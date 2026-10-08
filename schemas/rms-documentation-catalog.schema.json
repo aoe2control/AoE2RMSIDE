@@ -1,0 +1,292 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/rms-documentation-catalog/v1",
+  "title": "Versioned RMS editor documentation catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "compatibility",
+    "catalogId",
+    "profiles",
+    "sources",
+    "terms",
+    "families",
+    "snippets",
+    "evidenceGaps"
+  ],
+  "properties": {
+    "$schema": { "const": "https://rmside.invalid/schemas/rms-documentation-catalog/v1" },
+    "schemaVersion": { "const": "1.0.0" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    },
+    "catalogId": { "type": "string", "pattern": "^[a-z0-9-]{1,64}$" },
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": { "$ref": "#/definitions/profileId" }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "role"],
+        "properties": {
+          "id": { "$ref": "#/definitions/identifier" },
+          "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "role": { "enum": ["primary", "research"] }
+        }
+      }
+    },
+    "terms": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1024,
+      "items": { "$ref": "#/definitions/term" }
+    },
+    "families": {
+      "type": "array",
+      "maxItems": 64,
+      "items": { "$ref": "#/definitions/family" }
+    },
+    "snippets": {
+      "type": "array",
+      "maxItems": 128,
+      "items": { "$ref": "#/definitions/snippet" }
+    },
+    "evidenceGaps": {
+      "type": "array",
+      "maxItems": 1024,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["term", "reason", "reviewed"],
+        "properties": {
+          "term": { "$ref": "#/definitions/termName" },
+          "reason": { "$ref": "#/definitions/paragraph" },
+          "reviewed": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "profileId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]{0,95}$" },
+    "identifier": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "termName": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^\\S+$" },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 240 },
+    "paragraph": { "type": "string", "minLength": 1, "maxLength": 900 },
+    "paragraphs": {
+      "type": "array",
+      "maxItems": 8,
+      "items": { "$ref": "#/definitions/paragraph" }
+    },
+    "codeLines": {
+      "type": "array",
+      "maxItems": 24,
+      "items": { "type": "string", "maxLength": 120 }
+    },
+    "place": {
+      "type": "string",
+      "pattern": "^(\\*|(player_setup|land_generation|elevation_generation|cliff_generation|terrain_generation|connection_generation|objects_generation)(/[a-z_]+)?)$"
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "sources"],
+      "properties": {
+        "status": { "enum": ["engine-verified", "documented", "uncertain"] },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/identifier" }
+        },
+        "note": { "$ref": "#/definitions/paragraph" }
+      }
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "kind", "description"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z0-9_]{1,32}$" },
+        "kind": {
+          "enum": ["number", "object", "terrain", "constant", "label", "name", "file"]
+        },
+        "optional": { "type": "boolean" },
+        "description": { "$ref": "#/definitions/paragraph" },
+        "range": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "default": { "type": "string", "minLength": 1, "maxLength": 120 }
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "maxItems": 8,
+      "items": { "$ref": "#/definitions/parameter" }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["where", "summary"],
+      "properties": {
+        "where": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/place" }
+        },
+        "summary": { "$ref": "#/definitions/summary" },
+        "details": { "$ref": "#/definitions/paragraphs" },
+        "parameters": { "$ref": "#/definitions/parameters" },
+        "default": { "$ref": "#/definitions/paragraph" },
+        "example": { "$ref": "#/definitions/codeLines" },
+        "evidence": { "$ref": "#/definitions/evidence" }
+      }
+    },
+    "term": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "kind", "summary", "evidence"],
+      "properties": {
+        "name": { "$ref": "#/definitions/termName" },
+        "kind": {
+          "enum": [
+            "section",
+            "directive",
+            "control",
+            "command",
+            "attribute",
+            "function",
+            "delimiter"
+          ]
+        },
+        "summary": { "$ref": "#/definitions/summary" },
+        "details": { "$ref": "#/definitions/paragraphs" },
+        "parameters": { "$ref": "#/definitions/parameters" },
+        "opensBlock": { "type": "boolean" },
+        "default": { "$ref": "#/definitions/paragraph" },
+        "example": { "$ref": "#/definitions/codeLines" },
+        "related": {
+          "type": "array",
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+        },
+        "usages": {
+          "type": "array",
+          "maxItems": 12,
+          "items": { "$ref": "#/definitions/usage" }
+        },
+        "profileNotes": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["profiles", "text"],
+            "properties": {
+              "profiles": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "$ref": "#/definitions/profileId" }
+              },
+              "text": { "$ref": "#/definitions/paragraph" }
+            }
+          }
+        },
+        "evidence": { "$ref": "#/definitions/evidence" }
+      }
+    },
+    "family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "source", "summary", "membership", "evidence"],
+      "properties": {
+        "id": { "$ref": "#/definitions/identifier" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "source": { "enum": ["definitions", "run-settings"] },
+        "summary": { "$ref": "#/definitions/summary" },
+        "details": { "$ref": "#/definitions/paragraphs" },
+        "usedBy": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/termName" }
+        },
+        "membership": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "prefixes": { "$ref": "#/definitions/namePieces" },
+            "suffixes": { "$ref": "#/definitions/namePieces" },
+            "names": { "$ref": "#/definitions/namePieces" },
+            "patterns": { "$ref": "#/definitions/namePieces" },
+            "remainder": { "type": "boolean" }
+          }
+        },
+        "members": {
+          "type": "object",
+          "maxProperties": 256,
+          "propertyNames": { "pattern": "^[A-Z0-9_#]{1,64}$" },
+          "additionalProperties": { "$ref": "#/definitions/summary" }
+        },
+        "example": { "$ref": "#/definitions/codeLines" },
+        "evidence": { "$ref": "#/definitions/evidence" }
+      }
+    },
+    "namePieces": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z0-9_#]{1,64}$" }
+    },
+    "snippet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "prefix", "where", "summary", "body"],
+      "properties": {
+        "id": { "$ref": "#/definitions/identifier" },
+        "label": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "prefix": { "$ref": "#/definitions/termName" },
+        "where": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "*",
+              "player_setup",
+              "land_generation",
+              "elevation_generation",
+              "cliff_generation",
+              "terrain_generation",
+              "connection_generation",
+              "objects_generation"
+            ]
+          }
+        },
+        "summary": { "$ref": "#/definitions/summary" },
+        "body": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 24,
+          "items": { "type": "string", "maxLength": 120 }
+        }
+      }
+    }
+  }
+}

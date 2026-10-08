@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/exact-rng-sequence/v1",
+  "title": "Bounded exact RMS RNG conformance sequence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "compatibility",
+    "recordType",
+    "seedU32",
+    "streamRegistrationOrdinal",
+    "initialDrawCount",
+    "seedFanoutResultU32",
+    "initialState",
+    "draws"
+  ],
+  "properties": {
+    "$schema": { "const": "https://rmside.invalid/schemas/exact-rng-sequence/v1" },
+    "schemaVersion": { "const": "1.0.0" },
+    "compatibility": { "$ref": "#/definitions/compatibility" },
+    "recordType": { "const": "rms-exact-rng-sequence" },
+    "seedU32": { "$ref": "#/definitions/u32" },
+    "streamRegistrationOrdinal": { "const": 5 },
+    "initialDrawCount": { "const": 1 },
+    "seedFanoutResultU32": { "$ref": "#/definitions/u32" },
+    "initialState": { "$ref": "#/definitions/state" },
+    "draws": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ordinal", "rawU32", "upperExclusiveU32", "resultU32", "checkpointSha256"],
+        "properties": {
+          "ordinal": { "type": "integer", "minimum": 2, "maximum": 4097 },
+          "rawU32": { "$ref": "#/definitions/u32" },
+          "upperExclusiveU32": { "$ref": "#/definitions/u32" },
+          "resultU32": { "$ref": "#/definitions/u32" },
+          "checkpointSha256": { "$ref": "#/definitions/sha256" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "u32": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["indexU8", "wordsU32", "checkpointSha256"],
+      "properties": {
+        "indexU8": { "type": "integer", "minimum": 0, "maximum": 15 },
+        "wordsU32": {
+          "type": "array",
+          "minItems": 16,
+          "maxItems": 16,
+          "items": { "$ref": "#/definitions/u32" }
+        },
+        "checkpointSha256": { "$ref": "#/definitions/sha256" }
+      }
+    }
+  }
+}

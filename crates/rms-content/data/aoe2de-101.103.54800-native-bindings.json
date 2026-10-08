@@ -1,0 +1,601 @@
+{
+  "$schema": "https://rmside.invalid/schemas/native-content-bindings/v1",
+  "schemaVersion": "1.3.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "behaviorProfileId": "aoe2de-101.103.54800-rms-v1",
+  "terrainClassRestrictions": {
+    "land": 7,
+    "water": 19,
+    "buildable": 4
+  },
+  "terrainTopology": {
+    "cliffFacetTerrainId": 16,
+    "cliffOverlayTerrainId": 70,
+    "defaultShorelineTerrainId": 2,
+    "excludedShorelineWaterTerrainIds": [
+      15
+    ],
+    "fillTerrainId": 1,
+    "frozenShorelineTerrainId": 37
+  },
+  "nativeGenerationBindings": {
+    "defaultTerrainId": 0,
+    "flatOnlyTerrainId": 1,
+    "wallAnchorObjectIds": [
+      109,
+      444
+    ],
+    "explicitMaximumSeedFoundationObjectIds": [
+      50,
+      1187
+    ],
+    "classes": {
+      "farm": 49,
+      "tree": 15,
+      "wall": 27,
+      "gate": 39,
+      "tower": 52
+    },
+    "constructionSiteExemptions": {
+      "objectIds": [
+        357,
+        1188
+      ],
+      "classIds": [
+        51,
+        54
+      ]
+    },
+    "playerStartBindings": {
+      "townCenterObjectId": 109,
+      "packedTownCenterObjectId": 444,
+      "villagerObjectId": 83,
+      "alternateVillagerObjectId": 293,
+      "fallbackScoutObjectId": 448,
+      "packedTownCenterAttributeId": 82,
+      "startingVillagersAttributeId": 84,
+      "startingScoutAttributeId": 263
+    },
+    "farmCompletionBindings": {
+      "parentObjectIds": [
+        1893,
+        1897
+      ],
+      "spawnedObjectIds": [
+        1899,
+        1900
+      ],
+      "spawnCountAttributeId": 289,
+      "totalResourceQuantityAttributeId": 288,
+      "bonusAmountAttributeId": 237,
+      "bonusResourceAttributeId": 238,
+      "bonusAnchorAttributeId": 239
+    }
+  },
+  "objectPlacementClasses": {
+    "cliffZoneClassId": 34,
+    "forestZoneClassId": 15
+  },
+  "rmsPathReferenceObjectId": 83,
+  "restrictionClassificationClassMasks": [
+    3,
+    24,
+    32
+  ],
+  "cliffs": {
+    "terrainId": 16,
+    "styleBaseObjectIds": [
+      264,
+      1849,
+      1858,
+      2178,
+      2069,
+      2651
+    ],
+    "pieceRules": [
+      {
+        "edges": [
+          -1,
+          0,
+          -1,
+          0
+        ],
+        "primary": {
+          "slot": 2,
+          "facet": 11
+        },
+        "alternate": {
+          "slot": 2,
+          "facet": 10
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          -1,
+          0,
+          0,
+          -1
+        ],
+        "primary": {
+          "slot": 7,
+          "facet": 13
+        },
+        "xOffset256": 512,
+        "yOffset256": 256
+      },
+      {
+        "edges": [
+          -1,
+          0,
+          0,
+          0
+        ],
+        "primary": {
+          "slot": 2,
+          "facet": 20
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          -1,
+          1,
+          0,
+          0
+        ],
+        "primary": {
+          "slot": 5,
+          "facet": 0
+        },
+        "xOffset256": 384,
+        "yOffset256": 512
+      },
+      {
+        "edges": [
+          0,
+          -1,
+          -1,
+          0
+        ],
+        "primary": {
+          "slot": 7,
+          "facet": 9
+        },
+        "xOffset256": 256,
+        "yOffset256": 512
+      },
+      {
+        "edges": [
+          0,
+          -1,
+          0,
+          -1
+        ],
+        "primary": {
+          "slot": 1,
+          "facet": 8
+        },
+        "alternate": {
+          "slot": 1,
+          "facet": 7
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          -1,
+          0,
+          0
+        ],
+        "primary": {
+          "slot": 1,
+          "facet": 22
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          0,
+          -1,
+          0
+        ],
+        "primary": {
+          "slot": 2,
+          "facet": 21
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          0,
+          -1,
+          1
+        ],
+        "primary": {
+          "slot": 5,
+          "facet": 14
+        },
+        "xOffset256": 384,
+        "yOffset256": 256
+      },
+      {
+        "edges": [
+          0,
+          0,
+          0,
+          -1
+        ],
+        "primary": {
+          "slot": 1,
+          "facet": 23
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "primary": {
+          "slot": 0,
+          "facet": 19
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          0,
+          1,
+          -1
+        ],
+        "primary": {
+          "slot": 3,
+          "facet": 6
+        },
+        "xOffset256": 256,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "primary": {
+          "slot": 0,
+          "facet": 17
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          1,
+          0,
+          0
+        ],
+        "primary": {
+          "slot": 0,
+          "facet": 18
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          1,
+          0,
+          1
+        ],
+        "primary": {
+          "slot": 0,
+          "facet": 1
+        },
+        "alternate": {
+          "slot": 0,
+          "facet": 2
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          0,
+          1,
+          1,
+          0
+        ],
+        "primary": {
+          "slot": 0,
+          "facet": 15
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          1,
+          -1,
+          0,
+          0
+        ],
+        "primary": {
+          "slot": 3,
+          "facet": 12
+        },
+        "xOffset256": 512,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "primary": {
+          "slot": 0,
+          "facet": 16
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "primary": {
+          "slot": 0,
+          "facet": 3
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      },
+      {
+        "edges": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "primary": {
+          "slot": 0,
+          "facet": 4
+        },
+        "alternate": {
+          "slot": 0,
+          "facet": 5
+        },
+        "xOffset256": 384,
+        "yOffset256": 384
+      }
+    ]
+  },
+  "compositeTerrainRules": [
+    {
+      "primaryTerrainId": 6,
+      "secondaryTerrainId": 32,
+      "sourceTerrainId": 33
+    },
+    {
+      "primaryTerrainId": 0,
+      "secondaryTerrainId": 32,
+      "sourceTerrainId": 34
+    },
+    {
+      "primaryTerrainId": 6,
+      "secondaryTerrainId": 32,
+      "sourceTerrainId": 36
+    },
+    {
+      "primaryTerrainId": 25,
+      "secondaryTerrainId": 32,
+      "sourceTerrainId": 38
+    },
+    {
+      "primaryTerrainId": 6,
+      "secondaryTerrainId": 75,
+      "sourceTerrainId": 39
+    },
+    {
+      "primaryTerrainId": 14,
+      "secondaryTerrainId": 25,
+      "sourceTerrainId": 43
+    },
+    {
+      "primaryTerrainId": 0,
+      "secondaryTerrainId": 76,
+      "sourceTerrainId": 44
+    },
+    {
+      "primaryTerrainId": 75,
+      "secondaryTerrainId": 60,
+      "sourceTerrainId": 61
+    },
+    {
+      "primaryTerrainId": 77,
+      "secondaryTerrainId": 60,
+      "sourceTerrainId": 62
+    },
+    {
+      "primaryTerrainId": 6,
+      "secondaryTerrainId": 78,
+      "sourceTerrainId": 103
+    }
+  ],
+  "foundationTerrainRules": [
+    {
+      "anchorClassReplacement": {
+        "anchorPlacementClassMask": 128,
+        "comparisonTerrainId": 36,
+        "primaryTerrainId": 6,
+        "secondaryTerrainId": 32
+      },
+      "compatibleSourceTerrainIds": [
+        0,
+        3,
+        7,
+        8,
+        9,
+        12,
+        29,
+        30,
+        31,
+        32,
+        34,
+        63,
+        64,
+        65,
+        66,
+        67,
+        117,
+        118,
+        119,
+        120,
+        121
+      ],
+      "protectedSourceTerrainIds": [
+        47,
+        69
+      ],
+      "targetTerrainId": 27
+    }
+  ],
+  "foundationOmittedCells": [
+    {
+      "objectId": 109,
+      "cells": [
+        {
+          "x": 0,
+          "y": 2
+        },
+        {
+          "x": 0,
+          "y": 3
+        },
+        {
+          "x": 1,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": 3
+        }
+      ]
+    }
+  ],
+  "gameModeTerrainRules": [
+    {
+      "gameModeRaw": 5,
+      "radius": 5,
+      "terrainId": 40
+    },
+    {
+      "boundaryTerrainId": 4,
+      "gameModeRaw": 10,
+      "radius": 5,
+      "terrainId": 40
+    }
+  ],
+  "gameModePlayerObjectRules": [
+    {
+      "anchorObjectId": 109,
+      "gameModeRaw": 10,
+      "innerRadius": 6,
+      "objectId": 104,
+      "outerRadius": 12
+    }
+  ],
+  "wallPlacementRules": [
+    {
+      "horizontalGateCenterObjectId": 789,
+      "horizontalGateFlankObjectId": 791,
+      "verticalGateCenterObjectId": 793,
+      "verticalGateFlankObjectId": 795,
+      "wallObjectId": 72
+    },
+    {
+      "horizontalGateCenterObjectId": 64,
+      "horizontalGateFlankObjectId": 81,
+      "verticalGateCenterObjectId": 88,
+      "verticalGateFlankObjectId": 95,
+      "wallObjectId": 117
+    },
+    {
+      "horizontalGateCenterObjectId": 789,
+      "horizontalGateFlankObjectId": 791,
+      "verticalGateCenterObjectId": 793,
+      "verticalGateFlankObjectId": 795,
+      "wallObjectId": 119
+    }
+  ],
+  "constructionRetirementRequiresHeight": [
+    274,
+    1689,
+    1785
+  ],
+  "restrictionZoneConstructor": {
+    "objectIds": [
+      1105,
+      1744,
+      1746
+    ],
+    "excludedClassIds": [
+      5,
+      7,
+      8,
+      11,
+      14,
+      15,
+      16,
+      30,
+      31,
+      32,
+      33,
+      34,
+      38,
+      42,
+      48,
+      63
+    ]
+  },
+  "constructorResourceOverride": {
+    "classIds": [
+      18,
+      53
+    ],
+    "state": {
+      "resourceType": 34,
+      "quantityF32Bits": 1120403456
+    }
+  },
+  "singleRequestCounts": [
+    {
+      "objectId": 83,
+      "count": 3
+    }
+  ]
+}

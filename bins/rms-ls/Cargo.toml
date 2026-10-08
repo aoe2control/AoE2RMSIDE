@@ -1,0 +1,22 @@
+[package]
+name = "rms-ls"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[features]
+latency-profile = []
+
+[dependencies]
+anyhow.workspace = true
+rms-analysis.workspace = true
+rms-content.workspace = true
+rms-engine.workspace = true
+rms-profile.workspace = true
+rms-semantics.workspace = true
+rms-source.workspace = true
+rms-syntax.workspace = true
+serde_json.workspace = true
+xs-analysis.workspace = true
+xs-syntax.workspace = true

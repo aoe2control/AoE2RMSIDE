@@ -1,0 +1,22 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2de-101.103.48987-native-bindings",
+  "files": [
+    {
+      "path": "crates/rms-content/data/aoe2de-101.103.48987-native-bindings.json",
+      "sha256": "1db9f8911b41bef9d8dd37007a902efb4206bf14276d236d10b6aa2d9edbd529",
+      "authorship": "Independently reviewed conclusions about identities the native executable compares in code for this behavior profile; not an extracted table.",
+      "license": "Neutral factual identifiers; no source expression retained",
+      "sourceClassification": "sanitized-observation",
+      "created": "2026-10-07",
+      "containsGameContent": false,
+      "transformation": "Each binding records one reviewed executable-owned identity or rule consumed by the importer; the generation subset is stored in the content pack. Since 2026-10-04 it also names the building constructor's construction-site exemptions (masters 357 and 1188, classes 51 and 54), read from the executable of both builds. Schema 1.2.0 also names the eight executable-owned object and resource roles used by ordinary post-RMS fallback player starts. Schema 1.3.0 also names the perimeter farm completion roles (parents 1893 and 1897, the ordered children 1899 then 1900, and resources 289, 288, 237, 238 and 239), read from the executable of both builds.",
+      "reviewer": "Project maintainer; reviewed with the complete support bundle of the verified 101.103.48987 profile"
+    }
+  ]
+}

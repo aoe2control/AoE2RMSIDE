@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/message-catalog/v1",
+  "title": "Versioned interface message catalog of one locale",
+  "description": "The words of the desktop interface for one locale, keyed by stable message ids, in an ICU MessageFormat subset. The English source catalog also carries translator context: where a message appears, what control shows it, how long it may be, what it means, and what each placeholder stands for.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "compatibility",
+    "locale",
+    "name",
+    "direction",
+    "messages"
+  ],
+  "properties": {
+    "$schema": { "const": "https://rmside.invalid/schemas/message-catalog/v1" },
+    "schemaVersion": { "type": "string", "pattern": "^1\\.\\d{1,4}\\.\\d{1,4}$" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(?:-[A-Z][a-z]{3})?(?:-(?:[A-Z]{2}|\\d{3}))?$"
+    },
+    "name": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "direction": { "enum": ["ltr", "rtl"] },
+    "listPatterns": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "and": { "$ref": "#/definitions/listPattern" },
+        "or": { "$ref": "#/definitions/listPattern" },
+        "unit": { "$ref": "#/definitions/listPattern" }
+      }
+    },
+    "messages": {
+      "type": "object",
+      "maxProperties": 10000,
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[a-z][a-z0-9-]*(?:\\.[A-Za-z0-9_-]+)+$": { "$ref": "#/definitions/entry" }
+      }
+    }
+  },
+  "definitions": {
+    "listPattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["two", "start", "middle", "end"],
+      "properties": {
+        "two": { "$ref": "#/definitions/listPart" },
+        "start": { "$ref": "#/definitions/listPart" },
+        "middle": { "$ref": "#/definitions/listPart" },
+        "end": { "$ref": "#/definitions/listPart" }
+      }
+    },
+    "listPart": {
+      "type": "string",
+      "maxLength": 64,
+      "allOf": [{ "pattern": "\\{0\\}" }, { "pattern": "\\{1\\}" }]
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["message"],
+      "properties": {
+        "message": { "type": "string", "minLength": 1, "maxLength": 4000 },
+        "screen": { "type": "string", "pattern": "^[a-z0-9-]+(?:/[a-z0-9-]+)*$" },
+        "control": {
+          "enum": [
+            "menu",
+            "menu-item",
+            "button",
+            "dialog-title",
+            "dialog-text",
+            "label",
+            "option",
+            "tooltip",
+            "accessible-name",
+            "message-headline",
+            "message-cause",
+            "message-action",
+            "fragment",
+            "tab",
+            "heading",
+            "placeholder",
+            "status",
+            "notice",
+            "toggle",
+            "empty-state"
+          ]
+        },
+        "maxLength": { "type": "integer", "minimum": 1, "maximum": 4000 },
+        "meaning": { "type": "string", "minLength": 3, "maxLength": 600 },
+        "placeholders": {
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[A-Za-z_][A-Za-z0-9_]*$": { "type": "string", "minLength": 3, "maxLength": 300 }
+          }
+        },
+        "translate": {
+          "description": "English source only: false marks the IDE's English rewording of a message that originates in the engine; it shows in English in every language and translations leave it out.",
+          "const": false
+        }
+      }
+    }
+  }
+}

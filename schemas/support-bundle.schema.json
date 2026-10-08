@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/support-bundle/v1",
+  "title": "Packaged product-version support bundle",
+  "description": "Binds one behavior profile, complete neutral content pack, implicit definition environment, standard-include inventory, native bindings and completeness manifest by content hash.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "compatibility",
+    "bundleId",
+    "productVersion",
+    "behaviorProfileId",
+    "behaviorProfileSha256",
+    "contentPack",
+    "implicitDefinitions",
+    "standardIncludesSha256",
+    "nativeBindingsSha256",
+    "completenessManifestSha256"
+  ],
+  "properties": {
+    "$schema": { "const": "https://rmside.invalid/schemas/support-bundle/v1" },
+    "schemaVersion": { "const": "1.0.0" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    },
+    "bundleId": { "$ref": "#/definitions/identifier" },
+    "productVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "maxLength": 64
+    },
+    "behaviorProfileId": { "$ref": "#/definitions/identifier" },
+    "behaviorProfileSha256": { "$ref": "#/definitions/sha256" },
+    "contentPack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packId", "packVersion", "contentHash", "fileSha256"],
+      "properties": {
+        "packId": { "$ref": "#/definitions/identifier" },
+        "packVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "contentHash": { "$ref": "#/definitions/sha256" },
+        "fileSha256": { "$ref": "#/definitions/sha256" }
+      }
+    },
+    "implicitDefinitions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "fileSha256"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 0, "maximum": 65536 },
+        "fileSha256": { "$ref": "#/definitions/sha256" }
+      }
+    },
+    "standardIncludesSha256": { "$ref": "#/definitions/sha256" },
+    "nativeBindingsSha256": { "$ref": "#/definitions/sha256" },
+    "completenessManifestSha256": { "$ref": "#/definitions/sha256" }
+  },
+  "definitions": {
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

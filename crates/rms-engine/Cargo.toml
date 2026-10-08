@@ -1,0 +1,18 @@
+[package]
+name = "rms-engine"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[features]
+placement-oracle = ["rms-semantics/attribution-switches"]
+
+[dependencies]
+rms-content.workspace = true
+rms-profile.workspace = true
+rms-semantics.workspace = true
+rms-trace.workspace = true
+serde.workspace = true
+sha2.workspace = true
+thiserror.workspace = true

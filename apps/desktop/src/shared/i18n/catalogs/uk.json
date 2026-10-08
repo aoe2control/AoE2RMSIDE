@@ -1,0 +1,4618 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "uk",
+  "name": "Українська",
+  "direction": "ltr",
+  "messages": {
+    "app-menu.file.name": {
+      "message": "Файл"
+    },
+    "app-menu.edit.name": {
+      "message": "Редагування"
+    },
+    "app-menu.view.name": {
+      "message": "Вигляд"
+    },
+    "app-menu.help.name": {
+      "message": "Довідка"
+    },
+    "app-menu.file.new-file": {
+      "message": "Новий файл"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Новий скрипт тестів мапи"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Створити файл визначень…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Новий скрипт XS"
+    },
+    "app-menu.file.open-file": {
+      "message": "Відкрити файл…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Відкрити папку…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Переглянути встановлені мапи…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Розгорнути як мод…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Відкрити папку гри"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Від’єднати папку гри"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Імпортувати звіт тесту…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Нещодавні файли й папки"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Немає нещодавніх файлів чи папок"
+    },
+    "app-menu.file.save": {
+      "message": "Зберегти"
+    },
+    "app-menu.file.save-as": {
+      "message": "Зберегти як…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "Вибрати типову програму для файлів RMS…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Не вдалося відкрити параметри Windows"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "У параметрах Windows відкрито типові програми"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "Щоб відкривати файли .rms і .rms2 в AoE2RMSIDE, виберіть цю програму там. Windows змінить типову програму лише після вашого підтвердження."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Закрити вкладку"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Закрити папку"
+    },
+    "app-menu.file.close-window": {
+      "message": "Закрити вікно"
+    },
+    "app-menu.file.exit": {
+      "message": "Вийти"
+    },
+    "app-menu.edit.undo": {
+      "message": "Скасувати дію"
+    },
+    "app-menu.edit.redo": {
+      "message": "Повторити дію"
+    },
+    "app-menu.edit.cut": {
+      "message": "Вирізати"
+    },
+    "app-menu.edit.copy": {
+      "message": "Копіювати"
+    },
+    "app-menu.edit.paste": {
+      "message": "Вставити"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Вибрати все"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Форматувати документ"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Форматувати під час збереження"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "Відступи в блоках if/else"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Видаляти без переміщення до кошика"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Скинути компонування"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Рендеринг мапи на GPU"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Показувати етапи під час створення"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Показувати вбудовані підказки"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Правила перевірки коду"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Мова…"
+    },
+    "app-menu.view.theme": {
+      "message": "Тема"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Системна"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Світла"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Темна"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Фактичний розмір"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Збільшити"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Зменшити"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Перемкнути повноекранний режим"
+    },
+    "app-menu.help.documentation": {
+      "message": "Документація"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Приєднатися до Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Повідомити про помилку"
+    },
+    "app-menu.help.about": {
+      "message": "Про {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "Не вдалося відкрити під’єднану папку гри"
+    },
+    "about.version": {
+      "message": "Версія {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "Редактор скриптів XS"
+    },
+    "about.edition.rms-preview": {
+      "message": "Редактор скриптів RMS і XS"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Незалежний неофіційний редактор скриптів випадкових мап. Його власна реалізація відтворює те, як Age of Empires II: Definitive Edition читає скрипти випадкових мап і створює мапи."
+    },
+    "about.disclosure.independent": {
+      "message": "Незалежний неофіційний редактор скриптів для Age of Empires II: Definitive Edition."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "Відповідність створених мап грі гарантовано лише для перевірених версій гри; новіші версії працюють без такої гарантії. Деякі особливості гри відтворено навмисно, щоб мапи поводилися однаково."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE не містить файлів чи графіки гри. Офіційні ресурси зчитуються лише з локальної інсталяції, а Текстури гри видобуваються лише зі встановлених файлів гри."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE не містить файлів чи графіки гри. Офіційні ресурси зчитуються лише з локальної інсталяції."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Проєкт не пов’язаний із Microsoft, Xbox Game Studios, World's Edge чи Activision і не схвалений ними."
+    },
+    "about.credits": {
+      "message": "Автори\n{maintainer} — автор і відповідальний за підтримку проєкту"
+    },
+    "about.credits.research": {
+      "message": "Дякуємо автору {author} за {guide}, звідки ми дізналися багато про скрипти випадкових мап."
+    },
+    "about.credits.xs-research": {
+      "message": "Дякуємо автору {author} за документацію XS у {guide}, що стала основою підтримки XS."
+    },
+    "about.close": {
+      "message": "Закрити"
+    },
+    "about.documentation": {
+      "message": "Документація"
+    },
+    "dialog.confirm.title": {
+      "message": "Підтвердити дію"
+    },
+    "dialog.confirm.cancel": {
+      "message": "Скасувати"
+    },
+    "dialog.confirm.continue": {
+      "message": "Продовжити"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "Зберегти зміни у файлі {name}?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, one {Зберегти зміни у {count} файлі?} few {Зберегти зміни у {count} файлах?} many {Зберегти зміни у {count} файлах?} other {Зберегти зміни у файлах ({count})?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "Якщо закрити вікно, незбережені зміни буде втрачено."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "Якщо закрити цю вкладку, незбережені зміни буде втрачено."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "Якщо закрити цю папку, незбережені зміни буде втрачено."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "Якщо видалити {name}, незбережені зміни буде втрачено."
+    },
+    "dialog.unsaved.save": {
+      "message": "Зберегти"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Зберегти все"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Не зберігати"
+    },
+    "dialog.external-change.title": {
+      "message": "Файл {name} змінено поза AoE2RMSIDE"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Заміна файлу призведе до втрати зовнішньої версії. Перечитайте її, замініть текстом із редактора або скасуйте дію."
+    },
+    "dialog.external-change.replace": {
+      "message": "Замінити на диску"
+    },
+    "dialog.external-change.reload": {
+      "message": "Перечитати з диска"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Повторне читання призведе до втрати незбереженого тексту в редакторі. Продовжте редагування, щоб вирішити конфлікт під час збереження."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Продовжити редагування"
+    },
+    "dialog.delete-entry.title": {
+      "message": "Перемістити {name} до кошика?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "Папка не порожня. Її разом з усім вмістом буде переміщено до кошика."
+    },
+    "dialog.delete-entry.description": {
+      "message": "Елемент буде переміщено до кошика."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Перемістити до кошика"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "Назавжди видалити {name}?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "Папка не порожня. Її разом з усім вмістом буде видалено назавжди, без переміщення до кошика. Цю дію неможливо скасувати."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "Елемент буде видалено назавжди, без переміщення до кошика. Цю дію неможливо скасувати."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Видалити назавжди"
+    },
+    "output.clear": {
+      "message": "Очистити вивід"
+    },
+    "output.source.run": {
+      "message": "Виконання"
+    },
+    "output.source.script": {
+      "message": "Скрипт"
+    },
+    "output.source.preview": {
+      "message": "Перегляд"
+    },
+    "output.source.map-test": {
+      "message": "Тест мапи"
+    },
+    "output.source.deploy": {
+      "message": "Розгортання"
+    },
+    "output.source.live-test": {
+      "message": "Тест у грі"
+    },
+    "output.source.recovery": {
+      "message": "Відновлення"
+    },
+    "output.source.update": {
+      "message": "Оновлення"
+    },
+    "output.source.files": {
+      "message": "Файли"
+    },
+    "output.source.game-folder": {
+      "message": "Папка гри"
+    },
+    "output.source.game-textures": {
+      "message": "Текстури гри"
+    },
+    "output.source.app": {
+      "message": "Програма"
+    },
+    "output.log.label": {
+      "message": "{count, plural, one {{count} повідомлення виводу} few {{count} повідомлення виводу} many {{count} повідомлень виводу} other {{count} повідомлення виводу}}"
+    },
+    "output.empty": {
+      "message": "Запустіть створення мапи, щоб побачити результати тут."
+    },
+    "output.empty.filtered": {
+      "message": "Жодне повідомлення не відповідає фільтру."
+    },
+    "output.jump-to-latest": {
+      "message": "До останніх (нових: {count})"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, one {Повторено {count} раз} few {Повторено {count} рази} many {Повторено {count} разів} other {Повторено {count} разу}}"
+    },
+    "output.details": {
+      "message": "Подробиці"
+    },
+    "output.run.show": {
+      "message": "Показати повідомлення виконання"
+    },
+    "output.run.hide": {
+      "message": "Приховати повідомлення виконання"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, one {Не показано {count} попередній рядок} few {Не показано {count} попередні рядки} many {Не показано {count} попередніх рядків} other {Не показано {count} попереднього рядка}}"
+    },
+    "output.run.seed": {
+      "message": "зерно {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, one {{count} гравець} few {{count} гравці} many {{count} гравців} other {{count} гравця}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, one {{count} мапа} few {{count} мапи} many {{count} мап} other {{count} мапи}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} мс"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} с"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} хв {seconds} с"
+    },
+    "output.constructs.heading": {
+      "message": "Не порівняно з грою"
+    },
+    "output.constructs.label": {
+      "message": "Команди, не порівняні з грою"
+    },
+    "output.constructs.go-to": {
+      "message": "Перейти до першого використання"
+    },
+    "output.constructs.more": {
+      "message": "і ще {count}"
+    },
+    "installed-maps.filter.group": {
+      "message": "Походження мап"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Вбудовані мапи ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Мапи локальних модів ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Мапи модів за підпискою ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Усі джерела мап вимкнено. Увімкніть одне з них, щоб показати його мапи."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Немає встановлених випадкових мап з обраних джерел."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Жодна встановлена випадкова мапа з обраних джерел не відповідає пошуку."
+    },
+    "installed-maps.empty.none": {
+      "message": "Не знайдено вбудованих чи локальних випадкових мап або мап за підпискою."
+    },
+    "installed-maps.empty.search": {
+      "message": "Жодна встановлена випадкова мапа не відповідає пошуку."
+    },
+    "installed-maps.title": {
+      "message": "Встановлені випадкові мапи"
+    },
+    "installed-maps.close": {
+      "message": "Закрити встановлені випадкові мапи"
+    },
+    "installed-maps.search": {
+      "message": "Пошук установлених випадкових мап"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Шукати мапи"
+    },
+    "installed-maps.search.clear": {
+      "message": "Очистити пошук мап"
+    },
+    "installed-maps.loading": {
+      "message": "Завантаження встановлених випадкових мап"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Виберіть папку гри, щоб переглянути встановлені файли RMS"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Вбудована"
+    },
+    "installed-maps.origin.local": {
+      "message": "Локальний мод"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Мод за підпискою"
+    },
+    "installed-maps.clone": {
+      "message": "Клонувати для правок"
+    },
+    "installed-maps.open-failed": {
+      "message": "Не вдалося відкрити мапу"
+    },
+    "installed-maps.clone-failed": {
+      "message": "Не вдалося клонувати мапу"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Не вдалося отримати список установлених мап"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, one {Клоновано # файл мапи для редагування} few {Клоновано # файли мапи для редагування} many {Клоновано # файлів мапи для редагування} other {Клоновано # файлу мапи для редагування}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "Файл {name} не скопійовано"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "Клонована мапа посилається на цей файл, але він не є частиною встановленої мапи."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Цей файл надає сама гра; він не є частиною встановленої мапи."
+    },
+    "run-menu.control.detach": {
+      "message": "Від’єднати AoE2Control"
+    },
+    "run-menu.control.remove": {
+      "message": "Прибрати AoE2Control"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control під’єднується"
+    },
+    "run-menu.control.detaching": {
+      "message": "Від’єднання AoE2Control…"
+    },
+    "run-menu.control.busy": {
+      "message": "Зачекайте на завершення поточної операції AoE2Control"
+    },
+    "run-menu.run-on-save": {
+      "message": "При збереженні"
+    },
+    "run-menu.run-on-edit": {
+      "message": "При редагуванні"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Набір налаштувань"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Набір налаштувань {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Налаштування набору перегляду"
+    },
+    "run-menu.preset.manage": {
+      "message": "Керувати наборами перегляду"
+    },
+    "run-menu.preset.new": {
+      "message": "Новий набір налаштувань"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Назвати новий набір перегляду"
+    },
+    "run-menu.preset.rename": {
+      "message": "Перейменувати {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "Зберегти {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "Редагувати {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "Видалити {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "Видалити набір налаштувань {name}?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "Це видалить збережені налаштування перегляду цього набору."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Видалити"
+    },
+    "run-menu.preset.name-length": {
+      "message": "Назва набору має містити від 1 до 64 символів"
+    },
+    "run-menu.preset.exists": {
+      "message": "Набір з назвою {name} уже існує"
+    },
+    "run-menu.preset.limit": {
+      "message": "Можна зберегти щонайбільше 64 набори"
+    },
+    "run-menu.map-size": {
+      "message": "Розмір мапи"
+    },
+    "run-menu.game-mode": {
+      "message": "Режим гри"
+    },
+    "run-menu.starting-resources": {
+      "message": "Початкові ресурси"
+    },
+    "run-menu.starting-age": {
+      "message": "Початкова епоха"
+    },
+    "run-menu.ending-age": {
+      "message": "Кінцева епоха"
+    },
+    "run-menu.position-policy": {
+      "message": "Розташування гравців"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Виберіть"
+    },
+    "run-menu.turbo-note": {
+      "message": "Турбо-випадкова мапа — старий режим, що залишається без змін. Випадкова мапа з опцією Турбо надає мітки турбо, які використовує гра."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Вибрати: Випадкова мапа + Турбо"
+    },
+    "run-menu.players.configure": {
+      "message": "Налаштувати гравців"
+    },
+    "run-menu.players.count": {
+      "message": "Кількість гравців"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, one {# гравець} few {# гравці} many {# гравців} other {# гравця}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Місце гравця {player}"
+    },
+    "run-menu.players.color": {
+      "message": "Колір гравця {player}"
+    },
+    "run-menu.players.civilization": {
+      "message": "Цивілізація гравця {player}"
+    },
+    "run-menu.players.team": {
+      "message": "Команда гравця {player}"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Гравцем {player} керує комп’ютер"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Комп’ютерний гравець (визначає AI_PLAYERS)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "У тестах у грі всі гравці, крім P1, керуються комп’ютером"
+    },
+    "run-menu.players.live-note": {
+      "message": "У тестах у грі всі гравці, крім P1, керуються комп’ютером."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "У тестах у грі всі гравці, крім P1, керуються комп’ютером. Додайте гравця на місце P1 — ним гратимете ви."
+    },
+    "run-menu.lobby.label": {
+      "message": "Параметри лобі"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Параметри лобі, увімкнено: {count}"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Модифікатори режиму гри"
+    },
+    "run-menu.lobby.options": {
+      "message": "Параметри"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (режим гри)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Додає Війни імперій до режиму гри. Визначає EMPIRE_WARS."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Додає Раптову смерть до режиму гри. Визначає SUDDEN_DEATH."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Додає Царевбивство до режиму гри. Визначає REGICIDE."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Додає Короля гори до режиму гри. Визначає KING_OT_HILL."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Швидша гра. Визначає TURBO_MODE, а в режимі Випадкова мапа — також TURBO_RANDOM_MAP."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Кожна цивілізація може досліджувати все. Визначає FULL_TECH_TREE."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Режим Античність. Визначає ANTIQUITY_MODE; з ним змінюється багато мап."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Юніти не можуть проходити через ферми. Визначає SOLID_FARMS."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "Царевбивство потребує короля для кожного гравця. На мапі без королів гра одразу завершує матч."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Локальна папка гри"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (локальна)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (неперевірена)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Немає вбудованого профілю"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Немає вбудованої версії"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Версія гри для перегляду"
+    },
+    "run-menu.version.game-version": {
+      "message": "Версія гри"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Обрано локальну версію гри; повторний запуск перегляду"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} не є перевіреною версією RMS; перегляд використовує найновіший перевірений профіль поведінки ({profile}). Це може не впливати на роботу. Якщо створення мап відрізняється від гри, перевірте оновлення IDE або повідомте про проблему на {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "недоступний"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Вибрати папку гри"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Вибір папки гри…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "Використовується локальна AoE2DE {version}"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "Використовується обрана локальна інсталяція AoE2DE"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "Не вдалося завантажити налаштування виконання"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "Налаштування виконання не збережено"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "Редактор не зміг використати налаштування виконання"
+    },
+    "run-menu.run.warning": {
+      "message": "Для мапи є попередження"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Кеш перегляду очищено"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "Тестові зразки для розробки потребують непорожнього скрипту .rms або .rms2"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Випадкові цивілізації для цього перегляду: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Гравець {player}: {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "Під час тесту у грі цивілізації вибирає сама гра."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, one {# гравець} few {# гравці} many {# гравців} other {# гравця}}"
+    },
+    "run-menu.result.error": {
+      "message": "Помилка"
+    },
+    "run-menu.result.failed": {
+      "message": "Неуспішно"
+    },
+    "run-menu.result.passed": {
+      "message": "Успішно"
+    },
+    "run-menu.result.stopped": {
+      "message": "Зупинено"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Зупинено, останню мапу збережено"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Синтетичний зразок, несертифікований"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Синтетичний зразок, несертифікований, використано знову"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Створено, використано знову"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Створено · неперевірена версія гри"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Створено, використано знову · неперевірена версія гри"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Не вдається запустити перегляд"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "Поточний джерельний код порожній."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "Поточний джерельний код містить синтаксичні помилки."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Вибраний профіль поведінки недоступний."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Для вибраної версії гри немає сумісного пакета даних."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Для цього профілю немає сумісного пакета даних."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Інше виконання ще триває."
+    },
+    "run-menu.blocked.loading": {
+      "message": "Налаштування перегляду ще завантажуються."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "Розгортати можна лише головні файли .rms і .rms2."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "Вибраний код RMS порожній."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "Вибраний код RMS містить синтаксичні помилки."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "Не вдалося запланувати виконання вибраного коду RMS."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "Некоректний стан фіксації зерна."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "Некоректний стан запуску при збереженні."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "Некоректний стан запуску при редагуванні."
+    },
+    "run-menu.invalid.seed": {
+      "message": "Зерно має бути цілим числом від 0 до 4294967295."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "Розмір мапи має відповідати підтримуваному параметру гри."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Кількість гравців має бути від 1 до 8."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "Місця гравців мають містити вісім коректних значень."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Місця активних гравців не мають повторюватися."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "Кольори гравців мають містити вісім коректних значень."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Кольори активних гравців не мають повторюватися."
+    },
+    "run-menu.invalid.teams": {
+      "message": "Команди гравців мають містити вісім значень від «Без команди» до «Команда 4»."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "Типові значення цивілізацій мають охоплювати вісім місць гравців."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "Способи керування гравцями мають містити вісім значень."
+    },
+    "run-menu.invalid.profile": {
+      "message": "Потрібен відомий профіль поведінки."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "Некоректна область вибору версії."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "Потрібен режим або контекст гри."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "Модифікатори режиму гри мають бути відомими й не повторюватися."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Параметри лобі мають бути ввімкнені або вимкнені."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "Некоректні початкові ресурси."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "Некоректна початкова епоха."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "Некоректна кінцева епоха."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "Кінцева епоха не може передувати початковій."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "Некоректне розташування гравців."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "Некоректний рівень збирання трасування."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Кількість ядер для тесту має бути «Автоматично» або від 1 до 32."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "Для стандартних файлів include гри потрібна папка гри"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "Для стандартних файлів include гри потрібна локальна версія гри, але вибрано вбудовану версію."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "Для стандартних файлів include гри потрібна під’єднана папка гри, але жодної не під’єднано."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "Для стандартних файлів include гри потрібна папка resources/_common/drs/gamedata_x2 у під’єднаній папці гри, але її немає."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Не вдалося проаналізувати скрипт"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Не вдалося перевірити скрипт"
+    },
+    "run-menu.failure.not-started": {
+      "message": "Не вдалося розпочати виконання"
+    },
+    "run-menu.failure.generation": {
+      "message": "Не вдалося створити мапу"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Тест мапи"
+    },
+    "settings.language.title": {
+      "message": "Мова"
+    },
+    "settings.language.description": {
+      "message": "Меню, діалоги й повідомлення використовують цю мову. Команди скриптів, журнали й пакети для служби підтримки залишаються англійською."
+    },
+    "settings.language.label": {
+      "message": "Мова інтерфейсу"
+    },
+    "settings.language.system": {
+      "message": "Мова інтерфейсу Windows ({language})"
+    },
+    "settings.language.close": {
+      "message": "Закрити"
+    },
+    "settings.language.close-label": {
+      "message": "Закрити налаштування мови"
+    },
+    "settings.language.editor-next-start": {
+      "message": "Власні меню редактора коду зміняться після наступного запуску."
+    },
+    "message.action.report-problem": {
+      "message": "Повідомити про цю проблему"
+    },
+    "message.action.get-newer-control": {
+      "message": "Отримати новішу версію AoE2Control"
+    },
+    "message.action.link-game-folder": {
+      "message": "Під’єднати папку гри"
+    },
+    "message.action.verify-game-files": {
+      "message": "Перевірити цілісність файлів гри у Steam"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Вибрати локальну версію гри"
+    },
+    "message.action.check-include-name": {
+      "message": "Перевірити назву файлу include"
+    },
+    "message.action.open-problems": {
+      "message": "Відкрити панель «Проблеми»"
+    },
+    "message.action.choose-map-size": {
+      "message": "Вибрати інший розмір мапи"
+    },
+    "message.action.change-player-count": {
+      "message": "Змінити кількість гравців"
+    },
+    "message.action.open-players-menu": {
+      "message": "Відкрити меню гравців"
+    },
+    "message.action.try-another-seed": {
+      "message": "Спробувати інше зерно"
+    },
+    "message.action.reinstall": {
+      "message": "Перевстановити або оновити AoE2RMSIDE"
+    },
+    "message.action.check-update": {
+      "message": "Перевірити наявність оновлень AoE2RMSIDE"
+    },
+    "message.action.reconnect-control": {
+      "message": "Знову під’єднати AoE2Control і повторити спробу"
+    },
+    "message.action.check-control-file": {
+      "message": "Перевірити, чи працює вибраний файл AoE2Control, і повторити спробу"
+    },
+    "message.action.wait-run-again": {
+      "message": "Трохи зачекати й знову натиснути «Запустити»"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Знову натиснути «Запустити»; якщо проблема повторюється, перезапустити AoE2DE"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "Перезапустити AoE2DE й знову натиснути «Запустити»"
+    },
+    "message.action.check-game-window": {
+      "message": "Перевірити вікно гри й знову натиснути «Запустити»"
+    },
+    "message.action.press-run-again": {
+      "message": "Знову натиснути «Запустити»"
+    },
+    "message.action.wait-try-again": {
+      "message": "Трохи зачекати й повторити спробу"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Знову відкрити «Розгорнути як мод»"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Вибрати іншу назву моду"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Запустити тест мапи знову"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Місце гравця"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, рядок {line}"
+    },
+    "message.format.the-script": {
+      "message": "Скрипт"
+    },
+    "message.format.the-folder": {
+      "message": "Папка"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "папка XS вашого профілю"
+    },
+    "message.format.the-map-test": {
+      "message": "тест мапи"
+    },
+    "message.format.a-map-test": {
+      "message": "тест мапи"
+    },
+    "message.format.preview-kept": {
+      "message": "Перегляд збережено."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "Перегляд працює й без цього."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Скрипт змінився під час створення мапи"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "Наступною буде виконано новішу версію."
+    },
+    "message.xs-syntax.headline": {
+      "message": "Файл XS містить синтаксичні помилки"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} містить синтаксичні помилки XS"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name}, рядок {line}, не дає грі завантажити XS мапи, тому стан гри не змінено."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Гра не змогла завантажити XS мапи, тому стан гри не змінено."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Виправити помилки з панелі «Проблеми» й запустити тест у грі знову"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "У папці XS вашого профілю вже є файл XS"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "У папці XS вашого профілю вже є {name}"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Цей файл не створено AoE2RMSIDE ({folder}), тому тест у грі зупинився без його заміни."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Цей файл не створено AoE2RMSIDE, тому тест у грі зупинився без його заміни."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "Перейменувати файл XS або видалити наявний"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Файл у папці XS вашого профілю змінено поза AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "{name} у папці XS вашого профілю змінено поза AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE скопіювала його для тесту у грі ({folder}) і ніколи не перезаписує чужих змін, тому тест у грі зупинився."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Перенести свої зміни в інше місце або видалити файл і запустити тест у грі знову"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Файл XS не можна скопіювати до папки XS вашого профілю"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "{name} не можна скопіювати до папки XS вашого профілю"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Тест у грі копіює кожен файл XS під назвою з #includeXS без шляху, але ця назва містить папку."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "Залишити в рядку #includeXS лише назву файлу"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "Два файли XS було б скопійовано під однаковою назвою"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "Два файли XS було б скопійовано як {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "У папці XS вашого профілю може бути лише один файл із такою назвою."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "Перейменувати один із файлів XS"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "Не можна використати папку XS вашого профілю"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} не є звичайною папкою або вказує на інше місце, а AoE2RMSIDE ніколи не копіює через переспрямовані папки."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "Не вдається прочитати запис AoE2RMSIDE про скопійовані файли XS"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Без нього AoE2RMSIDE не може визначити, які файли XS у вашому профілі створила сама."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "Не вдалося скопіювати файли XS до папки XS вашого профілю"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "Мапа завантажує більше файлів XS, ніж може скопіювати тест у грі."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Деякі файли XS, змінені цим тестом у грі ({folder}), не вдалося відновити; AoE2RMSIDE досі вважає їх своїми."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Усі файли XS, змінені цим тестом у грі ({folder}), відновлено."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "Запис AoE2RMSIDE про файли XS у {folder} змінився під час тесту в грі."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Перевірити доступність папки для запису й запустити тест у грі знову"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE не запущено"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "Запустити AoE2DE й знову натиснути «Запустити»"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control закрилася до завершення запуску"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control не запустилася"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control не завершила під’єднання"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "У цій версії AoE2Control немає вибраної цивілізації"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Для саксів, варягів і данців потрібна AoE2Control 1.1.1 або новіша."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control не пропонує вибрану цивілізацію"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "Виберіть AoE2Control 1.1.1 або новішу чи іншу цивілізацію."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "У запущеній версії гри немає вибраної цивілізації"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Вибрати іншу цивілізацію"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Тести у грі не підтримуються для цієї версії гри"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "Попередня AoE2Control ще вивантажується з гри"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Попередній запуск AoE2Control досі триває у грі"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control не завершила запуск вчасно"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "Вікно AoE2DE не готове"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Відкрити вікно гри, не залишаючи його згорнутим, і знову натиснути «Запустити»"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "У грі працює інша версія AoE2Control"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "Раніше AoE2Control не вдалося запустити в цій грі"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control не змогла приєднатися до гри"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Працює інша програма запуску AoE2Control"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Закрити її й знову натиснути «Запустити»"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Ця версія AoE2Control несумісна"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Вибрати сумісний загальнодоступний випуск AoE2Control"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "Налаштування гри не збіглися з налаштуваннями виконання"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "З’єднання з AoE2Control втрачено"
+    },
+    "message.control.connection-lost.action": {
+      "message": "За потреби запустити AoE2DE й повторити спробу"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control не відповіла вчасно"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control закрила з’єднання без відповіді"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Можливо, гра зайнята або показує повідомлення."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Гра перестала відповідати під час запуску матчу"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "Можливо, AoE2DE показує повідомлення, наприклад про помилку скрипту."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Закрити повідомлення у грі й знову натиснути «Запустити»"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Гра не підтвердила новий матч вчасно"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "Поточний матч не завершився вчасно"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "Мапа змінилася під час копіювання до гри"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "У папці мап гри є інша мапа з такою назвою файлу"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Перейменувати мапу й знову натиснути «Запустити»"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "Не вдалося скопіювати мапу до гри"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Гра не підтвердила початок матчу"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Під’єднатися знову й перевірити поточний матч перед наступною спробою"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Гра не підтвердила завершення попереднього матчу"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Під’єднатися знову для перевірки перед наступною спробою"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "Не вдалося визначити папку гри або ігровий профіль"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Перевірити під’єднану папку гри"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "Не вдалося розгорнути мапу для тесту у грі"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control зупинилася до під’єднання"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control не змогла підтвердити стабільний сеанс одиночної гри"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control надіслала відповідь, яку AoE2RMSIDE не змогла використати"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "Поточний стан гри не підтримується тестом у грі"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Повернутися до головного меню або матчу для одного гравця й повторити спробу"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "Спершу потрібно завершити поточний матч"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Знову натиснути «Запустити» й дозволити завершення матчу"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control не під’єднана"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Знову натиснути «Запустити», щоб під’єднатися"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Вибраний файл AoE2Control змінився"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "Знову вибрати AoE2Control"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control зайнята"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Тести у грі не підтримуються в цій системі"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "Тест у грі не замінив поточний матч"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "В AoE2DE почався матч раніше, ніж тест у грі встиг запитати про його заміну."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control не змогла завершити поточний матч"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Стан гри змінився раніше, ніж тест у грі зміг запустити мапу"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "Поки готувався тест у грі, в AoE2DE почався матч або закрився екран налаштування одиночної гри."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "Під час тесту в грі AoE2DE або AoE2Control перезапущено"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "Скопійованої мапи немає в списку AoE2DE"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "У списку мап із модів гри скопійованої мапи не було або вона траплялася кілька разів."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "Налаштування одного з гравців не можна надіслати до AoE2Control"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Цивілізація, команда або колір виходять за межі того, що приймає ця AoE2Control."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE не змогла підготувати тест у грі"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control не змогла підготувати матч «Випадкова мапа»"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "Повернутися до головного меню AoE2DE й повторити спробу; якщо проблема залишається, один раз відкрити «Одиночна гра → Сутичка»"
+    },
+    "message.control.headline": {
+      "message": "Тест у грі завершився невдачею"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Ця версія AoE2Control не може встановлювати параметри лобі"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Для параметрів лобі потрібна AoE2Control 1.1.1 або новіша. Стан гри не змінено."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Для тесту у грі потрібен гравець на місці P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "Ви граєте за гравця на місці P1; усіма іншими керує комп’ютер."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Відкрити меню гравців і додати гравця на місце P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control відхилила гравця-людину після P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Тест у грі запускає гру для одного гравця, де всіма гравцями після P1 керує комп’ютер."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control відхилила список комп’ютерних гравців"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "Комп’ютерні гравці перелічені не за порядком місць."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Комп’ютерного гравця вказано на місці, де немає гравця."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control відхилила комп’ютерного гравця на місці P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "Під час тесту у грі ви граєте за гравця на місці P1, тому цим гравцем не може керувати комп’ютер."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Деякі налаштування лобі не відновлено"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "Тест у грі завершився невдачею. Ці параметри можуть відрізнятися від попередніх: {fields}."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "Тест у грі завершився невдачею, і деякі налаштування лобі можуть відрізнятися від попередніх."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Перевірити налаштування лобі в AoE2DE перед наступною грою"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "режим гри"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "розмір мапи"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "початкові ресурси"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "початкова епоха"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "кінцева епоха"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "відкриття мапи"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "кількість гравців"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "розташування команд"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "модифікатори режиму гри"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Турбо"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Повне дерево технологій"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Античність"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Непрохідні ферми"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "вибрана мапа"
+    },
+    "message.lobby-setting.seed": {
+      "message": "зерно"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot}: {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "команда"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "фора"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "колір"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "цивілізація"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "керування людиною чи комп’ютером"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "параметр"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "Запуск AoE2Control"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "Очікування вивантаження попередньої AoE2Control із гри"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "Очікування завершення запуску AoE2Control у грі"
+    },
+    "message.live.game-detected.headline": {
+      "message": "Виявлено AoE2DE"
+    },
+    "message.live.attach.headline": {
+      "message": "Приєднання до запущеної гри"
+    },
+    "message.live.handshake.headline": {
+      "message": "Перевірка AoE2Control"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control готова"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Завершення поточного матчу"
+    },
+    "message.live.deploy.headline": {
+      "message": "Розгортання мапи у грі"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, =1 {Файл XS мапи {files} також є в папці XS вашого профілю.} one {Файли XS мапи {files} також є в папці XS вашого профілю.} few {Файли XS мапи {files} також є в папці XS вашого профілю.} many {Файли XS мапи {files} також є в папці XS вашого профілю.} other {Файли XS мапи {files} також є в папці XS вашого профілю.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "У грі вже є ця версія мапи"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Вибір мапи у грі"
+    },
+    "message.live.match-start.headline": {
+      "message": "Запуск «Випадкової мапи» із зерном {seed}"
+    },
+    "message.live.verified.headline": {
+      "message": "Матч із зерном {seed} перевірено"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} не перевірено, тому матч може відрізнятися від перегляду."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} не перевірено для тестів у грі"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "Тести у грі працюють, але матч може відрізнятися від перегляду."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Тест у грі скасовано"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Подальших змін до стану гри не внесено."
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control від’єднано"
+    },
+    "message.live.stopped.headline": {
+      "message": "Тест у грі зупинено до зміни стану гри"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "Не вдалося створити перегляд."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "Скрипт містить помилки."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Скрипт або налаштування виконання змінилися під час створення перегляду."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "Перегляд більше не відповідає скрипту."
+    },
+    "message.live.match-kept.cause": {
+      "message": "Поточний матч не змінено."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "Не вдалося зберегти дозвіл на заміну поточного матчу."
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control вибрано"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Цей файл не є придатним виконуваним файлом AoE2Control"
+    },
+    "message.live.control-rejected.action": {
+      "message": "Вибрати загальнодоступний випуск AoE2Control"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "Вибір AoE2Control прибрано"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "Не вдалося прибрати вибір AoE2Control"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Від’єднати й повторити спробу"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "Стан AoE2Control недоступний"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "Не вдається імпортувати зерно поточного матчу"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "Зерно матчу {seed} імпортовано й зафіксовано"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "Папка моду змінилася під час розгортання"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Файли в папці моду змінено поза AoE2RMSIDE"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE ніколи не перезаписує чужих змін."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Перенести ці зміни в інше місце й повторити розгортання"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "Перегляд для розгортання застарів"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Цю папку вже використовує інший мод"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE замінює лише моди, які розгорнула сама."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Ігровий профіль не вибрано"
+    },
+    "message.deploy.profile.action": {
+      "message": "Вибрати профіль"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Вбудовані мапи не можна розгортати безпосередньо"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Спершу клонувати мапу до свого робочого простору"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "У моді забагато файлів для розгортання"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "Папка моду вказує на інше місце"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE ніколи не виконує розгортання через переспрямовані папки."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "Заміну наявного моду не підтверджено"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Повторити розгортання й підтвердити заміну"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Немає вашої мапи для розгортання"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Для моду потрібен скрипт .rms із вашого робочого простору."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Цю назву моду зарезервовано для тестів у грі"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Цю назву моду не можна використати як назву папки"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "Використайте одну назву папки без < > : \" / \\ | ? * та без крапки чи пробілу в кінці."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, рядок {line}: {error} Гра не змогла завантажити цей файл, тому нічого не розгорнуто."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Гра не змогла завантажити цей файл, тому нічого не розгорнуто."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Виправити помилки з панелі «Проблеми» й повторити розгортання"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "Не вдалося використати піктограму мапи"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Створити піктограму мапи знову"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "Створення піктограми мапи має виконуватися окремо, але зараз триває інший перегляд, тест мапи або тест у грі."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Повторити спробу після завершення"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "Для піктограми мапи потрібен поточний перегляд, а перегляд змінився."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Дочекатися нового перегляду й повторити спробу"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "Піктограму мапи намальовано з текстурами гри з іншої папки гри."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Не під’єднано дійсної інсталяції AoE2DE."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "Папка профілю або її папка модів не є звичайною папкою, яку може використати AoE2RMSIDE."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "Два файли було б скопійовано до {path} у моді."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Для одного з файлів мапи немає місця в папці моду."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE не змогла прочитати свій запис про розгорнуті моди."
+    },
+    "message.deploy.headline": {
+      "message": "Не вдалося виконати розгортання"
+    },
+    "message.map-test.replay.headline": {
+      "message": "Не вдалося показати мапу для цього зауваження"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "Тест мапи перевищив межу пам’яті свого процесу й був зупинений. Запуск не повторювався."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Зменшити обсяг пам’яті, який займає скрипт, наприклад великі повтори або багато збережених мап"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "Тест мапи надто глибоко вклав значення або виклики й перевищив стек свого процесу, тому його зупинено. Запуск не повторювався."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Процес тесту мапи аварійно завершився, найімовірніше через межу пам’яті або стека. Запуск не повторювався."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() потребує відносного шляху в лапках до файлу .rms або .rms2 у відкритій папці."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "Мапа, яку тест запускає типово, розташована поза відкритою папкою."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Для тесту мапи, який жодного разу не зберігали, потрібна відкрита папка."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Цей файл не є звітом тесту мапи, який може прочитати AoE2RMSIDE."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Файл більший за {limit, number, integer} MiB."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "Тест мапи змінився після виконання."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "Мапа або один із її файлів include змінилися після виконання."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "Версія гри, з якою виконувався тест, зараз недоступна."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "Мапа вийшла іншою, ніж під час виконання."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "Звіт не містить цього зауваження."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Відкрийте {script}, щоб показати цю мапу"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "Мапа для зауваження створюється знову тим тестом мапи, який його виявив."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Відкрийте {script}, щоб перейти до цієї перевірки"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Цей звіт імпортовано, тому файл тесту мапи невідомий."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "Виконується тест мапи"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "Виконується тест мапи · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Це результати попереднього виконання; вони оновляться після завершення поточного."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "Останнє виконання зупинилося з помилкою"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Це результати виконання, що передувало йому."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Переглянути помилку в панелях «Проблеми» й «Вивід»"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "Останнє виконання зупинено"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "Імпортовано звіт: {script}"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "Мапу для зауваження можна показати, доки цей тест мапи, його мапа й версія гри не змінилися з часу виконання."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} із {requested, plural, one {# мапи} few {# мап} many {# мап} other {# мапи}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Перевірено"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Перевірка"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {Перевірено # мапу} one {Перевірено # мапу} few {Перевірено # мапи} many {Перевірено # мап} other {Перевірено # мапи}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Перевірка мап, {percent}% ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Запуск тесту мапи"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Це не папка гри AoE2DE"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "Ця папка не містить повної інсталяції Age of Empires II: Definitive Edition."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Вибрати папку інсталяції гри, наприклад steamapps\\common\\AoE2DE у своїй бібліотеці Steam"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "Під’єднана інсталяція AoE2DE недоступна."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Не вдалося безпечно прочитати частину папки гри: вона завелика чи заглибока, веде в інше місце або містить непідтримувану назву файлу."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Виберіть звичайну папку поза папкою гри та встановленими мапами."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} уже є в цій папці."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Забагато файлів або папок, або файл завеликий."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "Тим часом встановлені мапи змінилися."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Знову відкрити встановлені мапи"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "Тим часом змінився скрипт або один із його файлів include."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "Файл {path} має тип, який мапа не може підключити."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Кілька файлів відрізняються від {path} лише регістром літер."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} розташовано поза папками, які може читати AoE2RMSIDE."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Тримати файли include у відкритій папці або в під’єднаній папці гри"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Використати меншу папку файлів include або зменшити кількість потрібних файлів include"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Зменшити обсяг потрібних джерельних даних і запустити знову"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Не вдалося запам’ятати відкриті вкладки й компонування"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Ваші файли не змінено, але після наступного запуску можуть відновитися старіший набір вкладок і компонування."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} несподівано завершив роботу."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} не запущено."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} не відповів вчасно."
+    },
+    "message.execution.busy.cause": {
+      "message": "Триває інший перегляд, тест мапи або тест у грі."
+    },
+    "message.editor.busy.cause": {
+      "message": "У редактора забагато запитів в очікуванні."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Вибрати версію гри знову"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Провіднику Windows не вдалося відкрити папку: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Файл двійковий, завеликий, нечитабельний або непідтримуваного типу."
+    },
+    "message.files.too-many.cause": {
+      "message": "Відкривайте не більше {limit, number, integer} файлів або папок за раз."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "Цього елемента більше немає в списку нещодавніх."
+    },
+    "message.files.encoding.cause": {
+      "message": "Скрипти тесту мапи потрібно зберігати в UTF-8."
+    },
+    "message.files.too-large.cause": {
+      "message": "Скрипт тесту мапи може мати щонайбільше {limit, number, integer} MiB."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Файли не можна зберігати в папку гри або у встановлені мапи."
+    },
+    "message.files.extension-required.cause": {
+      "message": "Назва файлу має закінчуватися на {extension}."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "Елемент змінено або переміщено поза AoE2RMSIDE."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Папка з такою назвою вже існує."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Файл розташований поза відкритою папкою."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "У папці забагато файлів і папок, щоб показати їх список."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Відкрити меншу папку"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "Параметр кошика змінився до видалення."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Видалити елемент знову"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "Незбережені зміни завеликі, щоб зберігати їх для відновлення."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Зберегти зміни, щоб не втратити їх"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Файл відновлення пошкоджений або записаний іншою версією AoE2RMSIDE."
+    },
+    "message.game-textures.cause": {
+      "message": "Натомість перегляд і піктограма мапи показують кольори текстур."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} Натомість перегляд і піктограма мапи показують кольори текстур."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Не вдалося підготувати текстури гри"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Текстури гри недоступні для під’єднаної папки гри"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Не вдалося прочитати перетворені дані місцевості"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Перетворення текстур гри скасовано"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "Перетворені файли збережено. Повторний вибір «Текстури гри» продовжить перетворення."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Не вдалося прочитати спрайти об’єктів"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Рендеринг мапи на GPU недоступний на цьому комп’ютері"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "Мапа відображається без нього, що може тривати довше для великих мап."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Рендеринг мапи на GPU не використовується на цьому комп’ютері"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Немає доступної відеокарти для відображення мапи, тому мапа відображається без неї. Для великих мап це може тривати довше."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "Рендеринг мапи на GPU припинився"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "Відеокарту скинуто, тому до перезапуску програми мапа відображатиметься без неї."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "Перегляд тестів мапи завжди використовує кольори мінімапи"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "Тести мапи показують лише готові мапи"
+    },
+    "message.generation-result.generated": {
+      "message": "Створено"
+    },
+    "message.generation-result.reused": {
+      "message": "Взято повторно"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "неперевірена версія гри"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Неперевірена версія гри"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "Створення мап для цієї версії гри ще недоступне."
+    },
+    "message.map-test.workers.label": {
+      "message": "Ядра для тесту"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Найбільша кількість ядер процесора, яку використовує тест мапи, тобто кількість мап, створюваних одночасно ({maximum, plural, =1 {1 на цьому комп’ютері} one {від 1 до {maximum} на цьому комп’ютері} few {від 1 до {maximum} на цьому комп’ютері} many {від 1 до {maximum} на цьому комп’ютері} other {від 1 до {maximum} на цьому комп’ютері}}). Залиште поле порожнім для режиму «Автоматично», який враховує комп’ютер і розмір мапи. Результати однакові за будь-якого вибору."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Автоматично"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Використати «Автоматично»"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, one {{count} команду не порівняно з грою} few {{count} команди не порівняно з грою} many {{count} команд не порівняно з грою} other {{count} команди не порівняно з грою}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Деякі команди не порівняно з грою"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Жодна записана мапа з гри ще не використовувала її в цьому місці, тому там, де вона діє, перегляд може відрізнятися від гри: {list}.} other {Жодна записана мапа з гри ще не використовувала їх у цих місцях, тому там, де вони діють, перегляд може відрізнятися від гри: {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Жодна записана мапа з гри ще не використовувала її в цьому місці, тому там, де вона діє, перегляд може відрізнятися від гри.} other {Жодна записана мапа з гри ще не використовувала їх у цих місцях, тому там, де вони діють, перегляд може відрізнятися від гри.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} у {context}"
+    },
+    "message.construct.list-more": {
+      "message": "{names}, і ще {more}"
+    },
+    "message.fallback.run": {
+      "message": "Виконання завершилося невдачею"
+    },
+    "message.fallback.script": {
+      "message": "Помилка скрипту"
+    },
+    "message.fallback.preview": {
+      "message": "Помилка перегляду"
+    },
+    "message.fallback.map-test": {
+      "message": "Тест мапи завершився невдачею"
+    },
+    "message.fallback.recovery": {
+      "message": "Не вдалося виконати відновлення"
+    },
+    "message.fallback.update": {
+      "message": "Не вдалося виконати оновлення"
+    },
+    "message.fallback.files": {
+      "message": "Не вдалося виконати операцію з файлом"
+    },
+    "message.fallback.game-folder": {
+      "message": "Не вдалося використати папку гри"
+    },
+    "message.fallback.app": {
+      "message": "Щось пішло не так"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Виправте показані помилки, щоб побачити решту."
+    },
+    "message.action.choose-another-name": {
+      "message": "Вибрати іншу назву"
+    },
+    "message.action.use-or-remove": {
+      "message": "Використати або видалити (доступне швидке виправлення для видалення)"
+    },
+    "explorer.create.definition-file": {
+      "message": "Файл визначень…"
+    },
+    "explorer.create.script": {
+      "message": "Скрипт"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Скрипт тестів мапи"
+    },
+    "explorer.create.xs-script": {
+      "message": "Скрипт XS"
+    },
+    "explorer.create.folder": {
+      "message": "Папка"
+    },
+    "explorer.create.label": {
+      "message": "Створити в {name}"
+    },
+    "explorer.label": {
+      "message": "Провідник файлів"
+    },
+    "explorer.search.label": {
+      "message": "Пошук файлів робочого простору"
+    },
+    "explorer.search.placeholder": {
+      "message": "Шукати файли"
+    },
+    "explorer.search.clear": {
+      "message": "Очистити пошук файлів"
+    },
+    "explorer.search.searching": {
+      "message": "Пошук файлів робочого простору"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Відповідних файлів RMS немає"
+    },
+    "explorer.search.no-results": {
+      "message": "Відповідних файлів немає"
+    },
+    "explorer.open-file.label": {
+      "message": "Відкрити файл"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Відкрити файл"
+    },
+    "explorer.open-folder.label": {
+      "message": "Відкрити папку"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Відкрити папку"
+    },
+    "explorer.tree.label": {
+      "message": "Файли: {name}"
+    },
+    "explorer.empty.maps": {
+      "message": "Відкрийте папку, щоб переглядати й редагувати її мапи."
+    },
+    "explorer.empty.scripts": {
+      "message": "Відкрийте папку, щоб переглядати й редагувати її скрипти."
+    },
+    "explorer.indexing": {
+      "message": "Індексування папки робочого простору"
+    },
+    "explorer.read-failed": {
+      "message": "Не вдалося прочитати цю папку"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Відкрити у Провіднику"
+    },
+    "explorer.context.rename": {
+      "message": "Перейменувати"
+    },
+    "explorer.context.delete": {
+      "message": "Видалити"
+    },
+    "explorer.inline.create-file": {
+      "message": "Створити файл"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Створити папку"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Перейменувати файл"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Перейменувати папку"
+    },
+    "definition-file.title": {
+      "message": "Створити файл визначень"
+    },
+    "definition-file.close-label": {
+      "message": "Закрити"
+    },
+    "definition-file.loading": {
+      "message": "Читання назв вибраної версії гри…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Версія гри"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (неперевірена)"
+    },
+    "definition-file.identity.target": {
+      "message": "Місце збереження"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "Вибирається під час створення"
+    },
+    "definition-file.groups.label": {
+      "message": "Групи вмісту"
+    },
+    "definition-file.group.terrains": {
+      "message": "Типи місцевості"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "Ідентифікатори місцевості для terrain_type, base_terrain та інших параметрів місцевості"
+    },
+    "definition-file.group.objects": {
+      "message": "Об’єкти"
+    },
+    "definition-file.group.objects.description": {
+      "message": "Ідентифікатори об’єктів для create_object та інших параметрів об’єктів"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, one {# назва} few {# назви} many {# назв} other {# назви}}"
+    },
+    "definition-file.built-in": {
+      "message": "Додати вбудовані назви"
+    },
+    "definition-file.built-in.description": {
+      "message": "Назви, які вже визначає гра. Скрипти можуть використовувати їх без цього файлу."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Під’єднайте папку гри, щоб додати назви об’єктів і типів місцевості, яким гра не надає назв."
+    },
+    "definition-file.note.other-version": {
+      "message": "У вашій папці гри інша версія гри, тому її назви не використовуються."
+    },
+    "definition-file.note.no-text": {
+      "message": "Не вдається прочитати назви з вашої папки гри для цієї версії гри."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Усі названі об’єкти й типи місцевості вже мають вбудовані назви."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, one {Пропущено # вбудовану назву, бо визначення вже є у скриптах цієї папки.} few {Пропущено # вбудовані назви, бо визначення вже є у скриптах цієї папки.} many {Пропущено # вбудованих назв, бо визначення вже є у скриптах цієї папки.} other {Пропущено # вбудованої назви, бо визначення вже є у скриптах цієї папки.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, one {Пропущено # назву з папки гри через брак унікальних назв.} few {Пропущено # назви з папки гри через брак унікальних назв.} many {Пропущено # назв із папки гри через брак унікальних назв.} other {Пропущено # назви з папки гри через брак унікальних назв.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "Не вдалося перевірити вже визначені назви в деяких скриптах цієї папки."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Для вибраної версії гри не можна створити файл визначень, оскільки її дані неповні."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Немає доступної версії гри для створення файлу визначень."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "Не вдалося прочитати назви вибраної версії гри."
+    },
+    "definition-file.file-name.label": {
+      "message": "Назва файлу"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Введіть назву файлу."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Цю назву не можна використати для файлу у Windows."
+    },
+    "definition-file.file-name.extension": {
+      "message": "Назва файлу має закінчуватися на .inc."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Ця назва належить файлу бібліотеки гри. Виберіть іншу назву."
+    },
+    "definition-file.generate": {
+      "message": "Створити"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Створити…"
+    },
+    "definition-file.error": {
+      "message": "Не вдалося записати файл визначень. Подробиці наведено в панелі «Вивід»."
+    },
+    "definition-file.replace.title": {
+      "message": "Замінити {name}?"
+    },
+    "definition-file.replace.description": {
+      "message": "У {folder} вже є файл із такою назвою. Заміна перезапише його вміст."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Замінити"
+    },
+    "definition-file.output.failed": {
+      "message": "Не вдалося записати файл визначень"
+    },
+    "definition-file.output.unavailable": {
+      "message": "Не вдалося прочитати назви для файлу визначень"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Зберегти файл визначень"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "Файли визначень"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Увімкнути мод"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Вмикає мод у списку модів гри. Мапа та її піктограма з’являться після перезапуску гри."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "Мод увімкнено. Перезапустіть гру, щоб побачити мапу та її піктограму."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Увімкніть мод у грі в розділі «Моди → Мої моди», а потім перезапустіть гру, щоб побачити мапу та її піктограму."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {Мод не ввімкнено: не вдалося прочитати файл списку модів гри.} unexpected-layout {Мод не ввімкнено: файл списку модів гри має невідому для IDE структуру.} duplicate-entry {Мод не ввімкнено: цей мод згадано у списку модів гри кілька разів.} unexpected-entry {Мод не ввімкнено: запис гри про цей мод має невідому для IDE структуру.} changed {Мод не ввімкнено: гра одночасно змінила свій список модів.} unsafe-path {Мод не ввімкнено: папка модів профілю або список модів посилається на інше місце.} other {Мод не ввімкнено: не вдалося зберегти список модів гри.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Гра запущена: зміна набуде чинності після перезапуску, але гра може скасувати її під час закриття. Якщо після перезапуску мод вимкнено, закрийте гру й повторіть розгортання."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Відкрити папку модів"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Готово"
+    },
+    "deploy-panel.success.title": {
+      "message": "Мод успішно розгорнуто"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "Мод збережено до"
+    },
+    "deploy-panel.success.path": {
+      "message": "Шлях до розгорнутого моду"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Копіювати шлях до моду"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Шлях до моду скопійовано"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, one {# файл.} few {# файли.} many {# файлів.} other {# файлу.}} Мод увімкнено; перезапустіть гру, щоб побачити мапу та її піктограму."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, one {# файл.} few {# файли.} many {# файлів.} other {# файлу.}} Увімкніть мод у грі в розділі «Моди → Мої моди», а потім перезапустіть гру, щоб побачити мапу та її піктограму."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "Мод розгорнуто, але не ввімкнено"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Не вдалося прочитати файл списку модів гри, тому його залишено без змін.} unexpected-layout {Файл списку модів гри має невідому для IDE структуру, тому його залишено без змін.} duplicate-entry {Цей мод згадано у списку модів гри кілька разів, тому список залишено без змін.} unexpected-entry {Запис гри про цей мод має невідому для IDE структуру, тому список залишено без змін.} changed {Гра одночасно змінила свій список модів, тому залишено версію списку, записану грою.} unsafe-path {Папка модів профілю або список модів посилається на інше місце, тому їх залишено без змін.} other {Не вдалося зберегти список модів гри; попередній список залишається на місці.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Увімкнути мод у грі в розділі «Моди → Мої моди», а потім перезапустити гру"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "Список модів змінився під час роботи гри"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "Зміна набуде чинності після перезапуску, але гра може скасувати її під час закриття. Якщо після перезапуску мод вимкнено, закрийте гру й повторіть розгортання."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "Використовується поточний перегляд {name}"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "Поточний перегляд не вдалося використати повторно, тому мапа створюється знову"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Не вдалося створити цю мапу для розгортання"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "Мод {mod} розгорнуто до профілю {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "Не вдалося відкрити папку модів"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Відкрити цільову папку у Провіднику Windows"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "Не вдалося відкрити цільову папку"
+    },
+    "deploy-panel.target": {
+      "message": "Цільова папка"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Копіювати шлях до цільової папки"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Шлях до цільової папки скопійовано"
+    },
+    "deploy-panel.title": {
+      "message": "Розгорнути як мод"
+    },
+    "deploy-panel.close": {
+      "message": "Закрити розгортання моду"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Виберіть папку гри для розгортання"
+    },
+    "deploy-panel.source": {
+      "message": "Код RMS"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Відкрийте головний файл RMS"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Цю мапу не вдалося створити, тому її поки не можна розгорнути. Виправте проблему з панелі «Вивід», а потім знову відкрийте «Розгорнути як мод»."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Цю мапу не вдалося створити, тому її поки не можна розгорнути. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "Перегляд вибраного коду RMS скасовано."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Назва моду"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Вибрати попередній експорт"
+    },
+    "deploy-panel.profile": {
+      "message": "Профіль користувача"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Виберіть профіль"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · рекомендований"
+    },
+    "deploy-panel.tree": {
+      "message": "Дерево файлів розгортання"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Завантаження дерева файлів розгортання"
+    },
+    "deploy-panel.no-source": {
+      "message": "Відкрийте головний файл .rms або .rms2 для розгортання."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Розгорнути мод"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Замінити наявний мод?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Усі файли наявного моду {name} буде видалено."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Замінити мод"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, one {{count} проблема} few {{count} проблеми} many {{count} проблем} other {{count} проблеми}}"
+    },
+    "problems-panel.empty": {
+      "message": "Синтаксичних проблем немає."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Жодна проблема не відповідає фільтру (приховано: {hidden})."
+    },
+    "problems-panel.severity.error": {
+      "message": "Помилка"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Попередження"
+    },
+    "problems-panel.severity.info": {
+      "message": "Примітка"
+    },
+    "problems-panel.group.file": {
+      "message": "Файл"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Файл гри"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, one {{count} помилка} few {{count} помилки} many {{count} помилок} other {{count} помилки}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, one {{count} попередження} few {{count} попередження} many {{count} попереджень} other {{count} попередження}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, one {{count} примітка} few {{count} примітки} many {{count} приміток} other {{count} примітки}}"
+    },
+    "problems-panel.group.show": {
+      "message": "Показати проблеми у {file}"
+    },
+    "problems-panel.group.hide": {
+      "message": "Приховати проблеми у {file}"
+    },
+    "problems-panel.group.label": {
+      "message": "Проблеми у {file}"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Перейти до {location}"
+    },
+    "severity-filter.label": {
+      "message": "Фільтр важливості: {panel}"
+    },
+    "severity-filter.errors.label": {
+      "message": "Показати помилки ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Показати помилки"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Приховати помилки"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Показати попередження ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Показати попередження"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Приховати попередження"
+    },
+    "severity-filter.notes.label": {
+      "message": "Показати примітки ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Показати примітки"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Приховати примітки"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "Не вдалося отримати список мап у {folder}: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "Пропущено інсталяцію з відсутніми або нечитабельними файлами гри."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "Пропущено недоступну інсталяцію."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Кількість кореневих папок установлених джерел досягла безпечної межі."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Кількість елементів установлених джерел досягла безпечної межі."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (неперевірена)"
+    },
+    "linked-game.content-read": {
+      "message": "Використовуються дані гри {label}"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, one {{objects} об’єкт, уже завантажено.} few {{objects} об’єкти, уже завантажено.} many {{objects} об’єктів, уже завантажено.} other {{objects} об’єкта, уже завантажено.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, one {{objects} об’єкт, прочитано за {milliseconds} мс.} few {{objects} об’єкти, прочитано за {milliseconds} мс.} many {{objects} об’єктів, прочитано за {milliseconds} мс.} other {{objects} об’єкта, прочитано за {milliseconds} мс.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "Не вдалося прочитати дані гри {label}"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Перегляд цієї версії використовує вбудовані дані {version}, які не дозволяють створювати об’єкти й типи місцевості, додані пізніше."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Невідома команда"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Невикористане визначення"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Команда тут не діє"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Атрибут задано повторно"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Випадкова гілка ніколи не вибирається"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "Перша гілка з нульовою ймовірністю"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Значення обмежується"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Константу вже визначено"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Не є коментарем у грі"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Число там, де потрібна назва"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Назва може бути не визначена"
+    },
+    "map-icon.generate": {
+      "message": "Створити піктограму мапи"
+    },
+    "map-icon.open-larger": {
+      "message": "Відкрити більшу піктограму мапи"
+    },
+    "map-icon.save-image": {
+      "message": "Зберегти зображення"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Зберегти зображення…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Створення піктограми мапи"
+    },
+    "map-icon.frame.ready": {
+      "message": "Перегляд піктограми мапи"
+    },
+    "map-icon.frame.original": {
+      "message": "Початкова піктограма мапи"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "Неможливо показати початкову піктограму мапи"
+    },
+    "map-icon.frame.none": {
+      "message": "Створеної піктограми мапи немає"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Відкрийте головний файл .rms або .rms2, щоб створити піктограму мапи."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "Для створення піктограми мапи потрібен успішний перегляд цього коду."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "Створення піктограми мапи недоступне: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Піктограма мапи недоступна: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Піктограма мапи: створення мапи із зерном {seed}"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "Для піктограми мапи потрібен успішний перегляд цього коду."
+    },
+    "map-icon.status.rendering": {
+      "message": "Піктограма мапи: відображення з поточного перегляду"
+    },
+    "map-icon.status.waiting": {
+      "message": "Піктограма мапи: очікування перегляду розгортання"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Піктограма мапи: створено {file}, замінено оригінал лише в цій розгорнутій копії"
+    },
+    "map-icon.status.generated": {
+      "message": "Піктограма мапи: створено {file} з поточного перегляду"
+    },
+    "map-icon.status.original": {
+      "message": "Піктограма мапи: оригінал {file} з папки джерельних файлів"
+    },
+    "map-icon.status.none": {
+      "message": "Піктограма мапи: немає"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "створена піктограма"
+    },
+    "map-icon.tree.original": {
+      "message": "оригінальна піктограма"
+    },
+    "map-icon.render-failed": {
+      "message": "Не вдалося намалювати піктограму мапи"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "Параметри піктограми мапи не збережено"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "Не вдалося створити піктограму мапи із зерном {seed}"
+    },
+    "map-icon.output.saved": {
+      "message": "Піктограму мапи збережено як {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "Не вдалося зберегти піктограму мапи"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Закрити перегляд піктограми мапи"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Піктограма мапи"
+    },
+    "map-icon.view-tools": {
+      "message": "Вигляд піктограми мапи"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Ромбоподібний вигляд"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Вигляд згори"
+    },
+    "map-icon.look.minimap": {
+      "message": "Кольори мінімапи"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Кольори текстур"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Текстури гри"
+    },
+    "map-icon.look.pending": {
+      "message": "Застосування текстур гри"
+    },
+    "map-icon.look.fallback": {
+      "message": "Текстури гри недоступні, тому піктограма використовує кольори текстур."
+    },
+    "map-icon.relief": {
+      "message": "Рельєф місцевості"
+    },
+    "map-icon.relief.hide": {
+      "message": "Приховати рельєф місцевості"
+    },
+    "map-icon.relief.show": {
+      "message": "Показати рельєф місцевості"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Згладжувати переходи між типами місцевості"
+    },
+    "map-icon.random-seed": {
+      "message": "Випадкове зерно"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Узяти зерно редактора"
+    },
+    "map-icon.seed": {
+      "message": "Зерно піктограми мапи"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Зерно редактора"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Квадрати гравців"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Сліди кочівників"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Без позначок старту"
+    },
+    "map-icon.spawn-size": {
+      "message": "Розмір позначок старту"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Зменшити розмір позначок старту"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Збільшити розмір позначок старту"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "{value} % ширини мапи"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Розмір позначок старту (% ширини мапи)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Показати дерева"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Приховати дерева"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Параметри дерев"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "кількість дерев"
+    },
+    "map-icon.art.trees.size": {
+      "message": "розмір дерев"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Показати золото й камінь"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Приховати золото й камінь"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Параметри золота й каменю"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "кількість покладів золота й каменю"
+    },
+    "map-icon.art.resources.size": {
+      "message": "розмір покладів золота й каменю"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Менше"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Більше"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "По одному на кожен вид"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "По одному на кожен об’єкт"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Мало"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Помірно"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Багато"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Менші"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Більші"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "Найменший"
+    },
+    "map-icon.art.size.small": {
+      "message": "Малий"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Середній"
+    },
+    "map-icon.art.size.large": {
+      "message": "Великий"
+    },
+    "map-icon.art.size.largest": {
+      "message": "Найбільший"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Показувати під позначками старту"
+    },
+    "workbench.application-menu.label": {
+      "message": "Меню програми"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Згорнути провідник файлів"
+    },
+    "workbench.explorer.expand": {
+      "message": "Розгорнути провідник файлів"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Згорнути провідник"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Розгорнути провідник"
+    },
+    "workbench.explorer.resize": {
+      "message": "Змінити розмір провідника файлів"
+    },
+    "workbench.preview.resize": {
+      "message": "Змінити розмір поточного перегляду мапи"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Показ етапів генерування в реальному часі ввімкнеться з наступного запуску"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Показ етапів генерування в реальному часі вимкнеться з наступного запуску"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Панель проблем і виводу"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Панель проблем, виводу й результатів тестів"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Змінити розмір панелі проблем і виводу"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Вивід"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Проблеми"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Результати тестів"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Вивід"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Проблеми"
+    },
+    "workbench.native.restart-label": {
+      "message": "Перезапустити процес {name} після збою"
+    },
+    "workbench.native.failed": {
+      "message": "Збій {name}"
+    },
+    "workbench.native.restarted": {
+      "message": "{name} перезапущено"
+    },
+    "workbench.native.restart-failed": {
+      "message": "Не вдалося перезапустити {name}"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} зупинився"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "Імпортовано звіт тесту {name}"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Не вдалося імпортувати звіт тесту мапи"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Звіт тесту експортовано"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Не вдалося експортувати звіт тесту мапи"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Відтворено зауваження зі збереженим зерном"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Відтворено зауваження зі збереженим зерном {seed}"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "Не вдалося від’єднати папку гри"
+    },
+    "code-editor.panel.label": {
+      "message": "Редактор джерельного коду RMS"
+    },
+    "code-editor.tabs.label": {
+      "message": "Відкриті файли"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Прокрутити вкладки редактора ліворуч"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Прокрутити вкладки редактора праворуч"
+    },
+    "code-editor.tab.close": {
+      "message": "Закрити {name}"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Незбережені зміни"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Лише для читання"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Незбережені зміни, лише для читання"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Розгорнути як мод…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Зберегти"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Клонувати / Зберегти як…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Зберегти як…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Закрити"
+    },
+    "code-editor.run.preview": {
+      "message": "Запустити перегляд"
+    },
+    "code-editor.run.map-test": {
+      "message": "Запустити тест мапи"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Запустити перегляд і тест у грі"
+    },
+    "code-editor.run.stop": {
+      "message": "Зупинити"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Запустити ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Запустити перегляд і тест у грі ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Зупинити ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Параметри запуску перегляду"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Виконуваний скрипт"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Закріпити виконуваний скрипт"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Зерно"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Копіювати зерно"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "Копіювати зерно {seed}"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Зерно скопійовано"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Зафіксоване"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Випадкове при запуску"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Узяти зерно поточної гри"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Потрібна перевірена активна одиночна гра на випадковій мапі."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Виберіть папку гри Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Вибір папки гри Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Пошук папки встановленої гри Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Тест у грі при запуску"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Запустити перегляд, а потім продовжити в AoE2DE"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Виберіть придатний виконуваний файл AoE2Control"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "Вибрати AoE2Control"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "Вибираємо AoE2Control…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "Вибрати AoE2Control.exe для тестування у грі"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "Вибір AoE2Control.exe для тестування у грі"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "Завантажити AoE2Control"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "Відкрити випуски AoE2Control"
+    },
+    "code-editor.control.remove.title": {
+      "message": "Вилучити AoE2Control?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "Буде скасовано вибір виконуваного файлу AoE2Control і від’єднано поточний сеанс тестування у грі. Перед заміною активної гри наступний тест знову запитає підтвердження."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Вилучити"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "Не вдалося відкрити сторінку випусків AoE2Control"
+    },
+    "code-editor.control-download.title": {
+      "message": "Перед розпакуванням AoE2Control"
+    },
+    "code-editor.control-download.description": {
+      "message": "Пароль для розпакування AoE2Control.zip: {password}. Оскільки AoE2Control впроваджує DLL для виконання Lua у грі, евристичні антивірусні засоби, зокрема Windows Defender, можуть помилково визнати його загрозою. Додайте папку з розпакованими файлами до винятків антивіруса, щоб рушій міг працювати без переривань."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Зрозуміло"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Згорнути поточний перегляд мапи"
+    },
+    "code-editor.preview.expand": {
+      "message": "Розгорнути поточний перегляд мапи"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Згорнути перегляд"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Розгорнути перегляд"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Закрити повідомлення про збій виконання скрипту"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Незбережену роботу відновлено"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Закрити повідомлення про відновлення"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "Перегляд тепер використовує текстури вашої гри"
+    },
+    "code-editor.font-size.label": {
+      "message": "Розмір шрифту редактора"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent} %"
+    },
+    "code-editor.read-only-message": {
+      "message": "Цей код із папки гри або моду з підписки захищений. Скористайтеся «Клонувати» або «Зберегти як»."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Відкрити включений файл"
+    },
+    "code-editor.include.open": {
+      "message": "Відкрити {name}"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "Перейменування тут може змінити зміст скрипту."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "Строгу еквівалентність не доведено."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} — захищений файл гри; перейменування змінило б його."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "Ігнорувати {code} у цьому рядку"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "Вимкнути {code} у цій робочій області"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Модель редактора недоступна."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "Змінилася мова скрипту."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Документ змінився до початку форматування."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Документ змінився під час підготовки форматування."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "Запит скасовано."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Форматування недоступне, доки код Starlark містить помилки."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "Для форматування відступи вже мають бути правильними й кратними чотирьом пробілам; структуру токенів не змінено."
+    },
+    "code-editor.completion.content.object": {
+      "message": "об’єкт {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "місцевість {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Тест мапи"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Вбудована функція Starlark"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Метод Starlark для {type}"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Раніше визначена функція Starlark"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Параметр функції Starlark"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Раніше визначена змінна Starlark"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Змінна циклу Starlark"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} визначено раніше в цьому документі."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Функція Starlark"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "Джерельні файли RMS і XS"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "Джерельні файли RMS, XS і тестів мап"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Відкрити джерельні файли"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "Відкрити папку RMS"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Зберегти джерельний файл як"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Звіт тесту мапи"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Експорт звіту тесту мапи"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Імпорт звіту тесту мапи"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Виберіть папку Age of Empires II: Definitive Edition"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Виберіть батьківську папку для редагованого клону мапи"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "Виберіть виконуваний файл AoE2Control"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "Виконуваний файл AoE2Control"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Зберегти піктограму мапи"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "Зображення PNG"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Не вдалося оновити включені файли"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "Не вдалося оновити сеанс після видалення"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Не вдалося показати деякі папки у провіднику"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, =1 {Файл робочої області має назву бібліотечного файлу гри} one {Файли робочої області мають назви бібліотечних файлів гри} few {Файли робочої області мають назви бібліотечних файлів гри} many {Файли робочої області мають назви бібліотечних файлів гри} other {Файли робочої області мають назви бібліотечних файлів гри}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Їх можна редагувати, але директиви включення можуть натомість вибрати файл гри."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, one {{paths, list, unit}, та ще {count}. Ці файли можна редагувати, але директиви включення можуть натомість вибрати файл гри.} few {{paths, list, unit}, та ще {count}. Ці файли можна редагувати, але директиви включення можуть натомість вибрати файл гри.} many {{paths, list, unit}, та ще {count}. Ці файли можна редагувати, але директиви включення можуть натомість вибрати файл гри.} other {{paths, list, unit}, та ще {count}. Ці файли можна редагувати, але директиви включення можуть натомість вибрати файл гри.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Перейменувати їх"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "Перевірку назв бібліотечних файлів гри не завершено"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Нічого не відкрито"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, one {Кількість файлів і папок у запиті перевищила {count}.} few {Кількість файлів і папок у запиті перевищила {count}.} many {Кількість файлів і папок у запиті перевищила {count}.} other {Кількість файлів і папок у запиті перевищила {count}.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "Шляхи в запиті довші, ніж дозволяє AoE2RMSIDE."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Одночасно надійшло забагато запитів на відкриття. Відкрийте решту елементів знову."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "Не відкрито {name}"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Елемент не існує або недоступний."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Це недопустимий шлях до файлу або папки."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE відкриває папки та файли .rms, .rms2, .inc, .def і .xs."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE відкриває папки та файли .rms, .rms2, .inc, .def, .xs і .rmstest."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Одночасно відкривається лише одна папка."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Одночасно відкривається лише одна папка; відкрито {folder}."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Не вдалося прочитати файл."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, one {Не відкрито ще # елемент} few {Не відкрито ще # елементи} many {Не відкрито ще # елементів} other {Не відкрито ще # елемента}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Вони не існують, не читаються або не є файлами, які відкриває AoE2RMSIDE."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "елемент із такою назвою вже існує"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "елемент із такою назвою або її коротким псевдонімом уже існує"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "назва непридатна для файлу або папки Windows"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "підтримуються лише джерельні файли .rms, .rms2, .inc, .def і .xs"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "підтримуються лише джерельні файли .rms, .rms2, .inc, .def, .rmstest і .xs"
+    },
+    "file-actions.entry.read-only": {
+      "message": "елемент робочої області доступний лише для читання або захищений"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "кореневу папку робочої області не можна перейменувати або видалити"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "''{name}'' зарезервовано для стандартного ресурсу гри; виберіть іншу назву файлу."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Незбережену роботу з попереднього сеансу не вдалося прочитати, її пропущено"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "Відновлена папка робочої області недоступна."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "Попередня папка робочої області недоступна, її пропущено."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "Пропущено недоступну вкладку сеансу {name}."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "{name} відновлено як незбережений буфер, оскільки джерельний файл недоступний."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, one {Файли місцевості з під’єднаної гри: перетворено {converted}, використано повторно {reused} за {seconds, number, ::.0 group-off} с} few {Файли місцевості з під’єднаної гри: перетворено {converted}, використано повторно {reused} за {seconds, number, ::.0 group-off} с} many {Файли місцевості з під’єднаної гри: перетворено {converted}, використано повторно {reused} за {seconds, number, ::.0 group-off} с} other {Файли місцевості з під’єднаної гри: перетворено {converted}, використано повторно {reused} за {seconds, number, ::.0 group-off} с}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Локальний кеш: {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, one {Не вдалося перетворити {count} файл місцевості; використано кольори мінімапи} few {Не вдалося перетворити {count} файли місцевості; використано кольори мінімапи} many {Не вдалося перетворити {count} файлів місцевості; використано кольори мінімапи} other {Не вдалося перетворити {count} файла місцевості; використано кольори мінімапи}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Наприклад, {asset}: {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Об’єкт {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Місцевість {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Стіна {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Гравець {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Гея"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Допоміжний об’єкт"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Урвище"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Тип урвища {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Сухопутне сполучення"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Водне сполучення"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Дорожнє сполучення"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Невідоме сполучення"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Пошук сполучення без шляху"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Неоднозначний вибір у перегляді: {layer} · {count, plural, one {вибрано {count}} few {вибрано {count}} many {вибрано {count}} other {вибрано {count}}} · {sources, plural, one {{sources} окреме джерело} few {{sources} окремі джерела} many {{sources} окремих джерел} other {{sources} окремого джерела}} · використано {location}."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Трава"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Мілководдя"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Вода"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Пляж"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Земля"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Камінь"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Ґрунт"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Схил урвища"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Суша"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Висоти"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Урвища"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Місцевість"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Сполучення"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Об’єкти"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Завершено"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Генерування · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Зразок {sample} (зерно {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Зразок {sample} (зерно {seed}) готовий · пакет ще виконується"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Клавіші Arrow вибирають клітинку, Shift+Arrow розширює вибір, Ctrl+Arrow переміщує мапу, плюс і мінус змінюють масштаб, 0 підганяє мапу до розміру перегляду, Ctrl+A вибирає всю мапу, Escape очищає вибір."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Вибір очищено"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Клітинка {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "Клітинки від {fromX}, {fromY} до {toX}, {toY}, {count, plural, one {{count} клітинка} few {{count} клітинки} many {{count} клітинок} other {{count} клітинки}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Немає шарів"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, one {{count} шар} few {{count} шари} many {{count} шарів} other {{count} шару}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, one {{count} шар} few {{count} шари} many {{count} шарів} other {{count} шару}}: {shown, list, unit} та ще {more}"
+    },
+    "preview-panel.run.include-only": {
+      "message": "Документи .inc, .def і .xs призначені лише для включення, їх не можна запускати."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Об’єкти й контур міського центру"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Краї урвищ"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Зміни місцевості від сполучень"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Лінії сполучень"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Без ліній сполучень"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "Прокладені шляхи сполучень"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "Показано шляхів: {shown, number} з {total, number}"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "Прокладені шляхи з’являться, коли мапа буде готова"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "Прокладені шляхи недоступні для цієї мапи"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Без висот"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Рельєф місцевості"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Мапа висот"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Вигляд згори"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Ромбоподібний вигляд"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Кольори мінімапи"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Кольори текстур"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Текстури гри"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Застосування текстур гри"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Сітка клітинок"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "перегляд мапи згори в кольорах мінімапи"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "перегляд мапи згори в кольорах текстур"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "перегляд мапи згори з текстурами гри"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "перегляд мапи ромбом 2:1 у кольорах мінімапи"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "перегляд мапи ромбом 2:1 у кольорах текстур"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "перегляд мапи ромбом 2:1 з текстурами гри"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "мапа"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Перегляд мапи готовий"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Перегляд мапи оновлено"
+    },
+    "preview-panel.panel.label": {
+      "message": "Поточний перегляд мапи"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Керування виглядом мапи"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Шари сполучень"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Стрілки вибирають клітинки"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "Стан перегляду"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Несертифіковано"
+    },
+    "preview-panel.status.seed": {
+      "message": "Зерно {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Редакція {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "генерування"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} мс"
+    },
+    "preview-panel.status.cache": {
+      "message": "Кеш: {entries} · повторних використань: {hits}"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Редагування"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Аналіз"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Без змін"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Застаріло — помилки в коді"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Генерування"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "Актуально"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Застаріло — збій генерування"
+    },
+    "preview-panel.legend.label": {
+      "message": "Легенда шарів вибраних клітинок"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Фільтрувати вибрані елементи"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Очистити фільтр вибраних елементів"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Фільтр"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Немає відповідних елементів"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Рядки вибраних шарів"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, наразі вибрано {count}"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Відкрити код: {name}, вибрано {count}"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Показати допоміжні об’єкти ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Приховати допоміжні об’єкти ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Внутрішні тестові зразки"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Внутрішні зразки · Несертифіковано"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Внутрішні · Несертифіковано"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "Запустити тестовий зразок {fixture}"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Читання"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Читання каталогу графіки гри"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Читання каталогу графіки гри, {percent} % ({unit, select, graphics {зображення} other {файли}}: {completed} з {total})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "Імпортування"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Імпортування текстур місцевості"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Імпортування текстур місцевості, {percent} % ({unit, select, graphics {зображення} other {файли}}: {completed} з {total})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Змішування"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Змішування переходів між типами місцевості"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Змішування переходів між типами місцевості, {percent} % ({unit, select, graphics {зображення} other {файли}}: {completed} з {total})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Маскування"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Підготовка масок накладання місцевості"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Підготовка масок накладання місцевості, {percent} % ({unit, select, graphics {зображення} other {файли}}: {completed} з {total})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Спрайти"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Перетворення спрайтів об’єктів цієї мапи"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Перетворення спрайтів об’єктів цієї мапи, {percent} % ({unit, select, graphics {зображення} other {файли}}: {completed} з {total})"
+    },
+    "game-art.progress.label": {
+      "message": "Перетворення графіки гри"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, one {{count} тип об’єктів без спрайтів із під’єднаної гри} few {{count} типи об’єктів без спрайтів із під’єднаної гри} many {{count} типів об’єктів без спрайтів із під’єднаної гри} other {{count} типу об’єктів без спрайтів із під’єднаної гри}} — збережено символи мінімапи: {names, list, unit}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, one {{count} тип об’єктів без спрайтів із під’єднаної гри} few {{count} типи об’єктів без спрайтів із під’єднаної гри} many {{count} типів об’єктів без спрайтів із під’єднаної гри} other {{count} типу об’єктів без спрайтів із під’єднаної гри}} — збережено символи мінімапи: {names, list, unit} та ще {more}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (об’єкт {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "об’єкт {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, one {{count} фрагмент урвища без спрайта з під’єднаної гри} few {{count} фрагменти урвищ без спрайтів із під’єднаної гри} many {{count} фрагментів урвищ без спрайтів із під’єднаної гри} other {{count} фрагмента урвища без спрайтів із під’єднаної гри}} — збережено лінії урвищ"
+    },
+    "profiler.group.parse": {
+      "message": "Розбір"
+    },
+    "profiler.group.setup": {
+      "message": "Налаштування"
+    },
+    "profiler.group.land": {
+      "message": "Суша"
+    },
+    "profiler.group.elevation": {
+      "message": "Висоти"
+    },
+    "profiler.group.cliffs": {
+      "message": "Урвища"
+    },
+    "profiler.group.terrain": {
+      "message": "Місцевість"
+    },
+    "profiler.group.connections": {
+      "message": "Сполучення"
+    },
+    "profiler.group.objects": {
+      "message": "Об’єкти"
+    },
+    "profiler.group.finalize": {
+      "message": "Завершення"
+    },
+    "profiler.step.parse-script": {
+      "message": "Розбір скрипту"
+    },
+    "profiler.step.setup-players": {
+      "message": "Налаштування гравців"
+    },
+    "profiler.step.land-generate": {
+      "message": "Генерування суші"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Генерування висот"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Генерування урвищ"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Генерування місцевості"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Генерування сполучень"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Розміщення об’єктів"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Завершальні зміни режиму гри"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Упорядкування об’єктів"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Складена місцевість"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, one {# операція} few {# операції} many {# операцій} other {# операції}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, one {# вибірка ГВЧ} few {# вибірки ГВЧ} many {# вибірок ГВЧ} other {# вибірки ГВЧ}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, one {# кандидат} few {# кандидати} many {# кандидатів} other {# кандидата}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, one {# клітинка} few {# клітинки} many {# клітинок} other {# клітинки}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, one {# пошук шляху} few {# пошуки шляху} many {# пошуків шляху} other {# пошуку шляху}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, one {обсяг роботи з пошуку шляху: #} few {обсяг роботи з пошуку шляху: #} many {обсяг роботи з пошуку шляху: #} other {обсяг роботи з пошуку шляху: #}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, one {# відхилення} few {# відхилення} many {# відхилень} other {# відхилення}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, one {# об’єкт} few {# об’єкти} many {# об’єктів} other {# об’єкта}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, one {перевірено # клітинку} few {перевірено # клітинки} many {перевірено # клітинок} other {перевірено # клітинки}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, one {приєднано #} few {приєднано #} many {приєднано #} other {приєднано #}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Клітинки, вибрані й перевірені під час розростання суші; прийняті клітинки приєднано до ділянки суші."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, one {перевірено # клітинку під час розростання} few {перевірено # клітинки під час розростання} many {перевірено # клітинок під час розростання} other {перевірено # клітинки під час розростання}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, one {піднято #} few {піднято #} many {піднято #} other {піднято #}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Клітинки, вибрані й перевірені під час розростання пагорбів. Підняті клітинки також охоплюють початкові клітинки кожного пагорба, які не враховано серед перевірених."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, one {розглянуто # місце для урвища} few {розглянуто # місця для урвища} many {розглянуто # місць для урвища} other {розглянуто # місця для урвища}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Місця на мапі, де можна розмістити урвище."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, one {# пошук шляху} few {# пошуки шляху} many {# пошуків шляху} other {# пошуку шляху}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, one {# крок пошуку} few {# кроки пошуку} many {# кроків пошуку} other {# кроку пошуку}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, one {зафарбовано # клітинку} few {зафарбовано # клітинки} many {зафарбовано # клітинок} other {зафарбовано # клітинки}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Кожен пошук шляху шукає маршрут між двома точками сполучення; кількість зафарбованих клітинок враховує кожну зміну місцевості вздовж маршрутів."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, one {# можливе місце} few {# можливі місця} many {# можливих місць} other {# можливого місця}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, one {відхилено # групу} few {відхилено # групи} many {відхилено # груп} other {відхилено # групи}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, one {розміщено # об’єкт} few {розміщено # об’єкти} many {розміщено # об’єктів} other {розміщено # об’єкта}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Можливі місця рахуються для кожної спроби розміщення, тому одна клітинка може враховуватися кілька разів. Група відхиляється щоразу, коли місце не проходить перевірки або місць більше не залишилося."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "Очікування завершення першого кроку"
+    },
+    "profiler.pending.group": {
+      "message": "Триває: {group}"
+    },
+    "profiler.pending.step": {
+      "message": "Триває: {step}"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} с"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} мс"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} мс"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} мс"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0,1 %"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off} %"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off} %"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "менше ніж 0,1 відсотка"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "частка у відсотках: {percent, number, ::precision-integer group-off}"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} відсотка"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Профілювання виконання: генерування, очікування рушія"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Профілювання виконання: генерування, очікування рушія, {seconds, number, ::.00 group-off} секунди"
+    },
+    "profiler.status.running.steps": {
+      "message": "Профілювання виконання: генерування, виконано кроків: {completed} з {total}"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Профілювання виконання: генерування, виконано кроків: {completed} з {total}, {seconds, number, ::.00 group-off} секунди"
+    },
+    "profiler.status.cached": {
+      "message": "Профілювання виконання: запуск із кешу, {seconds, number, ::.00 group-off} секунди, виміряно під час першого генерування цього перегляду"
+    },
+    "profiler.status.committed": {
+      "message": "Профілювання виконання: {seconds, number, ::.00 group-off} секунди виконання RMS"
+    },
+    "profiler.status.unsupported": {
+      "message": "Профілювання виконання: немає вимірювання для цього перегляду"
+    },
+    "profiler.status.idle": {
+      "message": "Профілювання виконання"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Генерування, очікування рушія"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Генерування, кроки: {completed} з {total}"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Витрати на виконання (запуск із кешу)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Витрати на виконання"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Немає вимірювання витрат на виконання"
+    },
+    "profiler.description": {
+      "message": "Приблизна локальна оцінка складності за одним запуском на цьому комп’ютері, а не прогноз часу генерування у грі."
+    },
+    "profiler.description.cached": {
+      "message": "Запуск із кешу: виміряно під час першого генерування цього перегляду; рушій не запускався повторно. Приблизна локальна оцінка складності за одним запуском на цьому комп’ютері, а не прогноз часу генерування у грі."
+    },
+    "profiler.description.map-test": {
+      "message": "Виміряно під час тесту мапи, зразки якого можуть генеруватися паралельно. Приблизна локальна оцінка складності за одним запуском на цьому комп’ютері, а не прогноз часу генерування у грі."
+    },
+    "profiler.panel.label": {
+      "message": "Профілювання витрат на виконання"
+    },
+    "profiler.panel.steps": {
+      "message": "Кроки виконання"
+    },
+    "profiler.panel.table": {
+      "message": "Кроки виконання за часом"
+    },
+    "profiler.panel.empty": {
+      "message": "Для цього перегляду немає вимірювання витрат на виконання."
+    },
+    "profiler.chart.label": {
+      "message": "Час виконання RMS за етапами генерування"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Пройдено"
+    },
+    "test-results.results.status.failed": {
+      "message": "Не пройдено"
+    },
+    "test-results.results.status.error": {
+      "message": "Помилка"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Зупинено"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, one {# зауваження} few {# зауваження} many {# зауважень} other {# зауваження}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{findings, plural, one {# зауваження} few {# зауваження} many {# зауважень} other {# зауваження}} для {seeds, plural, one {# зерна} few {# зерен} many {# зерен} other {# зерна}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, one {# мапа} few {# мапи} many {# мап} other {# мапи}} · {assertions, plural, one {# перевірка} few {# перевірки} many {# перевірок} other {# перевірки}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, рядок {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Перевірка в рядку {line}"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Зауважень немає. Мапа пройшла всі перевірки.} one {Зауважень немає. Усі перевірки пройдено на # мапі.} few {Зауважень немає. Усі перевірки пройдено на # мапах.} many {Зауважень немає. Усі перевірки пройдено на # мапах.} other {Зауважень немає. Усі перевірки пройдено; перевірено # мапи.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Зауважень немає. Тест не виконав жодної перевірки для {maps, plural, one {# мапи} few {# мап} many {# мап} other {# мапи}}."
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Експорт"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Зберегти ці результати у файл звіту. Він не містить ваших скриптів, згенерованих мап і повних шляхів до файлів."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, one {{count} зауваження тесту мапи} few {{count} зауваження тесту мапи} many {{count} зауважень тесту мапи} other {{count} зауваження тесту мапи}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Перейти до {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "Перевірка"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Приховати зауваження перевірки в рядку {line}"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Показати зауваження перевірки в рядку {line}"
+    },
+    "test-results.results.check-findings": {
+      "message": "Зауваження перевірки в рядку {line}"
+    },
+    "test-results.results.show-more": {
+      "message": "Показати ще {count}"
+    },
+    "test-results.results.not-shown": {
+      "message": "· не показано {count, number}"
+    },
+    "test-results.results.show-seed": {
+      "message": "Показати {map} із зерном {seed} у перегляді"
+    },
+    "test-results.results.seed": {
+      "message": "зерно {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Зауваження"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Крихітний"
+    },
+    "game-options.map-size.small": {
+      "message": "Малий"
+    },
+    "game-options.map-size.medium": {
+      "message": "Середній"
+    },
+    "game-options.map-size.normal": {
+      "message": "Звичайний"
+    },
+    "game-options.map-size.large": {
+      "message": "Великий"
+    },
+    "game-options.map-size.huge": {
+      "message": "Величезний"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Неймовірний"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Випадкова мапа"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Царевбивство"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "Бій на смерть"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "Король гори"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "Гонка чудес"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Захист чуда"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Турбо-випадкова мапа"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Захоплення реліквії"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Раптова смерть"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Королівська битва"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "Війни імперій"
+    },
+    "game-options.resources.standard": {
+      "message": "Стандартні ресурси"
+    },
+    "game-options.resources.low": {
+      "message": "Мало ресурсів"
+    },
+    "game-options.resources.medium": {
+      "message": "Помірні ресурси"
+    },
+    "game-options.resources.high": {
+      "message": "Багато ресурсів"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Надзвичайно багато ресурсів"
+    },
+    "game-options.resources.infinite": {
+      "message": "Необмежені ресурси"
+    },
+    "game-options.resources.random": {
+      "message": "Випадкові ресурси"
+    },
+    "game-options.age.standard": {
+      "message": "Стандартна початкова епоха"
+    },
+    "game-options.age.dark-age": {
+      "message": "Темна епоха"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Феодальна епоха"
+    },
+    "game-options.age.castle-age": {
+      "message": "Епоха замків"
+    },
+    "game-options.age.imperial-age": {
+      "message": "Імперська епоха"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "Постімперська епоха"
+    },
+    "game-options.positions.random": {
+      "message": "Випадкові позиції"
+    },
+    "game-options.positions.fixed": {
+      "message": "Фіксовані позиції"
+    },
+    "game-options.positions.team-together": {
+      "message": "Команда разом"
+    },
+    "game-options.color.blue": {
+      "message": "Синій"
+    },
+    "game-options.color.red": {
+      "message": "Червоний"
+    },
+    "game-options.color.green": {
+      "message": "Зелений"
+    },
+    "game-options.color.yellow": {
+      "message": "Жовтий"
+    },
+    "game-options.color.cyan": {
+      "message": "Блакитний"
+    },
+    "game-options.color.purple": {
+      "message": "Фіолетовий"
+    },
+    "game-options.color.gray": {
+      "message": "Сірий"
+    },
+    "game-options.color.orange": {
+      "message": "Помаранчевий"
+    },
+    "game-options.team.none": {
+      "message": "Без команди"
+    },
+    "game-options.team.numbered": {
+      "message": "Команда {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "Турбо"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Повне дерево технологій"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Античність"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Непрохідні ферми"
+    },
+    "game-options.civilization.random": {
+      "message": "Випадкова"
+    },
+    "game-options.civilization.britons": {
+      "message": "Бритони"
+    },
+    "game-options.civilization.franks": {
+      "message": "Франки"
+    },
+    "game-options.civilization.goths": {
+      "message": "Готи"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Тевтонці"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Японці"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Китайці"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Візантійці"
+    },
+    "game-options.civilization.persians": {
+      "message": "Перси"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Сарацини"
+    },
+    "game-options.civilization.turks": {
+      "message": "Турки"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Вікінги"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Монголи"
+    },
+    "game-options.civilization.celts": {
+      "message": "Кельти"
+    },
+    "game-options.civilization.spanish": {
+      "message": "Іспанці"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Ацтеки"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Мая"
+    },
+    "game-options.civilization.huns": {
+      "message": "Гуни"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Корейці"
+    },
+    "game-options.civilization.italians": {
+      "message": "Італійці"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Гіндустанці"
+    },
+    "game-options.civilization.incas": {
+      "message": "Інки"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Мадяри"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Слов’яни"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Португальці"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Ефіопи"
+    },
+    "game-options.civilization.malians": {
+      "message": "Малійці"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Бербери"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Кхмери"
+    },
+    "game-options.civilization.malay": {
+      "message": "Малайці"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Бірманці"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "В’єтнамці"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Болгари"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Татари"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Половці"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Литовці"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Бургундці"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Сицилійці"
+    },
+    "game-options.civilization.poles": {
+      "message": "Поляки"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Чехи"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Дравіди"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Бенгальці"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Гурджари"
+    },
+    "game-options.civilization.romans": {
+      "message": "Римляни"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Вірмени"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Грузини"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Ахеменіди"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Афіняни"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Спартанці"
+    },
+    "game-options.civilization.shu": {
+      "message": "Шу"
+    },
+    "game-options.civilization.wu": {
+      "message": "У"
+    },
+    "game-options.civilization.wei": {
+      "message": "Вей"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Чжурчжені"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Кидані"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Македонці"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Фракійці"
+    },
+    "game-options.civilization.puru": {
+      "message": "Пуру"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Муїска"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Мапуче"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Тупі"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Сакси"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Варяги"
+    },
+    "game-options.civilization.danes": {
+      "message": "Данці"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Цивілізація {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Перегляд"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Генерування перегляду (крок {step} з {total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Під’єднання"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "Під’єднання до AoE2Control (крок {step} з {total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Перевірка"
+    },
+    "live-test.progress.ending": {
+      "message": "Завершення"
+    },
+    "live-test.progress.copying": {
+      "message": "Копіювання"
+    },
+    "live-test.progress.selecting": {
+      "message": "Вибираємо"
+    },
+    "live-test.progress.starting": {
+      "message": "Запуск"
+    },
+    "live-test.progress.verifying": {
+      "message": "Перевірка"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Перевірка матчу (крок {step} з {total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Очікування"
+    },
+    "live-test.progress.verified": {
+      "message": "Перевірено"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Матч перевірено"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "Перевірка AoE2Control (крок {step} з {total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Перевірка гри (крок {step} з {total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Завершення поточного матчу (крок {step} з {total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Копіювання мапи до гри (крок {step} з {total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Вибір мапи у грі (крок {step} з {total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Запуск матчу (крок {step} з {total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "Очікування вивантаження попереднього екземпляра AoE2Control (крок {step} з {total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "Очікування запуску AoE2Control у грі (крок {step} з {total})"
+    },
+    "live-test.progress.label": {
+      "message": "Тест у грі"
+    },
+    "live-test.replace-match.title": {
+      "message": "Замінити активний матч?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE завершить одиночний матч і запустить цю редакцію перегляду. Повторного запиту не буде, доки ви не скасуєте вибір AoE2Control."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Завершити й замінити матч"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Спочатку виберіть придатний виконуваний файл AoE2Control."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Налаштуйте AoE2Control, щоб прочитати зерно поточного матчу."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control під’єднується. Спробуйте знову після завершення узгодження зв’язку."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "Читання даних матчу недоступне. Повторно під’єднайте AoE2Control і спробуйте знову."
+    },
+    "live-test.seed.replay": {
+      "message": "Не можна імпортувати зерна записаних ігор."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Не можна імпортувати зерна багатокористувацьких матчів."
+    },
+    "live-test.seed.state-changing": {
+      "message": "Стан матчу змінюється або невідомий. Зачекайте трохи й спробуйте знову."
+    },
+    "live-test.seed.no-match": {
+      "message": "Спочатку запустіть підтримуваний одиночний матч на випадковій мапі."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "Не вдалося прочитати налаштування активного матчу. Повторно під’єднайте AoE2Control і спробуйте знову."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "Активний матч не є підтримуваним матчем у режимі Випадкова мапа."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "Не вдалося прочитати зерно активного матчу. Повторно під’єднайте AoE2Control і спробуйте знову."
+    },
+    "live-test.seed.busy": {
+      "message": "Операція AoE2Control уже виконується."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control не повернула зерно матчу."
+    },
+    "live-test.control.missing": {
+      "message": "Вибраний виконуваний файл переміщено або видалено."
+    },
+    "live-test.control.changed": {
+      "message": "Вибраний виконуваний файл змінився. Виберіть його знову, щоб підтвердити довіру до нового файлу."
+    },
+    "live-test.control.invalid": {
+      "message": "Вибраний файл не є придатним виконуваним файлом публічної версії AoE2Control."
+    },
+    "workspace.format.save-skipped": {
+      "message": "Форматування при збереженні пропущено для {name}"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "Збереження {name} скасовано"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} доступний лише для читання, його не відформатовано"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} уже відформатовано"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} не відформатовано"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "Засіб форматування не завершив роботу вчасно."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "Строгу еквівалентність не доведено."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Запит на форматування застарів."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} видалено поза AoE2RMSIDE"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "Його текст залишається відкритим у редакторі."
+    },
+    "workspace.files.reloaded": {
+      "message": "{name} перезавантажено після зміни на диску"
+    },
+    "workspace.recovery.restored": {
+      "message": "Відновлено {count, plural, one {{count} незбережений буфер} few {{count} незбережені буфери} many {{count} незбережених буферів} other {{count} незбереженого буфера}} з попереднього сеансу"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "Джерельні файли не перезаписано."
+    },
+    "workspace.failed.save": {
+      "message": "Не вдалося зберегти файл"
+    },
+    "workspace.failed.open-file": {
+      "message": "Не вдалося відкрити файл"
+    },
+    "workspace.failed.open-folder": {
+      "message": "Не вдалося відкрити папку"
+    },
+    "workspace.failed.open-recent": {
+      "message": "Не вдалося відкрити нещодавній елемент"
+    },
+    "workspace.failed.open-requested": {
+      "message": "Не вдалося відкрити запитані елементи"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "Не вдалося відкрити перетягнуті елементи"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Не вдалося відкрити скрипт, що створив цей елемент мапи"
+    },
+    "workspace.failed.create": {
+      "message": "Не вдалося створити елемент"
+    },
+    "workspace.failed.rename": {
+      "message": "Не вдалося перейменувати елемент"
+    },
+    "workspace.failed.delete": {
+      "message": "Не вдалося видалити елемент"
+    },
+    "workspace.failed.restore-session": {
+      "message": "Не вдалося відновити попередній сеанс"
+    },
+    "workspace.failed.back-up": {
+      "message": "Не вдалося створити резервну копію незбереженої роботи"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Використати меншу папку джерельних файлів або закрити частину вкладок із кодом і повторити спробу."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Деякі діагностичні повідомлення редактора пропущено, оскільки черга оновлень заповнена."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "Деякі функції редактора обмежено"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Переглянути відповідні джерела в розділі «Подробиці» й повторити спробу."
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Деякі перевірки редактора не змогли використати поточні джерельні файли."
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "глибина папок"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "елементи каталогів"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "метадані назв (байти)"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "шляхи файлів include"
+    },
+    "file-actions.included-files.changed": {
+      "message": "Джерельні файли змінилися під час перевірки файлів include. Запустіть знову."
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "Пошук файлів include перевищив ліміт «{budget}» для {scope}: використано {used, number, integer}; ліміт {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Використати меншу папку файлів include або зменшити кількість потрібних файлів include."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "Не вдалося підготувати джерельні файли для тесту мапи"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "Тест мапи перевищує ліміт джерельних даних {limit, number, integer} MiB. Запускайте менше мап за один тест."
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "Тест мапи перевищує ліміт кількості мап ({limit, number, integer}). Запускайте менше мап за один тест."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "Тест мапи перевищує ліміт метаданих джерел {limit, number, integer} MiB. Запускайте менше мап за один тест."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "Тест мапи перевищує ліміт кількості записів про джерельні файли ({limit, number, integer}). Запускайте менше мап за один тест."
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} перевищує ліміт {limit, number, integer} MiB на файл."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "Загальний розмір потрібних джерельних файлів перевищує ліміт {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Кількість потрібних джерельних файлів перевищує ліміт ({limit, number, integer})."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "Відомості про потрібні джерела перевищують ліміт метаданих {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Зменшити обсяг потрібних джерельних даних і запустити знову."
+    },
+    "release-check.newer.headline": {
+      "message": "Доступна версія AoE2RMSIDE {version}"
+    },
+    "release-check.newer.cause": {
+      "message": "Ви використовуєте версію {current}."
+    },
+    "release-check.newer.action": {
+      "message": "Відкрити сторінку випусків"
+    }
+  }
+}

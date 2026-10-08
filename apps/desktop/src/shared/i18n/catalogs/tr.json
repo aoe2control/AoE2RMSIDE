@@ -1,0 +1,4618 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "tr",
+  "name": "Türkçe",
+  "direction": "ltr",
+  "messages": {
+    "app-menu.file.name": {
+      "message": "Dosya"
+    },
+    "app-menu.edit.name": {
+      "message": "Düzenle"
+    },
+    "app-menu.view.name": {
+      "message": "Görünüm"
+    },
+    "app-menu.help.name": {
+      "message": "Yardım"
+    },
+    "app-menu.file.new-file": {
+      "message": "Yeni dosya"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Yeni harita testi betiği"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Tanım dosyası oluştur…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Yeni XS betiği"
+    },
+    "app-menu.file.open-file": {
+      "message": "Dosya aç…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Klasör aç…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Kurulu haritalara göz at…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Mod olarak kur…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Oyun klasörünü aç"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Oyun klasörünün bağlantısını kaldır"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Test raporu içe aktar…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Son kullanılanları aç"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Son kullanılan dosya veya klasör yok"
+    },
+    "app-menu.file.save": {
+      "message": "Kaydet"
+    },
+    "app-menu.file.save-as": {
+      "message": "Farklı kaydet…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "RMS dosyaları için varsayılan uygulamayı seç…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Windows Ayarları açılamadı"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "Windows Ayarları, Varsayılan uygulamalar bölümünde açıldı"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": ".rms ve .rms2 dosyalarını AoE2RMSIDE ile açmak için orada bu uygulamayı seçin. Windows, varsayılanı ancak onayınızdan sonra değiştirir."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Sekmeyi kapat"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Klasörü kapat"
+    },
+    "app-menu.file.close-window": {
+      "message": "Pencereyi kapat"
+    },
+    "app-menu.file.exit": {
+      "message": "Çıkış"
+    },
+    "app-menu.edit.undo": {
+      "message": "Geri al"
+    },
+    "app-menu.edit.redo": {
+      "message": "Yinele"
+    },
+    "app-menu.edit.cut": {
+      "message": "Kes"
+    },
+    "app-menu.edit.copy": {
+      "message": "Kopyala"
+    },
+    "app-menu.edit.paste": {
+      "message": "Yapıştır"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Tümünü seç"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Belgeyi biçimlendir"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Kaydederken biçimlendir"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "if/else bloklarını girintile"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Silerken Geri Dönüşüm Kutusu’nu atla"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Yerleşimi sıfırla"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Haritayı GPU ile çiz"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Üretim aşamalarını anlık göster"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Satır içi ipuçlarını göster"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Kod denetimi kuralları"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Dil…"
+    },
+    "app-menu.view.theme": {
+      "message": "Tema"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Sistem"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Açık"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Koyu"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Gerçek boyut"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Yakınlaştır"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Uzaklaştır"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Tam ekranı aç/kapat"
+    },
+    "app-menu.help.documentation": {
+      "message": "Belgeler"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Discord’a katıl"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Hata bildir"
+    },
+    "app-menu.help.about": {
+      "message": "{product} hakkında"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "Bağlı oyun klasörü açılamadı"
+    },
+    "about.version": {
+      "message": "Sürüm {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "XS betik düzenleyicisi"
+    },
+    "about.edition.rms-preview": {
+      "message": "RMS ve XS betik düzenleyicisi"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Bağımsız, resmî olmayan bir rastgele harita betiği düzenleyicisi. Kendi geliştirdiği kod, Age of Empires II: Definitive Edition oyununun rastgele harita betiklerini okuma ve harita üretme davranışını yeniden oluşturur."
+    },
+    "about.disclosure.independent": {
+      "message": "Age of Empires II: Definitive Edition için bağımsız, resmî olmayan bir betik düzenleyicisi."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "Üretilen haritaların oyunla eşleşmesi yalnızca doğrulanmış oyun sürümlerinde garanti edilir; daha yeni sürümler bu garanti olmadan çalışır. Haritaların aynı şekilde davranması için oyunun bazı tuhaflıkları bilerek yeniden oluşturulur."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE, oyun dosyaları veya oyun grafikleri içermez. Resmî kaynaklar yalnızca yerel bir kurulumdan okunur; Oyun dokuları yalnızca kurulu oyun dosyalarından çıkarılır."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE, oyun dosyaları veya oyun grafikleri içermez. Resmî kaynaklar yalnızca yerel bir kurulumdan okunur."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Microsoft, Xbox Game Studios, World's Edge veya Activision ile bağlantılı değildir ve bu kuruluşlar tarafından desteklenmez."
+    },
+    "about.credits": {
+      "message": "Katkıda bulunanlar\n{maintainer} — Projenin yaratıcısı ve bakım sorumlusu"
+    },
+    "about.credits.research": {
+      "message": "{author}, {guide} adlı rehberle rastgele harita betikleri hakkında bildiklerimizin büyük bölümünü öğrenmemizi sağladı. Kendisine teşekkür ederiz."
+    },
+    "about.credits.xs-research": {
+      "message": "{author}, {guide} içindeki XS belgeleriyle XS desteğine başlangıç noktası sağladı. Kendisine teşekkür ederiz."
+    },
+    "about.close": {
+      "message": "Kapat"
+    },
+    "about.documentation": {
+      "message": "Belgeler"
+    },
+    "dialog.confirm.title": {
+      "message": "İşlemi onayla"
+    },
+    "dialog.confirm.cancel": {
+      "message": "İptal"
+    },
+    "dialog.confirm.continue": {
+      "message": "Devam et"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "{name} dosyasındaki değişiklikler kaydedilsin mi?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, one {{count} dosyadaki değişiklikler kaydedilsin mi?} other {{count} dosyadaki değişiklikler kaydedilsin mi?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "Pencereyi kapatırsanız kaydedilmemiş değişiklikler kaybolur."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "Bu sekmeyi kapatırsanız kaydedilmemiş değişiklikler kaybolur."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "Bu klasörü kapatırsanız kaydedilmemiş değişiklikler kaybolur."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "{name} öğesini silerseniz kaydedilmemiş değişiklikler kaybolur."
+    },
+    "dialog.unsaved.save": {
+      "message": "Kaydet"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Tümünü kaydet"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Kaydetme"
+    },
+    "dialog.external-change.title": {
+      "message": "{name}, AoE2RMSIDE dışında değişti"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Dosyanın üzerine yazmak dışarıdaki sürümü siler. Diskten yeniden yükleyin, bu düzenleyici metniyle üzerine yazın veya iptal edin."
+    },
+    "dialog.external-change.replace": {
+      "message": "Disktekinin üzerine yaz"
+    },
+    "dialog.external-change.reload": {
+      "message": "Diskten yeniden yükle"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Yeniden yüklemek kaydedilmemiş düzenleyici metnini siler. Çakışmayı kaydederken çözmek için düzenlemeye devam edin."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Düzenlemeye devam et"
+    },
+    "dialog.delete-entry.title": {
+      "message": "{name} öğesi Geri Dönüşüm Kutusu’na taşınsın mı?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "Klasör boş değil. Klasör ve içindeki tüm öğeler Geri Dönüşüm Kutusu’na taşınacak."
+    },
+    "dialog.delete-entry.description": {
+      "message": "Öğe Geri Dönüşüm Kutusu’na taşınacak."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Geri Dönüşüm Kutusu’na taşı"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "{name} öğesi kalıcı olarak silinsin mi?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "Klasör boş değil. Klasör ve içindeki tüm öğeler Geri Dönüşüm Kutusu’na taşınmadan kalıcı olarak silinecek. Bu işlem geri alınamaz."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "Öğe Geri Dönüşüm Kutusu’na taşınmadan kalıcı olarak silinecek. Bu işlem geri alınamaz."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Kalıcı olarak sil"
+    },
+    "output.clear": {
+      "message": "Çıktıyı temizle"
+    },
+    "output.source.run": {
+      "message": "Çalıştırma"
+    },
+    "output.source.script": {
+      "message": "Betik"
+    },
+    "output.source.preview": {
+      "message": "Önizleme"
+    },
+    "output.source.map-test": {
+      "message": "Harita testi"
+    },
+    "output.source.deploy": {
+      "message": "Mod kurulumu"
+    },
+    "output.source.live-test": {
+      "message": "Oyunda test"
+    },
+    "output.source.recovery": {
+      "message": "Kurtarma"
+    },
+    "output.source.update": {
+      "message": "Güncelleme"
+    },
+    "output.source.files": {
+      "message": "Dosyalar"
+    },
+    "output.source.game-folder": {
+      "message": "Oyun klasörü"
+    },
+    "output.source.game-textures": {
+      "message": "Oyun dokuları"
+    },
+    "output.source.app": {
+      "message": "Uygulama"
+    },
+    "output.log.label": {
+      "message": "{count, plural, one {{count} çıktı iletisi} other {{count} çıktı iletisi}}"
+    },
+    "output.empty": {
+      "message": "Sonuçlarını burada görmek için bir harita çalıştırın."
+    },
+    "output.empty.filtered": {
+      "message": "Filtreyle eşleşen ileti yok."
+    },
+    "output.jump-to-latest": {
+      "message": "En yeniye git ({count} yeni)"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, one {{count} kez tekrarlandı} other {{count} kez tekrarlandı}}"
+    },
+    "output.details": {
+      "message": "Ayrıntılar"
+    },
+    "output.run.show": {
+      "message": "Çalıştırma iletilerini göster"
+    },
+    "output.run.hide": {
+      "message": "Çalıştırma iletilerini gizle"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, one {Önceki {count} satır gösterilmiyor} other {Önceki {count} satır gösterilmiyor}}"
+    },
+    "output.run.seed": {
+      "message": "tohum {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, one {{count} oyuncu} other {{count} oyuncu}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, one {{count} harita} other {{count} harita}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ms"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} sn"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} dk {seconds} sn"
+    },
+    "output.constructs.heading": {
+      "message": "Oyunla karşılaştırılmadı"
+    },
+    "output.constructs.label": {
+      "message": "Oyunla karşılaştırılmamış komutlar"
+    },
+    "output.constructs.go-to": {
+      "message": "İlk kullanımına git"
+    },
+    "output.constructs.more": {
+      "message": "ve {count} tane daha"
+    },
+    "installed-maps.filter.group": {
+      "message": "Harita kaynakları"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Yerleşik haritalar ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Yerel mod haritaları ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Abone olunan mod haritaları ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Tüm harita kaynakları kapalı. Haritalarını listelemek için birini açın."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Seçili kaynaklardan kurulu rastgele harita yok."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Seçili kaynaklardan bu aramayla eşleşen kurulu rastgele harita yok."
+    },
+    "installed-maps.empty.none": {
+      "message": "Yerleşik haritalarda, yerel modlarda veya abone olunan modlarda rastgele harita bulunamadı."
+    },
+    "installed-maps.empty.search": {
+      "message": "Bu aramayla eşleşen kurulu rastgele harita yok."
+    },
+    "installed-maps.title": {
+      "message": "Kurulu rastgele haritalar"
+    },
+    "installed-maps.close": {
+      "message": "Kurulu rastgele haritaları kapat"
+    },
+    "installed-maps.search": {
+      "message": "Kurulu rastgele haritaları ara"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Harita ara"
+    },
+    "installed-maps.search.clear": {
+      "message": "Harita aramasını temizle"
+    },
+    "installed-maps.loading": {
+      "message": "Kurulu rastgele haritalar yükleniyor"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Kurulu RMS dosyalarını listelemek için oyun klasörünü seçin"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Yerleşik"
+    },
+    "installed-maps.origin.local": {
+      "message": "Yerel mod"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Abone olunan mod"
+    },
+    "installed-maps.clone": {
+      "message": "Düzenlemek İçin Klonla"
+    },
+    "installed-maps.open-failed": {
+      "message": "Harita açılamadı"
+    },
+    "installed-maps.clone-failed": {
+      "message": "Harita klonlanamadı"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Kurulu haritalar listelenemedi"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, one {Düzenlemek için # harita dosyası klonlandı} other {Düzenlemek için # harita dosyası klonlandı}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "{name} kopyalanmadı"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "Klonlanan harita bu dosyaya başvuruyor, ancak dosya kurulu haritanın parçası değil."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Bu dosyayı oyun sağlar; kurulu haritanın parçası değildir."
+    },
+    "run-menu.control.detach": {
+      "message": "AoE2Control bağlantısını kes"
+    },
+    "run-menu.control.remove": {
+      "message": "AoE2Control seçimini kaldır"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control bağlanıyor"
+    },
+    "run-menu.control.detaching": {
+      "message": "AoE2Control bağlantısı kesiliyor…"
+    },
+    "run-menu.control.busy": {
+      "message": "Geçerli AoE2Control işleminin bitmesini bekleyin"
+    },
+    "run-menu.run-on-save": {
+      "message": "Kaydedince"
+    },
+    "run-menu.run-on-edit": {
+      "message": "Düzenleyince"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Ön ayar"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Ön ayar {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Ön ayarın önizleme ayarları"
+    },
+    "run-menu.preset.manage": {
+      "message": "Önizleme ön ayarlarını yönet"
+    },
+    "run-menu.preset.new": {
+      "message": "Yeni ön ayar"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Yeni önizleme ön ayarını adlandır"
+    },
+    "run-menu.preset.rename": {
+      "message": "Ön ayarı yeniden adlandır: {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "Ön ayarı kaydet: {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "Ön ayarı düzenle: {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "Ön ayarı sil: {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "{name} ön ayarı silinsin mi?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "Bu ön ayar için kaydedilmiş önizleme ayarları kaldırılır."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Sil"
+    },
+    "run-menu.preset.name-length": {
+      "message": "Ön ayar adları 1 ile 64 karakter arasında olmalıdır"
+    },
+    "run-menu.preset.exists": {
+      "message": "{name} adlı bir ön ayar zaten var"
+    },
+    "run-menu.preset.limit": {
+      "message": "En fazla 64 ön ayar saklanabilir"
+    },
+    "run-menu.map-size": {
+      "message": "Harita boyutu"
+    },
+    "run-menu.game-mode": {
+      "message": "Oyun modu"
+    },
+    "run-menu.starting-resources": {
+      "message": "Başlangıç kaynakları"
+    },
+    "run-menu.starting-age": {
+      "message": "Başlangıç çağı"
+    },
+    "run-menu.ending-age": {
+      "message": "Bitiş çağı"
+    },
+    "run-menu.position-policy": {
+      "message": "Konumlandırma yöntemi"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Seç"
+    },
+    "run-menu.turbo-note": {
+      "message": "Turbo Rastgele Harita eski moddur ve değişmeden kalır. Turbo seçeneğiyle Rastgele Harita, oyunun turbo etiketlerini sağlar."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Rastgele Harita + Turbo kullan"
+    },
+    "run-menu.players.configure": {
+      "message": "Oyuncuları yapılandır"
+    },
+    "run-menu.players.count": {
+      "message": "Oyuncu sayısı"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, one {# oyuncu} other {# oyuncu}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Oyuncu {player} yuvası"
+    },
+    "run-menu.players.color": {
+      "message": "Oyuncu {player} rengi"
+    },
+    "run-menu.players.civilization": {
+      "message": "Oyuncu {player} uygarlığı"
+    },
+    "run-menu.players.team": {
+      "message": "Oyuncu {player} takımı"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Oyuncu {player} bilgisayar denetimi"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Bilgisayar oyuncusu (AI_PLAYERS sabitini tanımlar)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "Oyundaki testlerde P1 dışındaki her oyuncuyu bilgisayar yönetir"
+    },
+    "run-menu.players.live-note": {
+      "message": "Oyundaki testlerde P1 dışındaki her oyuncuyu bilgisayar yönetir."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "Oyundaki testlerde P1 dışındaki her oyuncuyu bilgisayar yönetir. Sizin oynayacağınız P1 yuvasına bir oyuncu yerleştirin."
+    },
+    "run-menu.lobby.label": {
+      "message": "Lobi seçenekleri"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Lobi seçenekleri, {count} seçenek açık"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Oyun modu değiştiricileri"
+    },
+    "run-menu.lobby.options": {
+      "message": "Seçenekler"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (oyun modu)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Oyun moduna İmparatorluk Savaşları değiştiricisini ekler. EMPIRE_WARS sabitini tanımlar."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Oyun moduna Ani Ölüm değiştiricisini ekler. SUDDEN_DEATH sabitini tanımlar."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Oyun moduna Kral Katili değiştiricisini ekler. REGICIDE sabitini tanımlar."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Oyun moduna Tepenin Kralı değiştiricisini ekler. KING_OT_HILL sabitini tanımlar."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Daha hızlı oynanış. TURBO_MODE sabitini tanımlar; Rastgele Harita modunda TURBO_RANDOM_MAP sabiti de tanımlanır."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Her uygarlık her şeyi araştırabilir. FULL_TECH_TREE sabitini tanımlar."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Antik Çağ modu. ANTIQUITY_MODE sabitini tanımlar; birçok harita bu seçenekle değişir."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Birimler tarlaların üzerinden geçemez. SOLID_FARMS sabitini tanımlar."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "Kral Katili modunda her oyuncunun bir kralı olmalıdır. Kralların olmadığı bir haritada oyun, maçı hemen bitirir."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Yerel oyun klasörü"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (yerel)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (doğrulanmamış)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Birlikte gelen profil yok"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Paketlenmiş sürüm yok"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Önizleme oyun sürümü"
+    },
+    "run-menu.version.game-version": {
+      "message": "Oyun sürümü"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Yerel oyun sürümünüz seçildi; önizleme yeniden çalıştırılıyor"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version}, doğrulanmış bir RMS sürümü değil; önizlemeler en yeni doğrulanmış davranış profilini ({profile}) kullanır. İşlevsellik etkilenmeyebilir. Üretim oyunla eşleşmiyorsa IDE güncellemesi olup olmadığını kontrol edin veya sorunu bildirin: {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "kullanılamıyor"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Oyun klasörünü seç"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Oyun klasörü seçiliyor…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "Yerel AoE2DE {version} kullanılıyor"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "Seçili yerel AoE2DE kurulumu kullanılıyor"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "Çalıştırma ayarları yüklenemedi"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "Çalıştırma ayarları kaydedilmedi"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "Düzenleyici çalıştırma ayarlarını kullanamadı"
+    },
+    "run-menu.run.warning": {
+      "message": "Harita için bir uyarı var"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Önizleme önbelleği temizlendi"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "Geliştirme örnekleri boş olmayan bir .rms veya .rms2 betiği gerektirir"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Bu önizleme için rastgele seçilen uygarlıklar: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Oyuncu {player}: {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "Oyundaki test, seçimi oyunun kendisine bırakır."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, one {# oyuncu} other {# oyuncu}}"
+    },
+    "run-menu.result.error": {
+      "message": "Hata"
+    },
+    "run-menu.result.failed": {
+      "message": "Başarısız"
+    },
+    "run-menu.result.passed": {
+      "message": "Başarılı"
+    },
+    "run-menu.result.stopped": {
+      "message": "Durduruldu"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Durduruldu, son harita korundu"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Sentetik örnek, sertifikasız"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Sentetik örnek, sertifikasız, yeniden kullanıldı"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Üretildi, yeniden kullanıldı"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Üretildi · doğrulanmamış oyun sürümü"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Üretildi, yeniden kullanıldı · doğrulanmamış oyun sürümü"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Önizleme çalıştırılamıyor"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "Geçerli kaynak kodu boş."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "Geçerli kaynak kodunda sözdizimi hataları var."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Seçili davranış profili kullanılamıyor."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Seçili oyun sürümü için uyumlu bir içerik paketi yok."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Profil için uyumlu bir içerik paketi yok."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Başka bir çalıştırma hâlâ sürüyor."
+    },
+    "run-menu.blocked.loading": {
+      "message": "Önizleme yapılandırması hâlâ yükleniyor."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "Yalnızca .rms ve .rms2 ana dosyaları mod olarak kurulabilir."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "Seçili RMS kaynak kodu boş."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "Seçili RMS kaynak kodunda sözdizimi hataları var."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "Seçili RMS kaynak kodu çalıştırılmak üzere sıraya alınamadı."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "Tohum kilidi durumu geçersiz."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "Kaydedince çalıştırma durumu geçersiz."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "Düzenleyince çalıştırma durumu geçersiz."
+    },
+    "run-menu.invalid.seed": {
+      "message": "Tohum, 0 ile 4294967295 arasında bir tam sayı olmalıdır."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "Harita boyutu desteklenen bir oyun seçeneğiyle eşleşmelidir."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Oyuncu sayısı 1 ile 8 arasında olmalıdır."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "Oyuncu yuvaları sekiz geçerli değer içermelidir."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Etkin oyuncu yuvaları benzersiz olmalıdır."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "Oyuncu renkleri sekiz geçerli değer içermelidir."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Etkin oyuncu renkleri benzersiz olmalıdır."
+    },
+    "run-menu.invalid.teams": {
+      "message": "Oyuncu takımları, Takım yok ile Takım 4 arasında sekiz değer içermelidir."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "Varsayılan uygarlıklar sekiz oyuncu yuvası içermelidir."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "Oyuncu denetimi seçimleri sekiz değer içermelidir."
+    },
+    "run-menu.invalid.profile": {
+      "message": "Bilinen bir davranış profili gerekir."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "Sürüm seçimi kapsamı geçersiz."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "Bir mod/bağlam gerekir."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "Oyun modu değiştiricileri benzersiz ve bilinen değerler olmalıdır."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Lobi seçenekleri açık veya kapalı olmalıdır."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "Başlangıç kaynakları geçersiz."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "Başlangıç çağı geçersiz."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "Bitiş çağı geçersiz."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "Bitiş çağı başlangıç çağından önce olamaz."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "Konumlandırma yöntemi geçersiz."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "İz toplama düzeyi geçersiz."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Test çekirdeği sayısı Otomatik veya 1 ile 32 arasında olmalıdır."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "Oyunun standart kitaplık dosyaları için oyun klasörünüz gerekir"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "Oyunun standart kitaplık dosyaları yerel oyun sürümünü gerektirir, ancak paketlenmiş bir sürüm seçili."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "Oyunun standart kitaplık dosyaları için bağlı bir oyun klasörü gerekir, ancak bağlı klasör yok."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "Oyunun standart kitaplık dosyaları için bağlı oyun klasöründe resources/_common/drs/gamedata_x2 gerekir, ancak bu klasör yok."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Betik analiz edilemedi"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Betik kontrol edilemedi"
+    },
+    "run-menu.failure.not-started": {
+      "message": "Çalıştırma başlatılamadı"
+    },
+    "run-menu.failure.generation": {
+      "message": "Üretim başarısız"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Harita testi"
+    },
+    "settings.language.title": {
+      "message": "Dil"
+    },
+    "settings.language.description": {
+      "message": "Menüler, iletişim kutuları ve iletiler bu dili kullanır. Betik komutları, günlükler ve destek paketleri İngilizce kalır."
+    },
+    "settings.language.label": {
+      "message": "Arayüz dili"
+    },
+    "settings.language.system": {
+      "message": "Windows görüntüleme dili ({language})"
+    },
+    "settings.language.close": {
+      "message": "Kapat"
+    },
+    "settings.language.close-label": {
+      "message": "Dil ayarlarını kapat"
+    },
+    "settings.language.editor-next-start": {
+      "message": "Kod düzenleyicisinin kendi menüleri bir sonraki başlangıçta değişir."
+    },
+    "message.action.report-problem": {
+      "message": "Bu sorunu bildir"
+    },
+    "message.action.get-newer-control": {
+      "message": "Daha yeni bir AoE2Control sürümü edin"
+    },
+    "message.action.link-game-folder": {
+      "message": "Oyun klasörünü bağlayın"
+    },
+    "message.action.verify-game-files": {
+      "message": "Oyun dosyalarını Steam’de doğrulayın"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Yerel oyun sürümünü seçin"
+    },
+    "message.action.check-include-name": {
+      "message": "Dahil edilen dosyanın adını kontrol edin"
+    },
+    "message.action.open-problems": {
+      "message": "Sorunlar panelini açın"
+    },
+    "message.action.choose-map-size": {
+      "message": "Başka bir harita boyutu seçin"
+    },
+    "message.action.change-player-count": {
+      "message": "Oyuncu sayısını değiştirin"
+    },
+    "message.action.open-players-menu": {
+      "message": "Oyuncular menüsünü açın"
+    },
+    "message.action.try-another-seed": {
+      "message": "Başka bir tohum deneyin"
+    },
+    "message.action.reinstall": {
+      "message": "AoE2RMSIDE uygulamasını yeniden kurun veya güncelleyin"
+    },
+    "message.action.check-update": {
+      "message": "AoE2RMSIDE güncellemesi olup olmadığını kontrol edin"
+    },
+    "message.action.reconnect-control": {
+      "message": "AoE2Control bağlantısını yeniden kurup tekrar deneyin"
+    },
+    "message.action.check-control-file": {
+      "message": "Seçili AoE2Control dosyasının çalıştığını kontrol edip tekrar deneyin"
+    },
+    "message.action.wait-run-again": {
+      "message": "Biraz bekleyip Çalıştır düğmesine yeniden basın"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Çalıştır düğmesine yeniden basın; sorun sürerse AoE2DE oyununu yeniden başlatın"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "AoE2DE oyununu yeniden başlatıp Çalıştır düğmesine yeniden basın"
+    },
+    "message.action.check-game-window": {
+      "message": "Oyun penceresini kontrol edip Çalıştır düğmesine yeniden basın"
+    },
+    "message.action.press-run-again": {
+      "message": "Çalıştır düğmesine yeniden basın"
+    },
+    "message.action.wait-try-again": {
+      "message": "Biraz bekleyip tekrar deneyin"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Mod olarak kur penceresini yeniden açın"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Başka bir mod adı seçin"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Harita testini yeniden çalıştırın"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Bir oyuncu yuvası"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, satır {line}"
+    },
+    "message.format.the-script": {
+      "message": "Betik"
+    },
+    "message.format.the-folder": {
+      "message": "Klasör"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "profilinizin XS klasörü"
+    },
+    "message.format.the-map-test": {
+      "message": "harita testi"
+    },
+    "message.format.a-map-test": {
+      "message": "bir harita testi"
+    },
+    "message.format.preview-kept": {
+      "message": "Önizleme korundu."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "Önizleme bu özellik olmadan da çalışır."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Harita üretilirken betik değişti"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "Sırada daha yeni sürüm çalıştırılacak."
+    },
+    "message.xs-syntax.headline": {
+      "message": "Bir XS dosyasında sözdizimi hataları var"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} dosyasında XS sözdizimi hataları var"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name}, satır {line}, oyunun haritanın XS kodunu yüklemesini engelliyor; bu yüzden oyunda değişiklik yapılmadı."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Oyun haritanın XS kodunu yükleyemedi; bu yüzden oyunda değişiklik yapılmadı."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Sorunlar panelinde listelenen hataları düzeltip oyundaki testi yeniden çalıştırın"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "Profilinizin XS klasöründe bir XS dosyası zaten var"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "Profilinizin XS klasöründe {name} zaten var"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Dosyayı AoE2RMSIDE oluşturmadı ({folder}); bu yüzden oyundaki test, dosyanın üzerine yazmadan durdu."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Dosyayı AoE2RMSIDE oluşturmadı; bu yüzden oyundaki test, dosyanın üzerine yazmadan durdu."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "XS dosyasını yeniden adlandırın veya var olan dosyayı kaldırın"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Profilinizin XS klasöründeki bir XS dosyası AoE2RMSIDE dışında değiştirildi"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "Profilinizin XS klasöründeki {name} dosyası AoE2RMSIDE dışında değiştirildi"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE dosyayı oyundaki test için kopyaladı (hedef: {folder}). Kendisinin yapmadığı değişikliklerin üzerine asla yazmaz; bu yüzden oyundaki test durdu."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Değişikliklerinizi başka yere taşıyın veya dosyayı kaldırın; ardından oyundaki testi yeniden çalıştırın"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Bir XS dosyası profilinizin XS klasörüne kopyalanamıyor"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "{name}, profilinizin XS klasörüne kopyalanamıyor"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Oyundaki test, her XS dosyasını #includeXS içinde yazan yalın dosya adıyla kopyalar; bu ad ise bir klasör içeriyor."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "#includeXS satırına yalnızca dosya adını yazın"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "İki XS dosyasının hedef adı aynı"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "İki XS dosyasının hedef adı aynı: {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "Profilinizin XS klasöründe bu adla yalnızca bir dosya bulunabilir."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "XS dosyalarından birini yeniden adlandırın"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "Profilinizin XS klasörü kullanılamıyor"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder}, normal bir klasör değil veya başka bir konuma işaret ediyor. AoE2RMSIDE, yönlendirilmiş klasörler üzerinden asla kopyalama yapmaz."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "AoE2RMSIDE tarafından kopyalanan XS dosyalarının kaydı okunamıyor"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Bu kayıt olmadan AoE2RMSIDE, profilinizdeki hangi XS dosyalarını kendisinin oluşturduğunu belirleyemez."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "XS dosyaları profilinizin XS klasörüne kopyalanamadı"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "Harita, oyundaki testin kopyalayabileceğinden daha fazla XS dosyası yüklüyor."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Oyundaki bu testin değiştirdiği bazı XS dosyaları ({folder}) geri yüklenemedi; AoE2RMSIDE bunları hâlâ kendisine ait sayıyor."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Oyundaki bu testin değiştirdiği tüm XS dosyaları ({folder}) geri yüklendi."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "AoE2RMSIDE’ın {folder} içindeki XS dosyalarına ilişkin kaydı oyunda test sırasında değişti."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Klasöre yazılabildiğini kontrol edip oyundaki testi yeniden çalıştırın"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE çalışmıyor"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "AoE2DE oyununu başlatıp Çalıştır düğmesine yeniden basın"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control başlamadan kapandı"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control başlamadı"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control bağlantıyı tamamlayamadı"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "Bu AoE2Control sürümünde seçili bir uygarlık yok"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Saksonlar, Varegler ve Danimarkalılar için AoE2Control 1.1.1 veya daha yenisi gerekir."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control seçili bir uygarlığı sunmuyor"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "AoE2Control 1.1.1 veya daha yenisini seçin ya da başka bir uygarlık seçin."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "Çalışan oyun sürümünde seçili bir uygarlık yok"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Başka bir uygarlık seçin"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Bu oyun sürümü oyunda test için desteklenmiyor"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "Önceki AoE2Control örneği hâlâ oyun belleğinden çıkarılıyor"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Daha önceki bir AoE2Control başlatma işlemi oyunda hâlâ sürüyor"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control zamanında başlatılamadı"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "AoE2DE penceresi hazır değil"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Oyun penceresini açın (simge durumunda olmasın), ardından Çalıştır düğmesine yeniden basın"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "Oyunda başka bir AoE2Control sürümü çalışıyor"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "AoE2Control bu oyunda daha önce başlatılamadı"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control oyuna bağlanamadı"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Başka bir AoE2Control başlatıcısı çalışıyor"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Onu kapatıp Çalıştır düğmesine yeniden basın"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Bu AoE2Control sürümü uyumlu değil"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Genel kullanıma açık uyumlu bir AoE2Control sürümü seçin"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "Oyunun ayarları çalıştırma ayarlarıyla eşleşmedi"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "AoE2Control bağlantısı kesildi"
+    },
+    "message.control.connection-lost.action": {
+      "message": "Gerekirse AoE2DE oyununu başlatıp tekrar deneyin"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control zamanında yanıt vermedi"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control yanıt vermeden bağlantıyı kapattı"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Oyun meşgul olabilir veya bir ileti gösteriyor olabilir."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Maç başlatılırken oyun yanıt vermeyi kesti"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE, betik hatası gibi bir ileti gösteriyor olabilir."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Oyundaki iletiyi kapatıp Çalıştır düğmesine yeniden basın"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Oyun yeni maçı zamanında doğrulamadı"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "Geçerli maç zamanında bitmedi"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "Harita oyuna kopyalanırken değişti"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "Oyunun harita klasöründe bu dosya adıyla başka bir harita var"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Haritayı yeniden adlandırıp Çalıştır düğmesine yeniden basın"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "Harita oyuna kopyalanamadı"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Oyun maçın başladığını doğrulamadı"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Tekrar denemeden önce geçerli maçı kontrol etmek için yeniden bağlanın"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Oyun önceki maçın bittiğini doğrulamadı"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Tekrar denemeden önce kontrol etmek için yeniden bağlanın"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "Oyun klasörü veya oyun profili belirlenemedi"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Bağlı oyun klasörünü kontrol edin"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "Harita, oyunda test için kurulamadı"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control bağlantı kurmadan durdu"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control kararlı bir tek oyunculu oturumu doğrulayamadı"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control, AoE2RMSIDE tarafından kullanılamayan bir yanıt gönderdi"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "Oyunun mevcut durumu oyunda test için desteklenmiyor"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Ana menüye veya tek oyunculu bir maça dönüp yeniden deneyin"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "Önce devam eden maçın bitmesi gerekiyor"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Yeniden Çalıştır düğmesine basıp maçın bitirilmesine izin verin"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control bağlı değil"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Bağlanmak için yeniden Çalıştır düğmesine basın"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Seçili AoE2Control dosyası değişti"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "AoE2Control dosyasını yeniden seçin"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control meşgul"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Bu sistemde oyunda test desteklenmiyor"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "Oyunda test, devam eden maçın yerini almadı"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "Oyunda test değiştirmeyi soramadan AoE2DE’de bir maç başladı."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control geçerli maçı bitiremedi"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Oyunda test haritayı başlatamadan oyun değişti"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "Oyunda test hazırlanırken AoE2DE bir maç başlattı veya tek oyunculu kurulumdan çıktı."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "Oyunda test sırasında AoE2DE veya AoE2Control yeniden başladı"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "AoE2DE kopyalanan haritayı listelemedi"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "Oyunun mod haritaları listesi kopyalanan haritayı göstermedi ya da birden fazla kez gösterdi."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "Bir oyuncunun ayarları AoE2Control’e gönderilemiyor"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Bir uygarlık, takım veya renk bu AoE2Control’ün kabul ettiği aralığın dışında."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE oyunda testi hazırlayamadı"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control rastgele harita maçını hazırlayamadı"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "AoE2DE ana menüsüne dönüp yeniden deneyin; sorun sürerse Tek oyunculu → Çatışma menüsünü bir kez açın"
+    },
+    "message.control.headline": {
+      "message": "Oyunda test başarısız oldu"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Bu AoE2Control sürümü lobi seçeneklerini ayarlayamıyor"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Lobi seçenekleri için AoE2Control 1.1.1 veya üzeri gerekiyor. Oyunda değişiklik yapılmadı."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Oyunda test için P1 konumunda bir oyuncu gerekiyor"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "P1 konumundaki oyuncuyu siz oynarsınız; diğer tüm oyuncuları bilgisayar yönetir."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Oyuncular menüsünü açıp P1 konumuna bir oyuncu yerleştirin"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control, P1 sonrasında insan oyuncuyu kabul etmedi"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Oyunda test, P1 sonrasındaki tüm oyuncuları bilgisayarın yönettiği tek oyunculu bir oyun başlatır."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control bilgisayar oyuncuları listesini kabul etmedi"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "Bilgisayar oyuncuları konum sırasına göre listelenmemişti."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Oyuncu bulunmayan bir konumda bilgisayar oyuncusu listelenmişti."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control, P1 konumunda bilgisayar oyuncusunu kabul etmedi"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "Oyunda test sırasında P1 konumundaki oyuncuyu siz oynarsınız; bu oyuncu bilgisayar olamaz."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Bazı lobi ayarları geri yüklenemedi"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "Oyunda test başarısız oldu. Şu ayarlar öncekinden farklı olabilir: {fields}."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "Oyunda test başarısız oldu ve bazı lobi ayarları öncekinden farklı olabilir."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Sonraki oyundan önce AoE2DE lobi ayarlarını kontrol edin"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "oyun modu"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "harita boyutu"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "başlangıç kaynakları"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "başlangıç çağı"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "bitiş çağı"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "harita görünürlüğü"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "oyuncu sayısı"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "takım konumları"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "oyun modu değiştiricileri"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Turbo"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Bütün teknoloji ağacı"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Antik Çağ"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Geçilmez tarlalar"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "seçili harita"
+    },
+    "message.lobby-setting.seed": {
+      "message": "tohum"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot}: {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "takım"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "handikap"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "renk"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "uygarlık"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "insan veya bilgisayar ayarı"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "ayar"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "AoE2Control başlatılıyor"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "Önceki AoE2Control örneğinin oyun belleğinden çıkarılması bekleniyor"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "AoE2Control uygulamasının oyun içinde başlatılması bekleniyor"
+    },
+    "message.live.game-detected.headline": {
+      "message": "AoE2DE algılandı"
+    },
+    "message.live.attach.headline": {
+      "message": "Çalışan oyuna bağlanılıyor"
+    },
+    "message.live.handshake.headline": {
+      "message": "AoE2Control kontrol ediliyor"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control hazır"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Mevcut maç bitiriliyor"
+    },
+    "message.live.deploy.headline": {
+      "message": "Harita oyuna kuruluyor"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, one {Haritanın XS dosyası profilinizin XS klasöründe de bulunuyor: {files}.} other {Haritanın XS dosyaları profilinizin XS klasöründe de bulunuyor: {files}.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "Haritanın bu sürümü oyunda zaten var"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Oyunda harita seçiliyor"
+    },
+    "message.live.match-start.headline": {
+      "message": "{seed} tohumu ile rastgele harita başlatılıyor"
+    },
+    "message.live.verified.headline": {
+      "message": "Maç, {seed} tohumu ile doğrulandı"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} doğrulanmadığından maç önizlemeden farklı olabilir."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version}, oyunda test için doğrulanmadı"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "Oyunda test çalışır ancak maç önizlemeden farklı olabilir."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Oyunda test iptal edildi"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Oyunda başka değişiklik yapılmadı."
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control bağlantısı kesildi"
+    },
+    "message.live.stopped.headline": {
+      "message": "Oyunda test, oyunu değiştirmeden durdu"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "Önizleme üretilemedi."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "Betikte hatalar var."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Üretim sırasında betik veya çalıştırma ayarları değişti."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "Önizleme artık betikle eşleşmiyor."
+    },
+    "message.live.match-kept.cause": {
+      "message": "Devam eden maç değiştirilmedi."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "Devam eden maçı değiştirme izni kaydedilemedi."
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control seçildi"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Bu dosya, kullanılabilir bir AoE2Control yürütülebilir dosyası değil"
+    },
+    "message.live.control-rejected.action": {
+      "message": "AoE2Control uygulamasının yayımlanmış bir sürümünü seçin"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "AoE2Control seçimi kaldırıldı"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "AoE2Control seçimi kaldırılamadı"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Bağlantısını kesip yeniden deneyin"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "AoE2Control durumuna ulaşılamıyor"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "Mevcut maçın tohumu içe aktarılamıyor"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "{seed} maç tohumu içe aktarıldı ve kilitlendi"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "Kurulum sırasında mod klasörü değişti"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Mod klasöründeki dosyalar AoE2RMSIDE dışında değiştirildi"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE kendi yapmadığı düzenlemelerin üzerine yazmaz."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Bu düzenlemeleri başka bir yere taşıyıp yeniden kurun"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "Mod kurulumunun önizlemesi güncel değil"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Bu klasörü başka bir mod kullanıyor"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE yalnızca kendi kurduğu modları değiştirir."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Oyun profili seçilmedi"
+    },
+    "message.deploy.profile.action": {
+      "message": "Bir profil seçin"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Yerleşik haritalar doğrudan kurulamaz"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Önce haritayı çalışma alanınıza klonlayın"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "Mod, kurulum için fazla sayıda dosya içeriyor"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "Mod klasörü başka bir konuma yönlendiriyor"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE yönlendirilmiş klasörler üzerinden mod kurmaz."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "Mevcut modun değiştirilmesi onaylanmadı"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Kurulumu yeniden başlatıp değiştirmeyi onaylayın"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Kurulabilecek bir haritanız yok"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Mod için çalışma alanınızdan bir .rms betiği gerekiyor."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Bu mod adı oyunda test için ayrılmış"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Bu mod adı klasör adı olarak kullanılamaz"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "< > : \" / \\ | ? * karakterlerini içermeyen, nokta veya boşlukla bitmeyen tek bir klasör adı kullanın."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, satır {line}: {error} Oyun dosyayı yükleyemediği için hiçbir şey kurulmadı."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Oyun dosyayı yükleyemediği için hiçbir şey kurulmadı."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Sorunlar panelindeki hataları düzeltip yeniden kurun"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "Harita simgesi kullanılamadı"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Harita simgesini yeniden üretin"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "Harita simgesi üretimi tek başına çalışmalıdır ancak başka bir önizleme, harita testi veya oyunda test sürüyor."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Bittiğinde yeniden deneyin"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "Harita simgesi güncel önizlemeyi gerektirir ve önizleme değişti."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Yeni önizlemeyi bekleyip tekrar deneyin"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "Harita simgesi başka bir oyun klasörünün oyun dokularıyla çizildi."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Geçerli bir AoE2DE kurulumu bağlı değil."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "Profil klasörü veya modlar klasörü, AoE2RMSIDE’ın kullanabileceği sıradan bir klasör değil."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "İki dosya modda {path} konumuna kopyalanacaktı."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Haritanın kullandığı bir dosyanın mod klasöründe yeri yok."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE kurduğu modların kaydını okuyamadı."
+    },
+    "message.deploy.headline": {
+      "message": "Mod kurulumu başarısız oldu"
+    },
+    "message.map-test.replay.headline": {
+      "message": "Bu bulgunun haritası gösterilemedi"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "Harita testi, işleminin bellek sınırını aştı ve durduruldu. Çalıştırma yinelenmedi."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Betiğin ayırdığı belleği azaltın (örneğin büyük tekrarlar veya saklanan çok sayıda harita)"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "Harita testi değerleri veya çağrıları çok derin iç içe geçirip işleminin yığınını aştığı için durduruldu. Çalıştırma yinelenmedi."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Harita testi işlemi, büyük olasılıkla bellek veya yığın sınırına ulaştığı için durdu. Çalıştırma yinelenmedi."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source(), açık klasördeki bir .rms veya .rms2 dosyasına tırnak içinde göreli bir yol gerektirir."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "Testin varsayılan olarak çalıştırdığı harita açık klasörün dışında."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Hiç kaydedilmemiş bir harita testi için açık bir klasör gerekir."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Dosya, AoE2RMSIDE’ın okuyabileceği bir harita testi raporu değil."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Dosya {limit, number, integer} MiB boyutundan büyük."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "Harita testi, çalıştırılmasından bu yana değişti."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "Harita veya dahil ettiği dosyalardan biri, çalıştırılmasından bu yana değişti."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "Testte kullanılan oyun sürümü şu anda kullanılamıyor."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "Üretilen harita, test çalıştırılırken üretilenden farklı."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "Rapor bu bulguyu içermiyor."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Bu haritayı göstermek için açın: {script}"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "Bir bulgunun haritası, onu bulan harita testiyle yeniden üretilir."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Bu kontrole gitmek için açın: {script}"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Bu rapor içe aktarıldığından harita testinin dosyası bilinmiyor."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "Harita testi çalışıyor"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "Harita testi çalışıyor · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Bunlar önceki çalıştırmanın sonuçlarıdır; mevcut çalıştırma bittiğinde güncellenirler."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "Son çalıştırma bir hata nedeniyle durdu"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Bunlar ondan önceki çalıştırmanın sonuçlarıdır."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Hata için Sorunlar ve Çıktı panellerine bakın"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "Son çalıştırma durduruldu"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "İçe aktarılan rapor: {script}"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "Bir bulgunun haritası, bu harita testi, haritası ve oyun sürümü çalıştırıldığı zamankiyle aynı kaldığı sürece gösterilebilir."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} / {requested, plural, one {# harita} other {# harita}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Test edildi"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Test ediliyor"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {# harita test edildi} one {# harita test edildi} other {# harita test edildi}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Haritalar test ediliyor, %{percent} ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Harita testi başlatılıyor"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Bu klasör bir AoE2DE oyun klasörü değil"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "Bu klasör, Age of Empires II: Definitive Edition oyununun eksiksiz kurulumunu içermiyor."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Oyunun kurulum klasörünü seçin, örneğin Steam kitaplığınızdaki steamapps\\common\\AoE2DE"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "Bağlı AoE2DE kurulumuna erişilemiyor."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Oyun klasörünün bir bölümü güvenli şekilde okunamadı: çok büyük veya çok derin, başka bir konuma bağlantı veriyor ya da desteklenmeyen bir dosya adı içeriyor."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Oyun klasörünün ve kurulu haritaların dışında sıradan bir klasör seçin."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} bu klasörde zaten var."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Çok fazla dosya veya klasör var ya da bir dosya çok büyük."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "Kurulu haritalar bu arada değişti."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Kurulu haritaları yeniden açın"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "Bu arada betik veya dahil ettiği dosyalardan biri değişti."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path}, bir haritanın dahil edebileceği bir dosya türü değil."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Birden fazla dosya {path} adından yalnızca büyük/küçük harf bakımından farklı."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope}, AoE2RMSIDE’ın okuyabileceği klasörlerin dışında."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Dahil edilen dosyaları açık klasörde veya bağlı oyun klasöründe tutun"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Dahil edilen dosyalar için daha küçük bir klasör kullanın veya gereken bağımlılıkları azaltın"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Gerekli kaynak verisini azaltıp yeniden çalıştırın"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Açık sekmeleriniz ve düzeniniz kaydedilemedi"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Dosyalarınız etkilenmez ancak sonraki açılışta daha eski sekmeler ve düzen açılabilir."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} beklenmedik şekilde kapandı."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} çalışmıyor."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} zamanında yanıt vermedi."
+    },
+    "message.execution.busy.cause": {
+      "message": "Başka bir önizleme, harita testi veya oyunda test sürüyor."
+    },
+    "message.editor.busy.cause": {
+      "message": "Düzenleyicide bekleyen çok fazla istek var."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Oyun sürümünü yeniden seçin"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Windows Dosya Gezgini klasörü açamadı: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Dosya ikili, çok büyük, okunamıyor veya desteklenmeyen bir türde."
+    },
+    "message.files.too-many.cause": {
+      "message": "Aynı anda en fazla {limit, number, integer} dosya veya klasör açın."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "Öğe artık son kullanılanlar listesinde değil."
+    },
+    "message.files.encoding.cause": {
+      "message": "Harita testi betikleri UTF-8 olarak kaydedilmelidir."
+    },
+    "message.files.too-large.cause": {
+      "message": "Bir harita testi betiği en fazla {limit, number, integer} MiB olabilir."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Dosyalar oyun klasörüne veya kurulu haritalara kaydedilemez."
+    },
+    "message.files.extension-required.cause": {
+      "message": "Dosya adı {extension} ile bitmelidir."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "Öğe AoE2RMSIDE dışında değiştirildi veya taşındı."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Bu adda bir klasör zaten var."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Dosya açık klasörün dışında."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "Klasörde listelenemeyecek kadar çok dosya ve klasör var."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Daha küçük bir klasör açın"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "Geri Dönüşüm Kutusu ayarı silmeden önce değişti."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Öğeyi yeniden silin"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "Kaydedilmemiş değişiklikler kurtarma için saklanamayacak kadar büyük."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Değişikliklerinizi korumak için kaydedin"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Kurtarma dosyası bozuk veya başka bir AoE2RMSIDE sürümü tarafından yazılmış."
+    },
+    "message.game-textures.cause": {
+      "message": "Önizleme ve harita simgesi bunun yerine doku renklerini gösterir."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} Önizleme ve harita simgesi bunun yerine doku renklerini gösterir."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Oyun dokuları hazırlanamadı"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Bağlı oyun klasörü için oyun dokuları kullanılamıyor"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Dönüştürülen arazi okunamadı"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Oyun dokularının dönüştürülmesi iptal edildi"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "Dönüştürülen dosyalar korunur. Oyun dokuları yeniden seçildiğinde işlem devam eder."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Nesne görselleri okunamadı"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Bu bilgisayarda harita GPU ile çizilemiyor"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "Harita GPU kullanılmadan çizilir; büyük haritalarda bu daha uzun sürebilir."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Bu bilgisayarda harita çizimi için GPU kullanılmıyor"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Haritayı çizmek için kullanılabilir bir ekran kartı yok. Harita ekran kartı olmadan çizildiği için büyük haritalarda çizim daha uzun sürebilir."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "GPU ile harita çizimi durdu"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "Ekran kartı sıfırlandığından uygulama yeniden başlatılana kadar harita ekran kartı kullanılmadan çizilir."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "Harita testi önizlemeleri her zaman küçük harita renklerini kullanır"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "Harita testi yalnız bitmiş haritaları gösterir"
+    },
+    "message.generation-result.generated": {
+      "message": "Üretildi"
+    },
+    "message.generation-result.reused": {
+      "message": "Yine kullanıldı"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "doğrulanmamış oyun sürümü"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Doğrulanmamış oyun sürümü"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "Bu oyun sürümü için harita üretimi henüz kullanılamıyor."
+    },
+    "message.map-test.workers.label": {
+      "message": "Test çekirdekleri"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Harita testinin kullanacağı en fazla işlemci çekirdeği, yani aynı anda üreteceği harita sayısı ({maximum, plural, one {bu bilgisayarda 1} other {bu bilgisayarda 1 ile {maximum} arası}}). Bilgisayara ve harita boyutuna uygun Otomatik seçimi için boş bırakın. Her seçimde sonuçlar aynıdır."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Otomatik"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Otomatik kullan"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, one {{count} komut oyunla karşılaştırılmadı} other {{count} komut oyunla karşılaştırılmadı}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Bazı komutlar oyunla karşılaştırılmadı"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Kaydedilmiş hiçbir oyun haritası bu komutu henüz bu konumda kullanmadığından önizleme, komutun etkili olduğu yerde oyundan farklı olabilir: {list}.} other {Kaydedilmiş hiçbir oyun haritası bu komutları henüz bu konumlarda kullanmadığından önizleme, komutların etkili olduğu yerlerde oyundan farklı olabilir: {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Kaydedilmiş hiçbir oyun haritası bu komutu henüz bu konumda kullanmadığından önizleme, komutun etkili olduğu yerde oyundan farklı olabilir.} other {Kaydedilmiş hiçbir oyun haritası bu komutları henüz bu konumlarda kullanmadığından önizleme, komutların etkili olduğu yerlerde oyundan farklı olabilir.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} (bağlam: {context})"
+    },
+    "message.construct.list-more": {
+      "message": "{names} ve {more} tane daha"
+    },
+    "message.fallback.run": {
+      "message": "Çalıştırma başarısız oldu"
+    },
+    "message.fallback.script": {
+      "message": "Betik başarısız oldu"
+    },
+    "message.fallback.preview": {
+      "message": "Önizleme başarısız oldu"
+    },
+    "message.fallback.map-test": {
+      "message": "Harita testi başarısız oldu"
+    },
+    "message.fallback.recovery": {
+      "message": "Kurtarma başarısız oldu"
+    },
+    "message.fallback.update": {
+      "message": "Güncelleme başarısız oldu"
+    },
+    "message.fallback.files": {
+      "message": "Dosya işlemi başarısız oldu"
+    },
+    "message.fallback.game-folder": {
+      "message": "Oyun klasörü kullanılamadı"
+    },
+    "message.fallback.app": {
+      "message": "Bir sorun oluştu"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Kalanları görmek için gösterilenleri düzeltin."
+    },
+    "message.action.choose-another-name": {
+      "message": "Başka bir ad seçin"
+    },
+    "message.action.use-or-remove": {
+      "message": "Kullanın veya kaldırın (hızlı düzeltme ile kaldırılabilir)"
+    },
+    "explorer.create.definition-file": {
+      "message": "Tanım dosyası…"
+    },
+    "explorer.create.script": {
+      "message": "Betik"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Harita testi betiği"
+    },
+    "explorer.create.xs-script": {
+      "message": "XS betiği"
+    },
+    "explorer.create.folder": {
+      "message": "Klasör"
+    },
+    "explorer.create.label": {
+      "message": "{name} klasöründe oluştur"
+    },
+    "explorer.label": {
+      "message": "Dosya gezgini"
+    },
+    "explorer.search.label": {
+      "message": "Çalışma alanında dosya ara"
+    },
+    "explorer.search.placeholder": {
+      "message": "Dosya ara"
+    },
+    "explorer.search.clear": {
+      "message": "Dosya aramasını temizle"
+    },
+    "explorer.search.searching": {
+      "message": "Çalışma alanındaki dosyalar aranıyor"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Eşleşen RMS dosyası yok"
+    },
+    "explorer.search.no-results": {
+      "message": "Eşleşen dosya yok"
+    },
+    "explorer.open-file.label": {
+      "message": "Dosya aç"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Dosya aç"
+    },
+    "explorer.open-folder.label": {
+      "message": "Klasör aç"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Klasör aç"
+    },
+    "explorer.tree.label": {
+      "message": "{name} klasöründeki dosyalar"
+    },
+    "explorer.empty.maps": {
+      "message": "Haritalarına göz atıp düzenlemek için bir klasör açın."
+    },
+    "explorer.empty.scripts": {
+      "message": "Betiklerine göz atıp düzenlemek için bir klasör açın."
+    },
+    "explorer.indexing": {
+      "message": "Çalışma alanı klasörü dizine ekleniyor"
+    },
+    "explorer.read-failed": {
+      "message": "Bu klasör okunamadı"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Dosya Gezgini’nde aç"
+    },
+    "explorer.context.rename": {
+      "message": "Yeniden adlandır"
+    },
+    "explorer.context.delete": {
+      "message": "Sil"
+    },
+    "explorer.inline.create-file": {
+      "message": "Dosya oluştur"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Klasör oluştur"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Dosyayı yeniden adlandır"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Klasörü yeniden adlandır"
+    },
+    "definition-file.title": {
+      "message": "Tanım dosyası üret"
+    },
+    "definition-file.close-label": {
+      "message": "Kapat"
+    },
+    "definition-file.loading": {
+      "message": "Seçili oyun sürümünün adları okunuyor…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Oyun sürümü"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (doğrulanmamış)"
+    },
+    "definition-file.identity.target": {
+      "message": "Kayıt konumu"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "Üretim sırasında seçilir"
+    },
+    "definition-file.groups.label": {
+      "message": "İçerik grupları"
+    },
+    "definition-file.group.terrains": {
+      "message": "Araziler"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "terrain_type, base_terrain ve diğer arazi ayarları için arazi kimlikleri"
+    },
+    "definition-file.group.objects": {
+      "message": "Nesneler"
+    },
+    "definition-file.group.objects.description": {
+      "message": "create_object ve diğer nesne ayarları için nesne kimlikleri"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, one {# ad} other {# ad}}"
+    },
+    "definition-file.built-in": {
+      "message": "Yerleşik adları dahil et"
+    },
+    "definition-file.built-in.description": {
+      "message": "Oyunun zaten tanımladığı adlar. Betikler bunları bu dosya olmadan kullanabilir."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Oyunun adsız bıraktığı nesne ve arazilerin adlarını eklemek için oyun klasörünüzü bağlayın."
+    },
+    "definition-file.note.other-version": {
+      "message": "Oyun klasörünüz farklı bir oyun sürümü içerdiğinden oradaki adlar kullanılmaz."
+    },
+    "definition-file.note.no-text": {
+      "message": "Oyun klasörünüzdeki adlar bu oyun sürümü için okunamıyor."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Adı olan her nesne ve arazinin zaten yerleşik bir adı var."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, one {Bu klasördeki bir betik zaten tanımladığı için # yerleşik ad dahil edilmedi.} other {Bu klasördeki betikler zaten tanımladığı için # yerleşik ad dahil edilmedi.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, one {Benzersiz bir ad kalmadığı için oyun klasöründeki # ad dahil edilmedi.} other {Benzersiz adlar kalmadığı için oyun klasöründeki # ad dahil edilmedi.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "Bu klasördeki bazı betiklerin zaten tanımladığı adlar kontrol edilemedi."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Seçili oyun sürümünün oyun verileri eksik olduğundan tanım dosyası üretilemiyor."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Tanım dosyası üretilebilecek bir oyun sürümü yok."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "Seçili oyun sürümünün adları okunamadı."
+    },
+    "definition-file.file-name.label": {
+      "message": "Dosya adı"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Bir dosya adı girin."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Bu ad Windows dosyaları için kullanılamaz."
+    },
+    "definition-file.file-name.extension": {
+      "message": "Dosya adı .inc ile bitmelidir."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Bu ad bir oyun kitaplığı dosyasına ait. Başka bir ad seçin."
+    },
+    "definition-file.generate": {
+      "message": "Üret"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Üret…"
+    },
+    "definition-file.error": {
+      "message": "Tanım dosyası yazılamadı. Ayrıntılar Çıktı panelinde."
+    },
+    "definition-file.replace.title": {
+      "message": "{name} dosyası değiştirilsin mi?"
+    },
+    "definition-file.replace.description": {
+      "message": "{folder} klasöründe bu adda bir dosya zaten var. Değiştirmek, dosyanın içeriğinin üzerine yazar."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Değiştir"
+    },
+    "definition-file.output.failed": {
+      "message": "Tanım dosyası yazılamadı"
+    },
+    "definition-file.output.unavailable": {
+      "message": "Tanım dosyası için adlar okunamadı"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Tanım dosyasını kaydet"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "Tanım dosyaları"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Modu etkinleştir"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Modu oyunun mod listesinde etkinleştirir. Harita ve simgesi, oyun yeniden başlatıldıktan sonra görünür."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "Mod etkinleştirildi. Haritayı ve simgesini görmek için oyunu yeniden başlatın."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Oyunda Modlar → Modlarım bölümünden modu etkinleştirin, ardından haritayı ve simgesini görmek için oyunu yeniden başlatın."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {Mod etkinleştirilmedi: oyunun mod listesi dosyası okunamadı.} unexpected-layout {Mod etkinleştirilmedi: oyunun mod listesi dosyasının biçimi IDE tarafından tanınmıyor.} duplicate-entry {Mod etkinleştirilmedi: oyunun mod listesinde bu mod birden fazla kez yer alıyor.} unexpected-entry {Mod etkinleştirilmedi: oyunun bu moda ait kaydının biçimi IDE tarafından tanınmıyor.} changed {Mod etkinleştirilmedi: oyun aynı anda mod listesini değiştirdi.} unsafe-path {Mod etkinleştirilmedi: profilin mod klasörü veya mod listesi başka bir konuma bağlantı veriyor.} other {Mod etkinleştirilmedi: oyunun mod listesi kaydedilemedi.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Oyun çalışıyor: değişiklik yeniden başlatıldıktan sonra uygulanır ve oyun kapanırken değişikliği geri alabilir. Yeniden başlatıldıktan sonra mod devre dışıysa oyunu kapatıp modu yeniden kurun."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Modlar klasörünü aç"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Bitir"
+    },
+    "deploy-panel.success.title": {
+      "message": "Mod başarıyla kuruldu"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "Modun kaydedildiği konum"
+    },
+    "deploy-panel.success.path": {
+      "message": "Kurulan modun yolu"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Mod yolunu kopyala"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Mod yolu kopyalandı"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, one {# dosya.} other {# dosya.}} Mod etkinleştirildi; haritayı ve simgesini görmek için oyunu yeniden başlatın."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, one {# dosya.} other {# dosya.}} Oyunda Modlar → Modlarım bölümünden modu etkinleştirin, ardından haritayı ve simgesini görmek için oyunu yeniden başlatın."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "Mod kuruldu ancak etkinleştirilmedi"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Oyunun mod listesi dosyası okunamadığından değiştirilmedi.} unexpected-layout {Oyunun mod listesi dosyasının biçimi IDE tarafından tanınmadığından değiştirilmedi.} duplicate-entry {Oyunun mod listesinde bu mod birden fazla kez yer aldığından liste değiştirilmedi.} unexpected-entry {Oyunun bu moda ait kaydının biçimi IDE tarafından tanınmadığından liste değiştirilmedi.} changed {Oyun aynı anda mod listesini değiştirdiğinden liste oyunun yazdığı haliyle bırakıldı.} unsafe-path {Profilin mod klasörü veya mod listesi başka bir konuma bağlantı verdiğinden değiştirilmedi.} other {Oyunun mod listesi kaydedilemedi; önceki liste hâlâ yerinde.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Oyunda Modlar → Modlarım bölümünden modu etkinleştirip oyunu yeniden başlatın"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "Oyun çalışırken mod listesi değişti"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "Değişiklik yeniden başlatıldıktan sonra uygulanır ve oyun kapanırken değişikliği geri alabilir. Yeniden başlatıldıktan sonra mod devre dışıysa oyunu kapatıp modu yeniden kurun."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "{name} dosyasının mevcut önizlemesi kullanılıyor"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "Mevcut önizleme yeniden kullanılamadığından tekrar üretiliyor"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Bu harita kurulum için üretilemedi"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "{mod} modu kuruldu (profil: {profile})"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "Modlar klasörü açılamadı"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Hedef dizini Windows Dosya Gezgini’nde aç"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "Hedef dizin açılamadı"
+    },
+    "deploy-panel.target": {
+      "message": "Hedef dizin"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Hedef dizini kopyala"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Hedef dizin kopyalandı"
+    },
+    "deploy-panel.title": {
+      "message": "Mod olarak kur"
+    },
+    "deploy-panel.close": {
+      "message": "Mod kurulumunu kapat"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Kurulum için oyun klasörü seçin"
+    },
+    "deploy-panel.source": {
+      "message": "RMS kaynağı"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Bir RMS ana dosyası açın"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Bu harita üretilemediği için henüz kurulamıyor. Çıktı panelinde gösterilen sorunu düzeltip Mod olarak kur penceresini yeniden açın."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Bu harita üretilemediği için henüz kurulamıyor. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "Seçili RMS kaynağının önizlemesi iptal edildi."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Mod adı"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Önceki bir dışa aktarımı seç"
+    },
+    "deploy-panel.profile": {
+      "message": "Kullanıcı profili"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Bir profil seçin"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · önerilen"
+    },
+    "deploy-panel.tree": {
+      "message": "Kurulum dosya ağacı"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Kurulum dosya ağacı yükleniyor"
+    },
+    "deploy-panel.no-source": {
+      "message": "Kurulum için bir .rms veya .rms2 ana dosyası açın."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Modu kur"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Mevcut mod değiştirilsin mi?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Mevcut {name} modundaki tüm dosyalar kaldırılacak."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Modu değiştir"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, one {{count} sorun} other {{count} sorun}}"
+    },
+    "problems-panel.empty": {
+      "message": "Sözdizimi sorunu yok."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Filtreyle eşleşen sorun yok ({hidden} gizli)."
+    },
+    "problems-panel.severity.error": {
+      "message": "Hata"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Uyarı"
+    },
+    "problems-panel.severity.info": {
+      "message": "Not"
+    },
+    "problems-panel.group.file": {
+      "message": "Dosya"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Oyun dosyası"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, one {{count} hata} other {{count} hata}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, one {{count} uyarı} other {{count} uyarı}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, one {{count} not} other {{count} not}}"
+    },
+    "problems-panel.group.show": {
+      "message": "{file} dosyasındaki sorunları göster"
+    },
+    "problems-panel.group.hide": {
+      "message": "{file} dosyasındaki sorunları gizle"
+    },
+    "problems-panel.group.label": {
+      "message": "{file} dosyasındaki sorunlar"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Konuma git: {location}"
+    },
+    "severity-filter.label": {
+      "message": "{panel} önem düzeyi filtresi"
+    },
+    "severity-filter.errors.label": {
+      "message": "Hataları göster ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Hataları göster"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Hataları gizle"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Uyarıları göster ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Uyarıları göster"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Uyarıları gizle"
+    },
+    "severity-filter.notes.label": {
+      "message": "Notları göster ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Notları göster"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Notları gizle"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "{folder} klasöründeki haritalar listelenemedi: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "Oyun dosyaları eksik veya okunamayan bir kurulum atlandı."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "Erişilemeyen bir kurulum atlandı."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Kurulu kaynak köklerinin sayısı güvenlik sınırına ulaştı."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Kurulu kaynak kayıtlarının sayısı güvenlik sınırına ulaştı."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (doğrulanmamış)"
+    },
+    "linked-game.content-read": {
+      "message": "{label} oyun verileri kullanılıyor"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, one {{objects} nesne, zaten yüklü.} other {{objects} nesne, zaten yüklü.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, one {{objects} nesne, {milliseconds} ms içinde okundu.} other {{objects} nesne, {milliseconds} ms içinde okundu.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "{label} oyun verileri okunamadı"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Bu sürümün önizlemeleri, uygulamayla gelen {version} verilerini kullanır. Sonradan eklenen nesne ve araziler bu verilerle üretilemez."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Bilinmeyen komut"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Kullanılmayan tanım"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Komut burada etkisiz"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Öznitelik yeniden ayarlandı"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Rastgele dal hiç seçilmiyor"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "İlk dalın olasılığı sıfır"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Değer sınıra çekiliyor"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Sabit zaten tanımlı"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Oyunda yorum sayılmıyor"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Ad gereken yerde sayı"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Ad tanımsız olabilir"
+    },
+    "map-icon.generate": {
+      "message": "Harita simgesi üret"
+    },
+    "map-icon.open-larger": {
+      "message": "Harita simgesini büyük aç"
+    },
+    "map-icon.save-image": {
+      "message": "Görseli kaydet"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Görseli kaydet…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Harita simgesi üretiliyor"
+    },
+    "map-icon.frame.ready": {
+      "message": "Harita simgesi önizlemesi"
+    },
+    "map-icon.frame.original": {
+      "message": "Özgün harita simgesi"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "Özgün harita simgesi gösterilemiyor"
+    },
+    "map-icon.frame.none": {
+      "message": "Üretilmiş harita simgesi yok"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Harita simgesi üretmek için bir .rms veya .rms2 ana dosyası açın."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "Harita simgesi üretmek için bu kaynağın başarılı bir önizlemesi gerekiyor."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "Harita simgesi üretimi kullanılamıyor: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Harita simgesi kullanılamıyor: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Harita simgesi: {seed} tohumundan harita üretiliyor"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "Harita simgesi için bu kaynağın başarılı bir önizlemesi gerekiyor."
+    },
+    "map-icon.status.rendering": {
+      "message": "Harita simgesi: mevcut önizlemeden çiziliyor"
+    },
+    "map-icon.status.waiting": {
+      "message": "Harita simgesi: kurulum önizlemesi bekleniyor"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Harita simgesi: {file} üretildi; özgün simgenin yerine yalnızca bu kurulum kopyasında kullanılır"
+    },
+    "map-icon.status.generated": {
+      "message": "Harita simgesi: mevcut önizlemeden {file} üretildi"
+    },
+    "map-icon.status.original": {
+      "message": "Harita simgesi: kaynak klasöründeki özgün {file}"
+    },
+    "map-icon.status.none": {
+      "message": "Harita simgesi: yok"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "üretilen simge"
+    },
+    "map-icon.tree.original": {
+      "message": "özgün simge"
+    },
+    "map-icon.render-failed": {
+      "message": "Harita simgesi çizilemedi"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "Harita simgesi seçenekleri kaydedilemedi"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "{seed} tohumundan harita simgesi üretilemedi"
+    },
+    "map-icon.output.saved": {
+      "message": "Harita simgesi {name} olarak kaydedildi"
+    },
+    "map-icon.output.save-failed": {
+      "message": "Harita simgesi kaydedilemedi"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Harita simgesi önizlemesini kapat"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Harita simgesi"
+    },
+    "map-icon.view-tools": {
+      "message": "Harita simgesi görünümü"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Baklava görünümü"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Üstten görünüm"
+    },
+    "map-icon.look.minimap": {
+      "message": "Küçük harita renkleri"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Doku renkleri"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Oyun dokuları"
+    },
+    "map-icon.look.pending": {
+      "message": "Oyun dokuları uygulanıyor"
+    },
+    "map-icon.look.fallback": {
+      "message": "Oyun dokuları kullanılamadığından simge doku renklerini kullanır."
+    },
+    "map-icon.relief": {
+      "message": "Arazi kabartması"
+    },
+    "map-icon.relief.hide": {
+      "message": "Arazi kabartmasını gizle"
+    },
+    "map-icon.relief.show": {
+      "message": "Arazi kabartmasını göster"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Arazi geçişlerini yumuşat"
+    },
+    "map-icon.random-seed": {
+      "message": "Rastgele tohum"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Editör tohumunu kullan"
+    },
+    "map-icon.seed": {
+      "message": "Harita simgesi tohumu"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Editör tohumu"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Oyuncu kareleri"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Göçebe ayak izleri"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Başlangıç işaretleri yok"
+    },
+    "map-icon.spawn-size": {
+      "message": "Başlangıç işareti boyutu"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Başlangıç işareti boyutunu küçült"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Başlangıç işareti boyutunu büyüt"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "%{value}"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "Harita genişliğine oranı: %{value}"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Başlangıç işareti boyutu (harita genişliğinin yüzdesi)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Ağaçları göster"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Ağaçları gizle"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Ağaç seçenekleri"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "ağaç miktarı"
+    },
+    "map-icon.art.trees.size": {
+      "message": "ağaç boyutu"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Altın ve taşı göster"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Altın ve taşı gizle"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Altın ve taş seçenekleri"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "altın ve taş miktarı"
+    },
+    "map-icon.art.resources.size": {
+      "message": "altın ve taş boyutu"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Daha az"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Daha çok"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "Tür başına bir tane"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "Nesne başına bir tane"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Az"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Orta"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Çok"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Daha küçük"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Daha büyük"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "En küçük"
+    },
+    "map-icon.art.size.small": {
+      "message": "Küçük"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Orta"
+    },
+    "map-icon.art.size.large": {
+      "message": "Büyük"
+    },
+    "map-icon.art.size.largest": {
+      "message": "En büyük"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Başlangıç işaretlerinin altında göster"
+    },
+    "workbench.application-menu.label": {
+      "message": "Uygulama menüsü"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Dosya gezginini gizle"
+    },
+    "workbench.explorer.expand": {
+      "message": "Dosya gezginini göster"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Gezgini gizle"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Gezgini göster"
+    },
+    "workbench.explorer.resize": {
+      "message": "Dosya gezginini yeniden boyutlandır"
+    },
+    "workbench.preview.resize": {
+      "message": "Canlı harita önizlemesini yeniden boyutlandır"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Canlı üretim aşamaları sonraki çalıştırmadan itibaren gösterilecek"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Canlı üretim aşamaları sonraki çalıştırmadan itibaren gizlenecek"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Sorunlar ve çıktı paneli"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Sorunlar, çıktı ve test sonuçları paneli"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Sorunlar ve çıktı panelini yeniden boyutlandır"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Çıktı"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Sorunlar"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Test sonuçları"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Çıktı"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Sorunlar"
+    },
+    "workbench.native.restart-label": {
+      "message": "Hata veren {name} sürecini yeniden başlat"
+    },
+    "workbench.native.failed": {
+      "message": "{name} hata verdi"
+    },
+    "workbench.native.restarted": {
+      "message": "{name} yeniden başlatıldı"
+    },
+    "workbench.native.restart-failed": {
+      "message": "{name} yeniden başlatılamadı"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} durdu"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "{name} test raporu içe aktarıldı"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Harita testi raporu içe aktarılamadı"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Test raporu dışa aktarıldı"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Harita testi raporu dışa aktarılamadı"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Bulgu, kaydedilmiş tohumuyla yeniden üretildi"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Bulgu, kaydedilmiş {seed} tohumuyla yeniden üretildi"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "Oyun klasörünün bağlantısı kaldırılamadı"
+    },
+    "code-editor.panel.label": {
+      "message": "RMS kaynak editörü"
+    },
+    "code-editor.tabs.label": {
+      "message": "Açık dosyalar"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Editör sekmelerini sola kaydır"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Editör sekmelerini sağa kaydır"
+    },
+    "code-editor.tab.close": {
+      "message": "{name} dosyasını kapat"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Kaydedilmemiş değişiklikler"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Salt okunur"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Kaydedilmemiş değişiklikler, salt okunur"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Mod olarak kur…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Kaydet"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Klonla / Farklı kaydet…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Farklı kaydet…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Kapat"
+    },
+    "code-editor.run.preview": {
+      "message": "Önizlemeyi çalıştır"
+    },
+    "code-editor.run.map-test": {
+      "message": "Harita testini çalıştır"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Önizlemeyi çalıştır ve oyunda test et"
+    },
+    "code-editor.run.stop": {
+      "message": "Durdur"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Çalıştır ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Önizlemeyi çalıştır ve oyunda test et ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Durdur ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Önizleme çalıştırma seçenekleri"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Çalıştırılan betik"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Çalıştırılan betiği sabitle"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Tohum"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Tohumu kopyala"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "{seed} tohumunu kopyala"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Tohum kopyalandı"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Kilitli"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Çalıştırırken rastgele seç"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Mevcut maçın tohumunu kullan"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Doğrulanmış, devam eden tek oyunculu bir rastgele harita maçı gerekiyor."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Age of Empires II: Definitive Edition oyun klasörünü seç"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Age of Empires II: Definitive Edition oyun klasörü seçiliyor"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Kurulu Age of Empires II: Definitive Edition oyun klasörü aranıyor"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Çalıştırırken oyunda test et"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Önizlemeyi çalıştır, ardından AoE2DE içinde devam et"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Geçerli bir AoE2Control yürütülebilir dosyası seçin"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "AoE2Control seç"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "AoE2Control seçiliyor…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "Oyunda test için AoE2Control.exe dosyasını seç"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "Oyunda test için AoE2Control.exe dosyası seçiliyor"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "AoE2Control indir"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "AoE2Control sürümleri sayfasını aç"
+    },
+    "code-editor.control.remove.title": {
+      "message": "AoE2Control seçimi kaldırılsın mı?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "Seçili AoE2Control yürütülebilir dosyası seçimini kaldırır ve mevcut oyunda test oturumunun bağlantısını keser. Sonraki oyunda test, devam eden bir maçı değiştirmeden önce yeniden izin ister."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Kaldır"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "AoE2Control sürümleri sayfası açılamadı"
+    },
+    "code-editor.control-download.title": {
+      "message": "AoE2Control arşivini açmadan önce"
+    },
+    "code-editor.control-download.description": {
+      "message": "AoE2Control.zip arşivini açma parolası: {password}. AoE2Control, oyunda Lua çalıştırmak için bir DLL enjekte ettiğinden Windows Defender dahil sezgisel antivirüs araçları yanlış alarm verebilir. Motorun kesintisiz çalışması için arşivden çıkarılan dosyaların klasörünü antivirüs istisnalarına ekleyin."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Anladım"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Canlı harita önizlemesini gizle"
+    },
+    "code-editor.preview.expand": {
+      "message": "Canlı harita önizlemesini göster"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Önizlemeyi gizle"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Önizlemeyi göster"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Betik çalıştırma hatası bildirimini kapat"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Kaydedilmemiş çalışma kurtarıldı"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Kurtarma bildirimini kapat"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "Önizleme artık oyununuzun dokularını kullanıyor"
+    },
+    "code-editor.font-size.label": {
+      "message": "Editör yazı tipi boyutu"
+    },
+    "code-editor.font-size.value": {
+      "message": "%{percent}"
+    },
+    "code-editor.read-only-message": {
+      "message": "Bu kurulum veya abone olunan mod kaynağı korumalıdır. Klonla veya Farklı kaydet seçeneğini kullanın."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Dahil edilen dosyayı aç"
+    },
+    "code-editor.include.open": {
+      "message": "{name} dosyasını aç"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "Burada yeniden adlandırmak betiğin anlamını korumayabilir."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "Tam eşdeğerlik kanıtlanamadı."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} korumalı bir oyun dosyasıdır; yeniden adlandırma bu dosyayı değiştirir."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "Bu satırda {code} uyarısını yoksay"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "Bu çalışma alanında {code} kuralını kapat"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Editör modeli kullanılamıyor."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "Betik dilinin kimliği değişti."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Belge, biçimlendirme başlamadan önce değişti."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Belge, biçimlendirme beklerken değişti."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "İstek iptal edildi."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Starlark kaynağı geçersizken biçimlendirme kullanılamaz."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "Biçimlendirme için dört boşluklu girintilerin zaten geçerli olması gerekir; belirteç yapısı değiştirilmedi."
+    },
+    "code-editor.completion.content.object": {
+      "message": "nesne {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "arazi {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Harita testi"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Starlark yerleşik işlevi"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Starlark {type} metodu"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Önceden tanımlanmış Starlark işlevi"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Starlark işlev parametresi"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Önceden tanımlanmış Starlark değişkeni"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Starlark döngü değişkeni"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} bu belgede daha önce tanımlandı."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Starlark işlevi"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "RMS ve XS kaynakları"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "RMS, XS ve harita testi kaynakları"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Kaynak dosyaları aç"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "RMS klasörü aç"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Kaynağı farklı kaydet"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Harita testi raporu"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Harita testi raporunu dışa aktar"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Harita testi raporunu içe aktar"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Age of Empires II: Definitive Edition klasörü seç"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Düzenlenebilir harita klonu için üst klasör seç"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "AoE2Control yürütülebilir dosyasını seç"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "AoE2Control yürütülebilir dosyası"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Harita simgesini kaydet"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "PNG görseli"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Dahil edilen dosyalar yenilenemedi"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "Silme işleminden sonra oturum güncellenemedi"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Bazı klasörler Gezgin panelinde gösterilemedi"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, one {Bir çalışma alanı dosyası bir oyun kitaplığı dosyasıyla aynı adı taşıyor} other {Çalışma alanı dosyaları oyun kitaplığı dosyalarıyla aynı adları taşıyor}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Düzenlenebilirler ancak dahil etme komutları bunların yerine oyunun dosyasını seçebilir."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, one {{paths, list, unit} ve {count} tane daha. Düzenlenebilirler ancak dahil etme komutları bunların yerine oyunun dosyasını seçebilir.} other {{paths, list, unit} ve {count} tane daha. Düzenlenebilirler ancak dahil etme komutları bunların yerine oyunun dosyasını seçebilir.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Yeniden adlandırın"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "Oyun kitaplığı dosya adları kontrolü tamamlanamadı"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Hiçbir şey açılmadı"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, one {İstekte {count} sınırını aşan sayıda dosya ve klasör belirtildi.} other {İstekte {count} sınırını aşan sayıda dosya ve klasör belirtildi.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "İstekteki yollar AoE2RMSIDE tarafından kabul edilenden daha uzun."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Aynı anda çok fazla açma isteği geldi. Kalan öğeleri yeniden açın."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "{name} açılmadı"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Mevcut değil veya erişilemiyor."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Geçerli bir dosya veya klasör yolu değil."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE klasörleri ve .rms, .rms2, .inc, .def ve .xs dosyalarını açar."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE klasörleri ve .rms, .rms2, .inc, .def, .xs ve .rmstest dosyalarını açar."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Aynı anda tek bir klasör açılır."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Aynı anda tek bir klasör açılır; {folder} klasörü açıldı."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Okunamadı."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, one {# öğe daha açılmadı} other {# öğe daha açılmadı}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Mevcut değiller, okunamıyorlar veya AoE2RMSIDE tarafından açılan dosya türlerinden değiller."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "bu adda bir öğe zaten var"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "bu adda veya bununla eşleşen kısa adlı bir öğe zaten var"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "geçerli bir Windows dosya veya klasör adı değil"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "yalnızca .rms, .rms2, .inc, .def ve .xs kaynak dosyaları desteklenir"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "yalnızca .rms, .rms2, .inc, .def, .rmstest ve .xs kaynak dosyaları desteklenir"
+    },
+    "file-actions.entry.read-only": {
+      "message": "çalışma alanı öğesi salt okunur veya korumalı"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "çalışma alanının kök klasörü yeniden adlandırılamaz veya silinemez"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "''{name}'' standart bir oyun kaynağı için ayrılmıştır; başka bir dosya adı seçin."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Son oturumdaki kaydedilmemiş çalışma okunamadığı için atlandı"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "Kurtarılan çalışma alanı klasörüne erişilemiyor."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "Önceki çalışma alanı klasörüne erişilemediği için atlandı."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "Erişilemeyen {name} oturum sekmesi atlandı."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "{name}, kaynağına erişilemediği için kaydedilmemiş bir arabellek olarak kurtarıldı."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, one {Bağlı oyundan {converted} arazi dosyası dönüştürüldü ve {reused} dosya yeniden kullanıldı; süre: {seconds, number, ::.0 group-off} sn} other {Bağlı oyundan {converted} arazi dosyası dönüştürüldü ve {reused} dosya yeniden kullanıldı; süre: {seconds, number, ::.0 group-off} sn}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Yerel önbellek: {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, one {{count} arazi dosyası dönüştürülemedi; küçük harita renkleri kullanılıyor} other {{count} arazi dosyası dönüştürülemedi; küçük harita renkleri kullanılıyor}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Örneğin {asset}: {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Nesne {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Arazi {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Duvar {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Oyuncu {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Yardımcı nesne"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Uçurum"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Uçurum türü {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Kara bağlantısı"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Su bağlantısı"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Yol bağlantısı"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Bilinmeyen bağlantı"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Yol bulunamayan bağlantı araması"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Önizleme seçiminde belirsizlik: {layer} · {count, plural, one {{count} seçili} other {{count} seçili}} · {sources, plural, one {{sources} ayrı kaynak} other {{sources} ayrı kaynak}} · kullanılan konum: {location}."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Çimen"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Sığ su"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Su"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Kumsal"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Çıplak toprak"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Taş"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Toprak"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Uçurum yüzeyi"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Kara"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Yükseklik"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Uçurumlar"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Arazi"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Bağlantılar"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Nesneler"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Tamamlandı"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Üretiliyor · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Örnek {sample} (tohum {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Örnek {sample} (tohum {seed}) tamamlandı · toplu işlem sürüyor"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Ok tuşları bir kare seçer, Shift+Ok seçimi genişletir, Ctrl+Ok görünümü kaydırır, artı ve eksi yakınlaştırır ve uzaklaştırır, 0 haritayı sığdırır, Ctrl+A tüm haritayı seçer, Escape seçimi temizler."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Seçim temizlendi"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Kare {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "{fromX}, {fromY} ile {toX}, {toY} arasındaki kareler, {count, plural, one {{count} kare} other {{count} kare}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Katman yok"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, one {{count} katman} other {{count} katman}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, one {{count} katman} other {{count} katman}}: {shown, list, unit} ve {more} tane daha"
+    },
+    "preview-panel.run.include-only": {
+      "message": ".inc, .def ve .xs belgeleri yalnızca başka betiklere dahil edilebilir; çalıştırılamaz."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Nesneler ve Şehir Merkezinin kapladığı alan"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Uçurum kenarları"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Bağlantıların arazi değişiklikleri"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Bağlantı çizgileri"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Bağlantı çizgileri kapalı"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "İzlenen bağlantı yolları"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "Gösterilen yollar: {shown, number} / {total, number}"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "İzlenen yollar harita bitince gösterilir"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "Bu harita için izlenen yollar kullanılamıyor"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Yükseklik kapalı"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Arazi kabartması"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Yükseklik haritası"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Üstten görünüm"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Baklava görünümü"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Küçük harita renkleri"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Doku renkleri"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Oyun dokuları"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Oyun dokuları uygulanıyor"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Kare ızgarası"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "küçük harita renklerinde üstten harita önizlemesi"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "doku renklerinde üstten harita önizlemesi"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "oyun dokularıyla üstten harita önizlemesi"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "küçük harita renklerinde 2:1 oranlı baklava harita önizlemesi"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "doku renklerinde 2:1 oranlı baklava harita önizlemesi"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "oyun dokularıyla 2:1 oranlı baklava harita önizlemesi"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "harita"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Harita önizlemesi hazır"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Harita önizlemesi güncellendi"
+    },
+    "preview-panel.panel.label": {
+      "message": "Canlı harita önizlemesi"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Harita görünüm kontrolleri"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Bağlantı katmanları"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Ok tuşları kare seçer"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "Önizleme durumu"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Sertifikasız"
+    },
+    "preview-panel.status.seed": {
+      "message": "Tohum {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Revizyon {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "üretim"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "Önbellek {entries} · {hits} isabet"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Düzenleniyor"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Analiz ediliyor"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Değişmedi"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Güncel değil - Geçersiz kaynak"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Üretiliyor"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "Güncel"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Güncel değil - Üretim başarısız"
+    },
+    "preview-panel.legend.label": {
+      "message": "Seçili karelerin katman açıklamaları"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Seçili öğeleri filtrele"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Seçili öğe filtresini temizle"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Filtrele"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Eşleşen öğe yok"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Seçili katman satırları"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, şu ana kadar {count} seçili"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Kaynağı aç: {name}, {count} seçili"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Yardımcı nesneleri göster ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Yardımcı nesneleri gizle ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Dahili geliştirme test verileri"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Dahili test verileri · Sertifikasız"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Dahili · Sertifikasız"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "{fixture} test verisini çalıştır"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Okunuyor"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Oyunun görsel kataloğu okunuyor"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Oyunun görsel kataloğu okunuyor, %{percent} ({completed} / {total} {unit, select, graphics {görsel} other {dosya}})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "İçe alınıyor"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Arazi dokuları içe aktarılıyor"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Arazi dokuları içe aktarılıyor, %{percent} ({completed} / {total} {unit, select, graphics {görsel} other {dosya}})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Harmanlanıyor"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Arazi geçişleri harmanlanıyor"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Arazi geçişleri harmanlanıyor, %{percent} ({completed} / {total} {unit, select, graphics {görsel} other {dosya}})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Maskeleniyor"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Arazi örtüşme maskeleri hazırlanıyor"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Arazi örtüşme maskeleri hazırlanıyor, %{percent} ({completed} / {total} {unit, select, graphics {görsel} other {dosya}})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Görseller"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Bu haritanın nesne görselleri dönüştürülüyor"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Bu haritanın nesne görselleri dönüştürülüyor, %{percent} ({completed} / {total} {unit, select, graphics {görsel} other {dosya}})"
+    },
+    "game-art.progress.label": {
+      "message": "Oyun görselleri dönüştürülüyor"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, one {Bağlı oyunda {count} nesne türünün görseli yok; küçük harita simgesi korunuyor: {names, list, unit}} other {Bağlı oyunda {count} nesne türünün görseli yok; küçük harita simgeleri korunuyor: {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, one {Bağlı oyunda {count} nesne türünün görseli yok; küçük harita simgesi korunuyor: {names, list, unit} ve {more} tane daha} other {Bağlı oyunda {count} nesne türünün görseli yok; küçük harita simgeleri korunuyor: {names, list, unit} ve {more} tane daha}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (nesne {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "nesne {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, one {Bağlı oyunda {count} uçurum parçasının görseli yok; uçurum çizgisi korunuyor} other {Bağlı oyunda {count} uçurum parçasının görseli yok; uçurum çizgileri korunuyor}}"
+    },
+    "profiler.group.parse": {
+      "message": "Ayrıştırma"
+    },
+    "profiler.group.setup": {
+      "message": "Hazırlık"
+    },
+    "profiler.group.land": {
+      "message": "Kara"
+    },
+    "profiler.group.elevation": {
+      "message": "Yükseklik"
+    },
+    "profiler.group.cliffs": {
+      "message": "Uçurumlar"
+    },
+    "profiler.group.terrain": {
+      "message": "Arazi"
+    },
+    "profiler.group.connections": {
+      "message": "Bağlantılar"
+    },
+    "profiler.group.objects": {
+      "message": "Nesneler"
+    },
+    "profiler.group.finalize": {
+      "message": "Sonlandırma"
+    },
+    "profiler.step.parse-script": {
+      "message": "Betik ayrıştırma"
+    },
+    "profiler.step.setup-players": {
+      "message": "Oyuncu hazırlığı"
+    },
+    "profiler.step.land-generate": {
+      "message": "Kara üretimi"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Yükseklik üretimi"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Uçurum üretimi"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Arazi üretimi"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Bağlantı üretimi"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Nesne yerleştirme"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Oyun modu son işlemleri"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Nesne sıralama"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Birleşik arazi"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, one {# işlem} other {# işlem}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, one {# RNG çekimi} other {# RNG çekimi}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, one {# aday} other {# aday}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, one {# kare} other {# kare}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, one {# yol araması} other {# yol araması}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, one {# birim yol arama işi} other {# birim yol arama işi}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, one {# ret} other {# ret}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, one {# nesne} other {# nesne}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, one {# kare kontrol edildi} other {# kare kontrol edildi}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, one {# kare karaya eklendi} other {# kare karaya eklendi}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Kara genişletilirken seçilip kontrol edilen kareler; eklenenler karanın parçası oldu."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, one {Büyütme sırasında # kare kontrol edildi} other {Büyütme sırasında # kare kontrol edildi}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, one {# kare yükseltildi} other {# kare yükseltildi}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Tepeler büyütülürken seçilip kontrol edilen kareler. Yükseltilen karelere, kontrol edilenler arasında sayılmayan tepe başlangıç kareleri de dahildir."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, one {# uçurum konumu değerlendirildi} other {# uçurum konumu değerlendirildi}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Uçurum yerleştirilebilecek harita konumları."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, one {# yol araması} other {# yol araması}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, one {# arama adımı} other {# arama adımı}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, one {# kare boyandı} other {# kare boyandı}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Her yol araması iki bağlantı noktası arasında bir rota arar; boyanan kare sayısı, rotalar boyunca yapılan her arazi değişikliğini içerir."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, one {# olası konum} other {# olası konum}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, one {# grup reddedildi} other {# grup reddedildi}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, one {# nesne yerleştirildi} other {# nesne yerleştirildi}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Olası konumlar her yerleştirme denemesinde sayılır; bir kare birden fazla kez sayılabilir. Bir konum kontrolleri geçemediğinde veya konum kalmadığında grup reddedilir."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "İlk adımın tamamlanması bekleniyor"
+    },
+    "profiler.pending.group": {
+      "message": "{group} sürüyor"
+    },
+    "profiler.pending.step": {
+      "message": "{step} sürüyor"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} sn"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<%0,1"
+    },
+    "profiler.percent.whole": {
+      "message": "%{percent, number, ::precision-integer group-off}"
+    },
+    "profiler.percent.tenths": {
+      "message": "%{percent, number, ::.0 group-off}"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "yüzde 0,1 değerinden az"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "yüzde {percent, number, ::precision-integer group-off}"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "yüzde {percent, number, ::.0 group-off}"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Çalıştırma profili: üretiliyor, motor bekleniyor"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Çalıştırma profili: üretiliyor, motor bekleniyor, {seconds, number, ::.00 group-off} saniye"
+    },
+    "profiler.status.running.steps": {
+      "message": "Çalıştırma profili: üretiliyor, tamamlanan adım: {completed} / {total}"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Çalıştırma profili: üretiliyor, tamamlanan adım: {completed} / {total}, {seconds, number, ::.00 group-off} saniye"
+    },
+    "profiler.status.cached": {
+      "message": "Çalıştırma profili: önbellekten alınan çalıştırma, {seconds, number, ::.00 group-off} saniye, bu önizleme ilk üretildiğinde ölçüldü"
+    },
+    "profiler.status.committed": {
+      "message": "Çalıştırma profili: {seconds, number, ::.00 group-off} saniyelik RMS çalıştırması"
+    },
+    "profiler.status.unsupported": {
+      "message": "Çalıştırma profili: bu önizleme için ölçüm yok"
+    },
+    "profiler.status.idle": {
+      "message": "Çalıştırma profili"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Üretiliyor, motor bekleniyor"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Üretiliyor, {completed} / {total} adım"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Çalıştırma maliyeti (önbellekten)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Çalıştırma maliyeti"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Çalıştırma maliyeti ölçümü yok"
+    },
+    "profiler.description": {
+      "message": "Bu bilgisayardaki tek bir çalıştırmadan elde edilen yaklaşık bir yerel karmaşıklık göstergesidir; oyun içindeki üretim süresini tahmin etmez."
+    },
+    "profiler.description.cached": {
+      "message": "Önbellekten alınan çalıştırma: bu önizleme ilk üretildiğinde ölçüldü; motor tekrar çalışmadı. Bu bilgisayardaki tek bir çalıştırmadan elde edilen yaklaşık bir yerel karmaşıklık göstergesidir; oyun içindeki üretim süresini tahmin etmez."
+    },
+    "profiler.description.map-test": {
+      "message": "Örnekleri eşzamanlı çalışabilen bir harita testi sırasında ölçüldü. Bu bilgisayardaki tek bir çalıştırmadan elde edilen yaklaşık bir yerel karmaşıklık göstergesidir; oyun içindeki üretim süresini tahmin etmez."
+    },
+    "profiler.panel.label": {
+      "message": "Çalıştırma maliyeti profili"
+    },
+    "profiler.panel.steps": {
+      "message": "Çalıştırma adımları"
+    },
+    "profiler.panel.table": {
+      "message": "Süreye göre çalıştırma adımları"
+    },
+    "profiler.panel.empty": {
+      "message": "Bu önizlemenin çalıştırma maliyeti ölçümü yok."
+    },
+    "profiler.chart.label": {
+      "message": "Üretim gruplarına göre RMS çalıştırma süresi"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Başarılı"
+    },
+    "test-results.results.status.failed": {
+      "message": "Başarısız"
+    },
+    "test-results.results.status.error": {
+      "message": "Hata"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Durduruldu"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, one {# bulgu} other {# bulgu}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{seeds, plural, one {# tohumda} other {# tohumda}} {findings, plural, one {# bulgu} other {# bulgu}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, one {# harita} other {# harita}} · {assertions, plural, one {# doğrulama} other {# doğrulama}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, satır {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Satır {line} üzerindeki kontrol"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Bulgu yok. Haritadaki tüm kontroller başarılı.} one {Bulgu yok. Haritadaki tüm kontroller başarılı.} other {Bulgu yok. # haritanın tümündeki bütün kontroller başarılı.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Bulgu yok. Test, ürettiği {maps, plural, one {# haritada} other {# haritada}} hiçbir kontrol yapmadı."
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Dışa aktar"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Bu sonuçları rapor dosyası olarak kaydet. Rapor; betiklerinizi, üretilen haritaları ve tam dosya yollarını içermez."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, one {{count} harita testi bulgusu} other {{count} harita testi bulgusu}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Konuma git: {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "Kontrol"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Satır {line} üzerindeki kontrolün bulgularını gizle"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Satır {line} üzerindeki kontrolün bulgularını göster"
+    },
+    "test-results.results.check-findings": {
+      "message": "Satır {line} üzerindeki kontrolün bulguları"
+    },
+    "test-results.results.show-more": {
+      "message": "{count} tane daha göster"
+    },
+    "test-results.results.not-shown": {
+      "message": "· {count, number} gösterilmiyor"
+    },
+    "test-results.results.show-seed": {
+      "message": "{map} haritasını {seed} tohumu ile önizlemede göster"
+    },
+    "test-results.results.seed": {
+      "message": "tohum {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Bulgu"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Minik"
+    },
+    "game-options.map-size.small": {
+      "message": "Küçük"
+    },
+    "game-options.map-size.medium": {
+      "message": "Orta"
+    },
+    "game-options.map-size.normal": {
+      "message": "Normal"
+    },
+    "game-options.map-size.large": {
+      "message": "Büyük"
+    },
+    "game-options.map-size.huge": {
+      "message": "Kocaman"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Muazzam"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Rastgele Harita"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Kral Katili"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "Ölüm Karşılaşması"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "Tepenin Kralı"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "Dünya Harikası Yarışı"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Dünya Harikası Savunma"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Turbo Rastgele Harita"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Kadim Eseri Ele Geçir"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Ani Ölüm"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Hayatta Kalma Savaşı"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "İmparatorluk Savaşları"
+    },
+    "game-options.resources.standard": {
+      "message": "Standart kaynaklar"
+    },
+    "game-options.resources.low": {
+      "message": "Az kaynak"
+    },
+    "game-options.resources.medium": {
+      "message": "Orta kaynak"
+    },
+    "game-options.resources.high": {
+      "message": "Bol kaynak"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Çok bol kaynak"
+    },
+    "game-options.resources.infinite": {
+      "message": "Sınırsız kaynak"
+    },
+    "game-options.resources.random": {
+      "message": "Rastgele kaynaklar"
+    },
+    "game-options.age.standard": {
+      "message": "Standart başlangıç çağı"
+    },
+    "game-options.age.dark-age": {
+      "message": "Karanlık Çağ"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Feodal Çağ"
+    },
+    "game-options.age.castle-age": {
+      "message": "Kale Çağı"
+    },
+    "game-options.age.imperial-age": {
+      "message": "İmparatorluk Çağı"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "İmparatorluk Ötesi Çağ"
+    },
+    "game-options.positions.random": {
+      "message": "Rastgele konumlar"
+    },
+    "game-options.positions.fixed": {
+      "message": "Sabit konumlar"
+    },
+    "game-options.positions.team-together": {
+      "message": "Takım oluşturun"
+    },
+    "game-options.color.blue": {
+      "message": "Mavi"
+    },
+    "game-options.color.red": {
+      "message": "Kırmızı"
+    },
+    "game-options.color.green": {
+      "message": "Yeşil"
+    },
+    "game-options.color.yellow": {
+      "message": "Sarı"
+    },
+    "game-options.color.cyan": {
+      "message": "Açık Mavi"
+    },
+    "game-options.color.purple": {
+      "message": "Mor"
+    },
+    "game-options.color.gray": {
+      "message": "Gri"
+    },
+    "game-options.color.orange": {
+      "message": "Turuncu"
+    },
+    "game-options.team.none": {
+      "message": "Takım yok"
+    },
+    "game-options.team.numbered": {
+      "message": "{team} Takımı"
+    },
+    "game-options.flag.turbo": {
+      "message": "Turbo"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Bütün teknoloji ağacı"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Antik Çağ"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Geçilmez tarlalar"
+    },
+    "game-options.civilization.random": {
+      "message": "Rastgele"
+    },
+    "game-options.civilization.britons": {
+      "message": "Britonlar"
+    },
+    "game-options.civilization.franks": {
+      "message": "Franklar"
+    },
+    "game-options.civilization.goths": {
+      "message": "Gotlar"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Tötonlar"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Japonlar"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Çinliler"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Bizanslılar"
+    },
+    "game-options.civilization.persians": {
+      "message": "Persler"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Sarazenler"
+    },
+    "game-options.civilization.turks": {
+      "message": "Türkler"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Vikingler"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Moğollar"
+    },
+    "game-options.civilization.celts": {
+      "message": "Keltler"
+    },
+    "game-options.civilization.spanish": {
+      "message": "İspanyollar"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Aztekler"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Maya"
+    },
+    "game-options.civilization.huns": {
+      "message": "Hunlar"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Koreliler"
+    },
+    "game-options.civilization.italians": {
+      "message": "İtalyanlar"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Hindistanlılar"
+    },
+    "game-options.civilization.incas": {
+      "message": "İnka"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Macarlar"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Slavlar"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Portekizliler"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Etiyopyalılar"
+    },
+    "game-options.civilization.malians": {
+      "message": "Malililer"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Berberiler"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Kmerler"
+    },
+    "game-options.civilization.malay": {
+      "message": "Malaylar"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Birmanlar"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "Vietnamlılar"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Bulgarlar"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Tatarlar"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Kumanlar"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Litvanyalılar"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Burgonyalılar"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Sicilyalılar"
+    },
+    "game-options.civilization.poles": {
+      "message": "Polonyalılar"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Bohemyalılar"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Dravidler"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Bengalliler"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Gurjaralar"
+    },
+    "game-options.civilization.romans": {
+      "message": "Romalılar"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Ermeniler"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Gürcistanlılar"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Ahamenişler"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Atinalılar"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Spartalılar"
+    },
+    "game-options.civilization.shu": {
+      "message": "Shu"
+    },
+    "game-options.civilization.wu": {
+      "message": "Wu"
+    },
+    "game-options.civilization.wei": {
+      "message": "Wei"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Curçenler"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Hıtaylar"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Makedonlar"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Trakyalılar"
+    },
+    "game-options.civilization.puru": {
+      "message": "Puru"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Muisca"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Mapuçe"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Tupi"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Saksonlar"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Varegler"
+    },
+    "game-options.civilization.danes": {
+      "message": "Danimarkalılar"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Uygarlık {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Önizleme"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Önizleme üretiliyor (adım {step} / {total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Bağlanılıyor"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "AoE2Control bağlantısı kuruluyor (adım {step} / {total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Denetleniyor"
+    },
+    "live-test.progress.ending": {
+      "message": "Bitiriliyor"
+    },
+    "live-test.progress.copying": {
+      "message": "Kopyalanıyor"
+    },
+    "live-test.progress.selecting": {
+      "message": "Seçiliyor"
+    },
+    "live-test.progress.starting": {
+      "message": "Başlatılıyor"
+    },
+    "live-test.progress.verifying": {
+      "message": "Doğrulanıyor"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Maç doğrulanıyor (adım {step} / {total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Bekleniyor"
+    },
+    "live-test.progress.verified": {
+      "message": "Doğrulandı"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Maç doğrulandı"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "AoE2Control kontrol ediliyor (adım {step} / {total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Oyun kontrol ediliyor (adım {step} / {total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Mevcut maç bitiriliyor (adım {step} / {total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Harita oyuna kopyalanıyor (adım {step} / {total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Oyunda harita seçiliyor (adım {step} / {total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Maç başlatılıyor (adım {step} / {total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "Önceki AoE2Control örneğinin bellekten çıkarılması bekleniyor (adım {step} / {total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "AoE2Control uygulamasının oyun içinde başlaması bekleniyor (adım {step} / {total})"
+    },
+    "live-test.progress.label": {
+      "message": "Oyunda test"
+    },
+    "live-test.replace-match.title": {
+      "message": "Devam eden maç değiştirilsin mi?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE tek oyunculu maçı bitirip önizlemenin bu revizyonunu başlatacak. AoE2Control seçimini kaldırana kadar yeniden sormayacak."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Maçı bitir ve değiştir"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Önce geçerli bir AoE2Control yürütülebilir dosyası seçin."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Mevcut maçın tohumunu okumak için AoE2Control uygulamasını yapılandırın."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control bağlanıyor. El sıkışma tamamlandıktan sonra yeniden deneyin."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "Maç bilgileri okunamıyor. AoE2Control bağlantısını yeniden kurup tekrar deneyin."
+    },
+    "live-test.seed.replay": {
+      "message": "Oyun kayıtlarının tohumları içe aktarılamaz."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Çok oyunculu maçların tohumları içe aktarılamaz."
+    },
+    "live-test.seed.state-changing": {
+      "message": "Maçın durumu değişiyor veya bilinmiyor. Biraz bekleyip yeniden deneyin."
+    },
+    "live-test.seed.no-match": {
+      "message": "Önce desteklenen tek oyunculu bir rastgele harita maçı başlatın."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "Devam eden maçın ayarları okunamıyor. AoE2Control bağlantısını yeniden kurup tekrar deneyin."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "Devam eden maç desteklenen bir rastgele harita maçı değil."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "Devam eden maçın tohumu okunamıyor. AoE2Control bağlantısını yeniden kurup tekrar deneyin."
+    },
+    "live-test.seed.busy": {
+      "message": "Bir AoE2Control işlemi zaten sürüyor."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control maç tohumunu döndürmedi."
+    },
+    "live-test.control.missing": {
+      "message": "Seçili yürütülebilir dosya taşındı veya kaldırıldı."
+    },
+    "live-test.control.changed": {
+      "message": "Seçili yürütülebilir dosya değişti. Yeni dosyaya güvenmek için yeniden seçin."
+    },
+    "live-test.control.invalid": {
+      "message": "Seçili dosya, yayımlanmış geçerli bir AoE2Control yürütülebilir dosyası değil."
+    },
+    "workspace.format.save-skipped": {
+      "message": "{name} dosyasında kaydederken biçimlendirme atlandı"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "{name} dosyasının kaydedilmesi iptal edildi"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} salt okunur olduğundan biçimlendirilmedi"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} zaten biçimlendirilmiş"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} biçimlendirilmedi"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "Biçimlendirici zamanında tamamlanmadı."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "Tam eşdeğerlik kanıtlanamadı."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Biçimlendirme isteği güncelliğini yitirdi."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name}, AoE2RMSIDE dışında silindi"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "Metni editörde açık kalır."
+    },
+    "workspace.files.reloaded": {
+      "message": "{name}, diskte değiştiği için yeniden yüklendi"
+    },
+    "workspace.recovery.restored": {
+      "message": "Önceki oturumdan {count, plural, one {{count} kaydedilmemiş arabellek} other {{count} kaydedilmemiş arabellek}} kurtarıldı"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "Kaynak dosyaların üzerine yazılmadı."
+    },
+    "workspace.failed.save": {
+      "message": "Dosya kaydedilemedi"
+    },
+    "workspace.failed.open-file": {
+      "message": "Dosya açılamadı"
+    },
+    "workspace.failed.open-folder": {
+      "message": "Klasör açılamadı"
+    },
+    "workspace.failed.open-recent": {
+      "message": "Son kullanılan öğe açılamadı"
+    },
+    "workspace.failed.open-requested": {
+      "message": "İstenen öğeler açılamadı"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "Sürüklenip bırakılan öğeler açılamadı"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Bu harita öğesini yerleştiren betik açılamadı"
+    },
+    "workspace.failed.create": {
+      "message": "Öğe oluşturulamadı"
+    },
+    "workspace.failed.rename": {
+      "message": "Öğe yeniden adlandırılamadı"
+    },
+    "workspace.failed.delete": {
+      "message": "Öğe silinemedi"
+    },
+    "workspace.failed.restore-session": {
+      "message": "Önceki oturum geri yüklenemedi"
+    },
+    "workspace.failed.back-up": {
+      "message": "Kaydedilmemiş çalışma yedeklenemedi"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Daha küçük bir kaynak klasörü kullanın veya bazı kaynak sekmelerini kapatıp yeniden deneyin."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Güncelleme kuyruğu dolu olduğundan bazı editör tanıları atlandı."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "Editör desteği sınırlı"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Etkilenen kaynaklar için Ayrıntılar bölümüne bakıp yeniden deneyin."
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Bazı editör kontrolleri güncel kaynak dosyalarını kullanamadı."
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "klasör derinliği"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "dizin öğeleri"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "ad üst verisi, bayt"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "dahil edilen dosya yolları"
+    },
+    "file-actions.included-files.changed": {
+      "message": "Dahil edilen dosyalar kontrol edilirken kaynaklar değişti. Yeniden çalıştırın."
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "Dahil edilen dosyalar aranırken sınır aşıldı ({budget}, kapsam: {scope}): kullanılan {used, number, integer}; sınır {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Dahil edilen dosyalar için daha küçük bir klasör kullanın veya gereken bağımlılıkları azaltın."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "Harita testinin kaynakları hazırlanamadı"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "Harita testi {limit, number, integer} MiB kaynak verisi sınırını aşıyor. Bir testte daha az harita çalıştırın."
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "Harita testi {limit, number, integer} harita sınırını aşıyor. Bir testte daha az harita çalıştırın."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "Harita testi {limit, number, integer} MiB kaynak üst verisi sınırını aşıyor. Bir testte daha az harita çalıştırın."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "Harita testi {limit, number, integer} kaynak kaydı sınırını aşıyor. Bir testte daha az harita çalıştırın."
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope}, dosya başına {limit, number, integer} MiB sınırını aşıyor."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "Gerekli kaynak dosyaları toplam {limit, number, integer} MiB sınırını aşıyor."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Gerekli kaynak dosyaları {limit, number, integer} dosya sınırını aşıyor."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "Gerekli kaynak bilgileri {limit, number, integer} MiB üst veri sınırını aşıyor."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Gerekli kaynak verisini azaltıp yeniden çalıştırın."
+    },
+    "release-check.newer.headline": {
+      "message": "AoE2RMSIDE {version} kullanıma sunuldu"
+    },
+    "release-check.newer.cause": {
+      "message": "{current} sürümünü kullanıyorsun."
+    },
+    "release-check.newer.action": {
+      "message": "Sürümler sayfasını aç"
+    }
+  }
+}

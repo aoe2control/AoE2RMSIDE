@@ -1,0 +1,31 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2rmside-application-icon",
+  "files": [
+    {
+      "path": "assets/original/branding/aoe2rmside-icon.ico",
+      "sha256": "ae1e75e1ccbdf77f0b3fb4b91212a4645dd151a0c2e5e3c537dfb6132726dc38",
+      "authorship": "AoE2RMSIDE project owner; original application icon composed on 2026-10-04 from the project's own original art.",
+      "license": "Apache-2.0",
+      "sourceClassification": "generated-independent",
+      "created": "2026-10-04",
+      "containsGameContent": false,
+      "transformation": "Rendered from the project's own map-square and palm composition: a white square turned 45 degrees with a black border (the top-down map preview), with the palm of the project's original tree sprite sheet (assets/original/map-icon-trees/tree-spritesheet-v1.webp, row 1, column 4) chroma-keyed, smoothed and reduced to two flat greyscale tones with a thick dark outline, placed slightly below and left of centre as chosen by the project owner, transparent background, cropped to the square's tips. Contains 16, 24, 32, 48, 64, 128 and 256 pixel entries."
+    },
+    {
+      "path": "assets/original/branding/aoe2rmside-icon-512.png",
+      "sha256": "bd5885a9e8d560b7984217149214fe282944d74e22ebc812d67f6681245e4913",
+      "authorship": "AoE2RMSIDE project owner; original application icon composed on 2026-10-04 from the project's own original art.",
+      "license": "Apache-2.0",
+      "sourceClassification": "generated-independent",
+      "created": "2026-10-04",
+      "containsGameContent": false,
+      "transformation": "The same composition as aoe2rmside-icon.ico at 512 x 512 pixels, transparent background."
+    }
+  ]
+}

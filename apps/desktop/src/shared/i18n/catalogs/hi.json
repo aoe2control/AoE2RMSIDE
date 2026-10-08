@@ -1,0 +1,4626 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "hi",
+  "name": "हिन्दी",
+  "direction": "ltr",
+  "listPatterns": {
+    "unit": {
+      "two": "{0}, {1}",
+      "start": "{0}, {1}",
+      "middle": "{0}, {1}",
+      "end": "{0}, {1}"
+    }
+  },
+  "messages": {
+    "app-menu.file.name": {
+      "message": "फ़ाइल"
+    },
+    "app-menu.edit.name": {
+      "message": "संपादन"
+    },
+    "app-menu.view.name": {
+      "message": "दृश्य"
+    },
+    "app-menu.help.name": {
+      "message": "सहायता"
+    },
+    "app-menu.file.new-file": {
+      "message": "नई फ़ाइल"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "नई मानचित्र-परीक्षण स्क्रिप्ट"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "परिभाषा फ़ाइल बनाएँ…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "नई XS स्क्रिप्ट"
+    },
+    "app-menu.file.open-file": {
+      "message": "फ़ाइल खोलें…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "फ़ोल्डर खोलें…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "इंस्टॉल किए गए मानचित्र देखें…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "मॉड के रूप में तैनात करें…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "गेम फ़ोल्डर खोलें"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "गेम फ़ोल्डर का लिंक हटाएँ"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "परीक्षण रिपोर्ट आयात करें…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "हाल के आइटम खोलें"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "हाल की कोई फ़ाइल या फ़ोल्डर नहीं"
+    },
+    "app-menu.file.save": {
+      "message": "सहेजें"
+    },
+    "app-menu.file.save-as": {
+      "message": "इस रूप में सहेजें…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "RMS फ़ाइलों का डिफ़ॉल्ट ऐप चुनें…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Windows सेटिंग्स नहीं खुल सकीं"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "Windows सेटिंग्स का डिफ़ॉल्ट ऐप पेज खुला"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": ".rms और .rms2 फ़ाइलें AoE2RMSIDE में खोलने के लिए वहाँ इसे चुनें। Windows डिफ़ॉल्ट को आपकी पुष्टि के बाद ही बदलता है।"
+    },
+    "app-menu.file.close-tab": {
+      "message": "टैब बंद करें"
+    },
+    "app-menu.file.close-folder": {
+      "message": "फ़ोल्डर बंद करें"
+    },
+    "app-menu.file.close-window": {
+      "message": "विंडो बंद करें"
+    },
+    "app-menu.file.exit": {
+      "message": "बाहर निकलें"
+    },
+    "app-menu.edit.undo": {
+      "message": "पूर्ववत करें"
+    },
+    "app-menu.edit.redo": {
+      "message": "फिर से करें"
+    },
+    "app-menu.edit.cut": {
+      "message": "काटें"
+    },
+    "app-menu.edit.copy": {
+      "message": "कॉपी करें"
+    },
+    "app-menu.edit.paste": {
+      "message": "चिपकाएँ"
+    },
+    "app-menu.edit.select-all": {
+      "message": "सभी चुनें"
+    },
+    "app-menu.edit.format-document": {
+      "message": "दस्तावेज़ फ़ॉर्मैट करें"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "सहेजते समय फ़ॉर्मैट करें"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "if/else ब्लॉक में इंडेंट दें"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "हटाते समय रीसायकल बिन छोड़ें"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "लेआउट रीसेट करें"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "GPU से मानचित्र रेंडर करें"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "निर्माण के चरण साथ-साथ दिखाएँ"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "इनले संकेत दिखाएँ"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "लिंट नियम"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "भाषा…"
+    },
+    "app-menu.view.theme": {
+      "message": "थीम"
+    },
+    "app-menu.view.theme.system": {
+      "message": "सिस्टम"
+    },
+    "app-menu.view.theme.light": {
+      "message": "हल्की"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "गहरी"
+    },
+    "app-menu.view.actual-size": {
+      "message": "वास्तविक आकार"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "ज़ूम बढ़ाएँ"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "ज़ूम घटाएँ"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "पूर्ण स्क्रीन चालू/बंद करें"
+    },
+    "app-menu.help.documentation": {
+      "message": "दस्तावेज़ीकरण"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Discord से जुड़ें"
+    },
+    "app-menu.help.report-bug": {
+      "message": "बग की रिपोर्ट करें"
+    },
+    "app-menu.help.about": {
+      "message": "{product} के बारे में"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "लिंक किया गया गेम फ़ोल्डर नहीं खुल सका"
+    },
+    "about.version": {
+      "message": "संस्करण {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "XS स्क्रिप्ट संपादक"
+    },
+    "about.edition.rms-preview": {
+      "message": "RMS और XS स्क्रिप्ट संपादक"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "एक स्वतंत्र, अनौपचारिक रैंडम मैप स्क्रिप्ट संपादक। इसका अपना कार्यान्वयन Age of Empires II: Definitive Edition के रैंडम मैप स्क्रिप्ट पढ़ने और मानचित्र बनाने के व्यवहार को दोहराता है।"
+    },
+    "about.disclosure.independent": {
+      "message": "Age of Empires II: Definitive Edition के लिए एक स्वतंत्र, अनौपचारिक स्क्रिप्ट संपादक।"
+    },
+    "about.disclosure.verified-versions": {
+      "message": "बने हुए मानचित्रों के गेम से मेल खाने की गारंटी केवल सत्यापित गेम संस्करणों के लिए है; नए संस्करण इस गारंटी के बिना काम करते हैं। गेम की कुछ विचित्रताओं को जानबूझकर दोहराया जाता है ताकि मानचित्र का व्यवहार एक जैसा रहे।"
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE के साथ कोई गेम फ़ाइल या गेम कला नहीं आती। आधिकारिक संसाधन केवल स्थानीय इंस्टॉलेशन से पढ़े जाते हैं, और गेम टेक्सचर केवल इंस्टॉल की गई गेम फ़ाइलों से निकाले जाते हैं।"
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE के साथ कोई गेम फ़ाइल या गेम कला नहीं आती। आधिकारिक संसाधन केवल स्थानीय इंस्टॉलेशन से पढ़े जाते हैं।"
+    },
+    "about.disclosure.affiliation": {
+      "message": "Microsoft, Xbox Game Studios, World's Edge या Activision से संबद्ध या उनके द्वारा समर्थित नहीं है।"
+    },
+    "about.credits": {
+      "message": "श्रेय\n{maintainer} — परियोजना के निर्माता और अनुरक्षक"
+    },
+    "about.credits.research": {
+      "message": "{author} का धन्यवाद, जिनकी {guide} से हमने रैंडम मैप स्क्रिप्ट के बारे में बहुत कुछ सीखा।"
+    },
+    "about.credits.xs-research": {
+      "message": "{author} का धन्यवाद; {guide} में उनके XS दस्तावेज़ीकरण से XS समर्थन की शुरुआत हुई।"
+    },
+    "about.close": {
+      "message": "बंद करें"
+    },
+    "about.documentation": {
+      "message": "दस्तावेज़ीकरण"
+    },
+    "dialog.confirm.title": {
+      "message": "कार्रवाई की पुष्टि करें"
+    },
+    "dialog.confirm.cancel": {
+      "message": "रद्द करें"
+    },
+    "dialog.confirm.continue": {
+      "message": "जारी रखें"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "{name} के बदलाव सहेजें?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, one {{count} फ़ाइल के बदलाव सहेजें?} other {{count} फ़ाइलों के बदलाव सहेजें?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "विंडो बंद करने पर बिना सहेजे बदलाव खो जाएँगे।"
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "यह टैब बंद करने पर बिना सहेजे बदलाव खो जाएँगे।"
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "यह फ़ोल्डर बंद करने पर बिना सहेजे बदलाव खो जाएँगे।"
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "{name} को हटाने पर बिना सहेजे बदलाव खो जाएँगे।"
+    },
+    "dialog.unsaved.save": {
+      "message": "सहेजें"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "सभी सहेजें"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "न सहेजें"
+    },
+    "dialog.external-change.title": {
+      "message": "{name} को AoE2RMSIDE के बाहर बदला गया"
+    },
+    "dialog.external-change.save.description": {
+      "message": "फ़ाइल बदलने पर बाहरी संस्करण खो जाएगा। उसे डिस्क से फिर लोड करें, उसकी जगह संपादक का पाठ लिखें, या रद्द करें।"
+    },
+    "dialog.external-change.replace": {
+      "message": "डिस्क पर बदलें"
+    },
+    "dialog.external-change.reload": {
+      "message": "डिस्क से फिर लोड करें"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "फिर लोड करने पर संपादक का बिना सहेजा पाठ खो जाएगा। संपादन जारी रखकर सहेजते समय विरोध हल करें।"
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "संपादन जारी रखें"
+    },
+    "dialog.delete-entry.title": {
+      "message": "{name} को रीसायकल बिन में भेजें?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "फ़ोल्डर खाली नहीं है। इसे और इसके भीतर की सभी फ़ाइलों व फ़ोल्डरों को रीसायकल बिन में भेजा जाएगा।"
+    },
+    "dialog.delete-entry.description": {
+      "message": "इसे रीसायकल बिन में भेजा जाएगा।"
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "रीसायकल बिन में भेजें"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "{name} को हमेशा के लिए हटाएँ?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "फ़ोल्डर खाली नहीं है। इसे और इसके भीतर की सभी फ़ाइलों व फ़ोल्डरों को रीसायकल बिन में भेजे बिना हमेशा के लिए हटाया जाएगा। इसे पूर्ववत नहीं किया जा सकता।"
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "इसे रीसायकल बिन में भेजे बिना हमेशा के लिए हटाया जाएगा। इसे पूर्ववत नहीं किया जा सकता।"
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "हमेशा के लिए हटाएँ"
+    },
+    "output.clear": {
+      "message": "आउटपुट साफ़ करें"
+    },
+    "output.source.run": {
+      "message": "रन"
+    },
+    "output.source.script": {
+      "message": "स्क्रिप्ट"
+    },
+    "output.source.preview": {
+      "message": "पूर्वावलोकन"
+    },
+    "output.source.map-test": {
+      "message": "मानचित्र परीक्षण"
+    },
+    "output.source.deploy": {
+      "message": "तैनाती"
+    },
+    "output.source.live-test": {
+      "message": "लाइव परीक्षण"
+    },
+    "output.source.recovery": {
+      "message": "पुनर्प्राप्ति"
+    },
+    "output.source.update": {
+      "message": "अपडेट"
+    },
+    "output.source.files": {
+      "message": "फ़ाइलें"
+    },
+    "output.source.game-folder": {
+      "message": "गेम फ़ोल्डर"
+    },
+    "output.source.game-textures": {
+      "message": "गेम टेक्सचर"
+    },
+    "output.source.app": {
+      "message": "ऐप"
+    },
+    "output.log.label": {
+      "message": "{count, plural, one {{count} आउटपुट संदेश} other {{count} आउटपुट संदेश}}"
+    },
+    "output.empty": {
+      "message": "नतीजे यहाँ देखने के लिए मानचित्र चलाएँ।"
+    },
+    "output.empty.filtered": {
+      "message": "फ़िल्टर से कोई संदेश मेल नहीं खाता।"
+    },
+    "output.jump-to-latest": {
+      "message": "नवीनतम पर जाएँ ({count} नए)"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, one {{count} बार दोहराया गया} other {{count} बार दोहराया गया}}"
+    },
+    "output.details": {
+      "message": "विवरण"
+    },
+    "output.run.show": {
+      "message": "रन के संदेश दिखाएँ"
+    },
+    "output.run.hide": {
+      "message": "रन के संदेश छिपाएँ"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, one {पहले की {count} पंक्ति नहीं दिखाई गई} other {पहले की {count} पंक्तियाँ नहीं दिखाई गईं}}"
+    },
+    "output.run.seed": {
+      "message": "सीड {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, one {{count} खिलाड़ी} other {{count} खिलाड़ी}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, one {{count} मानचित्र} other {{count} मानचित्र}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ms"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} s"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} min {seconds} s"
+    },
+    "output.constructs.heading": {
+      "message": "गेम से तुलना नहीं हुई"
+    },
+    "output.constructs.label": {
+      "message": "वे कमांड जिनकी गेम से तुलना नहीं हुई"
+    },
+    "output.constructs.go-to": {
+      "message": "इसके पहले उपयोग पर जाएँ"
+    },
+    "output.constructs.more": {
+      "message": "और {count}"
+    },
+    "installed-maps.filter.group": {
+      "message": "मानचित्र के स्रोत"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "गेम के साथ आए मानचित्र ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "स्थानीय मॉड के मानचित्र ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "सब्सक्राइब किए मॉड के मानचित्र ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "मानचित्र के सभी स्रोत बंद हैं। किसी स्रोत के मानचित्र देखने के लिए उसे चालू करें।"
+    },
+    "installed-maps.empty.origins": {
+      "message": "चुने गए स्रोतों का कोई रैंडम मैप इंस्टॉल नहीं है।"
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "चुने गए स्रोतों का कोई इंस्टॉल किया गया रैंडम मैप इस खोज से मेल नहीं खाता।"
+    },
+    "installed-maps.empty.none": {
+      "message": "गेम के साथ आया, स्थानीय या सब्सक्राइब किया कोई रैंडम मैप नहीं मिला।"
+    },
+    "installed-maps.empty.search": {
+      "message": "कोई इंस्टॉल किया गया रैंडम मैप इस खोज से मेल नहीं खाता।"
+    },
+    "installed-maps.title": {
+      "message": "इंस्टॉल किए गए रैंडम मैप"
+    },
+    "installed-maps.close": {
+      "message": "इंस्टॉल किए गए रैंडम मैप बंद करें"
+    },
+    "installed-maps.search": {
+      "message": "इंस्टॉल किए गए रैंडम मैप खोजें"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "मानचित्र खोजें"
+    },
+    "installed-maps.search.clear": {
+      "message": "मानचित्र की खोज साफ़ करें"
+    },
+    "installed-maps.loading": {
+      "message": "इंस्टॉल किए गए रैंडम मैप लोड हो रहे हैं"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "इंस्टॉल की गई RMS फ़ाइलों की सूची के लिए गेम फ़ोल्डर चुनें"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "गेम का हिस्सा"
+    },
+    "installed-maps.origin.local": {
+      "message": "स्थानीय मॉड"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "सब्सक्राइब्ड मॉड"
+    },
+    "installed-maps.clone": {
+      "message": "संपादन के लिए क्लोन करें"
+    },
+    "installed-maps.open-failed": {
+      "message": "मानचित्र नहीं खुल सका"
+    },
+    "installed-maps.clone-failed": {
+      "message": "मानचित्र क्लोन नहीं हो सका"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "इंस्टॉल किए गए मानचित्रों की सूची नहीं बन सकी"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, one {संपादन के लिए # मानचित्र फ़ाइल क्लोन की गई} other {संपादन के लिए # मानचित्र फ़ाइलें क्लोन की गईं}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "{name} कॉपी नहीं हुई"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "क्लोन किया गया मानचित्र इसे संदर्भित करता है, लेकिन यह इंस्टॉल किए गए मानचित्र का हिस्सा नहीं है।"
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "यह फ़ाइल गेम ख़ुद देता है; यह इंस्टॉल किए गए मानचित्र का हिस्सा नहीं है।"
+    },
+    "run-menu.control.detach": {
+      "message": "AoE2Control का कनेक्शन तोड़ें"
+    },
+    "run-menu.control.remove": {
+      "message": "AoE2Control हटाएँ"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control कनेक्ट हो रहा है"
+    },
+    "run-menu.control.detaching": {
+      "message": "AoE2Control का कनेक्शन टूट रहा है…"
+    },
+    "run-menu.control.busy": {
+      "message": "AoE2Control की मौजूदा कार्रवाई पूरी होने तक प्रतीक्षा करें"
+    },
+    "run-menu.run-on-save": {
+      "message": "सहेजने पर चलाएँ"
+    },
+    "run-menu.run-on-edit": {
+      "message": "संपादन पर चलाएँ"
+    },
+    "run-menu.preset.default-name": {
+      "message": "प्रीसेट"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "प्रीसेट {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "पूर्वावलोकन प्रीसेट की सेटिंग्स"
+    },
+    "run-menu.preset.manage": {
+      "message": "पूर्वावलोकन प्रीसेट प्रबंधित करें"
+    },
+    "run-menu.preset.new": {
+      "message": "नया प्रीसेट"
+    },
+    "run-menu.preset.new-name": {
+      "message": "नए पूर्वावलोकन प्रीसेट का नाम दें"
+    },
+    "run-menu.preset.rename": {
+      "message": "{name} का नाम बदलें"
+    },
+    "run-menu.preset.save": {
+      "message": "{name} सहेजें"
+    },
+    "run-menu.preset.edit": {
+      "message": "{name} संपादित करें"
+    },
+    "run-menu.preset.delete": {
+      "message": "{name} हटाएँ"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "प्रीसेट {name} हटाएँ?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "इससे इस प्रीसेट की सहेजी गई पूर्वावलोकन सेटिंग्स हट जाएँगी।"
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "हटाएँ"
+    },
+    "run-menu.preset.name-length": {
+      "message": "प्रीसेट के नाम में 1 से 64 वर्ण होने चाहिए"
+    },
+    "run-menu.preset.exists": {
+      "message": "{name} नाम का प्रीसेट पहले से मौजूद है"
+    },
+    "run-menu.preset.limit": {
+      "message": "अधिकतम 64 प्रीसेट सहेजे जा सकते हैं"
+    },
+    "run-menu.map-size": {
+      "message": "नक़्शे का आकार"
+    },
+    "run-menu.game-mode": {
+      "message": "गेम मोड"
+    },
+    "run-menu.starting-resources": {
+      "message": "शुरुआती संसाधन"
+    },
+    "run-menu.starting-age": {
+      "message": "शुरूआती युग"
+    },
+    "run-menu.ending-age": {
+      "message": "अंतिम युग"
+    },
+    "run-menu.position-policy": {
+      "message": "स्थान नीति"
+    },
+    "run-menu.select-placeholder": {
+      "message": "चुनें"
+    },
+    "run-menu.turbo-note": {
+      "message": "टर्बो यादृच्छिक नक्शा पुराना मोड है और वैसा ही रहता है। यादृच्छिक नक्शे के साथ टर्बो चुनने पर गेम के टर्बो लेबल मिलते हैं।"
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "यादृच्छिक नक्शा + टर्बो चुनें"
+    },
+    "run-menu.players.configure": {
+      "message": "खिलाड़ियों की सेटिंग्स"
+    },
+    "run-menu.players.count": {
+      "message": "खिलाड़ियों की संख्या"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, one {# खिलाड़ी} other {# खिलाड़ी}}"
+    },
+    "run-menu.players.slot": {
+      "message": "खिलाड़ी {player} का स्लॉट"
+    },
+    "run-menu.players.color": {
+      "message": "खिलाड़ी {player} का रंग"
+    },
+    "run-menu.players.civilization": {
+      "message": "खिलाड़ी {player} की सभ्यता"
+    },
+    "run-menu.players.team": {
+      "message": "खिलाड़ी {player} की टीम"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "खिलाड़ी {player} को कंप्यूटर बनाएँ"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "कंप्यूटर खिलाड़ी (AI_PLAYERS परिभाषित करता है)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "लाइव परीक्षण में P1 के बाद हर खिलाड़ी कंप्यूटर होता है"
+    },
+    "run-menu.players.live-note": {
+      "message": "लाइव परीक्षण में P1 के बाद हर खिलाड़ी कंप्यूटर होता है।"
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "लाइव परीक्षण में P1 के बाद हर खिलाड़ी कंप्यूटर होता है। P1 में वह खिलाड़ी रखें जिसे आप नियंत्रित करेंगे।"
+    },
+    "run-menu.lobby.label": {
+      "message": "लॉबी विकल्प"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "लॉबी विकल्प, {count} चालू"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "गेम मोड में बदलाव"
+    },
+    "run-menu.lobby.options": {
+      "message": "विकल्प"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (गेम मोड)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "गेम मोड में साम्राज्य युद्ध जोड़ता है। EMPIRE_WARS परिभाषित करता है।"
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "गेम मोड में आकस्मिक मृत्यु जोड़ता है। SUDDEN_DEATH परिभाषित करता है।"
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "गेम मोड में राजा की हत्या जोड़ता है। REGICIDE परिभाषित करता है।"
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "गेम मोड में किंग ऑफ़ द हिल जोड़ता है। KING_OT_HILL परिभाषित करता है।"
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "तेज़ गेमप्ले। TURBO_MODE, और यादृच्छिक नक्शे पर TURBO_RANDOM_MAP परिभाषित करता है।"
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "हर सभ्यता सभी तकनीकों पर शोध कर सकती है। FULL_TECH_TREE परिभाषित करता है।"
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "प्राचीन काल मोड। ANTIQUITY_MODE परिभाषित करता है; इससे कई मानचित्र बदलते हैं।"
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "इकाइयाँ खेतों पर नहीं चल सकतीं। SOLID_FARMS परिभाषित करता है।"
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "राजा की हत्या में हर खिलाड़ी के लिए एक राजा चाहिए। राजाओं के बिना मानचित्र पर गेम तुरंत मैच समाप्त कर देता है।"
+    },
+    "run-menu.version.local-folder": {
+      "message": "स्थानीय गेम फ़ोल्डर"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (स्थानीय)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (असत्यापित)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "साथ में कोई प्रोफ़ाइल नहीं"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "पैकेज में कोई संस्करण नहीं"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "पूर्वावलोकन का गेम संस्करण"
+    },
+    "run-menu.version.game-version": {
+      "message": "गेम संस्करण"
+    },
+    "run-menu.version.local-selected": {
+      "message": "आपका स्थानीय गेम संस्करण चुना गया; पूर्वावलोकन फिर चल रहा है"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} सत्यापित RMS संस्करण नहीं है; पूर्वावलोकन नवीनतम सत्यापित व्यवहार प्रोफ़ाइल ({profile}) इस्तेमाल करता है। संभव है कि कार्यक्षमता पर कोई असर न पड़े। यदि बने हुए मानचित्र गेम से मेल न खाएँ, तो IDE का अपडेट देखें या यहाँ रिपोर्ट करें: {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "अनुपलब्ध"
+    },
+    "run-menu.game-folder.select": {
+      "message": "गेम फ़ोल्डर चुनें"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "गेम फ़ोल्डर चुना जा रहा है…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "स्थानीय AoE2DE {version} इस्तेमाल हो रहा है"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "चुना गया स्थानीय AoE2DE इंस्टॉलेशन इस्तेमाल हो रहा है"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "रन की सेटिंग्स लोड नहीं हो सकीं"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "रन की सेटिंग्स सहेजी नहीं गईं"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "संपादक रन की सेटिंग्स इस्तेमाल नहीं कर सका"
+    },
+    "run-menu.run.warning": {
+      "message": "मानचित्र में चेतावनी है"
+    },
+    "run-menu.cache-cleared": {
+      "message": "पूर्वावलोकन कैश साफ़ हुआ"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "डेवलपमेंट परीक्षण डेटा के लिए .rms या .rms2 स्क्रिप्ट चाहिए जो खाली न हो"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "इस पूर्वावलोकन के लिए रैंडम सभ्यताएँ: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "खिलाड़ी {player}: {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "लाइव परीक्षण में गेम खुद इन्हें चुनता है।"
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, one {# खिलाड़ी} other {# खिलाड़ी}}"
+    },
+    "run-menu.result.error": {
+      "message": "त्रुटि"
+    },
+    "run-menu.result.failed": {
+      "message": "विफल"
+    },
+    "run-menu.result.passed": {
+      "message": "सफल"
+    },
+    "run-menu.result.stopped": {
+      "message": "रोका गया"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "रोका गया, पिछला मानचित्र रखा गया"
+    },
+    "run-menu.result.synthetic": {
+      "message": "कृत्रिम परीक्षण डेटा, अप्रमाणित"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "कृत्रिम परीक्षण डेटा, अप्रमाणित, फिर इस्तेमाल हुआ"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "बनाया गया, फिर इस्तेमाल हुआ"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "बनाया गया · असत्यापित गेम संस्करण"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "बनाया गया, फिर इस्तेमाल हुआ · असत्यापित गेम संस्करण"
+    },
+    "run-menu.blocked.headline": {
+      "message": "पूर्वावलोकन नहीं चल सकता"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "मौजूदा स्रोत खाली है।"
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "मौजूदा स्रोत में सिंटैक्स त्रुटियाँ हैं।"
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "चुनी गई व्यवहार प्रोफ़ाइल उपलब्ध नहीं है।"
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "चुने गए गेम संस्करण के लिए संगत कंटेंट पैक उपलब्ध नहीं है।"
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "प्रोफ़ाइल के लिए संगत कंटेंट पैक उपलब्ध नहीं है।"
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "एक अन्य रन अभी जारी है।"
+    },
+    "run-menu.blocked.loading": {
+      "message": "पूर्वावलोकन की सेटिंग्स अभी लोड हो रही हैं।"
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "केवल .rms और .rms2 मुख्य फ़ाइलें तैनात की जा सकती हैं।"
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "चुना गया RMS स्रोत खाली है।"
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "चुने गए RMS स्रोत में सिंटैक्स त्रुटियाँ हैं।"
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "चुने गए RMS स्रोत का रन निर्धारित नहीं हो सका।"
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "सीड लॉक की स्थिति अमान्य है।"
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "सहेजने पर चलाने की स्थिति अमान्य है।"
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "संपादन पर चलाने की स्थिति अमान्य है।"
+    },
+    "run-menu.invalid.seed": {
+      "message": "सीड 0 से 4294967295 तक की पूर्णांक संख्या होनी चाहिए।"
+    },
+    "run-menu.invalid.map-size": {
+      "message": "नक़्शे का आकार समर्थित गेम विकल्प से मेल खाना चाहिए।"
+    },
+    "run-menu.invalid.player-count": {
+      "message": "खिलाड़ियों की संख्या 1 से 8 तक होनी चाहिए।"
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "खिलाड़ी स्लॉट में आठ मान्य मान होने चाहिए।"
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "सक्रिय खिलाड़ियों के स्लॉट अलग-अलग होने चाहिए।"
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "खिलाड़ी रंगों में आठ मान्य मान होने चाहिए।"
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "सक्रिय खिलाड़ियों के रंग अलग-अलग होने चाहिए।"
+    },
+    "run-menu.invalid.teams": {
+      "message": "खिलाड़ी टीमों में ‘कोई टीम नहीं’ से ‘टीम 4’ तक के आठ मान होने चाहिए।"
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "सभ्यताओं के डिफ़ॉल्ट में आठ खिलाड़ी स्लॉट होने चाहिए।"
+    },
+    "run-menu.invalid.controllers": {
+      "message": "खिलाड़ी नियंत्रकों में आठ मान होने चाहिए।"
+    },
+    "run-menu.invalid.profile": {
+      "message": "एक ज्ञात व्यवहार प्रोफ़ाइल चाहिए।"
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "संस्करण चयन का दायरा अमान्य है।"
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "मोड/संदर्भ चाहिए।"
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "गेम मोड के बदलाव ज्ञात और अलग-अलग होने चाहिए।"
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "लॉबी विकल्प चालू या बंद होने चाहिए।"
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "शुरुआती संसाधन अमान्य हैं।"
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "शुरूआती युग अमान्य है।"
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "अंतिम युग अमान्य है।"
+    },
+    "run-menu.invalid.age-order": {
+      "message": "अंतिम युग शुरूआती युग से पहले नहीं हो सकता।"
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "स्थान नीति अमान्य है।"
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "ट्रेस संग्रह का स्तर अमान्य है।"
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "परीक्षण कोर की सेटिंग स्वचालित या 1 से 32 तक होनी चाहिए।"
+    },
+    "run-menu.standard-include.headline": {
+      "message": "गेम की मानक include फ़ाइलों के लिए आपका गेम फ़ोल्डर चाहिए"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "गेम की मानक include फ़ाइलों के लिए स्थानीय गेम संस्करण चाहिए, लेकिन पैकेज का संस्करण चुना गया है।"
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "गेम की मानक include फ़ाइलों के लिए लिंक किया गया गेम फ़ोल्डर चाहिए, और अभी कोई लिंक नहीं है।"
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "गेम की मानक include फ़ाइलों के लिए लिंक किए गए गेम फ़ोल्डर में resources/_common/drs/gamedata_x2 चाहिए, जो मौजूद नहीं है।"
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "स्क्रिप्ट का विश्लेषण नहीं हो सका"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "स्क्रिप्ट की जाँच नहीं हो सकी"
+    },
+    "run-menu.failure.not-started": {
+      "message": "रन शुरू नहीं हो सका"
+    },
+    "run-menu.failure.generation": {
+      "message": "मानचित्र बनाना विफल हुआ"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "मानचित्र परीक्षण"
+    },
+    "settings.language.title": {
+      "message": "भाषा"
+    },
+    "settings.language.description": {
+      "message": "मेनू, संवाद और संदेश इस भाषा में दिखते हैं। स्क्रिप्ट कमांड, लॉग और सहायता बंडल अंग्रेज़ी में रहते हैं।"
+    },
+    "settings.language.label": {
+      "message": "इंटरफ़ेस की भाषा"
+    },
+    "settings.language.system": {
+      "message": "Windows की प्रदर्शन भाषा ({language})"
+    },
+    "settings.language.close": {
+      "message": "बंद करें"
+    },
+    "settings.language.close-label": {
+      "message": "भाषा की सेटिंग्स बंद करें"
+    },
+    "settings.language.editor-next-start": {
+      "message": "कोड संपादक के अपने मेनू अगली बार ऐप शुरू होने पर बदलेंगे।"
+    },
+    "message.action.report-problem": {
+      "message": "इस समस्या की रिपोर्ट करें"
+    },
+    "message.action.get-newer-control": {
+      "message": "AoE2Control की नई रिलीज़ पाएँ"
+    },
+    "message.action.link-game-folder": {
+      "message": "अपना गेम फ़ोल्डर लिंक करें"
+    },
+    "message.action.verify-game-files": {
+      "message": "Steam में गेम फ़ाइलों की अखंडता जाँचें"
+    },
+    "message.action.select-local-game-version": {
+      "message": "अपना स्थानीय गेम संस्करण चुनें"
+    },
+    "message.action.check-include-name": {
+      "message": "include फ़ाइल का नाम जाँचें"
+    },
+    "message.action.open-problems": {
+      "message": "समस्याएँ पैनल खोलें"
+    },
+    "message.action.choose-map-size": {
+      "message": "मानचित्र का दूसरा आकार चुनें"
+    },
+    "message.action.change-player-count": {
+      "message": "खिलाड़ियों की संख्या बदलें"
+    },
+    "message.action.open-players-menu": {
+      "message": "खिलाड़ियों का मेनू खोलें"
+    },
+    "message.action.try-another-seed": {
+      "message": "दूसरा सीड आज़माएँ"
+    },
+    "message.action.reinstall": {
+      "message": "AoE2RMSIDE फिर इंस्टॉल या अपडेट करें"
+    },
+    "message.action.check-update": {
+      "message": "AoE2RMSIDE का अपडेट देखें"
+    },
+    "message.action.reconnect-control": {
+      "message": "AoE2Control फिर कनेक्ट करके दोबारा कोशिश करें"
+    },
+    "message.action.check-control-file": {
+      "message": "जाँचें कि चुनी गई AoE2Control फ़ाइल काम करती है, फिर दोबारा कोशिश करें"
+    },
+    "message.action.wait-run-again": {
+      "message": "थोड़ा रुकें, फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "फिर ‘चलाएँ’ दबाएँ; ऐसा बार-बार हो तो AoE2DE फिर शुरू करें"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "AoE2DE फिर शुरू करें, फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.action.check-game-window": {
+      "message": "गेम की विंडो देखें, फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.action.press-run-again": {
+      "message": "फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.action.wait-try-again": {
+      "message": "थोड़ा रुकें, फिर दोबारा कोशिश करें"
+    },
+    "message.action.open-deploy-again": {
+      "message": "‘मॉड के रूप में तैनात करें’ फिर खोलें"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "मॉड का दूसरा नाम चुनें"
+    },
+    "message.action.rerun-map-test": {
+      "message": "मानचित्र परीक्षण फिर चलाएँ"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "एक खिलाड़ी स्लॉट"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, पंक्ति {line}"
+    },
+    "message.format.the-script": {
+      "message": "स्क्रिप्ट"
+    },
+    "message.format.the-folder": {
+      "message": "फ़ोल्डर"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "आपकी प्रोफ़ाइल का XS फ़ोल्डर"
+    },
+    "message.format.the-map-test": {
+      "message": "मानचित्र परीक्षण"
+    },
+    "message.format.a-map-test": {
+      "message": "एक मानचित्र परीक्षण"
+    },
+    "message.format.preview-kept": {
+      "message": "पूर्वावलोकन रखा गया।"
+    },
+    "message.format.preview-works-without-it": {
+      "message": "इसके बिना भी पूर्वावलोकन काम करता है।"
+    },
+    "message.format.sentence": {
+      "message": "{text}।"
+    },
+    "message.generation.source-changed.headline": {
+      "message": "मानचित्र बनाते समय स्क्रिप्ट बदल गई"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "अगला रन नए संस्करण का होगा।"
+    },
+    "message.xs-syntax.headline": {
+      "message": "एक XS फ़ाइल में सिंटैक्स त्रुटियाँ हैं"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} में XS सिंटैक्स त्रुटियाँ हैं"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name} की पंक्ति {line} के कारण गेम मानचित्र का XS लोड नहीं कर सकता, इसलिए गेम में बदलाव नहीं किया गया।"
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "गेम मानचित्र का XS लोड नहीं कर सका, इसलिए गेम में बदलाव नहीं किया गया।"
+    },
+    "message.control.xs-syntax.action": {
+      "message": "समस्याएँ पैनल की त्रुटियाँ ठीक करें, फिर लाइव परीक्षण दोबारा चलाएँ"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "आपकी प्रोफ़ाइल के XS फ़ोल्डर में एक XS फ़ाइल पहले से मौजूद है"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "आपकी प्रोफ़ाइल के XS फ़ोल्डर में {name} पहले से मौजूद है"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "इसे AoE2RMSIDE ने नहीं बनाया था ({folder}), इसलिए लाइव परीक्षण इसे बदले बिना रुक गया।"
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "इसे AoE2RMSIDE ने नहीं बनाया था, इसलिए लाइव परीक्षण इसे बदले बिना रुक गया।"
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "XS फ़ाइल का नाम बदलें या मौजूदा फ़ाइल हटाएँ"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "आपकी प्रोफ़ाइल के XS फ़ोल्डर की एक XS फ़ाइल AoE2RMSIDE के बाहर बदली गई"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "आपकी प्रोफ़ाइल के XS फ़ोल्डर में {name} को AoE2RMSIDE के बाहर बदला गया"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE ने इसे लाइव परीक्षण के लिए {folder} में कॉपी किया था। वह दूसरों के किए बदलाव कभी नहीं मिटाता, इसलिए लाइव परीक्षण रुक गया।"
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "अपने बदलाव कहीं और रखें या फ़ाइल हटाएँ, फिर लाइव परीक्षण दोबारा चलाएँ"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "एक XS फ़ाइल आपकी प्रोफ़ाइल के XS फ़ोल्डर में कॉपी नहीं हो सकती"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "{name} आपकी प्रोफ़ाइल के XS फ़ोल्डर में कॉपी नहीं हो सकती"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "लाइव परीक्षण हर XS फ़ाइल को #includeXS में लिखे केवल फ़ाइल नाम से कॉपी करता है, और इस नाम में फ़ोल्डर शामिल है।"
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "#includeXS की पंक्ति में केवल फ़ाइल का नाम लिखें"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "दो XS फ़ाइलें एक ही नाम से कॉपी होंगी"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "दो XS फ़ाइलें {name} नाम से कॉपी होंगी"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "आपकी प्रोफ़ाइल के XS फ़ोल्डर में उस नाम की केवल एक फ़ाइल हो सकती है।"
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "एक XS फ़ाइल का नाम बदलें"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "आपकी प्रोफ़ाइल का XS फ़ोल्डर इस्तेमाल नहीं हो सकता"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} सामान्य फ़ोल्डर नहीं है या दूसरी जगह की ओर संकेत करता है। AoE2RMSIDE पुनर्निर्देशित फ़ोल्डरों के ज़रिए कभी कॉपी नहीं करता।"
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "कॉपी की गई XS फ़ाइलों का AoE2RMSIDE रिकॉर्ड पढ़ा नहीं जा सकता"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "इसके बिना AoE2RMSIDE नहीं जान सकता कि आपकी प्रोफ़ाइल की कौन-सी XS फ़ाइलें उसने बनाई थीं।"
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "XS फ़ाइलें आपकी प्रोफ़ाइल के XS फ़ोल्डर में कॉपी नहीं हो सकीं"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "मानचित्र में लाइव परीक्षण की कॉपी सीमा से अधिक XS फ़ाइलें लोड होती हैं।"
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "इस लाइव परीक्षण ने {folder} में जो XS फ़ाइलें बदलीं, उनमें से कुछ बहाल नहीं हो सकीं; AoE2RMSIDE अभी भी उन्हें अपनी बनाई फ़ाइलें मानता है।"
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "इस लाइव परीक्षण ने {folder} में जो भी XS फ़ाइलें बदली थीं, वे सभी बहाल हो गईं।"
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "लाइव परीक्षण के दौरान {folder} की XS फ़ाइलों का AoE2RMSIDE रिकॉर्ड बदल गया।"
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "जाँचें कि फ़ोल्डर में लिखा जा सकता है, फिर लाइव परीक्षण दोबारा चलाएँ"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE चल नहीं रहा है"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "AoE2DE शुरू करें, फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control शुरू होने से पहले बंद हो गया"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control शुरू नहीं हुआ"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control कनेक्शन पूरा नहीं कर सका"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "AoE2Control के इस संस्करण में चुनी गई सभ्यता नहीं है"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "सैक्सन, वरंगियन और डैनेस के लिए AoE2Control 1.1.1 या नया संस्करण चाहिए।"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control में चुनी गई सभ्यता उपलब्ध नहीं है"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "AoE2Control 1.1.1 या नया संस्करण चुनें, या दूसरी सभ्यता चुनें।"
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "चल रहे गेम संस्करण में चुनी गई सभ्यता नहीं है"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "दूसरी सभ्यता चुनें"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "इस गेम संस्करण में लाइव परीक्षण समर्थित नहीं है"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "पिछला AoE2Control अभी गेम से हट रहा है"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "AoE2Control की पहले शुरू हुई प्रक्रिया अभी गेम में चल रही है"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control समय पर शुरू नहीं हो सका"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "AoE2DE की विंडो तैयार नहीं है"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "गेम की विंडो खोलें (मिनिमाइज़ न रखें), फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "गेम में AoE2Control का दूसरा संस्करण चल रहा है"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "इस गेम में AoE2Control पहले शुरू नहीं हो पाया था"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control गेम से जुड़ नहीं सका"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "AoE2Control का दूसरा लॉन्चर चल रहा है"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "उसे बंद करें, फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "AoE2Control की यह रिलीज़ संगत नहीं है"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "AoE2Control की संगत सार्वजनिक रिलीज़ चुनें"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "गेम का सेटअप रन की सेटिंग्स से मेल नहीं खाया"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "AoE2Control से कनेक्शन टूट गया"
+    },
+    "message.control.connection-lost.action": {
+      "message": "ज़रूरत हो तो AoE2DE शुरू करें, फिर दोबारा कोशिश करें"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control ने समय पर जवाब नहीं दिया"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control ने जवाब दिए बिना कनेक्शन बंद कर दिया"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "गेम व्यस्त हो सकता है या कोई संदेश दिखा रहा हो सकता है।"
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "मैच शुरू होते समय गेम ने जवाब देना बंद कर दिया"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE कोई संदेश दिखा रहा हो सकता है, जैसे स्क्रिप्ट की त्रुटि।"
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "गेम का संदेश बंद करें, फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "गेम ने नए मैच की समय पर पुष्टि नहीं की"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "मौजूदा मैच समय पर समाप्त नहीं हुआ"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "गेम में कॉपी करते समय मानचित्र बदल गया"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "गेम के मानचित्र फ़ोल्डर में इस फ़ाइल नाम का दूसरा मानचित्र है"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "मानचित्र का नाम बदलें, फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "मानचित्र गेम में कॉपी नहीं हो सका"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "गेम ने मैच शुरू होने की पुष्टि नहीं की"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "दोबारा कोशिश करने से पहले फिर कनेक्ट करके मौजूदा मैच जाँचें"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "गेम ने पिछले मैच के समाप्त होने की पुष्टि नहीं की"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "दोबारा कोशिश करने से पहले फिर कनेक्ट करके जाँचें"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "गेम फ़ोल्डर या गेम प्रोफ़ाइल की पहचान नहीं हो सकी"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "लिंक किया गया गेम फ़ोल्डर जाँचें"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "मानचित्र लाइव परीक्षण के लिए तैनात नहीं हो सका"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control कनेक्ट होने से पहले रुक गया"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control एक स्थिर एकल-खिलाड़ी सत्र की पुष्टि नहीं कर सका"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control का जवाब AoE2RMSIDE इस्तेमाल नहीं कर सका"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "गेम की मौजूदा स्थिति लाइव परीक्षण में समर्थित नहीं है"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "मुख्य मेनू या एकल-खिलाड़ी मैच में लौटें, फिर दोबारा कोशिश करें"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "पहले चल रहा मैच समाप्त होना चाहिए"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "फिर ‘चलाएँ’ दबाएँ और मैच समाप्त करने की अनुमति दें"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control कनेक्ट नहीं है"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "कनेक्ट करने के लिए फिर ‘चलाएँ’ दबाएँ"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "चुनी गई AoE2Control फ़ाइल बदल गई"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "AoE2Control फिर चुनें"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control व्यस्त है"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "इस सिस्टम पर लाइव परीक्षण समर्थित नहीं है"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "लाइव परीक्षण ने चल रहे मैच की जगह नहीं ली"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "लाइव परीक्षण के उसे बदलने की अनुमति माँगने से पहले AoE2DE में एक मैच शुरू हो गया।"
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control मौजूदा मैच समाप्त नहीं कर सका"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "लाइव परीक्षण के मानचित्र शुरू करने से पहले गेम बदल गया"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "लाइव परीक्षण की तैयारी के दौरान AoE2DE में मैच शुरू हो गया या एकल-खिलाड़ी सेटअप बंद हो गया।"
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "लाइव परीक्षण के दौरान AoE2DE या AoE2Control फिर से शुरू हुआ"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "AoE2DE ने कॉपी किया गया मानचित्र सूची में नहीं दिखाया"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "गेम की मॉड मानचित्र सूची में कॉपी किया गया मानचित्र नहीं दिखा, या एक से अधिक बार दिखा।"
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "एक खिलाड़ी की सेटिंग AoE2Control को नहीं भेजी जा सकती"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "कोई सभ्यता, टीम या रंग इस AoE2Control की स्वीकार्य सीमा से बाहर है।"
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE लाइव परीक्षण तैयार नहीं कर सका"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control रैंडम मैप मैच का सेटअप नहीं कर सका"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "AoE2DE के मुख्य मेनू में लौटकर दोबारा कोशिश करें; ऐसा बार-बार हो तो एक बार एकल खिलाड़ी → झड़प खोलें"
+    },
+    "message.control.headline": {
+      "message": "लाइव परीक्षण विफल हुआ"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "AoE2Control का यह संस्करण लॉबी विकल्प तय नहीं कर सकता"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "लॉबी विकल्पों के लिए AoE2Control 1.1.1 या नया संस्करण चाहिए। गेम में बदलाव नहीं किया गया।"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "लाइव परीक्षण के लिए P1 में खिलाड़ी चाहिए"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "आप P1 के खिलाड़ी को नियंत्रित करते हैं; बाकी सभी खिलाड़ी कंप्यूटर होते हैं।"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "खिलाड़ियों का मेनू खोलें और P1 में खिलाड़ी रखें"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control ने P1 के बाद मानव खिलाड़ी अस्वीकार किया"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "लाइव परीक्षण एकल-खिलाड़ी गेम शुरू करता है, जिसमें P1 के बाद हर खिलाड़ी कंप्यूटर होता है।"
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control ने कंप्यूटर खिलाड़ियों की सूची अस्वीकार की"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "कंप्यूटर खिलाड़ियों की सूची स्लॉट क्रम में नहीं थी।"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "कंप्यूटर खिलाड़ी ऐसे स्लॉट में था जिसमें कोई खिलाड़ी नहीं है।"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control ने P1 में कंप्यूटर खिलाड़ी अस्वीकार किया"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "लाइव परीक्षण में आप P1 के खिलाड़ी को नियंत्रित करते हैं, इसलिए वह कंप्यूटर नहीं हो सकता।"
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "लॉबी की कुछ सेटिंग्स बहाल नहीं हुईं"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "लाइव परीक्षण विफल हुआ, और {fields} पहले से अलग हो सकते हैं।"
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "लाइव परीक्षण विफल हुआ, और लॉबी की कुछ सेटिंग्स पहले से अलग हो सकती हैं।"
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "अगले गेम से पहले AoE2DE में लॉबी की सेटिंग्स जाँचें"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "गेम मोड"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "नक़्शे का आकार"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "शुरुआती संसाधन"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "शुरूआती युग"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "अंतिम युग"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "मानचित्र दिखाना"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "खिलाड़ियों की संख्या"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "टीमों के स्थान"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "गेम मोड में बदलाव"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "टर्बो"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "संपूर्ण तकनीक वृक्ष"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "प्राचीन काल"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "ठोस खेत"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "चुना गया मानचित्र"
+    },
+    "message.lobby-setting.seed": {
+      "message": "सीड"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot}: {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "टीम"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "हैंडिकैप"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "रंग"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "सभ्यता"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "मानव या कंप्यूटर की सेटिंग"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "सेटिंग"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "AoE2Control शुरू हो रहा है"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "पिछले AoE2Control के गेम से हटने की प्रतीक्षा है"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "गेम में AoE2Control के पूरी तरह शुरू होने की प्रतीक्षा है"
+    },
+    "message.live.game-detected.headline": {
+      "message": "AoE2DE मिल गया"
+    },
+    "message.live.attach.headline": {
+      "message": "चल रहे गेम से जुड़ रहे हैं"
+    },
+    "message.live.handshake.headline": {
+      "message": "AoE2Control की जाँच हो रही है"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control तैयार है"
+    },
+    "message.live.clean-end.headline": {
+      "message": "मौजूदा मैच समाप्त हो रहा है"
+    },
+    "message.live.deploy.headline": {
+      "message": "मानचित्र गेम में तैनात हो रहा है"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, one {मानचित्र की XS फ़ाइल {files} भी आपकी प्रोफ़ाइल के XS फ़ोल्डर में है।} other {मानचित्र की XS फ़ाइलें {files} भी आपकी प्रोफ़ाइल के XS फ़ोल्डर में हैं।}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "गेम में मानचित्र का यह संस्करण पहले से है"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "गेम में मानचित्र चुना जा रहा है"
+    },
+    "message.live.match-start.headline": {
+      "message": "सीड {seed} के साथ रैंडम मैप शुरू हो रहा है"
+    },
+    "message.live.verified.headline": {
+      "message": "सीड {seed} के साथ मैच सत्यापित हुआ"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} सत्यापित नहीं है, इसलिए मैच पूर्वावलोकन से अलग हो सकता है।"
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} लाइव परीक्षण के लिए सत्यापित नहीं है"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "लाइव परीक्षण काम करता है, लेकिन मैच पूर्वावलोकन से अलग हो सकता है।"
+    },
+    "message.live.cancelled.headline": {
+      "message": "लाइव परीक्षण रद्द हुआ"
+    },
+    "message.live.cancelled.cause": {
+      "message": "गेम में आगे कोई बदलाव नहीं किया गया।"
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control का कनेक्शन टूट गया"
+    },
+    "message.live.stopped.headline": {
+      "message": "गेम में बदलाव से पहले लाइव परीक्षण रुक गया"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "पूर्वावलोकन नहीं बनाया जा सका।"
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "स्क्रिप्ट में त्रुटियाँ हैं।"
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "पूर्वावलोकन बनाते समय स्क्रिप्ट या रन की सेटिंग्स बदल गईं।"
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "पूर्वावलोकन अब स्क्रिप्ट से मेल नहीं खाता।"
+    },
+    "message.live.match-kept.cause": {
+      "message": "सक्रिय मैच में बदलाव नहीं किया गया।"
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "सक्रिय मैच बदलने की अनुमति सहेजी नहीं जा सकी।"
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control चुना गया"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "यह AoE2Control की उपयुक्त निष्पादन योग्य फ़ाइल नहीं है"
+    },
+    "message.live.control-rejected.action": {
+      "message": "AoE2Control की सार्वजनिक रिलीज़ चुनें"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "AoE2Control का चयन हटाया गया"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "AoE2Control का चयन नहीं हटाया जा सका"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "उसका कनेक्शन तोड़कर दोबारा कोशिश करें"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "AoE2Control की स्थिति उपलब्ध नहीं है"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "मौजूदा मैच का सीड आयात नहीं किया जा सकता"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "मैच का सीड {seed} आयात करके लॉक किया गया"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "तैनाती के दौरान मॉड फ़ोल्डर बदल गया"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "मॉड फ़ोल्डर की फ़ाइलें AoE2RMSIDE के बाहर बदली गईं"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE दूसरों के किए बदलाव कभी नहीं मिटाता।"
+    },
+    "message.deploy.external-edits.action": {
+      "message": "उन बदलावों को कहीं और रखें, फिर दोबारा तैनात करें"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "तैनाती का पूर्वावलोकन पुराना हो गया है"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "दूसरा मॉड यह फ़ोल्डर पहले से इस्तेमाल कर रहा है"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE केवल अपने तैनात किए मॉड बदलता है।"
+    },
+    "message.deploy.profile.headline": {
+      "message": "कोई गेम प्रोफ़ाइल नहीं चुनी गई"
+    },
+    "message.deploy.profile.action": {
+      "message": "प्रोफ़ाइल चुनें"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "गेम के साथ आए मानचित्र सीधे तैनात नहीं किए जा सकते"
+    },
+    "message.deploy.built-in.action": {
+      "message": "पहले मानचित्र को अपने कार्यक्षेत्र में क्लोन करें"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "मॉड में तैनाती की सीमा से अधिक फ़ाइलें हैं"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "मॉड फ़ोल्डर दूसरी जगह की ओर संकेत करता है"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE पुनर्निर्देशित फ़ोल्डरों के ज़रिए कभी तैनात नहीं करता।"
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "मौजूदा मॉड को बदलने की पुष्टि नहीं हुई"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "फिर तैनात करें और बदलने की पुष्टि करें"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "तैनात करने के लिए आपका कोई मानचित्र नहीं है"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "मॉड के लिए आपके कार्यक्षेत्र की .rms स्क्रिप्ट चाहिए।"
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "मॉड का यह नाम लाइव परीक्षण के लिए आरक्षित है"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "मॉड का यह नाम फ़ोल्डर के नाम के रूप में इस्तेमाल नहीं हो सकता"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "फ़ोल्डर का एक नाम दें जिसमें < > : \" / \\ | ? * न हों, और अंत में बिंदु या स्पेस न हो।"
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, पंक्ति {line}: {error} गेम इसे लोड नहीं कर सका, इसलिए कुछ भी तैनात नहीं किया गया।"
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "गेम इसे लोड नहीं कर सका, इसलिए कुछ भी तैनात नहीं किया गया।"
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "समस्याएँ पैनल की त्रुटियाँ ठीक करें, फिर दोबारा तैनात करें"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "मानचित्र का आइकन इस्तेमाल नहीं हो सका"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "मानचित्र का आइकन फिर बनाएँ"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "मानचित्र आइकन बनाने के लिए उसका अकेले चलना ज़रूरी है, लेकिन दूसरा पूर्वावलोकन, मानचित्र परीक्षण या लाइव परीक्षण चल रहा है।"
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "उसके पूरा होने पर फिर कोशिश करें"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "मानचित्र आइकन के लिए मौजूदा पूर्वावलोकन चाहिए, और पूर्वावलोकन बदल गया है।"
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "नए पूर्वावलोकन की प्रतीक्षा करें, फिर दोबारा कोशिश करें"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "मानचित्र आइकन किसी दूसरे गेम फ़ोल्डर के गेम टेक्सचर से बनाया गया था।"
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "कोई मान्य AoE2DE इंस्टॉलेशन लिंक नहीं है।"
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "प्रोफ़ाइल फ़ोल्डर या उसका मॉड फ़ोल्डर ऐसा सामान्य फ़ोल्डर नहीं है जिसे AoE2RMSIDE इस्तेमाल कर सके।"
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "दो फ़ाइलें मॉड में {path} पर कॉपी होतीं।"
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "मानचित्र द्वारा इस्तेमाल की जाने वाली एक फ़ाइल के लिए मॉड फ़ोल्डर में कोई जगह नहीं है।"
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE तैनात किए गए मॉड का अपना रिकॉर्ड नहीं पढ़ सका।"
+    },
+    "message.deploy.headline": {
+      "message": "तैनाती विफल हुई"
+    },
+    "message.map-test.replay.headline": {
+      "message": "इस निष्कर्ष का मानचित्र नहीं दिखाया जा सका"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "मानचित्र परीक्षण ने अपनी प्रक्रिया की मेमोरी सीमा पार की और उसे रोक दिया गया। रन दोबारा नहीं चलाया गया।"
+    },
+    "message.map-test.child-memory.action": {
+      "message": "स्क्रिप्ट जितनी मेमोरी लेती है उसे घटाएँ, जैसे बड़े दोहराव या रखे गए कई मानचित्र"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "मानचित्र परीक्षण ने मानों या कॉल को बहुत गहराई तक नेस्ट किया और अपनी प्रक्रिया का स्टैक पार कर लिया, इसलिए उसे रोका गया। रन दोबारा नहीं चलाया गया।"
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "मानचित्र परीक्षण प्रक्रिया बीच में रुक गई, संभवतः अपनी मेमोरी या स्टैक सीमा पर। रन दोबारा नहीं चलाया गया।"
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() को खुले फ़ोल्डर की किसी .rms या .rms2 फ़ाइल का उद्धरण चिह्नों में सापेक्ष पथ चाहिए।"
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "टेस्ट डिफ़ॉल्ट रूप से जो मानचित्र चलाता है, वह खुले फ़ोल्डर के बाहर है।"
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "जो मानचित्र परीक्षण कभी सहेजा नहीं गया, उसके लिए खुला फ़ोल्डर चाहिए।"
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "यह फ़ाइल ऐसी मानचित्र परीक्षण रिपोर्ट नहीं है जिसे AoE2RMSIDE पढ़ सके।"
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "फ़ाइल {limit, number, integer} MiB से बड़ी है।"
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "रन के बाद मानचित्र परीक्षण बदल गया।"
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "रन के बाद मानचित्र या उसकी कोई include फ़ाइल बदल गई।"
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "परीक्षण में इस्तेमाल हुआ गेम संस्करण अब उपलब्ध नहीं है।"
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "मानचित्र रन के समय से अलग बना।"
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "रिपोर्ट में यह निष्कर्ष नहीं है।"
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "यह मानचित्र देखने के लिए {script} खोलें"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "निष्कर्ष का मानचित्र उसे खोजने वाले मानचित्र परीक्षण से फिर बनाया जाता है।"
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "इस जाँच पर जाने के लिए {script} खोलें"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "यह रिपोर्ट आयात की गई थी, इसलिए मानचित्र परीक्षण की फ़ाइल ज्ञात नहीं है।"
+    },
+    "message.map-test.results-running.headline": {
+      "message": "मानचित्र परीक्षण चल रहा है"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "मानचित्र परीक्षण चल रहा है · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "ये पिछले रन के नतीजे हैं; मौजूदा रन समाप्त होने पर बदलेंगे।"
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "नवीनतम रन एक त्रुटि के साथ रुक गया"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "ये उससे पहले वाले रन के नतीजे हैं।"
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "त्रुटि के लिए समस्याएँ और आउटपुट देखें"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "नवीनतम रन रोक दिया गया"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "{script} की आयात की गई रिपोर्ट"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "इस निष्कर्ष का मानचित्र तभी दिखाया जा सकता है जब यह मानचित्र परीक्षण, इसका मानचित्र और गेम संस्करण रन के समय जैसे हों।"
+    },
+    "message.map-test.progress.counts": {
+      "message": "{requested, plural, one {# मानचित्र में से {done, number}} other {# मानचित्रों में से {done, number}}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "जाँच पूरी"
+    },
+    "message.map-test.progress.testing": {
+      "message": "जाँच जारी"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {# मानचित्र जाँचा गया} one {# मानचित्र जाँचा गया} other {# मानचित्र जाँचे गए}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "मानचित्रों की जाँच जारी, {percent}% ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "मानचित्र परीक्षण शुरू हो रहा है"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "यह फ़ोल्डर AoE2DE का गेम फ़ोल्डर नहीं है"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "इस फ़ोल्डर में Age of Empires II: Definitive Edition का पूरा इंस्टॉलेशन नहीं है।"
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "गेम का इंस्टॉलेशन फ़ोल्डर चुनें, उदाहरण के लिए अपनी Steam लाइब्रेरी में steamapps\\common\\AoE2DE"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "लिंक किया गया AoE2DE इंस्टॉलेशन उपलब्ध नहीं है।"
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "गेम फ़ोल्डर का एक हिस्सा सुरक्षित रूप से पढ़ा नहीं जा सका: वह बहुत बड़ा या बहुत गहरा है, किसी दूसरी जगह से लिंक है, या उसमें असमर्थित फ़ाइल नाम है।"
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "गेम फ़ोल्डर और इंस्टॉल किए गए मानचित्रों के बाहर कोई सामान्य फ़ोल्डर चुनें।"
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} उस फ़ोल्डर में पहले से मौजूद है।"
+    },
+    "message.installed-source.limit.cause": {
+      "message": "बहुत अधिक फ़ाइलें या फ़ोल्डर हैं, या कोई फ़ाइल बहुत बड़ी है।"
+    },
+    "message.installed-source.changed.cause": {
+      "message": "इस बीच इंस्टॉल किए गए मानचित्र बदल गए।"
+    },
+    "message.installed-source.changed.action": {
+      "message": "इंस्टॉल किए गए मानचित्र फिर से खोलें"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "इस बीच स्क्रिप्ट या उसकी कोई include फ़ाइल बदल गई।"
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} ऐसी फ़ाइल का प्रकार नहीं है जिसे कोई मानचित्र include कर सके।"
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "कई फ़ाइलें {path} से केवल अक्षरों के बड़े-छोटे होने में अलग हैं।"
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} उन फ़ोल्डरों के बाहर है जिन्हें AoE2RMSIDE पढ़ सकता है।"
+    },
+    "message.source-catalog.authority.action": {
+      "message": "include फ़ाइलें खुले फ़ोल्डर या लिंक किए गए गेम फ़ोल्डर में ही रखें"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "छोटा include फ़ोल्डर इस्तेमाल करें या आवश्यक include फ़ाइलें कम करें"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "आवश्यक स्रोत डेटा कम करें, फिर दोबारा चलाएँ"
+    },
+    "message.session.save-failed.headline": {
+      "message": "आपके खुले टैब और लेआउट याद नहीं रखे जा सके"
+    },
+    "message.session.save-failed.cause": {
+      "message": "आपकी फ़ाइलों पर असर नहीं पड़ा, लेकिन अगली बार पुराने टैब और लेआउट खुल सकते हैं।"
+    },
+    "message.native.exited.cause": {
+      "message": "{name} अप्रत्याशित रूप से बंद हो गया।"
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} नहीं चल रहा है।"
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} ने समय पर जवाब नहीं दिया।"
+    },
+    "message.execution.busy.cause": {
+      "message": "दूसरा पूर्वावलोकन, मानचित्र परीक्षण या लाइव परीक्षण चल रहा है।"
+    },
+    "message.editor.busy.cause": {
+      "message": "एडिटर में बहुत सारे लंबित अनुरोध हैं।"
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "गेम संस्करण फिर से चुनें"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Windows एक्सप्लोरर फ़ोल्डर नहीं खोल सका: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "फ़ाइल बाइनरी है, बहुत बड़ी है, पढ़ी नहीं जा सकती या उसका प्रकार समर्थित नहीं है।"
+    },
+    "message.files.too-many.cause": {
+      "message": "एक बार में अधिकतम {limit, number, integer} फ़ाइलें या फ़ोल्डर खोलें।"
+    },
+    "message.files.recent-missing.cause": {
+      "message": "यह आइटम अब हाल की सूची में नहीं है।"
+    },
+    "message.files.encoding.cause": {
+      "message": "मानचित्र परीक्षण स्क्रिप्ट UTF-8 में सहेजी जानी चाहिए।"
+    },
+    "message.files.too-large.cause": {
+      "message": "मानचित्र परीक्षण स्क्रिप्ट अधिकतम {limit, number, integer} MiB की हो सकती है।"
+    },
+    "message.files.protected-target.cause": {
+      "message": "फ़ाइलें गेम फ़ोल्डर या इंस्टॉल किए गए मानचित्रों में सहेजी नहीं जा सकतीं।"
+    },
+    "message.files.extension-required.cause": {
+      "message": "फ़ाइल नाम {extension} पर समाप्त होना चाहिए।"
+    },
+    "message.files.entry-stale.cause": {
+      "message": "यह आइटम AoE2RMSIDE के बाहर बदला या स्थानांतरित किया गया।"
+    },
+    "message.files.not-a-file.cause": {
+      "message": "उस नाम का फ़ोल्डर पहले से मौजूद है।"
+    },
+    "message.files.outside-folder.cause": {
+      "message": "फ़ाइल खुले फ़ोल्डर के बाहर है।"
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "फ़ोल्डर में सूची बनाने के लिए बहुत अधिक फ़ाइलें और फ़ोल्डर हैं।"
+    },
+    "message.files.traversal-limit.action": {
+      "message": "छोटा फ़ोल्डर खोलें"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "हटाने से पहले रीसायकल बिन की सेटिंग बदल गई।"
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "आइटम को फिर से हटाएँ"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "बिना सहेजे बदलाव पुनर्प्राप्ति के लिए रखने के हिसाब से बहुत बड़े हैं।"
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "बदलाव बनाए रखने के लिए उन्हें सहेजें"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "पुनर्प्राप्ति फ़ाइल क्षतिग्रस्त है या AoE2RMSIDE की किसी दूसरी रिलीज़ ने लिखी थी।"
+    },
+    "message.game-textures.cause": {
+      "message": "इसके बजाय पूर्वावलोकन और मानचित्र का आइकन टेक्सचर के रंग दिखाते हैं।"
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} इसके बजाय पूर्वावलोकन और मानचित्र का आइकन टेक्सचर के रंग दिखाते हैं।"
+    },
+    "message.game-textures.failed.headline": {
+      "message": "गेम टेक्सचर तैयार नहीं हो सके"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "लिंक किए गए गेम फ़ोल्डर के लिए गेम टेक्सचर उपलब्ध नहीं हैं"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "परिवर्तित भूभाग पढ़ा नहीं जा सका"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "गेम टेक्सचर का रूपांतरण रद्द हुआ"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "परिवर्तित फ़ाइलें रखी गई हैं; गेम टेक्सचर फिर चुनने पर काम जारी होगा।"
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "वस्तुओं के स्प्राइट पढ़े नहीं जा सके"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "इस कंप्यूटर पर GPU से मानचित्र रेंडर करना उपलब्ध नहीं है"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "मानचित्र इसके बिना बनाया जाता है, जिससे बड़े मानचित्रों पर अधिक समय लग सकता है।"
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "इस कंप्यूटर पर GPU से मानचित्र रेंडर नहीं हो रहा"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "मानचित्र बनाने के लिए ग्राफ़िक्स कार्ड उपलब्ध नहीं है, इसलिए उसके बिना बनाया जाता है; बड़े मानचित्रों पर अधिक समय लग सकता है।"
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "GPU से मानचित्र रेंडर करना रुक गया"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "ग्राफ़िक्स कार्ड रीसेट हुआ, इसलिए ऐप फिर शुरू होने तक मानचित्र उसके बिना बनाया जाएगा।"
+    },
+    "message.map-test.preview-note.look": {
+      "message": "मानचित्र परीक्षण का पूर्वावलोकन हमेशा मिनिमैप रंग इस्तेमाल करता है"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "मानचित्र परीक्षण केवल तैयार मानचित्र दिखाते हैं"
+    },
+    "message.generation-result.generated": {
+      "message": "बनाया गया"
+    },
+    "message.generation-result.reused": {
+      "message": "फिर इस्तेमाल हुआ"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "असत्यापित गेम संस्करण"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "असत्यापित गेम संस्करण"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "इस गेम संस्करण के लिए मानचित्र बनाना अभी उपलब्ध नहीं है।"
+    },
+    "message.map-test.workers.label": {
+      "message": "परीक्षण कोर"
+    },
+    "message.map-test.workers.hint": {
+      "message": "मानचित्र परीक्षण में इस्तेमाल होने वाले प्रोसेसर कोर की अधिकतम संख्या, यानी एक साथ कितने मानचित्र बनेंगे ({maximum, plural, one {इस कंप्यूटर पर 1} other {इस कंप्यूटर पर 1 से {maximum}}})। स्वचालित चयन के लिए खाली छोड़ें, जो इस कंप्यूटर और मानचित्र के आकार के अनुसार संख्या चुनता है। हर विकल्प के नतीजे एक जैसे होते हैं।"
+    },
+    "message.map-test.workers.automatic": {
+      "message": "स्वचालित"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "स्वचालित चुनें"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, one {{count} कमांड की गेम से तुलना नहीं हुई} other {{count} कमांड की गेम से तुलना नहीं हुई}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "कुछ कमांड की गेम से तुलना नहीं हुई"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {अभी किसी रिकॉर्ड किए गए गेम मानचित्र ने इसे वहाँ इस्तेमाल नहीं किया है, इसलिए जहाँ यह लागू होता है वहाँ पूर्वावलोकन गेम से अलग हो सकता है: {list}।} other {अभी किसी रिकॉर्ड किए गए गेम मानचित्र ने इन्हें वहाँ इस्तेमाल नहीं किया है, इसलिए जहाँ ये लागू होते हैं वहाँ पूर्वावलोकन गेम से अलग हो सकता है: {list}।}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {अभी किसी रिकॉर्ड किए गए गेम मानचित्र ने इसे वहाँ इस्तेमाल नहीं किया है, इसलिए जहाँ यह लागू होता है वहाँ पूर्वावलोकन गेम से अलग हो सकता है।} other {अभी किसी रिकॉर्ड किए गए गेम मानचित्र ने इन्हें वहाँ इस्तेमाल नहीं किया है, इसलिए जहाँ ये लागू होते हैं वहाँ पूर्वावलोकन गेम से अलग हो सकता है।}}"
+    },
+    "message.construct.in-context": {
+      "message": "{context} में {name}"
+    },
+    "message.construct.list-more": {
+      "message": "{names}, और {more}"
+    },
+    "message.fallback.run": {
+      "message": "रन विफल हुआ"
+    },
+    "message.fallback.script": {
+      "message": "स्क्रिप्ट विफल हुई"
+    },
+    "message.fallback.preview": {
+      "message": "पूर्वावलोकन विफल हुआ"
+    },
+    "message.fallback.map-test": {
+      "message": "मानचित्र परीक्षण विफल हुआ"
+    },
+    "message.fallback.recovery": {
+      "message": "पुनर्प्राप्ति विफल हुई"
+    },
+    "message.fallback.update": {
+      "message": "अपडेट विफल हुआ"
+    },
+    "message.fallback.files": {
+      "message": "फ़ाइल की कार्रवाई विफल हुई"
+    },
+    "message.fallback.game-folder": {
+      "message": "गेम फ़ोल्डर इस्तेमाल नहीं हो सका"
+    },
+    "message.fallback.app": {
+      "message": "कुछ गलत हुआ"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "बाकी देखने के लिए दिखाई गई समस्याएँ ठीक करें।"
+    },
+    "message.action.choose-another-name": {
+      "message": "दूसरा नाम चुनें"
+    },
+    "message.action.use-or-remove": {
+      "message": "इसे इस्तेमाल करें या हटाएँ (त्वरित सुधार इसे हटा सकता है)"
+    },
+    "explorer.create.definition-file": {
+      "message": "परिभाषा फ़ाइल…"
+    },
+    "explorer.create.script": {
+      "message": "स्क्रिप्ट"
+    },
+    "explorer.create.map-test-script": {
+      "message": "मानचित्र-परीक्षण स्क्रिप्ट"
+    },
+    "explorer.create.xs-script": {
+      "message": "XS स्क्रिप्ट"
+    },
+    "explorer.create.folder": {
+      "message": "फ़ोल्डर"
+    },
+    "explorer.create.label": {
+      "message": "{name} में बनाएँ"
+    },
+    "explorer.label": {
+      "message": "फ़ाइल एक्सप्लोरर"
+    },
+    "explorer.search.label": {
+      "message": "कार्यक्षेत्र की फ़ाइलें खोजें"
+    },
+    "explorer.search.placeholder": {
+      "message": "फ़ाइलें खोजें"
+    },
+    "explorer.search.clear": {
+      "message": "फ़ाइल की खोज साफ़ करें"
+    },
+    "explorer.search.searching": {
+      "message": "कार्यक्षेत्र की फ़ाइलें खोजी जा रही हैं"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "कोई मिलती हुई RMS फ़ाइल नहीं"
+    },
+    "explorer.search.no-results": {
+      "message": "कोई मिलती हुई फ़ाइल नहीं"
+    },
+    "explorer.open-file.label": {
+      "message": "फ़ाइल खोलें"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "फ़ाइल खोलें"
+    },
+    "explorer.open-folder.label": {
+      "message": "फ़ोल्डर खोलें"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "फ़ोल्डर खोलें"
+    },
+    "explorer.tree.label": {
+      "message": "{name} की फ़ाइलें"
+    },
+    "explorer.empty.maps": {
+      "message": "मानचित्र देखने और संपादित करने के लिए फ़ोल्डर खोलें।"
+    },
+    "explorer.empty.scripts": {
+      "message": "स्क्रिप्ट देखने और संपादित करने के लिए फ़ोल्डर खोलें।"
+    },
+    "explorer.indexing": {
+      "message": "कार्यक्षेत्र फ़ोल्डर की सूची बन रही है"
+    },
+    "explorer.read-failed": {
+      "message": "यह फ़ोल्डर पढ़ा नहीं जा सका"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "एक्सप्लोरर में खोलें"
+    },
+    "explorer.context.rename": {
+      "message": "नाम बदलें"
+    },
+    "explorer.context.delete": {
+      "message": "हटाएँ"
+    },
+    "explorer.inline.create-file": {
+      "message": "फ़ाइल बनाएँ"
+    },
+    "explorer.inline.create-folder": {
+      "message": "फ़ोल्डर बनाएँ"
+    },
+    "explorer.inline.rename-file": {
+      "message": "फ़ाइल का नाम बदलें"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "फ़ोल्डर का नाम बदलें"
+    },
+    "definition-file.title": {
+      "message": "परिभाषा फ़ाइल बनाएँ"
+    },
+    "definition-file.close-label": {
+      "message": "बंद करें"
+    },
+    "definition-file.loading": {
+      "message": "चुने गए गेम संस्करण के नाम पढ़े जा रहे हैं…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "गेम संस्करण"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (असत्यापित)"
+    },
+    "definition-file.identity.target": {
+      "message": "यहाँ सहेजें"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "बनाते समय चुना जाएगा"
+    },
+    "definition-file.groups.label": {
+      "message": "सामग्री के समूह"
+    },
+    "definition-file.group.terrains": {
+      "message": "भूभाग"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "terrain_type, base_terrain और अन्य भूभाग सेटिंग्स के लिए भूभाग ID"
+    },
+    "definition-file.group.objects": {
+      "message": "वस्तुएँ"
+    },
+    "definition-file.group.objects.description": {
+      "message": "create_object और अन्य वस्तु सेटिंग्स के लिए वस्तु ID"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, one {# नाम} other {# नाम}}"
+    },
+    "definition-file.built-in": {
+      "message": "पहले से परिभाषित नाम शामिल करें"
+    },
+    "definition-file.built-in.description": {
+      "message": "वे नाम जो गेम पहले से परिभाषित करता है। स्क्रिप्ट उन्हें इस फ़ाइल के बिना इस्तेमाल कर सकती हैं।"
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "गेम ने जिन वस्तुओं और भूभागों को नाम नहीं दिया है, उनके नाम जोड़ने के लिए अपना गेम फ़ोल्डर लिंक करें।"
+    },
+    "definition-file.note.other-version": {
+      "message": "आपके गेम फ़ोल्डर में दूसरा गेम संस्करण है, इसलिए उसके नाम इस्तेमाल नहीं होते।"
+    },
+    "definition-file.note.no-text": {
+      "message": "इस गेम संस्करण के लिए आपके गेम फ़ोल्डर के नाम पढ़े नहीं जा सकते।"
+    },
+    "definition-file.note.nothing-new": {
+      "message": "हर नाम वाली वस्तु और भूभाग का नाम पहले से परिभाषित है।"
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, one {# अंतर्निहित नाम छोड़ दिया गया क्योंकि इस फ़ोल्डर की स्क्रिप्ट उसे पहले से परिभाषित करती है।} other {# अंतर्निहित नाम छोड़ दिए गए क्योंकि इस फ़ोल्डर की स्क्रिप्ट उन्हें पहले से परिभाषित करती हैं।}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, one {गेम फ़ोल्डर का # नाम छोड़ दिया गया क्योंकि उसके लिए अलग नाम नहीं बचा था।} other {गेम फ़ोल्डर के # नाम छोड़ दिए गए क्योंकि उनके लिए अलग नाम नहीं बचे थे।}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "इस फ़ोल्डर की कुछ स्क्रिप्ट में पहले से परिभाषित नामों की जाँच नहीं हो सकी।"
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "चुने गए गेम संस्करण की परिभाषा फ़ाइल नहीं बन सकती, क्योंकि उसका गेम डेटा अधूरा है।"
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "परिभाषा फ़ाइल बनाने के लिए कोई गेम संस्करण उपलब्ध नहीं है।"
+    },
+    "definition-file.unavailable.failed": {
+      "message": "चुने गए गेम संस्करण के नाम पढ़े नहीं जा सके।"
+    },
+    "definition-file.file-name.label": {
+      "message": "फ़ाइल का नाम"
+    },
+    "definition-file.file-name.empty": {
+      "message": "फ़ाइल का नाम दर्ज करें।"
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Windows में फ़ाइल के लिए यह नाम इस्तेमाल नहीं हो सकता।"
+    },
+    "definition-file.file-name.extension": {
+      "message": "फ़ाइल का नाम .inc पर समाप्त होना चाहिए।"
+    },
+    "definition-file.file-name.reserved": {
+      "message": "यह नाम गेम की लाइब्रेरी फ़ाइल का है। दूसरा नाम चुनें।"
+    },
+    "definition-file.generate": {
+      "message": "बनाएँ"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "बनाएँ…"
+    },
+    "definition-file.error": {
+      "message": "परिभाषा फ़ाइल लिखी नहीं जा सकी। विवरण आउटपुट में है।"
+    },
+    "definition-file.replace.title": {
+      "message": "{name} को बदलें?"
+    },
+    "definition-file.replace.description": {
+      "message": "{folder} में इस नाम की फ़ाइल पहले से है। बदलने पर उसकी सामग्री मिटाकर नई सामग्री लिखी जाएगी।"
+    },
+    "definition-file.replace.confirm": {
+      "message": "बदलें"
+    },
+    "definition-file.output.failed": {
+      "message": "परिभाषा फ़ाइल लिखी नहीं जा सकी"
+    },
+    "definition-file.output.unavailable": {
+      "message": "परिभाषा फ़ाइल के लिए नाम पढ़े नहीं जा सके"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "परिभाषा फ़ाइल सहेजें"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "परिभाषा फ़ाइलें"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "मॉड सक्षम करें"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "गेम की मॉड सूची में मॉड चालू करता है। गेम फिर शुरू होने पर मानचित्र और उसका आइकन दिखते हैं।"
+    },
+    "deploy-panel.success.enabled": {
+      "message": "मॉड सक्षम है। मानचित्र और उसका आइकन देखने के लिए गेम फिर शुरू करें।"
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "गेम में मॉड → मेरे मॉड के तहत मॉड सक्षम करें, फिर मानचित्र और उसका आइकन देखने के लिए गेम फिर शुरू करें।"
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {मॉड सक्षम नहीं हुआ: गेम की मॉड सूची फ़ाइल पढ़ी नहीं जा सकी।} unexpected-layout {मॉड सक्षम नहीं हुआ: गेम की मॉड सूची फ़ाइल का ढाँचा IDE को ज्ञात नहीं है।} duplicate-entry {मॉड सक्षम नहीं हुआ: गेम की मॉड सूची में यह मॉड एक से अधिक बार है।} unexpected-entry {मॉड सक्षम नहीं हुआ: गेम में इस मॉड की प्रविष्टि का ढाँचा IDE को ज्ञात नहीं है।} changed {मॉड सक्षम नहीं हुआ: गेम ने उसी समय अपनी मॉड सूची बदल दी।} unsafe-path {मॉड सक्षम नहीं हुआ: प्रोफ़ाइल का मॉड फ़ोल्डर या मॉड सूची दूसरी जगह का लिंक है।} other {मॉड सक्षम नहीं हुआ: गेम की मॉड सूची सहेजी नहीं जा सकी।}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "गेम चल रहा है: बदलाव फिर शुरू होने के बाद लागू होगा, और गेम बंद होते समय इसे हटा सकता है। फिर शुरू करने के बाद मॉड बंद हो तो गेम बंद करके दोबारा तैनात करें।"
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "मॉड फ़ोल्डर खोलें"
+    },
+    "deploy-panel.success.finish": {
+      "message": "पूरा करें"
+    },
+    "deploy-panel.success.title": {
+      "message": "मॉड सफलतापूर्वक तैनात हुआ"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "मॉड यहाँ सहेजा गया"
+    },
+    "deploy-panel.success.path": {
+      "message": "तैनात मॉड का पथ"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "मॉड का पथ कॉपी करें"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "मॉड का पथ कॉपी हुआ"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, one {# फ़ाइल।} other {# फ़ाइलें।}} मॉड सक्षम है; मानचित्र और उसका आइकन देखने के लिए गेम फिर शुरू करें।"
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, one {# फ़ाइल।} other {# फ़ाइलें।}} गेम में मॉड → मेरे मॉड के तहत मॉड सक्षम करें, फिर मानचित्र और उसका आइकन देखने के लिए गेम फिर शुरू करें।"
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "मॉड तैनात हुआ लेकिन सक्षम नहीं हुआ"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {गेम की मॉड सूची फ़ाइल पढ़ी नहीं जा सकी, इसलिए उसे बदला नहीं गया।} unexpected-layout {गेम की मॉड सूची फ़ाइल का ढाँचा IDE को ज्ञात नहीं है, इसलिए उसे बदला नहीं गया।} duplicate-entry {गेम की मॉड सूची में यह मॉड एक से अधिक बार है, इसलिए सूची बदली नहीं गई।} unexpected-entry {गेम में इस मॉड की प्रविष्टि का ढाँचा IDE को ज्ञात नहीं है, इसलिए उसे बदला नहीं गया।} changed {गेम ने उसी समय अपनी मॉड सूची बदली, इसलिए सूची गेम की लिखी हुई ही रखी गई।} unsafe-path {प्रोफ़ाइल का मॉड फ़ोल्डर या मॉड सूची दूसरी जगह का लिंक है, इसलिए उसे बदला नहीं गया।} other {गेम की मॉड सूची सहेजी नहीं जा सकी; पिछली सूची बनी हुई है।}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "गेम में मॉड → मेरे मॉड के तहत मॉड सक्षम करें, फिर गेम दोबारा शुरू करें"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "गेम चलते समय मॉड सूची बदली गई"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "बदलाव फिर शुरू होने के बाद लागू होगा, और गेम बंद होते समय इसे हटा सकता है। फिर शुरू करने के बाद मॉड बंद हो तो गेम बंद करके दोबारा तैनात करें।"
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "{name} का मौजूदा पूर्वावलोकन इस्तेमाल हो रहा है"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "मौजूदा पूर्वावलोकन फिर इस्तेमाल नहीं हो सका, इसलिए फिर बनाया जा रहा है"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "यह मानचित्र तैनाती के लिए नहीं बनाया जा सका"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "{mod} को प्रोफ़ाइल {profile} में तैनात किया गया"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "मॉड फ़ोल्डर नहीं खुल सका"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "लक्ष्य निर्देशिका Windows एक्सप्लोरर में खोलें"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "लक्ष्य निर्देशिका नहीं खुल सकी"
+    },
+    "deploy-panel.target": {
+      "message": "लक्ष्य निर्देशिका"
+    },
+    "deploy-panel.target.copy": {
+      "message": "लक्ष्य निर्देशिका का पथ कॉपी करें"
+    },
+    "deploy-panel.target.copied": {
+      "message": "लक्ष्य निर्देशिका का पथ कॉपी हुआ"
+    },
+    "deploy-panel.title": {
+      "message": "मॉड के रूप में तैनात करें"
+    },
+    "deploy-panel.close": {
+      "message": "मॉड तैनाती बंद करें"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "तैनाती के लिए गेम फ़ोल्डर चुनें"
+    },
+    "deploy-panel.source": {
+      "message": "RMS स्रोत"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "RMS मुख्य फ़ाइल खोलें"
+    },
+    "deploy-panel.source.failed": {
+      "message": "यह मानचित्र नहीं बन सका, इसलिए अभी तैनात नहीं हो सकता। आउटपुट में दिखाई गई समस्या ठीक करें, फिर ‘मॉड के रूप में तैनात करें’ दोबारा खोलें।"
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "यह मानचित्र नहीं बन सका, इसलिए अभी तैनात नहीं हो सकता। {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "चुने गए RMS स्रोत का पूर्वावलोकन रद्द हुआ।"
+    },
+    "deploy-panel.mod-name": {
+      "message": "मॉड का नाम"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "पहले इस्तेमाल हुआ मॉड नाम चुनें"
+    },
+    "deploy-panel.profile": {
+      "message": "उपयोगकर्ता प्रोफ़ाइल"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "प्रोफ़ाइल चुनें"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · सुझाई गई"
+    },
+    "deploy-panel.tree": {
+      "message": "तैनाती की फ़ाइल संरचना"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "तैनाती की फ़ाइल संरचना लोड हो रही है"
+    },
+    "deploy-panel.no-source": {
+      "message": "तैनाती के लिए .rms या .rms2 मुख्य फ़ाइल खोलें।"
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "मॉड तैनात करें"
+    },
+    "deploy-panel.replace.title": {
+      "message": "मौजूदा मॉड बदलें?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "मौजूदा मॉड {name} की हर फ़ाइल हटाई जाएगी।"
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "मॉड बदलें"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, one {{count} समस्या} other {{count} समस्याएँ}}"
+    },
+    "problems-panel.empty": {
+      "message": "सिंटैक्स की कोई समस्या नहीं।"
+    },
+    "problems-panel.empty.filtered": {
+      "message": "फ़िल्टर से कोई समस्या मेल नहीं खाती ({hidden} छिपी हैं)।"
+    },
+    "problems-panel.severity.error": {
+      "message": "त्रुटि"
+    },
+    "problems-panel.severity.warning": {
+      "message": "चेतावनी"
+    },
+    "problems-panel.severity.info": {
+      "message": "सूचना"
+    },
+    "problems-panel.group.file": {
+      "message": "फ़ाइल"
+    },
+    "problems-panel.group.game-file": {
+      "message": "गेम फ़ाइल"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, one {{count} त्रुटि} other {{count} त्रुटियाँ}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, one {{count} चेतावनी} other {{count} चेतावनियाँ}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, one {{count} सूचना} other {{count} सूचनाएँ}}"
+    },
+    "problems-panel.group.show": {
+      "message": "{file} की समस्याएँ दिखाएँ"
+    },
+    "problems-panel.group.hide": {
+      "message": "{file} की समस्याएँ छिपाएँ"
+    },
+    "problems-panel.group.label": {
+      "message": "{file} की समस्याएँ"
+    },
+    "problems-panel.row.go-to": {
+      "message": "{location} पर जाएँ"
+    },
+    "severity-filter.label": {
+      "message": "{panel} का गंभीरता फ़िल्टर"
+    },
+    "severity-filter.errors.label": {
+      "message": "त्रुटियाँ दिखाएँ ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "त्रुटियाँ दिखाएँ"
+    },
+    "severity-filter.errors.hide": {
+      "message": "त्रुटियाँ छिपाएँ"
+    },
+    "severity-filter.warnings.label": {
+      "message": "चेतावनियाँ दिखाएँ ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "चेतावनियाँ दिखाएँ"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "चेतावनियाँ छिपाएँ"
+    },
+    "severity-filter.notes.label": {
+      "message": "सूचनाएँ दिखाएँ ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "सूचनाएँ दिखाएँ"
+    },
+    "severity-filter.notes.hide": {
+      "message": "सूचनाएँ छिपाएँ"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "{folder} के मानचित्रों की सूची नहीं बन सकी: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "अधूरी या अपठनीय गेम फ़ाइलों वाला इंस्टॉलेशन छोड़ दिया गया।"
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "अनुपलब्ध इंस्टॉलेशन छोड़ दिया गया।"
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "इंस्टॉल किए स्रोतों के रूट फ़ोल्डरों की संख्या सुरक्षा सीमा तक पहुँच गई।"
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "इंस्टॉल किए स्रोतों की प्रविष्टियों की संख्या सुरक्षा सीमा तक पहुँच गई।"
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (असत्यापित)"
+    },
+    "linked-game.content-read": {
+      "message": "{label} का गेम डेटा इस्तेमाल हो रहा है"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, one {{objects} वस्तु, पहले से लोड है।} other {{objects} वस्तुएँ, पहले से लोड हैं।}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, one {{objects} वस्तु, {milliseconds} ms में पढ़ी गई।} other {{objects} वस्तुएँ, {milliseconds} ms में पढ़ी गईं।}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "{label} का गेम डेटा पढ़ा नहीं जा सका"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "उस संस्करण के पूर्वावलोकन पैकेज का {version} डेटा इस्तेमाल करते हैं, जिसमें बाद में जोड़ी गई वस्तुएँ और भूभाग नहीं बनाए जा सकते।"
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "अज्ञात कमांड"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "इस्तेमाल न की गई परिभाषा"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "यहाँ कमांड का कोई असर नहीं"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "विशेषता फिर सेट की गई"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "रैंडम शाखा कभी नहीं चुनी जाती"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "पहली शाखा की संभावना शून्य"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "मान सीमा में समेटा जाता है"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "स्थिरांक पहले से परिभाषित है"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "गेम में टिप्पणी नहीं है"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "जहाँ नाम चाहिए वहाँ संख्या"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "नाम अपरिभाषित हो सकता है"
+    },
+    "map-icon.generate": {
+      "message": "मानचित्र का आइकन बनाएँ"
+    },
+    "map-icon.open-larger": {
+      "message": "मानचित्र का बड़ा आइकन खोलें"
+    },
+    "map-icon.save-image": {
+      "message": "चित्र सहेजें"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "चित्र सहेजें…"
+    },
+    "map-icon.frame.generating": {
+      "message": "मानचित्र का आइकन बन रहा है"
+    },
+    "map-icon.frame.ready": {
+      "message": "मानचित्र के आइकन का पूर्वावलोकन"
+    },
+    "map-icon.frame.original": {
+      "message": "मानचित्र का मूल आइकन"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "मानचित्र का मूल आइकन नहीं दिखाया जा सकता"
+    },
+    "map-icon.frame.none": {
+      "message": "मानचित्र का बना हुआ आइकन नहीं है"
+    },
+    "map-icon.switch.no-source": {
+      "message": "मानचित्र का आइकन बनाने के लिए .rms या .rms2 मुख्य फ़ाइल खोलें।"
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "मानचित्र का आइकन बनाने के लिए इस स्रोत का सफल पूर्वावलोकन चाहिए।"
+    },
+    "map-icon.switch.unavailable": {
+      "message": "मानचित्र का आइकन बनाना उपलब्ध नहीं है: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "मानचित्र का आइकन उपलब्ध नहीं है: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "मानचित्र का आइकन: सीड {seed} से मानचित्र बन रहा है"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "मानचित्र के आइकन के लिए इस स्रोत का सफल पूर्वावलोकन चाहिए।"
+    },
+    "map-icon.status.rendering": {
+      "message": "मानचित्र का आइकन: मौजूदा पूर्वावलोकन से रेंडर हो रहा है"
+    },
+    "map-icon.status.waiting": {
+      "message": "मानचित्र का आइकन: तैनाती के पूर्वावलोकन की प्रतीक्षा है"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "मानचित्र का आइकन: {file} बनाया गया, केवल इस तैनात स्नैपशॉट में मूल आइकन की जगह"
+    },
+    "map-icon.status.generated": {
+      "message": "मानचित्र का आइकन: मौजूदा पूर्वावलोकन से {file} बनाया गया"
+    },
+    "map-icon.status.original": {
+      "message": "मानचित्र का आइकन: स्रोत फ़ोल्डर की मूल {file}"
+    },
+    "map-icon.status.none": {
+      "message": "मानचित्र का आइकन: कोई नहीं"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "बनाया गया आइकन"
+    },
+    "map-icon.tree.original": {
+      "message": "मूल आइकन"
+    },
+    "map-icon.render-failed": {
+      "message": "मानचित्र का आइकन बनाया नहीं जा सका"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "मानचित्र के आइकन के विकल्प याद नहीं रखे गए"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "सीड {seed} से मानचित्र का आइकन नहीं बन सका"
+    },
+    "map-icon.output.saved": {
+      "message": "मानचित्र का आइकन {name} के रूप में सहेजा गया"
+    },
+    "map-icon.output.save-failed": {
+      "message": "मानचित्र का आइकन सहेजा नहीं जा सका"
+    },
+    "map-icon.lightbox.close": {
+      "message": "मानचित्र के आइकन का पूर्वावलोकन बंद करें"
+    },
+    "map-icon.lightbox.title": {
+      "message": "मानचित्र का आइकन"
+    },
+    "map-icon.view-tools": {
+      "message": "मानचित्र के आइकन का दृश्य"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "हीरे जैसा दृश्य"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "ऊपर से दृश्य"
+    },
+    "map-icon.look.minimap": {
+      "message": "मिनिमैप रंग"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "टेक्सचर के रंग"
+    },
+    "map-icon.look.game-textures": {
+      "message": "गेम टेक्सचर"
+    },
+    "map-icon.look.pending": {
+      "message": "गेम टेक्सचर लागू हो रहे हैं"
+    },
+    "map-icon.look.fallback": {
+      "message": "गेम टेक्सचर उपलब्ध नहीं हैं, इसलिए आइकन टेक्सचर के रंग इस्तेमाल करता है।"
+    },
+    "map-icon.relief": {
+      "message": "भूभाग का उतार-चढ़ाव"
+    },
+    "map-icon.relief.hide": {
+      "message": "भूभाग का उतार-चढ़ाव छिपाएँ"
+    },
+    "map-icon.relief.show": {
+      "message": "भूभाग का उतार-चढ़ाव दिखाएँ"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "भूभागों के बीच किनारे मुलायम करें"
+    },
+    "map-icon.random-seed": {
+      "message": "रैंडम सीड"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "संपादक का सीड इस्तेमाल करें"
+    },
+    "map-icon.seed": {
+      "message": "मानचित्र के आइकन का सीड"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "संपादक का सीड"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "खिलाड़ी के चौकोर चिह्न"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "खानाबदोश के पदचिह्न"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "शुरुआती स्थानों के चिह्न नहीं"
+    },
+    "map-icon.spawn-size": {
+      "message": "शुरुआती स्थान के चिह्न का आकार"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "शुरुआती स्थान के चिह्न का आकार घटाएँ"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "शुरुआती स्थान के चिह्न का आकार बढ़ाएँ"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "मानचित्र की चौड़ाई का {value}%"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "शुरुआती स्थान के चिह्न का आकार (मानचित्र की चौड़ाई का %)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "पेड़ दिखाएँ"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "पेड़ छिपाएँ"
+    },
+    "map-icon.art.trees.options": {
+      "message": "पेड़ों के विकल्प"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "पेड़ों की संख्या"
+    },
+    "map-icon.art.trees.size": {
+      "message": "पेड़ों का आकार"
+    },
+    "map-icon.art.resources.show": {
+      "message": "सोना और पत्थर दिखाएँ"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "सोना और पत्थर छिपाएँ"
+    },
+    "map-icon.art.resources.options": {
+      "message": "सोने और पत्थर के विकल्प"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "सोने और पत्थर की मात्रा"
+    },
+    "map-icon.art.resources.size": {
+      "message": "सोने और पत्थर का आकार"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "कम"
+    },
+    "map-icon.art.amount.more": {
+      "message": "ज़्यादा"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "हर प्रकार का एक"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "हर वस्तु का एक"
+    },
+    "map-icon.art.amount.few": {
+      "message": "थोड़े"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "मध्यम"
+    },
+    "map-icon.art.amount.many": {
+      "message": "बहुत"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "छोटे"
+    },
+    "map-icon.art.size.larger": {
+      "message": "बड़े"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "सबसे छोटा"
+    },
+    "map-icon.art.size.small": {
+      "message": "छोटा"
+    },
+    "map-icon.art.size.medium": {
+      "message": "मध्यम"
+    },
+    "map-icon.art.size.large": {
+      "message": "बड़ा"
+    },
+    "map-icon.art.size.largest": {
+      "message": "सबसे बड़ा"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "शुरुआती स्थान के चिह्नों के नीचे दिखाएँ"
+    },
+    "workbench.application-menu.label": {
+      "message": "ऐप का मेनू"
+    },
+    "workbench.explorer.collapse": {
+      "message": "फ़ाइल एक्सप्लोरर समेटें"
+    },
+    "workbench.explorer.expand": {
+      "message": "फ़ाइल एक्सप्लोरर फैलाएँ"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "एक्सप्लोरर समेटें"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "एक्सप्लोरर फैलाएँ"
+    },
+    "workbench.explorer.resize": {
+      "message": "फ़ाइल एक्सप्लोरर का आकार बदलें"
+    },
+    "workbench.preview.resize": {
+      "message": "लाइव मानचित्र पूर्वावलोकन का आकार बदलें"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "अगले रन से निर्माण के चरण साथ-साथ दिखेंगे"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "अगले रन से निर्माण के चरण छिपेंगे"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "समस्याएँ और आउटपुट पैनल"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "समस्याएँ, आउटपुट और परीक्षण नतीजों का पैनल"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "समस्याएँ और आउटपुट पैनल का आकार बदलें"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} आउटपुट"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} समस्याएँ"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} परीक्षण नतीजे"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "आउटपुट"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "समस्याएँ"
+    },
+    "workbench.native.restart-label": {
+      "message": "विफल {name} प्रक्रिया फिर शुरू करें"
+    },
+    "workbench.native.failed": {
+      "message": "{name} विफल हुआ"
+    },
+    "workbench.native.restarted": {
+      "message": "{name} फिर शुरू हुआ"
+    },
+    "workbench.native.restart-failed": {
+      "message": "{name} फिर शुरू नहीं हो सका"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} रुक गया"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "{name} की परीक्षण रिपोर्ट आयात हुई"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "मानचित्र-परीक्षण रिपोर्ट आयात नहीं हो सकी"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "परीक्षण रिपोर्ट निर्यात हुई"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "मानचित्र-परीक्षण रिपोर्ट निर्यात नहीं हो सकी"
+    },
+    "workbench.map-test.replayed": {
+      "message": "निष्कर्ष का मानचित्र उसके रिकॉर्ड किए सीड से फिर बनाया गया"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "निष्कर्ष का मानचित्र उसके रिकॉर्ड किए सीड {seed} से फिर बनाया गया"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "गेम फ़ोल्डर का लिंक नहीं हटाया जा सका"
+    },
+    "code-editor.panel.label": {
+      "message": "RMS स्रोत संपादक"
+    },
+    "code-editor.tabs.label": {
+      "message": "खुली फ़ाइलें"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "संपादक के टैब बाईं ओर स्क्रॉल करें"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "संपादक के टैब दाईं ओर स्क्रॉल करें"
+    },
+    "code-editor.tab.close": {
+      "message": "{name} बंद करें"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "बिना सहेजे बदलाव"
+    },
+    "code-editor.tab.read-only": {
+      "message": "केवल पढ़ने के लिए"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "बिना सहेजे बदलाव, केवल पढ़ने के लिए"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "मॉड के रूप में तैनात करें…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "सहेजें"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "क्लोन / इस रूप में सहेजें…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "इस रूप में सहेजें…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "बंद करें"
+    },
+    "code-editor.run.preview": {
+      "message": "पूर्वावलोकन चलाएँ"
+    },
+    "code-editor.run.map-test": {
+      "message": "मानचित्र परीक्षण चलाएँ"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "पूर्वावलोकन और लाइव परीक्षण चलाएँ"
+    },
+    "code-editor.run.stop": {
+      "message": "रोकें"
+    },
+    "code-editor.run.tooltip": {
+      "message": "चलाएँ ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "पूर्वावलोकन और लाइव परीक्षण चलाएँ ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "रोकें ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "पूर्वावलोकन चलाने के विकल्प"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "चलने वाली स्क्रिप्ट"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "चलने वाली स्क्रिप्ट पिन करें"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "सीड"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "सीड कॉपी करें"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "सीड {seed} कॉपी करें"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "सीड कॉपी हुआ"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "लॉक है"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "हर रन पर रैंडम सीड"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "मौजूदा मैच का सीड इस्तेमाल करें"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "एक सत्यापित सक्रिय एकल-खिलाड़ी रैंडम मैप मैच चाहिए।"
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Age of Empires II: Definitive Edition का गेम फ़ोल्डर चुनें"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Age of Empires II: Definitive Edition का गेम फ़ोल्डर चुना जा रहा है"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "इंस्टॉल किया गया Age of Empires II: Definitive Edition गेम फ़ोल्डर खोजा जा रहा है"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "हर रन पर लाइव परीक्षण"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "पूर्वावलोकन चलाएँ, फिर AoE2DE में जारी रखें"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "AoE2Control की मान्य निष्पादन योग्य फ़ाइल चुनें"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "AoE2Control चुनें"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "AoE2Control चुना जा रहा है…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "लाइव परीक्षण के लिए AoE2Control.exe चुनें"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "लाइव परीक्षण के लिए AoE2Control.exe चुना जा रहा है"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "AoE2Control डाउनलोड करें"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "AoE2Control की रिलीज़ खोलें"
+    },
+    "code-editor.control.remove.title": {
+      "message": "AoE2Control हटाएँ?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "इससे AoE2Control की निष्पादन योग्य फ़ाइल का चयन हटता है और मौजूदा लाइव-परीक्षण सत्र का कनेक्शन टूटता है। अगला लाइव परीक्षण चल रहे मैच को बदलने से पहले फिर अनुमति माँगेगा।"
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "हटाएँ"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "AoE2Control की रिलीज़ का पेज नहीं खुल सका"
+    },
+    "code-editor.control-download.title": {
+      "message": "AoE2Control निकालने से पहले"
+    },
+    "code-editor.control-download.description": {
+      "message": "AoE2Control.zip से फ़ाइलें निकालने का पासवर्ड {password} है। AoE2Control गेम में Lua चलाने के लिए DLL इंजेक्ट करता है, इसलिए अनुमान-आधारित एंटीवायरस टूल—Windows Defender सहित—इसे गलती से ख़तरा मान सकते हैं। निकाली गई फ़ाइलों के फ़ोल्डर को एंटीवायरस अपवाद में जोड़ें ताकि इंजन बिना रुकावट चल सके।"
+    },
+    "code-editor.control-download.confirm": {
+      "message": "समझ गया"
+    },
+    "code-editor.preview.collapse": {
+      "message": "लाइव मानचित्र पूर्वावलोकन समेटें"
+    },
+    "code-editor.preview.expand": {
+      "message": "लाइव मानचित्र पूर्वावलोकन फैलाएँ"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "पूर्वावलोकन समेटें"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "पूर्वावलोकन फैलाएँ"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "स्क्रिप्ट चलाने की विफलता का संदेश हटाएँ"
+    },
+    "code-editor.notice.recovery": {
+      "message": "बिना सहेजा काम वापस मिला"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "पुनर्प्राप्ति सूचना हटाएँ"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "पूर्वावलोकन अब आपके गेम के टेक्सचर इस्तेमाल करता है"
+    },
+    "code-editor.font-size.label": {
+      "message": "संपादक के फ़ॉन्ट का आकार"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent}%"
+    },
+    "code-editor.read-only-message": {
+      "message": "यह इंस्टॉलेशन या सब्सक्राइब किए मॉड का स्रोत सुरक्षित है। क्लोन या इस रूप में सहेजें इस्तेमाल करें।"
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "शामिल फ़ाइल खोलें"
+    },
+    "code-editor.include.open": {
+      "message": "{name} खोलें"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "यहाँ नाम बदलने से स्क्रिप्ट का अर्थ सुरक्षित नहीं रहता।"
+    },
+    "code-editor.rename.not-proven": {
+      "message": "अर्थ पूरी तरह समान रहने की पुष्टि नहीं हुई।"
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} सुरक्षित गेम फ़ाइल है; नाम बदलने से यह भी बदलेगी।"
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "इस पंक्ति पर {code} अनदेखा करें"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "इस कार्यक्षेत्र में {code} बंद करें"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "संपादक का मॉडल उपलब्ध नहीं है।"
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "स्क्रिप्ट की भाषा की पहचान बदल गई।"
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "फ़ॉर्मैट शुरू होने से पहले दस्तावेज़ बदल गया।"
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "फ़ॉर्मैट की तैयारी के दौरान दस्तावेज़ बदल गया।"
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "अनुरोध रद्द हुआ।"
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Starlark स्रोत अमान्य होने पर फ़ॉर्मैट उपलब्ध नहीं है।"
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "फ़ॉर्मैट के लिए चार स्पेस का इंडेंट पहले से मान्य होना चाहिए; टोकन संरचना बदली नहीं गई।"
+    },
+    "code-editor.completion.content.object": {
+      "message": "वस्तु {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "भूभाग {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "मानचित्र परीक्षण"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Starlark अंतर्निहित"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Starlark {type} विधि"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "पहले परिभाषित Starlark फ़ंक्शन"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Starlark फ़ंक्शन का पैरामीटर"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "पहले परिभाषित Starlark चर"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Starlark लूप का चर"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} इस दस्तावेज़ में पहले परिभाषित किया गया था।"
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Starlark फ़ंक्शन"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "RMS और XS स्रोत"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "RMS, XS और मानचित्र-परीक्षण स्रोत"
+    },
+    "native-dialog.open-files.title": {
+      "message": "स्रोत फ़ाइलें खोलें"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "RMS फ़ोल्डर खोलें"
+    },
+    "native-dialog.save-as.title": {
+      "message": "स्रोत इस रूप में सहेजें"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "मानचित्र-परीक्षण रिपोर्ट"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "मानचित्र-परीक्षण रिपोर्ट निर्यात करें"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "मानचित्र-परीक्षण रिपोर्ट आयात करें"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Age of Empires II: Definitive Edition का फ़ोल्डर चुनें"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "वह फ़ोल्डर चुनें जिसमें मानचित्र का संपादन योग्य क्लोन रखा जाएगा"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "AoE2Control की निष्पादन योग्य फ़ाइल चुनें"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "AoE2Control निष्पादन योग्य फ़ाइल"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "मानचित्र का आइकन सहेजें"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "PNG चित्र"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "शामिल फ़ाइलें फिर पढ़ी नहीं जा सकीं"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "हटाने के बाद सत्र अपडेट नहीं हो सका"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "एक्सप्लोरर में कुछ फ़ोल्डर नहीं दिखाए जा सके"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, one {कार्यक्षेत्र की एक फ़ाइल का नाम गेम की लाइब्रेरी फ़ाइल जैसा है} other {कार्यक्षेत्र की फ़ाइलों के नाम गेम की लाइब्रेरी फ़ाइलों जैसे हैं}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}। इनमें संपादन किया जा सकता है, लेकिन include उनकी जगह गेम की फ़ाइल चुन सकता है।"
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, one {{paths, list, unit}, और {count}। इनमें संपादन किया जा सकता है, लेकिन include उनकी जगह गेम की फ़ाइल चुन सकता है।} other {{paths, list, unit}, और {count}। इनमें संपादन किया जा सकता है, लेकिन include उनकी जगह गेम की फ़ाइल चुन सकता है।}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "उनके नाम बदलें"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "गेम की लाइब्रेरी फ़ाइलों के नामों की जाँच अधूरी रही"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "कुछ भी नहीं खोला गया"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, one {अनुरोध में {count} से अधिक फ़ाइलें और फ़ोल्डर थे।} other {अनुरोध में {count} से अधिक फ़ाइलें और फ़ोल्डर थे।}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "अनुरोध के पथ AoE2RMSIDE की स्वीकृत लंबाई से अधिक हैं।"
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "एक साथ बहुत सारे खोलने के अनुरोध आए। बाकी आइटम फिर खोलें।"
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "{name} नहीं खोला गया"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "यह मौजूद नहीं है या पहुँचा नहीं जा सकता।"
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "यह मान्य फ़ाइल या फ़ोल्डर पथ नहीं है।"
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE फ़ोल्डर और .rms, .rms2, .inc, .def व .xs फ़ाइलें खोलता है।"
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE फ़ोल्डर और .rms, .rms2, .inc, .def, .xs व .rmstest फ़ाइलें खोलता है।"
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "एक समय में एक फ़ोल्डर खुलता है।"
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "एक समय में एक फ़ोल्डर खुलता है; {folder} खोला गया।"
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "इसे पढ़ा नहीं जा सका।"
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, one {# और आइटम नहीं खोला गया} other {# और आइटम नहीं खोले गए}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "वे मौजूद नहीं हैं, पढ़े नहीं जा सकते, या ऐसी फ़ाइलें नहीं हैं जिन्हें AoE2RMSIDE खोलता है।"
+    },
+    "file-actions.entry.name-exists": {
+      "message": "इस नाम की फ़ाइल या फ़ोल्डर पहले से मौजूद है"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "इस नाम या इसके छोटे वैकल्पिक नाम वाली फ़ाइल या फ़ोल्डर पहले से मौजूद है"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "नाम Windows में मान्य फ़ाइल या फ़ोल्डर नाम नहीं है"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "केवल .rms, .rms2, .inc, .def और .xs स्रोत फ़ाइलें समर्थित हैं"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "केवल .rms, .rms2, .inc, .def, .rmstest और .xs स्रोत फ़ाइलें समर्थित हैं"
+    },
+    "file-actions.entry.read-only": {
+      "message": "कार्यक्षेत्र की फ़ाइल या फ़ोल्डर केवल पढ़ने के लिए या सुरक्षित है"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "कार्यक्षेत्र के मूल फ़ोल्डर का नाम नहीं बदला जा सकता और उसे हटाया नहीं जा सकता"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "''{name}'' मानक गेम संसाधन के लिए आरक्षित है; फ़ाइल का दूसरा नाम चुनें।"
+    },
+    "notice.recovery.read-failed": {
+      "message": "पिछले सत्र का बिना सहेजा काम पढ़ा नहीं जा सका और छोड़ दिया गया"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "पुनर्प्राप्त कार्यक्षेत्र फ़ोल्डर उपलब्ध नहीं है।"
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "पिछला कार्यक्षेत्र फ़ोल्डर उपलब्ध नहीं है और छोड़ दिया गया।"
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "सत्र का अनुपलब्ध टैब {name} छोड़ दिया गया।"
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "स्रोत उपलब्ध न होने के कारण {name} को बिना सहेजे पाठ के रूप में बहाल किया गया।"
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, one {लिंक किए गेम की {converted} भूभाग फ़ाइलें परिवर्तित हुईं और {reused} फिर इस्तेमाल हुई, {seconds, number, ::.0 group-off} s में} other {लिंक किए गेम की {converted} भूभाग फ़ाइलें परिवर्तित हुईं और {reused} फिर इस्तेमाल हुईं, {seconds, number, ::.0 group-off} s में}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "स्थानीय कैश {megabytes, number, ::.0 unit/megabyte group-off}।"
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, one {{count} भूभाग फ़ाइल परिवर्तित नहीं हो सकी और मिनिमैप रंग इस्तेमाल करती है} other {{count} भूभाग फ़ाइलें परिवर्तित नहीं हो सकीं और मिनिमैप रंग इस्तेमाल करती हैं}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "उदाहरण के लिए {asset}: {reason}।"
+    },
+    "preview-panel.name.object-number": {
+      "message": "वस्तु {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "भूभाग {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "दीवार {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "खिलाड़ी {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "गैया"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "सहायक वस्तु"
+    },
+    "preview-panel.material.cliff": {
+      "message": "चट्टान"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "चट्टान प्रकार {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "भूमि संपर्क"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "जल संपर्क"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "सड़क संपर्क"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "अज्ञात संपर्क"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "बिना मार्ग वाली संपर्क खोज"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "पूर्वावलोकन चयन में अस्पष्टता: {layer} · {count, plural, one {{count} चयनित} other {{count} चयनित}} · {sources, plural, one {{sources} अलग स्रोत} other {{sources} अलग स्रोत}} · {location} इस्तेमाल हो रहा है।"
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "घास"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "उथला पानी"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "पानी"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "तट"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "ज़मीन"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "पत्थर"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "मिट्टी"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "चट्टान का मुख"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "भूमि"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "ऊँचाई"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "चट्टानें"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "भूभाग"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "संपर्क"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "वस्तुएँ"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "पूरा हुआ"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "बन रहा है · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "नमूना {sample} (सीड {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "नमूना {sample} (सीड {seed}) पूरा हुआ · बैच अभी चल रहा है"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Arrow कुंजियाँ टाइल चुनती हैं, Shift+Arrow चयन बढ़ाता है, Ctrl+Arrow दृश्य खिसकाता है, प्लस और माइनस ज़ूम करते हैं, 0 मानचित्र को फ़िट करता है, Ctrl+A पूरा मानचित्र चुनता है, Escape चयन साफ़ करता है।"
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "चयन साफ़ हुआ"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "टाइल {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "टाइल {fromX}, {fromY} से {toX}, {toY}, {count, plural, one {{count} टाइल} other {{count} टाइलें}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}। कोई परत नहीं"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}। {count, plural, one {{count} परत} other {{count} परतें}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}। {count, plural, one {{count} परत} other {{count} परतें}}: {shown, list, unit}, और {more}"
+    },
+    "preview-panel.run.include-only": {
+      "message": ".inc, .def और .xs दस्तावेज़ केवल include के लिए हैं और सीधे नहीं चलाए जा सकते।"
+    },
+    "preview-panel.tool.objects": {
+      "message": "वस्तुएँ और नगर केंद्र का क्षेत्र"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "चट्टान के किनारे"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "संपर्क से भूभाग में बदलाव"
+    },
+    "preview-panel.tool.connections": {
+      "message": "संपर्क रेखाएँ"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "संपर्क रेखाएँ बंद"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "खोजे गए संपर्क मार्ग"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "{total, number} में से {shown, number} मार्ग दिखाए गए"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "खोजे गए मार्ग मानचित्र पूरा होने पर दिखते हैं"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "इस मानचित्र के लिए खोजे गए मार्ग उपलब्ध नहीं हैं"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "ऊँचाई बंद"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "भूभाग का उतार-चढ़ाव"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "ऊँचाई मानचित्र"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "ऊपर से दृश्य"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "हीरे जैसा दृश्य"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "मिनिमैप रंग"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "टेक्सचर के रंग"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "गेम टेक्सचर"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "गेम टेक्सचर लागू हो रहे हैं"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "टाइल ग्रिड"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "मिनिमैप रंगों में ऊपर से मानचित्र का पूर्वावलोकन"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "टेक्सचर के रंगों में ऊपर से मानचित्र का पूर्वावलोकन"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "गेम टेक्सचर के साथ ऊपर से मानचित्र का पूर्वावलोकन"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "मिनिमैप रंगों में 2:1 हीरे जैसे मानचित्र का पूर्वावलोकन"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "टेक्सचर के रंगों में 2:1 हीरे जैसे मानचित्र का पूर्वावलोकन"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "गेम टेक्सचर के साथ 2:1 हीरे जैसे मानचित्र का पूर्वावलोकन"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "मानचित्र"
+    },
+    "preview-panel.announce.ready": {
+      "message": "मानचित्र का पूर्वावलोकन तैयार है"
+    },
+    "preview-panel.announce.updated": {
+      "message": "मानचित्र का पूर्वावलोकन अपडेट हुआ"
+    },
+    "preview-panel.panel.label": {
+      "message": "लाइव मानचित्र पूर्वावलोकन"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "मानचित्र दृश्य के नियंत्रण"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "संपर्क की परतें"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Arrow कुंजियों से टाइल चुनें"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "पूर्वावलोकन की स्थिति"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "अप्रमाणित"
+    },
+    "preview-panel.status.seed": {
+      "message": "सीड {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "संशोधन {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "निर्माण"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "कैश {entries} · {hits} बार इस्तेमाल"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "संपादन जारी"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "विश्लेषण जारी"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "अपरिवर्तित"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "पुराना - अमान्य स्रोत"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "बन रहा है"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "वर्तमान"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "पुराना - निर्माण विफल"
+    },
+    "preview-panel.legend.label": {
+      "message": "चुनी गई टाइलों की परत सूची"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "चुने गए आइटम फ़िल्टर करें"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "चुने गए आइटम का फ़िल्टर साफ़ करें"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "फ़िल्टर"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "कोई मिलते हुए आइटम नहीं"
+    },
+    "preview-panel.legend.rows": {
+      "message": "चुनी गई परतों की पंक्तियाँ"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, अब तक {count} चयनित"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "{name} का स्रोत खोलें, {count} चयनित"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "सहायक वस्तुएँ दिखाएँ ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "सहायक वस्तुएँ छिपाएँ ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "आंतरिक डेवलपमेंट परीक्षण डेटा"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "आंतरिक परीक्षण डेटा · अप्रमाणित"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "आंतरिक · अप्रमाणित"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "{fixture} परीक्षण डेटा चलाएँ"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "पठन जारी"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "गेम की कला सूची पढ़ी जा रही है"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "गेम की कला सूची पढ़ी जा रही है, {percent}% ({total} {unit, select, graphics {चित्रों} other {फ़ाइलों}} में से {completed})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "आयात जारी"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "भूभाग टेक्सचर आयात हो रहे हैं"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "भूभाग टेक्सचर आयात हो रहे हैं, {percent}% ({total} {unit, select, graphics {चित्रों} other {फ़ाइलों}} में से {completed})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "मिश्रण जारी"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "भूभागों के बीच किनारे मिलाए जा रहे हैं"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "भूभागों के बीच किनारे मिलाए जा रहे हैं, {percent}% ({total} {unit, select, graphics {चित्रों} other {फ़ाइलों}} में से {completed})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "मास्क बन रहे"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "भूभाग ओवरले मास्क तैयार हो रहे हैं"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "भूभाग ओवरले मास्क तैयार हो रहे हैं, {percent}% ({total} {unit, select, graphics {चित्रों} other {फ़ाइलों}} में से {completed})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "स्प्राइट"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "इस मानचित्र की वस्तुओं के स्प्राइट परिवर्तित हो रहे हैं"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "इस मानचित्र की वस्तुओं के स्प्राइट परिवर्तित हो रहे हैं, {percent}% ({total} {unit, select, graphics {चित्रों} other {फ़ाइलों}} में से {completed})"
+    },
+    "game-art.progress.label": {
+      "message": "गेम कला का रूपांतरण"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, one {लिंक किए गेम में {count} वस्तु प्रकार का स्प्राइट नहीं है, इसलिए उसका मिनिमैप चिह्न रखा गया: {names, list, unit}} other {लिंक किए गेम में {count} वस्तु प्रकारों के स्प्राइट नहीं हैं, इसलिए उनके मिनिमैप चिह्न रखे गए: {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, one {लिंक किए गेम में {count} वस्तु प्रकार का स्प्राइट नहीं है, इसलिए उसका मिनिमैप चिह्न रखा गया: {names, list, unit}, और {more}} other {लिंक किए गेम में {count} वस्तु प्रकारों के स्प्राइट नहीं हैं, इसलिए उनके मिनिमैप चिह्न रखे गए: {names, list, unit}, और {more}}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (वस्तु {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "वस्तु {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, one {लिंक किए गेम में चट्टान के {count} टुकड़े का स्प्राइट नहीं है, इसलिए उसकी चट्टान रेखा रखी गई} other {लिंक किए गेम में चट्टान के {count} टुकड़ों के स्प्राइट नहीं हैं, इसलिए उनकी चट्टान रेखाएँ रखी गईं}}"
+    },
+    "profiler.group.parse": {
+      "message": "पार्सिंग"
+    },
+    "profiler.group.setup": {
+      "message": "सेटअप"
+    },
+    "profiler.group.land": {
+      "message": "भूमि"
+    },
+    "profiler.group.elevation": {
+      "message": "ऊँचाई"
+    },
+    "profiler.group.cliffs": {
+      "message": "चट्टानें"
+    },
+    "profiler.group.terrain": {
+      "message": "भूभाग"
+    },
+    "profiler.group.connections": {
+      "message": "संपर्क"
+    },
+    "profiler.group.objects": {
+      "message": "वस्तुएँ"
+    },
+    "profiler.group.finalize": {
+      "message": "अंतिम चरण"
+    },
+    "profiler.step.parse-script": {
+      "message": "स्क्रिप्ट पार्सिंग"
+    },
+    "profiler.step.setup-players": {
+      "message": "खिलाड़ियों का सेटअप"
+    },
+    "profiler.step.land-generate": {
+      "message": "भूमि निर्माण"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "ऊँचाई निर्माण"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "चट्टान निर्माण"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "भूभाग निर्माण"
+    },
+    "profiler.step.connections-generate": {
+      "message": "संपर्क निर्माण"
+    },
+    "profiler.step.objects-generate": {
+      "message": "वस्तुएँ रखना"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "गेम मोड के अंतिम बदलाव"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "वस्तुओं का क्रम"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "संयुक्त भूभाग"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, one {# कार्रवाई} other {# कार्रवाइयाँ}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, one {# RNG संख्या} other {# RNG संख्याएँ}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, one {# संभावित स्थान} other {# संभावित स्थान}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, one {# टाइल} other {# टाइलें}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, one {# मार्ग खोज} other {# मार्ग खोजें}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, one {मार्ग खोज का # कार्य} other {मार्ग खोज का # कार्य}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, one {# अस्वीकृति} other {# अस्वीकृतियाँ}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, one {# वस्तु} other {# वस्तुएँ}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, one {# टाइल जाँची गई} other {# टाइलें जाँची गईं}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, one {# भूमि में जुड़ी} other {# भूमि में जुड़ीं}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "भूमि फैलाते समय चुनी और जाँची गई टाइलें; जुड़ी हुई टाइलें किसी भूमि का हिस्सा बनीं।"
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, one {फैलाव के दौरान # टाइल जाँची गई} other {फैलाव के दौरान # टाइलें जाँची गईं}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, one {# ऊँची की गई} other {# ऊँची की गईं}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "पहाड़ी के फैलाव ने जिन टाइलों को चुना और जाँचा। ऊँची की गई टाइलों में हर पहाड़ी की शुरुआती टाइलें भी हैं, जो जाँची गई टाइलों में नहीं गिनी जातीं।"
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, one {चट्टान के # स्थान पर विचार हुआ} other {चट्टान के # स्थानों पर विचार हुआ}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "मानचित्र के वे स्थान जहाँ चट्टान रखी जा सकती थी।"
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, one {# मार्ग खोज} other {# मार्ग खोजें}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, one {# खोज चरण} other {# खोज चरण}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, one {# टाइल रंगी गई} other {# टाइलें रंगी गईं}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "हर मार्ग खोज दो संपर्क बिंदुओं के बीच रास्ता ढूँढती है; रंगी गई टाइलों की गिनती में रास्तों के भूभाग में हुआ हर बदलाव शामिल है।"
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, one {# संभावित स्थान} other {# संभावित स्थान}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, one {# समूह अस्वीकार हुआ} other {# समूह अस्वीकार हुए}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, one {# वस्तु रखी गई} other {# वस्तुएँ रखी गईं}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "संभावित स्थान हर बार वस्तु रखने की कोशिश पर गिने जाते हैं, इसलिए एक टाइल कई बार गिनी जा सकती है। हर बार स्थान जाँच में विफल हो या कोई स्थान न बचे तो समूह अस्वीकार होता है।"
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "पहला चरण पूरा होने की प्रतीक्षा है"
+    },
+    "profiler.pending.group": {
+      "message": "{group} जारी है"
+    },
+    "profiler.pending.step": {
+      "message": "{step} जारी है"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0.1%"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off}%"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off}%"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "0.1 प्रतिशत से कम"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "{percent, number, ::precision-integer group-off} प्रतिशत"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} प्रतिशत"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}। {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "रन प्रोफ़ाइलर: मानचित्र बन रहा है, इंजन की प्रतीक्षा है"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "रन प्रोफ़ाइलर: मानचित्र बन रहा है, इंजन की प्रतीक्षा है, {seconds, number, ::.00 group-off} सेकंड"
+    },
+    "profiler.status.running.steps": {
+      "message": "रन प्रोफ़ाइलर: मानचित्र बन रहा है, {total} में से {completed} चरण पूरे"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "रन प्रोफ़ाइलर: मानचित्र बन रहा है, {total} में से {completed} चरण पूरे, {seconds, number, ::.00 group-off} सेकंड"
+    },
+    "profiler.status.cached": {
+      "message": "रन प्रोफ़ाइलर: कैश किया गया रन, {seconds, number, ::.00 group-off} सेकंड, जब यह पूर्वावलोकन पहली बार बना था तब मापा गया"
+    },
+    "profiler.status.committed": {
+      "message": "रन प्रोफ़ाइलर: RMS चलाने में {seconds, number, ::.00 group-off} सेकंड"
+    },
+    "profiler.status.unsupported": {
+      "message": "रन प्रोफ़ाइलर: इस पूर्वावलोकन का माप उपलब्ध नहीं"
+    },
+    "profiler.status.idle": {
+      "message": "रन प्रोफ़ाइलर"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "मानचित्र बन रहा है, इंजन की प्रतीक्षा है"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "मानचित्र बन रहा है, {total} में से {completed} चरण"
+    },
+    "profiler.tooltip.cached": {
+      "message": "चलाने में लगा समय (कैश किया रन)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "चलाने में लगा समय"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "चलाने में लगे समय का माप नहीं"
+    },
+    "profiler.description": {
+      "message": "इस कंप्यूटर पर एक रन से जटिलता का अनुमानित स्थानीय संकेत; गेम में मानचित्र बनने के समय का अनुमान नहीं।"
+    },
+    "profiler.description.cached": {
+      "message": "कैश किया रन: समय तब मापा गया था जब यह पूर्वावलोकन पहली बार बना; इंजन फिर नहीं चला। इस कंप्यूटर पर एक रन से जटिलता का अनुमानित स्थानीय संकेत; गेम में मानचित्र बनने के समय का अनुमान नहीं।"
+    },
+    "profiler.description.map-test": {
+      "message": "मानचित्र-परीक्षण रन के दौरान मापा गया, जिसके नमूने एक साथ चल सकते हैं। इस कंप्यूटर पर एक रन से जटिलता का अनुमानित स्थानीय संकेत; गेम में मानचित्र बनने के समय का अनुमान नहीं।"
+    },
+    "profiler.panel.label": {
+      "message": "रन के समय का प्रोफ़ाइलर"
+    },
+    "profiler.panel.steps": {
+      "message": "रन के चरण"
+    },
+    "profiler.panel.table": {
+      "message": "अवधि के क्रम में रन के चरण"
+    },
+    "profiler.panel.empty": {
+      "message": "इस पूर्वावलोकन में रन के समय का माप नहीं है।"
+    },
+    "profiler.chart.label": {
+      "message": "निर्माण समूह के अनुसार RMS चलाने का समय"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "सफल"
+    },
+    "test-results.results.status.failed": {
+      "message": "विफल"
+    },
+    "test-results.results.status.error": {
+      "message": "त्रुटि"
+    },
+    "test-results.results.status.stopped": {
+      "message": "रोका गया"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, one {# निष्कर्ष} other {# निष्कर्ष}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{seeds, plural, one {# सीड पर} other {# सीड पर}} {findings, plural, one {# निष्कर्ष} other {# निष्कर्ष}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, one {# मानचित्र} other {# मानचित्र}} · {assertions, plural, one {# जाँच} other {# जाँचें}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, पंक्ति {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "पंक्ति {line} की जाँच"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {कोई निष्कर्ष नहीं। मानचित्र की हर जाँच सफल हुई।} one {कोई निष्कर्ष नहीं। सभी # मानचित्रों की हर जाँच सफल हुई।} other {कोई निष्कर्ष नहीं। सभी # मानचित्रों की हर जाँच सफल हुई।}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "कोई निष्कर्ष नहीं। परीक्षण ने अपने {maps, plural, one {# मानचित्र} other {# मानचित्रों}} पर कोई जाँच नहीं की।"
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "निर्यात"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "इन नतीजों को रिपोर्ट फ़ाइल में सहेजें। इसमें आपकी स्क्रिप्ट, बने हुए मानचित्र और पूरे फ़ाइल पथ शामिल नहीं होते।"
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, one {मानचित्र परीक्षण का {count} निष्कर्ष} other {मानचित्र परीक्षण के {count} निष्कर्ष}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "{location} पर जाएँ"
+    },
+    "test-results.results.check-source": {
+      "message": "जाँच"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "पंक्ति {line} की जाँच के निष्कर्ष छिपाएँ"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "पंक्ति {line} की जाँच के निष्कर्ष दिखाएँ"
+    },
+    "test-results.results.check-findings": {
+      "message": "पंक्ति {line} की जाँच के निष्कर्ष"
+    },
+    "test-results.results.show-more": {
+      "message": "{count} और दिखाएँ"
+    },
+    "test-results.results.not-shown": {
+      "message": "· {count, number} नहीं दिखाए गए"
+    },
+    "test-results.results.show-seed": {
+      "message": "पूर्वावलोकन में {map} का सीड {seed} दिखाएँ"
+    },
+    "test-results.results.seed": {
+      "message": "सीड {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "निष्कर्ष"
+    },
+    "game-options.map-size.tiny": {
+      "message": "बहुत छोटा"
+    },
+    "game-options.map-size.small": {
+      "message": "छोटा"
+    },
+    "game-options.map-size.medium": {
+      "message": "मध्यम"
+    },
+    "game-options.map-size.normal": {
+      "message": "सामान्य"
+    },
+    "game-options.map-size.large": {
+      "message": "बड़ा"
+    },
+    "game-options.map-size.huge": {
+      "message": "विशाल"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "हास्यास्पद"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "यादृच्छिक नक्शा"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "राजा की हत्या"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "मौत का खेल"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "किंग ऑफ़ द हिल"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "वंडर रेस"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "डिफेंड द वंडर"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "टर्बो यादृच्छिक नक्शा"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "अवशेष पर कब्जा"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "आकस्मिक मृत्यु"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "शाही जंग"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "साम्राज्य युद्ध"
+    },
+    "game-options.resources.standard": {
+      "message": "मानक संसाधन"
+    },
+    "game-options.resources.low": {
+      "message": "कम संसाधन"
+    },
+    "game-options.resources.medium": {
+      "message": "मध्यम संसाधन"
+    },
+    "game-options.resources.high": {
+      "message": "अधिक संसाधन"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "अत्यधिक संसाधन"
+    },
+    "game-options.resources.infinite": {
+      "message": "असीमित संसाधन"
+    },
+    "game-options.resources.random": {
+      "message": "रैंडम संसाधन"
+    },
+    "game-options.age.standard": {
+      "message": "मानक शुरूआती युग"
+    },
+    "game-options.age.dark-age": {
+      "message": "अंधकार युग"
+    },
+    "game-options.age.feudal-age": {
+      "message": "सामंतवादी युग"
+    },
+    "game-options.age.castle-age": {
+      "message": "परिवर्तन युग"
+    },
+    "game-options.age.imperial-age": {
+      "message": "साम्राज्यवादी युग"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "उत्तरसाम्राज्यवाद युग"
+    },
+    "game-options.positions.random": {
+      "message": "रैंडम स्थान"
+    },
+    "game-options.positions.fixed": {
+      "message": "निश्चित स्थिति"
+    },
+    "game-options.positions.team-together": {
+      "message": "साथ मिलकर टीम बनाएँ"
+    },
+    "game-options.color.blue": {
+      "message": "नीला"
+    },
+    "game-options.color.red": {
+      "message": "लाल"
+    },
+    "game-options.color.green": {
+      "message": "हरा"
+    },
+    "game-options.color.yellow": {
+      "message": "पीला"
+    },
+    "game-options.color.cyan": {
+      "message": "साइएन"
+    },
+    "game-options.color.purple": {
+      "message": "बैंगनी"
+    },
+    "game-options.color.gray": {
+      "message": "ग्रै"
+    },
+    "game-options.color.orange": {
+      "message": "नारंगी"
+    },
+    "game-options.team.none": {
+      "message": "कोई टीम नहीं"
+    },
+    "game-options.team.numbered": {
+      "message": "टीम {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "टर्बो"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "संपूर्ण तकनीक वृक्ष"
+    },
+    "game-options.flag.antiquity": {
+      "message": "प्राचीन काल"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "ठोस खेत"
+    },
+    "game-options.civilization.random": {
+      "message": "यादृच्छिक"
+    },
+    "game-options.civilization.britons": {
+      "message": "ब्रिटन"
+    },
+    "game-options.civilization.franks": {
+      "message": "फ्रैंक"
+    },
+    "game-options.civilization.goths": {
+      "message": "गोथ"
+    },
+    "game-options.civilization.teutons": {
+      "message": "ट्यूटन"
+    },
+    "game-options.civilization.japanese": {
+      "message": "जापानी"
+    },
+    "game-options.civilization.chinese": {
+      "message": "चीनी"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "यूनानी (बीजान्टिन)"
+    },
+    "game-options.civilization.persians": {
+      "message": "पारसी"
+    },
+    "game-options.civilization.saracens": {
+      "message": "सेरेसेन्ज़"
+    },
+    "game-options.civilization.turks": {
+      "message": "तुर्क"
+    },
+    "game-options.civilization.vikings": {
+      "message": "वाइकिंग"
+    },
+    "game-options.civilization.mongols": {
+      "message": "मंगोल"
+    },
+    "game-options.civilization.celts": {
+      "message": "केल्ट वासी"
+    },
+    "game-options.civilization.spanish": {
+      "message": "स्पेनिश"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "ऐज़टेक्स"
+    },
+    "game-options.civilization.mayans": {
+      "message": "माया"
+    },
+    "game-options.civilization.huns": {
+      "message": "हूण"
+    },
+    "game-options.civilization.koreans": {
+      "message": "कोरियाई"
+    },
+    "game-options.civilization.italians": {
+      "message": "इटालियन"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "हिंदुस्तानी"
+    },
+    "game-options.civilization.incas": {
+      "message": "इंका"
+    },
+    "game-options.civilization.magyars": {
+      "message": "हंगरीवासी"
+    },
+    "game-options.civilization.slavs": {
+      "message": "स्लाव्स"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "पुर्तगाली"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "इथोपियन"
+    },
+    "game-options.civilization.malians": {
+      "message": "माली निवासी"
+    },
+    "game-options.civilization.berbers": {
+      "message": "बर्बर"
+    },
+    "game-options.civilization.khmer": {
+      "message": "खमेर"
+    },
+    "game-options.civilization.malay": {
+      "message": "मलय"
+    },
+    "game-options.civilization.burmese": {
+      "message": "बर्मी"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "वियतनामी"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "बुल्गेरियाई"
+    },
+    "game-options.civilization.tatars": {
+      "message": "तातार"
+    },
+    "game-options.civilization.cumans": {
+      "message": "कुमान"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "लिथुआनियाई"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "बरगंडियंस"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "सिसिलियन"
+    },
+    "game-options.civilization.poles": {
+      "message": "पोल"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "बोहेमियन"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "द्रविड़"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "बंगाली"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "गुर्जर वंश"
+    },
+    "game-options.civilization.romans": {
+      "message": "रोमन्स"
+    },
+    "game-options.civilization.armenians": {
+      "message": "अर्मेनियाई"
+    },
+    "game-options.civilization.georgians": {
+      "message": "जॉर्जियाई"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "अकेमेनिड्स"
+    },
+    "game-options.civilization.athenians": {
+      "message": "एथेनियाई"
+    },
+    "game-options.civilization.spartans": {
+      "message": "स्पार्टन"
+    },
+    "game-options.civilization.shu": {
+      "message": "शू"
+    },
+    "game-options.civilization.wu": {
+      "message": "वू"
+    },
+    "game-options.civilization.wei": {
+      "message": "वेई"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "जुरचेन"
+    },
+    "game-options.civilization.khitans": {
+      "message": "ख़ितान"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "मैसीडोनियंस"
+    },
+    "game-options.civilization.thracians": {
+      "message": "थ्रेसियन"
+    },
+    "game-options.civilization.puru": {
+      "message": "पुरु"
+    },
+    "game-options.civilization.muisca": {
+      "message": "मुइस्का"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "मापुचे"
+    },
+    "game-options.civilization.tupi": {
+      "message": "तुपी"
+    },
+    "game-options.civilization.saxons": {
+      "message": "सैक्सन"
+    },
+    "game-options.civilization.varangians": {
+      "message": "वरंगियन"
+    },
+    "game-options.civilization.danes": {
+      "message": "डैनेस"
+    },
+    "game-options.civilization.unknown": {
+      "message": "सभ्यता {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "पूर्वावलोकन"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "पूर्वावलोकन बन रहा है ({total} में से चरण {step})"
+    },
+    "live-test.progress.connecting": {
+      "message": "जुड़ रहा है"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "AoE2Control से जुड़ रहे हैं ({total} में से चरण {step})"
+    },
+    "live-test.progress.checking": {
+      "message": "जाँच जारी"
+    },
+    "live-test.progress.ending": {
+      "message": "समापन जारी"
+    },
+    "live-test.progress.copying": {
+      "message": "कॉपी जारी"
+    },
+    "live-test.progress.selecting": {
+      "message": "चयन जारी"
+    },
+    "live-test.progress.starting": {
+      "message": "शुरुआत जारी"
+    },
+    "live-test.progress.verifying": {
+      "message": "सत्यापन जारी"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "मैच सत्यापित हो रहा है ({total} में से चरण {step})"
+    },
+    "live-test.progress.waiting": {
+      "message": "प्रतीक्षा"
+    },
+    "live-test.progress.verified": {
+      "message": "सत्यापित"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "मैच सत्यापित हुआ"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "AoE2Control की जाँच हो रही है ({total} में से चरण {step})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "गेम की जाँच हो रही है ({total} में से चरण {step})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "मौजूदा मैच समाप्त हो रहा है ({total} में से चरण {step})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "मानचित्र गेम में कॉपी हो रहा है ({total} में से चरण {step})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "गेम में मानचित्र चुना जा रहा है ({total} में से चरण {step})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "मैच शुरू हो रहा है ({total} में से चरण {step})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "पिछले AoE2Control के हटने की प्रतीक्षा है ({total} में से चरण {step})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "गेम में AoE2Control के शुरू होने की प्रतीक्षा है ({total} में से चरण {step})"
+    },
+    "live-test.progress.label": {
+      "message": "लाइव परीक्षण"
+    },
+    "live-test.replace-match.title": {
+      "message": "सक्रिय मैच बदलें?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE एकल-खिलाड़ी मैच समाप्त करके इस पूर्वावलोकन संशोधन से नया मैच शुरू करेगा। जब तक आप AoE2Control का चयन नहीं हटाते, यह फिर नहीं पूछेगा।"
+    },
+    "live-test.replace-match.confirm": {
+      "message": "मैच समाप्त करके बदलें"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "पहले AoE2Control की मान्य निष्पादन योग्य फ़ाइल चुनें।"
+    },
+    "live-test.seed.configure-control": {
+      "message": "मौजूदा मैच का सीड पढ़ने के लिए AoE2Control की सेटिंग करें।"
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control कनेक्ट हो रहा है। हैंडशेक पूरा होने पर दोबारा कोशिश करें।"
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "मैच की जानकारी पढ़ना उपलब्ध नहीं है। AoE2Control फिर कनेक्ट करके दोबारा कोशिश करें।"
+    },
+    "live-test.seed.replay": {
+      "message": "रीप्ले के सीड आयात नहीं किए जा सकते।"
+    },
+    "live-test.seed.multiplayer": {
+      "message": "मल्टीप्लेयर मैच के सीड आयात नहीं किए जा सकते।"
+    },
+    "live-test.seed.state-changing": {
+      "message": "मैच की स्थिति बदल रही है या अज्ञात है। थोड़ा रुककर दोबारा कोशिश करें।"
+    },
+    "live-test.seed.no-match": {
+      "message": "पहले समर्थित एकल-खिलाड़ी रैंडम मैप मैच शुरू करें।"
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "सक्रिय मैच का सेटअप पढ़ा नहीं जा सकता। AoE2Control फिर कनेक्ट करके दोबारा कोशिश करें।"
+    },
+    "live-test.seed.not-random-map": {
+      "message": "सक्रिय मैच समर्थित रैंडम मैप मैच नहीं है।"
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "सक्रिय मैच का सीड पढ़ा नहीं जा सकता। AoE2Control फिर कनेक्ट करके दोबारा कोशिश करें।"
+    },
+    "live-test.seed.busy": {
+      "message": "AoE2Control की एक कार्रवाई पहले से जारी है।"
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control ने मैच का सीड नहीं लौटाया।"
+    },
+    "live-test.control.missing": {
+      "message": "चुनी गई निष्पादन योग्य फ़ाइल स्थानांतरित या हटा दी गई।"
+    },
+    "live-test.control.changed": {
+      "message": "चुनी गई निष्पादन योग्य फ़ाइल बदल गई। नई फ़ाइल पर भरोसा करने के लिए उसे फिर चुनें।"
+    },
+    "live-test.control.invalid": {
+      "message": "चुनी गई फ़ाइल AoE2Control की मान्य सार्वजनिक निष्पादन योग्य फ़ाइल नहीं है।"
+    },
+    "workspace.format.save-skipped": {
+      "message": "{name} सहेजते समय फ़ॉर्मैट छोड़ दिया गया"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "{name} सहेजना रद्द हुआ"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} केवल पढ़ने के लिए है और फ़ॉर्मैट नहीं की गई"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} पहले से फ़ॉर्मैट है"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} फ़ॉर्मैट नहीं की गई"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "फ़ॉर्मैटर समय पर पूरा नहीं हुआ।"
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "अर्थ पूरी तरह समान रहने की पुष्टि नहीं हुई।"
+    },
+    "workspace.format.reason.stale": {
+      "message": "फ़ॉर्मैट का अनुरोध पुराना हो गया।"
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} को AoE2RMSIDE के बाहर हटाया गया"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "उसका पाठ संपादक में खुला रहता है।"
+    },
+    "workspace.files.reloaded": {
+      "message": "डिस्क पर बदलने के बाद {name} फिर लोड की गई"
+    },
+    "workspace.recovery.restored": {
+      "message": "पिछले सत्र से {count, plural, one {{count} टैब का बिना सहेजा पाठ बहाल हुआ} other {{count} टैबों का बिना सहेजा पाठ बहाल हुआ}}"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "स्रोत फ़ाइलों के ऊपर नहीं लिखा गया।"
+    },
+    "workspace.failed.save": {
+      "message": "फ़ाइल सहेजी नहीं जा सकी"
+    },
+    "workspace.failed.open-file": {
+      "message": "फ़ाइल खोली नहीं जा सकी"
+    },
+    "workspace.failed.open-folder": {
+      "message": "फ़ोल्डर खोला नहीं जा सका"
+    },
+    "workspace.failed.open-recent": {
+      "message": "हाल का आइटम खोला नहीं जा सका"
+    },
+    "workspace.failed.open-requested": {
+      "message": "अनुरोधित आइटम खोले नहीं जा सके"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "खींचकर छोड़े गए आइटम खोले नहीं जा सके"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "मानचित्र के इस आइटम की स्रोत स्क्रिप्ट नहीं खुल सकी"
+    },
+    "workspace.failed.create": {
+      "message": "आइटम बनाया नहीं जा सका"
+    },
+    "workspace.failed.rename": {
+      "message": "आइटम का नाम नहीं बदला जा सका"
+    },
+    "workspace.failed.delete": {
+      "message": "आइटम हटाया नहीं जा सका"
+    },
+    "workspace.failed.restore-session": {
+      "message": "पिछला सत्र बहाल नहीं हो सका"
+    },
+    "workspace.failed.back-up": {
+      "message": "बिना सहेजे काम का बैकअप नहीं बन सका"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "छोटा स्रोत फ़ोल्डर इस्तेमाल करें या कुछ स्रोत टैब बंद करें, फिर कोशिश करें।"
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "अपडेट कतार भरी होने के कारण संपादक की कुछ जाँच-सूचनाएँ छोड़ दी गईं।"
+    },
+    "editor-assistance.limited.headline": {
+      "message": "संपादक की सहायता सीमित है"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "प्रभावित स्रोतों के लिए विवरण देखें, फिर दोबारा कोशिश करें।"
+    },
+    "editor-assistance.limited.sources": {
+      "message": "संपादक की कुछ जाँचें मौजूदा स्रोत फ़ाइलों का इस्तेमाल नहीं कर सकीं।"
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "फ़ोल्डर की गहराई"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "निर्देशिका प्रविष्टियाँ"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "नाम मेटाडेटा, बाइट में"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "include पथ"
+    },
+    "file-actions.included-files.changed": {
+      "message": "include की जाँच के दौरान स्रोत बदल गए। फिर चलाएँ।"
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "{scope} के लिए include खोज में सीमा पार हुई ({budget}): {used, number, integer} इस्तेमाल; सीमा {maximum, number, integer}।"
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "छोटा include फ़ोल्डर इस्तेमाल करें या आवश्यक include फ़ाइलें कम करें।"
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "मानचित्र परीक्षण के स्रोत तैयार नहीं हो सके"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "मानचित्र परीक्षण ने स्रोत डेटा की {limit, number, integer} MiB सीमा पार कर दी। एक परीक्षण में कम मानचित्र चलाएँ।"
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "मानचित्र परीक्षण ने {limit, number, integer} मानचित्रों की सीमा पार कर दी। एक परीक्षण में कम मानचित्र चलाएँ।"
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "मानचित्र परीक्षण ने स्रोत मेटाडेटा की {limit, number, integer} MiB सीमा पार कर दी। एक परीक्षण में कम मानचित्र चलाएँ।"
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "मानचित्र परीक्षण ने {limit, number, integer} स्रोत रिकॉर्ड की सीमा पार कर दी। एक परीक्षण में कम मानचित्र चलाएँ।"
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} ने प्रति फ़ाइल {limit, number, integer} MiB की सीमा पार कर दी।"
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "आवश्यक स्रोत फ़ाइलों ने कुल {limit, number, integer} MiB की सीमा पार कर दी।"
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "आवश्यक स्रोत फ़ाइलों ने {limit, number, integer} फ़ाइलों की सीमा पार कर दी।"
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "आवश्यक स्रोत जानकारी ने मेटाडेटा की {limit, number, integer} MiB सीमा पार कर दी।"
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "आवश्यक स्रोत डेटा कम करें, फिर चलाएँ।"
+    },
+    "release-check.newer.headline": {
+      "message": "AoE2RMSIDE {version} उपलब्ध है"
+    },
+    "release-check.newer.cause": {
+      "message": "आप {current} का उपयोग कर रहे हैं।"
+    },
+    "release-check.newer.action": {
+      "message": "रिलीज़ पेज खोलें"
+    }
+  }
+}

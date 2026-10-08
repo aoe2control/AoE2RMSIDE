@@ -1,0 +1,25 @@
+{
+  "$schema": "https://rmside.invalid/schemas/support-bundle/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "bundleId": "aoe2de-101.103.48987-support-v1",
+  "productVersion": "101.103.48987.0",
+  "behaviorProfileId": "aoe2de-101.103.48987-rms-v1",
+  "behaviorProfileSha256": "3876184c81f8ebaa851a7d0306a8f616085ea4d49ebad830b356e430634897b3",
+  "contentPack": {
+    "packId": "aoe2de-101.103.48987-complete-v1",
+    "packVersion": "1.0.0",
+    "contentHash": "84d36fbfab21e77de095480a121fa58dc7a32d8b96e62f78483bddbeca1ce523",
+    "fileSha256": "84d36fbfab21e77de095480a121fa58dc7a32d8b96e62f78483bddbeca1ce523"
+  },
+  "implicitDefinitions": {
+    "count": 1114,
+    "fileSha256": "ab4cd9be07d77091090ee76ca8e233471b5a38cdafa9e0deb798cf53d8f7fa57"
+  },
+  "standardIncludesSha256": "f4c746b40f922a821ad0e383a4a54705e5ee72066ac052cd8f14ee00c5d37c10",
+  "nativeBindingsSha256": "1db9f8911b41bef9d8dd37007a902efb4206bf14276d236d10b6aa2d9edbd529",
+  "completenessManifestSha256": "9b2198e7e3844676b868406072f342b34f147516a7a027cf101dac08d4855d47"
+}

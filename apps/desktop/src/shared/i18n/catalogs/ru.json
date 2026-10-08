@@ -1,0 +1,4618 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "ru",
+  "name": "Русский",
+  "direction": "ltr",
+  "messages": {
+    "app-menu.file.name": {
+      "message": "Файл"
+    },
+    "app-menu.edit.name": {
+      "message": "Правка"
+    },
+    "app-menu.view.name": {
+      "message": "Вид"
+    },
+    "app-menu.help.name": {
+      "message": "Справка"
+    },
+    "app-menu.file.new-file": {
+      "message": "Новый файл"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Новый скрипт тестирования карт"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Создать файл определений…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Новый скрипт XS"
+    },
+    "app-menu.file.open-file": {
+      "message": "Открыть файл…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Открыть папку…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Просмотреть установленные карты…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Развернуть как мод…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Открыть папку игры"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Отключить папку игры"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Импортировать отчёт о тестировании…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Недавно открытые"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Нет недавно открытых файлов или папок"
+    },
+    "app-menu.file.save": {
+      "message": "Сохранить"
+    },
+    "app-menu.file.save-as": {
+      "message": "Сохранить как…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "Выбрать приложение для RMS по умолчанию…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Не удалось открыть параметры Windows"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "В параметрах Windows открыты приложения по умолчанию"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "Чтобы открывать файлы .rms и .rms2 в AoE2RMSIDE, выберите его там. Windows изменит приложение по умолчанию только после вашего подтверждения."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Закрыть вкладку"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Закрыть папку"
+    },
+    "app-menu.file.close-window": {
+      "message": "Закрыть окно"
+    },
+    "app-menu.file.exit": {
+      "message": "Выход"
+    },
+    "app-menu.edit.undo": {
+      "message": "Отменить"
+    },
+    "app-menu.edit.redo": {
+      "message": "Повторить"
+    },
+    "app-menu.edit.cut": {
+      "message": "Вырезать"
+    },
+    "app-menu.edit.copy": {
+      "message": "Копировать"
+    },
+    "app-menu.edit.paste": {
+      "message": "Вставить"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Выделить всё"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Форматировать документ"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Форматировать при сохранении"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "Отступы в блоках if/else"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Удалять без перемещения в корзину"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Сбросить расположение"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Отрисовка карты на GPU"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Показывать этапы создания карты"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Показывать встроенные подсказки"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Правила проверки кода"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Язык…"
+    },
+    "app-menu.view.theme": {
+      "message": "Тема"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Системная"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Светлая"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Тёмная"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Исходный размер"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Увеличить"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Уменьшить"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Переключить полноэкранный режим"
+    },
+    "app-menu.help.documentation": {
+      "message": "Документация"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Присоединиться к Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Сообщить об ошибке"
+    },
+    "app-menu.help.about": {
+      "message": "О программе {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "Не удалось открыть подключённую папку игры"
+    },
+    "about.version": {
+      "message": "Версия {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "Редактор скриптов XS"
+    },
+    "about.edition.rms-preview": {
+      "message": "Редактор скриптов RMS и XS"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Независимый неофициальный редактор скриптов случайных карт. Его собственная реализация воспроизводит то, как Age of Empires II: Definitive Edition читает скрипты случайных карт и генерирует карты."
+    },
+    "about.disclosure.independent": {
+      "message": "Независимый неофициальный редактор скриптов для Age of Empires II: Definitive Edition."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "Совпадение сгенерированных карт с игрой гарантируется только для проверенных версий игры; новые версии работают без этой гарантии. Некоторые особенности игры воспроизводятся намеренно, чтобы карты вели себя одинаково."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE не содержит файлов или графики игры. Официальные ресурсы читаются только из локальной установки, а текстуры для режима «Текстуры игры» извлекаются только из установленных файлов игры."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE не содержит файлов или графики игры. Официальные ресурсы читаются только из локальной установки."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Проект не связан с Microsoft, Xbox Game Studios, World's Edge или Activision и не одобрен ими."
+    },
+    "about.credits": {
+      "message": "Авторы\n{maintainer} — создатель проекта, отвечает за его поддержку"
+    },
+    "about.credits.research": {
+      "message": "Спасибо автору {author} за {guide}, откуда мы узнали многое о скриптах случайных карт."
+    },
+    "about.credits.xs-research": {
+      "message": "Спасибо автору {author} за документацию XS в {guide}, которая стала отправной точкой для поддержки XS."
+    },
+    "about.close": {
+      "message": "Закрыть"
+    },
+    "about.documentation": {
+      "message": "Документация"
+    },
+    "dialog.confirm.title": {
+      "message": "Подтвердить действие"
+    },
+    "dialog.confirm.cancel": {
+      "message": "Отмена"
+    },
+    "dialog.confirm.continue": {
+      "message": "Продолжить"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "Сохранить изменения в файле {name}?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, one {Сохранить изменения в {count} файле?} few {Сохранить изменения в {count} файлах?} many {Сохранить изменения в {count} файлах?} other {Сохранить изменения в {count} файла?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "При закрытии окна несохранённые изменения будут потеряны."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "При закрытии этой вкладки несохранённые изменения будут потеряны."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "При закрытии этой папки несохранённые изменения будут потеряны."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "При удалении {name} несохранённые изменения будут потеряны."
+    },
+    "dialog.unsaved.save": {
+      "message": "Сохранить"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Сохранить всё"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Не сохранять"
+    },
+    "dialog.external-change.title": {
+      "message": "Файл {name} изменён вне AoE2RMSIDE"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Замена файла приведёт к потере внешней версии. Перечитайте её, замените текстом из редактора или отмените действие."
+    },
+    "dialog.external-change.replace": {
+      "message": "Заменить на диске"
+    },
+    "dialog.external-change.reload": {
+      "message": "Перечитать с диска"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Повторное чтение приведёт к потере несохранённого текста в редакторе. Продолжите редактирование, чтобы разрешить конфликт при сохранении."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Продолжить правку"
+    },
+    "dialog.delete-entry.title": {
+      "message": "Переместить {name} в корзину?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "Папка не пуста. Она будет перемещена в корзину вместе со всем содержимым."
+    },
+    "dialog.delete-entry.description": {
+      "message": "Элемент будет перемещён в корзину."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Переместить в корзину"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "Удалить {name} безвозвратно?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "Папка не пуста. Она будет удалена безвозвратно вместе со всем содержимым, без перемещения в корзину. Это действие нельзя отменить."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "Элемент будет удалён безвозвратно, без перемещения в корзину. Это действие нельзя отменить."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Удалить безвозвратно"
+    },
+    "output.clear": {
+      "message": "Очистить вывод"
+    },
+    "output.source.run": {
+      "message": "Выполнение"
+    },
+    "output.source.script": {
+      "message": "Скрипт"
+    },
+    "output.source.preview": {
+      "message": "Предпросмотр"
+    },
+    "output.source.map-test": {
+      "message": "Тест карт"
+    },
+    "output.source.deploy": {
+      "message": "Развёртывание"
+    },
+    "output.source.live-test": {
+      "message": "Тест в игре"
+    },
+    "output.source.recovery": {
+      "message": "Восстановление"
+    },
+    "output.source.update": {
+      "message": "Обновление"
+    },
+    "output.source.files": {
+      "message": "Файлы"
+    },
+    "output.source.game-folder": {
+      "message": "Папка игры"
+    },
+    "output.source.game-textures": {
+      "message": "Текстуры игры"
+    },
+    "output.source.app": {
+      "message": "Приложение"
+    },
+    "output.log.label": {
+      "message": "{count, plural, one {{count} сообщение вывода} few {{count} сообщения вывода} many {{count} сообщений вывода} other {{count} сообщения вывода}}"
+    },
+    "output.empty": {
+      "message": "Запустите создание карты, чтобы увидеть здесь результаты."
+    },
+    "output.empty.filtered": {
+      "message": "Нет сообщений, соответствующих фильтру."
+    },
+    "output.jump-to-latest": {
+      "message": "К последним (новых: {count})"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, one {Повторено {count} раз} few {Повторено {count} раза} many {Повторено {count} раз} other {Повторено {count} раза}}"
+    },
+    "output.details": {
+      "message": "Подробности"
+    },
+    "output.run.show": {
+      "message": "Показать сообщения выполнения"
+    },
+    "output.run.hide": {
+      "message": "Скрыть сообщения выполнения"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, one {Не показана {count} предыдущая строка} few {Не показаны {count} предыдущие строки} many {Не показано {count} предыдущих строк} other {Не показано {count} предыдущей строки}}"
+    },
+    "output.run.seed": {
+      "message": "зерно {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, one {{count} игрок} few {{count} игрока} many {{count} игроков} other {{count} игрока}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, one {{count} карта} few {{count} карты} many {{count} карт} other {{count} карты}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} мс"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} с"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} мин {seconds} с"
+    },
+    "output.constructs.heading": {
+      "message": "Не сравнено с игрой"
+    },
+    "output.constructs.label": {
+      "message": "Команды, не сравнённые с игрой"
+    },
+    "output.constructs.go-to": {
+      "message": "Перейти к первому использованию"
+    },
+    "output.constructs.more": {
+      "message": "и ещё {count}"
+    },
+    "installed-maps.filter.group": {
+      "message": "Источники карт"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Встроенные карты ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Карты локальных модов ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Карты модов по подписке ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Все источники карт отключены. Включите один из них, чтобы показать его карты."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Нет установленных случайных карт из выбранных источников."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Нет установленных случайных карт из выбранных источников, соответствующих поиску."
+    },
+    "installed-maps.empty.none": {
+      "message": "Не найдены встроенные или локальные случайные карты либо карты по подписке."
+    },
+    "installed-maps.empty.search": {
+      "message": "Нет установленных случайных карт, соответствующих поиску."
+    },
+    "installed-maps.title": {
+      "message": "Установленные случайные карты"
+    },
+    "installed-maps.close": {
+      "message": "Закрыть установленные случайные карты"
+    },
+    "installed-maps.search": {
+      "message": "Поиск установленных случайных карт"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Найти карты"
+    },
+    "installed-maps.search.clear": {
+      "message": "Очистить поиск карт"
+    },
+    "installed-maps.loading": {
+      "message": "Загрузка установленных случайных карт"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Выберите папку игры для просмотра установленных файлов RMS"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Встроенная"
+    },
+    "installed-maps.origin.local": {
+      "message": "Локальный мод"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Мод по подписке"
+    },
+    "installed-maps.clone": {
+      "message": "Копировать для правки"
+    },
+    "installed-maps.open-failed": {
+      "message": "Не удалось открыть карту"
+    },
+    "installed-maps.clone-failed": {
+      "message": "Не удалось скопировать карту"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Не удалось получить список установленных карт"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, one {Скопирован # файл карты для правки} few {Скопированы # файла карты для правки} many {Скопировано # файлов карты для правки} other {Скопировано # файла карты для правки}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "Файл {name} не скопирован"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "Скопированная карта ссылается на этот файл, но он не входит в состав установленной карты."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Этот файл предоставляет сама игра; он не входит в состав установленной карты."
+    },
+    "run-menu.control.detach": {
+      "message": "Отключить AoE2Control"
+    },
+    "run-menu.control.remove": {
+      "message": "Убрать AoE2Control"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control подключается"
+    },
+    "run-menu.control.detaching": {
+      "message": "Отключение AoE2Control…"
+    },
+    "run-menu.control.busy": {
+      "message": "Дождитесь завершения текущей операции AoE2Control"
+    },
+    "run-menu.run-on-save": {
+      "message": "При сохранении"
+    },
+    "run-menu.run-on-edit": {
+      "message": "При правке"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Набор настроек"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Набор настроек {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Настройки набора предпросмотра"
+    },
+    "run-menu.preset.manage": {
+      "message": "Управление наборами настроек предпросмотра"
+    },
+    "run-menu.preset.new": {
+      "message": "Новый набор настроек"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Название нового набора настроек предпросмотра"
+    },
+    "run-menu.preset.rename": {
+      "message": "Переименовать {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "Сохранить {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "Изменить {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "Удалить {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "Удалить набор настроек {name}?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "Сохранённые настройки предпросмотра для этого набора будут удалены."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Удалить"
+    },
+    "run-menu.preset.name-length": {
+      "message": "Название набора должно содержать от 1 до 64 символов"
+    },
+    "run-menu.preset.exists": {
+      "message": "Набор с названием {name} уже существует"
+    },
+    "run-menu.preset.limit": {
+      "message": "Можно сохранить не более 64 наборов"
+    },
+    "run-menu.map-size": {
+      "message": "Размер карты"
+    },
+    "run-menu.game-mode": {
+      "message": "Режим игры"
+    },
+    "run-menu.starting-resources": {
+      "message": "Начальные ресурсы"
+    },
+    "run-menu.starting-age": {
+      "message": "Начальная эпоха"
+    },
+    "run-menu.ending-age": {
+      "message": "Конечная эпоха"
+    },
+    "run-menu.position-policy": {
+      "message": "Расположение игроков"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Выбрать"
+    },
+    "run-menu.turbo-note": {
+      "message": "«Случайная турбо-карта» — старый режим, который остаётся без изменений. «Случайная карта» с опцией «Турборежим» задаёт игровые метки турбо."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Случайная карта + Турборежим"
+    },
+    "run-menu.players.configure": {
+      "message": "Настроить игроков"
+    },
+    "run-menu.players.count": {
+      "message": "Число игроков"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, one {# игрок} few {# игрока} many {# игроков} other {# игрока}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Место игрока {player}"
+    },
+    "run-menu.players.color": {
+      "message": "Цвет игрока {player}"
+    },
+    "run-menu.players.civilization": {
+      "message": "Цивилизация игрока {player}"
+    },
+    "run-menu.players.team": {
+      "message": "Команда игрока {player}"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Игроком {player} управляет компьютер"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Компьютерный игрок (определяет AI_PLAYERS)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "В тестах в игре всеми игроками, кроме P1, управляет компьютер"
+    },
+    "run-menu.players.live-note": {
+      "message": "В тестах в игре всеми игроками, кроме P1, управляет компьютер."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "В тестах в игре всеми игроками, кроме P1, управляет компьютер. Поместите игрока на место P1 — им будете играть вы."
+    },
+    "run-menu.lobby.label": {
+      "message": "Параметры лобби"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Параметры лобби, включено: {count}"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Модификаторы режима игры"
+    },
+    "run-menu.lobby.options": {
+      "message": "Параметры"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (режим игры)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Добавляет «Имперские войны» к режиму игры. Определяет EMPIRE_WARS."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Добавляет «Внезапную смерть» к режиму игры. Определяет SUDDEN_DEATH."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Добавляет «Цареубийство» к режиму игры. Определяет REGICIDE."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Добавляет «Царя горы» к режиму игры. Определяет KING_OT_HILL."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Ускоренная игра. Определяет TURBO_MODE, а в режиме «Случайная карта» — также TURBO_RANDOM_MAP."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Каждая цивилизация может исследовать всё. Определяет FULL_TECH_TREE."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Режим «Античность». Определяет ANTIQUITY_MODE; с ним многие карты меняются."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Юниты не могут проходить через фермы. Определяет SOLID_FARMS."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "В режиме «Цареубийство» каждому игроку нужен король. На карте без королей игра сразу завершает матч."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Локальная папка игры"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (локальная)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (непроверенная)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Нет встроенного профиля"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Нет встроенной версии"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Версия игры для предпросмотра"
+    },
+    "run-menu.version.game-version": {
+      "message": "Версия игры"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Выбрана локальная версия игры; предпросмотр запускается повторно"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} не является проверенной версией RMS; предпросмотр использует новейший проверенный профиль поведения ({profile}). Это может не влиять на работу. Если созданная карта отличается от игровой, проверьте обновления IDE или сообщите о проблеме на {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "недоступен"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Выбрать папку игры"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Выбор папки игры…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "Используется локальная AoE2DE {version}"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "Используется выбранная локальная установка AoE2DE"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "Не удалось загрузить настройки запуска"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "Настройки запуска не сохранены"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "Редактор не смог использовать настройки запуска"
+    },
+    "run-menu.run.warning": {
+      "message": "Для карты есть предупреждение"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Кэш предпросмотра очищен"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "Для тестовых примеров разработки нужен непустой скрипт .rms или .rms2"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Случайные цивилизации для этого предпросмотра: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Игрок {player}: {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "При тесте в игре цивилизации выбирает сама игра."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, one {# игрок} few {# игрока} many {# игроков} other {# игрока}}"
+    },
+    "run-menu.result.error": {
+      "message": "Ошибка"
+    },
+    "run-menu.result.failed": {
+      "message": "Сбой"
+    },
+    "run-menu.result.passed": {
+      "message": "Пройдено"
+    },
+    "run-menu.result.stopped": {
+      "message": "Остановлено"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Остановлено, последняя карта сохранена"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Искусственный пример, не сертифицирован"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Искусственный пример, не сертифицирован, использован снова"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Создано ранее"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Создано · непроверенная версия игры"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Создано ранее · непроверенная версия игры"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Не удаётся запустить предпросмотр"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "Текущий исходный файл пуст."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "В текущем исходном файле есть синтаксические ошибки."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Выбранный профиль поведения недоступен."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Для выбранной версии игры нет совместимого пакета данных."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Для этого профиля нет совместимого пакета данных."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Другое выполнение ещё не завершено."
+    },
+    "run-menu.blocked.loading": {
+      "message": "Настройки предпросмотра ещё загружаются."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "Развернуть можно только основные файлы .rms и .rms2."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "Выбранный исходный файл RMS пуст."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "В выбранном исходном файле RMS есть синтаксические ошибки."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "Не удалось поставить выбранный исходный файл RMS в очередь на запуск."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "Недопустимое состояние фиксации зерна."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "Недопустимое состояние запуска при сохранении."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "Недопустимое состояние запуска при редактировании."
+    },
+    "run-menu.invalid.seed": {
+      "message": "Зерно должно быть целым числом от 0 до 4294967295."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "Размер карты должен соответствовать одному из поддерживаемых вариантов игры."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Число игроков должно быть от 1 до 8."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "Слоты игроков должны содержать восемь допустимых значений."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Слоты активных игроков не должны повторяться."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "Цвета игроков должны содержать восемь допустимых значений."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Цвета активных игроков не должны повторяться."
+    },
+    "run-menu.invalid.teams": {
+      "message": "Команды игроков должны содержать восемь значений от «Нет команды» до «Команда 4»."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "Настройки цивилизаций по умолчанию должны содержать восемь слотов игроков."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "Типы управления игроками должны содержать восемь значений."
+    },
+    "run-menu.invalid.profile": {
+      "message": "Требуется известный профиль поведения."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "Недопустимая область выбора версии."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "Требуется режим или контекст игры."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "Модификаторы режима игры должны быть известными и не повторяться."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Параметры лобби должны быть включены или выключены."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "Недопустимые начальные ресурсы."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "Недопустимая начальная эпоха."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "Недопустимая конечная эпоха."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "Конечная эпоха не может предшествовать начальной."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "Недопустимый способ размещения игроков."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "Недопустимый уровень сбора трассировки."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Число ядер для теста должно быть от 1 до 32 или определяться автоматически."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "Для стандартных включаемых файлов нужна папка игры"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "Для стандартных включаемых файлов нужна локальная версия игры, но выбрана встроенная версия."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "Для стандартных включаемых файлов нужна подключённая папка игры, но она не подключена."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "Для стандартных включаемых файлов нужна папка resources/_common/drs/gamedata_x2 в подключённой папке игры, но она отсутствует."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Не удалось проанализировать скрипт"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Не удалось проверить скрипт"
+    },
+    "run-menu.failure.not-started": {
+      "message": "Не удалось начать выполнение"
+    },
+    "run-menu.failure.generation": {
+      "message": "Ошибка генерации"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Тест карты"
+    },
+    "settings.language.title": {
+      "message": "Язык"
+    },
+    "settings.language.description": {
+      "message": "Этот язык используется в меню, диалогах и сообщениях. Команды скриптов, журналы и пакеты данных для поддержки остаются на английском."
+    },
+    "settings.language.label": {
+      "message": "Язык интерфейса"
+    },
+    "settings.language.system": {
+      "message": "Язык интерфейса Windows ({language})"
+    },
+    "settings.language.close": {
+      "message": "Закрыть"
+    },
+    "settings.language.close-label": {
+      "message": "Закрыть настройки языка"
+    },
+    "settings.language.editor-next-start": {
+      "message": "Собственные меню редактора кода сменят язык при следующем запуске."
+    },
+    "message.action.report-problem": {
+      "message": "Сообщить об этой проблеме"
+    },
+    "message.action.get-newer-control": {
+      "message": "Скачать более новую версию AoE2Control"
+    },
+    "message.action.link-game-folder": {
+      "message": "Подключить папку игры"
+    },
+    "message.action.verify-game-files": {
+      "message": "Проверить целостность файлов игры в Steam"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Выбрать локальную версию игры"
+    },
+    "message.action.check-include-name": {
+      "message": "Проверить имя включаемого файла"
+    },
+    "message.action.open-problems": {
+      "message": "Открыть панель проблем"
+    },
+    "message.action.choose-map-size": {
+      "message": "Выбрать другой размер карты"
+    },
+    "message.action.change-player-count": {
+      "message": "Изменить число игроков"
+    },
+    "message.action.open-players-menu": {
+      "message": "Открыть меню игроков"
+    },
+    "message.action.try-another-seed": {
+      "message": "Попробовать другое зерно"
+    },
+    "message.action.reinstall": {
+      "message": "Переустановить или обновить AoE2RMSIDE"
+    },
+    "message.action.check-update": {
+      "message": "Проверить наличие обновлений AoE2RMSIDE"
+    },
+    "message.action.reconnect-control": {
+      "message": "Подключить AoE2Control заново и повторить попытку"
+    },
+    "message.action.check-control-file": {
+      "message": "Проверить работоспособность выбранного файла AoE2Control и повторить попытку"
+    },
+    "message.action.wait-run-again": {
+      "message": "Немного подождать и снова нажать «Запуск»"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Снова нажать «Запуск»; если проблема повторяется, перезапустить AoE2DE"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "Перезапустить AoE2DE и снова нажать «Запуск»"
+    },
+    "message.action.check-game-window": {
+      "message": "Проверить окно игры и снова нажать «Запуск»"
+    },
+    "message.action.press-run-again": {
+      "message": "Снова нажать «Запуск»"
+    },
+    "message.action.wait-try-again": {
+      "message": "Немного подождать и повторить попытку"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Снова открыть «Развернуть как мод»"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Выбрать другое имя мода"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Запустить тест карты заново"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Слот игрока"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, строка {line}"
+    },
+    "message.format.the-script": {
+      "message": "Скрипт"
+    },
+    "message.format.the-folder": {
+      "message": "Папка"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "папку XS вашего профиля"
+    },
+    "message.format.the-map-test": {
+      "message": "тест карты"
+    },
+    "message.format.a-map-test": {
+      "message": "тест карты"
+    },
+    "message.format.preview-kept": {
+      "message": "Предпросмотр сохранён."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "Предпросмотр работает и без этого."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Скрипт изменился во время генерации"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "Следующей будет запущена новая версия."
+    },
+    "message.xs-syntax.headline": {
+      "message": "В файле XS есть синтаксические ошибки"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "В файле {name} есть синтаксические ошибки XS"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "Ошибка в файле {name}, строка {line}, мешает игре загрузить XS карты, поэтому состояние игры не изменилось."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Игра не смогла загрузить XS карты, поэтому состояние игры не изменилось."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Исправить ошибки на панели проблем и снова запустить тест в игре"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "В папке XS вашего профиля уже есть файл XS"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "В папке XS вашего профиля уже есть файл {name}"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Этот файл создан не AoE2RMSIDE ({folder}), поэтому тест в игре остановлен без его замены."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Этот файл создан не AoE2RMSIDE, поэтому тест в игре остановлен без его замены."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "Переименовать файл XS или удалить существующий"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Файл в папке XS вашего профиля изменён вне AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "Файл {name} в папке XS вашего профиля изменён вне AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE скопировал файл в {folder} для теста в игре и не перезаписывает чужие изменения, поэтому тест остановлен."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Сохранить изменения в другом месте или удалить файл и снова запустить тест в игре"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Не удаётся скопировать файл XS в папку XS вашего профиля"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "Не удаётся скопировать {name} в папку XS вашего профиля"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Тест в игре копирует каждый файл XS под именем, указанным в #includeXS, без пути к папке, но это имя содержит папку."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "Указать в строке #includeXS только имя файла"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "Два файла XS будут скопированы под одним именем"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "Два файла XS будут скопированы под именем {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "Папка XS вашего профиля может содержать только один файл с таким именем."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "Переименовать один из файлов XS"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "Папку XS вашего профиля нельзя использовать"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} не является обычной папкой или перенаправляет в другое место, а AoE2RMSIDE не копирует файлы через перенаправленные папки."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "Не удаётся прочитать сведения AoE2RMSIDE о скопированных файлах XS"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Без этих сведений AoE2RMSIDE не может определить, какие файлы XS в вашем профиле созданы им."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "Не удалось скопировать файлы XS в папку XS вашего профиля"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "Карта загружает больше файлов XS, чем может скопировать тест в игре."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Некоторые файлы XS, изменённые этим тестом в игре в папке {folder}, не удалось восстановить; AoE2RMSIDE по-прежнему считает их своими."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Все файлы XS, изменённые этим тестом в игре в папке {folder}, восстановлены."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "Сведения AoE2RMSIDE о файлах XS в папке {folder} изменились во время теста в игре."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Проверить доступность папки для записи и снова запустить тест в игре"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE не запущена"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "Запустить AoE2DE и снова нажать «Запуск»"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control закрылся до завершения запуска"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control не запустился"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control не завершил подключение"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "Эта версия AoE2Control не поддерживает выбранную цивилизацию"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Для саксов, варягов и датчан нужен AoE2Control 1.1.1 или новее."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control не предоставляет выбранную цивилизацию"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "Выберите AoE2Control 1.1.1 или новее либо другую цивилизацию."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "В запущенной версии игры нет выбранной цивилизации"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Выбрать другую цивилизацию"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Тестирование в этой версии игры не поддерживается"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "Предыдущий AoE2Control ещё выгружается из игры"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Предыдущий запуск AoE2Control в игре ещё не завершён"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control не завершил запуск вовремя"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "Окно AoE2DE не готово"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Открыть окно игры, не сворачивая его, и снова нажать «Запуск»"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "В игре запущена другая версия AoE2Control"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "Ранее в этой игре не удалось запустить AoE2Control"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control не смог подключиться к игре"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Запущена другая программа запуска AoE2Control"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Закрыть её и снова нажать «Запуск»"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Эта версия AoE2Control несовместима"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Выбрать совместимую публичную версию AoE2Control"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "Настройки игры не совпали с настройками запуска"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "Соединение с AoE2Control потеряно"
+    },
+    "message.control.connection-lost.action": {
+      "message": "При необходимости запустить AoE2DE и повторить попытку"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control не ответил вовремя"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control закрыл соединение без ответа"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Возможно, игра занята или показывает сообщение."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Игра перестала отвечать во время начала матча"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "Возможно, AoE2DE показывает сообщение, например об ошибке скрипта."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Закрыть сообщение в игре и снова нажать «Запуск»"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Игра не подтвердила новый матч вовремя"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "Текущий матч не завершился вовремя"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "Карта изменилась во время копирования в игру"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "В папке карт игры есть другая карта с таким именем файла"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Переименовать карту и снова нажать «Запуск»"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "Не удалось скопировать карту в игру"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Игра не подтвердила начало матча"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Подключиться заново, чтобы проверить текущий матч перед повторной попыткой"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Игра не подтвердила завершение предыдущего матча"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Подключиться заново для проверки перед повторной попыткой"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "Не удалось определить папку игры или игровой профиль"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Проверить подключённую папку игры"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "Не удалось развернуть карту для теста в игре"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control остановился до подключения"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control не смог подтвердить стабильный сеанс одиночной игры"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control отправил ответ, который AoE2RMSIDE не смог использовать"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "Состояние игры не поддерживается тестом в игре"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Вернуться в главное меню или одиночный матч и повторить попытку"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "Сначала нужно завершить текущий матч"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Снова нажать «Запуск» и разрешить завершение матча"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control не подключён"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Снова нажать «Запуск» для подключения"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Выбранный файл AoE2Control изменился"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "Заново выбрать AoE2Control"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control занят"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Тестирование в игре не поддерживается в этой системе"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "Тест в игре не заменил текущий матч"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "В AoE2DE начался матч до того, как тест в игре смог запросить его замену."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control не смог завершить текущий матч"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Состояние игры изменилось до того, как тест в игре смог запустить карту"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "Пока готовился тест в игре, в AoE2DE начался матч или был закрыт экран настройки одиночной игры."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "Во время теста в игре был перезапущен AoE2DE или AoE2Control"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "Скопированной карты нет в списке AoE2DE"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "В списке карт модов игры скопированной карты не было или она встречалась несколько раз."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "Настройки одного из игроков нельзя передать в AoE2Control"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Цивилизация, команда или цвет не поддерживаются этим AoE2Control."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE не удалось подготовить тест в игре"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control не смог подготовить матч на случайной карте"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "Вернуться в главное меню AoE2DE и повторить попытку; если проблема сохраняется, один раз открыть «Одиночная игра» → «Битва»"
+    },
+    "message.control.headline": {
+      "message": "Тест в игре не удался"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Эта версия AoE2Control не может задать параметры лобби"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Для параметров лобби нужен AoE2Control 1.1.1 или новее. Состояние игры не изменилось."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Для теста в игре нужен игрок в P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "Вы управляете игроком в P1; остальными игроками управляет компьютер."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Открыть меню игроков и поместить игрока в P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control отклонил игрока-человека в слоте после P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Тест в игре запускает одиночную игру, в которой всеми игроками после P1 управляет компьютер."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control отклонил список компьютерных игроков"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "Компьютерные игроки перечислены не по порядку слотов."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Компьютерный игрок указан в слоте, в котором нет игрока."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control отклонил компьютерного игрока в P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "В тесте в игре вы управляете игроком P1, поэтому он не может быть компьютерным."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Некоторые параметры лобби не восстановлены"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "Тест в игре не удался; параметры {fields} могут отличаться от прежних."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "Тест в игре не удался; некоторые параметры лобби могут отличаться от прежних."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Проверить параметры лобби в AoE2DE перед следующей игрой"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "режим игры"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "размер карты"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "начальные ресурсы"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "начальная эпоха"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "конечная эпоха"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "раскрытие карты"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "число игроков"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "позиции команд"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "модификаторы режима игры"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Турборежим"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Все технологии"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Античность"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Непроходимые фермы"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "выбранная карта"
+    },
+    "message.lobby-setting.seed": {
+      "message": "зерно"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot}: {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "команда"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "фора"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "цвет"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "цивилизация"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "управление человеком или компьютером"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "настройка"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "Запуск AoE2Control"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "Ожидание выгрузки предыдущего AoE2Control из игры"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "Ожидание завершения запуска AoE2Control в игре"
+    },
+    "message.live.game-detected.headline": {
+      "message": "Обнаружена AoE2DE"
+    },
+    "message.live.attach.headline": {
+      "message": "Подключение к запущенной игре"
+    },
+    "message.live.handshake.headline": {
+      "message": "Проверка AoE2Control"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control готов"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Завершение текущего матча"
+    },
+    "message.live.deploy.headline": {
+      "message": "Развёртывание карты в игре"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, =1 {Файл XS карты {files} также находится в папке XS вашего профиля.} one {Файлы XS карты {files} также находятся в папке XS вашего профиля.} few {Файлы XS карты {files} также находятся в папке XS вашего профиля.} many {Файлы XS карты {files} также находятся в папке XS вашего профиля.} other {Файлы XS карты {files} также находятся в папке XS вашего профиля.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "В игре уже есть эта версия карты"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Выбор карты в игре"
+    },
+    "message.live.match-start.headline": {
+      "message": "Запуск случайной карты с зерном {seed}"
+    },
+    "message.live.verified.headline": {
+      "message": "Матч с зерном {seed} проверен"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} не проверена, поэтому матч может отличаться от предпросмотра."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} не проверена для тестирования в игре"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "Тестирование в игре работает, но матч может отличаться от предпросмотра."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Тест в игре отменён"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Дальнейшие изменения в игру не вносились."
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control отключён"
+    },
+    "message.live.stopped.headline": {
+      "message": "Тест в игре остановлен до внесения изменений в игру"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "Не удалось создать предпросмотр."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "В скрипте есть ошибки."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Скрипт или настройки запуска изменились во время создания предпросмотра."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "Предпросмотр больше не соответствует скрипту."
+    },
+    "message.live.match-kept.cause": {
+      "message": "Текущий матч не изменён."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "Не удалось сохранить разрешение на замену текущего матча."
+    },
+    "message.live.control-selected.headline": {
+      "message": "Выбран AoE2Control"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Этот файл не является пригодным исполняемым файлом AoE2Control"
+    },
+    "message.live.control-rejected.action": {
+      "message": "Выбрать публичную версию AoE2Control"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "Выбор AoE2Control удалён"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "Не удалось удалить выбор AoE2Control"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Отключить его и повторить попытку"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "Состояние AoE2Control недоступно"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "Не удаётся импортировать зерно текущего матча"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "Зерно матча {seed} импортировано и зафиксировано"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "Папка мода изменилась во время развёртывания"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Файлы в папке мода изменены вне AoE2RMSIDE"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE не перезаписывает чужие изменения."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Перенести эти изменения в другое место и повторить развёртывание"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "Предпросмотр развёртывания устарел"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Эту папку уже использует другой мод"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE заменяет только моды, которые развернул сам."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Игровой профиль не выбран"
+    },
+    "message.deploy.profile.action": {
+      "message": "Выбрать профиль"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Встроенные карты нельзя развернуть напрямую"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Сначала клонировать карту в рабочую папку"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "В моде слишком много файлов для развёртывания"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "Папка мода перенаправляет в другое место"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE не выполняет развёртывание через перенаправленные папки."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "Замена существующего мода не подтверждена"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Повторить развёртывание и подтвердить замену"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Нет вашей карты для развёртывания"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Для мода нужен скрипт .rms из вашей рабочей папки."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Это имя мода зарезервировано для тестирования в игре"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Это имя мода нельзя использовать как имя папки"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "Укажите одно имя папки без символов < > : \" / \\ | ? *, без точки или пробела в конце."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, строка {line}: {error} Игра не смогла загрузить этот файл, поэтому развёртывание не выполнено."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Игра не смогла загрузить этот файл, поэтому развёртывание не выполнено."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Исправить ошибки на панели проблем и повторить развёртывание"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "Не удалось использовать значок карты"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Создать значок карты заново"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "Создание значка карты должно выполняться отдельно, но сейчас идёт другой предпросмотр, тест карты или тест в игре."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Повторить попытку после завершения"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "Для значка карты нужен текущий предпросмотр, а он изменился."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Дождаться нового предпросмотра и повторить попытку"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "Значок карты нарисован с игровыми текстурами из другой папки игры."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Не подключена допустимая установка AoE2DE."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "Папка профиля или её папка модов не является обычной папкой, которую может использовать AoE2RMSIDE."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "Два файла были бы скопированы в {path} в моде."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Для одного из файлов карты нет места в папке мода."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE не удалось прочитать свои сведения о развёрнутых модах."
+    },
+    "message.deploy.headline": {
+      "message": "Не удалось выполнить развёртывание"
+    },
+    "message.map-test.replay.headline": {
+      "message": "Не удалось показать карту с этим замечанием"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "Тест карты превысил предел памяти своего процесса и был остановлен. Повторный запуск не выполнялся."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Сократить объём памяти, который занимает скрипт, например большие повторы или множество сохраняемых карт"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "Тест карты слишком глубоко вложил значения или вызовы и превысил стек своего процесса, поэтому был остановлен. Повторный запуск не выполнялся."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Процесс теста карты аварийно завершился, скорее всего из-за предела памяти или стека. Повторный запуск не выполнялся."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() требует относительный путь в кавычках к файлу .rms или .rms2 в открытой папке."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "Карта, которую тест запускает по умолчанию, находится вне открытой папки."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Для теста карты, который ни разу не сохранялся, нужна открытая папка."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Этот файл не является отчётом теста карты, который может прочитать AoE2RMSIDE."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Размер файла превышает {limit, number, integer} MiB."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "Тест карты изменился после запуска."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "Карта или один из её включаемых файлов изменились после запуска."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "Версия игры, с которой выполнялся тест, сейчас недоступна."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "Карта получилась другой, чем во время теста."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "В отчёте нет этого замечания."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Откройте {script}, чтобы показать эту карту"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "Карта с замечанием создаётся заново с помощью теста карты, который его обнаружил."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Откройте {script}, чтобы перейти к этой проверке"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Этот отчёт импортирован, поэтому файл теста карты неизвестен."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "Выполняется тест карты"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "Выполняется тест карты · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Это результаты предыдущего запуска; они обновятся после завершения текущего."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "Последний запуск завершился с ошибкой"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Это результаты предшествовавшего ему запуска."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Посмотреть ошибку на панелях проблем и вывода"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "Последний запуск был остановлен"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "Импортирован отчёт: {script}"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "Карту с замечанием можно показать, пока тест карты, сама карта и версия игры не изменились с момента запуска."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} из {requested, plural, one {# карты} few {# карт} many {# карт} other {# карты}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Проверено"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Проверка"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {Проверена # карта} one {Проверена # карта} few {Проверены # карты} many {Проверено # карт} other {Проверено # карты}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Проверка карт, {percent}% ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Запуск теста карты"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Это не папка игры AoE2DE"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "В этой папке нет полной установки Age of Empires II: Definitive Edition."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Выбрать папку установки игры, например steamapps\\common\\AoE2DE в библиотеке Steam"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "Подключённая установка AoE2DE недоступна."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Не удалось безопасно прочитать часть папки игры: она слишком большая или глубокая, ведёт в другое место или содержит неподдерживаемое имя файла."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Выберите обычную папку вне папки игры и установленных карт."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} уже есть в этой папке."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Слишком много файлов или папок либо файл слишком большой."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "Установленные карты за это время изменились."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Снова открыть установленные карты"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "За это время изменился скрипт или один из подключаемых им файлов."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "Файл {path} имеет тип, который карта не может подключить."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Несколько файлов отличаются от {path} только регистром букв."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} находится вне папок, которые может читать AoE2RMSIDE."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Хранить подключаемые файлы в открытой папке или в подключённой папке игры"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Использовать меньшую папку подключаемых файлов или сократить число необходимых подключений"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Сократить объём необходимых исходных данных и выполнить запуск снова"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Не удалось запомнить открытые вкладки и расположение панелей"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Файлы не затронуты, но при следующем запуске могут восстановиться более старый набор вкладок и расположение панелей."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} неожиданно завершил работу."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} не запущен."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} не ответил вовремя."
+    },
+    "message.execution.busy.cause": {
+      "message": "Сейчас идёт другой предпросмотр, тест карты или тест в игре."
+    },
+    "message.editor.busy.cause": {
+      "message": "У редактора слишком много ожидающих запросов."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Снова выбрать версию игры"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Проводнику Windows не удалось открыть папку: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Файл двоичный, слишком большой, нечитаемый или неподдерживаемого типа."
+    },
+    "message.files.too-many.cause": {
+      "message": "Открывайте не более {limit, number, integer} файлов или папок за раз."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "Этого элемента больше нет в списке недавних."
+    },
+    "message.files.encoding.cause": {
+      "message": "Скрипты теста карты должны быть сохранены в UTF-8."
+    },
+    "message.files.too-large.cause": {
+      "message": "Размер скрипта теста карты не может превышать {limit, number, integer} MiB."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Файлы нельзя сохранять в папку игры или в установленные карты."
+    },
+    "message.files.extension-required.cause": {
+      "message": "Имя файла должно заканчиваться на {extension}."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "Элемент изменён или перемещён вне AoE2RMSIDE."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Папка с таким именем уже существует."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Файл находится вне открытой папки."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "В папке слишком много файлов и папок, чтобы показать их список."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Открыть папку поменьше"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "Параметр корзины изменился до удаления."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Снова удалить элемент"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "Несохранённые изменения слишком велики, чтобы хранить их для восстановления."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Сохранить изменения, чтобы не потерять их"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Файл восстановления повреждён или записан другой версией AoE2RMSIDE."
+    },
+    "message.game-textures.cause": {
+      "message": "В предпросмотре и на значке карты вместо них используются цвета текстур."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} В предпросмотре и на значке карты вместо них используются цвета текстур."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Не удалось подготовить игровые текстуры"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Игровые текстуры недоступны для подключённой папки игры"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Не удалось прочитать преобразованные данные ландшафта"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Преобразование игровых текстур отменено"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "Преобразованные файлы сохранены; повторный выбор игровых текстур продолжит работу."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Не удалось прочитать спрайты объектов"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Отрисовка карты на GPU недоступна на этом компьютере"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "Карта рисуется без GPU, что может занять больше времени на больших картах."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Отрисовка карты на GPU не используется на этом компьютере"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Нет доступной видеокарты для отрисовки карты, поэтому она рисуется без неё. На больших картах это может занять больше времени."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "Отрисовка карты на GPU остановлена"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "Произошёл сброс видеокарты, поэтому до перезапуска приложения карта рисуется без неё."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "В предпросмотре тестов карт всегда используются цвета мини-карты"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "Тесты карт показывают только готовые карты"
+    },
+    "message.generation-result.generated": {
+      "message": "Создано"
+    },
+    "message.generation-result.reused": {
+      "message": "Без пересчёта"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "непроверенная версия игры"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Непроверенная версия игры"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "Генерация карт для этой версии игры пока недоступна."
+    },
+    "message.map-test.workers.label": {
+      "message": "Ядра для теста"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Максимум ядер процессора для теста карты, то есть число одновременно создаваемых карт ({maximum, plural, =1 {1 на этом компьютере} one {от 1 до {maximum} на этом компьютере} few {от 1 до {maximum} на этом компьютере} many {от 1 до {maximum} на этом компьютере} other {от 1 до {maximum} на этом компьютере}}). Оставьте поле пустым для автоматического выбора с учётом компьютера и размера карты. Результаты одинаковы при любом выборе."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Автоматически"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Выбирать автоматически"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, one {С игрой не сравнена {count} команда} few {С игрой не сравнены {count} команды} many {С игрой не сравнено {count} команд} other {С игрой не сравнено {count} команды}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Некоторые команды не сравнивались с игрой"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Ни одна записанная карта из игры ещё не использовала эту команду в таком месте, поэтому там предпросмотр может отличаться от игры: {list}.} other {Ни одна записанная карта из игры ещё не использовала эти команды в таких местах, поэтому там предпросмотр может отличаться от игры: {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Ни одна записанная карта из игры ещё не использовала эту команду в таком месте, поэтому там предпросмотр может отличаться от игры.} other {Ни одна записанная карта из игры ещё не использовала эти команды в таких местах, поэтому там предпросмотр может отличаться от игры.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} в {context}"
+    },
+    "message.construct.list-more": {
+      "message": "{names} и ещё {more}"
+    },
+    "message.fallback.run": {
+      "message": "Сбой выполнения"
+    },
+    "message.fallback.script": {
+      "message": "Сбой скрипта"
+    },
+    "message.fallback.preview": {
+      "message": "Сбой предпросмотра"
+    },
+    "message.fallback.map-test": {
+      "message": "Сбой теста карты"
+    },
+    "message.fallback.recovery": {
+      "message": "Не удалось восстановить данные"
+    },
+    "message.fallback.update": {
+      "message": "Не удалось проверить обновления"
+    },
+    "message.fallback.files": {
+      "message": "Не удалось выполнить операцию с файлом"
+    },
+    "message.fallback.game-folder": {
+      "message": "Не удалось использовать папку игры"
+    },
+    "message.fallback.app": {
+      "message": "Произошла ошибка"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Исправьте показанные ошибки, чтобы увидеть остальные."
+    },
+    "message.action.choose-another-name": {
+      "message": "Выбрать другое имя"
+    },
+    "message.action.use-or-remove": {
+      "message": "Использовать или удалить (доступно быстрое исправление для удаления)"
+    },
+    "explorer.create.definition-file": {
+      "message": "Файл определений…"
+    },
+    "explorer.create.script": {
+      "message": "Скрипт"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Скрипт теста карты"
+    },
+    "explorer.create.xs-script": {
+      "message": "Скрипт XS"
+    },
+    "explorer.create.folder": {
+      "message": "Папка"
+    },
+    "explorer.create.label": {
+      "message": "Создать в {name}"
+    },
+    "explorer.label": {
+      "message": "Проводник файлов"
+    },
+    "explorer.search.label": {
+      "message": "Поиск файлов в рабочей папке"
+    },
+    "explorer.search.placeholder": {
+      "message": "Поиск файлов"
+    },
+    "explorer.search.clear": {
+      "message": "Очистить поиск файлов"
+    },
+    "explorer.search.searching": {
+      "message": "Поиск файлов в рабочей папке"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Подходящие файлы RMS не найдены"
+    },
+    "explorer.search.no-results": {
+      "message": "Подходящие файлы не найдены"
+    },
+    "explorer.open-file.label": {
+      "message": "Открыть файл"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Открыть файл"
+    },
+    "explorer.open-folder.label": {
+      "message": "Открыть папку"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Открыть папку"
+    },
+    "explorer.tree.label": {
+      "message": "Файлы папки {name}"
+    },
+    "explorer.empty.maps": {
+      "message": "Откройте папку для просмотра и редактирования её карт."
+    },
+    "explorer.empty.scripts": {
+      "message": "Откройте папку для просмотра и редактирования её скриптов."
+    },
+    "explorer.indexing": {
+      "message": "Индексация рабочей папки"
+    },
+    "explorer.read-failed": {
+      "message": "Не удалось прочитать эту папку"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Открыть в Проводнике"
+    },
+    "explorer.context.rename": {
+      "message": "Переименовать"
+    },
+    "explorer.context.delete": {
+      "message": "Удалить"
+    },
+    "explorer.inline.create-file": {
+      "message": "Создать файл"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Создать папку"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Переименовать файл"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Переименовать папку"
+    },
+    "definition-file.title": {
+      "message": "Создать файл определений"
+    },
+    "definition-file.close-label": {
+      "message": "Закрыть"
+    },
+    "definition-file.loading": {
+      "message": "Чтение имён из выбранной версии игры…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Версия игры"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (не проверена)"
+    },
+    "definition-file.identity.target": {
+      "message": "Папка сохранения"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "Выбирается при создании"
+    },
+    "definition-file.groups.label": {
+      "message": "Группы содержимого"
+    },
+    "definition-file.group.terrains": {
+      "message": "Типы местности"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "Идентификаторы местности для terrain_type, base_terrain и других настроек местности"
+    },
+    "definition-file.group.objects": {
+      "message": "Объекты"
+    },
+    "definition-file.group.objects.description": {
+      "message": "Идентификаторы объектов для create_object и других настроек объектов"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, one {# имя} few {# имени} many {# имён} other {# имени}}"
+    },
+    "definition-file.built-in": {
+      "message": "Добавить встроенные имена"
+    },
+    "definition-file.built-in.description": {
+      "message": "Имена, уже определённые игрой. Скрипты могут использовать их без этого файла."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Подключите папку игры, чтобы добавить имена для объектов и типов местности, которым игра не дала имён."
+    },
+    "definition-file.note.other-version": {
+      "message": "В папке игры другая версия, поэтому её имена не используются."
+    },
+    "definition-file.note.no-text": {
+      "message": "Для этой версии игры не удаётся прочитать имена из папки игры."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Все объекты и типы местности с именами уже имеют встроенные имена."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, one {# встроенное имя пропущено, поскольку оно уже определено в скриптах этой папки.} few {# встроенных имени пропущены, поскольку они уже определены в скриптах этой папки.} many {# встроенных имён пропущено, поскольку они уже определены в скриптах этой папки.} other {# встроенного имени пропущено, поскольку они уже определены в скриптах этой папки.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, one {# имя из папки игры пропущено, поскольку для него не осталось уникального имени.} few {# имени из папки игры пропущены, поскольку для них не осталось уникальных имён.} many {# имён из папки игры пропущено, поскольку для них не осталось уникальных имён.} other {# имени из папки игры пропущено, поскольку для них не осталось уникальных имён.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "Не удалось проверить, какие имена уже определены в некоторых скриптах этой папки."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Нельзя создать файл определений для выбранной версии игры: её игровые данные неполны."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Нет доступной версии игры для создания файла определений."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "Не удалось прочитать имена из выбранной версии игры."
+    },
+    "definition-file.file-name.label": {
+      "message": "Имя файла"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Введите имя файла."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Это имя нельзя использовать для файла в Windows."
+    },
+    "definition-file.file-name.extension": {
+      "message": "Имя файла должно заканчиваться на .inc."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Это имя принадлежит библиотечному файлу игры. Выберите другое имя."
+    },
+    "definition-file.generate": {
+      "message": "Создать"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Создать…"
+    },
+    "definition-file.error": {
+      "message": "Не удалось записать файл определений. Подробности на панели вывода."
+    },
+    "definition-file.replace.title": {
+      "message": "Заменить {name}?"
+    },
+    "definition-file.replace.description": {
+      "message": "В папке {folder} уже есть файл с таким именем. Замена перезапишет его содержимое."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Заменить"
+    },
+    "definition-file.output.failed": {
+      "message": "Не удалось записать файл определений"
+    },
+    "definition-file.output.unavailable": {
+      "message": "Не удалось прочитать имена для файла определений"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Сохранить файл определений"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "Файлы определений"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Включить мод"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Включает мод в списке модов игры. Карта и её значок появятся после перезапуска игры."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "Мод включён. Перезапустите игру, чтобы увидеть карту и её значок."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Включите мод в игре в разделе «Моды» → «Мои моды», затем перезапустите игру, чтобы увидеть карту и её значок."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {Мод не включён: не удалось прочитать файл списка модов игры.} unexpected-layout {Мод не включён: файл списка модов игры имеет неизвестную IDE структуру.} duplicate-entry {Мод не включён: в списке модов игры он указан несколько раз.} unexpected-entry {Мод не включён: запись этого мода в игре имеет неизвестную IDE структуру.} changed {Мод не включён: игра одновременно изменила свой список модов.} unsafe-path {Мод не включён: папка модов профиля или список модов ссылается на другое место.} other {Мод не включён: не удалось сохранить список модов игры.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Игра запущена: изменение вступит в силу после перезапуска, а при закрытии игра может его отменить. Если после перезапуска мод выключен, закройте игру и повторите развёртывание."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Открыть папку модов"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Готово"
+    },
+    "deploy-panel.success.title": {
+      "message": "Мод успешно развёрнут"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "Мод сохранён в папку"
+    },
+    "deploy-panel.success.path": {
+      "message": "Путь к развёрнутому моду"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Копировать путь к моду"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Путь к моду скопирован"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, one {# файл.} few {# файла.} many {# файлов.} other {# файла.}} Мод включён; перезапустите игру, чтобы увидеть карту и её значок."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, one {# файл.} few {# файла.} many {# файлов.} other {# файла.}} Включите мод в игре в разделе «Моды» → «Мои моды», затем перезапустите игру, чтобы увидеть карту и её значок."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "Мод развёрнут, но не включён"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Не удалось прочитать файл списка модов игры; он не изменён.} unexpected-layout {Файл списка модов игры имеет неизвестную IDE структуру; он не изменён.} duplicate-entry {В списке модов игры этот мод указан несколько раз; список не изменён.} unexpected-entry {Запись этого мода в игре имеет неизвестную IDE структуру; список не изменён.} changed {Игра одновременно изменила список модов; сохранена версия, записанная игрой.} unsafe-path {Папка модов профиля или список модов ссылается на другое место; список не изменён.} other {Не удалось сохранить список модов игры; прежний список остался на месте.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Включить мод в игре в разделе «Моды» → «Мои моды» и перезапустить игру"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "Список модов изменён, пока игра запущена"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "Изменение вступит в силу после перезапуска, а при закрытии игра может его отменить. Если после перезапуска мод выключен, закройте игру и повторите развёртывание."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "Используется текущий предпросмотр {name}"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "Не удалось использовать текущий предпросмотр повторно; он создаётся заново"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Не удалось создать эту карту для развёртывания"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "Мод {mod} развёрнут в профиле {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "Не удалось открыть папку модов"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Открыть целевую папку в Проводнике Windows"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "Не удалось открыть целевую папку"
+    },
+    "deploy-panel.target": {
+      "message": "Целевая папка"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Копировать путь к целевой папке"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Путь к целевой папке скопирован"
+    },
+    "deploy-panel.title": {
+      "message": "Развернуть как мод"
+    },
+    "deploy-panel.close": {
+      "message": "Закрыть развёртывание мода"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Выберите папку игры для развёртывания"
+    },
+    "deploy-panel.source": {
+      "message": "Исходный RMS"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Откройте основной файл RMS"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Не удалось создать эту карту, поэтому её пока нельзя развернуть. Исправьте проблему, указанную на панели вывода, и снова откройте «Развернуть как мод»."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Не удалось создать эту карту, поэтому её пока нельзя развернуть. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "Создание предпросмотра выбранного исходного RMS отменено."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Имя мода"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Выбрать предыдущий экспорт"
+    },
+    "deploy-panel.profile": {
+      "message": "Профиль пользователя"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Выберите профиль"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · рекомендуется"
+    },
+    "deploy-panel.tree": {
+      "message": "Дерево файлов для развёртывания"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Загрузка дерева файлов для развёртывания"
+    },
+    "deploy-panel.no-source": {
+      "message": "Для развёртывания откройте основной файл .rms или .rms2."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Развернуть мод"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Заменить существующий мод?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Все файлы существующего мода {name} будут удалены."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Заменить мод"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, one {{count} проблема} few {{count} проблемы} many {{count} проблем} other {{count} проблемы}}"
+    },
+    "problems-panel.empty": {
+      "message": "Синтаксических проблем нет."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Нет проблем, соответствующих фильтру (скрыто: {hidden})."
+    },
+    "problems-panel.severity.error": {
+      "message": "Ошибка"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Внимание"
+    },
+    "problems-panel.severity.info": {
+      "message": "Примечание"
+    },
+    "problems-panel.group.file": {
+      "message": "Файл"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Файл игры"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, one {{count} ошибка} few {{count} ошибки} many {{count} ошибок} other {{count} ошибки}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, one {{count} предупреждение} few {{count} предупреждения} many {{count} предупреждений} other {{count} предупреждения}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, one {{count} примечание} few {{count} примечания} many {{count} примечаний} other {{count} примечания}}"
+    },
+    "problems-panel.group.show": {
+      "message": "Показать проблемы в {file}"
+    },
+    "problems-panel.group.hide": {
+      "message": "Скрыть проблемы в {file}"
+    },
+    "problems-panel.group.label": {
+      "message": "Проблемы в {file}"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Перейти к {location}"
+    },
+    "severity-filter.label": {
+      "message": "Фильтр по важности на панели «{panel}»"
+    },
+    "severity-filter.errors.label": {
+      "message": "Показать ошибки ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Показать ошибки"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Скрыть ошибки"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Показать предупреждения ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Показать предупреждения"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Скрыть предупреждения"
+    },
+    "severity-filter.notes.label": {
+      "message": "Показать примечания ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Показать примечания"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Скрыть примечания"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "Не удалось получить список карт в {folder}: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "Пропущена установка игры с отсутствующими или нечитаемыми игровыми файлами."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "Недоступная установка игры пропущена."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Достигнут безопасный предел числа папок с установленными картами."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Достигнут безопасный предел числа файлов установленных карт."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (не проверена)"
+    },
+    "linked-game.content-read": {
+      "message": "Используются игровые данные {label}"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, one {{objects} объект, уже загружен.} few {{objects} объекта, уже загружены.} many {{objects} объектов, уже загружены.} other {{objects} объекта, уже загружены.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, one {{objects} объект, прочитан за {milliseconds} мс.} few {{objects} объекта, прочитаны за {milliseconds} мс.} many {{objects} объектов, прочитаны за {milliseconds} мс.} other {{objects} объекта, прочитаны за {milliseconds} мс.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "Не удалось прочитать игровые данные {label}"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Предпросмотр этой версии использует данные версии {version} из комплекта IDE; объекты и типы местности, добавленные позднее, создать не удастся."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Неизвестная команда"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Неиспользуемое определение"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Команда здесь не действует"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Атрибут задан повторно"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Случайная ветвь никогда не выбирается"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "Первая ветвь с нулевой вероятностью"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Значение ограничено диапазоном"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Константа уже определена"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Игра не считает это комментарием"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Число там, где нужно имя"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Имя может быть не определено"
+    },
+    "map-icon.generate": {
+      "message": "Создать значок карты"
+    },
+    "map-icon.open-larger": {
+      "message": "Открыть увеличенный значок карты"
+    },
+    "map-icon.save-image": {
+      "message": "Сохранить изображение"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Сохранить изображение…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Создание значка карты"
+    },
+    "map-icon.frame.ready": {
+      "message": "Предпросмотр значка карты"
+    },
+    "map-icon.frame.original": {
+      "message": "Исходный значок карты"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "Не удаётся показать исходный значок карты"
+    },
+    "map-icon.frame.none": {
+      "message": "Созданного значка карты нет"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Для создания значка карты откройте основной файл .rms или .rms2."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "Для создания значка карты нужен успешно созданный предпросмотр этого скрипта."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "Создание значка карты недоступно: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Значок карты недоступен: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Значок карты: создание карты с зерном {seed}"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "Для значка карты нужен успешно созданный предпросмотр этого скрипта."
+    },
+    "map-icon.status.rendering": {
+      "message": "Значок карты: отрисовка по текущему предпросмотру"
+    },
+    "map-icon.status.waiting": {
+      "message": "Значок карты: ожидание предпросмотра развёртывания"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Значок карты: создан {file}; исходный значок заменяется только в этой развёртываемой копии"
+    },
+    "map-icon.status.generated": {
+      "message": "Значок карты: файл {file} создан по текущему предпросмотру"
+    },
+    "map-icon.status.original": {
+      "message": "Значок карты: исходный файл {file} из папки скрипта"
+    },
+    "map-icon.status.none": {
+      "message": "Значок карты: отсутствует"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "созданный значок"
+    },
+    "map-icon.tree.original": {
+      "message": "исходный значок"
+    },
+    "map-icon.render-failed": {
+      "message": "Не удалось нарисовать значок карты"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "Настройки значка карты не сохранены"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "Не удалось создать значок карты с зерном {seed}"
+    },
+    "map-icon.output.saved": {
+      "message": "Значок карты сохранён как {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "Не удалось сохранить значок карты"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Закрыть предпросмотр значка карты"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Значок карты"
+    },
+    "map-icon.view-tools": {
+      "message": "Вид значка карты"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Вид ромбом"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Вид сверху"
+    },
+    "map-icon.look.minimap": {
+      "message": "Цвета мини-карты"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Цвета текстур"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Текстуры игры"
+    },
+    "map-icon.look.pending": {
+      "message": "Применение текстур игры"
+    },
+    "map-icon.look.fallback": {
+      "message": "Текстуры игры недоступны, поэтому значок использует цвета текстур."
+    },
+    "map-icon.relief": {
+      "message": "Рельеф местности"
+    },
+    "map-icon.relief.hide": {
+      "message": "Скрыть рельеф местности"
+    },
+    "map-icon.relief.show": {
+      "message": "Показать рельеф местности"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Сглаживать переходы между типами местности"
+    },
+    "map-icon.random-seed": {
+      "message": "Случайное зерно"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Взять зерно редактора"
+    },
+    "map-icon.seed": {
+      "message": "Зерно значка карты"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Зерно редактора"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Квадраты игроков"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Следы кочевников"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Без меток старта"
+    },
+    "map-icon.spawn-size": {
+      "message": "Размер меток старта"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Уменьшить метки старта"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Увеличить метки старта"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "{value} % ширины карты"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Размер меток старта (% ширины карты)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Показать деревья"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Скрыть деревья"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Настройки деревьев"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "количество деревьев"
+    },
+    "map-icon.art.trees.size": {
+      "message": "размер деревьев"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Показать золото и камень"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Скрыть золото и камень"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Настройки золота и камня"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "количество залежей золота и камня"
+    },
+    "map-icon.art.resources.size": {
+      "message": "размер залежей золота и камня"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Меньше"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Больше"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "По одному изображению на вид"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "По одному изображению на объект"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Мало"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Среднее количество"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Много"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Мельче"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Крупнее"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "Минимальный размер"
+    },
+    "map-icon.art.size.small": {
+      "message": "Малый размер"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Средний размер"
+    },
+    "map-icon.art.size.large": {
+      "message": "Большой размер"
+    },
+    "map-icon.art.size.largest": {
+      "message": "Максимальный размер"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Показывать под метками старта"
+    },
+    "workbench.application-menu.label": {
+      "message": "Меню приложения"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Свернуть проводник файлов"
+    },
+    "workbench.explorer.expand": {
+      "message": "Развернуть проводник файлов"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Свернуть проводник"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Развернуть проводник"
+    },
+    "workbench.explorer.resize": {
+      "message": "Изменить размер проводника файлов"
+    },
+    "workbench.preview.resize": {
+      "message": "Изменить размер предпросмотра карты"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Со следующего запуска этапы создания карты будут показаны по мере выполнения"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Со следующего запуска этапы создания карты будут скрыты"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Панель проблем и вывода"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Панель проблем, вывода и результатов тестов"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Изменить размер панели проблем и вывода"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Вывод"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Проблемы"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Результаты тестов"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Вывод"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Проблемы"
+    },
+    "workbench.native.restart-label": {
+      "message": "Перезапустить процесс {name} после сбоя"
+    },
+    "workbench.native.failed": {
+      "message": "Сбой {name}"
+    },
+    "workbench.native.restarted": {
+      "message": "Процесс {name} перезапущен"
+    },
+    "workbench.native.restart-failed": {
+      "message": "Не удалось перезапустить {name}"
+    },
+    "workbench.native.stopped": {
+      "message": "Процесс {name} остановлен"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "Импортирован отчёт о тестировании {name}"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Не удалось импортировать отчёт о тестировании карт"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Отчёт о тестировании экспортирован"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Не удалось экспортировать отчёт о тестировании карт"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Карта с замечанием создана повторно с записанным зерном"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Карта с замечанием создана повторно с записанным зерном {seed}"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "Не удалось отключить папку игры"
+    },
+    "code-editor.panel.label": {
+      "message": "Редактор исходного кода RMS"
+    },
+    "code-editor.tabs.label": {
+      "message": "Открытые файлы"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Прокрутить вкладки редактора влево"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Прокрутить вкладки редактора вправо"
+    },
+    "code-editor.tab.close": {
+      "message": "Закрыть {name}"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Несохранённые изменения"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Только чтение"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Несохранённые изменения, только чтение"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Развернуть как мод…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Сохранить"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Копия / Сохранить как…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Сохранить как…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Закрыть"
+    },
+    "code-editor.run.preview": {
+      "message": "Запустить предпросмотр"
+    },
+    "code-editor.run.map-test": {
+      "message": "Запустить тест карт"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Запустить предпросмотр и тест в игре"
+    },
+    "code-editor.run.stop": {
+      "message": "Остановить"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Запуск ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Запустить предпросмотр и тест в игре ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Остановить ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Параметры запуска предпросмотра"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Выполняемый скрипт"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Закрепить выполняемый скрипт"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Зерно"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Копировать зерно"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "Копировать зерно {seed}"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Зерно скопировано"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Фиксированное"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Случайное при запуске"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Взять зерно текущего матча"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Нужен проверенный активный одиночный матч на случайной карте."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Выбрать папку игры Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Выбор папки игры Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Поиск папки установленной игры Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Тест в игре при запуске"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Создать предпросмотр, затем продолжить в AoE2DE"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Выберите подходящий исполняемый файл AoE2Control"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "Выбрать AoE2Control"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "Выбор AoE2Control…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "Выбрать AoE2Control.exe для тестирования в игре"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "Выбор AoE2Control.exe для тестирования в игре"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "Скачать AoE2Control"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "Открыть страницу выпусков AoE2Control"
+    },
+    "code-editor.control.remove.title": {
+      "message": "Убрать AoE2Control?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "Выбор исполняемого файла AoE2Control будет сброшен, а текущий сеанс тестирования в игре — отключён. При следующем тестировании снова появится запрос перед заменой запущенного матча."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Убрать"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "Не удалось открыть страницу выпусков AoE2Control"
+    },
+    "code-editor.control-download.title": {
+      "message": "Перед распаковкой AoE2Control"
+    },
+    "code-editor.control-download.description": {
+      "message": "Пароль для распаковки AoE2Control.zip: {password}. AoE2Control внедряет DLL для выполнения Lua в игре, поэтому эвристическая проверка антивируса, в том числе Windows Defender, может дать ложное срабатывание. Добавьте папку с распакованными файлами в исключения антивируса, чтобы движок работал без прерываний."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Понятно"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Свернуть предпросмотр карты"
+    },
+    "code-editor.preview.expand": {
+      "message": "Развернуть предпросмотр карты"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Свернуть предпросмотр"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Развернуть предпросмотр"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Закрыть уведомление о сбое выполнения скрипта"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Несохранённая работа восстановлена"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Закрыть уведомление о восстановлении"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "Предпросмотр теперь использует текстуры вашей игры"
+    },
+    "code-editor.font-size.label": {
+      "message": "Размер шрифта редактора"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent} %"
+    },
+    "code-editor.read-only-message": {
+      "message": "Этот файл из установки игры или мода по подписке защищён. Используйте «Копия» или «Сохранить как»."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Открыть подключаемый файл"
+    },
+    "code-editor.include.open": {
+      "message": "Открыть {name}"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "Переименование здесь может изменить смысл скрипта."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "Строгая эквивалентность не доказана."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} — защищённый файл игры; переименование изменило бы его."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "Игнорировать {code} в этой строке"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "Отключить {code} в этой рабочей папке"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Модель редактора недоступна."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "Изменился язык скрипта."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Документ изменён до начала форматирования."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Документ изменён во время ожидания форматирования."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "Запрос отменён."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Форматирование недоступно, пока в коде Starlark есть ошибки."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "Для форматирования нужны уже корректные отступы по четыре пробела; структура токенов оставлена без изменений."
+    },
+    "code-editor.completion.content.object": {
+      "message": "объект {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "тип местности {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Тест карт"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Встроенная функция Starlark"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Метод {type} в Starlark"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Ранее определённая функция Starlark"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Параметр функции Starlark"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Ранее определённая переменная Starlark"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Переменная цикла Starlark"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} определено ранее в этом документе."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Функция Starlark"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "Исходные файлы RMS и XS"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "Исходные файлы RMS, XS и тестов карт"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Открыть исходные файлы"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "Открыть папку RMS"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Сохранить исходный файл как"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Отчёт о тестировании карт"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Экспорт отчёта о тестировании карт"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Импорт отчёта о тестировании карт"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Выберите папку Age of Empires II: Definitive Edition"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Выберите родительскую папку для редактируемой копии карты"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "Выберите исполняемый файл AoE2Control"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "Исполняемый файл AoE2Control"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Сохранить значок карты"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "Изображение PNG"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Не удалось обновить подключаемые файлы"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "Не удалось обновить сеанс после удаления"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Не удалось показать некоторые папки в проводнике"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, =1 {Файл рабочей папки назван как библиотечный файл игры} one {Файлы рабочей папки названы как библиотечные файлы игры} few {Файлы рабочей папки названы как библиотечные файлы игры} many {Файлы рабочей папки названы как библиотечные файлы игры} other {Файлы рабочей папки названы как библиотечные файлы игры}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Их можно редактировать, но при подключении вместо них могут выбираться файлы игры."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, one {{paths, list, unit} и ещё {count} файл. Их можно редактировать, но при подключении вместо них могут выбираться файлы игры.} few {{paths, list, unit} и ещё {count} файла. Их можно редактировать, но при подключении вместо них могут выбираться файлы игры.} many {{paths, list, unit} и ещё {count} файлов. Их можно редактировать, но при подключении вместо них могут выбираться файлы игры.} other {{paths, list, unit} и ещё {count} файла. Их можно редактировать, но при подключении вместо них могут выбираться файлы игры.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Переименовать их"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "Проверка совпадений с именами библиотечных файлов игры не завершена"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Ничего не открыто"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, one {Число файлов и папок в запросе превышает {count}.} few {Число файлов и папок в запросе превышает {count}.} many {Число файлов и папок в запросе превышает {count}.} other {Число файлов и папок в запросе превышает {count}.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "Длина путей в запросе превышает предел, допустимый в AoE2RMSIDE."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Одновременно поступило слишком много запросов на открытие. Откройте оставшиеся элементы ещё раз."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "Не удалось открыть {name}"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Файл или папку не удаётся найти или открыть."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Это недопустимый путь к файлу или папке."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE открывает папки и файлы .rms, .rms2, .inc, .def и .xs."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE открывает папки и файлы .rms, .rms2, .inc, .def, .xs и .rmstest."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Одновременно можно открыть только одну папку."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Одновременно можно открыть только одну папку; открыта папка {folder}."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Не удалось прочитать файл."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, one {Ещё # элемент не открыт} few {Ещё # элемента не открыты} many {Ещё # элементов не открыто} other {Ещё # элемента не открыто}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Они не существуют, не читаются или не относятся к файлам, которые открывает AoE2RMSIDE."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "файл или папка с таким именем уже существует"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "файл или папка с таким именем или совпадающим коротким именем уже существует"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "это имя недопустимо для файла или папки Windows"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "поддерживаются только исходные файлы .rms, .rms2, .inc, .def и .xs"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "поддерживаются только исходные файлы .rms, .rms2, .inc, .def, .rmstest и .xs"
+    },
+    "file-actions.entry.read-only": {
+      "message": "элемент рабочей папки доступен только для чтения или защищён"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "корневую рабочую папку нельзя переименовать или удалить"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "«{name}» зарезервировано для стандартного ресурса игры; выберите другое имя файла."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Не удалось прочитать несохранённую работу прошлого сеанса; она пропущена"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "Восстановленная рабочая папка недоступна."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "Предыдущая рабочая папка недоступна и пропущена."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "Недоступная вкладка прошлого сеанса {name} пропущена."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "{name} восстановлен в несохранённой вкладке, поскольку исходный файл недоступен."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, one {Файлы местности из подключённой игры: преобразовано — {converted}, использовано повторно — {reused}; время — {seconds, number, ::.0 group-off} с} few {Файлы местности из подключённой игры: преобразовано — {converted}, использовано повторно — {reused}; время — {seconds, number, ::.0 group-off} с} many {Файлы местности из подключённой игры: преобразовано — {converted}, использовано повторно — {reused}; время — {seconds, number, ::.0 group-off} с} other {Файлы местности из подключённой игры: преобразовано — {converted}, использовано повторно — {reused}; время — {seconds, number, ::.0 group-off} с}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Локальный кэш: {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, =1 {Не удалось преобразовать {count} файл местности; вместо него используются цвета мини-карты} one {Не удалось преобразовать {count} файл местности; вместо них используются цвета мини-карты} few {Не удалось преобразовать {count} файла местности; вместо них используются цвета мини-карты} many {Не удалось преобразовать {count} файлов местности; вместо них используются цвета мини-карты} other {Не удалось преобразовать {count} файла местности; вместо них используются цвета мини-карты}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Например, {asset}: {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Объект {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Тип местности {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Стена {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Игрок {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Природа"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Служебный объект"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Обрыв"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Тип обрыва {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Сухопутное соединение"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Водное соединение"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Дорожное соединение"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Неизвестное соединение"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Поиск соединения без пути"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Неоднозначность выбора в предпросмотре: {layer} · {count, plural, one {выбрано: {count}} few {выбрано: {count}} many {выбрано: {count}} other {выбрано: {count}}} · {sources, plural, one {{sources} отдельный источник} few {{sources} отдельных источника} many {{sources} отдельных источников} other {{sources} отдельного источника}} · используется {location}."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Трава"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Мелководье"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Вода"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Пляж"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Земля"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Камень"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Грязь"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Поверхность обрыва"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Суша"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Возвышенности"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Обрывы"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Типы местности"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Соединения"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Объекты"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Завершено"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Создание · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Образец {sample} (зерно {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Образец {sample} (зерно {seed}) готов · остальные ещё создаются"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Клавиши со стрелками выбирают клетку, Shift+стрелка расширяет выделение, Ctrl+стрелка сдвигает вид, плюс и минус меняют масштаб, 0 вписывает карту в окно, Ctrl+A выделяет всю карту, Escape снимает выделение."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Выделение снято"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Клетка {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "Клетки от {fromX}, {fromY} до {toX}, {toY}, {count, plural, one {{count} клетка} few {{count} клетки} many {{count} клеток} other {{count} клетки}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Слоёв нет"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, one {{count} слой} few {{count} слоя} many {{count} слоёв} other {{count} слоя}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, one {{count} слой} few {{count} слоя} many {{count} слоёв} other {{count} слоя}}: {shown, list, unit} и ещё {more}"
+    },
+    "preview-panel.run.include-only": {
+      "message": "Файлы .inc, .def и .xs предназначены только для подключения и не могут запускаться самостоятельно."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Объекты и площадь, занимаемая городским советом"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Края обрывов"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Изменения местности от соединений"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Линии соединений"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Без линий соединений"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "Проложенные пути соединений"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "Показано путей: {shown, number} из {total, number}"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "Проложенные пути появятся, когда карта будет готова"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "Проложенные пути недоступны для этой карты"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Без высот"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Рельеф местности"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Карта высот"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Вид сверху"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Вид ромбом"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Цвета мини-карты"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Цвета текстур"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Текстуры игры"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Применение текстур игры"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Сетка клеток"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "предпросмотр карты сверху в цветах мини-карты"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "предпросмотр карты сверху в цветах текстур"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "предпросмотр карты сверху с текстурами игры"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "предпросмотр карты ромбом с пропорциями 2 к 1 в цветах мини-карты"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "предпросмотр карты ромбом с пропорциями 2 к 1 в цветах текстур"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "предпросмотр карты ромбом с пропорциями 2 к 1 с текстурами игры"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "карта"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Предпросмотр карты готов"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Предпросмотр карты обновлён"
+    },
+    "preview-panel.panel.label": {
+      "message": "Предпросмотр карты"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Управление видом карты"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Слои соединений"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Стрелки выбирают клетки"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "Состояние предпросмотра"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Не сертифицировано"
+    },
+    "preview-panel.status.seed": {
+      "message": "Зерно {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Редакция {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "создание"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} мс"
+    },
+    "preview-panel.status.cache": {
+      "message": "Кэш: {entries} · повторных использований: {hits}"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Редактирование"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Анализ"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Без изменений"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Устарело — ошибки в скрипте"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Создание"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "Актуально"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Устарело — сбой создания"
+    },
+    "preview-panel.legend.label": {
+      "message": "Легенда слоёв выделенных клеток"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Фильтр выделенных элементов"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Очистить фильтр выделенных элементов"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Фильтр"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Нет подходящих элементов"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Строки выделенных слоёв"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, пока выбрано: {count}"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Открыть исходный код для {name}, выбрано: {count}"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Показать служебные объекты ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Скрыть служебные объекты ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Внутренние примеры для разработки"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Внутренние примеры · Не сертифицированы"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Внутренние · Не сертифицированы"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "Запустить пример {fixture}"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Чтение"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Чтение каталога графики игры"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Чтение каталога графики игры, {percent} % ({unit, select, graphics {изображения} other {файлы}}: {completed} из {total})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "Импорт"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Импорт текстур местности"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Импорт текстур местности, {percent} % ({unit, select, graphics {изображения} other {файлы}}: {completed} из {total})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Смешивание"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Смешивание переходов между типами местности"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Смешивание переходов между типами местности, {percent} % ({unit, select, graphics {изображения} other {файлы}}: {completed} из {total})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Маски"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Подготовка масок наложения местности"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Подготовка масок наложения местности, {percent} % ({unit, select, graphics {изображения} other {файлы}}: {completed} из {total})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Спрайты"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Преобразование спрайтов объектов этой карты"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Преобразование спрайтов объектов этой карты, {percent} % ({unit, select, graphics {изображения} other {файлы}}: {completed} из {total})"
+    },
+    "game-art.progress.label": {
+      "message": "Преобразование графики игры"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, one {Для {count} типа объектов нет спрайтов из подключённой игры; используются значки мини-карты: {names, list, unit}} few {Для {count} типов объектов нет спрайтов из подключённой игры; используются значки мини-карты: {names, list, unit}} many {Для {count} типов объектов нет спрайтов из подключённой игры; используются значки мини-карты: {names, list, unit}} other {Для {count} типа объектов нет спрайтов из подключённой игры; используются значки мини-карты: {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, one {Для {count} типа объектов нет спрайтов из подключённой игры; используются значки мини-карты: {names, list, unit} и ещё {more}} few {Для {count} типов объектов нет спрайтов из подключённой игры; используются значки мини-карты: {names, list, unit} и ещё {more}} many {Для {count} типов объектов нет спрайтов из подключённой игры; используются значки мини-карты: {names, list, unit} и ещё {more}} other {Для {count} типа объектов нет спрайтов из подключённой игры; используются значки мини-карты: {names, list, unit} и ещё {more}}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (объект {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "объект {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, one {Для {count} части обрыва нет спрайтов из подключённой игры; используются линии обрыва} few {Для {count} частей обрыва нет спрайтов из подключённой игры; используются линии обрыва} many {Для {count} частей обрыва нет спрайтов из подключённой игры; используются линии обрыва} other {Для {count} части обрыва нет спрайтов из подключённой игры; используются линии обрыва}}"
+    },
+    "profiler.group.parse": {
+      "message": "Разбор"
+    },
+    "profiler.group.setup": {
+      "message": "Подготовка"
+    },
+    "profiler.group.land": {
+      "message": "Суша"
+    },
+    "profiler.group.elevation": {
+      "message": "Возвышенности"
+    },
+    "profiler.group.cliffs": {
+      "message": "Обрывы"
+    },
+    "profiler.group.terrain": {
+      "message": "Типы местности"
+    },
+    "profiler.group.connections": {
+      "message": "Соединения"
+    },
+    "profiler.group.objects": {
+      "message": "Объекты"
+    },
+    "profiler.group.finalize": {
+      "message": "Завершение"
+    },
+    "profiler.step.parse-script": {
+      "message": "Разбор скрипта"
+    },
+    "profiler.step.setup-players": {
+      "message": "Подготовка игроков"
+    },
+    "profiler.step.land-generate": {
+      "message": "Создание суши"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Создание возвышенностей"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Создание обрывов"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Нанесение типов местности"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Создание соединений"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Размещение объектов"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Завершающие правки режима"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Упорядочение объектов"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Объединение слоёв местности"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, one {# операция} few {# операции} many {# операций} other {# операции}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, one {# вызов ГСЧ} few {# вызова ГСЧ} many {# вызовов ГСЧ} other {# вызова ГСЧ}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, one {# кандидат} few {# кандидата} many {# кандидатов} other {# кандидата}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, one {# клетка} few {# клетки} many {# клеток} other {# клетки}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, one {# поиск пути} few {# поиска пути} many {# поисков пути} other {# поиска пути}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, one {объём поиска путей: #} few {объём поиска путей: #} many {объём поиска путей: #} other {объём поиска путей: #}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, one {# отказ} few {# отказа} many {# отказов} other {# отказа}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, one {# объект} few {# объекта} many {# объектов} other {# объекта}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, one {проверена # клетка} few {проверены # клетки} many {проверено # клеток} other {проверено # клетки}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, one {добавлена #} few {добавлены #} many {добавлено #} other {добавлено #}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Клетки, выбранные и проверенные при расширении суши; добавленные клетки вошли в участок суши."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, one {при расширении проверена # клетка} few {при расширении проверены # клетки} many {при расширении проверено # клеток} other {при расширении проверено # клетки}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, one {поднята #} few {подняты #} many {поднято #} other {поднято #}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Клетки, выбранные и проверенные при расширении холмов. В число поднятых входят также начальные клетки каждого холма, которые не считаются проверенными."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, one {рассмотрена # позиция для обрыва} few {рассмотрены # позиции для обрыва} many {рассмотрено # позиций для обрыва} other {рассмотрено # позиции для обрыва}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Позиции на карте, где можно разместить обрыв."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, one {# поиск пути} few {# поиска пути} many {# поисков пути} other {# поиска пути}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, one {# шаг поиска} few {# шага поиска} many {# шагов поиска} other {# шага поиска}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, one {закрашена # клетка} few {закрашены # клетки} many {закрашено # клеток} other {закрашено # клетки}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Каждый поиск находит путь между двумя точками соединения; число закрашенных клеток учитывает каждое изменение местности вдоль путей."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, one {# возможное место} few {# возможных места} many {# возможных мест} other {# возможного места}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, one {отклонена # группа} few {отклонены # группы} many {отклонено # групп} other {отклонено # группы}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, one {размещён # объект} few {размещены # объекта} many {размещено # объектов} other {размещено # объекта}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Возможные места учитываются при каждой попытке размещения, поэтому одна клетка может учитываться несколько раз. Группа отклоняется каждый раз, когда место не проходит проверки или мест больше нет."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "Ожидание завершения первого шага"
+    },
+    "profiler.pending.group": {
+      "message": "Выполняется: {group}"
+    },
+    "profiler.pending.step": {
+      "message": "Выполняется: {step}"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} с"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} мс"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} мс"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} мс"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0,1 %"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off} %"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off} %"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "менее 0,1 процента"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "процентов: {percent, number, ::precision-integer group-off}"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} процента"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Профиль выполнения: создание карты, ожидание движка"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Профиль выполнения: создание карты, ожидание движка, {seconds, number, ::.00 group-off} секунды"
+    },
+    "profiler.status.running.steps": {
+      "message": "Профиль выполнения: создание карты, выполнено шагов: {completed} из {total}"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Профиль выполнения: создание карты, выполнено шагов: {completed} из {total}, {seconds, number, ::.00 group-off} секунды"
+    },
+    "profiler.status.cached": {
+      "message": "Профиль выполнения: результат из кэша, {seconds, number, ::.00 group-off} секунды, измерено при первом создании этого предпросмотра"
+    },
+    "profiler.status.committed": {
+      "message": "Профиль выполнения: {seconds, number, ::.00 group-off} секунды выполнения RMS"
+    },
+    "profiler.status.unsupported": {
+      "message": "Профиль выполнения: для этого предпросмотра нет замеров"
+    },
+    "profiler.status.idle": {
+      "message": "Профиль выполнения"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Создание карты, ожидание движка"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Создание карты, шагов: {completed} из {total}"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Время выполнения (результат из кэша)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Время выполнения"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Нет замеров времени выполнения"
+    },
+    "profiler.description": {
+      "message": "Примерная оценка сложности по одному запуску на этом компьютере, а не прогноз времени создания карты в игре."
+    },
+    "profiler.description.cached": {
+      "message": "Результат из кэша: замеры сделаны при первом создании этого предпросмотра; движок не запускался повторно. Примерная оценка сложности по одному запуску на этом компьютере, а не прогноз времени создания карты в игре."
+    },
+    "profiler.description.map-test": {
+      "message": "Замеры сделаны при тестировании карт, где несколько образцов могут создаваться одновременно. Примерная оценка сложности по одному запуску на этом компьютере, а не прогноз времени создания карты в игре."
+    },
+    "profiler.panel.label": {
+      "message": "Профиль времени выполнения"
+    },
+    "profiler.panel.steps": {
+      "message": "Шаги выполнения"
+    },
+    "profiler.panel.table": {
+      "message": "Шаги выполнения по времени"
+    },
+    "profiler.panel.empty": {
+      "message": "Для этого предпросмотра нет замеров времени выполнения."
+    },
+    "profiler.chart.label": {
+      "message": "Время выполнения RMS по этапам создания"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Пройдено"
+    },
+    "test-results.results.status.failed": {
+      "message": "Не пройдено"
+    },
+    "test-results.results.status.error": {
+      "message": "Ошибка"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Остановлено"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, one {# замечание} few {# замечания} many {# замечаний} other {# замечания}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{findings, plural, one {# замечание} few {# замечания} many {# замечаний} other {# замечания}} при {seeds, plural, one {# зерне} few {# зёрнах} many {# зёрнах} other {# зерна}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, one {# карта} few {# карты} many {# карт} other {# карты}} · {assertions, plural, one {# проверка} few {# проверки} many {# проверок} other {# проверки}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, строка {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Проверка в строке {line}"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Замечаний нет. Все проверки на карте пройдены.} one {Замечаний нет. Все проверки пройдены на # карте.} few {Замечаний нет. Все проверки пройдены на # картах.} many {Замечаний нет. Все проверки пройдены на # картах.} other {Замечаний нет. Все проверки пройдены на # карты.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Замечаний нет. Тест не выполнил проверок на {maps, plural, one {# карте} few {# картах} many {# картах} other {# карты}}."
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Экспорт"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Сохранить результаты в файл отчёта. В него не входят ваши скрипты, созданные карты и полные пути к файлам."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, one {{count} замечание теста карт} few {{count} замечания теста карт} many {{count} замечаний теста карт} other {{count} замечания теста карт}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Перейти к {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "Проверка"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Скрыть замечания проверки в строке {line}"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Показать замечания проверки в строке {line}"
+    },
+    "test-results.results.check-findings": {
+      "message": "Замечания проверки в строке {line}"
+    },
+    "test-results.results.show-more": {
+      "message": "Показать ещё {count}"
+    },
+    "test-results.results.not-shown": {
+      "message": "· не показано: {count, number}"
+    },
+    "test-results.results.show-seed": {
+      "message": "Показать {map} с зерном {seed} в предпросмотре"
+    },
+    "test-results.results.seed": {
+      "message": "зерно {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Замечание"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Крошечная"
+    },
+    "game-options.map-size.small": {
+      "message": "Маленькая"
+    },
+    "game-options.map-size.medium": {
+      "message": "Средняя"
+    },
+    "game-options.map-size.normal": {
+      "message": "Обычная"
+    },
+    "game-options.map-size.large": {
+      "message": "Крупная"
+    },
+    "game-options.map-size.huge": {
+      "message": "Огромная"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Невероятного размера"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Случайная карта"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Цареубийство"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "Битва насмерть"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "Царь горы"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "За чудом света"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Защита чуда света"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Случайная турбо-карта"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Захват реликвии"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Внезапная смерть"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Королевская битва"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "Имперские войны"
+    },
+    "game-options.resources.standard": {
+      "message": "Стандартные ресурсы"
+    },
+    "game-options.resources.low": {
+      "message": "Мало ресурсов"
+    },
+    "game-options.resources.medium": {
+      "message": "Средний запас ресурсов"
+    },
+    "game-options.resources.high": {
+      "message": "Обильный запас ресурсов"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Сверхвысокий запас ресурсов"
+    },
+    "game-options.resources.infinite": {
+      "message": "Бесконечные ресурсы"
+    },
+    "game-options.resources.random": {
+      "message": "Случайный запас ресурсов"
+    },
+    "game-options.age.standard": {
+      "message": "Стандартная начальная эпоха"
+    },
+    "game-options.age.dark-age": {
+      "message": "Тёмная эпоха"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Феодальная эпоха"
+    },
+    "game-options.age.castle-age": {
+      "message": "Замковая эпоха"
+    },
+    "game-options.age.imperial-age": {
+      "message": "Имперская эпоха"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "Постимперская эпоха"
+    },
+    "game-options.positions.random": {
+      "message": "Случайные позиции"
+    },
+    "game-options.positions.fixed": {
+      "message": "Фиксированные позиции"
+    },
+    "game-options.positions.team-together": {
+      "message": "Объединение"
+    },
+    "game-options.color.blue": {
+      "message": "Синий"
+    },
+    "game-options.color.red": {
+      "message": "Красный"
+    },
+    "game-options.color.green": {
+      "message": "Зелёный"
+    },
+    "game-options.color.yellow": {
+      "message": "Жёлтый"
+    },
+    "game-options.color.cyan": {
+      "message": "Голубой"
+    },
+    "game-options.color.purple": {
+      "message": "Фиолетовый"
+    },
+    "game-options.color.gray": {
+      "message": "Серый"
+    },
+    "game-options.color.orange": {
+      "message": "Оранжевый"
+    },
+    "game-options.team.none": {
+      "message": "Нет команды"
+    },
+    "game-options.team.numbered": {
+      "message": "Команда {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "Турборежим"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Все технологии"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Античность"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Непроходимые фермы"
+    },
+    "game-options.civilization.random": {
+      "message": "Случайно"
+    },
+    "game-options.civilization.britons": {
+      "message": "Британцы"
+    },
+    "game-options.civilization.franks": {
+      "message": "Франки"
+    },
+    "game-options.civilization.goths": {
+      "message": "Готы"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Тевтоны"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Японцы"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Китайцы"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Византийцы"
+    },
+    "game-options.civilization.persians": {
+      "message": "Персы"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Сарацины"
+    },
+    "game-options.civilization.turks": {
+      "message": "Турки"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Викинги"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Монголы"
+    },
+    "game-options.civilization.celts": {
+      "message": "Кельты"
+    },
+    "game-options.civilization.spanish": {
+      "message": "Испанцы"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Ацтеки"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Майя"
+    },
+    "game-options.civilization.huns": {
+      "message": "Гунны"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Корейцы"
+    },
+    "game-options.civilization.italians": {
+      "message": "Итальянцы"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Индусы"
+    },
+    "game-options.civilization.incas": {
+      "message": "Инки"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Венгры"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Славяне"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Португальцы"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Эфиопы"
+    },
+    "game-options.civilization.malians": {
+      "message": "Малийцы"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Берберы"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Кхмеры"
+    },
+    "game-options.civilization.malay": {
+      "message": "Малайцы"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Бирманцы"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "Вьетнамцы"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Болгары"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Татары"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Половцы"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Литовцы"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Бургундцы"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Сицилийцы"
+    },
+    "game-options.civilization.poles": {
+      "message": "Поляки"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Чехи"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Дравиды"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Бенгальцы"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Гурджары"
+    },
+    "game-options.civilization.romans": {
+      "message": "Римляне"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Армяне"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Грузины"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Ахемениды"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Афиняне"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Спартанцы"
+    },
+    "game-options.civilization.shu": {
+      "message": "Шу"
+    },
+    "game-options.civilization.wu": {
+      "message": "У"
+    },
+    "game-options.civilization.wei": {
+      "message": "Вэй"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Чжурчжэни"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Кидани"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Македонцы"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Фракийцы"
+    },
+    "game-options.civilization.puru": {
+      "message": "Пуру"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Муиска"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Мапуче"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Тупи"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Саксы"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Варяги"
+    },
+    "game-options.civilization.danes": {
+      "message": "Датчане"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Цивилизация {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Предпросмотр"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Создание предпросмотра (шаг {step} из {total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Подключение"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "Подключение к AoE2Control (шаг {step} из {total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Проверка"
+    },
+    "live-test.progress.ending": {
+      "message": "Завершение"
+    },
+    "live-test.progress.copying": {
+      "message": "Копирование"
+    },
+    "live-test.progress.selecting": {
+      "message": "Выбор"
+    },
+    "live-test.progress.starting": {
+      "message": "Запуск"
+    },
+    "live-test.progress.verifying": {
+      "message": "Сверка"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Сверка матча (шаг {step} из {total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Ожидание"
+    },
+    "live-test.progress.verified": {
+      "message": "Проверено"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Матч проверен"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "Проверка AoE2Control (шаг {step} из {total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Проверка игры (шаг {step} из {total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Завершение текущего матча (шаг {step} из {total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Копирование карты в игру (шаг {step} из {total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Выбор карты в игре (шаг {step} из {total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Запуск матча (шаг {step} из {total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "Ожидание выгрузки предыдущего AoE2Control (шаг {step} из {total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "Ожидание запуска AoE2Control в игре (шаг {step} из {total})"
+    },
+    "live-test.progress.label": {
+      "message": "Тест в игре"
+    },
+    "live-test.replace-match.title": {
+      "message": "Заменить активный матч?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE завершит одиночный матч и запустит эту редакцию предпросмотра. Запрос не появится снова, пока вы не уберёте AoE2Control."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Завершить и заменить матч"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Сначала выберите подходящий исполняемый файл AoE2Control."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Настройте AoE2Control, чтобы прочитать зерно текущего матча."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control подключается. Повторите попытку после завершения начального обмена."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "Чтение данных матча недоступно. Переподключите AoE2Control и повторите попытку."
+    },
+    "live-test.seed.replay": {
+      "message": "Нельзя импортировать зёрна из записей игр."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Нельзя импортировать зёрна сетевых матчей."
+    },
+    "live-test.seed.state-changing": {
+      "message": "Состояние матча меняется или неизвестно. Подождите немного и повторите попытку."
+    },
+    "live-test.seed.no-match": {
+      "message": "Сначала запустите поддерживаемый одиночный матч на случайной карте."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "Не удаётся прочитать настройки активного матча. Переподключите AoE2Control и повторите попытку."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "Активный матч не является поддерживаемым матчем в режиме «Случайная карта»."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "Не удаётся прочитать зерно активного матча. Переподключите AoE2Control и повторите попытку."
+    },
+    "live-test.seed.busy": {
+      "message": "Операция AoE2Control уже выполняется."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control не вернул зерно матча."
+    },
+    "live-test.control.missing": {
+      "message": "Выбранный исполняемый файл перемещён или удалён."
+    },
+    "live-test.control.changed": {
+      "message": "Выбранный исполняемый файл изменился. Выберите его заново, чтобы подтвердить доверие новому файлу."
+    },
+    "live-test.control.invalid": {
+      "message": "Выбранный файл не является допустимым исполняемым файлом общедоступной версии AoE2Control."
+    },
+    "workspace.format.save-skipped": {
+      "message": "Форматирование при сохранении пропущено для {name}"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "Сохранение {name} отменено"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} доступен только для чтения и не был отформатирован"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} уже отформатирован"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} не был отформатирован"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "Форматирование не завершилось вовремя."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "Строгая эквивалентность не доказана."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Запрос на форматирование устарел."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} удалён вне AoE2RMSIDE"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "Его текст остаётся открытым в редакторе."
+    },
+    "workspace.files.reloaded": {
+      "message": "{name} загружен заново после изменения на диске"
+    },
+    "workspace.recovery.restored": {
+      "message": "Из прошлого сеанса восстановлено несохранённых вкладок: {count, plural, one {{count}} few {{count}} many {{count}} other {{count}}}"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "Исходные файлы не перезаписаны."
+    },
+    "workspace.failed.save": {
+      "message": "Не удалось сохранить файл"
+    },
+    "workspace.failed.open-file": {
+      "message": "Не удалось открыть файл"
+    },
+    "workspace.failed.open-folder": {
+      "message": "Не удалось открыть папку"
+    },
+    "workspace.failed.open-recent": {
+      "message": "Не удалось открыть элемент из списка недавних"
+    },
+    "workspace.failed.open-requested": {
+      "message": "Не удалось открыть запрошенные элементы"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "Не удалось открыть перетащенные элементы"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Не удалось открыть скрипт, создавший этот элемент карты"
+    },
+    "workspace.failed.create": {
+      "message": "Не удалось создать элемент"
+    },
+    "workspace.failed.rename": {
+      "message": "Не удалось переименовать элемент"
+    },
+    "workspace.failed.delete": {
+      "message": "Не удалось удалить элемент"
+    },
+    "workspace.failed.restore-session": {
+      "message": "Не удалось восстановить прошлый сеанс"
+    },
+    "workspace.failed.back-up": {
+      "message": "Не удалось создать резервную копию несохранённой работы"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Используйте меньшую папку с исходными файлами или закройте часть вкладок с ними, затем повторите попытку."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Некоторые диагностические сообщения редактора пропущены: очередь обновлений заполнена."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "Помощь при редактировании ограничена"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Посмотрите, какие исходные файлы затронуты, в разделе «Подробности», затем повторите попытку."
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Некоторые проверки редактора не смогли использовать текущие исходные файлы."
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "глубина папок"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "элементы папок"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "метаданные имён (байты)"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "пути подключаемых файлов"
+    },
+    "file-actions.included-files.changed": {
+      "message": "Исходные файлы изменились во время проверки подключений. Выполните запуск снова."
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "При поиске подключаемых файлов превышен предел «{budget}» для {scope}: использовано {used, number, integer}; предел {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Используйте меньшую папку подключаемых файлов или сократите число необходимых подключений."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "Не удалось подготовить исходные файлы для теста карт"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "Тест превышает предел объёма исходных данных ({limit, number, integer} MiB). Запускайте меньше карт в одном тесте."
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "Тест превышает предел числа карт ({limit, number, integer}). Запускайте меньше карт в одном тесте."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "Тест превышает предел объёма метаданных исходных файлов ({limit, number, integer} MiB). Запускайте меньше карт в одном тесте."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "Тест превышает предел числа записей об исходных файлах ({limit, number, integer}). Запускайте меньше карт в одном тесте."
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} превышает предел объёма одного файла ({limit, number, integer} MiB)."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "Общий объём необходимых исходных файлов превышает предел ({limit, number, integer} MiB)."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Число необходимых исходных файлов превышает предел ({limit, number, integer})."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "Сведения о необходимых исходных данных превышают предел объёма метаданных ({limit, number, integer} MiB)."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Сократите объём необходимых исходных данных, затем выполните запуск снова."
+    },
+    "release-check.newer.headline": {
+      "message": "Доступна версия AoE2RMSIDE {version}"
+    },
+    "release-check.newer.cause": {
+      "message": "Вы используете версию {current}."
+    },
+    "release-check.newer.action": {
+      "message": "Открыть страницу выпусков"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/content-completeness/v1",
+  "title": "Complete content import accounting",
+  "description": "Counts and closure facts proving that every source terrain and object slot was emitted or excluded for a reviewed reason. It retains no source bytes, paths, labels or private fingerprints.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "compatibility",
+    "layoutId",
+    "behaviorProfileId",
+    "contentSchemaVersion",
+    "nativeBindingsCanonicalSha256",
+    "datVersionHeader",
+    "civilizationCount",
+    "terrainSlotCount",
+    "emittedTerrainCount",
+    "objectSlotCount",
+    "emittedObjectCount",
+    "excludedObjects",
+    "restrictionCount",
+    "resourceCount",
+    "objectReplacementRecordCount",
+    "emittedObjectReplacementRuleCount",
+    "implicitDefinitionCount",
+    "implicitDefinitionsCanonicalSha256"
+  ],
+  "properties": {
+    "$schema": { "const": "https://rmside.invalid/schemas/content-completeness/v1" },
+    "schemaVersion": { "const": "1.0.0" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    },
+    "layoutId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "behaviorProfileId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "contentSchemaVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "nativeBindingsCanonicalSha256": {
+      "description": "SHA-256 of the compact serialization of the parsed native bindings.",
+      "$ref": "#/definitions/sha256"
+    },
+    "datVersionHeader": { "type": "string", "minLength": 1, "maxLength": 16 },
+    "civilizationCount": { "$ref": "#/definitions/count" },
+    "terrainSlotCount": { "$ref": "#/definitions/count" },
+    "emittedTerrainCount": { "$ref": "#/definitions/count" },
+    "objectSlotCount": { "$ref": "#/definitions/count" },
+    "emittedObjectCount": { "$ref": "#/definitions/count" },
+    "excludedObjects": {
+      "description": "Every source object slot not emitted, in ascending slot order, with its reviewed reason.",
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["objectId", "reason"],
+        "properties": {
+          "objectId": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+          "reason": {
+            "enum": ["source-absent", "absent-from-gaia-table", "class-sentinel"]
+          }
+        }
+      }
+    },
+    "restrictionCount": { "$ref": "#/definitions/count" },
+    "resourceCount": { "$ref": "#/definitions/count" },
+    "objectReplacementRecordCount": { "$ref": "#/definitions/count" },
+    "emittedObjectReplacementRuleCount": { "$ref": "#/definitions/count" },
+    "implicitDefinitionCount": { "$ref": "#/definitions/count" },
+    "implicitDefinitionsCanonicalSha256": {
+      "description": "SHA-256 of the compact serialization of the normalized definitions.",
+      "$ref": "#/definitions/sha256"
+    }
+  },
+  "definitions": {
+    "count": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

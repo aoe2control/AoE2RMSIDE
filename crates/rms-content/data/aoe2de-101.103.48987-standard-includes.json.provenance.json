@@ -1,0 +1,22 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2de-101.103.48987-standard-include-names",
+  "files": [
+    {
+      "path": "crates/rms-content/data/aoe2de-101.103.48987-standard-includes.json",
+      "sha256": "f4c746b40f922a821ad0e383a4a54705e5ee72066ac052cd8f14ee00c5d37c10",
+      "authorship": "Names-only standard include namespace derived from the resource tree of a lawfully owned, version-verified game installation; no include body or RMS library expression retained.",
+      "license": "Factual relative identifiers and reserved basenames only",
+      "sourceClassification": "sanitized-observation",
+      "created": "2026-09-24",
+      "containsGameContent": false,
+      "transformation": "Bounded inventory of the 81 shared .inc resources at the verified build's canonical standard-resource root and includes folder, with case-insensitive filename union plus random_map.def.",
+      "reviewer": "Project maintainer; reviewed with the complete support bundle of the verified 101.103.48987 profile"
+    }
+  ]
+}

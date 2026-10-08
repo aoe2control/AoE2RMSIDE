@@ -1,0 +1,16 @@
+[package]
+name = "rms-semantics"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[features]
+attribution-switches = []
+
+[dependencies]
+rms-profile.workspace = true
+rms-source.workspace = true
+rms-syntax.workspace = true
+sha2.workspace = true
+thiserror.workspace = true

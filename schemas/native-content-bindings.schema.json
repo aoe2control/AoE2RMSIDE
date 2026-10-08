@@ -1,0 +1,300 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/native-content-bindings/v1",
+  "title": "Reviewed native content bindings of one behavior profile",
+  "description": "Identities that a verified native executable compares in code rather than reading from the DAT. The complete importer reads them instead of encoding them as importer or engine branches.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "compatibility",
+    "behaviorProfileId",
+    "terrainClassRestrictions",
+    "terrainTopology",
+    "nativeGenerationBindings",
+    "objectPlacementClasses",
+    "rmsPathReferenceObjectId",
+    "restrictionClassificationClassMasks",
+    "cliffs",
+    "compositeTerrainRules",
+    "foundationTerrainRules",
+    "foundationOmittedCells",
+    "gameModeTerrainRules",
+    "gameModePlayerObjectRules",
+    "wallPlacementRules",
+    "constructionRetirementRequiresHeight",
+    "restrictionZoneConstructor",
+    "constructorResourceOverride",
+    "singleRequestCounts"
+  ],
+  "properties": {
+    "$schema": { "const": "https://rmside.invalid/schemas/native-content-bindings/v1" },
+    "schemaVersion": { "enum": ["1.0.0", "1.1.0", "1.2.0", "1.3.0"] },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    },
+    "behaviorProfileId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "terrainClassRestrictions": {
+      "description": "Restriction rows that classify terrain as land, water and buildable.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["land", "water", "buildable"],
+      "properties": {
+        "land": { "$ref": "#/definitions/id" },
+        "water": { "$ref": "#/definitions/id" },
+        "buildable": { "$ref": "#/definitions/id" }
+      }
+    },
+    "terrainTopology": {
+      "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/terrainTopology"
+    },
+    "nativeGenerationBindings": {
+      "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/nativeGenerationBindings"
+    },
+    "objectPlacementClasses": {
+      "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/objectPlacementClasses"
+    },
+    "rmsPathReferenceObjectId": { "$ref": "#/definitions/id" },
+    "restrictionClassificationClassMasks": {
+      "description": "Terrain placement-class masks of the runtime restriction classification bits, in bit order.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": { "type": "integer", "minimum": 0, "maximum": 255 }
+    },
+    "cliffs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["terrainId", "styleBaseObjectIds", "pieceRules"],
+      "properties": {
+        "terrainId": { "$ref": "#/definitions/id" },
+        "styleBaseObjectIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "pieceRules": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": { "$ref": "#/definitions/cliffPieceSlotRule" }
+        }
+      }
+    },
+    "compositeTerrainRules": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/compositeTerrainRule"
+      }
+    },
+    "foundationTerrainRules": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/foundationTerrainRule"
+      }
+    },
+    "foundationOmittedCells": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["objectId", "cells"],
+        "properties": {
+          "objectId": { "$ref": "#/definitions/id" },
+          "cells": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 65536,
+            "items": {
+              "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/foundationCell"
+            }
+          }
+        }
+      }
+    },
+    "gameModeTerrainRules": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/gameModeTerrainRule"
+      }
+    },
+    "gameModePlayerObjectRules": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/gameModePlayerObjectRule"
+      }
+    },
+    "wallPlacementRules": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/wallPlacementRule"
+      }
+    },
+    "constructionRetirementRequiresHeight": {
+      "type": "array",
+      "maxItems": 65536,
+      "uniqueItems": true,
+      "items": { "$ref": "#/definitions/id" }
+    },
+    "restrictionZoneConstructor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectIds", "excludedClassIds"],
+      "properties": {
+        "objectIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "excludedClassIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/definitions/id" }
+        }
+      }
+    },
+    "constructorResourceOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classIds", "state"],
+      "properties": {
+        "classIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "state": {
+          "$ref": "https://rmside.invalid/schemas/content-pack/v2#/definitions/objectResourceState"
+        }
+      }
+    },
+    "singleRequestCounts": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["objectId", "count"],
+        "properties": {
+          "objectId": { "$ref": "#/definitions/id" },
+          "count": { "type": "integer", "minimum": 1, "maximum": 65536 }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "description": "1.1.0 and later name the building constructor's construction-site exemptions; 1.0.0 cannot.",
+      "if": {
+        "properties": { "schemaVersion": { "enum": ["1.1.0", "1.2.0", "1.3.0"] } }
+      },
+      "then": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "required": ["constructionSiteExemptions"],
+            "properties": { "constructionSiteExemptions": { "type": "object" } }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "properties": { "constructionSiteExemptions": false }
+          }
+        }
+      }
+    },
+    {
+      "description": "1.2.0 and 1.3.0 name the fallback player-start role identities; older documents cannot.",
+      "if": {
+        "properties": { "schemaVersion": { "enum": ["1.2.0", "1.3.0"] } }
+      },
+      "then": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "required": ["playerStartBindings"],
+            "properties": { "playerStartBindings": { "type": "object" } }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "properties": { "playerStartBindings": false }
+          }
+        }
+      }
+    },
+    {
+      "description": "1.3.0 names the perimeter farm completion roles; older documents cannot.",
+      "if": {
+        "properties": { "schemaVersion": { "const": "1.3.0" } }
+      },
+      "then": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "required": ["farmCompletionBindings"],
+            "properties": { "farmCompletionBindings": { "type": "object" } }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "properties": { "farmCompletionBindings": false }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "id": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "cliffPieceSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot", "facet"],
+      "properties": {
+        "slot": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "facet": { "type": "integer", "minimum": 0, "maximum": 255 }
+      }
+    },
+    "cliffPieceSlotRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edges", "primary", "xOffset256", "yOffset256"],
+      "properties": {
+        "edges": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "type": "integer", "minimum": -128, "maximum": 127 }
+        },
+        "primary": { "$ref": "#/definitions/cliffPieceSlot" },
+        "alternate": { "$ref": "#/definitions/cliffPieceSlot" },
+        "xOffset256": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "yOffset256": { "type": "integer", "minimum": 0, "maximum": 65535 }
+      }
+    }
+  }
+}

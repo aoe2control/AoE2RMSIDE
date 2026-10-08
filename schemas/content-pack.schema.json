@@ -1,0 +1,1376 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/content-pack/v2",
+  "title": "Neutral RMS content pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "compatibility",
+    "packId",
+    "packVersion",
+    "source",
+    "compatibleBehaviorProfiles",
+    "terrains",
+    "objects",
+    "civilizationSubstitutions",
+    "resources",
+    "cliffs",
+    "restrictions"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "enum": ["2.0.0", "2.1.0", "2.2.0", "2.3.0", "2.4.0", "2.5.0"] },
+    "compatibility": { "$ref": "#/definitions/compatibility" },
+    "packId": { "$ref": "#/definitions/identifier" },
+    "packVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "source": { "$ref": "#/definitions/source" },
+    "compatibleBehaviorProfiles": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "$ref": "#/definitions/identifier" },
+      "uniqueItems": true
+    },
+    "rmsImplicitDefinitions": {
+      "type": "object",
+      "maxProperties": 65536,
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128,
+        "pattern": "^[A-Z0-9_]+$"
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": -2147483648,
+        "maximum": 2147483647
+      }
+    },
+    "rmsPathReferenceObjectId": {
+      "description": "Optional RMS traversal reference source slot; resolve owner-effective masters during generation. Null or absent means unavailable, not an implicit reference.",
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 4294967295
+    },
+    "terrains": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/terrain" }
+    },
+    "foundationTerrainRules": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/foundationTerrainRule" }
+    },
+    "compositeTerrainRules": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/compositeTerrainRule" }
+    },
+    "gameModeTerrainRules": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "$ref": "#/definitions/gameModeTerrainRule" }
+    },
+    "gameModePlayerObjectRules": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "$ref": "#/definitions/gameModePlayerObjectRule" }
+    },
+    "initialAutomaticTechnologyIds": {
+      "type": "array",
+      "maxItems": 1024,
+      "uniqueItems": true,
+      "items": { "type": "integer", "minimum": 0, "maximum": 65535 }
+    },
+    "buildingTechnologyTriggers": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/buildingTechnologyTrigger" }
+    },
+    "automaticSpawnTechnologies": {
+      "type": "array",
+      "maxItems": 1024,
+      "items": { "$ref": "#/definitions/automaticSpawnTechnology" }
+    },
+    "setupDependentSpawnTechnologies": {
+      "description": "Automatic spawn technologies whose prerequisites no RMS-time route researches from a standard start; exact generation rejects a later starting age for their civilizations.",
+      "type": "array",
+      "maxItems": 1024,
+      "items": { "$ref": "#/definitions/automaticSpawnTechnology" }
+    },
+    "buildingSpawnVariantRules": {
+      "type": "array",
+      "maxItems": 1024,
+      "items": { "$ref": "#/definitions/buildingSpawnVariantRule" }
+    },
+    "objects": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": { "$ref": "#/definitions/object" }
+    },
+    "objectResourceSlotVariants": {
+      "description": "Disjoint, complete civilization groups for masters whose constructor resources vary by owner table.",
+      "type": "array",
+      "maxItems": 1000000,
+      "items": { "$ref": "#/definitions/objectResourceSlotVariant" }
+    },
+    "objectMovementSpeedVariants": {
+      "description": "Disjoint, complete civilization groups for masters whose raw movement speed varies by owner table.",
+      "type": "array",
+      "maxItems": 1000000,
+      "items": { "$ref": "#/definitions/objectMovementSpeedVariant" }
+    },
+    "civilizationSubstitutions": {
+      "type": "array",
+      "maxItems": 1000000,
+      "items": { "$ref": "#/definitions/civilizationSubstitution" }
+    },
+    "objectReplacementRules": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": { "$ref": "#/definitions/objectReplacementRule" }
+    },
+    "wallPlacementRules": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": { "$ref": "#/definitions/wallPlacementRule" }
+    },
+    "civilizationObjectAttributeValues": {
+      "type": "array",
+      "maxItems": 1000000,
+      "items": { "$ref": "#/definitions/civilizationObjectAttributeValue" }
+    },
+    "civilizationAttributeValues": {
+      "description": "Numeric player attributes of each civilization at generation start, sorted by civilization then attribute.",
+      "type": "array",
+      "maxItems": 1000000,
+      "items": { "$ref": "#/definitions/civilizationAttributeValue" }
+    },
+    "technologyStateRules": {
+      "description": "Generation-start native technology states, sorted by technology.",
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/technologyStateRule" }
+    },
+    "startupTechnologyResourceEffects": {
+      "description": "Technologies the game completes for players before map generation whose effects change a resource the farm completion reads, with their resource rows in order; sorted by civilization, route and technology (content 2.5.0).",
+      "type": "array",
+      "maxItems": 4096,
+      "items": { "$ref": "#/definitions/startupTechnologyResourceEffect" }
+    },
+    "graphics": {
+      "description": "Construction-relevant standing-graphic facts, sorted by graphic id. No art or frame data.",
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/graphic" }
+    },
+    "nativeGenerationBindings": {
+      "$ref": "#/definitions/nativeGenerationBindings"
+    },
+    "resources": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/resource" }
+    },
+    "cliffs": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/cliff" }
+    },
+    "restrictions": {
+      "type": "array",
+      "maxItems": 65536,
+      "items": { "$ref": "#/definitions/restriction" }
+    },
+    "terrainTopology": {
+      "$ref": "#/definitions/terrainTopology"
+    },
+    "objectPlacementClasses": {
+      "$ref": "#/definitions/objectPlacementClasses"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "schemaVersion": { "const": "2.0.0" } }
+      },
+      "then": {
+        "properties": { "objectMovementSpeedVariants": { "type": "array", "maxItems": 0 } }
+      }
+    },
+    {
+      "description": "Executable-owned generation bindings are required from 2.2.0; older documents cannot carry 2.2 facts.",
+      "if": {
+        "properties": { "schemaVersion": { "enum": ["2.2.0", "2.3.0", "2.4.0", "2.5.0"] } }
+      },
+      "then": {
+        "required": ["nativeGenerationBindings"],
+        "properties": { "nativeGenerationBindings": { "type": "object" } }
+      },
+      "else": {
+        "properties": {
+          "nativeGenerationBindings": false,
+          "civilizationAttributeValues": { "type": "array", "maxItems": 0 },
+          "technologyStateRules": { "type": "array", "maxItems": 0 },
+          "graphics": { "type": "array", "maxItems": 0 },
+          "setupDependentSpawnTechnologies": { "type": "array", "maxItems": 0 },
+          "source": {
+            "type": "object",
+            "properties": { "kind": { "not": { "const": "reviewed-bundle" } } }
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "constructorType": false,
+                "disappearsWhenBuilt": false,
+                "buildingConstruction": false
+              }
+            }
+          },
+          "automaticSpawnTechnologies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["civilizationId"],
+              "properties": { "civilizationId": { "type": "integer" } }
+            }
+          },
+          "objectReplacementRules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "requiredAttributeId": false,
+                "excludesComputerPlayers": false,
+                "technologyGate": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Building construction-site facts start with 2.3.0: a 2.3.0, 2.4.0 or 2.5.0 document names the constructor exemptions and states the facts of every building master (the loader checks the constructor type); older documents cannot carry them.",
+      "if": {
+        "properties": { "schemaVersion": { "enum": ["2.3.0", "2.4.0", "2.5.0"] } }
+      },
+      "then": {
+        "required": ["nativeGenerationBindings"],
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "required": ["constructionSiteExemptions"],
+            "properties": { "constructionSiteExemptions": { "type": "object" } }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "properties": { "constructionSiteExemptions": false }
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": { "buildingConstruction": false }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Fallback player-start role identities start with 2.4.0: a 2.4.0 or 2.5.0 document names them; older documents cannot carry them.",
+      "if": {
+        "properties": { "schemaVersion": { "enum": ["2.4.0", "2.5.0"] } }
+      },
+      "then": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "required": ["playerStartBindings"],
+            "properties": { "playerStartBindings": { "type": "object" } }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "properties": { "playerStartBindings": false }
+          }
+        }
+      }
+    },
+    {
+      "description": "Farm completion roles and startup technology effects are 2.5.0 facts: a 2.5.0 document names the roles; older documents cannot carry either.",
+      "if": {
+        "properties": { "schemaVersion": { "const": "2.5.0" } }
+      },
+      "then": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "required": ["farmCompletionBindings"],
+            "properties": { "farmCompletionBindings": { "type": "object" } }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "nativeGenerationBindings": {
+            "type": "object",
+            "properties": { "farmCompletionBindings": false }
+          },
+          "startupTechnologyResourceEffects": { "type": "array", "maxItems": 0 }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 2 },
+        "maximumMajor": { "const": 2 }
+      }
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "id": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "name": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "fingerprint", "productVersionLabel", "datVersionHeader"],
+      "properties": {
+        "kind": {
+          "enum": ["synthetic", "independent-reference", "aoe2de-dat", "reviewed-bundle"]
+        },
+        "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "productVersionLabel": { "type": ["string", "null"], "maxLength": 64 },
+        "datVersionHeader": { "type": ["string", "null"], "maxLength": 16 },
+        "objectReplacementFingerprint": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "terrain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "layerClass", "passable", "buildable"],
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "name": { "$ref": "#/definitions/name" },
+        "rmsNames": { "$ref": "#/definitions/rmsNames" },
+        "layerClass": { "enum": ["land", "water", "beach", "ice", "overlay"] },
+        "placementClass": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "passable": { "type": "boolean" },
+        "buildable": { "type": "boolean" },
+        "appearances": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "$ref": "#/definitions/terrainAppearance" }
+        }
+      }
+    },
+    "terrainAppearance": {
+      "type": "object",
+      "additionalProperties": false,
+      "dependencies": {
+        "objectId": ["placementRestrictionId"],
+        "placementRestrictionId": ["objectId"]
+      },
+      "required": ["placement", "weightPerThousand"],
+      "properties": {
+        "placement": { "enum": ["randomized", "centered"] },
+        "weightPerThousand": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "objectId": { "$ref": "#/definitions/id" },
+        "placementRestrictionId": { "$ref": "#/definitions/id" }
+      }
+    },
+    "terrainTopology": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cliffFacetTerrainId": { "$ref": "#/definitions/id" },
+        "cliffOverlayTerrainId": { "$ref": "#/definitions/id" },
+        "fillTerrainId": { "$ref": "#/definitions/id" },
+        "defaultShorelineTerrainId": { "$ref": "#/definitions/id" },
+        "frozenShorelineTerrainId": { "$ref": "#/definitions/id" },
+        "excludedShorelineWaterTerrainIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        }
+      }
+    },
+    "objectPlacementClasses": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "forestZoneClassId": { "$ref": "#/definitions/id" },
+        "cliffZoneClassId": { "$ref": "#/definitions/id" }
+      }
+    },
+    "foundationTerrainRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetTerrainId", "compatibleSourceTerrainIds"],
+      "properties": {
+        "targetTerrainId": { "$ref": "#/definitions/id" },
+        "compatibleSourceTerrainIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "protectedSourceTerrainIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "anchorClassReplacement": { "$ref": "#/definitions/foundationAnchorClassReplacement" }
+      }
+    },
+    "foundationAnchorClassReplacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "anchorPlacementClassMask",
+        "comparisonTerrainId",
+        "primaryTerrainId",
+        "secondaryTerrainId"
+      ],
+      "properties": {
+        "anchorPlacementClassMask": { "type": "integer", "minimum": 1, "maximum": 255 },
+        "comparisonTerrainId": { "$ref": "#/definitions/id" },
+        "primaryTerrainId": { "$ref": "#/definitions/id" },
+        "secondaryTerrainId": { "type": "integer", "minimum": 0, "maximum": 65535 }
+      }
+    },
+    "compositeTerrainRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceTerrainId", "primaryTerrainId", "secondaryTerrainId"],
+      "properties": {
+        "sourceTerrainId": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "primaryTerrainId": { "$ref": "#/definitions/id" },
+        "secondaryTerrainId": { "type": "integer", "minimum": 0, "maximum": 65535 }
+      }
+    },
+    "gameModeTerrainRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gameModeRaw", "terrainId", "radius"],
+      "properties": {
+        "gameModeRaw": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "terrainId": { "$ref": "#/definitions/id" },
+        "boundaryTerrainId": { "$ref": "#/definitions/id" },
+        "radius": { "type": "integer", "minimum": 0, "maximum": 65535 }
+      }
+    },
+    "rmsNames": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128,
+        "pattern": "^[A-Z0-9_]+$"
+      }
+    },
+    "objectResourceSlot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resourceType", "quantityF32Bits", "mode"],
+      "properties": {
+        "resourceType": { "type": "integer", "minimum": -32768, "maximum": 32767 },
+        "quantityF32Bits": { "$ref": "#/definitions/id" },
+        "mode": { "type": "integer", "minimum": 0, "maximum": 255 }
+      }
+    },
+    "objectResourceState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resourceType", "quantityF32Bits"],
+      "properties": {
+        "resourceType": { "type": "integer", "minimum": -32768, "maximum": 32767 },
+        "quantityF32Bits": { "$ref": "#/definitions/id" }
+      }
+    },
+    "gameModePlayerObjectRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gameModeRaw", "objectId", "anchorObjectId", "innerRadius", "outerRadius"],
+      "properties": {
+        "gameModeRaw": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "objectId": { "$ref": "#/definitions/id" },
+        "anchorObjectId": { "$ref": "#/definitions/id" },
+        "innerRadius": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "outerRadius": { "type": "integer", "minimum": 0, "maximum": 65535 }
+      }
+    },
+    "buildingTechnologyTrigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["civilizationId", "objectId", "technologyId"],
+      "properties": {
+        "civilizationId": { "$ref": "#/definitions/id" },
+        "objectId": { "$ref": "#/definitions/id" },
+        "technologyId": { "type": "integer", "minimum": 0, "maximum": 65535 }
+      }
+    },
+    "buildingSpawnCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spawnedObjectId", "buildingObjectId", "count"],
+      "properties": {
+        "spawnedObjectId": { "$ref": "#/definitions/id" },
+        "buildingObjectId": { "$ref": "#/definitions/id" },
+        "count": { "type": "integer", "minimum": 1, "maximum": 1024 }
+      }
+    },
+    "automaticSpawnTechnology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["technologyId", "requiredTechnologyIds", "commands"],
+      "properties": {
+        "technologyId": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "civilizationId": {
+          "description": "Absent (2.2.0) for a technology available to every civilization.",
+          "$ref": "#/definitions/id"
+        },
+        "requiredTechnologyIds": {
+          "type": "array",
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 0, "maximum": 65535 }
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": { "$ref": "#/definitions/buildingSpawnCommand" }
+        }
+      }
+    },
+    "buildingSpawnVariantRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceObjectId", "alternateObjectId", "alternateFromPercent"],
+      "properties": {
+        "sourceObjectId": { "$ref": "#/definitions/id" },
+        "alternateObjectId": { "$ref": "#/definitions/id" },
+        "alternateFromPercent": { "type": "integer", "minimum": 1, "maximum": 99 }
+      }
+    },
+    "objectResourceSlotVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectId", "civilizationIds", "resourceSlots"],
+      "properties": {
+        "objectId": { "$ref": "#/definitions/id" },
+        "civilizationIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "resourceSlots": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/definitions/objectResourceSlot" }
+        }
+      }
+    },
+    "objectMovementSpeedVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectId", "civilizationIds", "speedF32Bits"],
+      "properties": {
+        "objectId": { "$ref": "#/definitions/id" },
+        "civilizationIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "speedF32Bits": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+      }
+    },
+    "foundationCell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "y": { "type": "integer", "minimum": 0, "maximum": 65535 }
+      }
+    },
+    "objectFoundation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["terrainId", "omittedCells"],
+      "properties": {
+        "terrainId": { "$ref": "#/definitions/id" },
+        "omittedCells": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/foundationCell" }
+        }
+      }
+    },
+    "objectCreationRng": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["facetCount", "randomFacet", "randomAngle", "randomCombatSeed"],
+      "properties": {
+        "facetCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "randomFacet": { "type": "boolean" },
+        "randomAngle": { "type": "boolean" },
+        "randomCombatSeed": { "type": "boolean" },
+        "fixedFacet": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        }
+      }
+    },
+    "objectStandingGraphicCreationVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["standingGraphicId", "creationRng"],
+      "properties": {
+        "standingGraphicId": {
+          "type": "integer",
+          "minimum": -32768,
+          "maximum": 32767
+        },
+        "creationRng": { "$ref": "#/definitions/objectCreationRng" }
+      }
+    },
+    "objectGraphicReplacementVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["civilizationIds", "facet"],
+      "properties": {
+        "civilizationIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "facet": { "enum": ["preserve", "reset-zero"] }
+      }
+    },
+    "objectPlacementGeometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "collisionHalfWidthF32Bits",
+        "collisionHalfHeightF32Bits",
+        "placementHalfWidthF32Bits",
+        "placementHalfHeightF32Bits"
+      ],
+      "properties": {
+        "collisionHalfWidthF32Bits": { "type": "integer", "minimum": 0, "maximum": 1124073216 },
+        "collisionHalfHeightF32Bits": { "type": "integer", "minimum": 0, "maximum": 1124073216 },
+        "placementHalfWidthF32Bits": { "type": "integer", "minimum": 0, "maximum": 1124073216 },
+        "placementHalfHeightF32Bits": { "type": "integer", "minimum": 0, "maximum": 1124073216 }
+      }
+    },
+    "objectPlacementRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["family", "slopeMode"],
+      "properties": {
+        "family": { "enum": ["terrain", "collision", "occupancy"] },
+        "slopeMode": { "type": "integer", "minimum": 0, "maximum": 255 }
+      }
+    },
+    "objectPlacementRuleVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["civilizationIds", "rules"],
+      "properties": {
+        "civilizationIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "rules": { "$ref": "#/definitions/objectPlacementRules" }
+      }
+    },
+    "objectRestrictionVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["civilizationIds", "restrictionId"],
+      "properties": {
+        "civilizationIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "restrictionId": {
+          "anyOf": [{ "$ref": "#/definitions/id" }, { "type": "null" }]
+        }
+      }
+    },
+    "objectPathing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "kind",
+        "verticalExtentF32Bits",
+        "outlineHalfWidthF32Bits",
+        "outlineHalfHeightF32Bits"
+      ],
+      "properties": {
+        "action": { "enum": [0, 1, 2, 3, 5, 10, 11, 12, 13] },
+        "kind": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "verticalExtentF32Bits": { "type": "integer", "minimum": 0, "maximum": 2139095039 },
+        "outlineHalfWidthF32Bits": { "type": "integer", "minimum": 0, "maximum": 2139095039 },
+        "outlineHalfHeightF32Bits": { "type": "integer", "minimum": 0, "maximum": 2139095039 }
+      }
+    },
+    "objectNeighborFacing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "updatesNeighbors",
+        "hasGraphic",
+        "preserveFacet",
+        "fallback",
+        "linkedObjectId",
+        "acceptsLinkedNeighbor"
+      ],
+      "properties": {
+        "updatesNeighbors": { "type": "boolean" },
+        "hasGraphic": { "type": "boolean" },
+        "preserveFacet": { "type": "boolean" },
+        "acceptsLinkedNeighbor": { "type": "boolean" },
+        "linkedObjectId": { "anyOf": [{ "$ref": "#/definitions/id" }, { "type": "null" }] },
+        "fallback": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind"],
+              "properties": { "kind": { "const": "linked-object" } }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "classId"],
+              "properties": {
+                "kind": { "enum": ["class", "linking-class"] },
+                "classId": { "$ref": "#/definitions/id" }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "objectAttachment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectId", "xOffsetF32Bits", "yOffsetF32Bits"],
+      "properties": {
+        "objectId": { "$ref": "#/definitions/id" },
+        "xOffsetF32Bits": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "yOffsetF32Bits": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+      }
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": ["restrictionVariants"],
+            "properties": { "restrictionVariants": { "type": "array", "minItems": 1 } }
+          },
+          "then": {
+            "required": ["availableCivilizations"],
+            "properties": {
+              "restrictionId": { "type": "null" },
+              "availableCivilizations": {
+                "type": "array",
+                "maxItems": 65536,
+                "uniqueItems": true,
+                "items": { "$ref": "#/definitions/id" }
+              }
+            }
+          }
+        }
+      ],
+      "if": {
+        "required": ["constructionRetirementRequiresHeight"],
+        "properties": { "constructionRetirementRequiresHeight": { "const": true } }
+      },
+      "then": {
+        "required": ["pathing"],
+        "properties": { "pathing": { "$ref": "#/definitions/objectPathing" } }
+      },
+      "not": {
+        "required": ["placementRules", "placementRuleVariants"],
+        "properties": {
+          "placementRules": { "type": "object" },
+          "placementRuleVariants": { "type": "array", "minItems": 1 }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "classId",
+        "footprintWidth256",
+        "footprintHeight256",
+        "obstruction",
+        "restrictionId",
+        "resourceSlots"
+      ],
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "name": { "$ref": "#/definitions/name" },
+        "rmsNames": { "$ref": "#/definitions/rmsNames" },
+        "classId": { "$ref": "#/definitions/id" },
+        "availableCivilizations": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "footprintWidth256": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "footprintHeight256": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "placementGeometry": { "$ref": "#/definitions/objectPlacementGeometry" },
+        "placementRules": {
+          "description": "Omitted or null is unavailable; never infer family from obstruction.",
+          "anyOf": [{ "$ref": "#/definitions/objectPlacementRules" }, { "type": "null" }]
+        },
+        "placementRuleVariants": {
+          "description": "Disjoint complete civilization groups, alternative to uniform rules.",
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/definitions/objectPlacementRuleVariant" }
+        },
+        "positionFamily": { "enum": [null, "base", "moving", "combat", "building"] },
+        "occupancyUsesMovementSpeed": {
+          "description": "Constructor-selected occupancy speed eligibility, independent of position family. Omitted/null is unavailable, not false.",
+          "type": ["boolean", "null"]
+        },
+        "movementSpeedF32Bits": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "pathing": {
+          "description": "Initialized path occupancy metadata; omitted or null is unavailable, not an empty obstruction.",
+          "anyOf": [{ "$ref": "#/definitions/objectPathing" }, { "type": "null" }]
+        },
+        "class39PathingGate": {
+          "description": "Content half of the live class-39 pathing-gate predicate. Omitted or null is unavailable, not false.",
+          "type": ["boolean", "null"]
+        },
+        "edgeMargin256": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "obstruction": { "enum": ["none", "point", "rectangle", "circle"] },
+        "canBeBuiltOn": { "type": "boolean" },
+        "constructionRetirementRequiresHeight": {
+          "description": "Protect this existing master from construction retirement unless its separately supplied vertical extent is positive. Omission declares the ordinary height-independent rule.",
+          "type": "boolean"
+        },
+        "hitPoints": {
+          "type": ["integer", "null"],
+          "minimum": -32768,
+          "maximum": 32767,
+          "description": "Signed master hit points. Omission or null is unavailable metadata, not a durable-object default."
+        },
+        "placementCollision": { "enum": ["footprint", "none"] },
+        "placementSideTerrainIds": {
+          "type": "array",
+          "maxItems": 2,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "placementCenterTerrainIds": {
+          "type": "array",
+          "maxItems": 2,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "initialLifecycleState": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "restrictionId": {
+          "anyOf": [{ "$ref": "#/definitions/id" }, { "type": "null" }]
+        },
+        "restrictionVariants": {
+          "description": "Disjoint complete owner-table groups; alternative to a uniform restriction.",
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/definitions/objectRestrictionVariant" }
+        },
+        "initializesRestrictionZones": { "type": "boolean" },
+        "resourceSlots": {
+          "description": "Three ordered initialization slots; null denotes unavailable metadata, not empty resources.",
+          "anyOf": [
+            {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": { "$ref": "#/definitions/objectResourceSlot" }
+            },
+            { "type": "null" }
+          ]
+        },
+        "initialResourceOverride": {
+          "description": "Optional constructor-selected instance resource state after ordered storage-slot initialization.",
+          "anyOf": [{ "$ref": "#/definitions/objectResourceState" }, { "type": "null" }]
+        },
+        "dataStatus": {
+          "type": "integer",
+          "minimum": -32768,
+          "maximum": 32767
+        },
+        "creationRng": { "$ref": "#/definitions/objectCreationRng" },
+        "standingGraphicId": {
+          "description": "Primary standing graphic whose construction behavior is described by creationRng. Omission is unavailable metadata for RMS standing-graphic effects.",
+          "type": "integer",
+          "minimum": -32768,
+          "maximum": 32767
+        },
+        "standingGraphicCreationVariants": {
+          "description": "Additional content-derived construction profiles reachable through ordered RMS primary-standing-graphic effects.",
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/definitions/objectStandingGraphicCreationVariant" }
+        },
+        "graphicReplacementVariants": {
+          "description": "Changed active graphics and setter facet behavior when a constructed Gaia object adopts the authored civilization master.",
+          "type": "array",
+          "maxItems": 65536,
+          "items": { "$ref": "#/definitions/objectGraphicReplacementVariant" }
+        },
+        "constructionAttachments": {
+          "type": "array",
+          "maxItems": 4,
+          "items": { "$ref": "#/definitions/objectAttachment" }
+        },
+        "neighborFacing": { "$ref": "#/definitions/objectNeighborFacing" },
+        "singleRequestCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        },
+        "foundation": {
+          "anyOf": [{ "$ref": "#/definitions/objectFoundation" }, { "type": "null" }]
+        },
+        "disappearsWhenBuilt": {
+          "description": "The native building is retired when construction completes; one with a stack unit (its neighbor link) is first replaced by that unit, which exact generation refuses to construct.",
+          "const": true
+        },
+        "constructorType": {
+          "description": "Native constructor family that selects creation-RNG semantics for graphics an effect installs.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "buildingConstruction": {
+          "description": "2.3.0, building masters (constructor type 80) only: the two facts the building constructor reads to start a construction site with 1 hit point.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["positiveBuildTime", "headUnit"],
+          "properties": {
+            "positiveBuildTime": {
+              "description": "The first train location's build time is positive; a master without a train location has none.",
+              "type": "boolean"
+            },
+            "headUnit": { "description": "The master names a head unit.", "type": "boolean" }
+          }
+        }
+      }
+    },
+    "civilizationSubstitution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["civilizationId", "sourceObjectId", "replacementObjectId"],
+      "properties": {
+        "civilizationId": { "$ref": "#/definitions/id" },
+        "sourceObjectId": { "$ref": "#/definitions/id" },
+        "replacementObjectId": { "$ref": "#/definitions/id" }
+      }
+    },
+    "objectReplacementRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceObjectId"],
+      "properties": {
+        "sourceObjectId": { "$ref": "#/definitions/id" },
+        "replacementObjectId": { "$ref": "#/definitions/id" },
+        "replacementAttributeId": { "$ref": "#/definitions/id" },
+        "maximumRollInclusive": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 99
+        },
+        "requiredAttributeId": {
+          "description": "Owners whose numeric player attribute is not positive are skipped.",
+          "$ref": "#/definitions/id"
+        },
+        "excludesComputerPlayers": { "const": true },
+        "technologyGate": { "$ref": "#/definitions/technologyStateGate" }
+      }
+    },
+    "technologyStateGate": {
+      "description": "At least one listed technology must be in the native state: -1 disabled, 0 unavailable, 1 available, 3 researched.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["technologyIds", "state"],
+      "properties": {
+        "technologyIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 0, "maximum": 65535 }
+        },
+        "state": { "type": "integer", "minimum": -1, "maximum": 4 }
+      }
+    },
+    "civilizationAttributeValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["civilizationId", "attributeId", "valueF32Bits"],
+      "properties": {
+        "civilizationId": { "$ref": "#/definitions/id" },
+        "attributeId": { "$ref": "#/definitions/id" },
+        "valueF32Bits": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+      }
+    },
+    "technologyStateRule": {
+      "description": "Available once at least requiredCount listed technologies are researched; disabled and automatically researched civilizations are disjoint.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["technologyId", "requiredCount"],
+      "properties": {
+        "technologyId": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "requiredTechnologyIds": {
+          "type": "array",
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 0, "maximum": 65535 }
+        },
+        "requiredCount": { "type": "integer", "minimum": 0, "maximum": 6 },
+        "disabledCivilizationIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "researchedCivilizationIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        }
+      }
+    },
+    "graphic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "angleCount"],
+      "properties": {
+        "id": { "type": "integer", "minimum": -32768, "maximum": 32767 },
+        "angleCount": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "randomFacet": { "const": true },
+        "randomAngle": { "const": true }
+      }
+    },
+    "nativeClassBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["farm", "tree", "wall", "gate", "tower"],
+      "properties": {
+        "farm": { "$ref": "#/definitions/id" },
+        "tree": { "$ref": "#/definitions/id" },
+        "wall": { "$ref": "#/definitions/id" },
+        "gate": { "$ref": "#/definitions/id" },
+        "tower": { "$ref": "#/definitions/id" }
+      }
+    },
+    "nativeGenerationBindings": {
+      "description": "Executable-owned generation identities of one version, removing content literals from the engine.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["defaultTerrainId", "wallAnchorObjectIds", "classes"],
+      "properties": {
+        "defaultTerrainId": { "$ref": "#/definitions/id" },
+        "flatOnlyTerrainId": { "$ref": "#/definitions/id" },
+        "wallAnchorObjectIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "explicitMaximumSeedFoundationObjectIds": {
+          "type": "array",
+          "maxItems": 256,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "classes": { "$ref": "#/definitions/nativeClassBindings" },
+        "constructionSiteExemptions": {
+          "description": "Masters and classes the building constructor never starts as a construction site (from content 2.3.0, native bindings 1.1.0); ascending.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["objectIds", "classIds"],
+          "properties": {
+            "objectIds": {
+              "type": "array",
+              "maxItems": 256,
+              "uniqueItems": true,
+              "items": { "$ref": "#/definitions/id" }
+            },
+            "classIds": {
+              "type": "array",
+              "maxItems": 256,
+              "uniqueItems": true,
+              "items": { "$ref": "#/definitions/id" }
+            }
+          }
+        },
+        "playerStartBindings": { "$ref": "#/definitions/playerStartBindings" },
+        "farmCompletionBindings": { "$ref": "#/definitions/farmCompletionBindings" }
+      }
+    },
+    "wallPlacementRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wallObjectId",
+        "horizontalGateCenterObjectId",
+        "horizontalGateFlankObjectId",
+        "verticalGateCenterObjectId",
+        "verticalGateFlankObjectId"
+      ],
+      "properties": {
+        "wallObjectId": { "$ref": "#/definitions/id" },
+        "horizontalGateCenterObjectId": { "$ref": "#/definitions/id" },
+        "horizontalGateFlankObjectId": { "$ref": "#/definitions/id" },
+        "verticalGateCenterObjectId": { "$ref": "#/definitions/id" },
+        "verticalGateFlankObjectId": { "$ref": "#/definitions/id" }
+      }
+    },
+    "civilizationObjectAttributeValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["civilizationId", "attributeId", "objectId"],
+      "properties": {
+        "civilizationId": { "$ref": "#/definitions/id" },
+        "attributeId": { "$ref": "#/definitions/id" },
+        "objectId": { "$ref": "#/definitions/id" }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "name": { "$ref": "#/definitions/name" }
+      }
+    },
+    "cliff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cliffType", "terrainId"],
+      "properties": {
+        "cliffType": { "$ref": "#/definitions/id" },
+        "terrainId": { "$ref": "#/definitions/id" },
+        "pieceRules": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "$ref": "#/definitions/cliffPieceRule" }
+        }
+      }
+    },
+    "cliffPieceRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edges", "primary", "xOffset256", "yOffset256"],
+      "properties": {
+        "edges": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "type": "integer", "minimum": -1, "maximum": 1 }
+        },
+        "primary": { "$ref": "#/definitions/cliffPieceVariant" },
+        "alternate": {
+          "anyOf": [{ "$ref": "#/definitions/cliffPieceVariant" }, { "type": "null" }]
+        },
+        "xOffset256": { "type": "integer", "minimum": 256, "maximum": 512 },
+        "yOffset256": { "type": "integer", "minimum": 256, "maximum": 512 }
+      }
+    },
+    "cliffPieceVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectId", "facet"],
+      "properties": {
+        "objectId": { "$ref": "#/definitions/id" },
+        "facet": { "type": "integer", "minimum": 0, "maximum": 255 }
+      }
+    },
+    "restriction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "allowedTerrainIds", "blockedTerrainIds"],
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "name": { "$ref": "#/definitions/name" },
+        "allowedTerrainIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "traversalCostF32Bits": {
+          "type": ["array", "null"],
+          "maxItems": 256,
+          "items": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+        },
+        "placementPathingMaskI32": {
+          "description": "Signed runtime restriction mask used against live occupancy words. It is not derivable from terrain costs or the restriction ID.",
+          "type": ["integer", "null"],
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "blockedTerrainIds": {
+          "type": "array",
+          "maxItems": 65536,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        }
+      }
+    },
+    "playerStartBindings": {
+      "description": "Executable-owned role identities for ordinary fallback player starts; content 2.4.0/native bindings 1.2.0.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "townCenterObjectId",
+        "packedTownCenterObjectId",
+        "villagerObjectId",
+        "alternateVillagerObjectId",
+        "fallbackScoutObjectId",
+        "packedTownCenterAttributeId",
+        "startingVillagersAttributeId",
+        "startingScoutAttributeId"
+      ],
+      "properties": {
+        "townCenterObjectId": { "$ref": "#/definitions/id" },
+        "packedTownCenterObjectId": { "$ref": "#/definitions/id" },
+        "villagerObjectId": { "$ref": "#/definitions/id" },
+        "alternateVillagerObjectId": { "$ref": "#/definitions/id" },
+        "fallbackScoutObjectId": { "$ref": "#/definitions/id" },
+        "packedTownCenterAttributeId": { "$ref": "#/definitions/id" },
+        "startingVillagersAttributeId": { "$ref": "#/definitions/id" },
+        "startingScoutAttributeId": { "$ref": "#/definitions/id" }
+      }
+    },
+    "farmCompletionBindings": {
+      "description": "Executable-owned roles of the perimeter farm completion; content 2.5.0/native bindings 1.3.0. Parents ascend and are unique; spawned masters are an ordered, weighted list.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parentObjectIds",
+        "spawnedObjectIds",
+        "spawnCountAttributeId",
+        "totalResourceQuantityAttributeId",
+        "bonusAmountAttributeId",
+        "bonusResourceAttributeId",
+        "bonusAnchorAttributeId"
+      ],
+      "properties": {
+        "parentObjectIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "spawnedObjectIds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "spawnCountAttributeId": { "$ref": "#/definitions/id" },
+        "totalResourceQuantityAttributeId": { "$ref": "#/definitions/id" },
+        "bonusAmountAttributeId": { "$ref": "#/definitions/id" },
+        "bonusResourceAttributeId": { "$ref": "#/definitions/id" },
+        "bonusAnchorAttributeId": { "$ref": "#/definitions/id" }
+      }
+    },
+    "startupTechnologyResourceEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["civilizationId", "route", "technologyId", "operations"],
+      "properties": {
+        "civilizationId": { "$ref": "#/definitions/id" },
+        "route": {
+          "description": "automatic: the civilization's own automatic technology; team: completed by the civilization's team effect for its players and their allies.",
+          "enum": ["automatic", "team"]
+        },
+        "technologyId": { "type": "integer", "minimum": 0, "maximum": 65535 },
+        "operations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "resourceId", "valueF32Bits"],
+            "properties": {
+              "kind": { "enum": ["set", "add", "multiply"] },
+              "resourceId": { "$ref": "#/definitions/id" },
+              "sourceResourceId": { "$ref": "#/definitions/id" },
+              "valueF32Bits": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

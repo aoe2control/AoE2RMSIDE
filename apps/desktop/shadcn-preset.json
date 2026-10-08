@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "cliVersion": "4.18.0",
+  "initCommand": "pnpm dlx shadcn@4.18.0 init --preset b1D0dv74 --template vite",
+  "preset": {
+    "code": "b1D0dv74",
+    "version": "b",
+    "values": {
+      "menuColor": "default-translucent",
+      "menuAccent": "subtle",
+      "radius": "default",
+      "font": "inter",
+      "iconLibrary": "lucide",
+      "theme": "neutral",
+      "baseColor": "neutral",
+      "style": "mira",
+      "chartColor": "neutral",
+      "fontHeading": "inherit"
+    }
+  },
+  "generatedComponents": [
+    "src/renderer/components/ui/alert.tsx",
+    "src/renderer/components/ui/alert-dialog.tsx",
+    "src/renderer/components/ui/badge.tsx",
+    "src/renderer/components/ui/button.tsx",
+    "src/renderer/components/ui/context-menu.tsx",
+    "src/renderer/components/ui/dropdown-menu.tsx",
+    "src/renderer/components/ui/empty.tsx",
+    "src/renderer/components/ui/input.tsx",
+    "src/renderer/components/ui/select.tsx",
+    "src/renderer/components/ui/tabs.tsx",
+    "src/renderer/components/ui/tooltip.tsx"
+  ],
+  "font": {
+    "family": "Inter Variable",
+    "package": "@fontsource-variable/inter",
+    "version": "5.3.0",
+    "license": "../../assets/third-party/inter/LICENSE.txt"
+  }
+}

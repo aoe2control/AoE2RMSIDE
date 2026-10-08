@@ -1,0 +1,31 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2rmside-map-icon-player-sprites",
+  "files": [
+    {
+      "path": "assets/original/map-icon-players/player-squares-v1.png",
+      "sha256": "1317bd20972f5f91cc7f766708485b0173f06f1b01a50791bd884337ed6e229a",
+      "authorship": "AoE2RMSIDE project owner; supplied and approved on 2026-10-03 as original art for the generated map icon's player spawn markers (the owner states it contains no game content).",
+      "license": "Apache-2.0",
+      "sourceClassification": "generated-independent",
+      "created": "2026-10-03",
+      "containsGameContent": false,
+      "transformation": "Copied byte-for-byte as supplied: a 256 x 64 RGBA PNG with two rows of eight player-colored diamond markers (blue, red, green, yellow, cyan, purple, grey, orange). The bottom row is the marker set used by the map icon; the top row is unused. Bundled with the desktop renderer and processed at run time (bottom-row cells sliced as 32-pixel rectangles, cropped to their visible pixels, rescaled) into the generated map icon's player square spawn markers."
+    },
+    {
+      "path": "assets/original/map-icon-players/nomad-feet-v1.webp",
+      "sha256": "eb4b30727dbe027a2464c1af794a2dd4969bfb31f97a6ee55379bd997cbcd31e",
+      "authorship": "AoE2RMSIDE project owner; original art created for AoE2RMSIDE on 2026-10-03 and accepted by the project owner.",
+      "license": "Apache-2.0",
+      "sourceClassification": "generated-independent",
+      "created": "2026-10-03",
+      "containsGameContent": false,
+      "transformation": "Copied byte-for-byte as delivered. Eight sandals with player-colored cuff bands in a 4 x 2 grid on a flat magenta (#FF00FF) key background, cells left to right, top to bottom in player color order (blue, red, green, yellow, cyan, violet, grey, orange). Bundled with the desktop renderer and processed at run time (violet-safe chroma key, one-pixel erosion, re-outline, per-cell crop, downscale) into the generated map icon's nomad feet spawn markers."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2de-xs-builtins-v1",
+  "files": [
+    {
+      "path": "crates/xs-analysis/data/xs-builtins-v1.json",
+      "sha256": "d1c773a7843853aa49c64e8538827602d7f50d27e0f9050344a78d76004812fb",
+      "authorship": "Names, value types, integer and bool defaults, and per-build and runtime availability of the XS built-in functions of game builds 101.103.48987 and 101.103.54800, recorded as factual identifiers from lawfully owned, version-verified installations; every summary is independently written. Parameter and return documentation for seven of eight reviewed entries is independently authored from retained facts and the curated AoE2DE UGC Guide reference.",
+      "license": "Factual API identifiers and signatures; independently authored summaries and parameter/return documentation under the repository license",
+      "sourceClassification": "sanitized-observation",
+      "created": "2026-10-02",
+      "containsGameContent": false,
+      "transformation": "Factual identifiers and signatures only; the game's own help text and any executable addresses are not retained. Parameter names follow the game's own function prototypes; where a prototype disagrees with the parameter list the names are placeholders (parameterNamesKnown false). Basis 'help' marks summaries supported by the game's own help text, 'signature' summaries inferred from name and signature, 'unknown' unestablished behavior. Catalog 1.1 adds bounded plain-text documentation and related labels for seven of the eight reviewed entries; 'reference' marks independently authored guide-supported roles, paired with the fixed aoe2de-ugc-guide source ID (https://ugc.aoe2.rocks/general/xs/). No guide passages or examples are copied. Registered semantics and all 20 recorded / 7 unrecorded defaults in these entries are unchanged. Known limitations: xsDisplayInstructions playerColorForText and playSound roles remain unresolved; both registered defaults remain true. Its time default -1 has unresolved special meaning. xsGetTime unit and offset remain unresolved. Their uncertainty-only documentation fields are omitted; no replacement behavioral meanings are asserted. Meaningful descriptions render without evidence commentary.",
+      "reviewer": "Base factual identifiers and signatures reviewed and approved by the project maintainer on 2026-10-04. Eight-entry parameter/return documentation and evidence-basis review recorded on 2026-10-06."
+    }
+  ]
+}

@@ -1,0 +1,4618 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "nl",
+  "name": "Nederlands",
+  "direction": "ltr",
+  "messages": {
+    "app-menu.file.name": {
+      "message": "Bestand"
+    },
+    "app-menu.edit.name": {
+      "message": "Bewerken"
+    },
+    "app-menu.view.name": {
+      "message": "Beeld"
+    },
+    "app-menu.help.name": {
+      "message": "Help"
+    },
+    "app-menu.file.new-file": {
+      "message": "Nieuw bestand"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Nieuw kaarttestscript"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Definitiebestand genereren…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Nieuw XS-script"
+    },
+    "app-menu.file.open-file": {
+      "message": "Bestand openen…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Map openen…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Geïnstalleerde kaarten bekijken…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Als mod installeren…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Spelmap openen"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Spelmap ontkoppelen"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Testrapport importeren…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Recent geopend"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Geen recente bestanden of mappen"
+    },
+    "app-menu.file.save": {
+      "message": "Opslaan"
+    },
+    "app-menu.file.save-as": {
+      "message": "Opslaan als…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "Standaard-app voor RMS-bestanden kiezen…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Windows-instellingen konden niet worden geopend"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "Windows-instellingen geopend bij Standaard-apps"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "Kies daar AoE2RMSIDE om .rms- en .rms2-bestanden ermee te openen. Windows wijzigt de standaard-app pas nadat je dit bevestigt."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Tabblad sluiten"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Map sluiten"
+    },
+    "app-menu.file.close-window": {
+      "message": "Venster sluiten"
+    },
+    "app-menu.file.exit": {
+      "message": "Afsluiten"
+    },
+    "app-menu.edit.undo": {
+      "message": "Ongedaan maken"
+    },
+    "app-menu.edit.redo": {
+      "message": "Opnieuw uitvoeren"
+    },
+    "app-menu.edit.cut": {
+      "message": "Knippen"
+    },
+    "app-menu.edit.copy": {
+      "message": "Kopiëren"
+    },
+    "app-menu.edit.paste": {
+      "message": "Plakken"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Alles selecteren"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Document opmaken"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Opmaken bij opslaan"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "if/else-blokken inspringen"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Prullenbak overslaan bij verwijderen"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Indeling herstellen"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Kaarten met de GPU weergeven"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Generatiestappen live tonen"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Parameterhints tonen"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Controleregels"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Taal…"
+    },
+    "app-menu.view.theme": {
+      "message": "Thema"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Systeem"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Licht"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Donker"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Werkelijke grootte"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Inzoomen"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Uitzoomen"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Volledig scherm wisselen"
+    },
+    "app-menu.help.documentation": {
+      "message": "Documentatie"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Lid worden op Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Een fout melden"
+    },
+    "app-menu.help.about": {
+      "message": "Over {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "De gekoppelde spelmap kon niet worden geopend"
+    },
+    "about.version": {
+      "message": "Versie {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "Editor voor XS-scripts"
+    },
+    "about.edition.rms-preview": {
+      "message": "Editor voor RMS- en XS-scripts"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Een onafhankelijke, onofficiële editor voor scripts voor willekeurige kaarten. De eigen implementatie bootst na hoe Age of Empires II: Definitive Edition deze scripts leest en kaarten genereert."
+    },
+    "about.disclosure.independent": {
+      "message": "Een onafhankelijke, onofficiële scripteditor voor Age of Empires II: Definitive Edition."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "Alleen voor geverifieerde spelversies wordt gegarandeerd dat gegenereerde kaarten overeenkomen met het spel; nieuwere versies werken zonder die garantie. Sommige eigenaardigheden van het spel worden bewust nagebootst, zodat kaarten zich hetzelfde gedragen."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE bevat geen spelbestanden of spelafbeeldingen. Officiële bronnen worden alleen uit een lokale installatie gelezen en speltexturen worden alleen uit geïnstalleerde spelbestanden gehaald."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE bevat geen spelbestanden of spelafbeeldingen. Officiële bronnen worden alleen uit een lokale installatie gelezen."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Niet verbonden aan of onderschreven door Microsoft, Xbox Game Studios, World's Edge of Activision."
+    },
+    "about.credits": {
+      "message": "Medewerkers\n{maintainer} — Oprichter en beheerder van het project"
+    },
+    "about.credits.research": {
+      "message": "Met dank aan {author}, wiens {guide} ons veel heeft geleerd over scripts voor willekeurige kaarten."
+    },
+    "about.credits.xs-research": {
+      "message": "Met dank aan {author}, wiens XS-documentatie in de {guide} het uitgangspunt was voor de XS-ondersteuning."
+    },
+    "about.close": {
+      "message": "Sluiten"
+    },
+    "about.documentation": {
+      "message": "Documentatie"
+    },
+    "dialog.confirm.title": {
+      "message": "Actie bevestigen"
+    },
+    "dialog.confirm.cancel": {
+      "message": "Annuleren"
+    },
+    "dialog.confirm.continue": {
+      "message": "Doorgaan"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "Wijzigingen in {name} opslaan?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, one {Wijzigingen in {count} bestand opslaan?} other {Wijzigingen in {count} bestanden opslaan?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "Niet-opgeslagen wijzigingen gaan verloren als je het venster sluit."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "Niet-opgeslagen wijzigingen gaan verloren als je dit tabblad sluit."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "Niet-opgeslagen wijzigingen gaan verloren als je deze map sluit."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "Niet-opgeslagen wijzigingen gaan verloren als je {name} verwijdert."
+    },
+    "dialog.unsaved.save": {
+      "message": "Opslaan"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Alles opslaan"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Niet opslaan"
+    },
+    "dialog.external-change.title": {
+      "message": "{name} is buiten AoE2RMSIDE gewijzigd"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Als je het bestand vervangt, gaat de externe versie verloren. Laad het opnieuw, vervang het door de editorinhoud of annuleer."
+    },
+    "dialog.external-change.replace": {
+      "message": "Bestand overschrijven"
+    },
+    "dialog.external-change.reload": {
+      "message": "Bestand opnieuw laden"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Bij opnieuw laden gaat de niet-opgeslagen editorinhoud verloren. Ga door met bewerken om het conflict bij het opslaan op te lossen."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Verder bewerken"
+    },
+    "dialog.delete-entry.title": {
+      "message": "{name} naar de prullenbak verplaatsen?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "De map is niet leeg. De map en de volledige inhoud worden naar de prullenbak verplaatst."
+    },
+    "dialog.delete-entry.description": {
+      "message": "Het item wordt naar de prullenbak verplaatst."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Naar de prullenbak"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "{name} definitief verwijderen?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "De map is niet leeg. De map en de volledige inhoud worden definitief verwijderd, zonder de prullenbak te gebruiken. Dit kan niet ongedaan worden gemaakt."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "Het item wordt definitief verwijderd, zonder de prullenbak te gebruiken. Dit kan niet ongedaan worden gemaakt."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Definitief verwijderen"
+    },
+    "output.clear": {
+      "message": "Uitvoer wissen"
+    },
+    "output.source.run": {
+      "message": "Uitvoering"
+    },
+    "output.source.script": {
+      "message": "Script"
+    },
+    "output.source.preview": {
+      "message": "Voorbeeld"
+    },
+    "output.source.map-test": {
+      "message": "Kaarttest"
+    },
+    "output.source.deploy": {
+      "message": "Installatie"
+    },
+    "output.source.live-test": {
+      "message": "Livetest"
+    },
+    "output.source.recovery": {
+      "message": "Herstel"
+    },
+    "output.source.update": {
+      "message": "Update"
+    },
+    "output.source.files": {
+      "message": "Bestanden"
+    },
+    "output.source.game-folder": {
+      "message": "Spelmap"
+    },
+    "output.source.game-textures": {
+      "message": "Speltexturen"
+    },
+    "output.source.app": {
+      "message": "App"
+    },
+    "output.log.label": {
+      "message": "{count, plural, one {{count} uitvoerbericht} other {{count} uitvoerberichten}}"
+    },
+    "output.empty": {
+      "message": "Voer een kaart uit om de resultaten hier te zien."
+    },
+    "output.empty.filtered": {
+      "message": "Geen berichten voldoen aan het filter."
+    },
+    "output.jump-to-latest": {
+      "message": "Naar nieuwste ({count} nieuw)"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, one {{count} keer herhaald} other {{count} keer herhaald}}"
+    },
+    "output.details": {
+      "message": "Details"
+    },
+    "output.run.show": {
+      "message": "Uitvoeringsberichten tonen"
+    },
+    "output.run.hide": {
+      "message": "Uitvoeringsberichten verbergen"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, one {{count} eerdere regel niet getoond} other {{count} eerdere regels niet getoond}}"
+    },
+    "output.run.seed": {
+      "message": "startwaarde {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, one {{count} speler} other {{count} spelers}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, one {{count} kaart} other {{count} kaarten}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ms"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} s"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} min {seconds} s"
+    },
+    "output.constructs.heading": {
+      "message": "Niet vergeleken met het spel"
+    },
+    "output.constructs.label": {
+      "message": "Opdrachten die niet met het spel zijn vergeleken"
+    },
+    "output.constructs.go-to": {
+      "message": "Naar het eerste gebruik gaan"
+    },
+    "output.constructs.more": {
+      "message": "en nog {count}"
+    },
+    "installed-maps.filter.group": {
+      "message": "Herkomst van kaarten"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Meegeleverde kaarten ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Kaarten van lokale mods ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Kaarten van geabonneerde mods ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Alle herkomstfilters staan uit. Schakel er één in om de bijbehorende kaarten te tonen."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Geen geïnstalleerde willekeurige kaarten met de geselecteerde herkomst."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Geen geïnstalleerde willekeurige kaarten met de geselecteerde herkomst voldoen aan deze zoekopdracht."
+    },
+    "installed-maps.empty.none": {
+      "message": "Geen meegeleverde, lokale of geabonneerde willekeurige kaarten gevonden."
+    },
+    "installed-maps.empty.search": {
+      "message": "Geen geïnstalleerde willekeurige kaarten voldoen aan deze zoekopdracht."
+    },
+    "installed-maps.title": {
+      "message": "Geïnstalleerde willekeurige kaarten"
+    },
+    "installed-maps.close": {
+      "message": "Geïnstalleerde willekeurige kaarten sluiten"
+    },
+    "installed-maps.search": {
+      "message": "Geïnstalleerde willekeurige kaarten doorzoeken"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Kaarten zoeken"
+    },
+    "installed-maps.search.clear": {
+      "message": "Zoekopdracht wissen"
+    },
+    "installed-maps.loading": {
+      "message": "Geïnstalleerde willekeurige kaarten laden"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Kies de spelmap om geïnstalleerde RMS-bestanden weer te geven"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Meegeleverd"
+    },
+    "installed-maps.origin.local": {
+      "message": "Lokale mod"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Geabonneerde mod"
+    },
+    "installed-maps.clone": {
+      "message": "Kopiëren voor bewerken"
+    },
+    "installed-maps.open-failed": {
+      "message": "De kaart kon niet worden geopend"
+    },
+    "installed-maps.clone-failed": {
+      "message": "De kaart kon niet worden gekopieerd"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Geïnstalleerde kaarten konden niet worden weergegeven"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, one {# kaartbestand gekopieerd om te bewerken} other {# kaartbestanden gekopieerd om te bewerken}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "{name} is niet gekopieerd"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "De gekopieerde kaart verwijst ernaar, maar het bestand maakt geen deel uit van de geïnstalleerde kaart."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Het spel levert dit bestand; het maakt geen deel uit van de geïnstalleerde kaart."
+    },
+    "run-menu.control.detach": {
+      "message": "AoE2Control loskoppelen"
+    },
+    "run-menu.control.remove": {
+      "message": "AoE2Control verwijderen"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control maakt verbinding"
+    },
+    "run-menu.control.detaching": {
+      "message": "AoE2Control loskoppelen…"
+    },
+    "run-menu.control.busy": {
+      "message": "Wacht tot de huidige AoE2Control-bewerking is voltooid"
+    },
+    "run-menu.run-on-save": {
+      "message": "Bij opslaan"
+    },
+    "run-menu.run-on-edit": {
+      "message": "Bij bewerken"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Voorinstelling"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Voorinstelling {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Voorbeeldinstellingen van de voorinstelling"
+    },
+    "run-menu.preset.manage": {
+      "message": "Voorbeeldvoorinstellingen beheren"
+    },
+    "run-menu.preset.new": {
+      "message": "Nieuwe voorinstelling"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Nieuwe voorbeeldvoorinstelling benoemen"
+    },
+    "run-menu.preset.rename": {
+      "message": "{name} hernoemen"
+    },
+    "run-menu.preset.save": {
+      "message": "{name} opslaan"
+    },
+    "run-menu.preset.edit": {
+      "message": "{name} bewerken"
+    },
+    "run-menu.preset.delete": {
+      "message": "{name} verwijderen"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "Voorinstelling {name} verwijderen?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "De opgeslagen voorbeeldinstellingen van deze voorinstelling worden verwijderd."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Verwijderen"
+    },
+    "run-menu.preset.name-length": {
+      "message": "Namen van voorinstellingen moeten 1 tot 64 tekens bevatten"
+    },
+    "run-menu.preset.exists": {
+      "message": "Er bestaat al een voorinstelling met de naam {name}"
+    },
+    "run-menu.preset.limit": {
+      "message": "Er kunnen maximaal 64 voorinstellingen worden opgeslagen"
+    },
+    "run-menu.map-size": {
+      "message": "Kaartgrootte"
+    },
+    "run-menu.game-mode": {
+      "message": "Spelmodus"
+    },
+    "run-menu.starting-resources": {
+      "message": "Begingrondstoffen"
+    },
+    "run-menu.starting-age": {
+      "message": "Begintijdperk"
+    },
+    "run-menu.ending-age": {
+      "message": "Eindtijdperk"
+    },
+    "run-menu.position-policy": {
+      "message": "Spelerposities"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Selecteren"
+    },
+    "run-menu.turbo-note": {
+      "message": "Turbo Random Map is de oude modus en blijft ongewijzigd. Random Map met Turbo gebruikt de turbo-labels van het spel."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Random Map + Turbo gebruiken"
+    },
+    "run-menu.players.configure": {
+      "message": "Spelers instellen"
+    },
+    "run-menu.players.count": {
+      "message": "Aantal spelers"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, one {# speler} other {# spelers}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Plaats van speler {player}"
+    },
+    "run-menu.players.color": {
+      "message": "Kleur van speler {player}"
+    },
+    "run-menu.players.civilization": {
+      "message": "Beschaving van speler {player}"
+    },
+    "run-menu.players.team": {
+      "message": "Team van speler {player}"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Speler {player} als computer"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Computerspeler (definieert AI_PLAYERS)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "Bij livetests is elke speler na P1 een computer"
+    },
+    "run-menu.players.live-note": {
+      "message": "Bij livetests is elke speler na P1 een computer."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "Bij livetests is elke speler na P1 een computer. Zet een speler op P1, de plaats waarop je zelf speelt."
+    },
+    "run-menu.lobby.label": {
+      "message": "Lobbyopties"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Lobbyopties, {count} ingeschakeld"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Aanvullingen op de spelmodus"
+    },
+    "run-menu.lobby.options": {
+      "message": "Opties"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (spelmodus)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Voegt Empire Wars toe aan de spelmodus. Definieert EMPIRE_WARS."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Voegt Sudden Death toe aan de spelmodus. Definieert SUDDEN_DEATH."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Voegt Regicide toe aan de spelmodus. Definieert REGICIDE."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Voegt King of the Hill toe aan de spelmodus. Definieert KING_OT_HILL."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Sneller spelverloop. Definieert TURBO_MODE en, bij Random Map, TURBO_RANDOM_MAP."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Elke beschaving kan alles onderzoeken. Definieert FULL_TECH_TREE."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Antiquity-modus. Definieert ANTIQUITY_MODE; veel kaarten veranderen hierdoor."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Eenheden kunnen niet over akkers lopen. Definieert SOLID_FARMS."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "Regicide vereist een koning voor elke speler. Op een kaart zonder koningen beëindigt het spel de partij onmiddellijk."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Lokale spelmap"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (lokaal)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (niet geverifieerd)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Geen meegeleverd profiel"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Geen meegeleverde versie"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Spelversie voor het voorbeeld"
+    },
+    "run-menu.version.game-version": {
+      "message": "Spelversie"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Lokale spelversie geselecteerd; het voorbeeld wordt opnieuw uitgevoerd"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} is geen geverifieerde RMS-versie; voorbeelden gebruiken het nieuwste geverifieerde gedragsprofiel ({profile}). Dit hoeft de werking niet te beïnvloeden. Als de gegenereerde kaart afwijkt van het spel, controleer dan op een IDE-update of meld het via {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "niet beschikbaar"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Spelmap kiezen"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Spelmap kiezen…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "Lokale AoE2DE {version} wordt gebruikt"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "De geselecteerde lokale AoE2DE-installatie wordt gebruikt"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "De uitvoeringsinstellingen konden niet worden geladen"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "De uitvoeringsinstellingen zijn niet opgeslagen"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "De editor kon de uitvoeringsinstellingen niet gebruiken"
+    },
+    "run-menu.run.warning": {
+      "message": "De kaart heeft een waarschuwing"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Voorbeeldcache gewist"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "Ontwikkeltestgegevens vereisen een niet-leeg .rms- of .rms2-script"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Willekeurige beschavingen voor dit voorbeeld: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Speler {player} {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "Bij een livetest kiest het spel zelf."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, one {# speler} other {# spelers}}"
+    },
+    "run-menu.result.error": {
+      "message": "Fout"
+    },
+    "run-menu.result.failed": {
+      "message": "Mislukt"
+    },
+    "run-menu.result.passed": {
+      "message": "Geslaagd"
+    },
+    "run-menu.result.stopped": {
+      "message": "Gestopt"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Gestopt, laatste kaart behouden"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Synthetische testdata, niet gecertificeerd"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Synthetische testdata, niet gecertificeerd, hergebruikt"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Gegenereerd, hergebruikt"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Gegenereerd · niet-geverifieerde spelversie"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Gegenereerd, hergebruikt · niet-geverifieerde spelversie"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Het voorbeeld kan niet worden uitgevoerd"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "De huidige broncode is leeg."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "De huidige broncode bevat syntaxisfouten."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Het geselecteerde gedragsprofiel is niet beschikbaar."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Er is geen compatibel inhoudspakket beschikbaar voor de geselecteerde spelversie."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Er is geen compatibel inhoudspakket beschikbaar voor het profiel."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Er is nog een andere uitvoering bezig."
+    },
+    "run-menu.blocked.loading": {
+      "message": "De voorbeeldconfiguratie wordt nog geladen."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "Alleen .rms- en .rms2-hoofdbestanden kunnen worden geïnstalleerd."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "De geselecteerde RMS-broncode is leeg."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "De geselecteerde RMS-broncode bevat syntaxisfouten."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "De uitvoering van de geselecteerde RMS-broncode kon niet worden ingepland."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "De status van de startwaardevergrendeling is ongeldig."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "De instelling voor uitvoeren bij opslaan is ongeldig."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "De instelling voor uitvoeren bij bewerken is ongeldig."
+    },
+    "run-menu.invalid.seed": {
+      "message": "De startwaarde moet een geheel getal van 0 tot 4294967295 zijn."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "De kaartgrootte moet overeenkomen met een ondersteunde speloptie."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Het aantal spelers moet tussen 1 en 8 liggen."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "De spelerplaatsen moeten acht geldige waarden bevatten."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Actieve spelerplaatsen moeten uniek zijn."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "De spelerskleuren moeten acht geldige waarden bevatten."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Actieve spelerskleuren moeten uniek zijn."
+    },
+    "run-menu.invalid.teams": {
+      "message": "De spelersteams moeten acht waarden bevatten van Geen team tot Team 4."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "De standaardbeschavingen moeten acht spelerplaatsen bevatten."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "De spelerbesturing moet acht waarden bevatten."
+    },
+    "run-menu.invalid.profile": {
+      "message": "Een bekend gedragsprofiel is vereist."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "Het bereik van de versiekeuze is ongeldig."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "Een modus/context is vereist."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "Aanvullingen op de spelmodus moeten uniek en bekend zijn."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Lobbyopties moeten aan of uit staan."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "De begingrondstoffen zijn ongeldig."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "Het begintijdperk is ongeldig."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "Het eindtijdperk is ongeldig."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "Het eindtijdperk mag niet vóór het begintijdperk liggen."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "De instelling voor spelerposities is ongeldig."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "Het registratieniveau voor uitvoeringssporen is ongeldig."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Het aantal testkernen moet Automatisch of 1 tot 32 zijn."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "Standaard-includes van het spel vereisen je spelmap"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "Standaard-includes van het spel vereisen de lokale spelversie, maar er is een meegeleverde versie geselecteerd."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "Standaard-includes van het spel vereisen een gekoppelde spelmap, maar er is geen spelmap gekoppeld."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "Standaard-includes van het spel vereisen resources/_common/drs/gamedata_x2 in de gekoppelde spelmap, maar die map ontbreekt."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Het script kon niet worden geanalyseerd"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Het script kon niet worden gecontroleerd"
+    },
+    "run-menu.failure.not-started": {
+      "message": "De uitvoering kon niet starten"
+    },
+    "run-menu.failure.generation": {
+      "message": "Generatie mislukt"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Kaarttest"
+    },
+    "settings.language.title": {
+      "message": "Taal"
+    },
+    "settings.language.description": {
+      "message": "Menu's, dialoogvensters en berichten gebruiken deze taal. Scriptopdrachten, logboeken en ondersteuningsbundels blijven in het Engels."
+    },
+    "settings.language.label": {
+      "message": "Interfacetaal"
+    },
+    "settings.language.system": {
+      "message": "Windows-weergavetaal ({language})"
+    },
+    "settings.language.close": {
+      "message": "Sluiten"
+    },
+    "settings.language.close-label": {
+      "message": "Taalinstellingen sluiten"
+    },
+    "settings.language.editor-next-start": {
+      "message": "De eigen menu's van de code-editor veranderen bij de volgende start."
+    },
+    "message.action.report-problem": {
+      "message": "Dit probleem melden"
+    },
+    "message.action.get-newer-control": {
+      "message": "Een nieuwere AoE2Control-versie downloaden"
+    },
+    "message.action.link-game-folder": {
+      "message": "Koppel je spelmap"
+    },
+    "message.action.verify-game-files": {
+      "message": "Controleer de spelbestanden in Steam"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Kies je lokale spelversie"
+    },
+    "message.action.check-include-name": {
+      "message": "Controleer de naam van het include-bestand"
+    },
+    "message.action.open-problems": {
+      "message": "Open het paneel Problemen"
+    },
+    "message.action.choose-map-size": {
+      "message": "Kies een andere kaartgrootte"
+    },
+    "message.action.change-player-count": {
+      "message": "Wijzig het aantal spelers"
+    },
+    "message.action.open-players-menu": {
+      "message": "Open het spelersmenu"
+    },
+    "message.action.try-another-seed": {
+      "message": "Probeer een andere startwaarde"
+    },
+    "message.action.reinstall": {
+      "message": "Installeer AoE2RMSIDE opnieuw of werk het bij"
+    },
+    "message.action.check-update": {
+      "message": "Controleer op een AoE2RMSIDE-update"
+    },
+    "message.action.reconnect-control": {
+      "message": "Maak opnieuw verbinding met AoE2Control en probeer het opnieuw"
+    },
+    "message.action.check-control-file": {
+      "message": "Controleer of het geselecteerde AoE2Control-bestand werkt en probeer het opnieuw"
+    },
+    "message.action.wait-run-again": {
+      "message": "Wacht even en klik dan opnieuw op Uitvoeren"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Klik opnieuw op Uitvoeren; als dit blijft gebeuren, start AoE2DE dan opnieuw"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "Start AoE2DE opnieuw en klik dan opnieuw op Uitvoeren"
+    },
+    "message.action.check-game-window": {
+      "message": "Controleer het spelvenster en klik dan opnieuw op Uitvoeren"
+    },
+    "message.action.press-run-again": {
+      "message": "Klik opnieuw op Uitvoeren"
+    },
+    "message.action.wait-try-again": {
+      "message": "Wacht even en probeer het opnieuw"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Open Als mod installeren opnieuw"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Kies een andere modnaam"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Voer de kaarttest opnieuw uit"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Een spelerplaats"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, regel {line}"
+    },
+    "message.format.the-script": {
+      "message": "Het script"
+    },
+    "message.format.the-folder": {
+      "message": "De map"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "de XS-map van je profiel"
+    },
+    "message.format.the-map-test": {
+      "message": "de kaarttest"
+    },
+    "message.format.a-map-test": {
+      "message": "een kaarttest"
+    },
+    "message.format.preview-kept": {
+      "message": "Het voorbeeld is behouden."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "Het voorbeeld werkt ook zonder deze functie."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Het script is tijdens het genereren gewijzigd"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "De nieuwere versie wordt hierna uitgevoerd."
+    },
+    "message.xs-syntax.headline": {
+      "message": "Een XS-bestand bevat syntaxisfouten"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} bevat XS-syntaxisfouten"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name}, regel {line} verhindert dat het spel de XS-bestanden van de kaart laadt. Daarom is het spel niet gewijzigd."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Het spel kon de XS-bestanden van de kaart niet laden. Daarom is het spel niet gewijzigd."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Verhelp de fouten in Problemen en voer de livetest opnieuw uit"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "Er bestaat al een XS-bestand in de XS-map van je profiel"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "{name} bestaat al in de XS-map van je profiel"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Het bestand is niet door AoE2RMSIDE gemaakt ({folder}). Daarom is de livetest gestopt zonder het te vervangen."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Het bestand is niet door AoE2RMSIDE gemaakt. Daarom is de livetest gestopt zonder het te vervangen."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "Hernoem het XS-bestand of verwijder het bestaande bestand"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Een XS-bestand in de XS-map van je profiel is buiten AoE2RMSIDE gewijzigd"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "{name} in de XS-map van je profiel is buiten AoE2RMSIDE gewijzigd"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE heeft het bestand voor een livetest naar {folder} gekopieerd en overschrijft nooit wijzigingen die het niet zelf heeft gemaakt. Daarom is de livetest gestopt."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Bewaar je wijzigingen elders of verwijder het bestand en voer de livetest opnieuw uit"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Een XS-bestand kan niet naar de XS-map van je profiel worden gekopieerd"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "{name} kan niet naar de XS-map van je profiel worden gekopieerd"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Een livetest kopieert elk XS-bestand onder de bestandsnaam in #includeXS, zonder pad. Deze naam bevat echter een map."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "Gebruik op de #includeXS-regel alleen de bestandsnaam"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "Twee XS-bestanden zouden onder dezelfde naam worden gekopieerd"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "Twee XS-bestanden zouden beide als {name} worden gekopieerd"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "De XS-map van je profiel kan maar één bestand met die naam bevatten."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "Hernoem een van de XS-bestanden"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "De XS-map van je profiel kan niet worden gebruikt"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} is geen gewone map of verwijst naar een andere locatie. AoE2RMSIDE kopieert nooit via omgeleide mappen."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "Het overzicht van door AoE2RMSIDE gekopieerde XS-bestanden kan niet worden gelezen"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Zonder dit overzicht kan AoE2RMSIDE niet vaststellen welke XS-bestanden in je profiel het zelf heeft gemaakt."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "De XS-bestanden konden niet naar de XS-map van je profiel worden gekopieerd"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "De kaart laadt meer XS-bestanden dan een livetest kopieert."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Sommige XS-bestanden die deze livetest in {folder} heeft gewijzigd, konden niet worden hersteld; AoE2RMSIDE beschouwt ze nog steeds als eigen bestanden."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Alle XS-bestanden die deze livetest in {folder} heeft gewijzigd, zijn hersteld."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "Het overzicht van AoE2RMSIDE van de XS-bestanden in {folder} is tijdens de livetest gewijzigd."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Controleer of er naar de map kan worden geschreven en voer de livetest opnieuw uit"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE is niet actief"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "Start AoE2DE en klik dan opnieuw op Uitvoeren"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control is afgesloten voordat het was gestart"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control is niet gestart"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control heeft het verbinden niet voltooid"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "In deze AoE2Control-versie ontbreekt een geselecteerde beschaving"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Saksen, Varjagen en Denen vereisen AoE2Control 1.1.1 of nieuwer."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control biedt een geselecteerde beschaving niet aan"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "Kies AoE2Control 1.1.1 of nieuwer, of kies een andere beschaving."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "In de actieve spelversie ontbreekt een geselecteerde beschaving"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Kies een andere beschaving"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Deze spelversie wordt niet ondersteund voor livetests"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "De vorige AoE2Control-instantie wordt nog uit het spel ontladen"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Een eerdere start van AoE2Control is nog bezig in het spel"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control heeft het starten niet op tijd voltooid"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "Het AoE2DE-venster is niet gereed"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Open het spelvenster, niet geminimaliseerd, en klik opnieuw op Uitvoeren"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "Er draait een andere AoE2Control-versie in het spel"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "AoE2Control kon eerder in dit spel niet starten"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control kon geen verbinding maken met het spel"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Er is al een ander AoE2Control-startprogramma actief"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Sluit het en klik dan opnieuw op Uitvoeren"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Deze AoE2Control-versie is niet compatibel"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Kies een compatibele openbare AoE2Control-versie"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "De spelinstellingen kwamen niet overeen met de uitvoeringsinstellingen"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "De verbinding met AoE2Control is verbroken"
+    },
+    "message.control.connection-lost.action": {
+      "message": "Start indien nodig AoE2DE en probeer het opnieuw"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control heeft niet op tijd geantwoord"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control heeft de verbinding zonder antwoord gesloten"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Het spel is mogelijk bezig of toont een melding."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Het spel reageerde niet meer tijdens het starten van de partij"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE toont mogelijk een melding, zoals een scriptfout."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Sluit de melding in het spel en klik dan opnieuw op Uitvoeren"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Het spel heeft de nieuwe partij niet op tijd bevestigd"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "De huidige partij is niet op tijd beëindigd"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "De kaart is tijdens het kopiëren naar het spel gewijzigd"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "Er staat een andere kaart met deze bestandsnaam in de kaartenmap van het spel"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Hernoem de kaart en klik dan opnieuw op Uitvoeren"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "De kaart kon niet naar het spel worden gekopieerd"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Het spel heeft de start van de partij niet bevestigd"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Maak opnieuw verbinding om de huidige partij te controleren voordat je het opnieuw probeert"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Het spel heeft niet bevestigd dat de vorige partij is beëindigd"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Maak opnieuw verbinding om dit te controleren voordat je het opnieuw probeert"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "De spelmap of het spelprofiel kon niet worden vastgesteld"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Controleer de gekoppelde spelmap"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "De kaart kon niet voor de livetest worden geïnstalleerd"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control is gestopt voordat er verbinding was"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control kon geen stabiele sessie voor één speler bevestigen"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control heeft een antwoord gestuurd dat AoE2RMSIDE niet kon gebruiken"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "De toestand van het spel wordt niet ondersteund door de livetest"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Keer terug naar het hoofdmenu of een partij voor één speler en probeer het opnieuw"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "De actieve partij moet eerst worden beëindigd"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Klik opnieuw op Uitvoeren en sta toe dat de partij wordt beëindigd"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control is niet verbonden"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Klik opnieuw op Uitvoeren om verbinding te maken"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Het geselecteerde AoE2Control-bestand is gewijzigd"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "Selecteer AoE2Control opnieuw"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control is bezig"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Livetests worden niet ondersteund op dit systeem"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "De livetest heeft de lopende partij niet vervangen"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "Er is een partij in AoE2DE begonnen voordat de livetest kon vragen of die vervangen mag worden."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control kon de huidige partij niet beëindigen"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Het spel is gewijzigd voordat de livetest de kaart kon starten"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "AoE2DE is een partij gestart of heeft de instellingen voor één speler verlaten terwijl de livetest werd voorbereid."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "AoE2DE of AoE2Control is tijdens de livetest opnieuw gestart"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "AoE2DE heeft de gekopieerde kaart niet weergegeven"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "De lijst met modkaarten van het spel toonde de gekopieerde kaart niet, of meer dan eens."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "De instellingen van een speler kunnen niet naar AoE2Control worden gestuurd"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Een beschaving, team of kleur valt buiten wat deze AoE2Control accepteert."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE kon de livetest niet voorbereiden"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control kon de Random Map-partij niet instellen"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "Keer terug naar het AoE2DE-hoofdmenu en probeer het opnieuw; als het probleem blijft bestaan, open dan eenmaal Single Player → Skirmish"
+    },
+    "message.control.headline": {
+      "message": "Livetest mislukt"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Deze AoE2Control-versie kan geen lobbyopties instellen"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Lobbyopties vereisen AoE2Control 1.1.1 of nieuwer. Het spel is niet gewijzigd."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Een livetest vereist een speler op P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "Je speelt de speler op P1; elke andere speler is een computer."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Open het spelersmenu en zet een speler op P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control heeft een menselijke speler na P1 geweigerd"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Een livetest start een partij voor één speler, waarin elke speler na P1 een computer is."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control heeft de lijst met computerspelers geweigerd"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "De computerspelers stonden niet in de volgorde van de spelerplaatsen."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Er stond een computerspeler op een plaats zonder speler."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control heeft een computerspeler op P1 geweigerd"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "P1 is de speler die je zelf speelt in een livetest en kan daarom geen computer zijn."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Sommige lobbyinstellingen zijn niet hersteld"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "De livetest is mislukt en deze instellingen kunnen afwijken van daarvoor: {fields}."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "De livetest is mislukt en sommige lobbyinstellingen kunnen afwijken van daarvoor."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Controleer vóór de volgende partij de lobbyinstellingen in AoE2DE"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "spelmodus"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "kaartgrootte"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "begingrondstoffen"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "begintijdperk"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "eindtijdperk"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "kaartzichtbaarheid"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "aantal spelers"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "teamposities"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "aanvullingen op de spelmodus"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Turbo"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Full Tech Tree"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Antiquity"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Solid Farms"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "geselecteerde kaart"
+    },
+    "message.lobby-setting.seed": {
+      "message": "startwaarde"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot} {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "team"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "handicap"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "kleur"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "beschaving"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "instelling voor mens of computer"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "instelling"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "AoE2Control starten"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "Wachten tot de vorige AoE2Control-instantie uit het spel is ontladen"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "Wachten tot AoE2Control volledig in het spel is gestart"
+    },
+    "message.live.game-detected.headline": {
+      "message": "AoE2DE gedetecteerd"
+    },
+    "message.live.attach.headline": {
+      "message": "Verbinding maken met het actieve spel"
+    },
+    "message.live.handshake.headline": {
+      "message": "AoE2Control controleren"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control is gereed"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Huidige partij beëindigen"
+    },
+    "message.live.deploy.headline": {
+      "message": "Kaart in het spel installeren"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, one {Het XS-bestand {files} van de kaart staat ook in de XS-map van je profiel.} other {De XS-bestanden {files} van de kaart staan ook in de XS-map van je profiel.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "Het spel heeft deze kaartversie al"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Kaart in het spel selecteren"
+    },
+    "message.live.match-start.headline": {
+      "message": "Random Map starten met startwaarde {seed}"
+    },
+    "message.live.verified.headline": {
+      "message": "Partij geverifieerd met startwaarde {seed}"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} is niet geverifieerd, dus de partij kan afwijken van het voorbeeld."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} is niet geverifieerd voor livetests"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "Livetests werken, maar de partij kan afwijken van het voorbeeld."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Livetest geannuleerd"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Het spel is niet verder gewijzigd."
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control losgekoppeld"
+    },
+    "message.live.stopped.headline": {
+      "message": "Livetest gestopt voordat het spel werd gewijzigd"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "Het voorbeeld kon niet worden gegenereerd."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "Het script bevat fouten."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Het script of de uitvoeringsinstellingen zijn tijdens het genereren van het voorbeeld gewijzigd."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "Het voorbeeld komt niet meer overeen met het script."
+    },
+    "message.live.match-kept.cause": {
+      "message": "De actieve partij is niet gewijzigd."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "De toestemming om de actieve partij te vervangen kon niet worden opgeslagen."
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control geselecteerd"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Dit bestand is geen bruikbaar uitvoerbaar AoE2Control-bestand"
+    },
+    "message.live.control-rejected.action": {
+      "message": "Kies een openbare AoE2Control-versie"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "AoE2Control-selectie verwijderd"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "De AoE2Control-selectie kon niet worden verwijderd"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Verbreek de verbinding en probeer het opnieuw"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "De AoE2Control-status is niet beschikbaar"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "De startwaarde van de huidige partij kan niet worden geïmporteerd"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "Startwaarde {seed} van de partij geïmporteerd en vergrendeld"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "De modmap is tijdens de installatie gewijzigd"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Bestanden in de modmap zijn buiten AoE2RMSIDE gewijzigd"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE overschrijft nooit wijzigingen die het niet zelf heeft gemaakt."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Bewaar die wijzigingen elders en installeer de mod opnieuw"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "Het installatievoorbeeld is verouderd"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Een andere mod gebruikt deze map al"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE vervangt alleen mods die het zelf heeft geïnstalleerd."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Er is geen spelprofiel geselecteerd"
+    },
+    "message.deploy.profile.action": {
+      "message": "Kies een profiel"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Meegeleverde kaarten kunnen niet rechtstreeks worden geïnstalleerd"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Kopieer de kaart eerst naar je werkmap"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "De mod bevat te veel bestanden om te installeren"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "De modmap verwijst naar een andere locatie"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE installeert nooit via omgeleide mappen."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "Het vervangen van de bestaande mod is niet bevestigd"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Installeer de mod opnieuw en bevestig het vervangen"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Er is geen eigen kaart om te installeren"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Een mod vereist een .rms-script uit je werkmap."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Deze modnaam is gereserveerd voor livetests"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Deze modnaam kan niet als mapnaam worden gebruikt"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "Gebruik één mapnaam zonder < > : \" / \\ | ? * en zonder punt of spatie aan het einde."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, regel {line}: {error} Het spel kon het bestand niet laden, dus er is niets geïnstalleerd."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Het spel kon het bestand niet laden, dus er is niets geïnstalleerd."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Verhelp de fouten in Problemen en installeer de mod opnieuw"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "Het kaartpictogram kon niet worden gebruikt"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Genereer het kaartpictogram opnieuw"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "Het genereren van het kaartpictogram moet alleen draaien, maar er loopt al een ander voorbeeld, een kaarttest of een livetest."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Probeer het opnieuw zodra dat klaar is"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "Het kaartpictogram heeft het huidige voorbeeld nodig, en het voorbeeld is gewijzigd."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Wacht op het nieuwe voorbeeld en probeer het opnieuw"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "Het kaartpictogram is getekend met speltexturen uit een andere spelmap."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Er is geen geldige AoE2DE-installatie gekoppeld."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "De profielmap of de modmap ervan is geen gewone map die AoE2RMSIDE kan gebruiken."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "Twee bestanden zouden naar {path} in de mod worden gekopieerd."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Een bestand dat de kaart gebruikt, heeft geen plaats in een modmap."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE kon zijn overzicht van geïnstalleerde mods niet lezen."
+    },
+    "message.deploy.headline": {
+      "message": "Installatie mislukt"
+    },
+    "message.map-test.replay.headline": {
+      "message": "De kaart bij deze bevinding kon niet worden getoond"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "De kaarttest heeft de geheugenlimiet van het proces overschreden en is gestopt. De uitvoering is niet opnieuw geprobeerd."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Verminder wat het script toewijst, zoals grote herhalingen of veel bewaarde kaarten"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "De kaarttest heeft waarden of aanroepen te diep genest en de stack van het proces overschreden, en is daarom gestopt. De uitvoering is niet opnieuw geprobeerd."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Het kaarttestproces is afgebroken, waarschijnlijk op de geheugen- of stacklimiet. De uitvoering is niet opnieuw geprobeerd."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() heeft een relatief pad tussen aanhalingstekens nodig naar een .rms- of .rms2-bestand in de geopende map."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "De kaart die de test standaard uitvoert, staat buiten de geopende map."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Een kaarttest die nooit is opgeslagen, heeft een geopende map nodig."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Het bestand is geen kaarttestrapport dat AoE2RMSIDE kan lezen."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Het bestand is groter dan {limit, number, integer} MiB."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "De kaarttest is sinds de uitvoering gewijzigd."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "De kaart of een van de include-bestanden is sinds de uitvoering gewijzigd."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "De spelversie waarmee de test is uitgevoerd, is nu niet beschikbaar."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "De kaart is anders gegenereerd dan tijdens de uitvoering."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "Het rapport bevat deze bevinding niet."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Open {script} om deze kaart te tonen"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "De kaart bij een bevinding wordt opnieuw gegenereerd met de kaarttest die de bevinding heeft gevonden."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Open {script} om naar deze controle te gaan"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Dit rapport is geïmporteerd, dus het bestand van de kaarttest is niet bekend."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "Er wordt een kaarttest uitgevoerd"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "Er wordt een kaarttest uitgevoerd · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Dit zijn de resultaten van de vorige uitvoering; ze veranderen zodra de huidige test is afgelopen."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "De laatste uitvoering is gestopt met een fout"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Dit zijn de resultaten van de uitvoering daarvoor."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Bekijk Problemen en Uitvoer voor de fout"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "De laatste uitvoering is gestopt"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "Geïmporteerd rapport van {script}"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "De kaart bij een bevinding kan worden getoond zolang deze kaarttest, de kaart en de spelversie hetzelfde zijn als tijdens de uitvoering."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} van {requested, plural, one {# kaart} other {# kaarten}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Getest"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Testen"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {# kaart getest} one {# kaart getest} other {# kaarten getest}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Kaarten testen, {percent}% ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Kaarttest starten"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Deze map is geen AoE2DE-spelmap"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "Deze map bevat geen volledige installatie van Age of Empires II: Definitive Edition."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Kies de installatiemap van het spel, bijvoorbeeld steamapps\\common\\AoE2DE in je Steam-bibliotheek"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "De gekoppelde AoE2DE-installatie is niet beschikbaar."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Een deel van de spelmap kon niet veilig worden gelezen: het is te groot of te diep, verwijst naar een andere plek of bevat een niet-ondersteunde bestandsnaam."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Kies een gewone map buiten de spelmap en de geïnstalleerde kaarten."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} bestaat al in die map."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Er zijn te veel bestanden of mappen, of een bestand is te groot."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "De geïnstalleerde kaarten zijn intussen gewijzigd."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Open de geïnstalleerde kaarten opnieuw"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "Het script of een van de ingevoegde bestanden is intussen gewijzigd."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} is geen bestandstype dat een kaart kan invoegen."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Meerdere bestanden verschillen alleen in hoofdletters en kleine letters van {path}."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} staat buiten de mappen die AoE2RMSIDE mag lezen."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Bewaar ingevoegde bestanden in de geopende map of de gekoppelde spelmap"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Gebruik een kleinere map voor ingevoegde bestanden of verminder het aantal benodigde bestanden"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Verminder de hoeveelheid benodigde brongegevens en voer opnieuw uit"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Je geopende tabbladen en de indeling konden niet worden onthouden"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Dit heeft geen invloed op je bestanden, maar bij de volgende start kunnen oudere tabbladen en een oudere indeling worden geopend."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} is onverwacht gestopt."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} wordt niet uitgevoerd."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} heeft niet op tijd geantwoord."
+    },
+    "message.execution.busy.cause": {
+      "message": "Er loopt al een ander voorbeeld, een kaarttest of een livetest."
+    },
+    "message.editor.busy.cause": {
+      "message": "De editor heeft te veel openstaande verzoeken."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Kies de spelversie opnieuw"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Windows Verkenner kon de map niet openen: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Het bestand is binair, te groot, onleesbaar of van een niet-ondersteund type."
+    },
+    "message.files.too-many.cause": {
+      "message": "Open maximaal {limit, number, integer} bestanden of mappen tegelijk."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "Het item staat niet meer in de lijst met recente items."
+    },
+    "message.files.encoding.cause": {
+      "message": "Kaarttestscripts moeten als UTF-8 worden opgeslagen."
+    },
+    "message.files.too-large.cause": {
+      "message": "Een kaarttestscript mag maximaal {limit, number, integer} MiB groot zijn."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Bestanden kunnen niet in de spelmap of in geïnstalleerde kaarten worden opgeslagen."
+    },
+    "message.files.extension-required.cause": {
+      "message": "De bestandsnaam moet eindigen op {extension}."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "Het item is buiten AoE2RMSIDE gewijzigd of verplaatst."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Er bestaat al een map met die naam."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Het bestand staat buiten de geopende map."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "De map bevat te veel bestanden en mappen om weer te geven."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Open een kleinere map"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "De prullenbakinstelling is vóór het verwijderen gewijzigd."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Verwijder het item opnieuw"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "De niet-opgeslagen wijzigingen zijn te groot om voor herstel te bewaren."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Sla je wijzigingen op om ze te bewaren"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Het herstelbestand is beschadigd of door een andere AoE2RMSIDE-versie geschreven."
+    },
+    "message.game-textures.cause": {
+      "message": "Het voorbeeld en het kaartpictogram tonen in plaats daarvan textuurkleuren."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} Het voorbeeld en het kaartpictogram tonen in plaats daarvan textuurkleuren."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Speltexturen konden niet worden voorbereid"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Speltexturen zijn niet beschikbaar voor de gekoppelde spelmap"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Het geconverteerde terrein kon niet worden gelezen"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Conversie van speltexturen geannuleerd"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "De geconverteerde bestanden blijven behouden. Als je Speltexturen opnieuw kiest, wordt de conversie hervat."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Objectsprites konden niet worden gelezen"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Kaarten weergeven met de GPU is niet beschikbaar op deze computer"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "De kaart wordt zonder GPU weergegeven, wat bij grote kaarten langer kan duren."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Kaarten weergeven met de GPU wordt niet gebruikt op deze computer"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Er is geen grafische kaart beschikbaar om de kaart weer te geven. Weergave zonder grafische kaart kan bij grote kaarten langer duren."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "Kaartweergave met de GPU gestopt"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "De grafische kaart is opnieuw ingesteld. Tot de app opnieuw start, wordt de kaart zonder grafische kaart weergegeven."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "Voorbeelden van kaarttests gebruiken altijd minikaartkleuren"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "Kaarttests tonen alleen voltooide kaarten"
+    },
+    "message.generation-result.generated": {
+      "message": "Gegenereerd"
+    },
+    "message.generation-result.reused": {
+      "message": "Hergebruikt"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "niet-geverifieerde spelversie"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Niet-geverifieerde spelversie"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "Voor deze spelversie is kaartgeneratie nog niet beschikbaar."
+    },
+    "message.map-test.workers.label": {
+      "message": "Testkernen"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Het maximale aantal processorkernen voor een kaarttest, dus hoeveel kaarten tegelijk worden gegenereerd ({maximum, plural, one {1 op deze computer} other {1 tot {maximum} op deze computer}}). Laat dit leeg voor Automatisch, dat rekening houdt met deze computer en de kaartgrootte. Elke keuze levert dezelfde resultaten op."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Automatisch"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Automatisch gebruiken"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, one {{count} opdracht niet vergeleken met het spel} other {{count} opdrachten niet vergeleken met het spel}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Sommige opdrachten niet vergeleken met het spel"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Geen opgenomen spelkaart heeft deze opdracht daar al gebruikt, dus het voorbeeld kan daar afwijken van het spel: {list}.} other {Geen opgenomen spelkaart heeft deze opdrachten daar al gebruikt, dus het voorbeeld kan daar afwijken van het spel: {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Geen opgenomen spelkaart heeft deze opdracht daar al gebruikt, dus het voorbeeld kan daar afwijken van het spel.} other {Geen opgenomen spelkaart heeft deze opdrachten daar al gebruikt, dus het voorbeeld kan daar afwijken van het spel.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} in {context}"
+    },
+    "message.construct.list-more": {
+      "message": "{names} en nog {more}"
+    },
+    "message.fallback.run": {
+      "message": "De uitvoering is mislukt"
+    },
+    "message.fallback.script": {
+      "message": "Het script is mislukt"
+    },
+    "message.fallback.preview": {
+      "message": "Het voorbeeld is mislukt"
+    },
+    "message.fallback.map-test": {
+      "message": "De kaarttest is mislukt"
+    },
+    "message.fallback.recovery": {
+      "message": "Herstel mislukt"
+    },
+    "message.fallback.update": {
+      "message": "De update is mislukt"
+    },
+    "message.fallback.files": {
+      "message": "De bestandsbewerking is mislukt"
+    },
+    "message.fallback.game-folder": {
+      "message": "De spelmap kon niet worden gebruikt"
+    },
+    "message.fallback.app": {
+      "message": "Er is iets misgegaan"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Los de getoonde problemen op om de overige te zien."
+    },
+    "message.action.choose-another-name": {
+      "message": "Kies een andere naam"
+    },
+    "message.action.use-or-remove": {
+      "message": "Gebruik of verwijder het (een snelle oplossing kan het verwijderen)"
+    },
+    "explorer.create.definition-file": {
+      "message": "Definitiebestand…"
+    },
+    "explorer.create.script": {
+      "message": "Script"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Kaarttestscript"
+    },
+    "explorer.create.xs-script": {
+      "message": "XS-script"
+    },
+    "explorer.create.folder": {
+      "message": "Map"
+    },
+    "explorer.create.label": {
+      "message": "Maken in {name}"
+    },
+    "explorer.label": {
+      "message": "Bestandsverkenner"
+    },
+    "explorer.search.label": {
+      "message": "Bestanden in de werkmap zoeken"
+    },
+    "explorer.search.placeholder": {
+      "message": "Bestanden zoeken"
+    },
+    "explorer.search.clear": {
+      "message": "Zoekopdracht wissen"
+    },
+    "explorer.search.searching": {
+      "message": "Bestanden in de werkmap zoeken"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Geen overeenkomende RMS-bestanden"
+    },
+    "explorer.search.no-results": {
+      "message": "Geen overeenkomende bestanden"
+    },
+    "explorer.open-file.label": {
+      "message": "Bestand openen"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Bestand openen"
+    },
+    "explorer.open-folder.label": {
+      "message": "Map openen"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Map openen"
+    },
+    "explorer.tree.label": {
+      "message": "Bestanden in {name}"
+    },
+    "explorer.empty.maps": {
+      "message": "Open een map om de kaarten erin te bekijken en te bewerken."
+    },
+    "explorer.empty.scripts": {
+      "message": "Open een map om de scripts erin te bekijken en te bewerken."
+    },
+    "explorer.indexing": {
+      "message": "Werkmap indexeren"
+    },
+    "explorer.read-failed": {
+      "message": "Deze map kon niet worden gelezen"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Openen in Verkenner"
+    },
+    "explorer.context.rename": {
+      "message": "Naam wijzigen"
+    },
+    "explorer.context.delete": {
+      "message": "Verwijderen"
+    },
+    "explorer.inline.create-file": {
+      "message": "Bestand maken"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Map maken"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Bestandsnaam wijzigen"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Mapnaam wijzigen"
+    },
+    "definition-file.title": {
+      "message": "Definitiebestand genereren"
+    },
+    "definition-file.close-label": {
+      "message": "Sluiten"
+    },
+    "definition-file.loading": {
+      "message": "De namen van de gekozen spelversie worden gelezen…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Spelversie"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (niet geverifieerd)"
+    },
+    "definition-file.identity.target": {
+      "message": "Opslaan in"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "Kiezen bij het genereren"
+    },
+    "definition-file.groups.label": {
+      "message": "Inhoudsgroepen"
+    },
+    "definition-file.group.terrains": {
+      "message": "Terreinen"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "Terrein-ID's voor terrain_type, base_terrain en andere terreininstellingen"
+    },
+    "definition-file.group.objects": {
+      "message": "Objecten"
+    },
+    "definition-file.group.objects.description": {
+      "message": "Object-ID's voor create_object en andere objectinstellingen"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, one {# naam} other {# namen}}"
+    },
+    "definition-file.built-in": {
+      "message": "Ingebouwde namen opnemen"
+    },
+    "definition-file.built-in.description": {
+      "message": "Namen die het spel al definieert. Scripts kunnen ze zonder dit bestand gebruiken."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Koppel je spelmap om namen toe te voegen voor objecten en terreinen die het spel geen naam geeft."
+    },
+    "definition-file.note.other-version": {
+      "message": "Je spelmap bevat een andere spelversie. De namen ervan worden daarom niet gebruikt."
+    },
+    "definition-file.note.no-text": {
+      "message": "De namen in je spelmap kunnen voor deze spelversie niet worden gelezen."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Elk benoemd object en terrein heeft al een ingebouwde naam."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, one {# ingebouwde naam wordt weggelaten omdat een script in deze map die al definieert.} other {# ingebouwde namen worden weggelaten omdat scripts in deze map die al definiëren.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, one {# naam uit de spelmap wordt weggelaten omdat er geen unieke naam meer voor beschikbaar was.} other {# namen uit de spelmap worden weggelaten omdat er geen unieke namen meer voor beschikbaar waren.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "Sommige scripts in deze map konden niet worden gecontroleerd op namen die ze al definiëren."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Er kan geen definitiebestand voor de gekozen spelversie worden gegenereerd omdat de spelgegevens onvolledig zijn."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Er is geen spelversie beschikbaar om een definitiebestand voor te genereren."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "De namen van de gekozen spelversie konden niet worden gelezen."
+    },
+    "definition-file.file-name.label": {
+      "message": "Bestandsnaam"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Voer een bestandsnaam in."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Deze naam kan in Windows niet voor een bestand worden gebruikt."
+    },
+    "definition-file.file-name.extension": {
+      "message": "De bestandsnaam moet eindigen op .inc."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Deze naam hoort bij een bibliotheekbestand van het spel. Kies een andere naam."
+    },
+    "definition-file.generate": {
+      "message": "Genereren"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Genereren…"
+    },
+    "definition-file.error": {
+      "message": "Het definitiebestand kon niet worden geschreven. Details staan in Uitvoer."
+    },
+    "definition-file.replace.title": {
+      "message": "{name} vervangen?"
+    },
+    "definition-file.replace.description": {
+      "message": "Er staat al een bestand met deze naam in {folder}. Als je het vervangt, wordt de inhoud overschreven."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Vervangen"
+    },
+    "definition-file.output.failed": {
+      "message": "Het definitiebestand kon niet worden geschreven"
+    },
+    "definition-file.output.unavailable": {
+      "message": "De namen voor een definitiebestand konden niet worden gelezen"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Definitiebestand opslaan"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "Definitiebestanden"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Mod inschakelen"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Schakelt de mod in de modlijst van het spel in. De kaart en het pictogram verschijnen nadat het spel opnieuw is gestart."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "De mod is ingeschakeld. Start het spel opnieuw om de kaart en het pictogram te zien."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Schakel de mod in het spel in onder Mods → My Mods en start het spel daarna opnieuw om de kaart en het pictogram te zien."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {De mod is niet ingeschakeld: het bestand met de modlijst van het spel kon niet worden gelezen.} unexpected-layout {De mod is niet ingeschakeld: het bestand met de modlijst van het spel heeft een indeling die de IDE niet kent.} duplicate-entry {De mod is niet ingeschakeld: de mod staat meerdere keren in de modlijst van het spel.} unexpected-entry {De mod is niet ingeschakeld: de vermelding van deze mod heeft een indeling die de IDE niet kent.} changed {De mod is niet ingeschakeld: het spel heeft de modlijst tegelijkertijd gewijzigd.} unsafe-path {De mod is niet ingeschakeld: de modmap of modlijst van het profiel is een koppeling naar een andere locatie.} other {De mod is niet ingeschakeld: de modlijst van het spel kon niet worden opgeslagen.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Het spel is actief: de wijziging geldt na een herstart en kan bij het afsluiten van het spel ongedaan worden gemaakt. Als de mod na de herstart uitstaat, sluit dan het spel en installeer de mod opnieuw."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Modmap openen"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Voltooien"
+    },
+    "deploy-panel.success.title": {
+      "message": "Mod geïnstalleerd"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "De mod is opgeslagen in"
+    },
+    "deploy-panel.success.path": {
+      "message": "Pad van de geïnstalleerde mod"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Modpad kopiëren"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Modpad gekopieerd"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, one {# bestand.} other {# bestanden.}} De mod is ingeschakeld; start het spel opnieuw om de kaart en het pictogram te zien."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, one {# bestand.} other {# bestanden.}} Schakel de mod in het spel in onder Mods → My Mods en start het spel daarna opnieuw om de kaart en het pictogram te zien."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "De mod is geïnstalleerd maar niet ingeschakeld"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Het bestand met de modlijst van het spel kon niet worden gelezen en is ongewijzigd gebleven.} unexpected-layout {Het bestand met de modlijst van het spel heeft een indeling die de IDE niet kent en is ongewijzigd gebleven.} duplicate-entry {De mod staat meerdere keren in de modlijst van het spel. De lijst is ongewijzigd gebleven.} unexpected-entry {De vermelding van deze mod heeft een indeling die de IDE niet kent. De lijst is ongewijzigd gebleven.} changed {Het spel heeft de modlijst tegelijkertijd gewijzigd. De lijst is gelaten zoals het spel die heeft geschreven.} unsafe-path {De modmap of modlijst van het profiel is een koppeling naar een andere locatie en is ongewijzigd gebleven.} other {De modlijst van het spel kon niet worden opgeslagen. De vorige lijst is nog aanwezig.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Schakel de mod in het spel in onder Mods → My Mods en start het spel daarna opnieuw"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "De modlijst is gewijzigd terwijl het spel actief is"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "De wijziging geldt na een herstart en kan bij het afsluiten van het spel ongedaan worden gemaakt. Als de mod na de herstart uitstaat, sluit dan het spel en installeer de mod opnieuw."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "Het huidige voorbeeld van {name} wordt gebruikt"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "Het huidige voorbeeld kon niet opnieuw worden gebruikt en wordt opnieuw gegenereerd"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Deze kaart kon niet voor installatie worden gegenereerd"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "{mod} geïnstalleerd in profiel {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "De modmap kon niet worden geopend"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Doelmap openen in Windows Verkenner"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "De doelmap kon niet worden geopend"
+    },
+    "deploy-panel.target": {
+      "message": "Doelmap"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Doelmap kopiëren"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Doelmap gekopieerd"
+    },
+    "deploy-panel.title": {
+      "message": "Als mod installeren"
+    },
+    "deploy-panel.close": {
+      "message": "Modinstallatie sluiten"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Kies een spelmap om de mod te installeren"
+    },
+    "deploy-panel.source": {
+      "message": "RMS-bron"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Open een RMS-hoofdbestand"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Deze kaart kon niet worden gegenereerd en kan daarom nog niet worden geïnstalleerd. Los het probleem in Uitvoer op en open daarna Als mod installeren opnieuw."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Deze kaart kon niet worden gegenereerd en kan daarom nog niet worden geïnstalleerd. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "Het voorbeeld van de gekozen RMS-bron is geannuleerd."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Modnaam"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Een eerdere export kiezen"
+    },
+    "deploy-panel.profile": {
+      "message": "Gebruikersprofiel"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Kies een profiel"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · aanbevolen"
+    },
+    "deploy-panel.tree": {
+      "message": "Bestandsboom voor installatie"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Bestandsboom voor installatie laden"
+    },
+    "deploy-panel.no-source": {
+      "message": "Open een .rms- of .rms2-hoofdbestand om het te installeren."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Mod installeren"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Bestaande mod vervangen?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Alle bestanden van de bestaande mod {name} worden verwijderd."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Mod vervangen"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, one {{count} probleem} other {{count} problemen}}"
+    },
+    "problems-panel.empty": {
+      "message": "Geen syntaxisproblemen."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Geen problemen komen overeen met het filter ({hidden} verborgen)."
+    },
+    "problems-panel.severity.error": {
+      "message": "Fout"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Let op"
+    },
+    "problems-panel.severity.info": {
+      "message": "Opmerking"
+    },
+    "problems-panel.group.file": {
+      "message": "Bestand"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Spelbron"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, one {{count} fout} other {{count} fouten}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, one {{count} waarschuwing} other {{count} waarschuwingen}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, one {{count} opmerking} other {{count} opmerkingen}}"
+    },
+    "problems-panel.group.show": {
+      "message": "Problemen in {file} tonen"
+    },
+    "problems-panel.group.hide": {
+      "message": "Problemen in {file} verbergen"
+    },
+    "problems-panel.group.label": {
+      "message": "Problemen in {file}"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Naar {location} gaan"
+    },
+    "severity-filter.label": {
+      "message": "Filter op ernst voor {panel}"
+    },
+    "severity-filter.errors.label": {
+      "message": "Fouten tonen ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Fouten tonen"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Fouten verbergen"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Waarschuwingen tonen ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Waarschuwingen tonen"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Waarschuwingen verbergen"
+    },
+    "severity-filter.notes.label": {
+      "message": "Opmerkingen tonen ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Opmerkingen tonen"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Opmerkingen verbergen"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "De kaarten in {folder} konden niet worden weergegeven: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "Een installatie met ontbrekende of onleesbare spelbestanden is overgeslagen."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "Een niet-beschikbare installatie is overgeslagen."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Het aantal geïnstalleerde bronmappen heeft de veiligheidslimiet bereikt."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Het aantal geïnstalleerde bronbestanden heeft de veiligheidslimiet bereikt."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (niet geverifieerd)"
+    },
+    "linked-game.content-read": {
+      "message": "De spelgegevens van {label} worden gebruikt"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, one {{objects} object, al geladen.} other {{objects} objecten, al geladen.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, one {{objects} object, gelezen in {milliseconds} ms.} other {{objects} objecten, gelezen in {milliseconds} ms.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "De spelgegevens van {label} konden niet worden gelezen"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Voorbeelden van die versie gebruiken de meegeleverde gegevens van {version}. Daarmee kunnen later toegevoegde objecten en terreinen niet worden gegenereerd."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Onbekende opdracht"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Ongebruikte definitie"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Opdracht heeft hier geen effect"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Attribuut opnieuw ingesteld"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Willekeurige tak wordt nooit gekozen"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "Eerste tak heeft geen kans"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Waarde wordt begrensd"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Constante al gedefinieerd"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Geen commentaar in het spel"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Getal waar een naam nodig is"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Naam mogelijk niet gedefinieerd"
+    },
+    "map-icon.generate": {
+      "message": "Kaartpictogram genereren"
+    },
+    "map-icon.open-larger": {
+      "message": "Groter kaartpictogram openen"
+    },
+    "map-icon.save-image": {
+      "message": "Afbeelding opslaan"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Afbeelding opslaan…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Kaartpictogram genereren"
+    },
+    "map-icon.frame.ready": {
+      "message": "Voorbeeld van het kaartpictogram"
+    },
+    "map-icon.frame.original": {
+      "message": "Oorspronkelijk kaartpictogram"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "Oorspronkelijk kaartpictogram kan niet worden weergegeven"
+    },
+    "map-icon.frame.none": {
+      "message": "Geen gegenereerd kaartpictogram"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Open een .rms- of .rms2-hoofdbestand om een kaartpictogram te genereren."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "Om een kaartpictogram te genereren is een geslaagd voorbeeld van deze bron nodig."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "Het kaartpictogram kan niet worden gegenereerd: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Kaartpictogram niet beschikbaar: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Kaartpictogram: kaart met startwaarde {seed} genereren"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "Voor het kaartpictogram is een geslaagd voorbeeld van deze bron nodig."
+    },
+    "map-icon.status.rendering": {
+      "message": "Kaartpictogram: tekenen op basis van het huidige voorbeeld"
+    },
+    "map-icon.status.waiting": {
+      "message": "Kaartpictogram: wachten op het installatievoorbeeld"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Kaartpictogram: {file} gegenereerd; vervangt het origineel alleen in deze geïnstalleerde kopie"
+    },
+    "map-icon.status.generated": {
+      "message": "Kaartpictogram: {file} gegenereerd op basis van het huidige voorbeeld"
+    },
+    "map-icon.status.original": {
+      "message": "Kaartpictogram: origineel {file} uit de bronmap"
+    },
+    "map-icon.status.none": {
+      "message": "Kaartpictogram: geen"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "gegenereerd pictogram"
+    },
+    "map-icon.tree.original": {
+      "message": "oorspronkelijk pictogram"
+    },
+    "map-icon.render-failed": {
+      "message": "Het kaartpictogram kon niet worden getekend"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "De opties voor het kaartpictogram zijn niet onthouden"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "Het kaartpictogram met startwaarde {seed} kon niet worden gegenereerd"
+    },
+    "map-icon.output.saved": {
+      "message": "Kaartpictogram opgeslagen als {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "Het kaartpictogram kon niet worden opgeslagen"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Voorbeeld van het kaartpictogram sluiten"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Kaartpictogram"
+    },
+    "map-icon.view-tools": {
+      "message": "Weergave van het kaartpictogram"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Ruitweergave"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Bovenaanzicht"
+    },
+    "map-icon.look.minimap": {
+      "message": "Minikaartkleuren"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Textuurkleuren"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Speltexturen"
+    },
+    "map-icon.look.pending": {
+      "message": "Speltexturen toepassen"
+    },
+    "map-icon.look.fallback": {
+      "message": "Speltexturen zijn niet beschikbaar. Het pictogram gebruikt daarom textuurkleuren."
+    },
+    "map-icon.relief": {
+      "message": "Terreinreliëf"
+    },
+    "map-icon.relief.hide": {
+      "message": "Terreinreliëf verbergen"
+    },
+    "map-icon.relief.show": {
+      "message": "Terreinreliëf tonen"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Terreinovergangen verzachten"
+    },
+    "map-icon.random-seed": {
+      "message": "Willekeurige startwaarde"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Editorstartwaarde nemen"
+    },
+    "map-icon.seed": {
+      "message": "Startwaarde van het kaartpictogram"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Van editor"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Spelervierkanten"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Nomadenvoetsporen"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Geen startmarkeringen"
+    },
+    "map-icon.spawn-size": {
+      "message": "Grootte van startmarkeringen"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Startmarkeringen verkleinen"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Startmarkeringen vergroten"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "{value}% van de kaartbreedte"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Grootte van startmarkeringen (% van de kaartbreedte)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Bomen tonen"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Bomen verbergen"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Boomopties"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "aantal bomen"
+    },
+    "map-icon.art.trees.size": {
+      "message": "grootte van bomen"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Goud en steen tonen"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Goud en steen verbergen"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Opties voor goud en steen"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "aantal goud- en steenvoorraden"
+    },
+    "map-icon.art.resources.size": {
+      "message": "grootte van goud- en steenvoorraden"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Minder"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Meer"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "Eén per soort"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "Eén per object"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Weinig"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Gemiddeld"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Veel"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Kleiner"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Groter"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "Kleinst"
+    },
+    "map-icon.art.size.small": {
+      "message": "Klein"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Gemiddeld"
+    },
+    "map-icon.art.size.large": {
+      "message": "Groot"
+    },
+    "map-icon.art.size.largest": {
+      "message": "Grootst"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Onder startmarkeringen tonen"
+    },
+    "workbench.application-menu.label": {
+      "message": "Toepassingsmenu"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Bestandsverkenner inklappen"
+    },
+    "workbench.explorer.expand": {
+      "message": "Bestandsverkenner uitklappen"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Verkenner inklappen"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Verkenner uitklappen"
+    },
+    "workbench.explorer.resize": {
+      "message": "Grootte van bestandsverkenner wijzigen"
+    },
+    "workbench.preview.resize": {
+      "message": "Grootte van live kaartvoorbeeld wijzigen"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Live generatiefasen worden vanaf de volgende uitvoering getoond"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Live generatiefasen worden vanaf de volgende uitvoering verborgen"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Paneel voor problemen en uitvoer"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Paneel voor problemen, uitvoer en testresultaten"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Grootte van het paneel voor problemen en uitvoer wijzigen"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Uitvoer"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Problemen"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Testresultaten"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Uitvoer"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Problemen"
+    },
+    "workbench.native.restart-label": {
+      "message": "Uitgevallen proces {name} opnieuw starten"
+    },
+    "workbench.native.failed": {
+      "message": "{name} is uitgevallen"
+    },
+    "workbench.native.restarted": {
+      "message": "{name} opnieuw gestart"
+    },
+    "workbench.native.restart-failed": {
+      "message": "{name} kon niet opnieuw worden gestart"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} is gestopt"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "Testrapport van {name} geïmporteerd"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Het kaarttestrapport kon niet worden geïmporteerd"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Testrapport geëxporteerd"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Het kaarttestrapport kon niet worden geëxporteerd"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Kaart bij de bevinding opnieuw gegenereerd met de vastgelegde startwaarde"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Kaart bij de bevinding opnieuw gegenereerd met de vastgelegde startwaarde {seed}"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "De spelmap kon niet worden ontkoppeld"
+    },
+    "code-editor.panel.label": {
+      "message": "RMS-broneditor"
+    },
+    "code-editor.tabs.label": {
+      "message": "Geopende bestanden"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Editortabbladen naar links schuiven"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Editortabbladen naar rechts schuiven"
+    },
+    "code-editor.tab.close": {
+      "message": "{name} sluiten"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Niet-opgeslagen wijzigingen"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Alleen-lezen"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Niet-opgeslagen wijzigingen, alleen-lezen"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Als mod installeren…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Opslaan"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Klonen / Opslaan als…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Opslaan als…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Sluiten"
+    },
+    "code-editor.run.preview": {
+      "message": "Voorbeeld uitvoeren"
+    },
+    "code-editor.run.map-test": {
+      "message": "Kaarttest uitvoeren"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Voorbeeld en livetest uitvoeren"
+    },
+    "code-editor.run.stop": {
+      "message": "Stoppen"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Uitvoeren ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Voorbeeld en livetest uitvoeren ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Stoppen ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Uitvoeringsopties voor het voorbeeld"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Uitgevoerd script"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Uitgevoerd script vastzetten"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Startwaarde"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Startwaarde kopiëren"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "Startwaarde {seed} kopiëren"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Startwaarde gekopieerd"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Vergrendeld"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Willekeurig bij uitvoeren"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Startwaarde van huidige partij gebruiken"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Er is een geverifieerde actieve Random Map-partij voor één speler nodig."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "De spelmap van Age of Empires II: Definitive Edition kiezen"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "De spelmap van Age of Empires II: Definitive Edition wordt gekozen"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Zoeken naar een geïnstalleerde spelmap van Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Livetest bij uitvoeren"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Het voorbeeld uitvoeren en daarna doorgaan in AoE2DE"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Kies een geldig uitvoerbaar bestand voor AoE2Control"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "AoE2Control kiezen"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "AoE2Control wordt gekozen…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "AoE2Control.exe kiezen voor livetests"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "AoE2Control.exe wordt gekozen voor livetests"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "AoE2Control downloaden"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "AoE2Control-releases openen"
+    },
+    "code-editor.control.remove.title": {
+      "message": "AoE2Control verwijderen?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "Hiermee wordt het gekozen AoE2Control-programma vergeten en de huidige livetestsessie verbroken. De volgende livetest vraagt opnieuw om bevestiging voordat een lopende partij wordt vervangen."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Verwijderen"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "De releasepagina van AoE2Control kon niet worden geopend"
+    },
+    "code-editor.control-download.title": {
+      "message": "Voordat je AoE2Control uitpakt"
+    },
+    "code-editor.control-download.description": {
+      "message": "Het wachtwoord om AoE2Control.zip uit te pakken is {password}. Omdat AoE2Control een DLL injecteert om Lua in het spel uit te voeren, kunnen heuristische antivirusprogramma's, waaronder Windows Defender, een vals alarm geven. Voeg voor de uitgepakte bestanden een mapuitzondering toe aan je antivirusprogramma, zodat de engine ononderbroken kan werken."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Begrepen"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Live kaartvoorbeeld inklappen"
+    },
+    "code-editor.preview.expand": {
+      "message": "Live kaartvoorbeeld uitklappen"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Voorbeeld inklappen"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Voorbeeld uitklappen"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Melding over mislukte scriptuitvoering sluiten"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Niet-opgeslagen werk hersteld"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Herstelmelding sluiten"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "Het voorbeeld gebruikt nu de texturen van je spel"
+    },
+    "code-editor.font-size.label": {
+      "message": "Lettergrootte van de editor"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent}%"
+    },
+    "code-editor.read-only-message": {
+      "message": "Deze bron uit de installatie of een geabonneerde mod is beveiligd. Gebruik Klonen of Opslaan als."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Ingevoegd bestand openen"
+    },
+    "code-editor.include.open": {
+      "message": "{name} openen"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "De naam kan hier niet veilig worden gewijzigd zonder de betekenis mogelijk te veranderen."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "Strikte gelijkwaardigheid is niet aangetoond."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} is een beveiligd spelbestand; de naamswijziging zou het wijzigen."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "{code} op deze regel negeren"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "{code} in deze werkmap uitschakelen"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Het editormodel is niet beschikbaar."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "De scripttaal is gewijzigd."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Het document is gewijzigd voordat het opmaken begon."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Het document is gewijzigd terwijl het opmaken werd voorbereid."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "Het verzoek is geannuleerd."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Opmaken is niet beschikbaar zolang de Starlark-bron ongeldig is."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "Voor het opmaken moet de inspringing al geldig zijn met stappen van vier spaties; de tokenstructuur is ongewijzigd gebleven."
+    },
+    "code-editor.completion.content.object": {
+      "message": "object {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "terrein {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Kaarttest"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Ingebouwde Starlark-functie"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Starlark-methode voor {type}"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Eerder gedefinieerde Starlark-functie"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Parameter van een Starlark-functie"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Eerder gedefinieerde Starlark-variabele"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Starlark-lusvariabele"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} is eerder in dit document gedefinieerd."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Starlark-functie"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "RMS- en XS-bronnen"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "RMS-, XS- en kaarttestbronnen"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Bronbestanden openen"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "RMS-map openen"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Bron opslaan als"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Kaarttestrapport"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Kaarttestrapport exporteren"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Kaarttestrapport importeren"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Kies een map van Age of Empires II: Definitive Edition"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Kies een bovenliggende map voor de bewerkbare kaartkopie"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "Kies een uitvoerbaar AoE2Control-bestand"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "Uitvoerbaar AoE2Control-bestand"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Kaartpictogram opslaan"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "PNG-afbeelding"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Ingevoegde bestanden konden niet worden vernieuwd"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "De sessie kon na het verwijderen niet worden bijgewerkt"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Sommige mappen konden niet in Verkenner worden getoond"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, one {Een bestand in de werkmap heeft de naam van een spelbibliotheekbestand} other {Bestanden in de werkmap hebben de namen van spelbibliotheekbestanden}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Ze blijven bewerkbaar, maar includes kunnen in plaats daarvan het spelbestand laden."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, one {{paths, list, unit} en nog {count} bestand. Ze blijven bewerkbaar, maar includes kunnen in plaats daarvan het spelbestand laden.} other {{paths, list, unit} en nog {count} bestanden. Ze blijven bewerkbaar, maar includes kunnen in plaats daarvan het spelbestand laden.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Wijzig de namen"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "De controle op namen van spelbibliotheekbestanden is niet voltooid"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Er is niets geopend"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, one {Het verzoek bevatte meer dan {count} bestand of map.} other {Het verzoek bevatte meer dan {count} bestanden en mappen.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "De paden in het verzoek zijn langer dan AoE2RMSIDE toestaat."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Er kwamen te veel verzoeken om items te openen tegelijk binnen. Open de overige items opnieuw."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "{name} is niet geopend"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Het bestaat niet of is niet bereikbaar."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Het pad naar het bestand of de map is ongeldig."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE opent mappen en .rms-, .rms2-, .inc-, .def- en .xs-bestanden."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE opent mappen en .rms-, .rms2-, .inc-, .def-, .xs- en .rmstest-bestanden."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Er kan maar één map tegelijk worden geopend."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Er kan maar één map tegelijk worden geopend; {folder} is geopend."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Het kon niet worden gelezen."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, one {Nog # item is niet geopend} other {Nog # items zijn niet geopend}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Ze bestaan niet, zijn onleesbaar of zijn geen bestanden die AoE2RMSIDE opent."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "er bestaat al een item met die naam"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "er bestaat al een item met die naam of een bijbehorende korte naam"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "de naam is geen geldige Windows-bestandsnaam of mapnaam"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "alleen .rms-, .rms2-, .inc-, .def- en .xs-bronbestanden worden ondersteund"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "alleen .rms-, .rms2-, .inc-, .def-, .rmstest- en .xs-bronbestanden worden ondersteund"
+    },
+    "file-actions.entry.read-only": {
+      "message": "het item in de werkmap is alleen-lezen of beveiligd"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "de werkmap zelf kan niet worden hernoemd of verwijderd"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "‘{name}’ is gereserveerd voor een standaardbron van het spel; kies een andere bestandsnaam."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Niet-opgeslagen werk uit de vorige sessie kon niet worden gelezen en is overgeslagen"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "De herstelde werkmap is niet beschikbaar."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "De vorige werkmap is niet beschikbaar en is overgeslagen."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "Niet-beschikbaar tabblad {name} uit de vorige sessie overgeslagen."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "{name} is hersteld als niet-opgeslagen inhoud omdat het bronbestand niet beschikbaar is."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, one {Terreinbestanden uit het gekoppelde spel verwerkt in {seconds, number, ::.0 group-off} s: {converted} geconverteerd, {reused} hergebruikt} other {Terreinbestanden uit het gekoppelde spel verwerkt in {seconds, number, ::.0 group-off} s: {converted} geconverteerd, {reused} hergebruikt}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Lokale cache: {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, one {{count} terreinbestand kon niet worden geconverteerd en gebruikt minikaartkleuren} other {{count} terreinbestanden konden niet worden geconverteerd en gebruiken minikaartkleuren}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Bijvoorbeeld {asset}: {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Object {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Terrein {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Muur {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Speler {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Hulpobject"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Klif"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Kliftype {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Landverbinding"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Waterverbinding"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Wegverbinding"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Onbekende verbinding"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Verbindingszoekopdracht zonder pad"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Dubbelzinnige voorbeeldselectie: {layer} · {count, plural, one {{count} geselecteerd} other {{count} geselecteerd}} · {sources, plural, one {{sources} afzonderlijke bron} other {{sources} afzonderlijke bronnen}} · {location} wordt gebruikt."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Gras"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Ondiep water"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Water"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Strand"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Aarde"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Steen"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Grond"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Klifwand"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Land"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Hoogte"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Kliffen"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Terrein"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Verbindingen"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Objecten"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Voltooid"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Genereren · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Steekproef {sample} (startwaarde {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Steekproef {sample} (startwaarde {seed}) voltooid · reeks loopt nog"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Pijltoetsen selecteren een vak, Shift+pijltoets breidt de selectie uit, Ctrl+pijltoets verschuift de weergave, plus en min zoomen, 0 past de kaart in, Ctrl+A selecteert de hele kaart en Escape wist de selectie."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Selectie gewist"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Vak {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "Vakken van {fromX}, {fromY} tot {toX}, {toY}, {count, plural, one {{count} vak} other {{count} vakken}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Geen lagen"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, one {{count} laag} other {{count} lagen}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, one {{count} laag} other {{count} lagen}}: {shown, list, unit} en nog {more}"
+    },
+    "preview-panel.run.include-only": {
+      "message": ".inc-, .def- en .xs-documenten kunnen alleen worden ingevoegd en niet zelfstandig worden uitgevoerd."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Objecten en grondvlak van het Town Center"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Klifranden"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Terreinwijzigingen door verbindingen"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Verbindingslijnen"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Verbindingslijnen uit"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "Gevolgde verbindingspaden"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "{shown, number} van {total, number} paden getoond"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "Gevolgde paden verschijnen zodra de kaart voltooid is"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "Gevolgde paden zijn niet beschikbaar voor deze kaart"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Hoogteweergave uit"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Terreinreliëf"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Hoogtekaart"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Bovenaanzicht"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Ruitweergave"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Minikaartkleuren"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Textuurkleuren"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Speltexturen"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Speltexturen toepassen"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Vakraster"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "kaartvoorbeeld van bovenaf in minikaartkleuren"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "kaartvoorbeeld van bovenaf in textuurkleuren"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "kaartvoorbeeld van bovenaf met speltexturen"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "kaartvoorbeeld als 2-op-1-ruit in minikaartkleuren"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "kaartvoorbeeld als 2-op-1-ruit in textuurkleuren"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "kaartvoorbeeld als 2-op-1-ruit met speltexturen"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "kaart"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Kaartvoorbeeld gereed"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Kaartvoorbeeld bijgewerkt"
+    },
+    "preview-panel.panel.label": {
+      "message": "Live kaartvoorbeeld"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Bediening van de kaartweergave"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Verbindingslagen"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Pijltoetsen selecteren vakken"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "Voorbeeldstatus"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Niet gecertificeerd"
+    },
+    "preview-panel.status.seed": {
+      "message": "Startwaarde {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Revisie {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "generatie"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "Cache: {entries} · treffers: {hits}"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Bewerken"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Analyseren"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Ongewijzigd"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Verouderd – Ongeldige bron"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Genereren"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "Actueel"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Verouderd – Genereren mislukt"
+    },
+    "preview-panel.legend.label": {
+      "message": "Laaglegenda van geselecteerde vakken"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Geselecteerde items filteren"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Filter voor geselecteerde items wissen"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Filter"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Geen overeenkomende items"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Rijen van geselecteerde lagen"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, tot nu toe {count} geselecteerd"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Bron voor {name} openen, {count} geselecteerd"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Hulpobjecten tonen ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Hulpobjecten verbergen ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Interne ontwikkeltestgegevens"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Interne testdata · Niet gecertificeerd"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Intern · Niet gecertificeerd"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "Synthetische testgegevens {fixture} uitvoeren"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Lezen"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Lijst met spelafbeeldingen lezen"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Lijst met spelafbeeldingen lezen, {percent}% ({completed} van {total} {unit, select, graphics {afbeeldingen} other {bestanden}})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "Importeren"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Terreintexturen importeren"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Terreintexturen importeren, {percent}% ({completed} van {total} {unit, select, graphics {afbeeldingen} other {bestanden}})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Vervloeien"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Terreinovergangen laten vervloeien"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Terreinovergangen laten vervloeien, {percent}% ({completed} van {total} {unit, select, graphics {afbeeldingen} other {bestanden}})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Maskeren"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Maskers voor terreinlagen voorbereiden"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Maskers voor terreinlagen voorbereiden, {percent}% ({completed} van {total} {unit, select, graphics {afbeeldingen} other {bestanden}})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Sprites"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Objectsprites van deze kaart converteren"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Objectsprites van deze kaart converteren, {percent}% ({completed} van {total} {unit, select, graphics {afbeeldingen} other {bestanden}})"
+    },
+    "game-art.progress.label": {
+      "message": "Spelafbeeldingen converteren"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, one {{count} objecttype heeft geen sprite uit het gekoppelde spel en behoudt het minikaartsymbool: {names, list, unit}} other {{count} objecttypen hebben geen sprite uit het gekoppelde spel en behouden hun minikaartsymbolen: {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, one {{count} objecttype heeft geen sprite uit het gekoppelde spel en behoudt het minikaartsymbool: {names, list, unit} en nog {more}} other {{count} objecttypen hebben geen sprite uit het gekoppelde spel en behouden hun minikaartsymbolen: {names, list, unit} en nog {more}}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (object {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "object {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, one {{count} klifdeel heeft geen sprite uit het gekoppelde spel en behoudt de kliflijn} other {{count} klifdelen hebben geen sprite uit het gekoppelde spel en behouden hun kliflijnen}}"
+    },
+    "profiler.group.parse": {
+      "message": "Inlezen"
+    },
+    "profiler.group.setup": {
+      "message": "Voorbereiding"
+    },
+    "profiler.group.land": {
+      "message": "Land"
+    },
+    "profiler.group.elevation": {
+      "message": "Hoogte"
+    },
+    "profiler.group.cliffs": {
+      "message": "Kliffen"
+    },
+    "profiler.group.terrain": {
+      "message": "Terrein"
+    },
+    "profiler.group.connections": {
+      "message": "Verbindingen"
+    },
+    "profiler.group.objects": {
+      "message": "Objecten"
+    },
+    "profiler.group.finalize": {
+      "message": "Afronding"
+    },
+    "profiler.step.parse-script": {
+      "message": "Script inlezen"
+    },
+    "profiler.step.setup-players": {
+      "message": "Spelers voorbereiden"
+    },
+    "profiler.step.land-generate": {
+      "message": "Land genereren"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Hoogte genereren"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Kliffen genereren"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Terrein genereren"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Verbindingen genereren"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Objecten plaatsen"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Spelmodus afronden"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Objecten ordenen"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Terrein samenvoegen"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, one {# bewerking} other {# bewerkingen}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, one {# RNG-trekking} other {# RNG-trekkingen}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, one {# kandidaat} other {# kandidaten}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, one {# vak} other {# vakken}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, one {# padzoekopdracht} other {# padzoekopdrachten}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, one {# padzoekwerk} other {# padzoekwerk}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, one {# afwijzing} other {# afwijzingen}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, one {# object} other {# objecten}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, one {# vak gecontroleerd} other {# vakken gecontroleerd}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, one {# aangegroeid} other {# aangegroeid}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Vakken die de landgroei heeft opgepakt en gecontroleerd; aangegroeide vakken zijn aan een landgebied toegevoegd."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, one {# vak gecontroleerd tijdens groei} other {# vakken gecontroleerd tijdens groei}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, one {# verhoogd} other {# verhoogd}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Vakken die de heuvelgroei heeft opgepakt en gecontroleerd. Verhoogde vakken omvatten ook de beginvakken van elke heuvel, die niet als gecontroleerd tellen."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, one {# klifpositie overwogen} other {# klifposities overwogen}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Posities op de kaart waar een klif kan worden geplaatst."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, one {# padzoekopdracht} other {# padzoekopdrachten}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, one {# zoekstap} other {# zoekstappen}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, one {# vak ingekleurd} other {# vakken ingekleurd}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Elke padzoekopdracht zoekt een route tussen twee verbindingspunten; ingekleurde vakken tellen elke terreinwijziging langs de routes."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, one {# mogelijke plek} other {# mogelijke plekken}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, one {# groep afgewezen} other {# groepen afgewezen}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, one {# object geplaatst} other {# objecten geplaatst}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Mogelijke plekken worden per plaatsingspoging geteld, dus een vak kan meerdere keren meetellen. Een groep wordt afgewezen telkens wanneer een plek niet aan de controles voldoet of er geen plek overblijft."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "Wachten tot de eerste stap is voltooid"
+    },
+    "profiler.pending.group": {
+      "message": "Bezig met {group}"
+    },
+    "profiler.pending.step": {
+      "message": "Bezig met {step}"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0,1%"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off}%"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off}%"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "minder dan 0,1 procent"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "{percent, number, ::precision-integer group-off} procent"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} procent"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Uitvoeringsprofiel: genereren, wachten op de engine"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Uitvoeringsprofiel: genereren, wachten op de engine, {seconds, number, ::.00 group-off} seconden"
+    },
+    "profiler.status.running.steps": {
+      "message": "Uitvoeringsprofiel: genereren, {completed} van {total} stappen voltooid"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Uitvoeringsprofiel: genereren, {completed} van {total} stappen voltooid, {seconds, number, ::.00 group-off} seconden"
+    },
+    "profiler.status.cached": {
+      "message": "Uitvoeringsprofiel: uitvoering uit de cache, {seconds, number, ::.00 group-off} seconden, gemeten toen dit voorbeeld voor het eerst werd gegenereerd"
+    },
+    "profiler.status.committed": {
+      "message": "Uitvoeringsprofiel: {seconds, number, ::.00 group-off} seconden RMS-uitvoering"
+    },
+    "profiler.status.unsupported": {
+      "message": "Uitvoeringsprofiel: geen meting voor dit voorbeeld"
+    },
+    "profiler.status.idle": {
+      "message": "Uitvoeringsprofiel"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Genereren, wachten op de engine"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Genereren, {completed} van {total} stappen"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Uitvoeringsduur (uit de cache)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Uitvoeringsduur"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Geen meting van de uitvoeringsduur"
+    },
+    "profiler.description": {
+      "message": "Een grove indicatie van de complexiteit op basis van één lokale uitvoering op deze computer, geen voorspelling van de generatietijd in het spel."
+    },
+    "profiler.description.cached": {
+      "message": "Uitvoering uit de cache: gemeten toen dit voorbeeld voor het eerst werd gegenereerd; de engine is niet opnieuw uitgevoerd. Een grove indicatie van de complexiteit op basis van één lokale uitvoering op deze computer, geen voorspelling van de generatietijd in het spel."
+    },
+    "profiler.description.map-test": {
+      "message": "Gemeten tijdens een kaarttest waarvan de steekproeven gelijktijdig kunnen draaien. Een grove indicatie van de complexiteit op basis van één lokale uitvoering op deze computer, geen voorspelling van de generatietijd in het spel."
+    },
+    "profiler.panel.label": {
+      "message": "Profiel van de uitvoeringsduur"
+    },
+    "profiler.panel.steps": {
+      "message": "Uitvoeringsstappen"
+    },
+    "profiler.panel.table": {
+      "message": "Uitvoeringsstappen op duur"
+    },
+    "profiler.panel.empty": {
+      "message": "Voor dit voorbeeld is geen uitvoeringsduur gemeten."
+    },
+    "profiler.chart.label": {
+      "message": "RMS-uitvoeringsduur per generatiefase"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Geslaagd"
+    },
+    "test-results.results.status.failed": {
+      "message": "Mislukt"
+    },
+    "test-results.results.status.error": {
+      "message": "Fout"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Gestopt"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, one {# bevinding} other {# bevindingen}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{findings, plural, one {# bevinding} other {# bevindingen}} bij {seeds, plural, one {# startwaarde} other {# startwaarden}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, one {# kaart} other {# kaarten}} · {assertions, plural, one {# controle} other {# controles}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, regel {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Controle op regel {line}"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Geen bevindingen. Alle controles voor de kaart zijn geslaagd.} one {Geen bevindingen. Alle controles voor # kaart zijn geslaagd.} other {Geen bevindingen. Alle controles voor alle # kaarten zijn geslaagd.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Geen bevindingen. De test heeft geen controles uitgevoerd op {maps, plural, one {de # kaart} other {de # kaarten}}."
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Exporteren"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Deze resultaten opslaan als rapportbestand. Je scripts, de gegenereerde kaarten en volledige bestandspaden worden weggelaten."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, one {{count} kaarttestbevinding} other {{count} kaarttestbevindingen}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Naar {location} gaan"
+    },
+    "test-results.results.check-source": {
+      "message": "Controle"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Bevindingen van de controle op regel {line} verbergen"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Bevindingen van de controle op regel {line} tonen"
+    },
+    "test-results.results.check-findings": {
+      "message": "Bevindingen van de controle op regel {line}"
+    },
+    "test-results.results.show-more": {
+      "message": "Nog {count} tonen"
+    },
+    "test-results.results.not-shown": {
+      "message": "· {count, number} niet getoond"
+    },
+    "test-results.results.show-seed": {
+      "message": "Startwaarde {seed} van {map} in het voorbeeld tonen"
+    },
+    "test-results.results.seed": {
+      "message": "startwaarde {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Bevinding"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Piepklein"
+    },
+    "game-options.map-size.small": {
+      "message": "Klein"
+    },
+    "game-options.map-size.medium": {
+      "message": "Middelgroot"
+    },
+    "game-options.map-size.normal": {
+      "message": "Normaal"
+    },
+    "game-options.map-size.large": {
+      "message": "Groot"
+    },
+    "game-options.map-size.huge": {
+      "message": "Enorm"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Buitensporig"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Random Map"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Regicide"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "Death Match"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "King of the Hill"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "Wonder Race"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Defend the Wonder"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Turbo Random Map"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Capture the Relic"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Sudden Death"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Battle Royale"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "Empire Wars"
+    },
+    "game-options.resources.standard": {
+      "message": "Standaardgrondstoffen"
+    },
+    "game-options.resources.low": {
+      "message": "Weinig grondstoffen"
+    },
+    "game-options.resources.medium": {
+      "message": "Gemiddelde voorraad"
+    },
+    "game-options.resources.high": {
+      "message": "Veel grondstoffen"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Zeer veel grondstoffen"
+    },
+    "game-options.resources.infinite": {
+      "message": "Onbeperkte grondstoffen"
+    },
+    "game-options.resources.random": {
+      "message": "Willekeurige grondstoffen"
+    },
+    "game-options.age.standard": {
+      "message": "Standaardbegintijdperk"
+    },
+    "game-options.age.dark-age": {
+      "message": "Donkere tijd"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Feodale tijd"
+    },
+    "game-options.age.castle-age": {
+      "message": "Kasteeltijd"
+    },
+    "game-options.age.imperial-age": {
+      "message": "Keizertijd"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "Na de keizertijd"
+    },
+    "game-options.positions.random": {
+      "message": "Willekeurige posities"
+    },
+    "game-options.positions.fixed": {
+      "message": "Vaste posities"
+    },
+    "game-options.positions.team-together": {
+      "message": "Team bij elkaar"
+    },
+    "game-options.color.blue": {
+      "message": "Blauw"
+    },
+    "game-options.color.red": {
+      "message": "Rood"
+    },
+    "game-options.color.green": {
+      "message": "Groen"
+    },
+    "game-options.color.yellow": {
+      "message": "Geel"
+    },
+    "game-options.color.cyan": {
+      "message": "Cyaan"
+    },
+    "game-options.color.purple": {
+      "message": "Paars"
+    },
+    "game-options.color.gray": {
+      "message": "Grijs"
+    },
+    "game-options.color.orange": {
+      "message": "Oranje"
+    },
+    "game-options.team.none": {
+      "message": "Geen team"
+    },
+    "game-options.team.numbered": {
+      "message": "Team {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "Turbo"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Full Tech Tree"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Antiquity"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Solid Farms"
+    },
+    "game-options.civilization.random": {
+      "message": "Willekeurig"
+    },
+    "game-options.civilization.britons": {
+      "message": "Britten"
+    },
+    "game-options.civilization.franks": {
+      "message": "Franken"
+    },
+    "game-options.civilization.goths": {
+      "message": "Goten"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Teutonen"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Japanners"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Chinezen"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Byzantijnen"
+    },
+    "game-options.civilization.persians": {
+      "message": "Perzen"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Saracenen"
+    },
+    "game-options.civilization.turks": {
+      "message": "Turken"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Vikingen"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Mongolen"
+    },
+    "game-options.civilization.celts": {
+      "message": "Kelten"
+    },
+    "game-options.civilization.spanish": {
+      "message": "Spanjaarden"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Azteken"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Maya's"
+    },
+    "game-options.civilization.huns": {
+      "message": "Hunnen"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Koreanen"
+    },
+    "game-options.civilization.italians": {
+      "message": "Italianen"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Hindoestanen"
+    },
+    "game-options.civilization.incas": {
+      "message": "Inca's"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Magyaren"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Slaven"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Portugezen"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Ethiopiërs"
+    },
+    "game-options.civilization.malians": {
+      "message": "Malinezen"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Berbers"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Khmer"
+    },
+    "game-options.civilization.malay": {
+      "message": "Maleiers"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Birmezen"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "Vietnamezen"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Bulgaren"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Tataren"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Koemanen"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Litouwers"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Bourgondiërs"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Sicilianen"
+    },
+    "game-options.civilization.poles": {
+      "message": "Polen"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Bohemers"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Dravidiërs"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Bengalen"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Gurjara's"
+    },
+    "game-options.civilization.romans": {
+      "message": "Romeinen"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Armeniërs"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Georgiërs"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Achaemeniden"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Atheners"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Spartanen"
+    },
+    "game-options.civilization.shu": {
+      "message": "Shu"
+    },
+    "game-options.civilization.wu": {
+      "message": "Wu"
+    },
+    "game-options.civilization.wei": {
+      "message": "Wei"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Jurchen"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Kitan"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Macedoniërs"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Thraciërs"
+    },
+    "game-options.civilization.puru": {
+      "message": "Puru"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Muisca"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Mapuche"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Tupi"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Saksen"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Varjagen"
+    },
+    "game-options.civilization.danes": {
+      "message": "Denen"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Beschaving {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Voorbeeld"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Voorbeeld genereren (stap {step} van {total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Verbinden"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "Verbinden met AoE2Control (stap {step} van {total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Controleren"
+    },
+    "live-test.progress.ending": {
+      "message": "Beëindigen"
+    },
+    "live-test.progress.copying": {
+      "message": "Kopiëren"
+    },
+    "live-test.progress.selecting": {
+      "message": "Kiezen"
+    },
+    "live-test.progress.starting": {
+      "message": "Starten"
+    },
+    "live-test.progress.verifying": {
+      "message": "Verifiëren"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Partij verifiëren (stap {step} van {total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Wachten"
+    },
+    "live-test.progress.verified": {
+      "message": "Geverifieerd"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Partij geverifieerd"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "AoE2Control controleren (stap {step} van {total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Spel controleren (stap {step} van {total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Huidige partij beëindigen (stap {step} van {total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Kaart naar het spel kopiëren (stap {step} van {total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Kaart in het spel kiezen (stap {step} van {total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Partij starten (stap {step} van {total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "Wachten tot de vorige AoE2Control is ontladen (stap {step} van {total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "Wachten tot AoE2Control in het spel is gestart (stap {step} van {total})"
+    },
+    "live-test.progress.label": {
+      "message": "Livetest"
+    },
+    "live-test.replace-match.title": {
+      "message": "Actieve partij vervangen?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE beëindigt de partij voor één speler en start deze versie van het voorbeeld. De app vraagt dit pas weer nadat je AoE2Control verwijdert."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Partij beëindigen en vervangen"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Kies eerst een geldig uitvoerbaar bestand voor AoE2Control."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Stel AoE2Control in om de startwaarde van de huidige partij te lezen."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control maakt verbinding. Probeer het opnieuw nadat de verbindingsprocedure is voltooid."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "De partij kan niet worden uitgelezen. Verbind AoE2Control opnieuw en probeer het nogmaals."
+    },
+    "live-test.seed.replay": {
+      "message": "Startwaarden uit herhalingen kunnen niet worden geïmporteerd."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Startwaarden uit multiplayerpartijen kunnen niet worden geïmporteerd."
+    },
+    "live-test.seed.state-changing": {
+      "message": "De partijstatus verandert of is onbekend. Wacht even en probeer het opnieuw."
+    },
+    "live-test.seed.no-match": {
+      "message": "Start eerst een ondersteunde Random Map-partij voor één speler."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "De instellingen van de actieve partij zijn niet leesbaar. Verbind AoE2Control opnieuw en probeer het nogmaals."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "De actieve partij is geen ondersteunde Random Map-partij."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "De startwaarde van de actieve partij is niet leesbaar. Verbind AoE2Control opnieuw en probeer het nogmaals."
+    },
+    "live-test.seed.busy": {
+      "message": "Er is al een AoE2Control-bewerking bezig."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control heeft de startwaarde van de partij niet teruggegeven."
+    },
+    "live-test.control.missing": {
+      "message": "Het gekozen uitvoerbare bestand is verplaatst of verwijderd."
+    },
+    "live-test.control.changed": {
+      "message": "Het gekozen uitvoerbare bestand is gewijzigd. Kies het opnieuw om het nieuwe bestand te vertrouwen."
+    },
+    "live-test.control.invalid": {
+      "message": "Het gekozen bestand is geen geldig openbaar uitvoerbaar AoE2Control-bestand."
+    },
+    "workspace.format.save-skipped": {
+      "message": "Opmaken bij opslaan overgeslagen voor {name}"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "Opslaan geannuleerd voor {name}"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} is alleen-lezen en is niet opgemaakt"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} is al opgemaakt"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} is niet opgemaakt"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "Het opmaken is niet op tijd voltooid."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "Strikte gelijkwaardigheid is niet aangetoond."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Het opmaakverzoek is verouderd."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} is buiten AoE2RMSIDE verwijderd"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "De tekst blijft open in de editor."
+    },
+    "workspace.files.reloaded": {
+      "message": "{name} opnieuw geladen na een wijziging op schijf"
+    },
+    "workspace.recovery.restored": {
+      "message": "Niet-opgeslagen tekst uit {count, plural, one {{count} tabblad} other {{count} tabbladen}} van de vorige sessie hersteld"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "Bronbestanden zijn niet overschreven."
+    },
+    "workspace.failed.save": {
+      "message": "Het bestand kon niet worden opgeslagen"
+    },
+    "workspace.failed.open-file": {
+      "message": "Het bestand kon niet worden geopend"
+    },
+    "workspace.failed.open-folder": {
+      "message": "De map kon niet worden geopend"
+    },
+    "workspace.failed.open-recent": {
+      "message": "Het recente item kon niet worden geopend"
+    },
+    "workspace.failed.open-requested": {
+      "message": "De gevraagde items konden niet worden geopend"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "De neergezette items konden niet worden geopend"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Het script achter dit kaartitem kon niet worden geopend"
+    },
+    "workspace.failed.create": {
+      "message": "Het item kon niet worden gemaakt"
+    },
+    "workspace.failed.rename": {
+      "message": "De naam van het item kon niet worden gewijzigd"
+    },
+    "workspace.failed.delete": {
+      "message": "Het item kon niet worden verwijderd"
+    },
+    "workspace.failed.restore-session": {
+      "message": "De vorige sessie kon niet worden hersteld"
+    },
+    "workspace.failed.back-up": {
+      "message": "Er kon geen reservekopie van niet-opgeslagen werk worden gemaakt"
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "Bij het zoeken naar ingevoegde bestanden is de limiet voor {budget} in {scope} overschreden: {used, number, integer} gebruikt; limiet {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Gebruik een kleinere map voor ingevoegde bestanden of verminder het aantal benodigde bestanden."
+    },
+    "file-actions.included-files.changed": {
+      "message": "De bronnen zijn gewijzigd tijdens het controleren van ingevoegde bestanden. Voer opnieuw uit."
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "paden naar ingevoegde bestanden"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "naammetadata (bytes)"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "mapitems"
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "mapdiepte"
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "De kaarttest overschrijdt de limiet van {limit, number, integer} kaarten. Test minder kaarten tegelijk."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "De kaarttest overschrijdt de limiet van {limit, number, integer} vermeldingen van bronbestanden. Test minder kaarten tegelijk."
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "De kaarttest overschrijdt de limiet van {limit, number, integer} MiB aan brongegevens. Test minder kaarten tegelijk."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "De kaarttest overschrijdt de limiet van {limit, number, integer} MiB aan bronmetadata. Test minder kaarten tegelijk."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "De editorondersteuning is beperkt"
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Sommige editorcontroles konden de huidige bronbestanden niet gebruiken."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Sommige diagnostische meldingen van de editor zijn overgeslagen omdat de wachtrij voor updates vol is."
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Bekijk Details voor de betrokken bronbestanden en probeer het opnieuw."
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Gebruik een kleinere bronmap of sluit enkele tabbladen met bronbestanden en probeer het opnieuw."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "De bronbestanden voor de kaarttest konden niet worden voorbereid"
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} overschrijdt de limiet van {limit, number, integer} MiB per bestand."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "De totale omvang van de benodigde bronbestanden overschrijdt de limiet van {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Het aantal benodigde bronbestanden overschrijdt de limiet ({limit, number, integer})."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "De informatie over de benodigde bronnen overschrijdt de limiet voor metadata van {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Verminder de hoeveelheid benodigde brongegevens en voer opnieuw uit."
+    },
+    "release-check.newer.headline": {
+      "message": "AoE2RMSIDE {version} is beschikbaar"
+    },
+    "release-check.newer.cause": {
+      "message": "Je gebruikt {current}."
+    },
+    "release-check.newer.action": {
+      "message": "Releasepagina openen"
+    }
+  }
+}

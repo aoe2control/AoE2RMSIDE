@@ -1,0 +1,4618 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "cs",
+  "name": "Čeština",
+  "direction": "ltr",
+  "messages": {
+    "app-menu.file.name": {
+      "message": "Soubor"
+    },
+    "app-menu.edit.name": {
+      "message": "Úpravy"
+    },
+    "app-menu.view.name": {
+      "message": "Zobrazení"
+    },
+    "app-menu.help.name": {
+      "message": "Nápověda"
+    },
+    "app-menu.file.new-file": {
+      "message": "Nový soubor"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Nový skript testů mapy"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Vygenerovat soubor definic…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Nový skript XS"
+    },
+    "app-menu.file.open-file": {
+      "message": "Otevřít soubor…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Otevřít složku…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Procházet nainstalované mapy…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Nasadit jako mod…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Otevřít složku hry"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Odpojit složku hry"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Importovat zprávu testu…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Otevřít nedávné"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Žádné nedávné soubory ani složky"
+    },
+    "app-menu.file.save": {
+      "message": "Uložit"
+    },
+    "app-menu.file.save-as": {
+      "message": "Uložit jako…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "Vybrat výchozí aplikaci pro soubory RMS…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Nastavení Windows se nepodařilo otevřít"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "V nastavení Windows byly otevřeny výchozí aplikace"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "Chcete-li otevírat soubory .rms a .rms2 v AoE2RMSIDE, vyberte jej tam. Windows změní výchozí aplikaci až po vašem potvrzení."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Zavřít kartu"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Zavřít složku"
+    },
+    "app-menu.file.close-window": {
+      "message": "Zavřít okno"
+    },
+    "app-menu.file.exit": {
+      "message": "Ukončit"
+    },
+    "app-menu.edit.undo": {
+      "message": "Zpět"
+    },
+    "app-menu.edit.redo": {
+      "message": "Znovu"
+    },
+    "app-menu.edit.cut": {
+      "message": "Vyjmout"
+    },
+    "app-menu.edit.copy": {
+      "message": "Kopírovat"
+    },
+    "app-menu.edit.paste": {
+      "message": "Vložit"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Vybrat vše"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Formátovat dokument"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Formátovat při uložení"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "Odsadit bloky if/else"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Při mazání nepoužívat koš"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Obnovit rozložení"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Vykreslovat mapu pomocí GPU"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Zobrazovat průběžné fáze generování"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Zobrazovat nápovědy v kódu"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Pravidla kontroly kódu"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Jazyk…"
+    },
+    "app-menu.view.theme": {
+      "message": "Motiv"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Systémový"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Světlý"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Tmavý"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Skutečná velikost"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Přiblížit"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Oddálit"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Přepnout režim celé obrazovky"
+    },
+    "app-menu.help.documentation": {
+      "message": "Dokumentace"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Připojit se na Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Nahlásit chybu"
+    },
+    "app-menu.help.about": {
+      "message": "O aplikaci {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "Propojenou složku hry se nepodařilo otevřít"
+    },
+    "about.version": {
+      "message": "Verze {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "Editor skriptů XS"
+    },
+    "about.edition.rms-preview": {
+      "message": "Editor skriptů RMS a XS"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Nezávislý, neoficiální editor skriptů náhodných map. Jeho vlastní implementace napodobuje způsob, jakým Age of Empires II: Definitive Edition čte skripty náhodných map a generuje mapy."
+    },
+    "about.disclosure.independent": {
+      "message": "Nezávislý, neoficiální editor skriptů pro Age of Empires II: Definitive Edition."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "Shoda vygenerovaných map s hrou je zaručena pouze u ověřených verzí hry; novější verze fungují bez této záruky. Některé zvláštnosti hry jsou napodobeny záměrně, aby se mapy chovaly stejně."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE neobsahuje žádné soubory ani grafiku hry. Oficiální zdroje se čtou pouze z místní instalace a Herní textury se získávají pouze z nainstalovaných souborů hry."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE neobsahuje žádné soubory ani grafiku hry. Oficiální zdroje se čtou pouze z místní instalace."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Projekt není spojen se společnostmi Microsoft, Xbox Game Studios, World's Edge ani Activision a nemá jejich podporu."
+    },
+    "about.credits": {
+      "message": "Autoři\n{maintainer} — tvůrce a správce projektu"
+    },
+    "about.credits.research": {
+      "message": "Děkujeme za příručku {guide} (autor: {author}), která nás naučila mnoho o skriptech náhodných map."
+    },
+    "about.credits.xs-research": {
+      "message": "Děkujeme za dokumentaci XS v příručce {guide} (autor: {author}), která byla výchozím bodem pro podporu XS."
+    },
+    "about.close": {
+      "message": "Zavřít"
+    },
+    "about.documentation": {
+      "message": "Dokumentace"
+    },
+    "dialog.confirm.title": {
+      "message": "Potvrdit akci"
+    },
+    "dialog.confirm.cancel": {
+      "message": "Zrušit"
+    },
+    "dialog.confirm.continue": {
+      "message": "Pokračovat"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "Uložit změny v souboru {name}?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, one {Uložit změny v {count} souboru?} few {Uložit změny ve {count} souborech?} many {Uložit změny v {count} souboru?} other {Uložit změny v {count} souborech?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "Zavřením okna se neuložené změny ztratí."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "Zavřením této karty se neuložené změny ztratí."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "Zavřením této složky se neuložené změny ztratí."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "Smazáním položky {name} se neuložené změny ztratí."
+    },
+    "dialog.unsaved.save": {
+      "message": "Uložit"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Uložit vše"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Neukládat"
+    },
+    "dialog.external-change.title": {
+      "message": "Soubor {name} byl změněn mimo AoE2RMSIDE"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Nahrazením souboru se ztratí externí verze. Načtěte ji znovu, nahraďte ji obsahem editoru nebo akci zrušte."
+    },
+    "dialog.external-change.replace": {
+      "message": "Nahradit na disku"
+    },
+    "dialog.external-change.reload": {
+      "message": "Načíst z disku"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Opětovným načtením se ztratí neuložený obsah editoru. Pokračujte v úpravách a vyřešte konflikt při uložení."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Pokračovat v úpravách"
+    },
+    "dialog.delete-entry.title": {
+      "message": "Přesunout {name} do koše?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "Složka není prázdná. Bude přesunuta do koše i s celým obsahem."
+    },
+    "dialog.delete-entry.description": {
+      "message": "Položka bude přesunuta do koše."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Přesunout do koše"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "Trvale smazat {name}?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "Složka není prázdná. Bude trvale smazána i s celým obsahem bez přesunu do koše. Tuto akci nelze vrátit."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "Položka bude trvale smazána bez přesunu do koše. Tuto akci nelze vrátit."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Trvale smazat"
+    },
+    "output.clear": {
+      "message": "Vymazat výstup"
+    },
+    "output.source.run": {
+      "message": "Spuštění"
+    },
+    "output.source.script": {
+      "message": "Skript"
+    },
+    "output.source.preview": {
+      "message": "Náhled"
+    },
+    "output.source.map-test": {
+      "message": "Test mapy"
+    },
+    "output.source.deploy": {
+      "message": "Nasazení"
+    },
+    "output.source.live-test": {
+      "message": "Test ve hře"
+    },
+    "output.source.recovery": {
+      "message": "Obnovení"
+    },
+    "output.source.update": {
+      "message": "Aktualizace"
+    },
+    "output.source.files": {
+      "message": "Soubory"
+    },
+    "output.source.game-folder": {
+      "message": "Složka hry"
+    },
+    "output.source.game-textures": {
+      "message": "Herní textury"
+    },
+    "output.source.app": {
+      "message": "Aplikace"
+    },
+    "output.log.label": {
+      "message": "{count, plural, one {{count} výstupní zpráva} few {{count} výstupní zprávy} many {{count} výstupní zprávy} other {{count} výstupních zpráv}}"
+    },
+    "output.empty": {
+      "message": "Spusťte generování mapy a zde uvidíte výsledky."
+    },
+    "output.empty.filtered": {
+      "message": "Filtru neodpovídají žádné zprávy."
+    },
+    "output.jump-to-latest": {
+      "message": "Na nejnovější (nové: {count})"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, one {Opakováno {count}krát} few {Opakováno {count}krát} many {Opakováno {count}krát} other {Opakováno {count}krát}}"
+    },
+    "output.details": {
+      "message": "Podrobnosti"
+    },
+    "output.run.show": {
+      "message": "Zobrazit zprávy spuštění"
+    },
+    "output.run.hide": {
+      "message": "Skrýt zprávy spuštění"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, one {{count} předchozí řádek není zobrazen} few {{count} předchozí řádky nejsou zobrazeny} many {{count} předchozího řádku není zobrazeno} other {{count} předchozích řádků není zobrazeno}}"
+    },
+    "output.run.seed": {
+      "message": "semínko {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, one {{count} hráč} few {{count} hráči} many {{count} hráče} other {{count} hráčů}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, one {{count} mapa} few {{count} mapy} many {{count} mapy} other {{count} map}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ms"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} s"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} min {seconds} s"
+    },
+    "output.constructs.heading": {
+      "message": "Neporovnáno s hrou"
+    },
+    "output.constructs.label": {
+      "message": "Příkazy neporovnané s hrou"
+    },
+    "output.constructs.go-to": {
+      "message": "Přejít na první použití"
+    },
+    "output.constructs.more": {
+      "message": "další: {count}"
+    },
+    "installed-maps.filter.group": {
+      "message": "Původ map"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Vestavěné mapy ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Mapy místních modů ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Mapy odebíraných modů ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Všechny zdroje map jsou vypnuté. Zapněte některý, aby se zobrazily jeho mapy."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Žádné nainstalované náhodné mapy z vybraných zdrojů."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Hledání neodpovídají žádné nainstalované náhodné mapy z vybraných zdrojů."
+    },
+    "installed-maps.empty.none": {
+      "message": "Nebyly nalezeny žádné vestavěné, místní ani odebírané náhodné mapy."
+    },
+    "installed-maps.empty.search": {
+      "message": "Hledání neodpovídají žádné nainstalované náhodné mapy."
+    },
+    "installed-maps.title": {
+      "message": "Nainstalované náhodné mapy"
+    },
+    "installed-maps.close": {
+      "message": "Zavřít nainstalované náhodné mapy"
+    },
+    "installed-maps.search": {
+      "message": "Hledat v nainstalovaných náhodných mapách"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Hledat mapy"
+    },
+    "installed-maps.search.clear": {
+      "message": "Vymazat hledání map"
+    },
+    "installed-maps.loading": {
+      "message": "Načítání nainstalovaných náhodných map"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Vyberte složku hry pro zobrazení nainstalovaných souborů RMS"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Vestavěná"
+    },
+    "installed-maps.origin.local": {
+      "message": "Místní mod"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Odebíraný mod"
+    },
+    "installed-maps.clone": {
+      "message": "Klonovat pro úpravy"
+    },
+    "installed-maps.open-failed": {
+      "message": "Mapu se nepodařilo otevřít"
+    },
+    "installed-maps.clone-failed": {
+      "message": "Mapu se nepodařilo klonovat"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Nainstalované mapy se nepodařilo vypsat"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, one {Pro úpravy byl klonován # soubor mapy} few {Pro úpravy byly klonovány # soubory mapy} many {Pro úpravy bylo klonováno # souboru mapy} other {Pro úpravy bylo klonováno # souborů mapy}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "Soubor {name} nebyl zkopírován"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "Klonovaná mapa na něj odkazuje, ale není součástí nainstalované mapy."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Tento soubor poskytuje hra; není součástí nainstalované mapy."
+    },
+    "run-menu.control.detach": {
+      "message": "Odpojit AoE2Control"
+    },
+    "run-menu.control.remove": {
+      "message": "Odebrat AoE2Control"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control se připojuje"
+    },
+    "run-menu.control.detaching": {
+      "message": "Odpojování AoE2Control…"
+    },
+    "run-menu.control.busy": {
+      "message": "Počkejte na dokončení aktuální operace AoE2Control"
+    },
+    "run-menu.run-on-save": {
+      "message": "Při uložení"
+    },
+    "run-menu.run-on-edit": {
+      "message": "Při úpravě"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Předvolba"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Předvolba {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Nastavení předvolby náhledu"
+    },
+    "run-menu.preset.manage": {
+      "message": "Spravovat předvolby náhledu"
+    },
+    "run-menu.preset.new": {
+      "message": "Nová předvolba"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Pojmenovat novou předvolbu náhledu"
+    },
+    "run-menu.preset.rename": {
+      "message": "Přejmenovat {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "Uložit {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "Upravit {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "Smazat {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "Smazat předvolbu {name}?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "Tím se odstraní uložená nastavení náhledu této předvolby."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Smazat"
+    },
+    "run-menu.preset.name-length": {
+      "message": "Názvy předvoleb musí mít 1 až 64 znaků"
+    },
+    "run-menu.preset.exists": {
+      "message": "Předvolba s názvem {name} již existuje"
+    },
+    "run-menu.preset.limit": {
+      "message": "Lze uložit nejvýše 64 předvoleb"
+    },
+    "run-menu.map-size": {
+      "message": "Velikost mapy"
+    },
+    "run-menu.game-mode": {
+      "message": "Herní režim"
+    },
+    "run-menu.starting-resources": {
+      "message": "Počáteční suroviny"
+    },
+    "run-menu.starting-age": {
+      "message": "Počáteční věk"
+    },
+    "run-menu.ending-age": {
+      "message": "Konečný věk"
+    },
+    "run-menu.position-policy": {
+      "message": "Rozmístění hráčů"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Vyberte"
+    },
+    "run-menu.turbo-note": {
+      "message": "Turbo náhodná mapa je původní režim a zůstává beze změn. Náhodná mapa s volbou Turbo poskytuje herní značky pro turbo."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Použít Náhodnou mapu + Turbo"
+    },
+    "run-menu.players.configure": {
+      "message": "Nastavit hráče"
+    },
+    "run-menu.players.count": {
+      "message": "Počet hráčů"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, one {# hráč} few {# hráči} many {# hráče} other {# hráčů}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Pozice hráče {player}"
+    },
+    "run-menu.players.color": {
+      "message": "Barva hráče {player}"
+    },
+    "run-menu.players.civilization": {
+      "message": "Civilizace hráče {player}"
+    },
+    "run-menu.players.team": {
+      "message": "Tým hráče {player}"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Hráč {player} ovládaný počítačem"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Počítačový hráč (definuje AI_PLAYERS)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "Při testech ve hře ovládá všechny hráče kromě P1 počítač"
+    },
+    "run-menu.players.live-note": {
+      "message": "Při testech ve hře ovládá všechny hráče kromě P1 počítač."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "Při testech ve hře ovládá všechny hráče kromě P1 počítač. Umístěte hráče na pozici P1, za kterou budete hrát."
+    },
+    "run-menu.lobby.label": {
+      "message": "Možnosti herní místnosti"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Možnosti herní místnosti, zapnuto: {count}"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Modifikátory herního režimu"
+    },
+    "run-menu.lobby.options": {
+      "message": "Možnosti"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (herní režim)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Přidá k hernímu režimu Války říší. Definuje EMPIRE_WARS."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Přidá k hernímu režimu Náhlou smrt. Definuje SUDDEN_DEATH."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Přidá k hernímu režimu Královraždu. Definuje REGICIDE."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Přidá k hernímu režimu Krále kopce. Definuje KING_OT_HILL."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Rychlejší hraní. Definuje TURBO_MODE a v režimu Náhodná mapa také TURBO_RANDOM_MAP."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Každá civilizace může vyzkoumat vše. Definuje FULL_TECH_TREE."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Režim Antika. Definuje ANTIQUITY_MODE; mnoho map se s ním změní."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Jednotky nemohou procházet přes farmy. Definuje SOLID_FARMS."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "Královražda vyžaduje krále pro každého hráče. Na mapě bez králů hra zápas ihned ukončí."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Místní složka hry"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (místní)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (neověřená)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Žádný přibalený profil"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Žádná přibalená verze"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Verze hry pro náhled"
+    },
+    "run-menu.version.game-version": {
+      "message": "Verze hry"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Vybrána místní verze hry; náhled se spouští znovu"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} není ověřenou verzí RMS; náhledy používají nejnovější ověřený profil chování ({profile}). Funkčnost tím nemusí být ovlivněna. Pokud se generování liší od hry, zkontrolujte aktualizace IDE nebo to nahlaste na {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "nedostupný"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Vybrat složku hry"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Výběr složky hry…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "Používá se místní AoE2DE {version}"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "Používá se vybraná místní instalace AoE2DE"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "Nastavení spuštění se nepodařilo načíst"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "Nastavení spuštění nebylo uloženo"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "Editor nemohl použít nastavení spuštění"
+    },
+    "run-menu.run.warning": {
+      "message": "Mapa má varování"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Mezipaměť náhledu vymazána"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "Vývojové ukázky vyžadují neprázdný skript .rms nebo .rms2"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Náhodné civilizace pro tento náhled: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Hráč {player}: {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "Při testu ve hře si hra vybere vlastní civilizace."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, one {# hráč} few {# hráči} many {# hráče} other {# hráčů}}"
+    },
+    "run-menu.result.error": {
+      "message": "Chyba"
+    },
+    "run-menu.result.failed": {
+      "message": "Neúspěch"
+    },
+    "run-menu.result.passed": {
+      "message": "Úspěch"
+    },
+    "run-menu.result.stopped": {
+      "message": "Zastaveno"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Zastaveno, poslední mapa zachována"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Syntetická ukázka, necertifikovaná"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Syntetická ukázka, necertifikovaná, znovu použitá"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Vygenerováno, znovu použito"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Vygenerováno · neověřená verze hry"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Vygenerováno, znovu použito · neověřená verze hry"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Náhled nelze spustit"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "Aktuální zdrojový kód je prázdný."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "Aktuální zdrojový kód obsahuje syntaktické chyby."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Vybraný profil chování není dostupný."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Pro vybranou verzi hry není dostupný kompatibilní balíček obsahu."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Pro tento profil není dostupný kompatibilní balíček obsahu."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Stále probíhá jiné spuštění."
+    },
+    "run-menu.blocked.loading": {
+      "message": "Konfigurace náhledu se stále načítá."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "Do hry lze nasadit pouze hlavní soubory .rms a .rms2."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "Vybraný zdrojový kód RMS je prázdný."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "Vybraný zdrojový kód RMS obsahuje syntaktické chyby."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "Vybraný zdrojový kód RMS se nepodařilo zařadit ke spuštění."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "Stav uzamčení semínka je neplatný."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "Stav spouštění při uložení je neplatný."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "Stav spouštění při úpravě je neplatný."
+    },
+    "run-menu.invalid.seed": {
+      "message": "Semínko musí být celé číslo od 0 do 4294967295."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "Velikost mapy musí odpovídat podporované herní možnosti."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Počet hráčů musí být od 1 do 8."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "Pozice hráčů musí obsahovat osm platných hodnot."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Aktivní pozice hráčů se nesmí opakovat."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "Barvy hráčů musí obsahovat osm platných hodnot."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Barvy aktivních hráčů se nesmí opakovat."
+    },
+    "run-menu.invalid.teams": {
+      "message": "Týmy hráčů musí obsahovat osm hodnot od Bez týmu po Tým 4."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "Výchozí civilizace musí obsahovat osm pozic hráčů."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "Ovládání hráčů musí obsahovat osm hodnot."
+    },
+    "run-menu.invalid.profile": {
+      "message": "Je vyžadován známý profil chování."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "Rozsah výběru verze je neplatný."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "Je vyžadován herní režim nebo kontext."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "Modifikátory herního režimu musí být známé a nesmí se opakovat."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Možnosti herní místnosti musí být zapnuté nebo vypnuté."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "Počáteční suroviny jsou neplatné."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "Počáteční věk je neplatný."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "Konečný věk je neplatný."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "Konečný věk nesmí předcházet počátečnímu věku."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "Rozmístění hráčů je neplatné."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "Úroveň sběru trasovacích dat je neplatná."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Počet jader pro test musí být Automaticky nebo 1 až 32."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "Standardní herní soubory include vyžadují složku hry"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "Standardní herní soubory include vyžadují místní verzi hry, ale je vybrána přibalená verze."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "Standardní herní soubory include vyžadují propojenou složku hry, ale žádná není propojena."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "Standardní herní soubory include vyžadují resources/_common/drs/gamedata_x2 v propojené složce hry, ale tato cesta chybí."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Skript se nepodařilo analyzovat"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Skript se nepodařilo zkontrolovat"
+    },
+    "run-menu.failure.not-started": {
+      "message": "Spouštění se nezdařilo"
+    },
+    "run-menu.failure.generation": {
+      "message": "Generování selhalo"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Test mapy"
+    },
+    "settings.language.title": {
+      "message": "Jazyk"
+    },
+    "settings.language.description": {
+      "message": "Nabídky, dialogy a zprávy používají tento jazyk. Příkazy skriptů, protokoly a balíčky pro podporu zůstávají v angličtině."
+    },
+    "settings.language.label": {
+      "message": "Jazyk rozhraní"
+    },
+    "settings.language.system": {
+      "message": "Jazyk zobrazení Windows ({language})"
+    },
+    "settings.language.close": {
+      "message": "Zavřít"
+    },
+    "settings.language.close-label": {
+      "message": "Zavřít nastavení jazyka"
+    },
+    "settings.language.editor-next-start": {
+      "message": "Vlastní nabídky editoru kódu změní jazyk při příštím spuštění."
+    },
+    "message.action.report-problem": {
+      "message": "Nahlásit tento problém"
+    },
+    "message.action.get-newer-control": {
+      "message": "Získat novější vydání AoE2Control"
+    },
+    "message.action.link-game-folder": {
+      "message": "Propojit složku hry"
+    },
+    "message.action.verify-game-files": {
+      "message": "Ověřit soubory hry ve službě Steam"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Vybrat místní verzi hry"
+    },
+    "message.action.check-include-name": {
+      "message": "Zkontrolovat název souboru include"
+    },
+    "message.action.open-problems": {
+      "message": "Otevřít panel Problémy"
+    },
+    "message.action.choose-map-size": {
+      "message": "Vybrat jinou velikost mapy"
+    },
+    "message.action.change-player-count": {
+      "message": "Změnit počet hráčů"
+    },
+    "message.action.open-players-menu": {
+      "message": "Otevřít nabídku hráčů"
+    },
+    "message.action.try-another-seed": {
+      "message": "Vyzkoušet jiné semínko"
+    },
+    "message.action.reinstall": {
+      "message": "Přeinstalovat nebo aktualizovat AoE2RMSIDE"
+    },
+    "message.action.check-update": {
+      "message": "Zkontrolovat aktualizace AoE2RMSIDE"
+    },
+    "message.action.reconnect-control": {
+      "message": "Znovu připojit AoE2Control a opakovat pokus"
+    },
+    "message.action.check-control-file": {
+      "message": "Ověřit funkčnost vybraného souboru AoE2Control a opakovat pokus"
+    },
+    "message.action.wait-run-again": {
+      "message": "Chvíli počkat a znovu stisknout Spustit"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Znovu stisknout Spustit; pokud se problém opakuje, restartovat AoE2DE"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "Restartovat AoE2DE a znovu stisknout Spustit"
+    },
+    "message.action.check-game-window": {
+      "message": "Zkontrolovat okno hry a znovu stisknout Spustit"
+    },
+    "message.action.press-run-again": {
+      "message": "Znovu stisknout Spustit"
+    },
+    "message.action.wait-try-again": {
+      "message": "Chvíli počkat a opakovat pokus"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Znovu otevřít Nasadit jako mod"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Vybrat jiný název modu"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Znovu spustit test mapy"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Pozice hráče"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, řádek {line}"
+    },
+    "message.format.the-script": {
+      "message": "Skript"
+    },
+    "message.format.the-folder": {
+      "message": "Složka"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "složka XS vašeho profilu"
+    },
+    "message.format.the-map-test": {
+      "message": "test mapy"
+    },
+    "message.format.a-map-test": {
+      "message": "test mapy"
+    },
+    "message.format.preview-kept": {
+      "message": "Náhled byl zachován."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "Náhled funguje i bez této součásti."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Skript se během generování změnil"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "Následovat bude spuštění novější verze."
+    },
+    "message.xs-syntax.headline": {
+      "message": "Soubor XS obsahuje syntaktické chyby"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} obsahuje syntaktické chyby XS"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name}, řádek {line} brání hře v načtení XS mapy, takže stav hry nebyl změněn."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Hra nemohla načíst XS mapy, takže stav hry nebyl změněn."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Opravit chyby uvedené v panelu Problémy a znovu spustit test ve hře"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "Ve složce XS vašeho profilu již existuje soubor XS"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "Ve složce XS vašeho profilu již existuje {name}"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Nevytvořil jej AoE2RMSIDE ({folder}), takže test ve hře byl zastaven bez nahrazení souboru."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Nevytvořil jej AoE2RMSIDE, takže test ve hře byl zastaven bez nahrazení souboru."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "Přejmenovat soubor XS nebo odstranit ten stávající"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Soubor XS ve složce XS vašeho profilu byl změněn mimo AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "{name} ve složce XS vašeho profilu byl změněn mimo AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE jej zkopíroval pro test ve hře do umístění {folder} a nikdy nepřepisuje cizí úpravy, takže test byl zastaven."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Přesunout úpravy jinam nebo odstranit soubor a znovu spustit test ve hře"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Soubor XS nelze zkopírovat do složky XS vašeho profilu"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "{name} nelze zkopírovat do složky XS vašeho profilu"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Test ve hře kopíruje každý soubor XS pod samotným názvem uvedeným v #includeXS, ale tento název obsahuje složku."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "Uvést na řádku #includeXS pouze název souboru"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "Dva soubory XS by se zkopírovaly pod stejným názvem"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "Dva soubory XS by se oba zkopírovaly jako {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "Složka XS vašeho profilu může obsahovat pouze jeden soubor s tímto názvem."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "Přejmenovat jeden ze souborů XS"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "Složku XS vašeho profilu nelze použít"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} není běžná složka nebo odkazuje jinam a AoE2RMSIDE nikdy nekopíruje přes přesměrované složky."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "Záznam AoE2RMSIDE o zkopírovaných souborech XS nelze přečíst"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Bez něj AoE2RMSIDE nemůže určit, které soubory XS ve vašem profilu vytvořil."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "Soubory XS se nepodařilo zkopírovat do složky XS vašeho profilu"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "Mapa načítá více souborů XS, než test ve hře kopíruje."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Některé soubory XS, které tento test ve hře změnil v umístění {folder}, se nepodařilo obnovit; AoE2RMSIDE je stále považuje za vlastní."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Všechny soubory XS, které tento test ve hře změnil v umístění {folder}, byly obnoveny."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "Záznam AoE2RMSIDE o souborech XS v umístění {folder} se během testu ve hře změnil."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Ověřit možnost zápisu do složky a znovu spustit test ve hře"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE není spuštěna"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "Spustit AoE2DE a znovu stisknout Spustit"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control se zavřel před dokončením spuštění"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control se nespustil"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control nedokončil připojení"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "Tato verze AoE2Control neobsahuje vybranou civilizaci"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Sasové, Varjagové a Dánové vyžadují AoE2Control 1.1.1 nebo novější."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control nenabízí vybranou civilizaci"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "Vyberte AoE2Control 1.1.1 nebo novější, nebo zvolte jinou civilizaci."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "Spuštěná verze hry neobsahuje vybranou civilizaci"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Vybrat jinou civilizaci"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Tato verze hry nepodporuje testování ve hře"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "Předchozí AoE2Control se stále odpojuje ze hry"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Ve hře stále probíhá dřívější spuštění AoE2Control"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control nedokončil spuštění včas"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "Okno AoE2DE není připraveno"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Otevřít okno hry tak, aby nebylo minimalizované, a znovu stisknout Spustit"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "Ve hře běží jiná verze AoE2Control"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "Dřívější spuštění AoE2Control v této hře selhalo"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control se nemohl připojit ke hře"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Běží jiný spouštěč AoE2Control"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Zavřít jej a znovu stisknout Spustit"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Toto vydání AoE2Control není kompatibilní"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Vybrat kompatibilní veřejné vydání AoE2Control"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "Nastavení hry neodpovídalo nastavení spuštění"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "Spojení s AoE2Control bylo ztraceno"
+    },
+    "message.control.connection-lost.action": {
+      "message": "V případě potřeby spustit AoE2DE a opakovat pokus"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control neodpověděl včas"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control ukončil spojení bez odpovědi"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Hra může být zaneprázdněná nebo zobrazovat zprávu."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Hra přestala odpovídat při zahajování zápasu"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE může zobrazovat zprávu, například o chybě skriptu."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Zavřít zprávu ve hře a znovu stisknout Spustit"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Hra nepotvrdila nový zápas včas"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "Aktuální zápas neskončil včas"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "Mapa se během kopírování do hry změnila"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "Ve složce map hry je jiná mapa s tímto názvem souboru"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Přejmenovat mapu a znovu stisknout Spustit"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "Mapu se nepodařilo zkopírovat do hry"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Hra nepotvrdila zahájení zápasu"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Znovu se připojit a před dalším pokusem ověřit aktuální zápas"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Hra nepotvrdila ukončení předchozího zápasu"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Znovu se připojit a před dalším pokusem ověřit stav"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "Složku hry nebo herní profil se nepodařilo určit"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Zkontrolovat propojenou složku hry"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "Mapu se nepodařilo nasadit pro test ve hře"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control se zastavil před připojením"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control nemohl potvrdit stabilní relaci pro jednoho hráče"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control odeslal odpověď, kterou AoE2RMSIDE nemohl použít"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "Hra není ve stavu podporovaném testem ve hře"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Vrátit se do hlavní nabídky nebo zápasu pro jednoho hráče a opakovat pokus"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "Probíhající zápas musí nejprve skončit"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Znovu stisknout Spustit a povolit ukončení zápasu"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control není připojen"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Znovu stisknout Spustit pro připojení"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Vybraný soubor AoE2Control se změnil"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "Znovu vybrat AoE2Control"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control je zaneprázdněn"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Testování ve hře není na tomto systému podporováno"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "Test ve hře nenahradil probíhající zápas"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "V AoE2DE začal zápas dříve, než se test ve hře stihl zeptat na jeho nahrazení."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control nemohl ukončit aktuální zápas"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Stav hry se změnil dříve, než test ve hře mohl spustit mapu"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "Během přípravy testu ve hře začal v AoE2DE zápas nebo se zavřelo nastavení hry pro jednoho hráče."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "Během testu ve hře se AoE2DE nebo AoE2Control restartoval"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "Zkopírovaná mapa se v seznamu AoE2DE neobjevila"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "Seznam map z modů ve hře zkopírovanou mapu nezobrazil, nebo ji zobrazil vícekrát."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "Nastavení jednoho z hráčů nelze odeslat do AoE2Control"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Civilizace, tým nebo barva je mimo rozsah, který tento AoE2Control přijímá."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE nemohl připravit test ve hře"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control nemohl připravit zápas v režimu Náhodná mapa"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "Vrátit se do hlavní nabídky AoE2DE a opakovat pokus; pokud problém trvá, jednou otevřít Jeden hráč → Potyčka"
+    },
+    "message.control.headline": {
+      "message": "Test ve hře selhal"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Tato verze AoE2Control nemůže nastavit možnosti herní místnosti"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Možnosti herní místnosti vyžadují AoE2Control 1.1.1 nebo novější. Stav hry nebyl změněn."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Test ve hře vyžaduje hráče na pozici P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "Hrajete za hráče na pozici P1; všechny ostatní ovládá počítač."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Otevřít nabídku hráčů a umístit hráče na pozici P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control odmítl člověkem ovládaného hráče za pozicí P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Test ve hře spouští hru pro jednoho hráče, ve které všechny hráče za pozicí P1 ovládá počítač."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control odmítl seznam počítačových hráčů"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "Počítačoví hráči nebyli uvedeni v pořadí pozic."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Počítačový hráč byl uveden na pozici, která nemá hráče."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control odmítl počítačového hráče na pozici P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "P1 je hráč, za kterého při testu ve hře hrajete, takže jej nemůže ovládat počítač."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Některá nastavení herní místnosti nebyla obnovena"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "Test ve hře selhal a tato nastavení se mohou lišit od původních: {fields}."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "Test ve hře selhal a některá nastavení herní místnosti se mohou lišit od původních."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Před další hrou zkontrolovat nastavení herní místnosti v AoE2DE"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "herní režim"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "velikost mapy"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "počáteční suroviny"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "počáteční věk"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "konečný věk"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "odhalení mapy"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "počet hráčů"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "rozmístění týmů"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "modifikátory herního režimu"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Turbo"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Úplný strom technologií"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Antika"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Neprůchodné farmy"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "vybraná mapa"
+    },
+    "message.lobby-setting.seed": {
+      "message": "semínko"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot}: {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "tým"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "handicap"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "barva"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "civilizace"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "ovládání člověkem nebo počítačem"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "nastavení"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "Spouštění AoE2Control"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "Čekání na odpojení předchozího AoE2Control ze hry"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "Čekání na dokončení spuštění AoE2Control ve hře"
+    },
+    "message.live.game-detected.headline": {
+      "message": "AoE2DE nalezena"
+    },
+    "message.live.attach.headline": {
+      "message": "Připojování ke spuštěné hře"
+    },
+    "message.live.handshake.headline": {
+      "message": "Kontrola AoE2Control"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control je připraven"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Ukončování aktuálního zápasu"
+    },
+    "message.live.deploy.headline": {
+      "message": "Nasazování mapy do hry"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, one {Soubor XS mapy {files} je také ve složce XS vašeho profilu.} few {Soubory XS mapy {files} jsou také ve složce XS vašeho profilu.} many {Soubory XS mapy {files} jsou také ve složce XS vašeho profilu.} other {Soubory XS mapy {files} jsou také ve složce XS vašeho profilu.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "Hra již obsahuje tuto verzi mapy"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Výběr mapy ve hře"
+    },
+    "message.live.match-start.headline": {
+      "message": "Spouštění režimu Náhodná mapa se semínkem {seed}"
+    },
+    "message.live.verified.headline": {
+      "message": "Zápas ověřen se semínkem {seed}"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} není ověřena, takže se zápas může lišit od náhledu."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} není ověřena pro testování ve hře"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "Testování ve hře funguje, ale zápas se může lišit od náhledu."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Test ve hře zrušen"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Stav hry již nebyl dále měněn."
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control odpojen"
+    },
+    "message.live.stopped.headline": {
+      "message": "Test ve hře zastaven před změnou stavu hry"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "Náhled se nepodařilo vygenerovat."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "Skript obsahuje chyby."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Skript nebo nastavení spuštění se během generování náhledu změnily."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "Náhled již neodpovídá skriptu."
+    },
+    "message.live.match-kept.cause": {
+      "message": "Probíhající zápas nebyl změněn."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "Oprávnění k nahrazení probíhajícího zápasu se nepodařilo uložit."
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control vybrán"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Tento soubor není použitelný spustitelný soubor AoE2Control"
+    },
+    "message.live.control-rejected.action": {
+      "message": "Vybrat veřejné vydání AoE2Control"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "Výběr AoE2Control odebrán"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "Výběr AoE2Control se nepodařilo odebrat"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Odpojit jej a opakovat pokus"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "Stav AoE2Control není dostupný"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "Semínko aktuálního zápasu nelze importovat"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "Semínko zápasu {seed} importováno a uzamčeno"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "Složka modu se během nasazování změnila"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Soubory ve složce modu byly změněny mimo AoE2RMSIDE"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE nikdy nepřepisuje cizí úpravy."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Přesunout tyto úpravy jinam a znovu nasadit mod"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "Náhled nasazení je zastaralý"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Tuto složku již používá jiný mod"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE nahrazuje pouze mody, které sám nasadil."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Není vybrán žádný herní profil"
+    },
+    "message.deploy.profile.action": {
+      "message": "Vybrat profil"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Vestavěné mapy nelze nasadit přímo"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Nejprve naklonovat mapu do pracovního prostoru"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "Mod obsahuje příliš mnoho souborů pro nasazení"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "Složka modu odkazuje jinam"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE nikdy nenasazuje přes přesměrované složky."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "Nahrazení stávajícího modu nebylo potvrzeno"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Znovu nasadit mod a potvrdit nahrazení"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Nemáte žádnou vlastní mapu k nasazení"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Mod vyžaduje skript .rms z vašeho pracovního prostoru."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Tento název modu je vyhrazen pro testování ve hře"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Tento název modu nelze použít jako název složky"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "Použijte jeden název složky bez znaků < > : \" / \\ | ? * a bez tečky či mezery na konci."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, řádek {line}: {error} Hra jej nemohla načíst, takže nic nebylo nasazeno."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Hra jej nemohla načíst, takže nic nebylo nasazeno."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Opravit chyby uvedené v panelu Problémy a znovu nasadit mod"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "Ikonu mapy se nepodařilo použít"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Znovu vygenerovat ikonu mapy"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "Generování ikony mapy musí běžet samostatně, ale probíhá jiný náhled, test mapy nebo test ve hře."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Zkusit znovu po dokončení"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "Ikona mapy potřebuje aktuální náhled a náhled se změnil."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Počkat na nový náhled a zkusit to znovu"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "Ikona mapy byla vykreslena s herními texturami z jiné složky hry."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Není propojena žádná platná instalace AoE2DE."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "Složka profilu nebo její složka modů není běžná složka, kterou může AoE2RMSIDE použít."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "Dva soubory by se zkopírovaly do {path} v modu."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Soubor, který mapa používá, nemá ve složce modu své místo."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE nemohl přečíst svůj záznam o nasazených modech."
+    },
+    "message.deploy.headline": {
+      "message": "Nasazení selhalo"
+    },
+    "message.map-test.replay.headline": {
+      "message": "Mapu tohoto nálezu se nepodařilo zobrazit"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "Test mapy překročil limit paměti svého procesu a byl zastaven. Běh se neopakoval."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Omezit, co skript alokuje, například velká opakování nebo mnoho uchovávaných map"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "Test mapy vnořil hodnoty nebo volání příliš hluboko a překročil zásobník svého procesu, proto byl zastaven. Běh se neopakoval."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Proces testu mapy byl přerušen, nejspíš na limitu paměti nebo zásobníku. Běh se neopakoval."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() potřebuje relativní cestu v uvozovkách k souboru .rms nebo .rms2 v otevřené složce."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "Mapa, kterou test ve výchozím stavu spouští, je mimo otevřenou složku."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Test mapy, který nebyl nikdy uložen, potřebuje otevřenou složku."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Soubor není zpráva testu mapy, kterou AoE2RMSIDE dokáže přečíst."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Soubor je větší než {limit, number, integer} MiB."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "Test mapy se od spuštění změnil."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "Mapa nebo některý z jejích souborů include se od spuštění změnily."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "Verze hry použitá při testu nyní není dostupná."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "Mapa byla vygenerována jinak než při testu."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "Zpráva tento nález neobsahuje."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Pro zobrazení této mapy otevřete {script}"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "Mapa nálezu se znovu vygeneruje podle testu mapy, který jej odhalil."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Pro přechod na tuto kontrolu otevřete {script}"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Tato zpráva byla importována, takže soubor testu mapy není znám."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "Probíhá test mapy"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "Probíhá test mapy · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Toto jsou výsledky předchozího spuštění; změní se po skončení aktuálního testu."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "Poslední spuštění skončilo chybou"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Toto jsou výsledky předchozího spuštění."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Zobrazit chybu v panelech Problémy a Výstup"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "Poslední spuštění bylo zastaveno"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "Importovaná zpráva: {script}"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "Mapu nálezu lze zobrazit, pokud jsou tento test mapy, jeho mapa a verze hry stejné jako při spuštění."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} z {requested, plural, one {# mapy} few {# map} many {# mapy} other {# map}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Otestováno"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Testování"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {Otestována # mapa} one {Otestována # mapa} few {Otestovány # mapy} many {Otestováno # mapy} other {Otestováno # map}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Testování map, {percent}% ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Spouštění testu mapy"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Tato složka není složkou hry AoE2DE"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "Tato složka neobsahuje úplnou instalaci hry Age of Empires II: Definitive Edition."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Vybrat instalační složku hry, například steamapps\\common\\AoE2DE v knihovně služby Steam"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "Propojená instalace AoE2DE není dostupná."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Část složky hry se nepodařilo bezpečně přečíst: je příliš velká nebo hluboká, odkazuje jinam nebo obsahuje nepodporovaný název souboru."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Vyberte běžnou složku mimo složku hry a nainstalované mapy."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} v této složce již existuje."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Je zde příliš mnoho souborů nebo složek, nebo je soubor příliš velký."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "Nainstalované mapy se mezitím změnily."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Znovu otevřít nainstalované mapy"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "Skript nebo některý z jeho souborů include se mezitím změnil."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} není typ souboru, který může mapa vložit pomocí include."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Několik souborů se od {path} liší jen velikostí písmen."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} je mimo složky, které smí AoE2RMSIDE číst."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Ponechat soubory include v otevřené složce nebo v propojené složce hry"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Použít menší složku souborů include nebo snížit počet požadovaných souborů include"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Snížit množství požadovaných zdrojových dat a spustit znovu"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Otevřené karty a rozložení se nepodařilo zapamatovat"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Vaše soubory nejsou ovlivněny, ale při příštím spuštění se může otevřít starší sada karet a rozložení."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} se neočekávaně ukončil."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} neběží."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} neodpověděl včas."
+    },
+    "message.execution.busy.cause": {
+      "message": "Probíhá jiný náhled, test mapy nebo test ve hře."
+    },
+    "message.editor.busy.cause": {
+      "message": "Editor má příliš mnoho čekajících požadavků."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Znovu vybrat verzi hry"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Průzkumník Windows nemohl otevřít složku: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Soubor je binární, příliš velký, nečitelný nebo nepodporovaného typu."
+    },
+    "message.files.too-many.cause": {
+      "message": "Otevírejte najednou nejvýše {limit, number, integer} souborů nebo složek."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "Položka již není v seznamu nedávných."
+    },
+    "message.files.encoding.cause": {
+      "message": "Skripty testu mapy musí být uloženy v kódování UTF-8."
+    },
+    "message.files.too-large.cause": {
+      "message": "Skript testu mapy může mít nejvýše {limit, number, integer} MiB."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Soubory nelze ukládat do složky hry ani do nainstalovaných map."
+    },
+    "message.files.extension-required.cause": {
+      "message": "Název souboru musí končit příponou {extension}."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "Položka byla změněna nebo přesunuta mimo AoE2RMSIDE."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Složka s tímto názvem již existuje."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Soubor je mimo otevřenou složku."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "Složka obsahuje příliš mnoho souborů a složek na to, aby je bylo možné vypsat."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Otevřít menší složku"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "Nastavení koše se před odstraněním změnilo."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Odstranit položku znovu"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "Neuložené změny jsou příliš velké na to, aby se uchovaly pro obnovení."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Uložit změny, aby se zachovaly"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Soubor pro obnovení je poškozený nebo ho zapsalo jiné vydání AoE2RMSIDE."
+    },
+    "message.game-textures.cause": {
+      "message": "Náhled a ikona mapy místo toho zobrazují barvy textur."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} Náhled a ikona mapy místo toho zobrazují barvy textur."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Herní textury se nepodařilo připravit"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Herní textury nejsou pro propojenou složku hry dostupné"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Převedený terén se nepodařilo přečíst"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Převod herních textur zrušen"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "Převedené soubory zůstanou zachovány. Převod pokračuje po opětovném výběru vzhledu Herní textury."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Sprity objektů se nepodařilo přečíst"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Vykreslování mapy pomocí GPU není na tomto počítači dostupné"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "Mapa se vykresluje bez něj, což může u velkých map trvat déle."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Vykreslování mapy pomocí GPU se na tomto počítači nepoužívá"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Pro vykreslení mapy není dostupná grafická karta, takže se mapa vykresluje bez ní, což může u velkých map trvat déle."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "Vykreslování mapy pomocí GPU se zastavilo"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "Grafická karta byla resetována, takže se mapa až do restartu aplikace vykresluje bez ní."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "Náhledy testů map vždy používají barvy minimapy"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "Testy map zobrazují pouze dokončené mapy"
+    },
+    "message.generation-result.generated": {
+      "message": "Vygenerováno"
+    },
+    "message.generation-result.reused": {
+      "message": "Znovu použito"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "neověřená verze hry"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Neověřená verze hry"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "Generování map pro tuto verzi hry zatím není dostupné."
+    },
+    "message.map-test.workers.label": {
+      "message": "Jádra pro test"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Nejvyšší počet jader procesoru, která test mapy používá, tedy počet map generovaných současně ({maximum, plural, one {1 na tomto počítači} few {1 až {maximum} na tomto počítači} many {1 až {maximum} na tomto počítači} other {1 až {maximum} na tomto počítači}}). Prázdné pole znamená Automaticky, což zohledňuje počítač a velikost mapy. Výsledky jsou při každé volbě stejné."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Automaticky"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Použít Automaticky"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, one {{count} příkaz neporovnán s hrou} few {{count} příkazy neporovnány s hrou} many {{count} příkazu neporovnáno s hrou} other {{count} příkazů neporovnáno s hrou}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Některé příkazy nebyly porovnány s hrou"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Žádná zaznamenaná herní mapa jej na tomto místě dosud nepoužila, takže se náhled může lišit od hry tam, kde se uplatní: {list}.} other {Žádná zaznamenaná herní mapa je na těchto místech dosud nepoužila, takže se náhled může lišit od hry tam, kde se uplatní: {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Žádná zaznamenaná herní mapa jej na tomto místě dosud nepoužila, takže se náhled může lišit od hry tam, kde se uplatní.} other {Žádná zaznamenaná herní mapa je na těchto místech dosud nepoužila, takže se náhled může lišit od hry tam, kde se uplatní.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} v {context}"
+    },
+    "message.construct.list-more": {
+      "message": "{names}; další: {more}"
+    },
+    "message.fallback.run": {
+      "message": "Spuštění selhalo"
+    },
+    "message.fallback.script": {
+      "message": "Skript selhal"
+    },
+    "message.fallback.preview": {
+      "message": "Náhled selhal"
+    },
+    "message.fallback.map-test": {
+      "message": "Test mapy selhal"
+    },
+    "message.fallback.recovery": {
+      "message": "Obnovení selhalo"
+    },
+    "message.fallback.update": {
+      "message": "Kontrola aktualizací selhala"
+    },
+    "message.fallback.files": {
+      "message": "Operace se souborem selhala"
+    },
+    "message.fallback.game-folder": {
+      "message": "Složku hry se nepodařilo použít"
+    },
+    "message.fallback.app": {
+      "message": "Došlo k chybě"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Opravte zobrazené chyby, aby se zobrazily zbývající."
+    },
+    "message.action.choose-another-name": {
+      "message": "Vybrat jiný název"
+    },
+    "message.action.use-or-remove": {
+      "message": "Použít nebo odstranit (lze odstranit rychlou opravou)"
+    },
+    "explorer.create.definition-file": {
+      "message": "Soubor definic…"
+    },
+    "explorer.create.script": {
+      "message": "Skript"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Skript testů mapy"
+    },
+    "explorer.create.xs-script": {
+      "message": "Skript XS"
+    },
+    "explorer.create.folder": {
+      "message": "Složka"
+    },
+    "explorer.create.label": {
+      "message": "Vytvořit ve složce {name}"
+    },
+    "explorer.label": {
+      "message": "Průzkumník souborů"
+    },
+    "explorer.search.label": {
+      "message": "Hledat soubory v pracovním prostoru"
+    },
+    "explorer.search.placeholder": {
+      "message": "Hledat soubory"
+    },
+    "explorer.search.clear": {
+      "message": "Vymazat hledání souborů"
+    },
+    "explorer.search.searching": {
+      "message": "Hledání souborů v pracovním prostoru"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Žádné odpovídající soubory RMS"
+    },
+    "explorer.search.no-results": {
+      "message": "Žádné odpovídající soubory"
+    },
+    "explorer.open-file.label": {
+      "message": "Otevřít soubor"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Otevřít soubor"
+    },
+    "explorer.open-folder.label": {
+      "message": "Otevřít složku"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Otevřít složku"
+    },
+    "explorer.tree.label": {
+      "message": "Soubory složky {name}"
+    },
+    "explorer.empty.maps": {
+      "message": "Otevřete složku, abyste mohli procházet a upravovat její mapy."
+    },
+    "explorer.empty.scripts": {
+      "message": "Otevřete složku, abyste mohli procházet a upravovat její skripty."
+    },
+    "explorer.indexing": {
+      "message": "Indexování složky pracovního prostoru"
+    },
+    "explorer.read-failed": {
+      "message": "Tuto složku se nepodařilo přečíst"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Otevřít v Průzkumníku"
+    },
+    "explorer.context.rename": {
+      "message": "Přejmenovat"
+    },
+    "explorer.context.delete": {
+      "message": "Smazat"
+    },
+    "explorer.inline.create-file": {
+      "message": "Vytvořit soubor"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Vytvořit složku"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Přejmenovat soubor"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Přejmenovat složku"
+    },
+    "definition-file.title": {
+      "message": "Vygenerovat soubor definic"
+    },
+    "definition-file.close-label": {
+      "message": "Zavřít"
+    },
+    "definition-file.loading": {
+      "message": "Načítání názvů vybrané verze hry…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Verze hry"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (neověřená)"
+    },
+    "definition-file.identity.target": {
+      "message": "Uložit do"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "Vyberete při generování"
+    },
+    "definition-file.groups.label": {
+      "message": "Skupiny obsahu"
+    },
+    "definition-file.group.terrains": {
+      "message": "Terény"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "ID terénů pro terrain_type, base_terrain a další nastavení terénu"
+    },
+    "definition-file.group.objects": {
+      "message": "Objekty"
+    },
+    "definition-file.group.objects.description": {
+      "message": "ID objektů pro create_object a další nastavení objektů"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, one {# název} few {# názvy} many {# názvu} other {# názvů}}"
+    },
+    "definition-file.built-in": {
+      "message": "Zahrnout vestavěné názvy"
+    },
+    "definition-file.built-in.description": {
+      "message": "Názvy, které hra již definuje. Skripty je mohou používat bez tohoto souboru."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Propojte složku hry, abyste přidali názvy objektů a terénů, které hra ponechává nepojmenované."
+    },
+    "definition-file.note.other-version": {
+      "message": "Složka hry obsahuje jinou verzi hry, takže se její názvy nepoužijí."
+    },
+    "definition-file.note.no-text": {
+      "message": "Názvy ve složce hry nelze pro tuto verzi hry přečíst."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Každý pojmenovaný objekt a terén již má vestavěný název."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, one {# vestavěný název je vynechán, protože jej skript v této složce již definuje.} few {# vestavěné názvy jsou vynechány, protože je skripty v této složce již definují.} many {# vestavěného názvu je vynecháno, protože je skripty v této složce již definují.} other {# vestavěných názvů je vynecháno, protože je skripty v této složce již definují.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, one {# název ze složky hry je vynechán, protože pro něj nezbyl jedinečný název.} few {# názvy ze složky hry jsou vynechány, protože pro ně nezbyly jedinečné názvy.} many {# názvu ze složky hry je vynecháno, protože pro ně nezbyly jedinečné názvy.} other {# názvů ze složky hry je vynecháno, protože pro ně nezbyly jedinečné názvy.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "U některých skriptů v této složce se nepodařilo zkontrolovat již definované názvy."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Pro vybranou verzi hry nelze vygenerovat soubor definic, protože její herní data jsou neúplná."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Není dostupná žádná verze hry, pro kterou by šlo vygenerovat soubor definic."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "Názvy vybrané verze hry se nepodařilo přečíst."
+    },
+    "definition-file.file-name.label": {
+      "message": "Název souboru"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Zadejte název souboru."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Tento název nelze ve Windows použít pro soubor."
+    },
+    "definition-file.file-name.extension": {
+      "message": "Název souboru musí končit příponou .inc."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Tento název patří souboru herní knihovny. Zvolte jiný název."
+    },
+    "definition-file.generate": {
+      "message": "Vygenerovat"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Vygenerovat…"
+    },
+    "definition-file.error": {
+      "message": "Soubor definic se nepodařilo zapsat. Podrobnosti jsou v panelu Výstup."
+    },
+    "definition-file.replace.title": {
+      "message": "Nahradit {name}?"
+    },
+    "definition-file.replace.description": {
+      "message": "Ve složce {folder} již existuje soubor s tímto názvem. Nahrazení přepíše jeho obsah."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Nahradit"
+    },
+    "definition-file.output.failed": {
+      "message": "Soubor definic se nepodařilo zapsat"
+    },
+    "definition-file.output.unavailable": {
+      "message": "Názvy pro soubor definic se nepodařilo přečíst"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Uložit soubor definic"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "Soubory definic"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Zapnout mod"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Zapne mod v herním seznamu modů. Mapa a její ikona se objeví po restartu hry."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "Mod je zapnutý. Restartujte hru, aby se zobrazila mapa a její ikona."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Ve hře zapněte mod v nabídce Mody → Moje mody a poté restartujte hru, aby se zobrazila mapa a její ikona."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {Mod nebyl zapnut: soubor herního seznamu modů se nepodařilo přečíst.} unexpected-layout {Mod nebyl zapnut: soubor herního seznamu modů má strukturu, kterou IDE nezná.} duplicate-entry {Mod nebyl zapnut: herní seznam modů uvádí tento mod vícekrát.} unexpected-entry {Mod nebyl zapnut: herní záznam tohoto modu má strukturu, kterou IDE nezná.} changed {Mod nebyl zapnut: hra zároveň změnila svůj seznam modů.} unsafe-path {Mod nebyl zapnut: složka modů nebo seznam modů v profilu odkazuje jinam.} other {Mod nebyl zapnut: herní seznam modů se nepodařilo uložit.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Hra je spuštěna: změna se projeví po restartu a hra ji může při ukončení zrušit. Pokud je mod po restartu vypnutý, zavřete hru a znovu jej nasaďte."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Otevřít složku modů"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Dokončit"
+    },
+    "deploy-panel.success.title": {
+      "message": "Mod úspěšně nasazen"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "Mod byl uložen do"
+    },
+    "deploy-panel.success.path": {
+      "message": "Cesta k nasazenému modu"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Kopírovat cestu k modu"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Cesta k modu zkopírována"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, one {# soubor.} few {# soubory.} many {# souboru.} other {# souborů.}} Mod je zapnutý; restartujte hru, aby se zobrazila mapa a její ikona."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, one {# soubor.} few {# soubory.} many {# souboru.} other {# souborů.}} Ve hře zapněte mod v nabídce Mody → Moje mody a poté restartujte hru, aby se zobrazila mapa a její ikona."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "Mod byl nasazen, ale nebyl zapnut"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Soubor herního seznamu modů se nepodařilo přečíst, takže zůstal beze změny.} unexpected-layout {Soubor herního seznamu modů má strukturu, kterou IDE nezná, takže zůstal beze změny.} duplicate-entry {Herní seznam modů uvádí tento mod vícekrát, takže zůstal beze změny.} unexpected-entry {Herní záznam tohoto modu má strukturu, kterou IDE nezná, takže zůstal beze změny.} changed {Hra zároveň změnila svůj seznam modů, takže seznam zůstal tak, jak jej hra zapsala.} unsafe-path {Složka modů nebo seznam modů v profilu odkazuje jinam, takže zůstal beze změny.} other {Herní seznam modů se nepodařilo uložit; předchozí seznam zůstává zachován.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Zapnout mod ve hře v nabídce Mody → Moje mody a poté restartovat hru"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "Seznam modů byl změněn za běhu hry"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "Změna se projeví po restartu a hra ji může při ukončení zrušit. Pokud je mod po restartu vypnutý, zavřete hru a znovu jej nasaďte."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "Používá se aktuální náhled skriptu {name}"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "Aktuální náhled se nepodařilo znovu použít, takže se generuje znovu"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Tuto mapu se nepodařilo vygenerovat pro nasazení"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "Mod {mod} nasazen do profilu {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "Složku modů se nepodařilo otevřít"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Otevřít cílový adresář v Průzkumníku Windows"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "Cílový adresář se nepodařilo otevřít"
+    },
+    "deploy-panel.target": {
+      "message": "Cílový adresář"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Kopírovat cílový adresář"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Cílový adresář zkopírován"
+    },
+    "deploy-panel.title": {
+      "message": "Nasadit jako mod"
+    },
+    "deploy-panel.close": {
+      "message": "Zavřít nasazení modu"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Vyberte složku hry pro nasazení"
+    },
+    "deploy-panel.source": {
+      "message": "Zdrojový kód RMS"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Otevřete hlavní soubor RMS"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Tuto mapu se nepodařilo vygenerovat, takže ji zatím nelze nasadit. Opravte problém uvedený v panelu Výstup a znovu otevřete Nasadit jako mod."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Tuto mapu se nepodařilo vygenerovat, takže ji zatím nelze nasadit. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "Náhled vybraného zdrojového kódu RMS byl zrušen."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Název modu"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Vybrat předchozí export"
+    },
+    "deploy-panel.profile": {
+      "message": "Uživatelský profil"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Vyberte profil"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · doporučený"
+    },
+    "deploy-panel.tree": {
+      "message": "Strom souborů k nasazení"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Načítání stromu souborů k nasazení"
+    },
+    "deploy-panel.no-source": {
+      "message": "Pro nasazení otevřete hlavní soubor .rms nebo .rms2."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Nasadit mod"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Nahradit stávající mod?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Všechny soubory stávajícího modu {name} budou odstraněny."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Nahradit mod"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, one {{count} problém} few {{count} problémy} many {{count} problému} other {{count} problémů}}"
+    },
+    "problems-panel.empty": {
+      "message": "Žádné syntaktické problémy."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Filtru neodpovídají žádné problémy (skryto: {hidden})."
+    },
+    "problems-panel.severity.error": {
+      "message": "Chyba"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Varování"
+    },
+    "problems-panel.severity.info": {
+      "message": "Poznámka"
+    },
+    "problems-panel.group.file": {
+      "message": "Soubor"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Soubor hry"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, one {{count} chyba} few {{count} chyby} many {{count} chyby} other {{count} chyb}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, one {{count} varování} few {{count} varování} many {{count} varování} other {{count} varování}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, one {{count} poznámka} few {{count} poznámky} many {{count} poznámky} other {{count} poznámek}}"
+    },
+    "problems-panel.group.show": {
+      "message": "Zobrazit problémy v souboru {file}"
+    },
+    "problems-panel.group.hide": {
+      "message": "Skrýt problémy v souboru {file}"
+    },
+    "problems-panel.group.label": {
+      "message": "Problémy v souboru {file}"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Přejít na {location}"
+    },
+    "severity-filter.label": {
+      "message": "Filtr závažnosti v panelu {panel}"
+    },
+    "severity-filter.errors.label": {
+      "message": "Zobrazit chyby ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Zobrazit chyby"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Skrýt chyby"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Zobrazit varování ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Zobrazit varování"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Skrýt varování"
+    },
+    "severity-filter.notes.label": {
+      "message": "Zobrazit poznámky ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Zobrazit poznámky"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Skrýt poznámky"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "Mapy ve složce {folder} se nepodařilo vypsat: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "Instalace s chybějícími nebo nečitelnými herními soubory byla přeskočena."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "Nedostupná instalace byla přeskočena."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Počet kořenových složek nainstalovaných zdrojů dosáhl bezpečnostního limitu."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Počet položek nainstalovaných zdrojů dosáhl bezpečnostního limitu."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (neověřená)"
+    },
+    "linked-game.content-read": {
+      "message": "Používají se herní data verze {label}"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, one {{objects} objekt, již načtený.} few {{objects} objekty, již načtené.} many {{objects} objektu, již načteno.} other {{objects} objektů, již načteno.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, one {{objects} objekt, načten za {milliseconds} ms.} few {{objects} objekty, načteny za {milliseconds} ms.} many {{objects} objektu, načteno za {milliseconds} ms.} other {{objects} objektů, načteno za {milliseconds} ms.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "Herní data verze {label} se nepodařilo přečíst"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Náhledy této verze používají přibalená data verze {version}, se kterými nelze generovat později přidané objekty a terény."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Neznámý příkaz"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Nepoužitá definice"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Příkaz zde nemá účinek"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Atribut nastaven znovu"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Náhodná větev se nikdy nevybere"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "První větev s nulovou šancí"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Hodnota je omezena rozsahem"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Konstanta již definována"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Ve hře nejde o komentář"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Číslo tam, kde je potřeba název"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Název nemusí být definován"
+    },
+    "map-icon.generate": {
+      "message": "Generovat ikonu mapy"
+    },
+    "map-icon.open-larger": {
+      "message": "Otevřít větší ikonu mapy"
+    },
+    "map-icon.save-image": {
+      "message": "Uložit obrázek"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Uložit obrázek…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Generování ikony mapy"
+    },
+    "map-icon.frame.ready": {
+      "message": "Náhled ikony mapy"
+    },
+    "map-icon.frame.original": {
+      "message": "Původní ikona mapy"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "Původní ikonu mapy nelze zobrazit"
+    },
+    "map-icon.frame.none": {
+      "message": "Žádná vygenerovaná ikona mapy"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Pro vygenerování ikony mapy otevřete hlavní soubor .rms nebo .rms2."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "Generování ikony mapy vyžaduje úspěšný náhled tohoto zdrojového kódu."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "Generování ikony mapy není dostupné: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Ikona mapy není dostupná: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Ikona mapy: generování mapy ze semínka {seed}"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "Ikona mapy vyžaduje úspěšný náhled tohoto zdrojového kódu."
+    },
+    "map-icon.status.rendering": {
+      "message": "Ikona mapy: vykreslování z aktuálního náhledu"
+    },
+    "map-icon.status.waiting": {
+      "message": "Ikona mapy: čekání na náhled nasazení"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Ikona mapy: vygenerovaný soubor {file} nahradí původní ikonu pouze v této nasazené kopii"
+    },
+    "map-icon.status.generated": {
+      "message": "Ikona mapy: soubor {file} vygenerován z aktuálního náhledu"
+    },
+    "map-icon.status.original": {
+      "message": "Ikona mapy: původní soubor {file} ze zdrojové složky"
+    },
+    "map-icon.status.none": {
+      "message": "Ikona mapy: žádná"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "vygenerovaná ikona"
+    },
+    "map-icon.tree.original": {
+      "message": "původní ikona"
+    },
+    "map-icon.render-failed": {
+      "message": "Ikonu mapy se nepodařilo vykreslit"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "Možnosti ikony mapy nebyly zapamatovány"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "Ikonu mapy ze semínka {seed} se nepodařilo vygenerovat"
+    },
+    "map-icon.output.saved": {
+      "message": "Ikona mapy uložena jako {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "Ikonu mapy se nepodařilo uložit"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Zavřít náhled ikony mapy"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Ikona mapy"
+    },
+    "map-icon.view-tools": {
+      "message": "Zobrazení ikony mapy"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Kosočtvercový pohled"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Pohled shora"
+    },
+    "map-icon.look.minimap": {
+      "message": "Barvy minimapy"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Barvy textur"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Herní textury"
+    },
+    "map-icon.look.pending": {
+      "message": "Příprava herních textur"
+    },
+    "map-icon.look.fallback": {
+      "message": "Herní textury nejsou dostupné, takže ikona používá barvy textur."
+    },
+    "map-icon.relief": {
+      "message": "Reliéf terénu"
+    },
+    "map-icon.relief.hide": {
+      "message": "Skrýt reliéf terénu"
+    },
+    "map-icon.relief.show": {
+      "message": "Zobrazit reliéf terénu"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Vyhladit přechody terénu"
+    },
+    "map-icon.random-seed": {
+      "message": "Náhodné semínko"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Použít semínko editoru"
+    },
+    "map-icon.seed": {
+      "message": "Semínko ikony mapy"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Semínko editoru"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Čtverce hráčů"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Stopy nomádů"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Bez značek startů"
+    },
+    "map-icon.spawn-size": {
+      "message": "Velikost značek startů"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Zmenšit značky startů"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Zvětšit značky startů"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "{value} % šířky mapy"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Velikost značek startů (% šířky mapy)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Zobrazit stromy"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Skrýt stromy"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Možnosti stromů"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "množství stromů"
+    },
+    "map-icon.art.trees.size": {
+      "message": "velikost stromů"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Zobrazit zlato a kámen"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Skrýt zlato a kámen"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Možnosti zlata a kamene"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "množství zlata a kamene"
+    },
+    "map-icon.art.resources.size": {
+      "message": "velikost zlata a kamene"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Méně"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Více"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "Jeden na každý druh"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "Jeden na každý objekt"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Málo"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Střední množství"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Mnoho"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Menší"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Větší"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "Nejmenší"
+    },
+    "map-icon.art.size.small": {
+      "message": "Malé"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Střední"
+    },
+    "map-icon.art.size.large": {
+      "message": "Velké"
+    },
+    "map-icon.art.size.largest": {
+      "message": "Největší"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Zobrazit pod značkami startů"
+    },
+    "workbench.application-menu.label": {
+      "message": "Nabídka aplikace"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Skrýt průzkumník souborů"
+    },
+    "workbench.explorer.expand": {
+      "message": "Zobrazit průzkumník souborů"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Skrýt Průzkumník"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Zobrazit Průzkumník"
+    },
+    "workbench.explorer.resize": {
+      "message": "Změnit velikost průzkumníku souborů"
+    },
+    "workbench.preview.resize": {
+      "message": "Změnit velikost průběžného náhledu mapy"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Průběžné fáze generování se zobrazí od příštího spuštění"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Průběžné fáze generování budou skryty od příštího spuštění"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Panel Problémy a Výstup"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Panel Problémy, Výstup a Výsledky testů"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Změnit velikost panelu Problémy a Výstup"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Výstup"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Problémy"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Výsledky testů"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Výstup"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Problémy"
+    },
+    "workbench.native.restart-label": {
+      "message": "Restartovat selhaný proces {name}"
+    },
+    "workbench.native.failed": {
+      "message": "Proces {name} selhal"
+    },
+    "workbench.native.restarted": {
+      "message": "Proces {name} restartován"
+    },
+    "workbench.native.restart-failed": {
+      "message": "Proces {name} se nepodařilo restartovat"
+    },
+    "workbench.native.stopped": {
+      "message": "Proces {name} se zastavil"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "Zpráva testu {name} importována"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Zprávu testu mapy se nepodařilo importovat"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Zpráva testu exportována"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Zprávu testu mapy se nepodařilo exportovat"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Nález znovu vygenerován se zaznamenaným semínkem"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Nález znovu vygenerován se zaznamenaným semínkem {seed}"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "Složku hry se nepodařilo odpojit"
+    },
+    "code-editor.panel.label": {
+      "message": "Editor zdrojového kódu RMS"
+    },
+    "code-editor.tabs.label": {
+      "message": "Otevřené soubory"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Posunout karty editoru doleva"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Posunout karty editoru doprava"
+    },
+    "code-editor.tab.close": {
+      "message": "Zavřít {name}"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Neuložené změny"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Jen pro čtení"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Neuložené změny, jen pro čtení"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Nasadit jako mod…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Uložit"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Klonovat / Uložit jako…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Uložit jako…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Zavřít"
+    },
+    "code-editor.run.preview": {
+      "message": "Spustit náhled"
+    },
+    "code-editor.run.map-test": {
+      "message": "Spustit test mapy"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Spustit náhled a test ve hře"
+    },
+    "code-editor.run.stop": {
+      "message": "Zastavit"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Spustit ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Spustit náhled a test ve hře ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Zastavit ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Možnosti spuštění náhledu"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Spouštěný skript"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Připnout spouštěný skript"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Semínko"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Kopírovat semínko"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "Kopírovat semínko {seed}"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Semínko zkopírováno"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Uzamčeno"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Náhodné při spuštění"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Použít semínko aktuálního zápasu"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Je vyžadován ověřený probíhající zápas na náhodné mapě pro jednoho hráče."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Vybrat složku hry Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Výběr složky hry Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Hledání složky nainstalované hry Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Při spuštění test ve hře"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Spustit náhled a pokračovat v AoE2DE"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Vyberte platný spustitelný soubor AoE2Control"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "Vybrat AoE2Control"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "Výběr AoE2Control…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "Vybrat AoE2Control.exe pro testování ve hře"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "Výběr AoE2Control.exe pro testování ve hře"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "Stáhnout AoE2Control"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "Otevřít vydání AoE2Control"
+    },
+    "code-editor.control.remove.title": {
+      "message": "Odebrat AoE2Control?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "Tím se odebere výběr spustitelného souboru AoE2Control a odpojí se aktuální relace testování ve hře. Příští test ve hře se před nahrazením probíhajícího zápasu znovu zeptá."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Odebrat"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "Stránku vydání AoE2Control se nepodařilo otevřít"
+    },
+    "code-editor.control-download.title": {
+      "message": "Před rozbalením AoE2Control"
+    },
+    "code-editor.control-download.description": {
+      "message": "Heslo pro rozbalení AoE2Control.zip je {password}. AoE2Control vkládá DLL do hry, aby v ní spouštěl Lua, takže jej heuristické antivirové nástroje včetně Windows Defender mohou chybně označit za hrozbu. Přidejte pro složku s rozbalenými soubory antivirovou výjimku, aby nástroj mohl běžet bez přerušení."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Rozumím"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Skrýt průběžný náhled mapy"
+    },
+    "code-editor.preview.expand": {
+      "message": "Zobrazit průběžný náhled mapy"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Skrýt Náhled"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Zobrazit Náhled"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Zavřít oznámení o selhání spuštění skriptu"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Neuložená práce obnovena"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Zavřít oznámení o obnovení"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "Náhled nyní používá textury vaší hry"
+    },
+    "code-editor.font-size.label": {
+      "message": "Velikost písma editoru"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent} %"
+    },
+    "code-editor.read-only-message": {
+      "message": "Tento zdrojový kód z instalace nebo odebíraného modu je chráněn. Použijte Klonovat nebo Uložit jako."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Otevřít vložený soubor"
+    },
+    "code-editor.include.open": {
+      "message": "Otevřít {name}"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "Přejmenování zde není bezpečné z hlediska významu skriptu."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "Přesná ekvivalence nebyla prokázána."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} je chráněný herní soubor; přejmenování by jej změnilo."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "Ignorovat {code} na tomto řádku"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "Vypnout {code} v tomto pracovním prostoru"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Model editoru není dostupný."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "Změnil se typ jazyka souboru."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Dokument se změnil před zahájením formátování."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Dokument se změnil během čekání na formátování."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "Požadavek byl zrušen."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Formátování není dostupné, dokud je zdrojový kód Starlark neplatný."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "Formátování vyžaduje již platné odsazení po čtyřech mezerách; struktura tokenů zůstala beze změny."
+    },
+    "code-editor.completion.content.object": {
+      "message": "objekt {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "terén {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Test mapy"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Vestavěná funkce Starlark"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Metoda {type} ve Starlark"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Dříve definovaná funkce Starlark"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Parametr funkce Starlark"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Dříve definovaná proměnná Starlark"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Proměnná cyklu Starlark"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} je již definováno výše v tomto dokumentu."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Funkce Starlark"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "Zdrojové soubory RMS a XS"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "Zdrojové soubory RMS, XS a testů mapy"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Otevřít zdrojové soubory"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "Otevřít složku RMS"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Uložit zdrojový kód jako"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Zpráva testu mapy"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Exportovat zprávu testu mapy"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Importovat zprávu testu mapy"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Vybrat složku Age of Empires II: Definitive Edition"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Vybrat nadřazenou složku pro upravitelnou kopii mapy"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "Vybrat spustitelný soubor AoE2Control"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "Spustitelný soubor AoE2Control"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Uložit ikonu mapy"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "Obrázek PNG"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Vložené soubory se nepodařilo znovu načíst"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "Po smazání se nepodařilo aktualizovat relaci"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Některé složky se nepodařilo zobrazit v Průzkumníku"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, one {Soubor pracovního prostoru má název souboru herní knihovny} few {Soubory pracovního prostoru mají názvy souborů herní knihovny} many {Soubory pracovního prostoru mají názvy souborů herní knihovny} other {Soubory pracovního prostoru mají názvy souborů herní knihovny}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Zůstávají upravitelné, ale příkazy include mohou místo nich vybrat soubor hry."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, one {{paths, list, unit} a {count} další soubor. Zůstávají upravitelné, ale příkazy include mohou místo nich vybrat soubor hry.} few {{paths, list, unit} a {count} další soubory. Zůstávají upravitelné, ale příkazy include mohou místo nich vybrat soubor hry.} many {{paths, list, unit} a {count} dalšího souboru. Zůstávají upravitelné, ale příkazy include mohou místo nich vybrat soubor hry.} other {{paths, list, unit} a {count} dalších souborů. Zůstávají upravitelné, ale příkazy include mohou místo nich vybrat soubor hry.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Přejmenovat je"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "Kontrola názvů souborů herní knihovny nebyla úplná"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Nic nebylo otevřeno"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, one {Požadavek uvedl více než {count} soubor nebo složku.} few {Požadavek uvedl více než {count} soubory a složky.} many {Požadavek uvedl více než {count} souboru a složky.} other {Požadavek uvedl více než {count} souborů a složek.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "Cesty v požadavku jsou delší, než AoE2RMSIDE přijímá."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Přišlo příliš mnoho požadavků na otevření najednou. Zbývající položky otevřete znovu."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "Položka {name} nebyla otevřena"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Neexistuje nebo není dostupná."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Nejde o platnou cestu k souboru nebo složce."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE otevírá složky a soubory .rms, .rms2, .inc, .def a .xs."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE otevírá složky a soubory .rms, .rms2, .inc, .def, .xs a .rmstest."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Najednou lze otevřít jednu složku."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Najednou lze otevřít jednu složku; otevřela se složka {folder}."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Nepodařilo se ji přečíst."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, one {# další položka nebyla otevřena} few {# další položky nebyly otevřeny} many {# další položky nebylo otevřeno} other {# dalších položek nebylo otevřeno}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Neexistují, nelze je přečíst nebo nejde o soubory, které AoE2RMSIDE otevírá."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "položka s tímto názvem již existuje"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "položka s tímto názvem nebo jeho krátkým aliasem již existuje"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "název není platným názvem souboru či složky ve Windows"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "podporovány jsou pouze zdrojové soubory .rms, .rms2, .inc, .def a .xs"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "podporovány jsou pouze zdrojové soubory .rms, .rms2, .inc, .def, .rmstest a .xs"
+    },
+    "file-actions.entry.read-only": {
+      "message": "položka pracovního prostoru je jen pro čtení nebo chráněná"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "kořenovou složku pracovního prostoru nelze přejmenovat ani smazat"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "„{name}“ je vyhrazen pro standardní herní soubor; zvolte jiný název souboru."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Neuloženou práci z poslední relace se nepodařilo přečíst a byla přeskočena"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "Obnovená složka pracovního prostoru není dostupná."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "Předchozí složka pracovního prostoru není dostupná a byla přeskočena."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "Nedostupná karta relace {name} byla přeskočena."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "Soubor {name} byl obnoven jako neuložený obsah, protože jeho zdroj není dostupný."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, one {Soubory terénu z propojené hry: převedeno {converted}, znovu použit {reused}; doba {seconds, number, ::.0 group-off} s} few {Soubory terénu z propojené hry: převedeno {converted}, znovu použity {reused}; doba {seconds, number, ::.0 group-off} s} many {Soubory terénu z propojené hry: převedeno {converted}, znovu použito {reused}; doba {seconds, number, ::.0 group-off} s} other {Soubory terénu z propojené hry: převedeno {converted}, znovu použito {reused}; doba {seconds, number, ::.0 group-off} s}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Místní mezipaměť {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, one {{count} soubor terénu se nepodařilo převést a používá barvy minimapy} few {{count} soubory terénu se nepodařilo převést a používají barvy minimapy} many {{count} souboru terénu se nepodařilo převést a používá barvy minimapy} other {{count} souborů terénu se nepodařilo převést a používá barvy minimapy}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Například {asset}: {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Objekt {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Terén {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Zeď {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Hráč {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Pomocný objekt"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Útes"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Typ útesu {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Pozemní spojení"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Vodní spojení"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Silniční spojení"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Neznámé spojení"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Hledání spojení bez cesty"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Nejednoznačný výběr v náhledu: {layer} · {count, plural, one {vybrána {count} položka} few {vybrány {count} položky} many {vybráno {count} položky} other {vybráno {count} položek}} · {sources, plural, one {{sources} různý zdroj} few {{sources} různé zdroje} many {{sources} různého zdroje} other {{sources} různých zdrojů}} · použito {location}."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Tráva"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Mělčiny"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Voda"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Pláž"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Zemina"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Kámen"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Hlína"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Stěna útesu"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Pevnina"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Vyvýšení"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Útesy"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Terén"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Spojení"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Objekty"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Dokončeno"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Generování · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Vzorek {sample} (semínko {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Vzorek {sample} (semínko {seed}) dokončen · dávka stále běží"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Šipky vybírají políčko, Shift+šipka rozšiřuje výběr, Ctrl+šipka posouvá pohled, plus a minus mění přiblížení, 0 přizpůsobí mapu oknu, Ctrl+A vybere celou mapu a Escape vymaže výběr."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Výběr vymazán"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Políčko {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "Políčka {fromX}, {fromY} až {toX}, {toY}, {count, plural, one {{count} políčko} few {{count} políčka} many {{count} políčka} other {{count} políček}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Žádné vrstvy"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, one {{count} vrstva} few {{count} vrstvy} many {{count} vrstvy} other {{count} vrstev}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, one {{count} vrstva} few {{count} vrstvy} many {{count} vrstvy} other {{count} vrstev}}: {shown, list, unit}; další: {more}"
+    },
+    "preview-panel.run.include-only": {
+      "message": "Dokumenty .inc, .def a .xs slouží pouze k vložení do jiného skriptu a nelze je spustit samostatně."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Objekty a půdorys městského centra"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Hrany útesů"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Změny terénu spojení"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Čáry spojení"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Čáry spojení vypnuty"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "Vyhledané cesty spojení"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "Zobrazené cesty: {shown, number} z {total, number}"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "Vyhledané cesty se zobrazí po dokončení mapy"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "Vyhledané cesty nejsou pro tuto mapu dostupné"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Vyvýšení vypnuto"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Reliéf terénu"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Výšková mapa"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Pohled shora"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Kosočtvercový pohled"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Barvy minimapy"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Barvy textur"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Herní textury"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Použití herních textur"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Mřížka políček"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "náhled mapy shora v barvách minimapy"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "náhled mapy shora v barvách textur"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "náhled mapy shora s herními texturami"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "kosočtvercový náhled mapy v poměru 2:1 v barvách minimapy"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "kosočtvercový náhled mapy v poměru 2:1 v barvách textur"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "kosočtvercový náhled mapy v poměru 2:1 s herními texturami"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "mapa"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Náhled mapy připraven"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Náhled mapy aktualizován"
+    },
+    "preview-panel.panel.label": {
+      "message": "Průběžný náhled mapy"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Ovládání zobrazení mapy"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Vrstvy spojení"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Šipky vybírají políčka"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "Stav náhledu"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Necertifikováno"
+    },
+    "preview-panel.status.seed": {
+      "message": "Semínko {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Revize {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "generování"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "Mezipaměť: {entries} · počet použití: {hits}"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Úpravy"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Analýza"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Beze změny"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Zastaralý – neplatný zdrojový kód"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Generování"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "Aktuální"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Zastaralý – generování selhalo"
+    },
+    "preview-panel.legend.label": {
+      "message": "Legenda vrstev vybraných políček"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Filtrovat vybrané položky"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Vymazat filtr vybraných položek"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Filtrovat"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Žádné odpovídající položky"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Řádky vybraných vrstev"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, dosud vybráno: {count}"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Otevřít zdroj pro {name}, vybráno: {count}"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Zobrazit pomocné objekty ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Skrýt pomocné objekty ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Interní vývojové ukázky"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Interní ukázky · necertifikované"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Interní · necertifikované"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "Spustit ukázku {fixture}"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Čtení"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Čtení katalogu herní grafiky"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Čtení katalogu herní grafiky, {percent} % ({unit, select, graphics {grafika} other {soubory}}: {completed} z {total})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "Import"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Import textur terénu"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Import textur terénu, {percent} % ({unit, select, graphics {grafika} other {soubory}}: {completed} z {total})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Prolínání"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Prolínání přechodů terénu"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Prolínání přechodů terénu, {percent} % ({unit, select, graphics {grafika} other {soubory}}: {completed} z {total})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Maskování"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Příprava masek překrytí terénu"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Příprava masek překrytí terénu, {percent} % ({unit, select, graphics {grafika} other {soubory}}: {completed} z {total})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Sprity"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Převod spritů objektů této mapy"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Převod spritů objektů této mapy, {percent} % ({unit, select, graphics {grafika} other {soubory}}: {completed} z {total})"
+    },
+    "game-art.progress.label": {
+      "message": "Převod herní grafiky"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, one {{count} typ objektu nemá sprit z propojené hry a ponechává si značku minimapy: {names, list, unit}} few {{count} typy objektů nemají sprity z propojené hry a ponechávají si značky minimapy: {names, list, unit}} many {{count} typu objektu nemá sprity z propojené hry a ponechává si značky minimapy: {names, list, unit}} other {{count} typů objektů nemá sprity z propojené hry a ponechává si značky minimapy: {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, one {{count} typ objektu nemá sprit z propojené hry a ponechává si značku minimapy: {names, list, unit}; další: {more}} few {{count} typy objektů nemají sprity z propojené hry a ponechávají si značky minimapy: {names, list, unit}; další: {more}} many {{count} typu objektu nemá sprity z propojené hry a ponechává si značky minimapy: {names, list, unit}; další: {more}} other {{count} typů objektů nemá sprity z propojené hry a ponechává si značky minimapy: {names, list, unit}; další: {more}}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (objekt {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "objekt {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, one {{count} díl útesu nemá sprit z propojené hry a ponechává si čáru útesu} few {{count} díly útesu nemají sprity z propojené hry a ponechávají si čáru útesu} many {{count} dílu útesu nemá sprity z propojené hry a ponechává si čáru útesu} other {{count} dílů útesu nemá sprity z propojené hry a ponechává si čáru útesu}}"
+    },
+    "profiler.group.parse": {
+      "message": "Parsování"
+    },
+    "profiler.group.setup": {
+      "message": "Příprava"
+    },
+    "profiler.group.land": {
+      "message": "Pevnina"
+    },
+    "profiler.group.elevation": {
+      "message": "Vyvýšení"
+    },
+    "profiler.group.cliffs": {
+      "message": "Útesy"
+    },
+    "profiler.group.terrain": {
+      "message": "Terén"
+    },
+    "profiler.group.connections": {
+      "message": "Spojení"
+    },
+    "profiler.group.objects": {
+      "message": "Objekty"
+    },
+    "profiler.group.finalize": {
+      "message": "Dokončení"
+    },
+    "profiler.step.parse-script": {
+      "message": "Parsování skriptu"
+    },
+    "profiler.step.setup-players": {
+      "message": "Příprava hráčů"
+    },
+    "profiler.step.land-generate": {
+      "message": "Generování pevniny"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Generování vyvýšení"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Generování útesů"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Generování terénu"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Generování spojení"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Rozmístění objektů"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Dokončení herního režimu"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Seřazení objektů"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Složený terén"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, one {# operace} few {# operace} many {# operace} other {# operací}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, one {# odběr z RNG} few {# odběry z RNG} many {# odběru z RNG} other {# odběrů z RNG}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, one {# kandidát} few {# kandidáti} many {# kandidáta} other {# kandidátů}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, one {# políčko} few {# políčka} many {# políčka} other {# políček}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, one {# hledání cesty} few {# hledání cesty} many {# hledání cesty} other {# hledání cesty}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, one {# jednotka práce při hledání cest} few {# jednotky práce při hledání cest} many {# jednotky práce při hledání cest} other {# jednotek práce při hledání cest}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, one {# odmítnutí} few {# odmítnutí} many {# odmítnutí} other {# odmítnutí}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, one {# objekt} few {# objekty} many {# objektu} other {# objektů}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, one {# zkontrolované políčko} few {# zkontrolovaná políčka} many {# zkontrolovaného políčka} other {# zkontrolovaných políček}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, one {# přidané} few {# přidaná} many {# přidaného} other {# přidaných}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Políčka, která růst pevniny vybral a zkontroloval; přidaná políčka se stala součástí pevniny."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, one {# políčko zkontrolované při růstu} few {# políčka zkontrolovaná při růstu} many {# políčka zkontrolovaného při růstu} other {# políček zkontrolovaných při růstu}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, one {# zvýšené} few {# zvýšená} many {# zvýšeného} other {# zvýšených}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Políčka, která růst kopců vybral a zkontroloval. Zvýšená políčka zahrnují i počáteční políčka každého kopce, která se mezi zkontrolovaná nepočítají."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, one {# posouzená pozice útesu} few {# posouzené pozice útesu} many {# posouzené pozice útesu} other {# posouzených pozic útesu}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Pozice na mapě, kam by bylo možné umístit útes."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, one {# hledání cesty} few {# hledání cesty} many {# hledání cesty} other {# hledání cesty}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, one {# krok hledání} few {# kroky hledání} many {# kroku hledání} other {# kroků hledání}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, one {# přebarvené políčko} few {# přebarvená políčka} many {# přebarveného políčka} other {# přebarvených políček}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Každé hledání cesty hledá trasu mezi dvěma body spojení; počet přebarvených políček zahrnuje každou změnu terénu podél tras."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, one {# možné místo} few {# možná místa} many {# možného místa} other {# možných míst}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, one {# odmítnutá skupina} few {# odmítnuté skupiny} many {# odmítnuté skupiny} other {# odmítnutých skupin}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, one {# umístěný objekt} few {# umístěné objekty} many {# umístěného objektu} other {# umístěných objektů}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Možná místa se počítají při každém pokusu o umístění, takže se jedno políčko může započítat vícekrát. Skupina je odmítnuta vždy, když místo neprojde kontrolami nebo nezbývá žádné místo."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "Čekání na dokončení prvního kroku"
+    },
+    "profiler.pending.group": {
+      "message": "Probíhá: {group}"
+    },
+    "profiler.pending.step": {
+      "message": "Probíhá: {step}"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0,1 %"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off} %"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off} %"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "méně než 0,1 procenta"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "{percent, number, ::precision-integer group-off} procent"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} procenta"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Profilování běhu: generování, čekání na generátor"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Profilování běhu: generování, čekání na generátor, {seconds, number, ::.00 group-off} sekundy"
+    },
+    "profiler.status.running.steps": {
+      "message": "Profilování běhu: generování, dokončené kroky: {completed} z {total}"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Profilování běhu: generování, dokončené kroky: {completed} z {total}, {seconds, number, ::.00 group-off} sekundy"
+    },
+    "profiler.status.cached": {
+      "message": "Profilování běhu: běh z mezipaměti, {seconds, number, ::.00 group-off} sekundy, změřeno při prvním vygenerování tohoto náhledu"
+    },
+    "profiler.status.committed": {
+      "message": "Profilování běhu: {seconds, number, ::.00 group-off} sekundy vykonávání RMS"
+    },
+    "profiler.status.unsupported": {
+      "message": "Profilování běhu: pro tento náhled není měření"
+    },
+    "profiler.status.idle": {
+      "message": "Profilování běhu"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Generování, čekání na generátor"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Generování, kroky: {completed} z {total}"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Doba běhu (z mezipaměti)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Doba běhu"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Bez měření doby běhu"
+    },
+    "profiler.description": {
+      "message": "Přibližný místní ukazatel složitosti z jednoho běhu na tomto počítači, nikoli předpověď doby generování ve hře."
+    },
+    "profiler.description.cached": {
+      "message": "Běh z mezipaměti: změřeno při prvním vygenerování tohoto náhledu; generátor se znovu nespustil. Přibližný místní ukazatel složitosti z jednoho běhu na tomto počítači, nikoli předpověď doby generování ve hře."
+    },
+    "profiler.description.map-test": {
+      "message": "Změřeno během testu mapy, jehož vzorky mohou běžet souběžně. Přibližný místní ukazatel složitosti z jednoho běhu na tomto počítači, nikoli předpověď doby generování ve hře."
+    },
+    "profiler.panel.label": {
+      "message": "Profilování doby běhu"
+    },
+    "profiler.panel.steps": {
+      "message": "Kroky běhu"
+    },
+    "profiler.panel.table": {
+      "message": "Kroky běhu podle času"
+    },
+    "profiler.panel.empty": {
+      "message": "Tento náhled nemá měření doby běhu."
+    },
+    "profiler.chart.label": {
+      "message": "Doba vykonávání RMS podle fází generování"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Úspěch"
+    },
+    "test-results.results.status.failed": {
+      "message": "Neúspěch"
+    },
+    "test-results.results.status.error": {
+      "message": "Chyba"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Zastaveno"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, one {# nález} few {# nálezy} many {# nálezu} other {# nálezů}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{findings, plural, one {# nález} few {# nálezy} many {# nálezu} other {# nálezů}} pro {seeds, plural, one {# semínko} few {# semínka} many {# semínka} other {# semínek}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, one {# mapa} few {# mapy} many {# mapy} other {# map}} · {assertions, plural, one {# kontrola} few {# kontroly} many {# kontroly} other {# kontrol}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, řádek {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Kontrola na řádku {line}"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Žádné nálezy. Všechny kontroly na mapě prošly.} one {Žádné nálezy. Všechny kontroly na # mapě prošly.} few {Žádné nálezy. Všechny kontroly na všech # mapách prošly.} many {Žádné nálezy. Všechny kontroly prošly; počet map: #.} other {Žádné nálezy. Všechny kontroly na všech # mapách prošly.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Žádné nálezy. Test neprovedl žádné kontroly. {maps, plural, one {Počet vygenerovaných map: #.} few {Počet vygenerovaných map: #.} many {Počet vygenerovaných map: #.} other {Počet vygenerovaných map: #.}}"
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Exportovat"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Uloží tyto výsledky do souboru zprávy. Vynechá vaše skripty, vygenerované mapy a úplné cesty k souborům."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, one {{count} nález testu mapy} few {{count} nálezy testu mapy} many {{count} nálezu testu mapy} other {{count} nálezů testu mapy}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Přejít na {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "Kontrola"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Skrýt nálezy kontroly na řádku {line}"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Zobrazit nálezy kontroly na řádku {line}"
+    },
+    "test-results.results.check-findings": {
+      "message": "Nálezy kontroly na řádku {line}"
+    },
+    "test-results.results.show-more": {
+      "message": "Zobrazit další: {count}"
+    },
+    "test-results.results.not-shown": {
+      "message": "· nezobrazeno: {count, number}"
+    },
+    "test-results.results.show-seed": {
+      "message": "Zobrazit mapu {map} se semínkem {seed} v náhledu"
+    },
+    "test-results.results.seed": {
+      "message": "semínko {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Nález"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Drobná"
+    },
+    "game-options.map-size.small": {
+      "message": "Malá"
+    },
+    "game-options.map-size.medium": {
+      "message": "Střední"
+    },
+    "game-options.map-size.normal": {
+      "message": "Normální"
+    },
+    "game-options.map-size.large": {
+      "message": "Velká"
+    },
+    "game-options.map-size.huge": {
+      "message": "Obrovská"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Absurdní"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Náhodná mapa"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Královražda"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "Boj na život a na smrt"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "Král kopce"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "Závod o div světa"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Obrana divu světa"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Turbo náhodná mapa"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Získání relikvie"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Náhlá smrt"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Battle Royale"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "Války říší"
+    },
+    "game-options.resources.standard": {
+      "message": "Standardní suroviny"
+    },
+    "game-options.resources.low": {
+      "message": "Málo surovin"
+    },
+    "game-options.resources.medium": {
+      "message": "Střední množství surovin"
+    },
+    "game-options.resources.high": {
+      "message": "Hodně surovin"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Velmi mnoho surovin"
+    },
+    "game-options.resources.infinite": {
+      "message": "Neomezené suroviny"
+    },
+    "game-options.resources.random": {
+      "message": "Náhodné suroviny"
+    },
+    "game-options.age.standard": {
+      "message": "Standardní počáteční věk"
+    },
+    "game-options.age.dark-age": {
+      "message": "Temný věk"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Feudální věk"
+    },
+    "game-options.age.castle-age": {
+      "message": "Věk hradů"
+    },
+    "game-options.age.imperial-age": {
+      "message": "Imperiální věk"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "Postimperiální věk"
+    },
+    "game-options.positions.random": {
+      "message": "Náhodné pozice"
+    },
+    "game-options.positions.fixed": {
+      "message": "Pevné pozice"
+    },
+    "game-options.positions.team-together": {
+      "message": "Tým pohromadě"
+    },
+    "game-options.color.blue": {
+      "message": "Modrá"
+    },
+    "game-options.color.red": {
+      "message": "Červená"
+    },
+    "game-options.color.green": {
+      "message": "Zelená"
+    },
+    "game-options.color.yellow": {
+      "message": "Žlutá"
+    },
+    "game-options.color.cyan": {
+      "message": "Tyrkysová"
+    },
+    "game-options.color.purple": {
+      "message": "Fialová"
+    },
+    "game-options.color.gray": {
+      "message": "Šedá"
+    },
+    "game-options.color.orange": {
+      "message": "Oranžová"
+    },
+    "game-options.team.none": {
+      "message": "Bez týmu"
+    },
+    "game-options.team.numbered": {
+      "message": "Tým {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "Turbo"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Úplný strom technologií"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Antika"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Neprůchodné farmy"
+    },
+    "game-options.civilization.random": {
+      "message": "Náhodná"
+    },
+    "game-options.civilization.britons": {
+      "message": "Britové"
+    },
+    "game-options.civilization.franks": {
+      "message": "Frankové"
+    },
+    "game-options.civilization.goths": {
+      "message": "Gótové"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Teutoni"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Japonci"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Číňané"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Byzantinci"
+    },
+    "game-options.civilization.persians": {
+      "message": "Peršané"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Saracéni"
+    },
+    "game-options.civilization.turks": {
+      "message": "Turci"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Vikingové"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Mongolové"
+    },
+    "game-options.civilization.celts": {
+      "message": "Keltové"
+    },
+    "game-options.civilization.spanish": {
+      "message": "Španělé"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Aztékové"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Mayové"
+    },
+    "game-options.civilization.huns": {
+      "message": "Hunové"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Korejci"
+    },
+    "game-options.civilization.italians": {
+      "message": "Italové"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Hindustánci"
+    },
+    "game-options.civilization.incas": {
+      "message": "Inkové"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Maďaři"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Slované"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Portugalci"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Etiopané"
+    },
+    "game-options.civilization.malians": {
+      "message": "Malijci"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Berbeři"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Khmerové"
+    },
+    "game-options.civilization.malay": {
+      "message": "Malajci"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Barmánci"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "Vietnamci"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Bulhaři"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Tataři"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Kumáni"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Litevci"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Burgunďané"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Sicilané"
+    },
+    "game-options.civilization.poles": {
+      "message": "Poláci"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Češi"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Drávidové"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Bengálci"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Gurdžarové"
+    },
+    "game-options.civilization.romans": {
+      "message": "Římané"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Arméni"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Gruzínci"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Achaimenovci"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Athéňané"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Sparťané"
+    },
+    "game-options.civilization.shu": {
+      "message": "Šu"
+    },
+    "game-options.civilization.wu": {
+      "message": "Wu"
+    },
+    "game-options.civilization.wei": {
+      "message": "Wej"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Džürčeni"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Kitanové"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Makedonci"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Thrákové"
+    },
+    "game-options.civilization.puru": {
+      "message": "Puru"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Muiscové"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Mapučové"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Tupiové"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Sasové"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Varjagové"
+    },
+    "game-options.civilization.danes": {
+      "message": "Dánové"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Civilizace {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Náhled"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Generování náhledu (krok {step} z {total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Připojování"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "Připojování k AoE2Control (krok {step} z {total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Kontrola"
+    },
+    "live-test.progress.ending": {
+      "message": "Ukončování"
+    },
+    "live-test.progress.copying": {
+      "message": "Kopírování"
+    },
+    "live-test.progress.selecting": {
+      "message": "Vybírání"
+    },
+    "live-test.progress.starting": {
+      "message": "Spouštění"
+    },
+    "live-test.progress.verifying": {
+      "message": "Ověřování"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Ověřování zápasu (krok {step} z {total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Čekání"
+    },
+    "live-test.progress.verified": {
+      "message": "Ověřeno"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Zápas ověřen"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "Kontrola AoE2Control (krok {step} z {total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Kontrola hry (krok {step} z {total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Ukončování aktuálního zápasu (krok {step} z {total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Kopírování mapy do hry (krok {step} z {total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Výběr mapy ve hře (krok {step} z {total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Spouštění zápasu (krok {step} z {total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "Čekání na odpojení předchozího AoE2Control (krok {step} z {total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "Čekání na spuštění AoE2Control ve hře (krok {step} z {total})"
+    },
+    "live-test.progress.label": {
+      "message": "Test ve hře"
+    },
+    "live-test.replace-match.title": {
+      "message": "Nahradit probíhající zápas?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE ukončí zápas pro jednoho hráče a spustí tuto revizi náhledu. Znovu se zeptá až po odebrání AoE2Control."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Ukončit a nahradit zápas"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Nejprve vyberte platný spustitelný soubor AoE2Control."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Nastavte AoE2Control pro čtení semínka aktuálního zápasu."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control se připojuje. Zkuste to znovu po dokončení úvodní komunikace."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "Čtení stavu zápasu není dostupné. Znovu připojte AoE2Control a opakujte pokus."
+    },
+    "live-test.seed.replay": {
+      "message": "Semínka ze záznamů her nelze importovat."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Semínka zápasů více hráčů nelze importovat."
+    },
+    "live-test.seed.state-changing": {
+      "message": "Stav zápasu se mění nebo není znám. Chvíli počkejte a opakujte pokus."
+    },
+    "live-test.seed.no-match": {
+      "message": "Nejprve spusťte podporovaný zápas na náhodné mapě pro jednoho hráče."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "Nastavení probíhajícího zápasu nelze přečíst. Znovu připojte AoE2Control a opakujte pokus."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "Probíhající zápas není podporovaný zápas v režimu Náhodná mapa."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "Semínko probíhajícího zápasu nelze přečíst. Znovu připojte AoE2Control a opakujte pokus."
+    },
+    "live-test.seed.busy": {
+      "message": "Již probíhá operace AoE2Control."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control nevrátil semínko zápasu."
+    },
+    "live-test.control.missing": {
+      "message": "Vybraný spustitelný soubor byl přesunut nebo odstraněn."
+    },
+    "live-test.control.changed": {
+      "message": "Vybraný spustitelný soubor se změnil. Vyberte jej znovu, abyste novému souboru udělili důvěru."
+    },
+    "live-test.control.invalid": {
+      "message": "Vybraný soubor není platný veřejný spustitelný soubor AoE2Control."
+    },
+    "workspace.format.save-skipped": {
+      "message": "Formátování při uložení souboru {name} přeskočeno"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "Uložení souboru {name} zrušeno"
+    },
+    "workspace.format.read-only": {
+      "message": "Soubor {name} je jen pro čtení a nebyl naformátován"
+    },
+    "workspace.format.unchanged": {
+      "message": "Soubor {name} je již naformátován"
+    },
+    "workspace.format.not-formatted": {
+      "message": "Soubor {name} nebyl naformátován"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "Formátovač nedokončil práci včas."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "Přesná ekvivalence nebyla prokázána."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Požadavek na formátování zastaral."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "Soubor {name} byl smazán mimo AoE2RMSIDE"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "Jeho text zůstává otevřený v editoru."
+    },
+    "workspace.files.reloaded": {
+      "message": "Soubor {name} znovu načten po změně na disku"
+    },
+    "workspace.recovery.restored": {
+      "message": "{count, plural, one {Obnovena {count} neuložená karta z předchozí relace} few {Obnoveny {count} neuložené karty z předchozí relace} many {Obnoveno {count} neuložené karty z předchozí relace} other {Obnoveno {count} neuložených karet z předchozí relace}}"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "Zdrojové soubory nebyly přepsány."
+    },
+    "workspace.failed.save": {
+      "message": "Soubor se nepodařilo uložit"
+    },
+    "workspace.failed.open-file": {
+      "message": "Soubor se nepodařilo otevřít"
+    },
+    "workspace.failed.open-folder": {
+      "message": "Složku se nepodařilo otevřít"
+    },
+    "workspace.failed.open-recent": {
+      "message": "Nedávnou položku se nepodařilo otevřít"
+    },
+    "workspace.failed.open-requested": {
+      "message": "Požadované položky se nepodařilo otevřít"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "Přetažené položky se nepodařilo otevřít"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Skript této položky mapy se nepodařilo otevřít"
+    },
+    "workspace.failed.create": {
+      "message": "Položku se nepodařilo vytvořit"
+    },
+    "workspace.failed.rename": {
+      "message": "Položku se nepodařilo přejmenovat"
+    },
+    "workspace.failed.delete": {
+      "message": "Položku se nepodařilo smazat"
+    },
+    "workspace.failed.restore-session": {
+      "message": "Předchozí relaci se nepodařilo obnovit"
+    },
+    "workspace.failed.back-up": {
+      "message": "Neuloženou práci se nepodařilo zálohovat"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Použít menší složku zdrojů nebo zavřít některé karty se zdrojovým kódem a opakovat pokus."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Některé diagnostické zprávy editoru byly přeskočeny, protože je fronta aktualizací plná."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "Podpora při úpravách kódu je omezena"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Zkontrolovat dotčené zdroje v části Podrobnosti a opakovat pokus."
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Některé kontroly editoru nemohly použít aktuální zdrojové soubory."
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "hloubka složek"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "položky adresářů"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "metadata názvů (bajty)"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "cesty souborů include"
+    },
+    "file-actions.included-files.changed": {
+      "message": "Zdrojové soubory se během kontroly souborů include změnily. Spusťte znovu."
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "Hledání souborů include překročilo limit „{budget}“ pro {scope}: využito {used, number, integer}; limit {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Použít menší složku souborů include nebo snížit počet požadovaných souborů include."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "Zdroje pro test mapy se nepodařilo připravit"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "Test mapy překračuje limit zdrojových dat {limit, number, integer} MiB. Spusťte méně map v jednom testu."
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "Test mapy překračuje limit počtu map ({limit, number, integer}). Spusťte méně map v jednom testu."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "Test mapy překračuje limit metadat zdrojů {limit, number, integer} MiB. Spusťte méně map v jednom testu."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "Test mapy překračuje limit počtu záznamů o zdrojových souborech ({limit, number, integer}). Spusťte méně map v jednom testu."
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} překračuje limit {limit, number, integer} MiB na soubor."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "Celková velikost požadovaných zdrojových souborů překračuje limit {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Počet požadovaných zdrojových souborů překračuje limit ({limit, number, integer})."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "Informace o požadovaných zdrojích překračují limit metadat {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Snížit množství požadovaných zdrojových dat a spustit znovu."
+    },
+    "release-check.newer.headline": {
+      "message": "Je k dispozici AoE2RMSIDE {version}"
+    },
+    "release-check.newer.cause": {
+      "message": "Používáte verzi {current}."
+    },
+    "release-check.newer.action": {
+      "message": "Otevřít stránku s vydáními"
+    }
+  }
+}

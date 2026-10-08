@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/certified-constructs/v1",
+  "title": "Shipped certified constructs of one behavior profile",
+  "description": "Presentation only: the commands and block attributes, each in the place where it executed, that at least one case whose native capture matched the preview executed, derived offline from the executed-construct export of the matched cases, shipped beside the frozen profile files and bound by profileId; names and places only, no case identity, script, argument, value, or path; outside every behavior, palette, and generation identity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "compatibility", "profileId", "derivationContract", "entries"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "compatibility": {
+      "$ref": "#/definitions/compatibility"
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "derivationContract": {
+      "const": "aoe2de-native-capture-executed-constructs-v1"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/definitions/certifiedConstructsEntry"
+      }
+    }
+  },
+  "definitions": {
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": {
+          "const": 1
+        },
+        "maximumMajor": {
+          "const": 1
+        }
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "productVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]+)*$"
+    },
+    "construct": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["context", "name"],
+      "properties": {
+        "context": {
+          "description": "Empty before any section header, the section header for a command outside braces, or the create command whose braces hold the attribute.",
+          "type": "string",
+          "pattern": "^(?:|<[A-Z][A-Z_]{0,62}>|create_[a-z][a-z0-9_]{0,56})$"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        }
+      }
+    },
+    "certifiedConstructsEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tableId", "productVersion", "source", "provenance", "constructs"],
+      "properties": {
+        "tableId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$"
+        },
+        "productVersion": {
+          "$ref": "#/definitions/productVersion"
+        },
+        "source": {
+          "const": "matched-native-captures"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tool", "nativeBuild", "matchedCases", "executionsSha256", "derivedOn"],
+          "properties": {
+            "tool": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "nativeBuild": {
+              "$ref": "#/definitions/productVersion"
+            },
+            "matchedCases": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "executionsSha256": {
+              "$ref": "#/definitions/sha256"
+            },
+            "derivedOn": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$"
+            }
+          }
+        },
+        "constructs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4096,
+          "items": {
+            "$ref": "#/definitions/construct"
+          }
+        }
+      }
+    }
+  }
+}

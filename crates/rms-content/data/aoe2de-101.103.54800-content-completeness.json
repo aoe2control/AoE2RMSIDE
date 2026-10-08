@@ -1,0 +1,618 @@
+{
+  "$schema": "https://rmside.invalid/schemas/content-completeness/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "layoutId": "aoe2de-ver89-complete-v1",
+  "behaviorProfileId": "aoe2de-101.103.54800-rms-v1",
+  "contentSchemaVersion": "2.5.0",
+  "nativeBindingsCanonicalSha256": "67af56b275168dd6b785df427f308e0ef01019d40d0bbf10faa28c55c2f8ae82",
+  "datVersionHeader": "VER 8.9",
+  "civilizationCount": 63,
+  "terrainSlotCount": 200,
+  "emittedTerrainCount": 200,
+  "objectSlotCount": 2750,
+  "emittedObjectCount": 2602,
+  "excludedObjects": [
+    {
+      "objectId": 273,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 379,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 382,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 383,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 384,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 386,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 387,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 388,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 467,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 727,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 769,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 770,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 903,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 946,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 947,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 948,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 949,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 950,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 951,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 952,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 953,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 954,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 955,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 956,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 957,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 958,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 959,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 960,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 961,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 962,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 963,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 964,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 965,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 966,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 967,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 968,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 969,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 970,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 971,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 972,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 973,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 974,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 975,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 976,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 977,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 978,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 979,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 980,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 981,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 982,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 983,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 984,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 985,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 986,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 987,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 988,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 989,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 990,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 991,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 992,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 993,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 994,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 995,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 996,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 997,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 998,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 999,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 1000,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2113,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2114,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2115,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2116,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2136,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2137,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2152,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2153,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2154,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2155,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2156,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2157,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2158,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2159,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2160,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2161,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2189,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2239,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2240,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2241,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2242,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2243,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2244,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2245,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2246,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2247,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2248,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2249,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2250,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2266,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2267,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2268,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2269,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2295,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2296,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2297,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2298,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2299,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2300,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2305,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2335,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2336,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2337,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2338,
+      "reason": "source-absent"
+    },
+    {
+      "objectId": 2539,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2540,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2541,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2542,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2543,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2544,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2545,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2546,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2547,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2548,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2549,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2634,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2649,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2660,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2661,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2662,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2663,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2664,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2665,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2666,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2667,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2668,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2669,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2670,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2671,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2672,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2673,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2674,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2675,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2676,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2677,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2695,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2696,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2697,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2698,
+      "reason": "class-sentinel"
+    },
+    {
+      "objectId": 2699,
+      "reason": "class-sentinel"
+    }
+  ],
+  "restrictionCount": 54,
+  "resourceCount": 20,
+  "objectReplacementRecordCount": 8,
+  "emittedObjectReplacementRuleCount": 8,
+  "implicitDefinitionCount": 1396,
+  "implicitDefinitionsCanonicalSha256": "34ff459f4c71513ae80e26b4d063cf9a0a3acd64a89d4b66840aab99acc4f9aa"
+}

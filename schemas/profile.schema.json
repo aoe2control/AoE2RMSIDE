@@ -1,0 +1,223 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/profile/v1",
+  "title": "Sparse RMS behavior profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "compatibility", "profileId", "behaviorVersion", "decisions"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "enum": ["1.0.0", "1.1.0"] },
+    "compatibility": { "$ref": "#/definitions/compatibility" },
+    "profileId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "behaviorVersion": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "productVersions": {
+      "type": "array",
+      "maxItems": 256,
+      "items": { "type": "string", "minLength": 1, "maxLength": 64 },
+      "uniqueItems": true
+    },
+    "unverifiedProductVersions": {
+      "description": "Schema 1.1: product versions this profile targets without verification.",
+      "type": "array",
+      "maxItems": 256,
+      "items": { "type": "string", "pattern": "^[0-9]+(?:\\.[0-9]+)*$", "maxLength": 64 },
+      "uniqueItems": true
+    },
+    "capabilities": {
+      "type": "object",
+      "maxProperties": 256,
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+      "additionalProperties": { "enum": ["unsupported", "partial", "complete"] }
+    },
+    "minimapPalettes": { "$ref": "#/definitions/minimapPalettes" },
+    "semanticTokenAliases": {
+      "type": "object",
+      "maxProperties": 1024,
+      "propertyNames": { "pattern": "^-?[0-9]+$" },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+      }
+    },
+    "decisions": { "$ref": "#/definitions/decisions" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "required": ["schemaVersion"],
+        "properties": { "schemaVersion": { "const": "1.0.0" } }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "unverifiedProductVersions": false,
+          "decisions": {
+            "type": "object",
+            "properties": {
+              "generator": {
+                "type": "object",
+                "properties": {
+                  "object-group-roll-filter": false,
+                  "path-no-route-result": false,
+                  "building-spawn-placement": false,
+                  "foundation-terrain-remap": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "type": "object",
+        "properties": {
+          "decisions": {
+            "type": "object",
+            "properties": {
+              "generator": {
+                "type": "object",
+                "required": [
+                  "object-group-roll-filter",
+                  "path-no-route-result",
+                  "building-spawn-placement",
+                  "foundation-terrain-remap"
+                ],
+                "properties": {
+                  "object-group-roll-filter": {
+                    "enum": ["weight-at-most-roll", "weight-at-least-roll"]
+                  },
+                  "path-no-route-result": { "enum": [3, 4] },
+                  "building-spawn-placement": {
+                    "enum": ["inner-tile-fallback", "unit-ring-nearest-default"]
+                  },
+                  "foundation-terrain-remap": {
+                    "enum": ["remap-8-to-27-and-64-to-54", "none"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "rgb24": { "type": "integer", "minimum": 0, "maximum": 16777215 },
+    "terrainMinimapColor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["terrainId", "highColor", "mediumColor", "lowColor"],
+      "properties": {
+        "terrainId": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "highColor": { "$ref": "#/definitions/rgb24" },
+        "mediumColor": { "$ref": "#/definitions/rgb24" },
+        "lowColor": { "$ref": "#/definitions/rgb24" }
+      }
+    },
+    "neutralObjectMinimapColor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectId", "color"],
+      "properties": {
+        "objectId": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "color": { "$ref": "#/definitions/rgb24" }
+      }
+    },
+    "cliffMinimapColor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cliffType", "leftColor", "rightColor"],
+      "properties": {
+        "cliffType": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "leftColor": { "$ref": "#/definitions/rgb24" },
+        "rightColor": { "$ref": "#/definitions/rgb24" }
+      }
+    },
+    "minimapPaletteEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paletteId",
+        "productVersion",
+        "source",
+        "terrainColors",
+        "neutralObjectColors",
+        "cliffColors"
+      ],
+      "properties": {
+        "paletteId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$" },
+        "productVersion": { "type": "string", "pattern": "^[0-9]+(?:\\.[0-9]+)*$" },
+        "source": { "const": "dedicated-dat-palette-indices" },
+        "terrainColors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4096,
+          "items": { "$ref": "#/definitions/terrainMinimapColor" }
+        },
+        "neutralObjectColors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100000,
+          "items": { "$ref": "#/definitions/neutralObjectMinimapColor" }
+        },
+        "cliffColors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4096,
+          "items": { "$ref": "#/definitions/cliffMinimapColor" }
+        }
+      }
+    },
+    "minimapPalettes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "derivationContract", "entries"],
+      "properties": {
+        "schemaVersion": { "const": "1.0.0" },
+        "derivationContract": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$"
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": { "$ref": "#/definitions/minimapPaletteEntry" }
+        }
+      }
+    },
+    "decisionMap": {
+      "type": "object",
+      "maxProperties": 1024,
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$" },
+      "additionalProperties": {
+        "anyOf": [
+          { "type": "boolean" },
+          { "type": "integer" },
+          { "type": "string", "maxLength": 256 }
+        ]
+      }
+    },
+    "decisions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parser", "rng", "generator", "observedFailures"],
+      "properties": {
+        "parser": { "$ref": "#/definitions/decisionMap" },
+        "rng": { "$ref": "#/definitions/decisionMap" },
+        "generator": { "$ref": "#/definitions/decisionMap" },
+        "observedFailures": { "$ref": "#/definitions/decisionMap" }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    }
+  }
+}

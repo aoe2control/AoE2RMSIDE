@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/setup-context/v1",
+  "title": "RMSIDE typed setup context",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "compatibility",
+    "gameMode",
+    "startingResources",
+    "startingAge",
+    "positionPolicy",
+    "players"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "enum": ["1.0.0", "1.1.0", "1.2.0"] },
+    "compatibility": { "$ref": "#/definitions/compatibility" },
+    "gameMode": {
+      "enum": [
+        "random-map",
+        "regicide",
+        "death-match",
+        "king-of-the-hill",
+        "wonder-race",
+        "defend-the-wonder",
+        "turbo-random-map",
+        "capture-the-relic",
+        "sudden-death",
+        "battle-royale",
+        "empire-wars"
+      ]
+    },
+    "startingResources": {
+      "enum": ["standard", "low", "medium", "high", "ultra-high", "infinite", "random"]
+    },
+    "startingAge": {
+      "enum": [
+        "standard",
+        "dark-age",
+        "feudal-age",
+        "castle-age",
+        "imperial-age",
+        "post-imperial-age"
+      ]
+    },
+    "positionPolicy": { "enum": ["random", "fixed", "team-together"] },
+    "players": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": { "$ref": "#/definitions/player" }
+    },
+    "computerPlayerSlots": {
+      "description": "Setup context 1.1: strictly ascending lobby slots controlled by a computer player; absent when every player is human.",
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": { "type": "integer", "minimum": 1, "maximum": 8 }
+    },
+    "gameModeModifiers": {
+      "description": "Setup context 1.2: additive lobby game-mode modifiers, unique and in this enum's order; absent when none is selected.",
+      "type": "array",
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": { "enum": ["empire-wars", "sudden-death", "regicide", "king-of-the-hill"] }
+    },
+    "turboMode": {
+      "description": "Setup context 1.2: the lobby turbo flag; absent when off.",
+      "type": "boolean"
+    },
+    "fullTechTree": {
+      "description": "Setup context 1.2: the full tech tree option; absent when off.",
+      "type": "boolean"
+    },
+    "antiquityMode": {
+      "description": "Setup context 1.2: the antiquity option; absent when off.",
+      "type": "boolean"
+    },
+    "solidFarms": {
+      "description": "Setup context 1.2: solid (not walkable) farms; absent when off.",
+      "type": "boolean"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "computerPlayerSlots": { "type": "array" } },
+        "required": ["computerPlayerSlots"]
+      },
+      "then": { "properties": { "schemaVersion": { "enum": ["1.1.0", "1.2.0"] } } }
+    },
+    {
+      "if": {
+        "anyOf": [
+          {
+            "properties": { "gameModeModifiers": { "type": "array" } },
+            "required": ["gameModeModifiers"]
+          },
+          { "properties": { "turboMode": { "type": "boolean" } }, "required": ["turboMode"] },
+          { "properties": { "fullTechTree": { "type": "boolean" } }, "required": ["fullTechTree"] },
+          {
+            "properties": { "antiquityMode": { "type": "boolean" } },
+            "required": ["antiquityMode"]
+          },
+          { "properties": { "solidFarms": { "type": "boolean" } }, "required": ["solidFarms"] }
+        ]
+      },
+      "then": { "properties": { "schemaVersion": { "const": "1.2.0" } } }
+    }
+  ],
+  "definitions": {
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    },
+    "player": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot", "team", "civilizationId", "color"],
+      "properties": {
+        "slot": { "type": "integer", "minimum": 1, "maximum": 8 },
+        "team": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "civilizationId": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+        "color": { "type": "integer", "minimum": 0, "maximum": 7 }
+      }
+    }
+  }
+}

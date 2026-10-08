@@ -1,0 +1,17 @@
+target
+node_modules
+apps/desktop/dist
+apps/desktop/out
+.schema-check
+**/test-results
+**/playwright-report
+pnpm-lock.yaml
+Cargo.lock
+LICENSE
+*.md
+*.proto
+**/*.inc
+apps/desktop/src/generated
+crates/rms-content/data/*.json
+crates/xs-analysis/data/*.json
+tools/public-export/tests/fixtures

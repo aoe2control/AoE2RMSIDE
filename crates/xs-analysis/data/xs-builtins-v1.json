@@ -1,0 +1,7390 @@
+{
+  "$schema": "https://rmside.invalid/schemas/xs-builtin-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "catalogId": "aoe2de-xs-builtins-v1",
+  "builds": [
+    {
+      "id": "4x",
+      "productVersion": "101.103.48987"
+    },
+    {
+      "id": "5x",
+      "productVersion": "101.103.54800"
+    }
+  ],
+  "runtimes": [
+    {
+      "id": "rms",
+      "description": "Scripts loaded by #includeXS from a random map script."
+    },
+    {
+      "id": "trigger",
+      "description": "Scenario trigger scripts."
+    },
+    {
+      "id": "ai",
+      "description": "AI scripts."
+    }
+  ],
+  "builtins": [
+    {
+      "name": "abs",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Absolute value.",
+      "basis": "signature"
+    },
+    {
+      "name": "acos",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Arc cosine, in radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "asin",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Arc sine, in radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "atan",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Arc tangent, in radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "atan2",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "y",
+          "type": "float"
+        },
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Angle of the point (x, y) from the origin, in radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "atan2v",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        }
+      ],
+      "summary": "Angle of a vector's x/y direction, in radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "bin",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Parses a binary number from a string, or returns the fallback value.",
+      "basis": "signature"
+    },
+    {
+      "name": "bitAnd",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "v1",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "v2",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Bitwise AND of two integers.",
+      "basis": "signature"
+    },
+    {
+      "name": "bitCastToFloat",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "number",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Reinterprets the bits of an integer as a float.",
+      "basis": "signature"
+    },
+    {
+      "name": "bitCastToInt",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "number",
+          "type": "float"
+        }
+      ],
+      "summary": "Reinterprets the bits of a float as an integer.",
+      "basis": "signature"
+    },
+    {
+      "name": "bitLsh",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "v1",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "v2",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Shifts an integer left by a number of bits.",
+      "basis": "signature"
+    },
+    {
+      "name": "bitNot",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "v1",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Bitwise complement of an integer.",
+      "basis": "signature"
+    },
+    {
+      "name": "bitOr",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "v1",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "v2",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Bitwise OR of two integers.",
+      "basis": "signature"
+    },
+    {
+      "name": "bitRsh",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "v1",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "v2",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Shifts an integer right by a number of bits.",
+      "basis": "signature"
+    },
+    {
+      "name": "bitXor",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "v1",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "v2",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Bitwise exclusive OR of two integers.",
+      "basis": "signature"
+    },
+    {
+      "name": "ceil",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Smallest whole number not below x, as a float.",
+      "basis": "signature"
+    },
+    {
+      "name": "chr",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "A one-character string for a character code.",
+      "basis": "signature"
+    },
+    {
+      "name": "cos",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Cosine of an angle in radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "degrees",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Converts radians to degrees.",
+      "basis": "signature"
+    },
+    {
+      "name": "dist",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "v1",
+          "type": "vector"
+        },
+        {
+          "name": "v2",
+          "type": "vector"
+        }
+      ],
+      "summary": "Distance between two points.",
+      "basis": "signature"
+    },
+    {
+      "name": "exp",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "e raised to the power x.",
+      "basis": "signature"
+    },
+    {
+      "name": "floor",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Largest whole number not above x, as a float.",
+      "basis": "signature"
+    },
+    {
+      "name": "fstr",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ],
+      "summary": "A formatted string.",
+      "basis": "unknown"
+    },
+    {
+      "name": "hex",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Parses a hexadecimal number from a string, or returns the fallback value.",
+      "basis": "signature"
+    },
+    {
+      "name": "ln",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Natural logarithm.",
+      "basis": "signature"
+    },
+    {
+      "name": "log10",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Base-10 logarithm.",
+      "basis": "signature"
+    },
+    {
+      "name": "log2",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Base-2 logarithm.",
+      "basis": "signature"
+    },
+    {
+      "name": "ord",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "character",
+          "type": "string"
+        }
+      ],
+      "summary": "The character code of the first character of a string.",
+      "basis": "signature"
+    },
+    {
+      "name": "pow",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        },
+        {
+          "name": "y",
+          "type": "float"
+        }
+      ],
+      "summary": "x raised to the power y.",
+      "basis": "signature"
+    },
+    {
+      "name": "radians",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Converts degrees to radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "round",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        },
+        {
+          "name": "places",
+          "type": "int",
+          "default": 2
+        }
+      ],
+      "summary": "x rounded to the given number of decimal places.",
+      "basis": "signature"
+    },
+    {
+      "name": "sin",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Sine of an angle in radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "sqrt",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Square root.",
+      "basis": "signature"
+    },
+    {
+      "name": "strCharAt",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "The character at an index, as a string.",
+      "basis": "signature"
+    },
+    {
+      "name": "strContains",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "substring",
+          "type": "string"
+        }
+      ],
+      "summary": "Tells whether a string contains another string.",
+      "basis": "signature"
+    },
+    {
+      "name": "strEndsWith",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "suffix",
+          "type": "string"
+        }
+      ],
+      "summary": "Tells whether a string ends with a suffix.",
+      "basis": "signature"
+    },
+    {
+      "name": "strIndexOf",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "substring",
+          "type": "string"
+        },
+        {
+          "name": "fromIndex",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Index of the first occurrence of a substring at or after a start index.",
+      "basis": "signature"
+    },
+    {
+      "name": "strInsert",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": 0
+        },
+        {
+          "name": "target",
+          "type": "string"
+        }
+      ],
+      "summary": "Inserts text into a string at an index.",
+      "basis": "signature"
+    },
+    {
+      "name": "strJoin",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "arrayId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "delimiter",
+          "type": "string"
+        }
+      ],
+      "summary": "Joins the elements of a string array with a delimiter.",
+      "basis": "signature"
+    },
+    {
+      "name": "strLastIndexOf",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "substring",
+          "type": "string"
+        },
+        {
+          "name": "fromIndex",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Index of the last occurrence of a substring at or before a start index.",
+      "basis": "signature"
+    },
+    {
+      "name": "strLen",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ],
+      "summary": "The number of characters in a string.",
+      "basis": "signature"
+    },
+    {
+      "name": "strRemove",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": 0
+        },
+        {
+          "name": "length",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Removes a run of characters from a string.",
+      "basis": "signature"
+    },
+    {
+      "name": "strRemovePrefix",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "prefix",
+          "type": "string"
+        }
+      ],
+      "summary": "The string without a leading prefix, when present.",
+      "basis": "signature"
+    },
+    {
+      "name": "strRemoveSuffix",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "suffix",
+          "type": "string"
+        }
+      ],
+      "summary": "The string without a trailing suffix, when present.",
+      "basis": "signature"
+    },
+    {
+      "name": "strReplace",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "target",
+          "type": "string"
+        },
+        {
+          "name": "replacement",
+          "type": "string"
+        },
+        {
+          "name": "max",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Replaces occurrences of a target text, optionally limited to a maximum count.",
+      "basis": "signature"
+    },
+    {
+      "name": "strReverse",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ],
+      "summary": "The string with its characters in reverse order.",
+      "basis": "signature"
+    },
+    {
+      "name": "strSplit",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "delimiter",
+          "type": "string"
+        },
+        {
+          "name": "max",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Splits a string at a delimiter into a new string array; returns the array id.",
+      "basis": "signature"
+    },
+    {
+      "name": "strStartsWith",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "prefix",
+          "type": "string"
+        }
+      ],
+      "summary": "Tells whether a string begins with a prefix.",
+      "basis": "signature"
+    },
+    {
+      "name": "strSubstring",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "start",
+          "type": "int",
+          "default": 0
+        },
+        {
+          "name": "end",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The part of a string from a start index up to an end index.",
+      "basis": "signature"
+    },
+    {
+      "name": "strToFloat",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "type": "float"
+        }
+      ],
+      "summary": "Parses a float, or returns the fallback value.",
+      "basis": "signature"
+    },
+    {
+      "name": "strToInt",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "base",
+          "type": "int",
+          "default": 10
+        },
+        {
+          "name": "defaultValue",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Parses an integer in a number base, or returns the fallback value.",
+      "basis": "signature"
+    },
+    {
+      "name": "strToLower",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ],
+      "summary": "The string in lower case.",
+      "basis": "signature"
+    },
+    {
+      "name": "strToUpper",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ],
+      "summary": "The string in upper case.",
+      "basis": "signature"
+    },
+    {
+      "name": "strTrim",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ],
+      "summary": "The string without leading and trailing whitespace.",
+      "basis": "signature"
+    },
+    {
+      "name": "strTrimEnd",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ],
+      "summary": "The string without trailing whitespace.",
+      "basis": "signature"
+    },
+    {
+      "name": "strTrimStart",
+      "category": "language-library",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ],
+      "summary": "The string without leading whitespace.",
+      "basis": "signature"
+    },
+    {
+      "name": "tan",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "Tangent of an angle in radians.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsAddRuntimeEvent",
+      "category": "runtime-meta",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "foo",
+          "type": "string"
+        },
+        {
+          "name": "bar",
+          "type": "string"
+        },
+        {
+          "name": "something",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Registers a runtime event; not for general use.",
+      "basis": "unknown"
+    },
+    {
+      "name": "xsArrayCreateBool",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "defaultValue",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Creates a named bool array of the given size filled with a start value; returns its array id.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayCreateFloat",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "defaultValue",
+          "type": "float"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Creates a named float array of the given size filled with a start value; returns its array id.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayCreateInt",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Number of elements to create.",
+            "basis": "help"
+          }
+        },
+        {
+          "name": "defaultValue",
+          "type": "int",
+          "default": 0,
+          "documentation": {
+            "text": "Value assigned to each element initially.",
+            "basis": "help"
+          }
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "documentation": {
+            "text": "Array name. Choose a name that has not already been assigned.",
+            "basis": "reference"
+          }
+        }
+      ],
+      "summary": "Creates an integer array with a chosen size and initial value.",
+      "basis": "help",
+      "referenceSource": "aoe2de-ugc-guide",
+      "returnDocumentation": {
+        "text": "Returns the new array's ID. The array is not tied to the caller's scope.",
+        "basis": "reference"
+      },
+      "relatedIdentifiers": [
+        "xsArrayGetInt",
+        "xsArraySetInt"
+      ]
+    },
+    {
+      "name": "xsArrayCreateString",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "default": "<default string>"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Creates a named string array of the given size filled with a start value; returns its array id.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayCreateVector",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "size",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "defaultValue",
+          "type": "vector"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Creates a named vector array of the given size filled with a start value; returns its array id.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayGetBool",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads the bool at an index of a bool array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayGetFloat",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads the float at an index of a float array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayGetInt",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Identifier of the integer array.",
+            "basis": "help"
+          }
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Position of the element to read.",
+            "basis": "help"
+          }
+        }
+      ],
+      "summary": "Reads an integer element from an array.",
+      "basis": "help",
+      "returnDocumentation": {
+        "text": "Returns the stored integer.",
+        "basis": "help"
+      },
+      "relatedIdentifiers": [
+        "xsArrayCreateInt",
+        "xsArraySetInt"
+      ]
+    },
+    {
+      "name": "xsArrayGetSize",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The number of elements in an array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayGetString",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads the string at an index of a string array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayGetVector",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads the vector at an index of a vector array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayResizeBool",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "newSize",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Changes the size of a bool array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayResizeFloat",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "newSize",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Changes the size of a float array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayResizeInt",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "newSize",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Changes the size of an integer array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayResizeString",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "newSize",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Changes the size of a string array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArrayResizeVector",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "newSize",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Changes the size of a vector array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArraySetBool",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Stores a bool at an index of a bool array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArraySetFloat",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "float"
+        }
+      ],
+      "summary": "Stores a float at an index of a float array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArraySetInt",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Identifier of the integer array.",
+            "basis": "help"
+          }
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Position of the element to replace.",
+            "basis": "help"
+          }
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Integer to store.",
+            "basis": "help"
+          }
+        }
+      ],
+      "summary": "Writes an integer value into an array.",
+      "basis": "help",
+      "relatedIdentifiers": [
+        "xsArrayCreateInt",
+        "xsArrayGetInt"
+      ]
+    },
+    {
+      "name": "xsArraySetString",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "default": "<default string>"
+        }
+      ],
+      "summary": "Stores a string at an index of a string array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsArraySetVector",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arrayID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "vector"
+        }
+      ],
+      "summary": "Stores a vector at an index of a vector array.",
+      "basis": "help"
+    },
+    {
+      "name": "xsBreakPoint",
+      "category": "runtime-meta",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [],
+      "summary": "Debugger breakpoint; has no effect in release builds of the game.",
+      "basis": "help"
+    },
+    {
+      "name": "xsBuildUnit",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitIds",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "location1",
+          "type": "vector"
+        },
+        {
+          "name": "location2",
+          "type": "vector"
+        },
+        {
+          "name": "isShiftQueue",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "isFormationCommand",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Orders units to construct a building.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsCeilToInt",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "number",
+          "type": "float"
+        }
+      ],
+      "summary": "Rounds a float up to the next whole number and returns it as an integer.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsChatData",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Shows a debug chat message; a %d in the text is replaced by the value.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsClearInstructions",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "panelPosition",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Clears an instruction message panel.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsClearTimer",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "timerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Removes an on-screen timer.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsCloseFile",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [],
+      "summary": "Closes the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsCreateFile",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arg1",
+          "type": "bool",
+          "default": true
+        }
+      ],
+      "summary": "Creates (or opens for appending) the script's data file in the player profile.",
+      "basis": "signature",
+      "parameterNamesKnown": false
+    },
+    {
+      "name": "xsCreateUnit",
+      "category": "write-map-objects",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "location",
+          "type": "vector"
+        },
+        {
+          "name": "foundation",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "playCreatedSound",
+          "type": "bool",
+          "default": true
+        },
+        {
+          "name": "checkCollision",
+          "type": "bool",
+          "default": true
+        }
+      ],
+      "summary": "Creates a unit for a player at a position; returns the new unit id.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsDeclareVictory",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "victory",
+          "type": "bool",
+          "default": true
+        }
+      ],
+      "summary": "Ends the game with victory (or defeat) for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsDisableRule",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "ruleName",
+          "type": "string"
+        }
+      ],
+      "summary": "Turns off the rule with this name so it stops running.",
+      "basis": "help"
+    },
+    {
+      "name": "xsDisableRuleGroup",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "ruleGroupName",
+          "type": "string"
+        }
+      ],
+      "summary": "Turns off every rule that belongs to the named group.",
+      "basis": "help"
+    },
+    {
+      "name": "xsDisableSelf",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [],
+      "summary": "Turns off the rule that is currently running.",
+      "basis": "help"
+    },
+    {
+      "name": "xsDisplayInstructions",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "msg",
+          "type": "string",
+          "documentation": {
+            "text": "Text to display.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "time",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Duration in seconds.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "sourcePlayer",
+          "type": "int",
+          "default": 0,
+          "documentation": {
+            "text": "Player supplying the icon's civilization and color.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "iconObjectId",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Object identifier used for the instruction icon.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "panelPosition",
+          "type": "int",
+          "default": 0,
+          "documentation": {
+            "text": "Panel placement; the guide names cPanelTop as its default.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "playerColorForText",
+          "type": "bool",
+          "default": true
+        },
+        {
+          "name": "playSound",
+          "type": "bool",
+          "default": true
+        },
+        {
+          "name": "soundFilename",
+          "type": "string",
+          "documentation": {
+            "text": "Sound file associated with the instruction.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Recipient player; -1 shows the message to everyone.",
+            "basis": "reference"
+          }
+        }
+      ],
+      "summary": "Shows an instruction message.",
+      "basis": "reference",
+      "referenceSource": "aoe2de-ugc-guide",
+      "relatedIdentifiers": [
+        "cPanelTop",
+        "cPanelMiddle",
+        "cPanelBottom"
+      ]
+    },
+    {
+      "name": "xsDisplayTimer",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "timerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "msg",
+          "type": "string"
+        },
+        {
+          "name": "time",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "timeUnit",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "resetTimer",
+          "type": "bool",
+          "default": true
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Shows an on-screen countdown timer.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsDoesUnitExist",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Tells whether a unit id refers to an existing unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsDumpArrays",
+      "category": "runtime-meta",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [],
+      "summary": "Writes every XS array to the game's debug log.",
+      "basis": "help"
+    },
+    {
+      "name": "xsEffectAmount",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "effect",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Effect selector.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "itemName",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Target object, unit or technology identifier.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "type",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Attribute or operation selector for the effect.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "documentation": {
+            "text": "Numeric operand supplied to the effect.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -2,
+          "documentation": {
+            "text": "When omitted, the guide describes applying the effect to players other than Gaia.",
+            "basis": "reference"
+          }
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Training-location entry override. If omitted, the object's entry setting is used.",
+            "basis": "reference"
+          }
+        }
+      ],
+      "summary": "Applies an effect to object or technology data.",
+      "basis": "reference",
+      "buildDifferences": [
+        {
+          "build": "4x",
+          "parameterCount": 5,
+          "returnType": "void"
+        }
+      ],
+      "referenceSource": "aoe2de-ugc-guide"
+    },
+    {
+      "name": "xsEnableRule",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "ruleName",
+          "type": "string"
+        }
+      ],
+      "summary": "Turns on the rule with this name so the scheduler runs it.",
+      "basis": "help"
+    },
+    {
+      "name": "xsEnableRuleGroup",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "ruleGroupName",
+          "type": "string"
+        }
+      ],
+      "summary": "Turns on every rule that belongs to the named group.",
+      "basis": "help"
+    },
+    {
+      "name": "xsFlashUnit",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "soundEventName",
+          "type": "string",
+          "default": "?capture_complete"
+        }
+      ],
+      "summary": "Flashes a unit on screen with an optional sound.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetAiScriptGoal",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "goalId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads a goal flag shared with AI scripts.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetAiSignal",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "signalId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "useLegacyAi",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Reads a signal value shared with AI scripts.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetCivName",
+      "category": "input-lobby-setup",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "civId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The name of a civilization.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetColorMood",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The current color mood (lighting) setting.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetContextPlayer",
+      "category": "runtime-meta",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The player the script currently acts for.",
+      "basis": "help"
+    },
+    {
+      "name": "xsGetDamageClassName",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "attributeId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The name of a damage (armor) class.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetDataTypeSize",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "type",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The size in bytes of an XS data type in the data file format.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetDifficulty",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The game difficulty setting.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetDiplomacy",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "sourcePlayerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "targetPlayerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The diplomacy stance of one player toward another.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetFilePosition",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The current read/write position of the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetFileSize",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The size of the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetFunctionID",
+      "category": "runtime-meta",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "functionName",
+          "type": "string"
+        }
+      ],
+      "summary": "The internal id of a script function, looked up by name.",
+      "basis": "help"
+    },
+    {
+      "name": "xsGetGameTime",
+      "category": "input-time",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The game time in seconds.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetGarrisonedInUnitId",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The unit this unit is garrisoned in.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetGarrisonedUnitIds",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The units garrisoned in a unit.",
+      "basis": "unknown"
+    },
+    {
+      "name": "xsGetGoal",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "goalID",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads an AI goal value by id (AI scripts only).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetGroupMoveTarget",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "groupId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The position a unit group is moving to.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetHandicapMultiplier",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "A player's handicap multiplier.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetLocale",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The game's language setting.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetLocalPlayerId",
+      "category": "gameplay-only",
+      "builds": [
+        "4x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The player id of the local client.",
+      "basis": "signature",
+      "successor": {
+        "build": "5x",
+        "name": "xsUnsyncGetLocalPlayerId"
+      }
+    },
+    {
+      "name": "xsGetMapHeight",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The map height in tiles.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetMapID",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The id of the selected map type.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetMapName",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "extension",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The name of the map script, optionally with its file extension.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetMapSeed",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "arg1",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The map seed of the generated map.",
+      "basis": "signature",
+      "parameterNamesKnown": false
+    },
+    {
+      "name": "xsGetMapTileAttribute",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "attributeId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads a per-tile map value (terrain, elevation, land id, ...) at a tile.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetMapWidth",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The map width in tiles.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetNumPlayers",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The number of players in the game, not counting Gaia.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectAttribute",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "attribute",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "damageClassOrIndex",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads an attribute of a player's object type (the 5x build also takes an index for list attributes).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectAttributeName",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "attributeId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The name of an object attribute.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectClass",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The class of a player's object type.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectCopyId",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The copy id of a player's object type.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectCount",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "id",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The number of a player's existing objects of a type.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectCountTotal",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "id",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The number of a player's objects of a type, including those not yet finished.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectName",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": 0
+        },
+        {
+          "name": "internalName",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The name of an object type for a player (internal or displayed, optionally localized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectTaskCount",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The number of tasks of a player's object type.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetObjectType",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The type category of a player's object type.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerAttributeName",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "resourceId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The name of a player resource or attribute.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerCivilization",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerID",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The civilization id of a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerCivName",
+      "category": "input-lobby-setup",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The civilization name shown for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerColor",
+      "category": "input-lobby-setup",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "A player's color id.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerColorTag",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The text color tag for a player's color.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerInGame",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "playerID",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Tells whether a player is still in the game.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerName",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "A player's name.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerNumberOfObjects",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The number of object types defined for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerNumberOfTechs",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerID",
+          "type": "int",
+          "default": -1,
+          "documentation": {
+            "text": "Player whose technology count is requested.",
+            "basis": "signature"
+          }
+        }
+      ],
+      "summary": "Returns a player's technology count.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerType",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The kind of player in a slot (human, computer, ...).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetPlayerUnitIds",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "objectOrClassId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "arrayId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Fills an int array with a player's unit ids of an object or class; returns the count.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetRandomNumber",
+      "category": "input-random",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "A random integer from the game's synchronized random stream.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetRandomNumberLH",
+      "category": "input-random",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "low",
+          "type": "int",
+          "default": 0
+        },
+        {
+          "name": "high",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "A random integer between low and high from the game's synchronized random stream.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetRandomNumberMax",
+      "category": "input-random",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "max",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "A random integer below max from the game's synchronized random stream.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetStrategicNumber",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "snID",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads an AI strategic number by id (AI scripts only).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetString",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "stringId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "A string from the game's string table by id, optionally localized.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetTaskAmount",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "taskFieldId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads one of the loaded task fields.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetTechAttribute",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "techId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "techAttribute",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "indexOrCostType",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Reads an attribute of a technology for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetTechName",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "techId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": 0
+        },
+        {
+          "name": "internalName",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The name of a technology for a player (internal or displayed, optionally localized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetTechState",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "techId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The research state of a technology for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetTime",
+      "category": "input-time",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "Reads the game-time counter.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetTimerTimeRemaining",
+      "category": "gameplay-only",
+      "builds": [
+        "4x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "timerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "timeUnit",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Time left on an on-screen timer.",
+      "basis": "signature",
+      "successor": {
+        "build": "5x",
+        "name": "xsUnsyncGetTimerTimeRemaining"
+      }
+    },
+    {
+      "name": "xsGetTurn",
+      "category": "input-time",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The current simulation turn number.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitAttribute",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "attribute",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "damageClassOrIndex",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads an attribute of an individual unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitAttributeHeld",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "attributeId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The amount of a resource a unit carries.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitAttributeTypesHeld",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The resource kinds a unit carries.",
+      "basis": "unknown"
+    },
+    {
+      "name": "xsGetUnitBuildPoints",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The construction progress of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitCaption",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "A unit's caption text.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitCharge",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The charge value of a unit (charged attacks and similar).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitCivName",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "The civilization name shown for a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitClass",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The class of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitCopyId",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The copy id of a unit's object type.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitGatherPoint",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "buildingId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "A building's gather point.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitGroupId",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The group a unit belongs to.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitHitpoints",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The current hit points of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitMoveTarget",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The position a unit is moving to.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitName",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "internalName",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "localized",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "A unit's name (internal or displayed, optionally localized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitObjectId",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The object type id of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitOwner",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The player that owns a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitPlayerName",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The player name shown for a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitPosition",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "A unit's position on the map.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitProperty",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "property",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "typeOrPlayer",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads a unit property.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitTargetUnitId",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The unit a unit is targeting.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitTaskCount",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The number of tasks of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetUnitType",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The type category of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetVictoryCondition",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The victory condition setting.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetVictoryConditionForSecondaryGameMode",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The secondary game mode's victory condition setting.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetVictoryPlayer",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The player currently holding a timed victory condition.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetVictoryPlayerForSecondaryGameMode",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The player holding the secondary game mode's victory condition.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetVictoryTime",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The time limit of a timed victory setting.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetVictoryTimeForSecondaryGameMode",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The time limit of the secondary game mode's victory condition.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetVictoryType",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The victory setting chosen in the lobby.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetWorldPlayerId",
+      "category": "input-lobby-setup",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "scenarioPlayerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The in-game player id for a scenario player slot.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsGetWorldTime",
+      "category": "input-time",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The world simulation time.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsHasResearchedLocalTechnology",
+      "category": "input-world-read",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localTechId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Tells whether a unit has researched a local (per-building) technology.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsInitiateResearch",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "buildingId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "techId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Starts researching a technology at a building.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsIsObjectAvailable",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Tells whether an object type is available to a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsIsObjectValid",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Tells whether an object type id is valid for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsIsRuleEnabled",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "ruleName",
+          "type": "string"
+        }
+      ],
+      "summary": "Tells whether the rule with this name is currently turned on.",
+      "basis": "help"
+    },
+    {
+      "name": "xsIsRuleGroupEnabled",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "ruleGroupName",
+          "type": "string"
+        }
+      ],
+      "summary": "Intended to report whether a rule group is on; the game registers it without a result value.",
+      "basis": "help"
+    },
+    {
+      "name": "xsModifyObjectTasks",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "taskId",
+          "type": "int",
+          "default": -32768
+        },
+        {
+          "name": "edit",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Adds or edits a task of a player's object type from the task fields.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsModifyUnitTasks",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "taskId",
+          "type": "int",
+          "default": -32768
+        },
+        {
+          "name": "edit",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Adds or edits a task of a unit from the task fields.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsObjectHasAction",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "playerID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "unitType",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "actionID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "targetPlayerID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "targetType",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "targetUnitLevel",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Tells whether a unit type has a task of the given kind against a target.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsObjectTaskAmount",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "taskId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Loads one task of a player's object type into the task fields.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsOffsetFilePosition",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arg1",
+          "type": "int",
+          "default": 0
+        },
+        {
+          "name": "arg2",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Moves the read/write position of the open data file relative to its current position.",
+      "basis": "signature",
+      "parameterNamesKnown": false
+    },
+    {
+      "name": "xsOpenFile",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "filename",
+          "type": "string"
+        }
+      ],
+      "summary": "Opens a named data file in the player profile for reading.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsPlayerAttribute",
+      "category": "input-world-read",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "attribute",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads a player resource or attribute (food, population, age, ...).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsPlaySound",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "eventOrSoundFileName",
+          "type": "string"
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "position",
+          "type": "vector"
+        },
+        {
+          "name": "angle",
+          "type": "float"
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "global",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Plays a sound or sound event.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsReadFloat",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [],
+      "summary": "Reads a float from the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsReadInt",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "Reads an integer from the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsReadString",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "string",
+      "parameters": [],
+      "summary": "Reads a string from the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsReadVector",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [],
+      "summary": "Reads a vector from the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsRemoveTask",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "masterUnitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "actionType",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "targetMasterUnitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Removes a task (action) from a unit type for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsRemoveUnit",
+      "category": "write-map-objects",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Removes a unit from the game.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsResearchLocalTechnology",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "buildingId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "localTechId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Researches a local (per-building) technology at a building.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsResearchTechnology",
+      "category": "write-player-state",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "techId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "force",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "arg3",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Researches a technology for a player, optionally ignoring its requirements.",
+      "basis": "signature",
+      "parameterNamesKnown": false
+    },
+    {
+      "name": "xsResetTaskAmount",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [],
+      "summary": "Clears the task fields prepared with xsTaskAmount.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSendChat",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "msg",
+          "type": "string"
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "silent",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Sends a chat message.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetAiScriptGoal",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "goalId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Writes a goal flag shared with AI scripts.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetAiSignal",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "signalId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "useLegacyAi",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Writes a signal value shared with AI scripts.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetChatToPlayer",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "enabled",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Enables or disables chat to a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetColorMood",
+      "category": "write-player-state",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "colorMood",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "interval",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Changes the color mood (lighting) over an interval.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetContextPlayer",
+      "category": "runtime-meta",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "playerID",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Changes the player the script acts for; the game warns against using it casually.",
+      "basis": "help"
+    },
+    {
+      "name": "xsSetDiplomacy",
+      "category": "write-player-state",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "sourcePlayerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "targetPlayerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "diploState",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "mirror",
+          "type": "bool",
+          "default": false
+        }
+      ],
+      "summary": "Sets the diplomacy stance of one player toward another, optionally both ways.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetFilePosition",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "arg1",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Moves the read/write position of the open data file.",
+      "basis": "signature",
+      "parameterNamesKnown": false
+    },
+    {
+      "name": "xsSetGoal",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "goalID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Writes an AI goal value by id (AI scripts only).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetObjectDescription",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ],
+      "summary": "Changes an object type's description for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetPlayerAttribute",
+      "category": "write-player-state",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "attribute",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "float"
+        }
+      ],
+      "summary": "Sets a player resource or attribute (food, population, age, ...).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetPlayerCivName",
+      "category": "write-player-state",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Sets the civilization name shown for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetPlayerColor",
+      "category": "write-player-state",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "colorId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Changes a player's color.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetPlayerName",
+      "category": "write-player-state",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Sets a player's name.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetRuleMaxInterval",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "ruleName",
+          "type": "string"
+        },
+        {
+          "name": "interval",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Changes the maximum interval between runs of the named rule.",
+      "basis": "help"
+    },
+    {
+      "name": "xsSetRuleMaxIntervalSelf",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "interval",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Changes the maximum interval between runs of the running rule.",
+      "basis": "help"
+    },
+    {
+      "name": "xsSetRuleMinInterval",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "ruleName",
+          "type": "string"
+        },
+        {
+          "name": "interval",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Changes the minimum interval between runs of the named rule.",
+      "basis": "help"
+    },
+    {
+      "name": "xsSetRuleMinIntervalSelf",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "interval",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Changes the minimum interval between runs of the running rule.",
+      "basis": "help"
+    },
+    {
+      "name": "xsSetRulePriority",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "ruleName",
+          "type": "string"
+        },
+        {
+          "name": "priority",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Changes the scheduling priority of the named rule.",
+      "basis": "help"
+    },
+    {
+      "name": "xsSetRulePrioritySelf",
+      "category": "rule-scheduling",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "priority",
+          "type": "int",
+          "default": 0
+        }
+      ],
+      "summary": "Changes the scheduling priority of the running rule.",
+      "basis": "help"
+    },
+    {
+      "name": "xsSetStrategicNumber",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "snID",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Writes an AI strategic number by id (AI scripts only).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetTechDescription",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "techId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ],
+      "summary": "Changes a technology's description for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetTechName",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "techId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Renames a technology for a player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetTriggerVariable",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Writes a scenario trigger variable (scenario trigger scripts only).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitAttributeHeld",
+      "category": "write-map-objects",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "float"
+        },
+        {
+          "name": "attributeId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Sets the amount of a resource a unit carries.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitBuildPoints",
+      "category": "write-map-objects",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "float"
+        }
+      ],
+      "summary": "Sets the construction progress of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitCaption",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "caption",
+          "type": "string"
+        }
+      ],
+      "summary": "Sets a unit's caption text.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitCharge",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "float"
+        }
+      ],
+      "summary": "Sets the charge value of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitCivName",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Sets the civilization name shown for a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitGatherPoint",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "buildingId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "position",
+          "type": "vector"
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Sets a building's gather point.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitHitpoints",
+      "category": "write-map-objects",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "float"
+        }
+      ],
+      "summary": "Sets the current hit points of a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitName",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Renames a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitOwner",
+      "category": "write-map-objects",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "flashObject",
+          "type": "bool",
+          "default": true
+        }
+      ],
+      "summary": "Transfers a unit to another player.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitPlayerName",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "summary": "Sets the player name shown for a unit.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitPosition",
+      "category": "write-map-objects",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "position",
+          "type": "vector"
+        },
+        {
+          "name": "checkCollision",
+          "type": "bool",
+          "default": true
+        }
+      ],
+      "summary": "Moves a unit to a position, optionally checking for collisions.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetUnitProperty",
+      "category": "write-map-objects",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "property",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "float"
+        },
+        {
+          "name": "typeOrForce",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Sets a unit property.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetViewPosition",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "position",
+          "type": "vector"
+        },
+        {
+          "name": "duration",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Moves a player's camera to a position.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsSetZoom",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "zoom",
+          "type": "float"
+        },
+        {
+          "name": "duration",
+          "type": "float"
+        }
+      ],
+      "summary": "Changes a player's camera zoom.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsStopUnit",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Stops a unit's current action.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsTask",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "masterUnitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "actionType",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "targetMasterUnitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Adds or edits a task (action) of a unit type for a player, using the prepared task fields.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsTaskAmount",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "taskFieldId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "value",
+          "type": "float"
+        }
+      ],
+      "summary": "Sets one field of the task that the next xsTask call adds or edits.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsTaskUnits",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "void",
+      "parameters": [
+        {
+          "name": "unitIds",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "actionType",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "location",
+          "type": "vector"
+        },
+        {
+          "name": "locationObjectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "isShiftQueue",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "isFormationCommand",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "shouldPlayUnloadSound",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "patrolPoints",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Gives units an order.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsTrainObject",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "buildingId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "objectId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Queues units for training at a building.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsTriggerVariable",
+      "category": "gameplay-only",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Reads a scenario trigger variable (scenario trigger scripts only).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsUnitTaskAmount",
+      "category": "write-object-or-tech-data",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "taskId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Loads one task of a unit into the task fields.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsUnsyncGetLocalPlayerId",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [],
+      "summary": "The player id of the local client (differs per machine; not synchronized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsUnsyncGetPlayerSelectedUnitIds",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "int",
+      "parameters": [
+        {
+          "name": "arrayId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The units the local client has selected (not synchronized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsUnsyncGetTimerTimeRemaining",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "timerId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "timeUnit",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Time left on an on-screen timer as seen by the local client (not synchronized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsUnsyncGetViewPosition",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The camera position of the local client (not synchronized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsUnsyncGetZoom",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "The camera zoom of the local client (not synchronized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsUnsyncIsSandboxMode",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [],
+      "summary": "Tells whether the local client runs in sandbox mode (not synchronized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsUnsyncIsUnitVisible",
+      "category": "gameplay-only",
+      "builds": [
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "unitId",
+          "type": "int",
+          "default": -1
+        },
+        {
+          "name": "allowInFog",
+          "type": "bool",
+          "default": false
+        },
+        {
+          "name": "playerId",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Tells whether a unit is visible to the local client (not synchronized).",
+      "basis": "signature"
+    },
+    {
+      "name": "xsVectorGetX",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        }
+      ],
+      "summary": "Reads the x part of a vector.",
+      "basis": "help"
+    },
+    {
+      "name": "xsVectorGetY",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        }
+      ],
+      "summary": "Reads the y part of a vector.",
+      "basis": "help"
+    },
+    {
+      "name": "xsVectorGetZ",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        }
+      ],
+      "summary": "Reads the z part of a vector.",
+      "basis": "help"
+    },
+    {
+      "name": "xsVectorLength",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "float",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        }
+      ],
+      "summary": "Magnitude of a vector.",
+      "basis": "help"
+    },
+    {
+      "name": "xsVectorNormalize",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        }
+      ],
+      "summary": "The vector scaled to length 1.",
+      "basis": "help"
+    },
+    {
+      "name": "xsVectorSet",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float",
+          "documentation": {
+            "text": "The vector's x component.",
+            "basis": "help"
+          }
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "documentation": {
+            "text": "The vector's y component.",
+            "basis": "help"
+          }
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "documentation": {
+            "text": "The vector's z component.",
+            "basis": "help"
+          }
+        }
+      ],
+      "summary": "Constructs a vector from three components.",
+      "basis": "help",
+      "returnDocumentation": {
+        "text": "Returns the resulting vector.",
+        "basis": "help"
+      },
+      "relatedIdentifiers": [
+        "cOriginVector",
+        "cInvalidVector"
+      ]
+    },
+    {
+      "name": "xsVectorSetX",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        },
+        {
+          "name": "x",
+          "type": "float"
+        }
+      ],
+      "summary": "A copy of the vector with its x component replaced.",
+      "basis": "help"
+    },
+    {
+      "name": "xsVectorSetY",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        },
+        {
+          "name": "y",
+          "type": "float"
+        }
+      ],
+      "summary": "A copy of the vector with its y component replaced.",
+      "basis": "help"
+    },
+    {
+      "name": "xsVectorSetZ",
+      "category": "language-library",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "vector",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "vector"
+        },
+        {
+          "name": "z",
+          "type": "float"
+        }
+      ],
+      "summary": "A copy of the vector with its z component replaced.",
+      "basis": "help"
+    },
+    {
+      "name": "xsWriteFloat",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "float"
+        }
+      ],
+      "summary": "Writes a float to the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsWriteInt",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "int",
+          "default": -1
+        }
+      ],
+      "summary": "Writes an integer to the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsWriteString",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "string"
+        }
+      ],
+      "summary": "Writes a string to the open data file.",
+      "basis": "signature"
+    },
+    {
+      "name": "xsWriteVector",
+      "category": "file-io",
+      "builds": [
+        "4x",
+        "5x"
+      ],
+      "runtimes": [
+        "ai",
+        "rms",
+        "trigger"
+      ],
+      "returnType": "bool",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "vector"
+        }
+      ],
+      "summary": "Writes a vector to the open data file.",
+      "basis": "signature"
+    }
+  ]
+}

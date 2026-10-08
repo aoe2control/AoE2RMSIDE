@@ -1,0 +1,60 @@
+name: Translation suggestion
+description: Suggest a new or better translation. No development experience needed.
+labels: ['translation']
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Thank you for helping translate AoE2RMSIDE. Tell us which text you
+        would like to change and what it should say. A screenshot of where
+        the text appears is very helpful. You can also ask for a language
+        that is not available yet.
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - English
+        - Deutsch - German
+        - Français - French
+        - Español (España) - Spanish, Spain
+        - Español (México) - Spanish, Mexico
+        - Italiano - Italian
+        - Português (Brasil) - Portuguese, Brazil
+        - Русский - Russian
+        - Polski - Polish
+        - Türkçe - Turkish
+        - 简体中文 - Chinese, Simplified
+        - 繁體中文 - Chinese, Traditional
+        - 日本語 - Japanese
+        - 한국어 - Korean
+        - Tiếng Việt - Vietnamese
+        - Bahasa Melayu - Malay
+        - हिन्दी - Hindi
+        - Українська - Ukrainian
+        - Čeština - Czech
+        - Nederlands - Dutch
+        - Another language (name it in the notes)
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Current text, suggested text, and where it appears
+      description: Copy the current text if there is one, write your suggestion, and say where you saw it (menu, button, dialog, message).
+      placeholder: |
+        Current: ...
+        Suggested: ...
+        Where: File menu
+    validations:
+      required: true
+  - type: input
+    id: message-id
+    attributes:
+      label: Message id (optional)
+      description: If you found the text in a language file, its message id, for example app-menu.file.open-file.
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything else that helps, for example why the current wording is confusing, or which language you would like to see added.

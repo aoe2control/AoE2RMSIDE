@@ -1,0 +1,21 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2rmside-map-icon-tree-sprites",
+  "files": [
+    {
+      "path": "assets/original/map-icon-trees/tree-spritesheet-v1.webp",
+      "sha256": "f1c06c3fc22dc11614c965b0e4a2cebf10fa1b91759b7367b59bab1e1b16790c",
+      "authorship": "AoE2RMSIDE project owner; original art created for AoE2RMSIDE on 2026-09-27 and accepted by the project owner.",
+      "license": "Apache-2.0",
+      "sourceClassification": "generated-independent",
+      "created": "2026-09-27",
+      "containsGameContent": false,
+      "transformation": "Copied byte-for-byte as delivered: a 1254 x 1254 RGB WebP. Sixteen tree species in a 4 x 4 grid on a flat magenta (#FF00FF) key background, cells left to right, top to bottom: oak, pine, snow pine, palm, jungle tree, bamboo, dead tree, baobab, acacia, mangrove, olive, cypress, dragon tree, birch, autumn tree, and a generic broadleaf used for every other tree. Bundled with the desktop renderer and processed at run time (chroma key, one-pixel erosion, re-outline, per-cell crop, downscale) into the generated map icon's tree layer."
+    }
+  ]
+}

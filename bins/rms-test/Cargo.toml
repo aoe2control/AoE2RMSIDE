@@ -1,0 +1,38 @@
+[package]
+name = "rms-test"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[features]
+default = ["internal-fixtures"]
+internal-fixtures = []
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+hex.workspace = true
+prost.workspace = true
+rms-analysis.workspace = true
+rms-content.workspace = true
+rms-engine.workspace = true
+rms-profile.workspace = true
+rms-protocol.workspace = true
+rms-semantics.workspace = true
+rms-source.workspace = true
+rms-trace.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+starlark.workspace = true
+starlark_lsp.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { workspace = true, features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_JobObjects",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+] }

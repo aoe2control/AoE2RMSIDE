@@ -1,0 +1,4 @@
+apps/desktop/src/generated/** text eol=lf
+proto/** text eol=lf
+crates/rms-content/data/*.json text eol=lf
+crates/xs-analysis/data/*.json text eol=lf

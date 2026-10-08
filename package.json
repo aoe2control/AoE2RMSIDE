@@ -1,0 +1,27 @@
+{
+  "name": "aoe2-rmside",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": "24.12.0",
+    "pnpm": "11.19.0"
+  },
+  "scripts": {
+    "build": "pnpm --filter @rmside/desktop build",
+    "format:check": "prettier --check . --ignore-unknown",
+    "lint": "pnpm --filter @rmside/desktop lint",
+    "package": "pnpm --filter @rmside/desktop package",
+    "package:zip": "node tools/package-portable.mjs --edition full",
+    "package:xs-preview": "node tools/package-portable.mjs --edition xs-preview",
+    "package:rms-preview": "node tools/package-portable.mjs --edition rms-preview",
+    "package:installer": "node tools/package-installer.mjs --edition full",
+    "schema:generate": "buf generate",
+    "package:prepared": "pnpm --filter @rmside/desktop package:prepared"
+  },
+  "devDependencies": {
+    "@bufbuild/buf": "1.72.0",
+    "@bufbuild/protoc-gen-es": "2.14.0",
+    "prettier": "3.9.6"
+  }
+}

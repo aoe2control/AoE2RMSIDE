@@ -1,0 +1,4618 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "it",
+  "name": "Italiano",
+  "direction": "ltr",
+  "messages": {
+    "app-menu.file.name": {
+      "message": "File"
+    },
+    "app-menu.edit.name": {
+      "message": "Modifica"
+    },
+    "app-menu.view.name": {
+      "message": "Visualizza"
+    },
+    "app-menu.help.name": {
+      "message": "Aiuto"
+    },
+    "app-menu.file.new-file": {
+      "message": "Nuovo file"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Nuovo script di test delle mappe"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Genera file di definizioni…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Nuovo script XS"
+    },
+    "app-menu.file.open-file": {
+      "message": "Apri file…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Apri cartella…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Sfoglia mappe installate…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Installa come mod…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Apri cartella del gioco"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Scollega cartella del gioco"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Importa rapporto di test…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Apri recenti"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Nessun file o cartella recente"
+    },
+    "app-menu.file.save": {
+      "message": "Salva"
+    },
+    "app-menu.file.save-as": {
+      "message": "Salva con nome…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "Scegli app predefinita per i file RMS…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Impossibile aprire le impostazioni di Windows"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "Aperta la pagina App predefinite di Windows"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "Per aprire i file .rms e .rms2 con AoE2RMSIDE, selezionalo in quella pagina. Windows cambia l’app predefinita solo dopo la tua conferma."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Chiudi scheda"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Chiudi cartella"
+    },
+    "app-menu.file.close-window": {
+      "message": "Chiudi finestra"
+    },
+    "app-menu.file.exit": {
+      "message": "Esci"
+    },
+    "app-menu.edit.undo": {
+      "message": "Annulla"
+    },
+    "app-menu.edit.redo": {
+      "message": "Ripristina"
+    },
+    "app-menu.edit.cut": {
+      "message": "Taglia"
+    },
+    "app-menu.edit.copy": {
+      "message": "Copia"
+    },
+    "app-menu.edit.paste": {
+      "message": "Incolla"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Seleziona tutto"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Formatta documento"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Formatta al salvataggio"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "Applica rientro ai blocchi if/else"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Elimina senza passare dal Cestino"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Ripristina disposizione"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Rendering delle mappe con GPU"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Mostra fasi di generazione"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Mostra suggerimenti nel codice"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Regole di analisi"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Lingua…"
+    },
+    "app-menu.view.theme": {
+      "message": "Tema"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Sistema"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Chiaro"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Scuro"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Dimensioni effettive"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Ingrandisci"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Riduci"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Attiva/disattiva schermo intero"
+    },
+    "app-menu.help.documentation": {
+      "message": "Documentazione"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Unisciti a Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Segnala un problema"
+    },
+    "app-menu.help.about": {
+      "message": "Informazioni su {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "Impossibile aprire la cartella del gioco collegata"
+    },
+    "about.version": {
+      "message": "Versione {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "Editor di script XS"
+    },
+    "about.edition.rms-preview": {
+      "message": "Editor di script RMS e XS"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Un editor indipendente e non ufficiale di script per mappe casuali. La sua implementazione riproduce il modo in cui Age of Empires II: Definitive Edition legge questi script e genera le mappe."
+    },
+    "about.disclosure.independent": {
+      "message": "Un editor di script indipendente e non ufficiale per Age of Empires II: Definitive Edition."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "La corrispondenza tra le mappe generate e quelle del gioco è garantita solo per le versioni verificate; le versioni più recenti funzionano senza questa garanzia. Alcune particolarità del gioco sono riprodotte volutamente, affinché le mappe si comportino allo stesso modo."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE non distribuisce file né risorse grafiche del gioco. Le risorse ufficiali vengono lette solo da un’installazione locale e le Texture del gioco vengono estratte solo dai file del gioco installato."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE non distribuisce file né risorse grafiche del gioco. Le risorse ufficiali vengono lette solo da un’installazione locale."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Nessuna affiliazione o approvazione da parte di Microsoft, Xbox Game Studios, World's Edge o Activision."
+    },
+    "about.credits": {
+      "message": "Crediti\n{maintainer} — Ideatore e responsabile del progetto"
+    },
+    "about.credits.research": {
+      "message": "Grazie a {author}, il cui {guide} ci ha insegnato molto di ciò che sappiamo sugli script per mappe casuali."
+    },
+    "about.credits.xs-research": {
+      "message": "Grazie a {author}, la cui documentazione XS nel {guide} è stata il punto di partenza per il supporto XS."
+    },
+    "about.close": {
+      "message": "Chiudi"
+    },
+    "about.documentation": {
+      "message": "Documentazione"
+    },
+    "dialog.confirm.title": {
+      "message": "Conferma azione"
+    },
+    "dialog.confirm.cancel": {
+      "message": "Annulla"
+    },
+    "dialog.confirm.continue": {
+      "message": "Continua"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "Salvare le modifiche a {name}?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, one {Salvare le modifiche a {count} file?} many {Salvare le modifiche a {count} file?} other {Salvare le modifiche a {count} file?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "Le modifiche non salvate andranno perse se chiudi la finestra."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "Le modifiche non salvate andranno perse se chiudi questa scheda."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "Le modifiche non salvate andranno perse se chiudi questa cartella."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "Le modifiche non salvate andranno perse se elimini {name}."
+    },
+    "dialog.unsaved.save": {
+      "message": "Salva"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Salva tutto"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Non salvare"
+    },
+    "dialog.external-change.title": {
+      "message": "{name} è stato modificato al di fuori di AoE2RMSIDE"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Sostituendo il file perderesti la versione esterna. Ricaricalo, sostituiscilo con il contenuto dell’editor oppure annulla."
+    },
+    "dialog.external-change.replace": {
+      "message": "Sostituisci su disco"
+    },
+    "dialog.external-change.reload": {
+      "message": "Ricarica da disco"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Ricaricando perderai il contenuto non salvato dell’editor. Continua a modificare il file per risolvere il conflitto al salvataggio."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Continua a modificare"
+    },
+    "dialog.delete-entry.title": {
+      "message": "Spostare {name} nel Cestino?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "La cartella non è vuota. Verrà spostata nel Cestino insieme a tutto il suo contenuto."
+    },
+    "dialog.delete-entry.description": {
+      "message": "L’elemento verrà spostato nel Cestino."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Sposta nel Cestino"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "Eliminare definitivamente {name}?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "La cartella non è vuota. Verrà eliminata definitivamente con tutto il suo contenuto, senza passare dal Cestino. Questa operazione non può essere annullata."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "L’elemento verrà eliminato definitivamente, senza passare dal Cestino. Questa operazione non può essere annullata."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Elimina definitivamente"
+    },
+    "output.clear": {
+      "message": "Cancella output"
+    },
+    "output.source.run": {
+      "message": "Esecuzione"
+    },
+    "output.source.script": {
+      "message": "Script"
+    },
+    "output.source.preview": {
+      "message": "Anteprima"
+    },
+    "output.source.map-test": {
+      "message": "Test mappe"
+    },
+    "output.source.deploy": {
+      "message": "Installazione"
+    },
+    "output.source.live-test": {
+      "message": "Test nel gioco"
+    },
+    "output.source.recovery": {
+      "message": "Ripristino"
+    },
+    "output.source.update": {
+      "message": "Aggiornamento"
+    },
+    "output.source.files": {
+      "message": "File"
+    },
+    "output.source.game-folder": {
+      "message": "Cartella del gioco"
+    },
+    "output.source.game-textures": {
+      "message": "Texture del gioco"
+    },
+    "output.source.app": {
+      "message": "Applicazione"
+    },
+    "output.log.label": {
+      "message": "{count, plural, one {{count} messaggio di output} many {{count} messaggi di output} other {{count} messaggi di output}}"
+    },
+    "output.empty": {
+      "message": "Esegui una mappa per vedere qui i risultati."
+    },
+    "output.empty.filtered": {
+      "message": "Nessun messaggio corrisponde al filtro."
+    },
+    "output.jump-to-latest": {
+      "message": "Vai ai più recenti ({count} nuovi)"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, one {Ripetuto {count} volta} many {Ripetuto {count} volte} other {Ripetuto {count} volte}}"
+    },
+    "output.details": {
+      "message": "Dettagli"
+    },
+    "output.run.show": {
+      "message": "Mostra messaggi dell’esecuzione"
+    },
+    "output.run.hide": {
+      "message": "Nascondi messaggi dell’esecuzione"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, one {{count} riga precedente non mostrata} many {{count} righe precedenti non mostrate} other {{count} righe precedenti non mostrate}}"
+    },
+    "output.run.seed": {
+      "message": "seme {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, one {{count} giocatore} many {{count} giocatori} other {{count} giocatori}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, one {{count} mappa} many {{count} mappe} other {{count} mappe}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ms"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} s"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} min {seconds} s"
+    },
+    "output.constructs.heading": {
+      "message": "Non confrontato con il gioco"
+    },
+    "output.constructs.label": {
+      "message": "Comandi non confrontati con il gioco"
+    },
+    "output.constructs.go-to": {
+      "message": "Vai al primo utilizzo"
+    },
+    "output.constructs.more": {
+      "message": "e altri {count}"
+    },
+    "installed-maps.filter.group": {
+      "message": "Origine delle mappe"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Mappe del gioco ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Mappe dei mod locali ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Mappe dei mod seguiti ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Tutte le origini delle mappe sono disattivate. Attivane una per elencarne le mappe."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Nessuna mappa casuale installata proviene dalle origini selezionate."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Nessuna mappa casuale installata delle origini selezionate corrisponde alla ricerca."
+    },
+    "installed-maps.empty.none": {
+      "message": "Non sono state trovate mappe casuali del gioco, di mod locali o di mod seguiti."
+    },
+    "installed-maps.empty.search": {
+      "message": "Nessuna mappa casuale installata corrisponde alla ricerca."
+    },
+    "installed-maps.title": {
+      "message": "Mappe casuali installate"
+    },
+    "installed-maps.close": {
+      "message": "Chiudi mappe casuali installate"
+    },
+    "installed-maps.search": {
+      "message": "Cerca mappe casuali installate"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Cerca mappe"
+    },
+    "installed-maps.search.clear": {
+      "message": "Cancella ricerca delle mappe"
+    },
+    "installed-maps.loading": {
+      "message": "Caricamento delle mappe casuali installate"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Seleziona la cartella del gioco per elencare i file RMS installati"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Del gioco"
+    },
+    "installed-maps.origin.local": {
+      "message": "Mod locale"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Mod seguito"
+    },
+    "installed-maps.clone": {
+      "message": "Clona per modificare"
+    },
+    "installed-maps.open-failed": {
+      "message": "Impossibile aprire la mappa"
+    },
+    "installed-maps.clone-failed": {
+      "message": "Impossibile clonare la mappa"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Impossibile elencare le mappe installate"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, one {Clonato # file della mappa da modificare} many {Clonati # file della mappa da modificare} other {Clonati # file della mappa da modificare}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "{name} non è stato copiato"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "La mappa clonata vi fa riferimento, ma non fa parte della mappa installata."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Il gioco fornisce questo file; non fa parte della mappa installata."
+    },
+    "run-menu.control.detach": {
+      "message": "Disconnetti AoE2Control"
+    },
+    "run-menu.control.remove": {
+      "message": "Rimuovi AoE2Control"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control si sta connettendo"
+    },
+    "run-menu.control.detaching": {
+      "message": "Disconnessione di AoE2Control…"
+    },
+    "run-menu.control.busy": {
+      "message": "Attendi il termine dell’operazione corrente di AoE2Control"
+    },
+    "run-menu.run-on-save": {
+      "message": "Al salvataggio"
+    },
+    "run-menu.run-on-edit": {
+      "message": "Alla modifica"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Preimpostazione"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Preimpostazione {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Impostazioni della preimpostazione di anteprima"
+    },
+    "run-menu.preset.manage": {
+      "message": "Gestisci preimpostazioni di anteprima"
+    },
+    "run-menu.preset.new": {
+      "message": "Nuova preimpostazione"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Assegna un nome alla nuova preimpostazione di anteprima"
+    },
+    "run-menu.preset.rename": {
+      "message": "Rinomina {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "Salva {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "Modifica {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "Elimina {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "Eliminare la preimpostazione {name}?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "Le impostazioni di anteprima salvate in questa preimpostazione verranno eliminate."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Elimina"
+    },
+    "run-menu.preset.name-length": {
+      "message": "I nomi delle preimpostazioni devono avere da 1 a 64 caratteri"
+    },
+    "run-menu.preset.exists": {
+      "message": "Esiste già una preimpostazione chiamata {name}"
+    },
+    "run-menu.preset.limit": {
+      "message": "È possibile salvare al massimo 64 preimpostazioni"
+    },
+    "run-menu.map-size": {
+      "message": "Dimensioni mappa"
+    },
+    "run-menu.game-mode": {
+      "message": "Modalità di gioco"
+    },
+    "run-menu.starting-resources": {
+      "message": "Risorse iniziali"
+    },
+    "run-menu.starting-age": {
+      "message": "Età d’inizio"
+    },
+    "run-menu.ending-age": {
+      "message": "Età finale"
+    },
+    "run-menu.position-policy": {
+      "message": "Disposizione dei giocatori"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Seleziona"
+    },
+    "run-menu.turbo-note": {
+      "message": "Mappa casuale turbo è la vecchia modalità e rimane invariata. Mappa casuale con Turbo fornisce le etichette turbo del gioco."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Usa Mappa casuale + Turbo"
+    },
+    "run-menu.players.configure": {
+      "message": "Configura giocatori"
+    },
+    "run-menu.players.count": {
+      "message": "Numero di giocatori"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, one {# giocatore} many {# giocatori} other {# giocatori}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Posto del giocatore {player}"
+    },
+    "run-menu.players.color": {
+      "message": "Colore del giocatore {player}"
+    },
+    "run-menu.players.civilization": {
+      "message": "Civiltà del giocatore {player}"
+    },
+    "run-menu.players.team": {
+      "message": "Squadra del giocatore {player}"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Giocatore {player} controllato dal computer"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Giocatore controllato dal computer (definisce AI_PLAYERS)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "Nei test nel gioco, il computer controlla tutti i giocatori dopo P1"
+    },
+    "run-menu.players.live-note": {
+      "message": "Nei test nel gioco, il computer controlla tutti i giocatori dopo P1."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "Nei test nel gioco, il computer controlla tutti i giocatori dopo P1. Assegna un giocatore a P1: sarà quello che controllerai."
+    },
+    "run-menu.lobby.label": {
+      "message": "Opzioni della sala"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Opzioni della sala, {count} attive"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Modificatori modalità di gioco"
+    },
+    "run-menu.lobby.options": {
+      "message": "Opzioni"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (modalità di gioco)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Aggiunge Empire Wars alla modalità di gioco. Definisce EMPIRE_WARS."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Aggiunge Morte improvvisa alla modalità di gioco. Definisce SUDDEN_DEATH."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Aggiunge Regicidio alla modalità di gioco. Definisce REGICIDE."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Aggiunge Re della collina alla modalità di gioco. Definisce KING_OT_HILL."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Accelera la partita. Definisce TURBO_MODE e, in Mappa casuale, TURBO_RANDOM_MAP."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Ogni civiltà può ricercare tutte le tecnologie. Definisce FULL_TECH_TREE."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Modalità Antichità. Definisce ANTIQUITY_MODE; molte mappe cambiano con questa modalità."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Le unità non possono attraversare le fattorie. Definisce SOLID_FARMS."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "Regicidio richiede un re per ogni giocatore. Su una mappa senza re, il gioco termina subito la partita."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Cartella locale del gioco"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (locale)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (non verificata)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Nessun profilo incluso"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Nessuna versione inclusa"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Versione del gioco per l’anteprima"
+    },
+    "run-menu.version.game-version": {
+      "message": "Versione del gioco"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Selezionata la versione locale del gioco; l’anteprima viene eseguita di nuovo"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} non è una versione verificata per RMS; le anteprime usano il profilo di comportamento verificato più recente ({profile}). Il funzionamento potrebbe non risentirne. Se la generazione non corrisponde al gioco, cerca un aggiornamento dell’IDE o segnala il problema su {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "non disponibile"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Scegli cartella del gioco"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Selezione cartella del gioco…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "In uso AoE2DE {version} installato localmente"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "In uso l’installazione locale di AoE2DE selezionata"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "Impossibile caricare le impostazioni di esecuzione"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "Le impostazioni di esecuzione non sono state salvate"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "L’editor non ha potuto usare le impostazioni di esecuzione"
+    },
+    "run-menu.run.warning": {
+      "message": "La mappa presenta un avviso"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Cache dell’anteprima svuotata"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "I casi di test interni richiedono uno script .rms o .rms2 non vuoto"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Civiltà casuali per questa anteprima: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Giocatore {player} {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "In un test nel gioco, il gioco effettua la propria scelta casuale."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, one {# giocatore} many {# giocatori} other {# giocatori}}"
+    },
+    "run-menu.result.error": {
+      "message": "Errore"
+    },
+    "run-menu.result.failed": {
+      "message": "Non riuscito"
+    },
+    "run-menu.result.passed": {
+      "message": "Superato"
+    },
+    "run-menu.result.stopped": {
+      "message": "Interrotto"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Interrotto, ultima mappa conservata"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Caso di test sintetico, non certificato"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Caso di test sintetico, non certificato, riutilizzato"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Generata, riutilizzata"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Generata · versione del gioco non verificata"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Generata, riutilizzata · versione del gioco non verificata"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Impossibile eseguire l’anteprima"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "Lo script corrente è vuoto."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "Lo script corrente contiene errori di sintassi."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Il profilo di comportamento selezionato non è disponibile."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Non è disponibile alcun pacchetto di contenuti compatibile con la versione del gioco selezionata."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Non è disponibile alcun pacchetto di contenuti compatibile con il profilo."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Un’altra esecuzione è ancora in corso."
+    },
+    "run-menu.blocked.loading": {
+      "message": "La configurazione dell’anteprima è ancora in caricamento."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "È possibile installare solo i file principali .rms e .rms2."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "Lo script RMS selezionato è vuoto."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "Lo script RMS selezionato contiene errori di sintassi."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "Impossibile pianificare l’esecuzione dello script RMS selezionato."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "Lo stato del blocco del seme non è valido."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "Lo stato dell’esecuzione al salvataggio non è valido."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "Lo stato dell’esecuzione alla modifica non è valido."
+    },
+    "run-menu.invalid.seed": {
+      "message": "Il seme deve essere un numero intero da 0 a 4294967295."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "Le dimensioni della mappa devono corrispondere a un’opzione supportata dal gioco."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Il numero di giocatori deve essere compreso tra 1 e 8."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "I posti dei giocatori devono contenere otto valori validi."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Ogni giocatore attivo deve occupare un posto diverso."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "I colori dei giocatori devono contenere otto valori validi."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Ogni giocatore attivo deve avere un colore diverso."
+    },
+    "run-menu.invalid.teams": {
+      "message": "Le squadre dei giocatori devono contenere otto valori, da Nessuna squadra a Squadra 4."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "Le civiltà predefinite devono includere otto posti giocatore."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "La scelta tra umano e computer deve contenere otto valori."
+    },
+    "run-menu.invalid.profile": {
+      "message": "È necessario un profilo di comportamento noto."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "L’ambito di selezione della versione non è valido."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "È necessaria una modalità o un contesto di gioco."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "I modificatori della modalità di gioco devono essere noti e non ripetersi."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Le opzioni della sala devono essere attive o disattive."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "Le risorse iniziali non sono valide."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "L’età d’inizio non è valida."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "L’età finale non è valida."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "L’età finale non può precedere quella d’inizio."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "La disposizione dei giocatori non è valida."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "Il livello di raccolta delle tracce non è valido."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Il numero di core di test deve essere Automatico oppure da 1 a 32."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "I file di inclusione standard richiedono la cartella del gioco"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "I file di inclusione standard richiedono la versione locale del gioco, ma è selezionata una versione inclusa nell’IDE."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "I file di inclusione standard richiedono una cartella del gioco collegata, ma non ne è collegata nessuna."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "I file di inclusione standard richiedono resources/_common/drs/gamedata_x2 nella cartella del gioco collegata, ma la cartella manca."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Impossibile analizzare lo script"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Impossibile verificare lo script"
+    },
+    "run-menu.failure.not-started": {
+      "message": "Impossibile avviare l’esecuzione"
+    },
+    "run-menu.failure.generation": {
+      "message": "Generazione non riuscita"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Test delle mappe"
+    },
+    "settings.language.title": {
+      "message": "Lingua"
+    },
+    "settings.language.description": {
+      "message": "Menu, finestre di dialogo e messaggi usano questa lingua. I comandi degli script, i log e i pacchetti di assistenza rimangono in inglese."
+    },
+    "settings.language.label": {
+      "message": "Lingua dell’interfaccia"
+    },
+    "settings.language.system": {
+      "message": "Lingua di visualizzazione di Windows ({language})"
+    },
+    "settings.language.close": {
+      "message": "Chiudi"
+    },
+    "settings.language.close-label": {
+      "message": "Chiudi impostazioni della lingua"
+    },
+    "settings.language.editor-next-start": {
+      "message": "I menu dell’editor di codice cambieranno al prossimo avvio."
+    },
+    "message.action.report-problem": {
+      "message": "Segnala questo problema"
+    },
+    "message.action.get-newer-control": {
+      "message": "Ottieni una versione più recente di AoE2Control"
+    },
+    "message.action.link-game-folder": {
+      "message": "Collega la cartella del gioco"
+    },
+    "message.action.verify-game-files": {
+      "message": "Verifica i file del gioco su Steam"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Seleziona la versione locale del gioco"
+    },
+    "message.action.check-include-name": {
+      "message": "Controlla il nome del file incluso"
+    },
+    "message.action.open-problems": {
+      "message": "Apri il pannello Problemi"
+    },
+    "message.action.choose-map-size": {
+      "message": "Scegli altre dimensioni della mappa"
+    },
+    "message.action.change-player-count": {
+      "message": "Cambia il numero di giocatori"
+    },
+    "message.action.open-players-menu": {
+      "message": "Apri il menu dei giocatori"
+    },
+    "message.action.try-another-seed": {
+      "message": "Prova un altro seme"
+    },
+    "message.action.reinstall": {
+      "message": "Reinstalla o aggiorna AoE2RMSIDE"
+    },
+    "message.action.check-update": {
+      "message": "Cerca un aggiornamento di AoE2RMSIDE"
+    },
+    "message.action.reconnect-control": {
+      "message": "Riconnetti AoE2Control e riprova"
+    },
+    "message.action.check-control-file": {
+      "message": "Controlla che il file AoE2Control selezionato funzioni, poi riprova"
+    },
+    "message.action.wait-run-again": {
+      "message": "Attendi un momento, poi premi di nuovo Esegui"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Premi di nuovo Esegui; se il problema persiste, riavvia AoE2DE"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "Riavvia AoE2DE, poi premi di nuovo Esegui"
+    },
+    "message.action.check-game-window": {
+      "message": "Controlla la finestra del gioco, poi premi di nuovo Esegui"
+    },
+    "message.action.press-run-again": {
+      "message": "Premi di nuovo Esegui"
+    },
+    "message.action.wait-try-again": {
+      "message": "Attendi un momento, poi riprova"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Apri di nuovo Installa come mod"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Scegli un altro nome per il mod"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Esegui di nuovo il test delle mappe"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Un posto giocatore"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, riga {line}"
+    },
+    "message.format.the-script": {
+      "message": "Lo script"
+    },
+    "message.format.the-folder": {
+      "message": "La cartella"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "la cartella XS del tuo profilo"
+    },
+    "message.format.the-map-test": {
+      "message": "il test delle mappe"
+    },
+    "message.format.a-map-test": {
+      "message": "un test delle mappe"
+    },
+    "message.format.preview-kept": {
+      "message": "L’anteprima è stata conservata."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "L’anteprima funziona anche senza questo componente."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Lo script è cambiato durante la generazione"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "La versione più recente verrà eseguita subito dopo."
+    },
+    "message.xs-syntax.headline": {
+      "message": "Un file XS contiene errori di sintassi"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} contiene errori di sintassi XS"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name}, riga {line}, impedisce al gioco di caricare l’XS della mappa, quindi il gioco non è stato modificato."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Il gioco non ha potuto caricare l’XS della mappa, quindi non è stato modificato."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Correggi gli errori elencati in Problemi, poi ripeti il test nel gioco"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "Esiste già un file XS nella cartella XS del tuo profilo"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "{name} esiste già nella cartella XS del tuo profilo"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Non è stato creato da AoE2RMSIDE ({folder}), quindi il test nel gioco si è interrotto senza sostituirlo."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Non è stato creato da AoE2RMSIDE, quindi il test nel gioco si è interrotto senza sostituirlo."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "Rinomina il file XS o rimuovi quello esistente"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Un file XS nella cartella XS del tuo profilo è stato modificato al di fuori di AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "{name}, nella cartella XS del tuo profilo, è stato modificato al di fuori di AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE lo ha copiato in {folder} per un test nel gioco e non sovrascrive mai modifiche apportate altrove, quindi il test si è interrotto."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Sposta altrove le tue modifiche oppure rimuovi il file, poi ripeti il test nel gioco"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Impossibile copiare un file XS nella cartella XS del tuo profilo"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "Impossibile copiare {name} nella cartella XS del tuo profilo"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Un test nel gioco copia ogni file XS con il solo nome del file indicato in #includeXS, ma questo nome include una cartella."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "Scrivi solo il nome del file nella riga #includeXS"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "Due file XS verrebbero copiati con lo stesso nome"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "Due file XS verrebbero copiati con il nome {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "La cartella XS del tuo profilo può contenere un solo file con quel nome."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "Rinomina uno dei file XS"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "Impossibile usare la cartella XS del tuo profilo"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} non è una cartella normale o rimanda a un altro percorso e AoE2RMSIDE non copia mai file attraverso cartelle reindirizzate."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "Impossibile leggere il registro dei file XS copiati da AoE2RMSIDE"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Senza questo registro, AoE2RMSIDE non può sapere quali file XS del tuo profilo ha creato."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "Impossibile copiare i file XS nella cartella XS del tuo profilo"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "La mappa carica più file XS di quanti un test nel gioco possa copiarne."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Non è stato possibile ripristinare alcuni file XS modificati da questo test in {folder}; AoE2RMSIDE li considera ancora propri."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Tutti i file XS modificati da questo test in {folder} sono stati ripristinati."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "Il registro di AoE2RMSIDE dei file XS in {folder} è cambiato durante il test nel gioco."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Controlla che sia possibile scrivere nella cartella, poi ripeti il test nel gioco"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE non è in esecuzione"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "Avvia AoE2DE, poi premi di nuovo Esegui"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control si è chiuso prima di avviarsi"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control non si è avviato"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control non ha completato la connessione"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "Questa versione di AoE2Control non include una civiltà selezionata"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Sassoni, Variaghi e Danesi richiedono AoE2Control 1.1.1 o successivo."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control non offre una civiltà selezionata"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "Seleziona AoE2Control 1.1.1 o successivo, oppure scegli un’altra civiltà."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "La versione del gioco in esecuzione non include una civiltà selezionata"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Scegli un’altra civiltà"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Questa versione del gioco non supporta i test nel gioco"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "L’istanza precedente di AoE2Control è ancora in fase di rimozione dal gioco"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Un avvio precedente di AoE2Control è ancora in corso nel gioco"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control non ha completato l’avvio in tempo"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "La finestra di AoE2DE non è pronta"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Apri la finestra del gioco senza ridurla a icona, poi premi di nuovo Esegui"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "Un’altra versione di AoE2Control è in esecuzione nel gioco"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "AoE2Control non è riuscito ad avviarsi in precedenza in questa istanza del gioco"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control non ha potuto collegarsi al gioco"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Un altro launcher di AoE2Control è in esecuzione"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Chiudilo, poi premi di nuovo Esegui"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Questa versione di AoE2Control non è compatibile"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Seleziona una versione pubblica compatibile di AoE2Control"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "La configurazione del gioco non corrispondeva alle impostazioni di esecuzione"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "La connessione ad AoE2Control è stata persa"
+    },
+    "message.control.connection-lost.action": {
+      "message": "Avvia AoE2DE se necessario, poi riprova"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control non ha risposto in tempo"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control ha chiuso la connessione senza rispondere"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Il gioco potrebbe essere occupato o mostrare un messaggio."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Il gioco ha smesso di rispondere durante l’avvio della partita"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE potrebbe mostrare un messaggio, ad esempio un errore nello script."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Chiudi il messaggio nel gioco, poi premi di nuovo Esegui"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Il gioco non ha confermato la nuova partita in tempo"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "La partita corrente non è terminata in tempo"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "La mappa è cambiata durante la copia nel gioco"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "Un’altra mappa con questo nome file è presente nella cartella delle mappe del gioco"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Rinomina la mappa, poi premi di nuovo Esegui"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "Impossibile copiare la mappa nel gioco"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Il gioco non ha confermato l’avvio della partita"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Riconnettiti per controllare la partita corrente prima di riprovare"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Il gioco non ha confermato la fine della partita precedente"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Riconnettiti per verificare prima di riprovare"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "Impossibile identificare la cartella del gioco o il profilo di gioco"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Controlla la cartella del gioco collegata"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "Impossibile installare la mappa per il test nel gioco"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control si è arrestato prima di connettersi"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control non ha potuto confermare una sessione stabile per giocatore singolo"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control ha inviato una risposta che AoE2RMSIDE non ha potuto usare"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "Lo stato attuale del gioco non consente il test nel gioco"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Torna al menu principale o a una partita per giocatore singolo, poi riprova"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "La partita in corso deve prima terminare"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Premi di nuovo Esegui e consenti di terminare la partita"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control non è connesso"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Premi di nuovo Esegui per connetterti"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Il file AoE2Control selezionato è cambiato"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "Seleziona di nuovo AoE2Control"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control è occupato"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Questo sistema non supporta i test nel gioco"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "Il test nel gioco non ha sostituito la partita in corso"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "In AoE2DE è iniziata una partita prima che il test nel gioco potesse chiedere di sostituirla."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control non è riuscito a terminare la partita corrente"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Il gioco è cambiato prima che il test nel gioco potesse avviare la mappa"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "AoE2DE ha avviato una partita o ha lasciato la configurazione per giocatore singolo mentre il test nel gioco si preparava."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "AoE2DE o AoE2Control è stato riavviato durante il test nel gioco"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "AoE2DE non ha elencato la mappa copiata"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "L’elenco delle mappe dei mod del gioco non mostrava la mappa copiata o la mostrava più volte."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "Le impostazioni di un giocatore non possono essere inviate ad AoE2Control"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Una civiltà, una squadra o un colore non è accettato da questo AoE2Control."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE non è riuscito a preparare il test nel gioco"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control non ha potuto preparare la partita Mappa casuale"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "Torna al menu principale di AoE2DE e riprova; se il problema persiste, apri una volta Un giocatore → Schermaglia"
+    },
+    "message.control.headline": {
+      "message": "Test nel gioco non riuscito"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Questa versione di AoE2Control non può impostare le opzioni della sala"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Le opzioni della sala richiedono AoE2Control 1.1.1 o successivo. Il gioco non è stato modificato."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Un test nel gioco richiede un giocatore in P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "Controlli il giocatore in P1; tutti gli altri sono controllati dal computer."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Apri il menu dei giocatori e assegna un giocatore a P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control ha rifiutato un giocatore umano dopo P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Un test nel gioco avvia una partita per giocatore singolo, in cui tutti i giocatori dopo P1 sono controllati dal computer."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control ha rifiutato l’elenco dei giocatori controllati dal computer"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "I giocatori controllati dal computer non erano elencati nell’ordine dei posti."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Un giocatore controllato dal computer era indicato in un posto senza giocatore."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control ha rifiutato un giocatore controllato dal computer in P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "P1 è il giocatore che controlli durante un test nel gioco, quindi non può essere controllato dal computer."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Alcune impostazioni della sala non sono state ripristinate"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "Il test nel gioco non è riuscito e queste impostazioni potrebbero essere cambiate: {fields}."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "Il test nel gioco non è riuscito e alcune impostazioni della sala potrebbero essere cambiate."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Controlla le impostazioni della sala in AoE2DE prima della prossima partita"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "modalità di gioco"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "dimensioni della mappa"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "risorse iniziali"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "età d’inizio"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "età finale"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "rivela mappa"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "numero di giocatori"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "posizioni delle squadre"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "modificatori della modalità di gioco"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Turbo"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Tutte le tecnologie"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Antichità"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Fattorie solide"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "mappa selezionata"
+    },
+    "message.lobby-setting.seed": {
+      "message": "seme"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot} {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "squadra"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "handicap"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "colore"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "civiltà"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "scelta tra umano e computer"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "impostazione"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "Avvio di AoE2Control"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "In attesa che l’istanza precedente di AoE2Control venga rimossa dal gioco"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "In attesa che AoE2Control completi l’avvio nel gioco"
+    },
+    "message.live.game-detected.headline": {
+      "message": "AoE2DE rilevato"
+    },
+    "message.live.attach.headline": {
+      "message": "Connessione al gioco in esecuzione"
+    },
+    "message.live.handshake.headline": {
+      "message": "Verifica di AoE2Control"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control è pronto"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Chiusura della partita corrente"
+    },
+    "message.live.deploy.headline": {
+      "message": "Installazione della mappa nel gioco"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, one {Il file XS {files} della mappa si trova anche nella cartella XS del tuo profilo.} many {I file XS {files} della mappa si trovano anche nella cartella XS del tuo profilo.} other {I file XS {files} della mappa si trovano anche nella cartella XS del tuo profilo.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "Il gioco dispone già di questa versione della mappa"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Selezione della mappa nel gioco"
+    },
+    "message.live.match-start.headline": {
+      "message": "Avvio di Mappa casuale con il seme {seed}"
+    },
+    "message.live.verified.headline": {
+      "message": "Partita verificata con il seme {seed}"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} non è verificato, quindi la partita può differire dall’anteprima."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} non è verificato per i test nel gioco"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "I test nel gioco funzionano, ma la partita può differire dall’anteprima."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Test nel gioco annullato"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Non sono state apportate altre modifiche al gioco."
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control disconnesso"
+    },
+    "message.live.stopped.headline": {
+      "message": "Test nel gioco interrotto prima di modificare il gioco"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "Impossibile generare l’anteprima."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "Lo script contiene errori."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Lo script o le impostazioni di esecuzione sono cambiati durante la generazione dell’anteprima."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "L’anteprima non corrisponde più allo script."
+    },
+    "message.live.match-kept.cause": {
+      "message": "La partita in corso non è stata modificata."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "Impossibile salvare l’autorizzazione a sostituire la partita in corso."
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control selezionato"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Questo file non è un eseguibile AoE2Control utilizzabile"
+    },
+    "message.live.control-rejected.action": {
+      "message": "Scegli una versione pubblica di AoE2Control"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "Selezione di AoE2Control rimossa"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "Impossibile rimuovere la selezione di AoE2Control"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Disconnettilo e riprova"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "Lo stato di AoE2Control non è disponibile"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "Impossibile importare il seme della partita corrente"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "Seme {seed} della partita importato e bloccato"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "La cartella del mod è cambiata durante l’installazione"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Alcuni file nella cartella del mod sono stati modificati al di fuori di AoE2RMSIDE"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE non sovrascrive mai modifiche apportate altrove."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Sposta altrove queste modifiche, poi ripeti l’installazione"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "L’anteprima dell’installazione non è aggiornata"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Un altro mod usa già questa cartella"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE sostituisce solo i mod che ha installato direttamente."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Nessun profilo di gioco selezionato"
+    },
+    "message.deploy.profile.action": {
+      "message": "Seleziona un profilo"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Le mappe del gioco non possono essere installate direttamente"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Clona prima la mappa nell’area di lavoro"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "Il mod contiene troppi file per essere installato"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "La cartella del mod rimanda a un altro percorso"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE non installa mai file attraverso cartelle reindirizzate."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "La sostituzione del mod esistente non è stata confermata"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Ripeti l’installazione e conferma la sostituzione"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Non ci sono mappe tue da installare"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Un mod richiede uno script .rms dalla tua area di lavoro."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Questo nome di mod è riservato ai test nel gioco"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Questo nome di mod non può essere usato come nome di cartella"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "Usa un solo nome di cartella senza < > : \" / \\ | ? * e senza un punto o uno spazio finale."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, riga {line}: {error} Il gioco non ha potuto caricarlo, quindi non è stato installato nulla."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Il gioco non ha potuto caricarlo, quindi non è stato installato nulla."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Correggi gli errori elencati in Problemi, poi ripeti l’installazione"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "Impossibile usare l’icona della mappa"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Genera di nuovo l’icona della mappa"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "La generazione dell’icona della mappa deve essere eseguita da sola, ma è in corso un’altra anteprima, un test delle mappe o un test nel gioco."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Riprova al termine"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "L’icona della mappa richiede l’anteprima corrente, e l’anteprima è cambiata."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Attendi la nuova anteprima, poi riprova"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "L’icona della mappa è stata disegnata con le Texture del gioco di un’altra cartella del gioco."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Nessuna installazione valida di AoE2DE è collegata."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "La cartella del profilo o la sua cartella dei mod non è una cartella normale che AoE2RMSIDE può usare."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "Due file verrebbero copiati in {path} nel mod."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Un file usato dalla mappa non ha una posizione in una cartella di mod."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE non è riuscito a leggere il suo registro dei mod installati."
+    },
+    "message.deploy.headline": {
+      "message": "Installazione non riuscita"
+    },
+    "message.map-test.replay.headline": {
+      "message": "Impossibile mostrare la mappa di questa anomalia"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "Il test delle mappe ha superato il limite di memoria del suo processo ed è stato interrotto. L’esecuzione non è stata ripetuta."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Riduci ciò che lo script alloca, come grandi ripetizioni o molte mappe conservate"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "Il test delle mappe ha annidato valori o chiamate troppo in profondità e ha superato lo stack del suo processo, quindi è stato interrotto. L’esecuzione non è stata ripetuta."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Il processo del test delle mappe si è interrotto, molto probabilmente al limite di memoria o di stack. L’esecuzione non è stata ripetuta."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() richiede un percorso relativo tra virgolette a un file .rms o .rms2 nella cartella aperta."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "La mappa che il test esegue per impostazione predefinita è fuori dalla cartella aperta."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Un test delle mappe mai salvato richiede una cartella aperta."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Il file non è un report del test delle mappe che AoE2RMSIDE può leggere."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Il file supera {limit, number, integer} MiB."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "Il test delle mappe è cambiato dall’esecuzione."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "La mappa o uno dei suoi file inclusi è cambiato dall’esecuzione."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "La versione del gioco usata per il test non è più disponibile."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "La mappa generata è diversa da quella dell’esecuzione originale."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "Il rapporto non contiene questa anomalia."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Apri {script} per mostrare questa mappa"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "La mappa associata a un’anomalia viene rigenerata dal test delle mappe che l’ha rilevata."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Apri {script} per andare a questa verifica"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Questo rapporto è stato importato, quindi il file del test delle mappe non è noto."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "È in corso un test delle mappe"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "È in corso un test delle mappe · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Questi sono i risultati dell’esecuzione precedente; cambieranno al termine di quella in corso."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "L’ultima esecuzione si è interrotta con un errore"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Questi sono i risultati dell’esecuzione che l’ha preceduta."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Consulta Problemi e Output per l’errore"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "L’ultima esecuzione è stata interrotta"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "Rapporto importato di {script}"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "La mappa associata a un’anomalia può essere mostrata finché questo test, la sua mappa e la versione del gioco rimangono uguali a quelli dell’esecuzione."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} di {requested, plural, one {# mappa} many {# mappe} other {# mappe}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Testato"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Test in corso"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {# mappa testata} one {# mappa testata} many {# mappe testate} other {# mappe testate}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Test delle mappe, {percent}% ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Avvio del test delle mappe"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Questa cartella non è una cartella di gioco di AoE2DE"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "Questa cartella non contiene un’installazione completa di Age of Empires II: Definitive Edition."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Seleziona la cartella di installazione del gioco, ad esempio steamapps\\common\\AoE2DE nella tua libreria Steam"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "L’installazione di AoE2DE collegata non è disponibile."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Non è stato possibile leggere in sicurezza una parte della cartella del gioco: è troppo grande o profonda, rimanda a un’altra posizione o contiene un nome file non supportato."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Scegli una cartella normale fuori dalla cartella del gioco e dalle mappe installate."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} esiste già in quella cartella."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Ci sono troppi file o cartelle, oppure un file è troppo grande."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "Nel frattempo le mappe installate sono cambiate."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Apri di nuovo le mappe installate"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "Nel frattempo lo script o uno dei suoi file inclusi è cambiato."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} non è un tipo di file che una mappa può includere."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Diversi file differiscono da {path} solo per maiuscole e minuscole."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} si trova fuori dalle cartelle che AoE2RMSIDE può leggere."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Tieni i file inclusi nella cartella aperta o nella cartella del gioco collegata"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Usa una cartella di file inclusi più piccola o riduci il numero di file inclusi necessari"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Riduci la quantità di dati sorgente necessari, poi esegui di nuovo"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Impossibile memorizzare le schede aperte e la disposizione"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Questo non influisce sui tuoi file, ma al prossimo avvio potrebbero essere ripristinate schede e disposizione precedenti."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} si è chiuso inaspettatamente."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} non è in esecuzione."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} non ha risposto in tempo."
+    },
+    "message.execution.busy.cause": {
+      "message": "È in corso un’altra anteprima, un test delle mappe o un test nel gioco."
+    },
+    "message.editor.busy.cause": {
+      "message": "L’editor ha troppe richieste in sospeso."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Scegli di nuovo la versione del gioco"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Esplora file di Windows non è riuscito ad aprire la cartella: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Il file è binario, troppo grande, illeggibile o di un tipo non supportato."
+    },
+    "message.files.too-many.cause": {
+      "message": "Apri al massimo {limit, number, integer} file o cartelle alla volta."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "L’elemento non è più nell’elenco degli elementi recenti."
+    },
+    "message.files.encoding.cause": {
+      "message": "Gli script del test delle mappe devono essere salvati in UTF-8."
+    },
+    "message.files.too-large.cause": {
+      "message": "Uno script del test delle mappe può essere al massimo di {limit, number, integer} MiB."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Non è possibile salvare file nella cartella del gioco o nelle mappe installate."
+    },
+    "message.files.extension-required.cause": {
+      "message": "Il nome del file deve terminare con {extension}."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "L’elemento è stato modificato o spostato al di fuori di AoE2RMSIDE."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Esiste già una cartella con questo nome."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Il file si trova fuori dalla cartella aperta."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "La cartella contiene troppi file e cartelle per poterli elencare."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Apri una cartella più piccola"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "L’impostazione del Cestino è cambiata prima dell’eliminazione."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Elimina di nuovo l’elemento"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "Le modifiche non salvate sono troppo grandi per essere conservate per il ripristino."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Salva le modifiche per conservarle"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Il file di ripristino è danneggiato o è stato scritto da un’altra versione di AoE2RMSIDE."
+    },
+    "message.game-textures.cause": {
+      "message": "L’anteprima e l’icona della mappa mostrano invece i colori delle texture."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} L’anteprima e l’icona della mappa mostrano invece i colori delle texture."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Impossibile preparare le Texture del gioco"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Le Texture del gioco non sono disponibili per la cartella del gioco collegata"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Impossibile leggere i terreni convertiti"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Conversione delle Texture del gioco annullata"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "I file convertiti vengono conservati; scegliendo di nuovo Texture del gioco, la conversione riprende."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Impossibile leggere gli sprite degli oggetti"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Il rendering delle mappe con GPU non è disponibile su questo computer"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "La mappa viene disegnata senza questa funzione, il che può richiedere più tempo per mappe grandi."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Il rendering delle mappe con GPU non è usato su questo computer"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Non è disponibile una scheda grafica per disegnare la mappa, che viene quindi disegnata senza; le mappe grandi potrebbero richiedere più tempo."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "Il rendering delle mappe con GPU si è interrotto"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "La scheda grafica è stata reimpostata, quindi la mappa verrà disegnata senza di essa fino al riavvio dell’applicazione."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "Le anteprime dei test usano sempre i colori della minimappa"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "I test mostrano solo mappe completate"
+    },
+    "message.generation-result.generated": {
+      "message": "Generata"
+    },
+    "message.generation-result.reused": {
+      "message": "Riutilizzata"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "versione del gioco non verificata"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Versione del gioco non verificata"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "La generazione di mappe non è ancora disponibile per questa versione del gioco."
+    },
+    "message.map-test.workers.label": {
+      "message": "Core di test"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Il numero massimo di core del processore usati da un test, quindi di mappe generate contemporaneamente ({maximum, plural, one {1 su questo computer} many {da 1 a {maximum} su questo computer} other {da 1 a {maximum} su questo computer}}). Lascia vuoto per Automatico, che si adatta al computer e alle dimensioni della mappa. I risultati sono identici con qualsiasi scelta."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Automatico"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Usa Automatico"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, one {{count} comando non confrontato con il gioco} many {{count} comandi non confrontati con il gioco} other {{count} comandi non confrontati con il gioco}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Alcuni comandi non sono stati confrontati con il gioco"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Nessuna mappa registrata del gioco lo ha ancora usato in quel punto, quindi l’anteprima potrebbe differire dal gioco dove si applica: {list}.} other {Nessuna mappa registrata del gioco li ha ancora usati in quei punti, quindi l’anteprima potrebbe differire dal gioco dove si applicano: {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Nessuna mappa registrata del gioco lo ha ancora usato in quel punto, quindi l’anteprima potrebbe differire dal gioco dove si applica.} other {Nessuna mappa registrata del gioco li ha ancora usati in quei punti, quindi l’anteprima potrebbe differire dal gioco dove si applicano.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} in {context}"
+    },
+    "message.construct.list-more": {
+      "message": "{names} e altri {more}"
+    },
+    "message.fallback.run": {
+      "message": "L’esecuzione non è riuscita"
+    },
+    "message.fallback.script": {
+      "message": "Lo script non è riuscito"
+    },
+    "message.fallback.preview": {
+      "message": "L’anteprima non è riuscita"
+    },
+    "message.fallback.map-test": {
+      "message": "Il test delle mappe non è riuscito"
+    },
+    "message.fallback.recovery": {
+      "message": "Il ripristino non è riuscito"
+    },
+    "message.fallback.update": {
+      "message": "Aggiornamento non riuscito"
+    },
+    "message.fallback.files": {
+      "message": "Operazione sul file non riuscita"
+    },
+    "message.fallback.game-folder": {
+      "message": "Impossibile usare la cartella del gioco"
+    },
+    "message.fallback.app": {
+      "message": "Si è verificato un errore"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Correggi gli errori mostrati per vedere gli altri."
+    },
+    "message.action.choose-another-name": {
+      "message": "Scegli un altro nome"
+    },
+    "message.action.use-or-remove": {
+      "message": "Usa questo elemento o rimuovilo (puoi rimuoverlo con una correzione rapida)"
+    },
+    "explorer.create.definition-file": {
+      "message": "File di definizioni…"
+    },
+    "explorer.create.script": {
+      "message": "Script"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Script di test delle mappe"
+    },
+    "explorer.create.xs-script": {
+      "message": "Script XS"
+    },
+    "explorer.create.folder": {
+      "message": "Cartella"
+    },
+    "explorer.create.label": {
+      "message": "Crea in {name}"
+    },
+    "explorer.label": {
+      "message": "Esplora file"
+    },
+    "explorer.search.label": {
+      "message": "Cerca file nell’area di lavoro"
+    },
+    "explorer.search.placeholder": {
+      "message": "Cerca file"
+    },
+    "explorer.search.clear": {
+      "message": "Cancella la ricerca dei file"
+    },
+    "explorer.search.searching": {
+      "message": "Ricerca dei file nell’area di lavoro"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Nessun file RMS corrispondente"
+    },
+    "explorer.search.no-results": {
+      "message": "Nessun file corrispondente"
+    },
+    "explorer.open-file.label": {
+      "message": "Apri file"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Apri file"
+    },
+    "explorer.open-folder.label": {
+      "message": "Apri cartella"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Apri cartella"
+    },
+    "explorer.tree.label": {
+      "message": "File di {name}"
+    },
+    "explorer.empty.maps": {
+      "message": "Apri una cartella per esplorare e modificare le sue mappe."
+    },
+    "explorer.empty.scripts": {
+      "message": "Apri una cartella per esplorare e modificare i suoi script."
+    },
+    "explorer.indexing": {
+      "message": "Indicizzazione della cartella dell’area di lavoro"
+    },
+    "explorer.read-failed": {
+      "message": "Impossibile leggere questa cartella"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Apri in Esplora file"
+    },
+    "explorer.context.rename": {
+      "message": "Rinomina"
+    },
+    "explorer.context.delete": {
+      "message": "Elimina"
+    },
+    "explorer.inline.create-file": {
+      "message": "Crea file"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Crea cartella"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Rinomina file"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Rinomina cartella"
+    },
+    "definition-file.title": {
+      "message": "Genera file di definizioni"
+    },
+    "definition-file.close-label": {
+      "message": "Chiudi"
+    },
+    "definition-file.loading": {
+      "message": "Lettura dei nomi della versione del gioco selezionata…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Versione del gioco"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (non verificata)"
+    },
+    "definition-file.identity.target": {
+      "message": "Salva in"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "Da scegliere quando generi"
+    },
+    "definition-file.groups.label": {
+      "message": "Gruppi di contenuti"
+    },
+    "definition-file.group.terrains": {
+      "message": "Terreni"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "ID dei terreni per terrain_type, base_terrain e altre impostazioni dei terreni"
+    },
+    "definition-file.group.objects": {
+      "message": "Oggetti"
+    },
+    "definition-file.group.objects.description": {
+      "message": "ID degli oggetti per create_object e altre impostazioni degli oggetti"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, one {# nome} many {# nomi} other {# nomi}}"
+    },
+    "definition-file.built-in": {
+      "message": "Includi nomi integrati"
+    },
+    "definition-file.built-in.description": {
+      "message": "Nomi già definiti dal gioco. Gli script possono usarli senza questo file."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Collega la cartella del gioco per aggiungere nomi agli oggetti e ai terreni che il gioco non nomina."
+    },
+    "definition-file.note.other-version": {
+      "message": "La cartella del gioco contiene un’altra versione del gioco, quindi i suoi nomi non vengono usati."
+    },
+    "definition-file.note.no-text": {
+      "message": "Impossibile leggere i nomi nella cartella del gioco per questa versione del gioco."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Ogni oggetto e terreno con un nome ha già un nome integrato."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, one {# nome integrato viene escluso perché uno script in questa cartella lo definisce già.} many {# nomi integrati vengono esclusi perché gli script in questa cartella li definiscono già.} other {# nomi integrati vengono esclusi perché gli script in questa cartella li definiscono già.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, one {# nome della cartella del gioco viene escluso perché non era disponibile un nome univoco.} many {# nomi della cartella del gioco vengono esclusi perché non erano disponibili nomi univoci.} other {# nomi della cartella del gioco vengono esclusi perché non erano disponibili nomi univoci.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "Non è stato possibile verificare i nomi già definiti in alcuni script di questa cartella."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Impossibile generare un file di definizioni per la versione del gioco selezionata perché i suoi dati di gioco sono incompleti."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Nessuna versione del gioco disponibile per generare un file di definizioni."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "Impossibile leggere i nomi della versione del gioco selezionata."
+    },
+    "definition-file.file-name.label": {
+      "message": "Nome del file"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Inserisci un nome per il file."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Questo nome non può essere usato per un file in Windows."
+    },
+    "definition-file.file-name.extension": {
+      "message": "Il nome del file deve terminare con .inc."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Questo nome appartiene a un file di libreria del gioco. Scegli un altro nome."
+    },
+    "definition-file.generate": {
+      "message": "Genera"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Genera…"
+    },
+    "definition-file.error": {
+      "message": "Impossibile scrivere il file di definizioni. I dettagli sono nel pannello Output."
+    },
+    "definition-file.replace.title": {
+      "message": "Sostituire {name}?"
+    },
+    "definition-file.replace.description": {
+      "message": "Un file con questo nome esiste già in {folder}. Sostituendolo, il suo contenuto verrà sovrascritto."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Sostituisci"
+    },
+    "definition-file.output.failed": {
+      "message": "Impossibile scrivere il file di definizioni"
+    },
+    "definition-file.output.unavailable": {
+      "message": "Impossibile leggere i nomi per il file di definizioni"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Salva file di definizioni"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "File di definizioni"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Attiva mod"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Attiva il mod nell’elenco dei mod del gioco. La mappa e la sua icona appariranno dopo il riavvio del gioco."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "Il mod è attivo. Riavvia il gioco per vedere la mappa e la sua icona."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Attiva il mod nel gioco in Mod → I miei mod, poi riavvia il gioco per vedere la mappa e la sua icona."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {Il mod non è stato attivato: impossibile leggere il file dell’elenco dei mod del gioco.} unexpected-layout {Il mod non è stato attivato: il file dell’elenco dei mod del gioco ha una struttura sconosciuta all’IDE.} duplicate-entry {Il mod non è stato attivato: l’elenco dei mod del gioco contiene questo mod più di una volta.} unexpected-entry {Il mod non è stato attivato: la voce del gioco per questo mod ha una struttura sconosciuta all’IDE.} changed {Il mod non è stato attivato: il gioco ha modificato contemporaneamente il proprio elenco dei mod.} unsafe-path {Il mod non è stato attivato: la cartella dei mod o l’elenco dei mod del profilo è un collegamento a un’altra posizione.} other {Il mod non è stato attivato: impossibile salvare l’elenco dei mod del gioco.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Il gioco è in esecuzione: la modifica si applica dopo un riavvio, ma il gioco potrebbe annullarla alla chiusura. Se il mod è disattivato dopo il riavvio, chiudi il gioco e installalo di nuovo."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Apri cartella dei mod"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Fine"
+    },
+    "deploy-panel.success.title": {
+      "message": "Mod installato correttamente"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "Il mod è stato salvato in"
+    },
+    "deploy-panel.success.path": {
+      "message": "Percorso del mod installato"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Copia percorso del mod"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Percorso del mod copiato"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, one {# file.} many {# file.} other {# file.}} Il mod è attivo; riavvia il gioco per vedere la mappa e la sua icona."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, one {# file.} many {# file.} other {# file.}} Attiva il mod nel gioco in Mod → I miei mod, poi riavvia il gioco per vedere la mappa e la sua icona."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "Il mod è stato installato ma non attivato"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Impossibile leggere il file dell’elenco dei mod del gioco, che è stato lasciato invariato.} unexpected-layout {Il file dell’elenco dei mod del gioco ha una struttura sconosciuta all’IDE ed è stato lasciato invariato.} duplicate-entry {L’elenco dei mod del gioco contiene questo mod più di una volta ed è stato lasciato invariato.} unexpected-entry {La voce del gioco per questo mod ha una struttura sconosciuta all’IDE ed è stata lasciata invariata.} changed {Il gioco ha modificato contemporaneamente il proprio elenco dei mod, che è stato conservato così come scritto dal gioco.} unsafe-path {La cartella dei mod o l’elenco dei mod del profilo è un collegamento a un’altra posizione ed è stato lasciato invariato.} other {Impossibile salvare l’elenco dei mod del gioco; l’elenco precedente è ancora presente.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Attiva il mod nel gioco in Mod → I miei mod, poi riavvia il gioco"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "L’elenco dei mod è cambiato mentre il gioco è in esecuzione"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "La modifica si applica dopo un riavvio, ma il gioco potrebbe annullarla alla chiusura. Se il mod è disattivato dopo il riavvio, chiudi il gioco e installalo di nuovo."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "Uso dell’anteprima attuale di {name}"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "Impossibile riutilizzare l’anteprima attuale, che viene quindi generata di nuovo"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Impossibile generare questa mappa per l’installazione"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "{mod} installato nel profilo {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "Impossibile aprire la cartella dei mod"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Apri la cartella di destinazione in Esplora file di Windows"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "Impossibile aprire la cartella di destinazione"
+    },
+    "deploy-panel.target": {
+      "message": "Cartella di destinazione"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Copia il percorso della cartella di destinazione"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Percorso della cartella di destinazione copiato"
+    },
+    "deploy-panel.title": {
+      "message": "Installa come mod"
+    },
+    "deploy-panel.close": {
+      "message": "Chiudi l’installazione del mod"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Seleziona la cartella del gioco per installare il mod"
+    },
+    "deploy-panel.source": {
+      "message": "Sorgente RMS"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Apri un file RMS principale"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Impossibile generare questa mappa, che quindi non può ancora essere installata. Correggi il problema indicato in Output, poi riapri Installa come mod."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Impossibile generare questa mappa, che quindi non può ancora essere installata. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "L’anteprima della sorgente RMS selezionata è stata annullata."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Nome del mod"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Scegli un’esportazione precedente"
+    },
+    "deploy-panel.profile": {
+      "message": "Profilo utente"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Seleziona un profilo"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · suggerito"
+    },
+    "deploy-panel.tree": {
+      "message": "Albero dei file da installare"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Caricamento dell’albero dei file da installare"
+    },
+    "deploy-panel.no-source": {
+      "message": "Apri un file principale .rms o .rms2 da installare."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Installa mod"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Sostituire il mod esistente?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Tutti i file del mod esistente {name} verranno rimossi."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Sostituisci mod"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, one {{count} problema} many {{count} problemi} other {{count} problemi}}"
+    },
+    "problems-panel.empty": {
+      "message": "Nessun problema di sintassi."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Nessun problema corrisponde al filtro (problemi nascosti: {hidden})."
+    },
+    "problems-panel.severity.error": {
+      "message": "Errore"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Avviso"
+    },
+    "problems-panel.severity.info": {
+      "message": "Nota"
+    },
+    "problems-panel.group.file": {
+      "message": "File"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Del gioco"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, one {{count} errore} many {{count} errori} other {{count} errori}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, one {{count} avviso} many {{count} avvisi} other {{count} avvisi}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, one {{count} nota} many {{count} note} other {{count} note}}"
+    },
+    "problems-panel.group.show": {
+      "message": "Mostra i problemi in {file}"
+    },
+    "problems-panel.group.hide": {
+      "message": "Nascondi i problemi in {file}"
+    },
+    "problems-panel.group.label": {
+      "message": "Problemi in {file}"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Vai a {location}"
+    },
+    "severity-filter.label": {
+      "message": "Filtro per gravità di {panel}"
+    },
+    "severity-filter.errors.label": {
+      "message": "Mostra errori ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Mostra errori"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Nascondi errori"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Mostra avvisi ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Mostra avvisi"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Nascondi avvisi"
+    },
+    "severity-filter.notes.label": {
+      "message": "Mostra note ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Mostra note"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Nascondi note"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "Impossibile elencare le mappe in {folder}: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "È stata ignorata un’installazione con file di gioco mancanti o illeggibili."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "È stata ignorata un’installazione non disponibile."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Il numero di cartelle delle mappe installate ha raggiunto il limite di sicurezza."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Il numero di file delle mappe installate ha raggiunto il limite di sicurezza."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (non verificata)"
+    },
+    "linked-game.content-read": {
+      "message": "Uso dei dati di gioco di {label}"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, one {{objects} oggetto, già caricato.} many {{objects} oggetti, già caricati.} other {{objects} oggetti, già caricati.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, one {{objects} oggetto, letto in {milliseconds} ms.} many {{objects} oggetti, letti in {milliseconds} ms.} other {{objects} oggetti, letti in {milliseconds} ms.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "Impossibile leggere i dati di gioco di {label}"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Le anteprime di quella versione usano i dati {version} inclusi nell’IDE, con cui non è possibile generare oggetti e terreni aggiunti in seguito."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Comando sconosciuto"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Definizione non usata"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Il comando non ha effetto qui"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Attributo impostato di nuovo"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Ramo casuale mai scelto"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "Primo ramo con probabilità zero"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Valore limitato all’intervallo valido"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Costante già definita"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Il gioco non lo considera un commento"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Numero dove serve un nome"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Nome forse non definito"
+    },
+    "map-icon.generate": {
+      "message": "Genera icona della mappa"
+    },
+    "map-icon.open-larger": {
+      "message": "Apri l’icona della mappa ingrandita"
+    },
+    "map-icon.save-image": {
+      "message": "Salva immagine"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Salva immagine…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Generazione dell’icona della mappa"
+    },
+    "map-icon.frame.ready": {
+      "message": "Anteprima dell’icona della mappa"
+    },
+    "map-icon.frame.original": {
+      "message": "Icona originale della mappa"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "Impossibile mostrare l’icona originale della mappa"
+    },
+    "map-icon.frame.none": {
+      "message": "Nessuna icona della mappa generata"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Apri un file principale .rms o .rms2 per generare un’icona della mappa."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "Per generare l’icona della mappa serve un’anteprima riuscita di questa sorgente."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "Generazione dell’icona della mappa non disponibile: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Icona della mappa non disponibile: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Icona della mappa: generazione della mappa con il seme {seed}"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "L’icona della mappa richiede un’anteprima riuscita di questa sorgente."
+    },
+    "map-icon.status.rendering": {
+      "message": "Icona della mappa: rendering dall’anteprima attuale"
+    },
+    "map-icon.status.waiting": {
+      "message": "Icona della mappa: in attesa dell’anteprima dell’installazione"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Icona della mappa: generato {file}, che sostituisce l’originale solo in questa copia installata"
+    },
+    "map-icon.status.generated": {
+      "message": "Icona della mappa: generato {file} dall’anteprima attuale"
+    },
+    "map-icon.status.original": {
+      "message": "Icona della mappa: {file} originale dalla cartella sorgente"
+    },
+    "map-icon.status.none": {
+      "message": "Icona della mappa: nessuna"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "icona generata"
+    },
+    "map-icon.tree.original": {
+      "message": "icona originale"
+    },
+    "map-icon.render-failed": {
+      "message": "Impossibile disegnare l’icona della mappa"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "Le opzioni dell’icona della mappa non sono state memorizzate"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "Impossibile generare l’icona della mappa con il seme {seed}"
+    },
+    "map-icon.output.saved": {
+      "message": "Icona della mappa salvata come {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "Impossibile salvare l’icona della mappa"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Chiudi l’anteprima dell’icona della mappa"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Icona della mappa"
+    },
+    "map-icon.view-tools": {
+      "message": "Vista dell’icona della mappa"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Vista a rombo"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Vista dall’alto"
+    },
+    "map-icon.look.minimap": {
+      "message": "Colori della minimappa"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Colori delle texture"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Texture del gioco"
+    },
+    "map-icon.look.pending": {
+      "message": "Applicazione delle texture del gioco"
+    },
+    "map-icon.look.fallback": {
+      "message": "Le texture del gioco non sono disponibili, quindi l’icona usa i colori delle texture."
+    },
+    "map-icon.relief": {
+      "message": "Rilievo del terreno"
+    },
+    "map-icon.relief.hide": {
+      "message": "Nascondi il rilievo del terreno"
+    },
+    "map-icon.relief.show": {
+      "message": "Mostra il rilievo del terreno"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Sfuma le transizioni tra terreni"
+    },
+    "map-icon.random-seed": {
+      "message": "Seme casuale"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Usa seme dell’editor"
+    },
+    "map-icon.seed": {
+      "message": "Seme dell’icona della mappa"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Seme editor"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Quadrati dei giocatori"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Orme nomadi"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Nessun indicatore di partenza"
+    },
+    "map-icon.spawn-size": {
+      "message": "Dimensione degli indicatori di partenza"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Riduci la dimensione degli indicatori di partenza"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Aumenta la dimensione degli indicatori di partenza"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "{value}% della larghezza della mappa"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Dimensione degli indicatori di partenza (% della larghezza della mappa)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Mostra alberi"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Nascondi alberi"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Opzioni degli alberi"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "quantità di alberi"
+    },
+    "map-icon.art.trees.size": {
+      "message": "dimensione degli alberi"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Mostra oro e pietra"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Nascondi oro e pietra"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Opzioni di oro e pietra"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "quantità di oro e pietra"
+    },
+    "map-icon.art.resources.size": {
+      "message": "dimensione delle miniere d’oro e di pietra"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Meno"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Più"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "Uno per tipo"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "Uno per oggetto"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Pochi"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Quantità media"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Molti"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Più piccolo"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Più grande"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "Dimensione minima"
+    },
+    "map-icon.art.size.small": {
+      "message": "Piccolo"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Dimensione media"
+    },
+    "map-icon.art.size.large": {
+      "message": "Grande"
+    },
+    "map-icon.art.size.largest": {
+      "message": "Dimensione massima"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Mostra sotto gli indicatori di partenza"
+    },
+    "workbench.application-menu.label": {
+      "message": "Menu dell’applicazione"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Comprimi Esplora file"
+    },
+    "workbench.explorer.expand": {
+      "message": "Espandi Esplora file"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Comprimi Esplora file"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Espandi Esplora file"
+    },
+    "workbench.explorer.resize": {
+      "message": "Ridimensiona Esplora file"
+    },
+    "workbench.preview.resize": {
+      "message": "Ridimensiona l’anteprima della mappa in tempo reale"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Le fasi di generazione saranno mostrate in tempo reale dalla prossima esecuzione"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Le fasi di generazione in tempo reale saranno nascoste dalla prossima esecuzione"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Pannello Problemi e Output"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Pannello Problemi, Output e Risultati dei test"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Ridimensiona il pannello Problemi e Output"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Output"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Problemi"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Risultati dei test"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Output"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Problemi"
+    },
+    "workbench.native.restart-label": {
+      "message": "Riavvia il processo {name} terminato con un errore"
+    },
+    "workbench.native.failed": {
+      "message": "{name} è terminato con un errore"
+    },
+    "workbench.native.restarted": {
+      "message": "{name} riavviato"
+    },
+    "workbench.native.restart-failed": {
+      "message": "Impossibile riavviare {name}"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} si è arrestato"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "Importato il rapporto di test di {name}"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Impossibile importare il rapporto di test delle mappe"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Rapporto di test esportato"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Impossibile esportare il rapporto di test delle mappe"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Anomalia riprodotta con il seme registrato"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Anomalia riprodotta con il seme registrato {seed}"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "Impossibile scollegare la cartella del gioco"
+    },
+    "code-editor.panel.label": {
+      "message": "Editor del sorgente RMS"
+    },
+    "code-editor.tabs.label": {
+      "message": "File aperti"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Scorri le schede dell’editor a sinistra"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Scorri le schede dell’editor a destra"
+    },
+    "code-editor.tab.close": {
+      "message": "Chiudi {name}"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Modifiche non salvate"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Sola lettura"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Modifiche non salvate, sola lettura"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Installa come mod…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Salva"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Clona / Salva con nome…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Salva con nome…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Chiudi"
+    },
+    "code-editor.run.preview": {
+      "message": "Avvia anteprima"
+    },
+    "code-editor.run.map-test": {
+      "message": "Avvia test delle mappe"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Avvia anteprima e test nel gioco"
+    },
+    "code-editor.run.stop": {
+      "message": "Interrompi"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Esegui ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Avvia anteprima e test nel gioco ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Interrompi ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Opzioni di esecuzione dell’anteprima"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Script eseguito"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Fissa lo script eseguito"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Seme"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Copia seme"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "Copia seme {seed}"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Seme copiato"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Bloccato"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Casuale a ogni esecuzione"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Usa il seme della partita attuale"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Serve una partita attiva e verificata su mappa casuale per giocatore singolo."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Seleziona la cartella del gioco Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Selezione della cartella del gioco Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Ricerca di una cartella di installazione di Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Test in gioco all’esecuzione"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Avvia l’anteprima, poi continua in AoE2DE"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Seleziona un eseguibile AoE2Control valido"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "Seleziona AoE2Control"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "Selezione di AoE2Control…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "Seleziona AoE2Control.exe per i test nel gioco"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "Selezione di AoE2Control.exe per i test nel gioco"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "Scarica AoE2Control"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "Apri le versioni di AoE2Control"
+    },
+    "code-editor.control.remove.title": {
+      "message": "Rimuovere AoE2Control?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "L’eseguibile AoE2Control selezionato verrà dimenticato e la sessione di test nel gioco attuale verrà disconnessa. Il prossimo test nel gioco chiederà nuovamente conferma prima di sostituire una partita in corso."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Rimuovi"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "Impossibile aprire la pagina delle versioni di AoE2Control"
+    },
+    "code-editor.control-download.title": {
+      "message": "Prima di estrarre AoE2Control"
+    },
+    "code-editor.control-download.description": {
+      "message": "La password per estrarre AoE2Control.zip è {password}. Poiché AoE2Control inietta una DLL per eseguire Lua nel gioco, gli antivirus euristici, incluso Windows Defender, potrebbero segnalarlo erroneamente come una minaccia. Aggiungi un’esclusione di cartella nell’antivirus per i file estratti, così il motore potrà funzionare senza interruzioni."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Ho capito"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Comprimi l’anteprima della mappa in tempo reale"
+    },
+    "code-editor.preview.expand": {
+      "message": "Espandi l’anteprima della mappa in tempo reale"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Comprimi Anteprima"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Espandi Anteprima"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Chiudi l’avviso di esecuzione dello script non riuscita"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Lavoro non salvato recuperato"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Chiudi l’avviso di recupero"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "L’anteprima ora usa le texture del tuo gioco"
+    },
+    "code-editor.font-size.label": {
+      "message": "Dimensione del carattere dell’editor"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent}%"
+    },
+    "code-editor.read-only-message": {
+      "message": "Questo file dell’installazione o di un mod a cui sei iscritto è protetto. Usa Clona o Salva con nome."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Apri file incluso"
+    },
+    "code-editor.include.open": {
+      "message": "Apri {name}"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "Rinominare qui potrebbe cambiare il significato dello script."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "L’equivalenza rigorosa non è stata dimostrata."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} è un file di gioco protetto; la ridenominazione lo modificherebbe."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "Ignora {code} su questa riga"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "Disattiva {code} in questa area di lavoro"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Il modello dell’editor non è disponibile."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "Il linguaggio del file è cambiato."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Il documento è cambiato prima dell’inizio della formattazione."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Il documento è cambiato durante la preparazione della formattazione."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "La richiesta è stata annullata."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "La formattazione non è disponibile finché il codice Starlark non è valido."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "La formattazione richiede un rientro già valido di quattro spazi; la struttura degli elementi dello script non è stata modificata."
+    },
+    "code-editor.completion.content.object": {
+      "message": "oggetto {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "terreno {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Test delle mappe"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Funzione integrata Starlark"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Metodo {type} di Starlark"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Funzione Starlark definita in precedenza"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Parametro di funzione Starlark"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Variabile Starlark definita in precedenza"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Variabile di ciclo Starlark"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} è stato definito in precedenza in questo documento."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Funzione Starlark"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "Sorgenti RMS e XS"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "Sorgenti RMS, XS e di test delle mappe"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Apri file sorgente"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "Apri cartella RMS"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Salva sorgente con nome"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Rapporto di test delle mappe"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Esporta rapporto di test delle mappe"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Importa rapporto di test delle mappe"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Seleziona una cartella di Age of Empires II: Definitive Edition"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Seleziona la cartella in cui creare la copia modificabile della mappa"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "Seleziona l’eseguibile AoE2Control"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "Eseguibile AoE2Control"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Salva icona della mappa"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "Immagine PNG"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Impossibile aggiornare i file inclusi"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "Impossibile aggiornare la sessione dopo l’eliminazione"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Impossibile mostrare alcune cartelle in Esplora file"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, one {Un file dell’area di lavoro ha il nome di un file di libreria del gioco} many {Alcuni file dell’area di lavoro hanno nomi di file di libreria del gioco} other {Alcuni file dell’area di lavoro hanno nomi di file di libreria del gioco}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Restano modificabili, ma le inclusioni potrebbero scegliere al loro posto il file del gioco."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, one {{paths, list, unit}, e {count} altro. Restano modificabili, ma le inclusioni potrebbero scegliere al loro posto il file del gioco.} many {{paths, list, unit}, e altri {count}. Restano modificabili, ma le inclusioni potrebbero scegliere al loro posto il file del gioco.} other {{paths, list, unit}, e altri {count}. Restano modificabili, ma le inclusioni potrebbero scegliere al loro posto il file del gioco.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Rinominali"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "La verifica dei nomi dei file di libreria del gioco non è stata completata"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Nessun elemento aperto"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, one {La richiesta indicava più di {count} file o cartella.} many {La richiesta indicava più di {count} file e cartelle.} other {La richiesta indicava più di {count} file e cartelle.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "I percorsi della richiesta superano la lunghezza accettata da AoE2RMSIDE."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Sono arrivate troppe richieste di apertura contemporaneamente. Apri di nuovo gli elementi rimanenti."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "{name} non è stato aperto"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Non esiste o non è raggiungibile."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Non è un percorso valido di file o cartella."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE apre cartelle e file .rms, .rms2, .inc, .def e .xs."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE apre cartelle e file .rms, .rms2, .inc, .def, .xs e .rmstest."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Si apre una sola cartella alla volta."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Si apre una sola cartella alla volta; è stata aperta {folder}."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Impossibile leggerlo."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, one {# altro elemento non è stato aperto} many {Altri # elementi non sono stati aperti} other {Altri # elementi non sono stati aperti}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Non esistono, non sono leggibili o non sono file che AoE2RMSIDE apre."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "esiste già un elemento con questo nome"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "esiste già un elemento con questo nome o con un alias equivalente in formato breve"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "il nome non è valido per un file o una cartella di Windows"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "sono supportati solo file sorgente .rms, .rms2, .inc, .def e .xs"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "sono supportati solo file sorgente .rms, .rms2, .inc, .def, .rmstest e .xs"
+    },
+    "file-actions.entry.read-only": {
+      "message": "l’elemento dell’area di lavoro è in sola lettura o protetto"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "la cartella radice dell’area di lavoro non può essere rinominata o eliminata"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "“{name}” è riservato a una risorsa standard del gioco; scegli un altro nome per il file."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Impossibile leggere il lavoro non salvato dell’ultima sessione, che è stato ignorato"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "La cartella dell’area di lavoro recuperata non è disponibile."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "La cartella dell’area di lavoro precedente non è disponibile ed è stata ignorata."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "Ignorata la scheda di sessione {name} non disponibile."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "{name} è stato recuperato in una scheda non salvata perché la sua sorgente non è disponibile."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, one {File dei terreni del gioco collegato — convertiti: {converted}, riutilizzati: {reused}, durata: {seconds, number, ::.0 group-off} s} many {File dei terreni del gioco collegato — convertiti: {converted}, riutilizzati: {reused}, durata: {seconds, number, ::.0 group-off} s} other {File dei terreni del gioco collegato — convertiti: {converted}, riutilizzati: {reused}, durata: {seconds, number, ::.0 group-off} s}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Cache locale: {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, one {Impossibile convertire {count} file di terreno, che usa i colori della minimappa} many {Impossibile convertire {count} file dei terreni, che usano i colori della minimappa} other {Impossibile convertire {count} file dei terreni, che usano i colori della minimappa}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Ad esempio {asset}: {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Oggetto {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Terreno {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Muro {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Giocatore {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Oggetto ausiliario"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Scogliera"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Tipo di scogliera {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Collegamento terrestre"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Collegamento acquatico"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Collegamento stradale"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Collegamento sconosciuto"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Ricerca di collegamento senza percorso"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Selezione ambigua nell’anteprima: {layer} · {count, plural, one {{count} elemento selezionato} many {{count} elementi selezionati} other {{count} elementi selezionati}} · {sources, plural, one {{sources} sorgente distinta} many {{sources} sorgenti distinte} other {{sources} sorgenti distinte}} · posizione usata: {location}."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Erba"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Acque basse"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Acqua"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Spiaggia"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Terra"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Pietra"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Suolo nudo"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Parete della scogliera"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Terre"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Elevazione"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Scogliere"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Terreni"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Collegamenti"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Oggetti"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Completato"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Generazione · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Campione {sample} (seme {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Campione {sample} (seme {seed}) completato · elaborazione del lotto in corso"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Le frecce (Arrow) selezionano una casella, Shift+Arrow estende la selezione, Ctrl+Arrow sposta la vista, più e meno regolano lo zoom, 0 adatta la mappa, Ctrl+A seleziona tutta la mappa, Escape cancella la selezione."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Selezione cancellata"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Casella {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "Caselle da {fromX}, {fromY} a {toX}, {toY}, {count, plural, one {{count} casella} many {{count} caselle} other {{count} caselle}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Nessun livello"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, one {{count} livello} many {{count} livelli} other {{count} livelli}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, one {{count} livello} many {{count} livelli} other {{count} livelli}}: {shown, list, unit}, e ancora {more}"
+    },
+    "preview-panel.run.include-only": {
+      "message": "I documenti .inc, .def e .xs possono solo essere inclusi in altri script e non possono essere eseguiti da soli."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Oggetti e ingombro del centro città"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Bordi delle scogliere"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Modifiche al terreno dei collegamenti"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Linee dei collegamenti"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Linee dei collegamenti nascoste"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "Percorsi tracciati dei collegamenti"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "Percorsi mostrati: {shown, number} su {total, number}"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "I percorsi tracciati compaiono a mappa completata"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "I percorsi tracciati non sono disponibili per questa mappa"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Elevazione nascosta"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Rilievo del terreno"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Mappa delle altezze"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Vista dall’alto"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Vista a rombo"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Colori della minimappa"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Colori delle texture"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Texture del gioco"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Applicazione delle texture del gioco"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Griglia delle caselle"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "anteprima della mappa dall’alto con i colori della minimappa"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "anteprima della mappa dall’alto con i colori delle texture"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "anteprima della mappa dall’alto con le texture del gioco"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "anteprima della mappa a rombo con proporzioni 2 a 1 e colori della minimappa"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "anteprima della mappa a rombo con proporzioni 2 a 1 e colori delle texture"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "anteprima della mappa a rombo con proporzioni 2 a 1 e texture del gioco"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "mappa"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Anteprima della mappa pronta"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Anteprima della mappa aggiornata"
+    },
+    "preview-panel.panel.label": {
+      "message": "Anteprima della mappa in tempo reale"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Controlli della vista della mappa"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Livelli dei collegamenti"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Frecce: seleziona caselle"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "Stato dell’anteprima"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Non certificato"
+    },
+    "preview-panel.status.seed": {
+      "message": "Seme {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Revisione {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "generazione"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "Cache: {entries} · riutilizzi: {hits}"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Modifica"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Analisi"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Invariato"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Obsoleta - Sorgente non valida"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Generazione"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "Aggiornata"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Obsoleta - Generazione non riuscita"
+    },
+    "preview-panel.legend.label": {
+      "message": "Legenda dei livelli delle caselle selezionate"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Filtra elementi selezionati"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Cancella il filtro degli elementi selezionati"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Filtra"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Nessun elemento corrispondente"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Righe dei livelli selezionati"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, selezionati finora: {count}"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Apri la sorgente di {name}, selezionati: {count}"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Mostra oggetti ausiliari ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Nascondi oggetti ausiliari ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Casi di test interni di sviluppo"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Test interni · Non certificati"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Interno · Non certificato"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "Esegui il caso di test {fixture}"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Lettura"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Lettura del catalogo grafico del gioco"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Lettura del catalogo grafico del gioco, {percent}% ({unit, select, graphics {immagini} other {file}}: {completed} su {total})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "Importazione"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Importazione delle texture dei terreni"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Importazione delle texture dei terreni, {percent}% ({unit, select, graphics {immagini} other {file}}: {completed} su {total})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Sfumatura"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Sfumatura delle transizioni tra terreni"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Sfumatura delle transizioni tra terreni, {percent}% ({unit, select, graphics {immagini} other {file}}: {completed} su {total})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Mascheratura"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Preparazione delle maschere di sovrapposizione dei terreni"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Preparazione delle maschere di sovrapposizione dei terreni, {percent}% ({unit, select, graphics {immagini} other {file}}: {completed} su {total})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Sprite"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Conversione degli sprite degli oggetti di questa mappa"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Conversione degli sprite degli oggetti di questa mappa, {percent}% ({unit, select, graphics {immagini} other {file}}: {completed} su {total})"
+    },
+    "game-art.progress.label": {
+      "message": "Conversione della grafica del gioco"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, one {{count} tipo di oggetto non ha uno sprite nel gioco collegato e mantiene il simbolo della minimappa: {names, list, unit}} many {{count} tipi di oggetti non hanno uno sprite nel gioco collegato e mantengono i simboli della minimappa: {names, list, unit}} other {{count} tipi di oggetti non hanno uno sprite nel gioco collegato e mantengono i simboli della minimappa: {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, one {{count} tipo di oggetto non ha uno sprite nel gioco collegato e mantiene il simbolo della minimappa: {names, list, unit}, e ancora {more}} many {{count} tipi di oggetti non hanno uno sprite nel gioco collegato e mantengono i simboli della minimappa: {names, list, unit}, e ancora {more}} other {{count} tipi di oggetti non hanno uno sprite nel gioco collegato e mantengono i simboli della minimappa: {names, list, unit}, e ancora {more}}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (oggetto {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "oggetto {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, one {{count} segmento di scogliera non ha uno sprite nel gioco collegato e mantiene la linea della scogliera} many {{count} segmenti di scogliera non hanno uno sprite nel gioco collegato e mantengono la linea della scogliera} other {{count} segmenti di scogliera non hanno uno sprite nel gioco collegato e mantengono la linea della scogliera}}"
+    },
+    "profiler.group.parse": {
+      "message": "Analisi sintattica"
+    },
+    "profiler.group.setup": {
+      "message": "Preparazione"
+    },
+    "profiler.group.land": {
+      "message": "Terre"
+    },
+    "profiler.group.elevation": {
+      "message": "Elevazione"
+    },
+    "profiler.group.cliffs": {
+      "message": "Scogliere"
+    },
+    "profiler.group.terrain": {
+      "message": "Terreni"
+    },
+    "profiler.group.connections": {
+      "message": "Collegamenti"
+    },
+    "profiler.group.objects": {
+      "message": "Oggetti"
+    },
+    "profiler.group.finalize": {
+      "message": "Finalizzazione"
+    },
+    "profiler.step.parse-script": {
+      "message": "Analisi dello script"
+    },
+    "profiler.step.setup-players": {
+      "message": "Preparazione dei giocatori"
+    },
+    "profiler.step.land-generate": {
+      "message": "Generazione delle terre"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Generazione dell’elevazione"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Generazione delle scogliere"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Generazione dei terreni"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Generazione dei collegamenti"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Posizionamento degli oggetti"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Finalizzazione modalità di gioco"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Ordinamento degli oggetti"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Terreno composito"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, one {# operazione} many {# operazioni} other {# operazioni}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, one {# estrazione RNG} many {# estrazioni RNG} other {# estrazioni RNG}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, one {# candidato} many {# candidati} other {# candidati}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, one {# casella} many {# caselle} other {# caselle}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, one {# ricerca di percorso} many {# ricerche di percorso} other {# ricerche di percorso}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, one {lavoro di ricerca dei percorsi: #} many {lavoro di ricerca dei percorsi: #} other {lavoro di ricerca dei percorsi: #}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, one {# rifiuto} many {# rifiuti} other {# rifiuti}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, one {# oggetto} many {# oggetti} other {# oggetti}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, one {# casella verificata} many {# caselle verificate} other {# caselle verificate}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, one {# aggiunta alle terre} many {# aggiunte alle terre} other {# aggiunte alle terre}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Caselle scelte e verificate durante l’espansione delle terre; quelle aggiunte sono entrate in un’area di terra."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, one {# casella verificata durante l’espansione} many {# caselle verificate durante l’espansione} other {# caselle verificate durante l’espansione}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, one {# rialzata} many {# rialzate} other {# rialzate}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Caselle scelte e verificate durante l’espansione delle colline. Le caselle rialzate includono anche quelle iniziali di ogni collina, che non sono conteggiate tra quelle verificate."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, one {# posizione di scogliera considerata} many {# posizioni di scogliera considerate} other {# posizioni di scogliera considerate}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Posizioni della mappa in cui si potrebbe collocare una scogliera."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, one {# ricerca di percorso} many {# ricerche di percorso} other {# ricerche di percorso}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, one {# passo di ricerca} many {# passi di ricerca} other {# passi di ricerca}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, one {# casella dipinta} many {# caselle dipinte} other {# caselle dipinte}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Ogni ricerca di percorso cerca un tragitto tra due punti di collegamento; le caselle dipinte conteggiano ogni modifica al terreno lungo i tragitti."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, one {# posizione possibile} many {# posizioni possibili} other {# posizioni possibili}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, one {# gruppo rifiutato} many {# gruppi rifiutati} other {# gruppi rifiutati}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, one {# oggetto collocato} many {# oggetti collocati} other {# oggetti collocati}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Le posizioni possibili sono contate a ogni tentativo di posizionamento, quindi una casella può essere contata più volte. Un gruppo viene rifiutato ogni volta che una posizione non supera le verifiche o non ne rimangono altre."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "In attesa del completamento del primo passo"
+    },
+    "profiler.pending.group": {
+      "message": "{group} in corso"
+    },
+    "profiler.pending.step": {
+      "message": "{step} in corso"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0,1%"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off}%"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off}%"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "meno dello 0,1 per cento"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "{percent, number, ::precision-integer group-off} per cento"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} per cento"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Profiler di esecuzione: generazione, in attesa del motore"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Profiler di esecuzione: generazione, in attesa del motore, durata in secondi: {seconds, number, ::.00 group-off}"
+    },
+    "profiler.status.running.steps": {
+      "message": "Profiler di esecuzione: generazione, passi completati: {completed} su {total}"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Profiler di esecuzione: generazione, passi completati: {completed} su {total}, durata in secondi: {seconds, number, ::.00 group-off}"
+    },
+    "profiler.status.cached": {
+      "message": "Profiler di esecuzione: risultato in cache, durata misurata alla prima generazione di questa anteprima, in secondi: {seconds, number, ::.00 group-off}"
+    },
+    "profiler.status.committed": {
+      "message": "Profiler di esecuzione: durata dell’esecuzione RMS in secondi: {seconds, number, ::.00 group-off}"
+    },
+    "profiler.status.unsupported": {
+      "message": "Profiler di esecuzione: nessuna misurazione per questa anteprima"
+    },
+    "profiler.status.idle": {
+      "message": "Profiler di esecuzione"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Generazione, in attesa del motore"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Generazione, passi: {completed} su {total}"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Costo di esecuzione (risultato in cache)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Costo di esecuzione"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Nessuna misurazione del costo di esecuzione"
+    },
+    "profiler.description": {
+      "message": "Un’indicazione approssimativa della complessità locale ricavata da un’esecuzione su questo computer, non una previsione del tempo di generazione nel gioco."
+    },
+    "profiler.description.cached": {
+      "message": "Risultato in cache: misurato alla prima generazione di questa anteprima; il motore non è stato eseguito di nuovo. Un’indicazione approssimativa della complessità locale ricavata da un’esecuzione su questo computer, non una previsione del tempo di generazione nel gioco."
+    },
+    "profiler.description.map-test": {
+      "message": "Misurato durante un test delle mappe i cui campioni possono essere eseguiti in parallelo. Un’indicazione approssimativa della complessità locale ricavata da un’esecuzione su questo computer, non una previsione del tempo di generazione nel gioco."
+    },
+    "profiler.panel.label": {
+      "message": "Profiler del costo di esecuzione"
+    },
+    "profiler.panel.steps": {
+      "message": "Passi di esecuzione"
+    },
+    "profiler.panel.table": {
+      "message": "Passi di esecuzione per durata"
+    },
+    "profiler.panel.empty": {
+      "message": "Questa anteprima non ha una misurazione del costo di esecuzione."
+    },
+    "profiler.chart.label": {
+      "message": "Tempo di esecuzione RMS per fase di generazione"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Superato"
+    },
+    "test-results.results.status.failed": {
+      "message": "Non superato"
+    },
+    "test-results.results.status.error": {
+      "message": "Errore"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Interrotto"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, one {# anomalia} many {# anomalie} other {# anomalie}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{findings, plural, one {# anomalia} many {# anomalie} other {# anomalie}} su {seeds, plural, one {# seme} many {# semi} other {# semi}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, one {# mappa} many {# mappe} other {# mappe}} · {assertions, plural, one {# asserzione} many {# asserzioni} other {# asserzioni}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, riga {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Verifica alla riga {line}"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Nessuna anomalia. Tutte le verifiche sulla mappa sono state superate.} one {Nessuna anomalia. Tutte le verifiche sono state superate su # mappa.} many {Nessuna anomalia. Tutte le verifiche sono state superate su tutte le # mappe.} other {Nessuna anomalia. Tutte le verifiche sono state superate su tutte le # mappe.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Nessuna anomalia. Il test non ha effettuato verifiche su {maps, plural, one {# mappa} many {# mappe} other {# mappe}}."
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Esporta"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Salva questi risultati in un file di rapporto. Esclude gli script, le mappe generate e i percorsi completi dei file."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, one {{count} anomalia del test delle mappe} many {{count} anomalie del test delle mappe} other {{count} anomalie del test delle mappe}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Vai a {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "Verifica"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Nascondi le anomalie della verifica alla riga {line}"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Mostra le anomalie della verifica alla riga {line}"
+    },
+    "test-results.results.check-findings": {
+      "message": "Anomalie della verifica alla riga {line}"
+    },
+    "test-results.results.show-more": {
+      "message": "Mostra ancora {count}"
+    },
+    "test-results.results.not-shown": {
+      "message": "· anomalie nascoste: {count, number}"
+    },
+    "test-results.results.show-seed": {
+      "message": "Mostra il seme {seed} di {map} nell’anteprima"
+    },
+    "test-results.results.seed": {
+      "message": "seme {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Anomalia"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Mini"
+    },
+    "game-options.map-size.small": {
+      "message": "Piccola"
+    },
+    "game-options.map-size.medium": {
+      "message": "Media"
+    },
+    "game-options.map-size.normal": {
+      "message": "Normale"
+    },
+    "game-options.map-size.large": {
+      "message": "Grande"
+    },
+    "game-options.map-size.huge": {
+      "message": "Enorme"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Inconcepibile"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Mappa casuale"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Regicidio"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "All’ultimo sangue"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "Re della collina"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "Sviluppo meraviglie"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Difesa meraviglie"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Mappa casuale turbo"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Cattura la reliquia"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Morte improvvisa"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Battle royale"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "Empire Wars"
+    },
+    "game-options.resources.standard": {
+      "message": "Risorse standard"
+    },
+    "game-options.resources.low": {
+      "message": "Risorse basse"
+    },
+    "game-options.resources.medium": {
+      "message": "Risorse medie"
+    },
+    "game-options.resources.high": {
+      "message": "Risorse alte"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Risorse altissime"
+    },
+    "game-options.resources.infinite": {
+      "message": "Risorse infinite"
+    },
+    "game-options.resources.random": {
+      "message": "Risorse casuali"
+    },
+    "game-options.age.standard": {
+      "message": "Età d’inizio standard"
+    },
+    "game-options.age.dark-age": {
+      "message": "Alto Medioevo"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Età feudale"
+    },
+    "game-options.age.castle-age": {
+      "message": "Età dei castelli"
+    },
+    "game-options.age.imperial-age": {
+      "message": "Età imperiale"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "Età postimperiale"
+    },
+    "game-options.positions.random": {
+      "message": "Posizioni casuali"
+    },
+    "game-options.positions.fixed": {
+      "message": "Posizioni assegnate"
+    },
+    "game-options.positions.team-together": {
+      "message": "Squadre unite"
+    },
+    "game-options.color.blue": {
+      "message": "Blu"
+    },
+    "game-options.color.red": {
+      "message": "Rosso"
+    },
+    "game-options.color.green": {
+      "message": "Verde"
+    },
+    "game-options.color.yellow": {
+      "message": "Giallo"
+    },
+    "game-options.color.cyan": {
+      "message": "Azzurro"
+    },
+    "game-options.color.purple": {
+      "message": "Viola"
+    },
+    "game-options.color.gray": {
+      "message": "Grigio"
+    },
+    "game-options.color.orange": {
+      "message": "Arancione"
+    },
+    "game-options.team.none": {
+      "message": "Nessuna squadra"
+    },
+    "game-options.team.numbered": {
+      "message": "Squadra {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "Turbo"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Tutte le tecnologie"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Antichità"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Fattorie solide"
+    },
+    "game-options.civilization.random": {
+      "message": "Casuale"
+    },
+    "game-options.civilization.britons": {
+      "message": "Britanni"
+    },
+    "game-options.civilization.franks": {
+      "message": "Franchi"
+    },
+    "game-options.civilization.goths": {
+      "message": "Goti"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Teutoni"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Giapponesi"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Cinesi"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Bizantini"
+    },
+    "game-options.civilization.persians": {
+      "message": "Persiani"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Saraceni"
+    },
+    "game-options.civilization.turks": {
+      "message": "Turchi"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Vichinghi"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Mongoli"
+    },
+    "game-options.civilization.celts": {
+      "message": "Celti"
+    },
+    "game-options.civilization.spanish": {
+      "message": "Spagnoli"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Aztechi"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Maya"
+    },
+    "game-options.civilization.huns": {
+      "message": "Unni"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Coreani"
+    },
+    "game-options.civilization.italians": {
+      "message": "Italiani"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Indostani"
+    },
+    "game-options.civilization.incas": {
+      "message": "Inca"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Magiari"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Slavi"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Portoghesi"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Etiopi"
+    },
+    "game-options.civilization.malians": {
+      "message": "Maliani"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Berberi"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Khmer"
+    },
+    "game-options.civilization.malay": {
+      "message": "Malesi"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Birmani"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "Vietnamiti"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Bulgari"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Tartari"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Cumani"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Lituani"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Borgognoni"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Siciliani"
+    },
+    "game-options.civilization.poles": {
+      "message": "Polacchi"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Boemi"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Dravidi"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Bengalesi"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Gurjara"
+    },
+    "game-options.civilization.romans": {
+      "message": "Romani"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Armeni"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Georgiani"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Achemenidi"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Ateniesi"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Spartani"
+    },
+    "game-options.civilization.shu": {
+      "message": "Shu"
+    },
+    "game-options.civilization.wu": {
+      "message": "Wu"
+    },
+    "game-options.civilization.wei": {
+      "message": "Wei"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Juzhen"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Kitai"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Macedoni"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Traci"
+    },
+    "game-options.civilization.puru": {
+      "message": "Puru"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Muisca"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Mapuche"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Tupi"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Sassoni"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Variaghi"
+    },
+    "game-options.civilization.danes": {
+      "message": "Danesi"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Civiltà {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Anteprima"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Generazione dell’anteprima (passo {step} di {total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Connessione"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "Connessione ad AoE2Control (passo {step} di {total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Controllo"
+    },
+    "live-test.progress.ending": {
+      "message": "Conclusione"
+    },
+    "live-test.progress.copying": {
+      "message": "Copia"
+    },
+    "live-test.progress.selecting": {
+      "message": "Selezione"
+    },
+    "live-test.progress.starting": {
+      "message": "Avvio"
+    },
+    "live-test.progress.verifying": {
+      "message": "Verifica"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Verifica della partita (passo {step} di {total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Attesa"
+    },
+    "live-test.progress.verified": {
+      "message": "Verificata"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Partita verificata"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "Controllo di AoE2Control (passo {step} di {total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Controllo del gioco (passo {step} di {total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Conclusione della partita attuale (passo {step} di {total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Copia della mappa nel gioco (passo {step} di {total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Selezione della mappa nel gioco (passo {step} di {total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Avvio della partita (passo {step} di {total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "In attesa dello scaricamento dalla memoria della precedente istanza di AoE2Control (passo {step} di {total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "In attesa dell’avvio di AoE2Control nel gioco (passo {step} di {total})"
+    },
+    "live-test.progress.label": {
+      "message": "Test nel gioco"
+    },
+    "live-test.replace-match.title": {
+      "message": "Sostituire la partita attiva?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE terminerà la partita per giocatore singolo e avvierà questa revisione dell’anteprima. Non chiederà più conferma finché non rimuoverai AoE2Control."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Termina e sostituisci partita"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Seleziona prima un eseguibile AoE2Control valido."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Configura AoE2Control per leggere il seme della partita attuale."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control si sta connettendo. Riprova al termine della connessione."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "La lettura della partita non è disponibile. Riconnetti AoE2Control e riprova."
+    },
+    "live-test.seed.replay": {
+      "message": "Impossibile importare i semi delle partite registrate."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Impossibile importare i semi delle partite multigiocatore."
+    },
+    "live-test.seed.state-changing": {
+      "message": "Lo stato della partita sta cambiando o è sconosciuto. Attendi un momento e riprova."
+    },
+    "live-test.seed.no-match": {
+      "message": "Avvia prima una partita supportata su mappa casuale per giocatore singolo."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "Impossibile leggere le impostazioni della partita attiva. Riconnetti AoE2Control e riprova."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "La partita attiva non è una partita supportata in modalità Mappa casuale."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "Impossibile leggere il seme della partita attiva. Riconnetti AoE2Control e riprova."
+    },
+    "live-test.seed.busy": {
+      "message": "Un’operazione di AoE2Control è già in corso."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control non ha restituito il seme della partita."
+    },
+    "live-test.control.missing": {
+      "message": "L’eseguibile selezionato è stato spostato o rimosso."
+    },
+    "live-test.control.changed": {
+      "message": "L’eseguibile selezionato è cambiato. Selezionalo di nuovo per autorizzare il nuovo file."
+    },
+    "live-test.control.invalid": {
+      "message": "Il file selezionato non è un eseguibile pubblico AoE2Control valido."
+    },
+    "workspace.format.save-skipped": {
+      "message": "Formattazione al salvataggio ignorata per {name}"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "Salvataggio annullato per {name}"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} è in sola lettura e non è stato formattato"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} è già formattato"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} non è stato formattato"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "Il formattatore non ha terminato in tempo."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "L’equivalenza rigorosa non è stata dimostrata."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Il testo è cambiato durante la formattazione."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} è stato eliminato al di fuori di AoE2RMSIDE"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "Il suo testo rimane aperto nell’editor."
+    },
+    "workspace.files.reloaded": {
+      "message": "{name} ricaricato dopo una modifica sul disco"
+    },
+    "workspace.recovery.restored": {
+      "message": "{count, plural, one {Recuperata {count} scheda non salvata} many {Recuperate {count} schede non salvate} other {Recuperate {count} schede non salvate}} dalla sessione precedente"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "I file sorgente non sono stati sovrascritti."
+    },
+    "workspace.failed.save": {
+      "message": "Impossibile salvare il file"
+    },
+    "workspace.failed.open-file": {
+      "message": "Impossibile aprire il file"
+    },
+    "workspace.failed.open-folder": {
+      "message": "Impossibile aprire la cartella"
+    },
+    "workspace.failed.open-recent": {
+      "message": "Impossibile aprire l’elemento recente"
+    },
+    "workspace.failed.open-requested": {
+      "message": "Impossibile aprire gli elementi richiesti"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "Impossibile aprire gli elementi trascinati"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Impossibile aprire lo script che ha collocato questo elemento della mappa"
+    },
+    "workspace.failed.create": {
+      "message": "Impossibile creare l’elemento"
+    },
+    "workspace.failed.rename": {
+      "message": "Impossibile rinominare l’elemento"
+    },
+    "workspace.failed.delete": {
+      "message": "Impossibile eliminare l’elemento"
+    },
+    "workspace.failed.restore-session": {
+      "message": "Impossibile ripristinare la sessione precedente"
+    },
+    "workspace.failed.back-up": {
+      "message": "Impossibile creare una copia di sicurezza del lavoro non salvato"
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "La ricerca dei file inclusi ha superato il limite di {budget} per {scope}: {used, number, integer} su un massimo di {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Usa una cartella di file inclusi più piccola o riduci il numero di file inclusi necessari."
+    },
+    "file-actions.included-files.changed": {
+      "message": "Le sorgenti sono cambiate durante la verifica dei file inclusi. Esegui di nuovo."
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "percorsi di inclusione"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "metadati dei nomi (byte)"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "voci di cartella"
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "profondità delle cartelle"
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "Il test delle mappe supera il limite di {limit, number, integer} mappe. Prova meno mappe per test."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "Il test delle mappe supera il limite di {limit, number, integer} voci relative ai file sorgente. Prova meno mappe per test."
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "Il test delle mappe supera il limite di {limit, number, integer} MiB di dati sorgente. Prova meno mappe per test."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "Il test delle mappe supera il limite di {limit, number, integer} MiB di metadati sorgente. Prova meno mappe per test."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "L’assistenza dell’editor è limitata"
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Alcuni controlli dell’editor non hanno potuto usare i file sorgente attuali."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Alcuni messaggi diagnostici dell’editor sono stati saltati perché la coda degli aggiornamenti è piena."
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Consulta Dettagli per vedere i file sorgente interessati, poi riprova."
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Usa una cartella sorgente più piccola o chiudi alcune schede dei file sorgente, poi riprova."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "Impossibile preparare i file sorgente per il test delle mappe"
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} supera il limite di {limit, number, integer} MiB per file."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "La dimensione totale dei file sorgente necessari supera il limite di {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Il numero di file sorgente necessari supera il limite ({limit, number, integer})."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "Le informazioni sui sorgenti necessari superano il limite dei metadati di {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Riduci la quantità di dati sorgente necessari, poi esegui di nuovo."
+    },
+    "release-check.newer.headline": {
+      "message": "AoE2RMSIDE {version} è disponibile"
+    },
+    "release-check.newer.cause": {
+      "message": "Stai usando {current}."
+    },
+    "release-check.newer.action": {
+      "message": "Apri la pagina delle versioni"
+    }
+  }
+}

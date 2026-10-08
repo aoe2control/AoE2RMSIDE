@@ -1,0 +1,22 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2de-101.103.48987-content-pack",
+  "files": [
+    {
+      "path": "crates/rms-content/data/aoe2de-101.103.48987-content-pack.json",
+      "sha256": "84d36fbfab21e77de095480a121fa58dc7a32d8b96e62f78483bddbeca1ce523",
+      "authorship": "Complete neutral RMS execution metadata projected by the project's VER 8.9 reader from a lawfully owned, version-verified game installation; no DAT bytes, names, text, art or installation fingerprint retained.",
+      "license": "Neutral factual RMS execution metadata; no source expression retained",
+      "sourceClassification": "sanitized-observation",
+      "created": "2026-10-07",
+      "containsGameContent": false,
+      "transformation": "Bounded structural decode of every terrain and object slot, projected into content schema 2.5.0 field families (terrains, restrictions, objects with owner variants, resources, cliffs, standing-graphic facts (construction draws per constructor type, signed direction counts), building construction-site facts (two booleans per building master), replacements and gates, technology routes); installation fingerprints replaced by the completeness-manifest hash. The versioned player-start roles reuse the existing civilization resource projections and uniform villager count. Content 2.5.0 adds the perimeter farm roles from the native bindings, the civilization values of every resource the farm completion and its startup technologies touch, and the startup technology resource effects: a civilization team effect that sets an open technology’s time to zero, or a civilization’s own automatic technology, with its owner resource rows in order.",
+      "reviewer": "Project maintainer; reviewed with the complete support bundle of the verified 101.103.48987 profile"
+    }
+  ]
+}

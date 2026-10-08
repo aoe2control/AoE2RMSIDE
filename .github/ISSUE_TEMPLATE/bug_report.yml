@@ -1,0 +1,69 @@
+name: Bug report
+description: Something in AoE2RMSIDE does not work as expected.
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Thank you for reporting a problem. Please do not report security
+        vulnerabilities here; see SECURITY.md instead. If the generated map
+        differs from the game, attach the script and its includes, or a
+        smaller script that shows the same difference.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Where does the problem happen?
+      options:
+        - Code editor
+        - Map preview
+        - Map tests
+        - Deploying a map as a mod
+        - Live test in the game
+        - Installing, starting, or updating
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: What did you do? Include the script, seed, and lobby settings if the problem is about a generated map.
+      placeholder: |
+        1. Open ...
+        2. Set the seed to ...
+        3. Press Run ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+      description: What did you expect to happen, and what happened instead? Screenshots help.
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Error details
+      description: If an error appeared, copy its Details from the Output panel. Remove local paths and user names first.
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: AoE2RMSIDE version
+      description: The version shown in Help → About AoE2RMSIDE, or the commit you built from.
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: game-version
+    attributes:
+      label: Game version
+      description: The game version selected in the preview, if it matters for the problem.
+      placeholder: 101.103.48987.0
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2

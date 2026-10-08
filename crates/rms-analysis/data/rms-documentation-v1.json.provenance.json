@@ -1,0 +1,22 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2de-rms-documentation-v1",
+  "files": [
+    {
+      "path": "crates/rms-analysis/data/rms-documentation-v1.json",
+      "sha256": "e0bb4e399c770aacaa1938edb1afeb9c44894218a04f852b6f7ed6bec0dd79ce",
+      "authorship": "Independently written documentation of the RMS sections, commands, attributes, control terms, the rnd value form, the built-in name families, and editor snippets of the shipped behavior profiles. Behavior claims follow the project's own strict parser and exact generation engine; terms the engine does not model are described briefly from reviewed community documentation, chiefly Zetnus' Definitive Random Map Scripting Guide (the main community research source), in the project's own words.",
+      "license": "Independent text under the repository license; command, constant, and label names are factual identifiers",
+      "sourceClassification": "independent",
+      "created": "2026-10-04",
+      "containsGameContent": false,
+      "transformation": "No game file, official script, or community text is reproduced. Each entry records its evidence status (engine-verified, documented, or uncertain) and sources. The SHA-256 covers the file with LF line endings.",
+      "reviewer": "Reviewed and approved by the project maintainer on 2026-10-04"
+    }
+  ]
+}

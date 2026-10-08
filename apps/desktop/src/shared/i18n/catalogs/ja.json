@@ -1,0 +1,4626 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "ja",
+  "name": "日本語",
+  "direction": "ltr",
+  "listPatterns": {
+    "unit": {
+      "two": "{0}、{1}",
+      "start": "{0}、{1}",
+      "middle": "{0}、{1}",
+      "end": "{0}、{1}"
+    }
+  },
+  "messages": {
+    "app-menu.file.name": {
+      "message": "ファイル"
+    },
+    "app-menu.edit.name": {
+      "message": "編集"
+    },
+    "app-menu.view.name": {
+      "message": "表示"
+    },
+    "app-menu.help.name": {
+      "message": "ヘルプ"
+    },
+    "app-menu.file.new-file": {
+      "message": "新しいファイル"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "新しいマップテストスクリプト"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "定義ファイルを生成…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "新しい XS スクリプト"
+    },
+    "app-menu.file.open-file": {
+      "message": "ファイルを開く…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "フォルダーを開く…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "インストール済みマップを参照…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "MOD として配置…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "ゲームフォルダーを開く"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "ゲームフォルダーのリンクを解除"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "テストレポートを読み込む…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "最近使った項目を開く"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "最近使ったファイルやフォルダーはありません"
+    },
+    "app-menu.file.save": {
+      "message": "保存"
+    },
+    "app-menu.file.save-as": {
+      "message": "名前を付けて保存…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "RMS ファイルの既定のアプリを選択…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Windows の設定を開けませんでした"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "Windows の「既定のアプリ」を開きました"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": ".rms ファイルと .rms2 ファイルを AoE2RMSIDE で開くには、そこで AoE2RMSIDE を選択してください。Windows の既定のアプリは、確認するまで変更されません。"
+    },
+    "app-menu.file.close-tab": {
+      "message": "タブを閉じる"
+    },
+    "app-menu.file.close-folder": {
+      "message": "フォルダーを閉じる"
+    },
+    "app-menu.file.close-window": {
+      "message": "ウィンドウを閉じる"
+    },
+    "app-menu.file.exit": {
+      "message": "終了"
+    },
+    "app-menu.edit.undo": {
+      "message": "元に戻す"
+    },
+    "app-menu.edit.redo": {
+      "message": "やり直す"
+    },
+    "app-menu.edit.cut": {
+      "message": "切り取り"
+    },
+    "app-menu.edit.copy": {
+      "message": "コピー"
+    },
+    "app-menu.edit.paste": {
+      "message": "貼り付け"
+    },
+    "app-menu.edit.select-all": {
+      "message": "すべて選択"
+    },
+    "app-menu.edit.format-document": {
+      "message": "ドキュメントを整形"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "保存時に整形"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "if/else ブロックを字下げ"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "削除時にごみ箱を使わない"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "レイアウトをリセット"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "GPU でマップを描画"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "生成途中のマップを表示"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "インレイヒントを表示"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "検査ルール"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title}（{code}）"
+    },
+    "app-menu.view.language": {
+      "message": "言語…"
+    },
+    "app-menu.view.theme": {
+      "message": "テーマ"
+    },
+    "app-menu.view.theme.system": {
+      "message": "システムに合わせる"
+    },
+    "app-menu.view.theme.light": {
+      "message": "ライト"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "ダーク"
+    },
+    "app-menu.view.actual-size": {
+      "message": "実際のサイズ"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "拡大"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "縮小"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "全画面表示を切り替え"
+    },
+    "app-menu.help.documentation": {
+      "message": "ドキュメント"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Discord に参加"
+    },
+    "app-menu.help.report-bug": {
+      "message": "不具合を報告"
+    },
+    "app-menu.help.about": {
+      "message": "{product} について"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "リンクされたゲームフォルダーを開けませんでした"
+    },
+    "about.version": {
+      "message": "バージョン {version}（{commit}）"
+    },
+    "about.edition.xs-preview": {
+      "message": "XS スクリプトエディター"
+    },
+    "about.edition.rms-preview": {
+      "message": "RMS・XS スクリプトエディター"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "独立して開発された非公式のランダムマップスクリプトエディターです。Age of Empires II: Definitive Edition がランダムマップスクリプトを読み取り、マップを生成する仕組みを独自の実装で再現しています。"
+    },
+    "about.disclosure.independent": {
+      "message": "独立して開発された、Age of Empires II: Definitive Edition 用の非公式スクリプトエディターです。"
+    },
+    "about.disclosure.verified-versions": {
+      "message": "生成されるマップとゲームとの一致は、検証済みのゲームバージョンでのみ保証されます。新しいバージョンでも動作しますが、一致は保証されません。マップの動作を合わせるため、ゲーム特有の挙動を意図的に再現している場合があります。"
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE にはゲームのファイルや画像素材は含まれていません。公式リソースはローカルのインストール先からのみ読み取り、「ゲームのテクスチャ」はインストール済みのゲームファイルからのみ抽出します。"
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE にはゲームのファイルや画像素材は含まれていません。公式リソースはローカルのインストール先からのみ読み取ります。"
+    },
+    "about.disclosure.affiliation": {
+      "message": "Microsoft、Xbox Game Studios、World's Edge、Activision との提携関係はなく、これらの企業による承認も受けていません。"
+    },
+    "about.credits": {
+      "message": "クレジット\n{maintainer} — プロジェクトの制作者・管理者"
+    },
+    "about.credits.research": {
+      "message": "{author} 氏に感謝します。{guide} を通じて、ランダムマップスクリプトに関する多くの知識を得ました。"
+    },
+    "about.credits.xs-research": {
+      "message": "{author} 氏に感謝します。{guide} に収録された XS の解説が、XS 対応の出発点となりました。"
+    },
+    "about.close": {
+      "message": "閉じる"
+    },
+    "about.documentation": {
+      "message": "ドキュメント"
+    },
+    "dialog.confirm.title": {
+      "message": "操作の確認"
+    },
+    "dialog.confirm.cancel": {
+      "message": "キャンセル"
+    },
+    "dialog.confirm.continue": {
+      "message": "続行"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "{name} への変更を保存しますか？"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, other {{count} 個のファイルへの変更を保存しますか？}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "ウィンドウを閉じると、保存していない変更は失われます。"
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "このタブを閉じると、保存していない変更は失われます。"
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "このフォルダーを閉じると、保存していない変更は失われます。"
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "{name} を削除すると、保存していない変更は失われます。"
+    },
+    "dialog.unsaved.save": {
+      "message": "保存"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "すべて保存"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "保存しない"
+    },
+    "dialog.external-change.title": {
+      "message": "{name} が AoE2RMSIDE の外部で変更されました"
+    },
+    "dialog.external-change.save.description": {
+      "message": "上書きすると、外部で変更された内容は失われます。ディスクから再読み込みするか、編集中の内容で上書きするか、キャンセルしてください。"
+    },
+    "dialog.external-change.replace": {
+      "message": "ディスク上のファイルを上書き"
+    },
+    "dialog.external-change.reload": {
+      "message": "ディスクから再読み込み"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "再読み込みすると、保存していない編集内容は失われます。編集を続ける場合は、保存時に競合を解決してください。"
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "編集を続ける"
+    },
+    "dialog.delete-entry.title": {
+      "message": "{name} をごみ箱に移動しますか？"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "フォルダーは空ではありません。フォルダーとその中のすべての項目をごみ箱に移動します。"
+    },
+    "dialog.delete-entry.description": {
+      "message": "この項目をごみ箱に移動します。"
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "ごみ箱に移動"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "{name} を完全に削除しますか？"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "フォルダーは空ではありません。フォルダーとその中のすべての項目をごみ箱に移動せず、完全に削除します。この操作は元に戻せません。"
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "この項目をごみ箱に移動せず、完全に削除します。この操作は元に戻せません。"
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "完全に削除"
+    },
+    "output.clear": {
+      "message": "出力を消去"
+    },
+    "output.source.run": {
+      "message": "実行"
+    },
+    "output.source.script": {
+      "message": "スクリプト"
+    },
+    "output.source.preview": {
+      "message": "プレビュー"
+    },
+    "output.source.map-test": {
+      "message": "マップテスト"
+    },
+    "output.source.deploy": {
+      "message": "配置"
+    },
+    "output.source.live-test": {
+      "message": "ゲーム内テスト"
+    },
+    "output.source.recovery": {
+      "message": "復元"
+    },
+    "output.source.update": {
+      "message": "更新"
+    },
+    "output.source.files": {
+      "message": "ファイル"
+    },
+    "output.source.game-folder": {
+      "message": "ゲームフォルダー"
+    },
+    "output.source.game-textures": {
+      "message": "ゲームのテクスチャ"
+    },
+    "output.source.app": {
+      "message": "アプリ"
+    },
+    "output.log.label": {
+      "message": "{count, plural, other {出力メッセージ {count} 件}}"
+    },
+    "output.empty": {
+      "message": "マップを実行すると、ここに結果が表示されます。"
+    },
+    "output.empty.filtered": {
+      "message": "フィルターに一致するメッセージはありません。"
+    },
+    "output.jump-to-latest": {
+      "message": "最新へ移動（新着 {count} 件）"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, other {{count} 回繰り返されました}}"
+    },
+    "output.details": {
+      "message": "詳細"
+    },
+    "output.run.show": {
+      "message": "実行メッセージを表示"
+    },
+    "output.run.hide": {
+      "message": "実行メッセージを非表示"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, other {以前の {count} 行は表示されていません}}"
+    },
+    "output.run.seed": {
+      "message": "シード {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, other {プレイヤー {count} 人}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, other {マップ {count} 個}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ミリ秒"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} 秒"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} 分 {seconds} 秒"
+    },
+    "output.constructs.heading": {
+      "message": "ゲームと比較されていません"
+    },
+    "output.constructs.label": {
+      "message": "ゲームと比較されていないコマンド"
+    },
+    "output.constructs.go-to": {
+      "message": "最初の使用箇所へ移動"
+    },
+    "output.constructs.more": {
+      "message": "ほか {count} 件"
+    },
+    "installed-maps.filter.group": {
+      "message": "マップの提供元"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "標準マップ（{count, number}）"
+    },
+    "installed-maps.filter.local": {
+      "message": "ローカル MOD のマップ（{count, number}）"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "登録済み MOD のマップ（{count, number}）"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "すべての提供元が非表示になっています。いずれかをオンにすると、そのマップが表示されます。"
+    },
+    "installed-maps.empty.origins": {
+      "message": "選択した提供元のインストール済みランダムマップはありません。"
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "選択した提供元のインストール済みランダムマップに、検索と一致するものはありません。"
+    },
+    "installed-maps.empty.none": {
+      "message": "標準マップ、ローカル MOD、登録済み MOD のランダムマップは見つかりませんでした。"
+    },
+    "installed-maps.empty.search": {
+      "message": "検索に一致するインストール済みランダムマップはありません。"
+    },
+    "installed-maps.title": {
+      "message": "インストール済みランダムマップ"
+    },
+    "installed-maps.close": {
+      "message": "インストール済みランダムマップを閉じる"
+    },
+    "installed-maps.search": {
+      "message": "インストール済みランダムマップを検索"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "マップを検索"
+    },
+    "installed-maps.search.clear": {
+      "message": "マップの検索を消去"
+    },
+    "installed-maps.loading": {
+      "message": "インストール済みランダムマップを読み込み中"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "インストール済み RMS ファイルを一覧表示するには、ゲームフォルダーを選択してください"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "標準"
+    },
+    "installed-maps.origin.local": {
+      "message": "ローカル MOD"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "登録済み MOD"
+    },
+    "installed-maps.clone": {
+      "message": "編集用に複製"
+    },
+    "installed-maps.open-failed": {
+      "message": "マップを開けませんでした"
+    },
+    "installed-maps.clone-failed": {
+      "message": "マップを複製できませんでした"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "インストール済みマップを一覧表示できませんでした"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, other {編集用にマップファイルを # 個複製しました}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "{name} はコピーされませんでした"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "複製したマップが参照していますが、インストール済みマップには含まれていません。"
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "このファイルはゲームが提供するもので、インストール済みマップには含まれていません。"
+    },
+    "run-menu.control.detach": {
+      "message": "AoE2Control の接続を解除"
+    },
+    "run-menu.control.remove": {
+      "message": "AoE2Control の選択を解除"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control は接続中です"
+    },
+    "run-menu.control.detaching": {
+      "message": "AoE2Control の接続を解除中…"
+    },
+    "run-menu.control.busy": {
+      "message": "現在の AoE2Control の操作が完了するまでお待ちください"
+    },
+    "run-menu.run-on-save": {
+      "message": "保存時に実行"
+    },
+    "run-menu.run-on-edit": {
+      "message": "編集時に実行"
+    },
+    "run-menu.preset.default-name": {
+      "message": "プリセット"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "プリセット {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "プレビューのプリセット設定"
+    },
+    "run-menu.preset.manage": {
+      "message": "プレビューのプリセットを管理"
+    },
+    "run-menu.preset.new": {
+      "message": "新しいプリセット"
+    },
+    "run-menu.preset.new-name": {
+      "message": "新しいプレビュープリセットの名前"
+    },
+    "run-menu.preset.rename": {
+      "message": "{name} の名前を変更"
+    },
+    "run-menu.preset.save": {
+      "message": "{name} を保存"
+    },
+    "run-menu.preset.edit": {
+      "message": "{name} を編集"
+    },
+    "run-menu.preset.delete": {
+      "message": "{name} を削除"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "プリセット {name} を削除しますか？"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "このプリセットに保存されたプレビュー設定を削除します。"
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "削除"
+    },
+    "run-menu.preset.name-length": {
+      "message": "プリセット名は 1～64 文字で入力してください"
+    },
+    "run-menu.preset.exists": {
+      "message": "{name} というプリセットは既に存在します"
+    },
+    "run-menu.preset.limit": {
+      "message": "保存できるプリセットは 64 個までです"
+    },
+    "run-menu.map-size": {
+      "message": "マップの大きさ"
+    },
+    "run-menu.game-mode": {
+      "message": "ゲームモード"
+    },
+    "run-menu.starting-resources": {
+      "message": "開始時の資源"
+    },
+    "run-menu.starting-age": {
+      "message": "最初の時代"
+    },
+    "run-menu.ending-age": {
+      "message": "最終時代"
+    },
+    "run-menu.position-policy": {
+      "message": "配置方式"
+    },
+    "run-menu.select-placeholder": {
+      "message": "選択"
+    },
+    "run-menu.turbo-note": {
+      "message": "ターボランダムマップは旧来のモードで、動作は変わりません。ランダムマップでターボを有効にすると、ゲームのターボ用ラベルが定義されます。"
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "ランダムマップ＋ターボを使用"
+    },
+    "run-menu.players.configure": {
+      "message": "プレイヤーを設定"
+    },
+    "run-menu.players.count": {
+      "message": "プレイヤー数"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, other {プレイヤー # 人}}"
+    },
+    "run-menu.players.slot": {
+      "message": "プレイヤー {player} のスロット"
+    },
+    "run-menu.players.color": {
+      "message": "プレイヤー {player} の色"
+    },
+    "run-menu.players.civilization": {
+      "message": "プレイヤー {player} の文明"
+    },
+    "run-menu.players.team": {
+      "message": "プレイヤー {player} のチーム"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "プレイヤー {player} をコンピューターに設定"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "コンピュータープレイヤー（AI_PLAYERS を定義）"
+    },
+    "run-menu.players.live-computer": {
+      "message": "ゲーム内テストでは P1 以外の全員がコンピューターになります"
+    },
+    "run-menu.players.live-note": {
+      "message": "ゲーム内テストでは P1 以外の全員がコンピューターになります。"
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "ゲーム内テストでは P1 以外の全員がコンピューターになります。自分が操作するプレイヤーを P1 に配置してください。"
+    },
+    "run-menu.lobby.label": {
+      "message": "ロビーオプション"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "ロビーオプション、{count} 個がオン"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "ゲームモードの追加ルール"
+    },
+    "run-menu.lobby.options": {
+      "message": "オプション"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode}（ゲームモード）"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "ゲームモードにエンパイアウォーズを追加します。EMPIRE_WARS を定義します。"
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "ゲームモードにサドンデスを追加します。SUDDEN_DEATH を定義します。"
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "ゲームモードにチェックメイトを追加します。REGICIDE を定義します。"
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "ゲームモードにキングオブザヒルを追加します。KING_OT_HILL を定義します。"
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "ゲームの進行を速めます。TURBO_MODE を定義し、ランダムマップでは TURBO_RANDOM_MAP も定義します。"
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "すべての文明がすべての技術を研究できます。FULL_TECH_TREE を定義します。"
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "古代モードです。ANTIQUITY_MODE を定義し、多くのマップの動作が変わります。"
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "ユニットが畑の上を歩けなくなります。SOLID_FARMS を定義します。"
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "チェックメイトでは、各プレイヤーに王が必要です。王のいないマップでは、ゲーム開始直後に対戦が終了します。"
+    },
+    "run-menu.version.local-folder": {
+      "message": "ローカルのゲームフォルダー"
+    },
+    "run-menu.version.local": {
+      "message": "{version}（ローカル）"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version}（未検証）"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "同梱プロファイルなし"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "同梱バージョンなし"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "プレビューのゲームバージョン"
+    },
+    "run-menu.version.game-version": {
+      "message": "ゲームバージョン"
+    },
+    "run-menu.version.local-selected": {
+      "message": "ローカルのゲームバージョンを選択しました。プレビューを再実行します"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} は RMS の検証済みバージョンではありません。プレビューには最新の検証済み動作プロファイル（{profile}）を使用します。機能に影響しない場合もあります。生成結果がゲームと一致しない場合は、IDE の更新を確認するか、{url} で報告してください"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "利用不可"
+    },
+    "run-menu.game-folder.select": {
+      "message": "ゲームフォルダーを選択"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "ゲームフォルダーを選択中…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "ローカルの AoE2DE {version} を使用します"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "選択したローカルの AoE2DE インストール先を使用します"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "実行設定を読み込めませんでした"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "実行設定は保存されませんでした"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "エディターで実行設定を使用できませんでした"
+    },
+    "run-menu.run.warning": {
+      "message": "マップに警告があります"
+    },
+    "run-menu.cache-cleared": {
+      "message": "プレビューキャッシュを消去しました"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "開発用テストデータには、内容のある .rms または .rms2 スクリプトが必要です"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "このプレビューでランダムに選ばれた文明：{players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "プレイヤー {player}：{civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "ゲーム内テストでは、ゲームが独自に文明を選びます。"
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, other {プレイヤー # 人}}"
+    },
+    "run-menu.result.error": {
+      "message": "エラー"
+    },
+    "run-menu.result.failed": {
+      "message": "失敗"
+    },
+    "run-menu.result.passed": {
+      "message": "成功"
+    },
+    "run-menu.result.stopped": {
+      "message": "停止"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "停止しました。直前のマップを保持しています"
+    },
+    "run-menu.result.synthetic": {
+      "message": "合成テストデータ・未認証"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "合成テストデータ・未認証・再利用"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "生成済み・再利用"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "生成済み・ゲームバージョン未検証"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "生成済み・再利用・ゲームバージョン未検証"
+    },
+    "run-menu.blocked.headline": {
+      "message": "プレビューを実行できません"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "現在のソースは空です。"
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "現在のソースに構文エラーがあります。"
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "選択した動作プロファイルは利用できません。"
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "選択したゲームバージョンに対応するコンテンツパックがありません。"
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "このプロファイルに対応するコンテンツパックがありません。"
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "別の処理を実行中です。"
+    },
+    "run-menu.blocked.loading": {
+      "message": "プレビュー設定を読み込み中です。"
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "配置できるメインファイルは .rms と .rms2 のみです。"
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "選択した RMS ソースは空です。"
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "選択した RMS ソースに構文エラーがあります。"
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "選択した RMS ソースを実行待ちにできませんでした。"
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "シード固定の設定が無効です。"
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "保存時に実行する設定が無効です。"
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "編集時に実行する設定が無効です。"
+    },
+    "run-menu.invalid.seed": {
+      "message": "シードには 0～4294967295 の整数を指定してください。"
+    },
+    "run-menu.invalid.map-size": {
+      "message": "対応しているゲームの選択肢からマップの大きさを選んでください。"
+    },
+    "run-menu.invalid.player-count": {
+      "message": "プレイヤー数は 1～8 人で指定してください。"
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "プレイヤースロットには 8 個の有効な値が必要です。"
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "参加プレイヤーのスロットは重複できません。"
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "プレイヤーの色には 8 個の有効な値が必要です。"
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "参加プレイヤーの色は重複できません。"
+    },
+    "run-menu.invalid.teams": {
+      "message": "プレイヤーのチームには、「チームなし」から「チーム 4」までの値が 8 個必要です。"
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "文明の既定値には、8 人分のプレイヤースロットが必要です。"
+    },
+    "run-menu.invalid.controllers": {
+      "message": "プレイヤーの操作担当には 8 個の値が必要です。"
+    },
+    "run-menu.invalid.profile": {
+      "message": "既知の動作プロファイルが必要です。"
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "バージョンの選択範囲が無効です。"
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "ゲームモードとその設定が必要です。"
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "ゲームモードの追加ルールは既知のものを指定し、重複させないでください。"
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "ロビーオプションはオンまたはオフにしてください。"
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "開始時の資源が無効です。"
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "最初の時代が無効です。"
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "最終時代が無効です。"
+    },
+    "run-menu.invalid.age-order": {
+      "message": "最終時代を最初の時代より前にはできません。"
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "配置方式が無効です。"
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "トレース収集レベルが無効です。"
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "テスト用コア数は「自動」または 1～32 にしてください。"
+    },
+    "run-menu.standard-include.headline": {
+      "message": "ゲームの標準インクルードにはゲームフォルダーが必要です"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "ゲームの標準インクルードにはローカルのゲームバージョンが必要ですが、同梱バージョンが選択されています。"
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "ゲームの標準インクルードにはゲームフォルダーのリンクが必要ですが、まだリンクされていません。"
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "ゲームの標準インクルードに必要な resources/_common/drs/gamedata_x2 が、リンクされたゲームフォルダーにありません。"
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "スクリプトを解析できませんでした"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "スクリプトを検査できませんでした"
+    },
+    "run-menu.failure.not-started": {
+      "message": "実行を開始できませんでした"
+    },
+    "run-menu.failure.generation": {
+      "message": "生成に失敗しました"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "マップテスト"
+    },
+    "settings.language.title": {
+      "message": "言語"
+    },
+    "settings.language.description": {
+      "message": "メニュー、ダイアログ、メッセージにこの言語を使用します。スクリプトのコマンド、ログ、サポート用データは英語のままです。"
+    },
+    "settings.language.label": {
+      "message": "表示言語"
+    },
+    "settings.language.system": {
+      "message": "Windows の表示言語（{language}）"
+    },
+    "settings.language.close": {
+      "message": "閉じる"
+    },
+    "settings.language.close-label": {
+      "message": "言語設定を閉じる"
+    },
+    "settings.language.editor-next-start": {
+      "message": "コードエディター内のメニューは、次回の起動時に切り替わります。"
+    },
+    "message.action.report-problem": {
+      "message": "この問題を報告"
+    },
+    "message.action.get-newer-control": {
+      "message": "新しい AoE2Control を入手"
+    },
+    "message.action.link-game-folder": {
+      "message": "ゲームフォルダーをリンクしてください"
+    },
+    "message.action.verify-game-files": {
+      "message": "Steam でゲームファイルの整合性を確認してください"
+    },
+    "message.action.select-local-game-version": {
+      "message": "ローカルのゲームバージョンを選択してください"
+    },
+    "message.action.check-include-name": {
+      "message": "インクルードファイル名を確認してください"
+    },
+    "message.action.open-problems": {
+      "message": "「問題」パネルを開いてください"
+    },
+    "message.action.choose-map-size": {
+      "message": "別のマップの大きさを選択してください"
+    },
+    "message.action.change-player-count": {
+      "message": "プレイヤー数を変更してください"
+    },
+    "message.action.open-players-menu": {
+      "message": "プレイヤーメニューを開いてください"
+    },
+    "message.action.try-another-seed": {
+      "message": "別のシードを試してください"
+    },
+    "message.action.reinstall": {
+      "message": "AoE2RMSIDE を再インストールまたは更新してください"
+    },
+    "message.action.check-update": {
+      "message": "AoE2RMSIDE の更新を確認してください"
+    },
+    "message.action.reconnect-control": {
+      "message": "AoE2Control を再接続して、もう一度お試しください"
+    },
+    "message.action.check-control-file": {
+      "message": "選択した AoE2Control ファイルが動作することを確認して、もう一度お試しください"
+    },
+    "message.action.wait-run-again": {
+      "message": "少し待ってから、もう一度「実行」を押してください"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "もう一度「実行」を押し、繰り返し発生する場合は AoE2DE を再起動してください"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "AoE2DE を再起動してから、もう一度「実行」を押してください"
+    },
+    "message.action.check-game-window": {
+      "message": "ゲームのウィンドウを確認してから、もう一度「実行」を押してください"
+    },
+    "message.action.press-run-again": {
+      "message": "もう一度「実行」を押してください"
+    },
+    "message.action.wait-try-again": {
+      "message": "少し待ってから、もう一度お試しください"
+    },
+    "message.action.open-deploy-again": {
+      "message": "「MOD として配置」をもう一度開いてください"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "別の MOD 名を選択してください"
+    },
+    "message.action.rerun-map-test": {
+      "message": "マップテストを再実行してください"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "プレイヤースロット"
+    },
+    "message.format.located": {
+      "message": "{location}：{text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}、{line} 行目"
+    },
+    "message.format.the-script": {
+      "message": "スクリプト"
+    },
+    "message.format.the-folder": {
+      "message": "フォルダー"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "プレイヤープロファイルの XS フォルダー"
+    },
+    "message.format.the-map-test": {
+      "message": "マップテスト"
+    },
+    "message.format.a-map-test": {
+      "message": "マップテスト"
+    },
+    "message.format.preview-kept": {
+      "message": "プレビューは保持されています。"
+    },
+    "message.format.preview-works-without-it": {
+      "message": "この機能がなくてもプレビューは動作します。"
+    },
+    "message.format.sentence": {
+      "message": "{text}。"
+    },
+    "message.generation.source-changed.headline": {
+      "message": "生成中にスクリプトが変更されました"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "次に新しい内容を実行します。"
+    },
+    "message.xs-syntax.headline": {
+      "message": "XS ファイルに構文エラーがあります"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} に XS の構文エラーがあります"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name} の {line} 行目により、ゲームがマップの XS を読み込めません。ゲームの状態は変更していません。"
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "ゲームがマップの XS を読み込めません。ゲームの状態は変更していません。"
+    },
+    "message.control.xs-syntax.action": {
+      "message": "「問題」に表示されたエラーを修正して、ゲーム内テストを再実行してください"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "プレイヤープロファイルの XS フォルダーに、同名の XS ファイルが既にあります"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "プレイヤープロファイルの XS フォルダーに {name} が既にあります"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "{folder} にあるこのファイルは AoE2RMSIDE が作成したものではないため、上書きせずにゲーム内テストを中止しました。"
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "このファイルは AoE2RMSIDE が作成したものではないため、上書きせずにゲーム内テストを中止しました。"
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "XS ファイルの名前を変更するか、既存のファイルを削除してください"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "プレイヤープロファイルの XS フォルダー内のファイルが、AoE2RMSIDE の外部で変更されました"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "プレイヤープロファイルの XS フォルダー内の {name} が、AoE2RMSIDE の外部で変更されました"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE がゲーム内テスト用に {folder} へコピーしたファイルです。外部で加えられた変更を上書きしないため、ゲーム内テストを中止しました。"
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "編集した内容を別の場所へ移すかファイルを削除して、ゲーム内テストを再実行してください"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "プレイヤープロファイルの XS フォルダーに XS ファイルをコピーできません"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "プレイヤープロファイルの XS フォルダーに {name} をコピーできません"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "ゲーム内テストでは、#includeXS に書かれたファイル名で各 XS ファイルをコピーします。この名前にはフォルダーが含まれています。"
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "#includeXS の行にはファイル名だけを記述してください"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "2 つの XS ファイルが同じ名前でコピーされます"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "2 つの XS ファイルがどちらも {name} としてコピーされます"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "プレイヤープロファイルの XS フォルダーには、その名前のファイルを 1 つしか置けません。"
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "どちらかの XS ファイルの名前を変更してください"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "プレイヤープロファイルの XS フォルダーを使用できません"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} は通常のフォルダーではないか、別の場所を指しています。AoE2RMSIDE は転送先のあるフォルダーを経由してコピーしません。"
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "AoE2RMSIDE がコピーした XS ファイルの記録を読み取れません"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "この記録がないと、プレイヤープロファイル内のどの XS ファイルを AoE2RMSIDE が作成したか判別できません。"
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "プレイヤープロファイルの XS フォルダーに XS ファイルをコピーできませんでした"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "このマップが読み込む XS ファイル数は、ゲーム内テストでコピーできる数を超えています。"
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "このゲーム内テストが {folder} 内で変更した XS ファイルの一部を元に戻せませんでした。AoE2RMSIDE は引き続き自分が作成したファイルとして扱います。"
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "このゲーム内テストが {folder} 内で変更した XS ファイルは、すべて元に戻しました。"
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "ゲーム内テスト中に、{folder} 内の XS ファイルに関する AoE2RMSIDE の記録が変更されました。"
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "フォルダーに書き込めることを確認して、ゲーム内テストを再実行してください"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE が起動していません"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "AoE2DE を起動してから、もう一度「実行」を押してください"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control が起動する前に終了しました"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control が起動しませんでした"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control の接続が完了しませんでした"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "このバージョンの AoE2Control は、選択した文明に対応していません"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "サクソン人、ヴァリャーグ、デーンには AoE2Control 1.1.1 以降が必要です。"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "選択した文明を AoE2Control で使用できません"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "AoE2Control 1.1.1 以降を選択するか、別の文明を選んでください。"
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "実行中のゲームバージョンには、選択した文明がありません"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "別の文明を選択してください"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "このゲームバージョンは、ゲーム内テストに対応していません"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "前の AoE2Control をゲームから取り外している途中です"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "以前の AoE2Control の起動処理が、まだゲーム内で続いています"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control の起動が制限時間内に完了しませんでした"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "AoE2DE のウィンドウの準備ができていません"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "ゲームのウィンドウを最小化せずに表示してから、もう一度「実行」を押してください"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "別のバージョンの AoE2Control がゲーム内で動作しています"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "このゲームでは、以前に AoE2Control の起動に失敗しています"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control をゲームに接続できませんでした"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "別の AoE2Control ランチャーが起動しています"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "それを終了してから、もう一度「実行」を押してください"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "この AoE2Control リリースには互換性がありません"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "互換性のある AoE2Control の公開リリースを選択してください"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "ゲームの設定が実行設定と一致しませんでした"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "AoE2Control との接続が切れました"
+    },
+    "message.control.connection-lost.action": {
+      "message": "必要に応じて AoE2DE を起動して、もう一度お試しください"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control が制限時間内に応答しませんでした"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control が応答せずに接続を閉じました"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "ゲームが処理中か、メッセージを表示している可能性があります。"
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "対戦の開始中にゲームが応答しなくなりました"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE がスクリプトエラーなどのメッセージを表示している可能性があります。"
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "ゲーム内のメッセージを閉じてから、もう一度「実行」を押してください"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "制限時間内に、ゲームから新しい対戦の開始を示す応答がありませんでした"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "現在の対戦が制限時間内に終了しませんでした"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "ゲームへのコピー中にマップが変更されました"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "ゲームのマップフォルダーに、同じファイル名の別のマップがあります"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "マップの名前を変更してから、もう一度「実行」を押してください"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "ゲームにマップをコピーできませんでした"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "ゲームから対戦開始の確認がありませんでした"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "再試行する前に、再接続して現在の対戦を確認してください"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "ゲームから前の対戦が終了したことの確認がありませんでした"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "再試行する前に、再接続して状態を確認してください"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "ゲームフォルダーまたはプレイヤープロファイルを特定できませんでした"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "リンクされたゲームフォルダーを確認してください"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "ゲーム内テスト用にマップを配置できませんでした"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control が接続する前に停止しました"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control は安定したシングルプレイヤーセッションを確認できませんでした"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control から、AoE2RMSIDE で使用できない応答が届きました"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "ゲームがゲーム内テストに対応する状態ではありません"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "メインメニューまたはシングルプレイヤーの対戦に戻って、もう一度お試しください"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "先に現在の対戦を終了する必要があります"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "もう一度「実行」を押し、対戦の終了を許可してください"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control は接続されていません"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "もう一度「実行」を押して接続してください"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "選択した AoE2Control ファイルが変更されました"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "AoE2Control を選択し直してください"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control は処理中です"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "このシステムはゲーム内テストに対応していません"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "ゲーム内テストは進行中の対戦を置き換えませんでした"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "ゲーム内テストが置き換えの確認をする前に、AoE2DE で対戦が始まりました。"
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control は現在の対戦を終了できませんでした"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "ゲーム内テストがマップを開始する前にゲームの状態が変わりました"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "ゲーム内テストの準備中に、AoE2DE で対戦が始まったか、シングルプレイヤーの設定画面が閉じられました。"
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "ゲーム内テスト中に AoE2DE または AoE2Control が再起動しました"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "コピーしたマップが AoE2DE に一覧表示されませんでした"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "ゲームの MOD マップ一覧に、コピーしたマップが表示されなかったか、複数回表示されました。"
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "プレイヤーの設定を AoE2Control に送信できません"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "文明、チーム、色のいずれかが、この AoE2Control で受け付けられる範囲外です。"
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE はゲーム内テストを準備できませんでした"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control はランダムマップの対戦を設定できませんでした"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "AoE2DE のメインメニューに戻って再試行し、解消しない場合は「シングルプレイヤー → スカーミッシュ」を一度開いてください"
+    },
+    "message.control.headline": {
+      "message": "ゲーム内テストに失敗しました"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "このバージョンの AoE2Control はロビーオプションを設定できません"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "ロビーオプションには AoE2Control 1.1.1 以降が必要です。ゲームの状態は変更していません。"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "ゲーム内テストでは P1 にプレイヤーが必要です"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "自分が操作するのは P1 のプレイヤーです。ほかの全員はコンピューターになります。"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "プレイヤーメニューを開いて P1 にプレイヤーを配置してください"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control は P1 以外の人間プレイヤーを拒否しました"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "ゲーム内テストではシングルプレイヤーの対戦を開始するため、P1 以外の全員がコンピューターになります。"
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control はコンピュータープレイヤーの一覧を拒否しました"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "コンピュータープレイヤーがスロット順に並んでいませんでした。"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "プレイヤーのいないスロットにコンピュータープレイヤーが指定されていました。"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control は P1 のコンピュータープレイヤーを拒否しました"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "P1 はゲーム内テストで自分が操作するプレイヤーなので、コンピューターにはできません。"
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "一部のロビー設定を元に戻せませんでした"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "ゲーム内テストに失敗し、{fields} が以前と異なっている可能性があります。"
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "ゲーム内テストに失敗し、一部のロビー設定が以前と異なっている可能性があります。"
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "次の対戦を始める前に、AoE2DE のロビー設定を確認してください"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "ゲームモード"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "マップの大きさ"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "開始時の資源"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "最初の時代"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "最終時代"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "マップの表示"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "プレイヤー数"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "チームの配置"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "ゲームモードの追加ルール"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "ターボ"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "全テクノロジー系統図"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "古代"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "堅固な畑"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "選択したマップ"
+    },
+    "message.lobby-setting.seed": {
+      "message": "シード"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot} の{setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "チーム"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "ハンディキャップ"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "色"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "文明"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "人間・コンピューターの設定"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "設定"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "AoE2Control を起動中"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "前の AoE2Control がゲームから取り外されるのを待機中"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "AoE2Control がゲーム内で起動を完了するのを待機中"
+    },
+    "message.live.game-detected.headline": {
+      "message": "AoE2DE を検出しました"
+    },
+    "message.live.attach.headline": {
+      "message": "実行中のゲームに接続中"
+    },
+    "message.live.handshake.headline": {
+      "message": "AoE2Control を確認中"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control の準備ができました"
+    },
+    "message.live.clean-end.headline": {
+      "message": "現在の対戦を終了中"
+    },
+    "message.live.deploy.headline": {
+      "message": "ゲームにマップを配置中"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, other {マップの XS ファイル {files} も、プレイヤープロファイルの XS フォルダーにあります。}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "このバージョンのマップは既にゲームにあります"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "ゲーム内でマップを選択中"
+    },
+    "message.live.match-start.headline": {
+      "message": "シード {seed} でランダムマップを開始中"
+    },
+    "message.live.verified.headline": {
+      "message": "シード {seed} で対戦を検証しました"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} は未検証のため、対戦がプレビューと異なる場合があります。"
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} でのゲーム内テストは未検証です"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "ゲーム内テストは動作しますが、対戦がプレビューと異なる場合があります。"
+    },
+    "message.live.cancelled.headline": {
+      "message": "ゲーム内テストをキャンセルしました"
+    },
+    "message.live.cancelled.cause": {
+      "message": "ゲームにはそれ以上の変更を加えていません。"
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control の接続を解除しました"
+    },
+    "message.live.stopped.headline": {
+      "message": "ゲームを変更する前にゲーム内テストを中止しました"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "プレビューを生成できませんでした。"
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "スクリプトにエラーがあります。"
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "プレビューの生成中に、スクリプトまたは実行設定が変更されました。"
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "プレビューが現在のスクリプトと一致しなくなりました。"
+    },
+    "message.live.match-kept.cause": {
+      "message": "進行中の対戦は変更していません。"
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "進行中の対戦を置き換える許可を保存できませんでした。"
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control を選択しました"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "このファイルは利用可能な AoE2Control 実行ファイルではありません"
+    },
+    "message.live.control-rejected.action": {
+      "message": "AoE2Control の公開リリースを選択してください"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "AoE2Control の選択を解除しました"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "AoE2Control の選択を解除できませんでした"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "接続を解除して、もう一度お試しください"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "AoE2Control の状態を取得できません"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "現在の対戦のシードを読み込めません"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "対戦のシード {seed} を読み込み、固定しました"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "配置中に MOD フォルダーが変更されました"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "MOD フォルダー内のファイルが AoE2RMSIDE の外部で変更されました"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE は、外部で加えられた変更を上書きしません。"
+    },
+    "message.deploy.external-edits.action": {
+      "message": "変更した内容を別の場所へ移して、再度配置してください"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "配置内容のプレビューが古くなっています"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "別の MOD が既にこのフォルダーを使用しています"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE は、自分で配置した MOD のみを置き換えます。"
+    },
+    "message.deploy.profile.headline": {
+      "message": "プレイヤープロファイルが選択されていません"
+    },
+    "message.deploy.profile.action": {
+      "message": "プロファイルを選択してください"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "標準マップは直接配置できません"
+    },
+    "message.deploy.built-in.action": {
+      "message": "先にマップをワークスペースに複製してください"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "MOD のファイル数が多すぎるため配置できません"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "MOD フォルダーが別の場所を指しています"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE は、転送先のあるフォルダーを経由して配置しません。"
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "既存の MOD の置き換えが確認されていません"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "もう一度配置し、置き換えを確認してください"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "配置できる自分のマップがありません"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "MOD には、ワークスペース内の .rms スクリプトが必要です。"
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "この MOD 名はゲーム内テスト用に予約されています"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "この MOD 名はフォルダー名として使用できません"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "< > : \" / \\ | ? * を含めず、末尾をピリオドや空白にせず、単一のフォルダー名を指定してください。"
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}、{line} 行目：{error} ゲームが読み込めないため、何も配置していません。"
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "ゲームが読み込めないため、何も配置していません。"
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "「問題」に表示されたエラーを修正して、再度配置してください"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "マップアイコンを使用できませんでした"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "マップアイコンを再生成してください"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "マップアイコンの生成は単独で実行する必要がありますが、別のプレビュー、マップテスト、またはゲーム内テストが実行中です。"
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "完了してから、もう一度お試しください"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "マップアイコンには現在のプレビューが必要ですが、プレビューが変更されました。"
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "新しいプレビューを待ってから、もう一度お試しください"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "マップアイコンは、別のゲームフォルダーのゲームのテクスチャで描画されています。"
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "有効な AoE2DE のインストールがリンクされていません。"
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "プロファイルフォルダーまたはその MOD フォルダーが、AoE2RMSIDE で使用できる通常のフォルダーではありません。"
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "2 つのファイルが MOD 内の {path} にコピーされることになります。"
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "マップが使うファイルの一部に、MOD フォルダー内の配置先がありません。"
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE は配置済み MOD の記録を読み取れませんでした。"
+    },
+    "message.deploy.headline": {
+      "message": "配置に失敗しました"
+    },
+    "message.map-test.replay.headline": {
+      "message": "この検出結果のマップを表示できませんでした"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "マップテストがプロセスのメモリ上限を超えたため停止しました。再実行は行っていません。"
+    },
+    "message.map-test.child-memory.action": {
+      "message": "スクリプトが確保するメモリを減らしてください（大きな繰り返しや保持するマップの数など）"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "マップテストで値または呼び出しの入れ子が深すぎ、プロセスのスタックを超えたため停止しました。再実行は行っていません。"
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "マップテストのプロセスが中断しました。メモリまたはスタックの上限に達した可能性があります。再実行は行っていません。"
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() には、開いているフォルダー内の .rms または .rms2 ファイルへの、引用符で囲んだ相対パスが必要です。"
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "テストが既定で実行するマップが、開いているフォルダーの外にあります。"
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "一度も保存していないマップテストには、開いているフォルダーが必要です。"
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "このファイルは、AoE2RMSIDE が読み取れるマップテストのレポートではありません。"
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "ファイルが {limit, number, integer} MiB を超えています。"
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "実行後にマップテストが変更されています。"
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "実行後にマップまたはインクルードファイルが変更されています。"
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "テストの実行に使用したゲームバージョンは、現在利用できません。"
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "テスト実行時とは異なるマップが生成されました。"
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "このレポートに該当の検出結果はありません。"
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "このマップを表示するには {script} を開いてください"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "検出結果のマップは、その結果を記録したマップテストから再生成されます。"
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "この検証へ移動するには {script} を開いてください"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "読み込んだレポートのため、対応するマップテストのファイルを特定できません。"
+    },
+    "message.map-test.results-running.headline": {
+      "message": "マップテストを実行中です"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "マップテストを実行中です · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "表示されているのは前回の実行結果です。実行が終了すると更新されます。"
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "直近の実行はエラーで停止しました"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "表示されているのは、その前の実行結果です。"
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "「問題」と「出力」でエラーを確認してください"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "直近の実行は中止されました"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "読み込んだ {script} のレポート"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "マップテスト、マップ、ゲームバージョンが実行時と同じであれば、検出結果のマップを表示できます。"
+    },
+    "message.map-test.progress.counts": {
+      "message": "{requested, plural, other {マップ # 個中}} {done, number} 個"
+    },
+    "message.map-test.progress.tested": {
+      "message": "テスト済み"
+    },
+    "message.map-test.progress.testing": {
+      "message": "テスト中"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {マップ # 個をテストしました} other {マップ # 個をテストしました}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "マップをテスト中、{percent}%（{counts}）"
+    },
+    "message.map-test.progress.starting": {
+      "message": "マップテストを開始中"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "このフォルダーは AoE2DE のゲームフォルダーではありません"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "このフォルダーには、Age of Empires II: Definitive Edition の完全なインストール内容がありません。"
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "ゲームのインストール先フォルダーを選択してください（例: Steam ライブラリ内の steamapps\\common\\AoE2DE）"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "リンクしている AoE2DE のインストールを利用できません。"
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "ゲームフォルダーの一部を安全に読み取れませんでした。大きすぎるか階層が深すぎる、別の場所へのリンクである、または対応していないファイル名を含んでいます。"
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "ゲームフォルダーとインストール済みマップの外にある通常のフォルダーを選んでください。"
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} はそのフォルダーに既にあります。"
+    },
+    "message.installed-source.limit.cause": {
+      "message": "ファイルまたはフォルダーが多すぎるか、ファイルが大きすぎます。"
+    },
+    "message.installed-source.changed.cause": {
+      "message": "その間にインストール済みマップが変更されました。"
+    },
+    "message.installed-source.changed.action": {
+      "message": "インストール済みマップを開き直してください"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "その間にスクリプトまたはそのインクルードのいずれかが変更されました。"
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} は、マップがインクルードできる種類のファイルではありません。"
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "{path} と大文字・小文字だけが異なるファイルが複数あります。"
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} は、AoE2RMSIDE が読み取れるフォルダーの外にあります。"
+    },
+    "message.source-catalog.authority.action": {
+      "message": "インクルードするファイルは、開いているフォルダーかリンクしたゲームフォルダーに置いてください"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "インクルード用のフォルダーを小さくするか、必要なインクルードを減らしてください"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "必要なソースデータを減らしてから、もう一度実行してください"
+    },
+    "message.session.save-failed.headline": {
+      "message": "開いているタブとレイアウトを記憶できませんでした"
+    },
+    "message.session.save-failed.cause": {
+      "message": "ファイルには影響しませんが、次回の起動時には以前のタブ構成とレイアウトが復元される場合があります。"
+    },
+    "message.native.exited.cause": {
+      "message": "{name} が予期せず終了しました。"
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} が実行されていません。"
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} が時間内に応答しませんでした。"
+    },
+    "message.execution.busy.cause": {
+      "message": "別のプレビュー、マップテスト、またはゲーム内テストが実行中です。"
+    },
+    "message.editor.busy.cause": {
+      "message": "エディターの保留中の要求が多すぎます。"
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "ゲームバージョンを選び直してください"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Windows エクスプローラーでフォルダーを開けませんでした：{reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "このファイルはバイナリ、大きすぎる、読み取れない、または対応していない種類です。"
+    },
+    "message.files.too-many.cause": {
+      "message": "一度に開けるファイルまたはフォルダーは {limit, number, integer} 個までです。"
+    },
+    "message.files.recent-missing.cause": {
+      "message": "この項目は最近使った項目の一覧にもうありません。"
+    },
+    "message.files.encoding.cause": {
+      "message": "マップテストのスクリプトは UTF-8 で保存する必要があります。"
+    },
+    "message.files.too-large.cause": {
+      "message": "マップテストのスクリプトは最大 {limit, number, integer} MiB です。"
+    },
+    "message.files.protected-target.cause": {
+      "message": "ゲームフォルダーやインストール済みマップにはファイルを保存できません。"
+    },
+    "message.files.extension-required.cause": {
+      "message": "ファイル名の末尾は {extension} にする必要があります。"
+    },
+    "message.files.entry-stale.cause": {
+      "message": "この項目は AoE2RMSIDE の外部で変更または移動されました。"
+    },
+    "message.files.not-a-file.cause": {
+      "message": "同じ名前のフォルダーが既にあります。"
+    },
+    "message.files.outside-folder.cause": {
+      "message": "このファイルは開いているフォルダーの外にあります。"
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "フォルダー内のファイルとフォルダーが多すぎて一覧表示できません。"
+    },
+    "message.files.traversal-limit.action": {
+      "message": "より小さいフォルダーを開いてください"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "削除の前にごみ箱の設定が変更されました。"
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "もう一度項目を削除してください"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "未保存の変更が大きすぎるため、復元用に保持できません。"
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "変更を保存して保持してください"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "復元ファイルが破損しているか、別の AoE2RMSIDE リリースで書き込まれています。"
+    },
+    "message.game-textures.cause": {
+      "message": "代わりに、プレビューとマップアイコンをテクスチャ色で表示します。"
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} 代わりに、プレビューとマップアイコンをテクスチャ色で表示します。"
+    },
+    "message.game-textures.failed.headline": {
+      "message": "ゲームのテクスチャを準備できませんでした"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "リンクされたゲームフォルダーではゲームのテクスチャを利用できません"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "変換済みの地形を読み込めませんでした"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "ゲームのテクスチャの変換をキャンセルしました"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "変換済みファイルは保持されています。「ゲームのテクスチャ」を再び選択すると続行します。"
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "オブジェクトのスプライトを読み込めませんでした"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "このコンピューターでは GPU によるマップ描画を利用できません"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "GPU を使わずにマップを描画します。大きなマップでは時間がかかる場合があります。"
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "このコンピューターでは GPU によるマップ描画を使用していません"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "マップの描画に使えるグラフィックスカードがないため、カードを使わずに描画します。大きなマップでは時間がかかる場合があります。"
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "GPU によるマップ描画が停止しました"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "グラフィックスカードがリセットされたため、アプリを再起動するまで GPU を使わずにマップを描画します。"
+    },
+    "message.map-test.preview-note.look": {
+      "message": "マップテストのプレビューには常にミニマップ色を使用します"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "マップテストでは完成したマップのみ表示します"
+    },
+    "message.generation-result.generated": {
+      "message": "生成済み"
+    },
+    "message.generation-result.reused": {
+      "message": "再利用"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "ゲームバージョン未検証"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "ゲームバージョン未検証"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "このゲームバージョンでは、まだマップ生成を利用できません。"
+    },
+    "message.map-test.workers.label": {
+      "message": "テスト用コア数"
+    },
+    "message.map-test.workers.hint": {
+      "message": "マップテストが使用する最大コア数、つまり同時に生成するマップ数です（{maximum, plural, =1 {このコンピューターでは 1} other {このコンピューターでは 1～{maximum}}}）。空欄にすると「自動」になり、コンピューターとマップサイズに合わせて選択します。どの設定でも結果は同じです。"
+    },
+    "message.map-test.workers.automatic": {
+      "message": "自動"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "自動にする"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, other {{count} 個のコマンドはゲームと比較されていません}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "一部のコマンドはゲームと比較されていません"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {記録されたゲームのマップでこの箇所の使用例がまだないため、適用箇所でプレビューがゲームと異なる可能性があります：{list}。} other {記録されたゲームのマップでこれらの箇所の使用例がまだないため、適用箇所でプレビューがゲームと異なる可能性があります：{list}。}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {記録されたゲームのマップでこの箇所の使用例がまだないため、適用箇所でプレビューがゲームと異なる可能性があります。} other {記録されたゲームのマップでこれらの箇所の使用例がまだないため、適用箇所でプレビューがゲームと異なる可能性があります。}}"
+    },
+    "message.construct.in-context": {
+      "message": "{context} 内の {name}"
+    },
+    "message.construct.list-more": {
+      "message": "{names}、ほか {more} 件"
+    },
+    "message.fallback.run": {
+      "message": "実行に失敗しました"
+    },
+    "message.fallback.script": {
+      "message": "スクリプトが失敗しました"
+    },
+    "message.fallback.preview": {
+      "message": "プレビューに失敗しました"
+    },
+    "message.fallback.map-test": {
+      "message": "マップテストに失敗しました"
+    },
+    "message.fallback.recovery": {
+      "message": "復元に失敗しました"
+    },
+    "message.fallback.update": {
+      "message": "更新に失敗しました"
+    },
+    "message.fallback.files": {
+      "message": "ファイル操作に失敗しました"
+    },
+    "message.fallback.game-folder": {
+      "message": "ゲームフォルダーを使用できませんでした"
+    },
+    "message.fallback.app": {
+      "message": "問題が発生しました"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "表示されている問題を修正すると、残りを確認できます。"
+    },
+    "message.action.choose-another-name": {
+      "message": "別の名前を選択してください"
+    },
+    "message.action.use-or-remove": {
+      "message": "使用するか削除してください（クイックフィックスで削除できます）"
+    },
+    "explorer.create.definition-file": {
+      "message": "定義ファイル…"
+    },
+    "explorer.create.script": {
+      "message": "スクリプト"
+    },
+    "explorer.create.map-test-script": {
+      "message": "マップテストスクリプト"
+    },
+    "explorer.create.xs-script": {
+      "message": "XS スクリプト"
+    },
+    "explorer.create.folder": {
+      "message": "フォルダー"
+    },
+    "explorer.create.label": {
+      "message": "{name} 内に作成"
+    },
+    "explorer.label": {
+      "message": "ファイルエクスプローラー"
+    },
+    "explorer.search.label": {
+      "message": "ワークスペースのファイルを検索"
+    },
+    "explorer.search.placeholder": {
+      "message": "ファイルを検索"
+    },
+    "explorer.search.clear": {
+      "message": "ファイルの検索を消去"
+    },
+    "explorer.search.searching": {
+      "message": "ワークスペースのファイルを検索中"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "一致する RMS ファイルはありません"
+    },
+    "explorer.search.no-results": {
+      "message": "一致するファイルはありません"
+    },
+    "explorer.open-file.label": {
+      "message": "ファイルを開く"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "ファイルを開く"
+    },
+    "explorer.open-folder.label": {
+      "message": "フォルダーを開く"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "フォルダーを開く"
+    },
+    "explorer.tree.label": {
+      "message": "{name} 内のファイル"
+    },
+    "explorer.empty.maps": {
+      "message": "フォルダーを開くと、その中のマップを参照・編集できます。"
+    },
+    "explorer.empty.scripts": {
+      "message": "フォルダーを開くと、その中のスクリプトを参照・編集できます。"
+    },
+    "explorer.indexing": {
+      "message": "ワークスペースフォルダーを索引化中"
+    },
+    "explorer.read-failed": {
+      "message": "このフォルダーを読み取れませんでした"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "エクスプローラーで開く"
+    },
+    "explorer.context.rename": {
+      "message": "名前を変更"
+    },
+    "explorer.context.delete": {
+      "message": "削除"
+    },
+    "explorer.inline.create-file": {
+      "message": "ファイルを作成"
+    },
+    "explorer.inline.create-folder": {
+      "message": "フォルダーを作成"
+    },
+    "explorer.inline.rename-file": {
+      "message": "ファイル名を変更"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "フォルダー名を変更"
+    },
+    "definition-file.title": {
+      "message": "定義ファイルを生成"
+    },
+    "definition-file.close-label": {
+      "message": "閉じる"
+    },
+    "definition-file.loading": {
+      "message": "選択したゲームバージョンのオブジェクト名と地形名を読み取り中…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "ゲームバージョン"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version}（未検証）"
+    },
+    "definition-file.identity.target": {
+      "message": "保存先"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "生成時に選択"
+    },
+    "definition-file.groups.label": {
+      "message": "内容のグループ"
+    },
+    "definition-file.group.terrains": {
+      "message": "地形"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "terrain_type、base_terrain などの地形設定に使う地形 ID"
+    },
+    "definition-file.group.objects": {
+      "message": "オブジェクト"
+    },
+    "definition-file.group.objects.description": {
+      "message": "create_object などのオブジェクト設定に使うオブジェクト ID"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, other {名前 # 個}}"
+    },
+    "definition-file.built-in": {
+      "message": "組み込みの名前を含める"
+    },
+    "definition-file.built-in.description": {
+      "message": "ゲームが既に定義している名前です。このファイルがなくてもスクリプトで使用できます。"
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "ゲームフォルダーをリンクすると、ゲームが名前を定義していないオブジェクトや地形の名前を追加できます。"
+    },
+    "definition-file.note.other-version": {
+      "message": "ゲームフォルダーのバージョンが異なるため、その名前は使用しません。"
+    },
+    "definition-file.note.no-text": {
+      "message": "このゲームバージョンでは、ゲームフォルダー内の名前を読み取れません。"
+    },
+    "definition-file.note.nothing-new": {
+      "message": "名前のあるオブジェクトと地形は、すべて組み込みの名前を持っています。"
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, other {このフォルダー内のスクリプトで既に定義されているため、組み込みの名前を # 個省略します。}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, other {重複しない名前にできなかったため、ゲームフォルダー由来の名前を # 個省略します。}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "このフォルダー内の一部のスクリプトについて、定義済みの名前を確認できませんでした。"
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "選択したゲームバージョンのデータが不完全なため、定義ファイルを生成できません。"
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "定義ファイルの生成に使用できるゲームバージョンがありません。"
+    },
+    "definition-file.unavailable.failed": {
+      "message": "選択したゲームバージョンのオブジェクト名と地形名を読み取れませんでした。"
+    },
+    "definition-file.file-name.label": {
+      "message": "ファイル名"
+    },
+    "definition-file.file-name.empty": {
+      "message": "ファイル名を入力してください。"
+    },
+    "definition-file.file-name.invalid": {
+      "message": "この名前は Windows のファイル名として使用できません。"
+    },
+    "definition-file.file-name.extension": {
+      "message": "ファイル名の末尾は .inc にしてください。"
+    },
+    "definition-file.file-name.reserved": {
+      "message": "この名前はゲームのライブラリファイルが使用しています。別の名前を選んでください。"
+    },
+    "definition-file.generate": {
+      "message": "生成"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "生成…"
+    },
+    "definition-file.error": {
+      "message": "定義ファイルを書き込めませんでした。「出力」で詳細を確認できます。"
+    },
+    "definition-file.replace.title": {
+      "message": "{name} を置き換えますか？"
+    },
+    "definition-file.replace.description": {
+      "message": "{folder} には、この名前のファイルが既にあります。置き換えると内容が上書きされます。"
+    },
+    "definition-file.replace.confirm": {
+      "message": "置き換え"
+    },
+    "definition-file.output.failed": {
+      "message": "定義ファイルを書き込めませんでした"
+    },
+    "definition-file.output.unavailable": {
+      "message": "定義ファイルに使用する名前を読み取れませんでした"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "定義ファイルを保存"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "定義ファイル"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "MOD を有効化"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "ゲームの MOD 一覧で MOD を有効にします。マップとアイコンは、ゲームを再起動すると表示されます。"
+    },
+    "deploy-panel.success.enabled": {
+      "message": "MOD は有効です。ゲームを再起動すると、マップとアイコンが表示されます。"
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "ゲームの「MOD → 自分の MOD」で MOD を有効にしてからゲームを再起動すると、マップとアイコンが表示されます。"
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {ゲームの MOD 一覧ファイルを読み取れなかったため、MOD は有効になりませんでした。} unexpected-layout {ゲームの MOD 一覧ファイルが IDE の認識できない形式のため、MOD は有効になりませんでした。} duplicate-entry {ゲームの MOD 一覧にこの MOD が複数回記載されているため、MOD は有効になりませんでした。} unexpected-entry {ゲームのこの MOD の項目が IDE の認識できない形式のため、MOD は有効になりませんでした。} changed {ゲームが同時に MOD 一覧を変更したため、MOD は有効になりませんでした。} unsafe-path {プレイヤープロファイルの MOD フォルダーまたは MOD 一覧が別の場所へのリンクのため、MOD は有効になりませんでした。} other {ゲームの MOD 一覧を保存できなかったため、MOD は有効になりませんでした。}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "ゲームは実行中です。変更は再起動後に適用されますが、終了時にゲームが変更を取り消す場合があります。再起動後に MOD が無効なら、ゲームを終了して再度配置してください。"
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "MOD フォルダーを開く"
+    },
+    "deploy-panel.success.finish": {
+      "message": "完了"
+    },
+    "deploy-panel.success.title": {
+      "message": "MOD を配置しました"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "MOD の保存先"
+    },
+    "deploy-panel.success.path": {
+      "message": "配置した MOD のパス"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "MOD のパスをコピー"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "MOD のパスをコピーしました"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, other {ファイル # 個。}} MOD は有効です。ゲームを再起動すると、マップとアイコンが表示されます。"
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, other {ファイル # 個。}} ゲームの「MOD → 自分の MOD」で MOD を有効にしてからゲームを再起動すると、マップとアイコンが表示されます。"
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "MOD を配置しましたが、有効にはできませんでした"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {ゲームの MOD 一覧ファイルを読み取れなかったため、変更していません。} unexpected-layout {ゲームの MOD 一覧ファイルが IDE の認識できない形式のため、変更していません。} duplicate-entry {ゲームの MOD 一覧にこの MOD が複数回記載されているため、変更していません。} unexpected-entry {ゲームのこの MOD の項目が IDE の認識できない形式のため、変更していません。} changed {ゲームが同時に MOD 一覧を変更したため、ゲームが書き込んだ状態のままにしています。} unsafe-path {プレイヤープロファイルの MOD フォルダーまたは MOD 一覧が別の場所へのリンクのため、変更していません。} other {ゲームの MOD 一覧を保存できませんでした。以前の一覧がそのまま残っています。}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "ゲームの「MOD → 自分の MOD」で MOD を有効にしてから、ゲームを再起動してください"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "ゲームの実行中に MOD 一覧を変更しました"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "変更は再起動後に適用されますが、終了時にゲームが変更を取り消す場合があります。再起動後に MOD が無効なら、ゲームを終了して再度配置してください。"
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "{name} の現在のプレビューを使用します"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "現在のプレビューを再利用できなかったため、再生成します"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "配置用にこのマップを生成できませんでした"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "{mod} をプロファイル {profile} に配置しました"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "MOD フォルダーを開けませんでした"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "配置先フォルダーを Windows エクスプローラーで開く"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "配置先フォルダーを開けませんでした"
+    },
+    "deploy-panel.target": {
+      "message": "配置先フォルダー"
+    },
+    "deploy-panel.target.copy": {
+      "message": "配置先フォルダーのパスをコピー"
+    },
+    "deploy-panel.target.copied": {
+      "message": "配置先フォルダーのパスをコピーしました"
+    },
+    "deploy-panel.title": {
+      "message": "MOD として配置"
+    },
+    "deploy-panel.close": {
+      "message": "MOD の配置を閉じる"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "配置するにはゲームフォルダーを選択してください"
+    },
+    "deploy-panel.source": {
+      "message": "RMS ソース"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "RMS メインファイルを開いてください"
+    },
+    "deploy-panel.source.failed": {
+      "message": "このマップを生成できなかったため、まだ配置できません。「出力」に表示された問題を修正してから、「MOD として配置」をもう一度開いてください。"
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "このマップを生成できなかったため、まだ配置できません。{guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "選択した RMS ソースのプレビューはキャンセルされました。"
+    },
+    "deploy-panel.mod-name": {
+      "message": "MOD 名"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "以前に配置した MOD 名を選択"
+    },
+    "deploy-panel.profile": {
+      "message": "プレイヤープロファイル"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "プレイヤープロファイルを選択"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · 推奨"
+    },
+    "deploy-panel.tree": {
+      "message": "配置するファイルのツリー"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "配置するファイルのツリーを読み込み中"
+    },
+    "deploy-panel.no-source": {
+      "message": "配置するには .rms または .rms2 メインファイルを開いてください。"
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}：{names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "MOD を配置"
+    },
+    "deploy-panel.replace.title": {
+      "message": "既存の MOD を置き換えますか？"
+    },
+    "deploy-panel.replace.description": {
+      "message": "既存の MOD {name} に含まれるすべてのファイルが削除されます。"
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "MOD を置き換え"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, other {問題 {count} 件}}"
+    },
+    "problems-panel.empty": {
+      "message": "構文上の問題はありません。"
+    },
+    "problems-panel.empty.filtered": {
+      "message": "フィルターに一致する問題はありません（{hidden} 件が非表示）。"
+    },
+    "problems-panel.severity.error": {
+      "message": "エラー"
+    },
+    "problems-panel.severity.warning": {
+      "message": "警告"
+    },
+    "problems-panel.severity.info": {
+      "message": "情報"
+    },
+    "problems-panel.group.file": {
+      "message": "ファイル"
+    },
+    "problems-panel.group.game-file": {
+      "message": "ゲームファイル"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, other {エラー {count} 件}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, other {警告 {count} 件}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, other {情報 {count} 件}}"
+    },
+    "problems-panel.group.show": {
+      "message": "{file} の問題を表示"
+    },
+    "problems-panel.group.hide": {
+      "message": "{file} の問題を非表示"
+    },
+    "problems-panel.group.label": {
+      "message": "{file} の問題"
+    },
+    "problems-panel.row.go-to": {
+      "message": "{location} へ移動"
+    },
+    "severity-filter.label": {
+      "message": "{panel}の重要度フィルター"
+    },
+    "severity-filter.errors.label": {
+      "message": "エラーを表示（{count}）"
+    },
+    "severity-filter.errors.show": {
+      "message": "エラーを表示"
+    },
+    "severity-filter.errors.hide": {
+      "message": "エラーを非表示"
+    },
+    "severity-filter.warnings.label": {
+      "message": "警告を表示（{count}）"
+    },
+    "severity-filter.warnings.show": {
+      "message": "警告を表示"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "警告を非表示"
+    },
+    "severity-filter.notes.label": {
+      "message": "情報を表示（{count}）"
+    },
+    "severity-filter.notes.show": {
+      "message": "情報を表示"
+    },
+    "severity-filter.notes.hide": {
+      "message": "情報を非表示"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "{folder} のマップを一覧表示できませんでした：{error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "ゲームファイルが存在しないか読み取れないインストール先をスキップしました。"
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "利用できないインストール先をスキップしました。"
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "インストール済みソースのフォルダー数が安全上の上限に達しました。"
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "インストール済みソースのファイル数が安全上の上限に達しました。"
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version}（未検証）"
+    },
+    "linked-game.content-read": {
+      "message": "{label} のゲームデータを使用します"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, other {オブジェクト {objects} 個。読み込み済みです。}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, other {オブジェクト {objects} 個。{milliseconds} ミリ秒で読み込みました。}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "{label} のゲームデータを読み込めませんでした"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "このバージョンのプレビューには同梱の {version} のデータを使用します。それ以降に追加されたオブジェクトや地形は生成できません。"
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "不明なコマンド"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "未使用の定義"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "この箇所では効果のないコマンド"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "属性の重複設定"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "選択されないランダム分岐"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "確率ゼロの最初の分岐"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "許容範囲内に補正される値"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "定義済みの定数"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "ゲームではコメントとして扱われない記述"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "名前が必要な箇所の数値"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "名前が未定義の可能性"
+    },
+    "map-icon.generate": {
+      "message": "マップアイコンを生成"
+    },
+    "map-icon.open-larger": {
+      "message": "マップアイコンを拡大表示"
+    },
+    "map-icon.save-image": {
+      "message": "画像を保存"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "画像を保存…"
+    },
+    "map-icon.frame.generating": {
+      "message": "マップアイコンを生成中"
+    },
+    "map-icon.frame.ready": {
+      "message": "マップアイコンのプレビュー"
+    },
+    "map-icon.frame.original": {
+      "message": "元のマップアイコン"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "元のマップアイコンを表示できません"
+    },
+    "map-icon.frame.none": {
+      "message": "生成されたマップアイコンはありません"
+    },
+    "map-icon.switch.no-source": {
+      "message": "マップアイコンを生成するには、.rms または .rms2 メインファイルを開いてください。"
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "マップアイコンの生成には、このソースのプレビューが成功している必要があります。"
+    },
+    "map-icon.switch.unavailable": {
+      "message": "マップアイコンを生成できません：{reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "マップアイコンを利用できません：{reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "マップアイコン：シード {seed} からマップを生成中"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "マップアイコンには、このソースのプレビューが成功している必要があります。"
+    },
+    "map-icon.status.rendering": {
+      "message": "マップアイコン：現在のプレビューから描画中"
+    },
+    "map-icon.status.waiting": {
+      "message": "マップアイコン：配置内容のプレビューを待機中"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "マップアイコン：{file} を生成しました。今回配置する内容でのみ、元のアイコンを置き換えます"
+    },
+    "map-icon.status.generated": {
+      "message": "マップアイコン：現在のプレビューから {file} を生成しました"
+    },
+    "map-icon.status.original": {
+      "message": "マップアイコン：ソースフォルダー内の元の {file}"
+    },
+    "map-icon.status.none": {
+      "message": "マップアイコン：なし"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "生成したアイコン"
+    },
+    "map-icon.tree.original": {
+      "message": "元のアイコン"
+    },
+    "map-icon.render-failed": {
+      "message": "マップアイコンを描画できませんでした"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "マップアイコンの設定を記憶できませんでした"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "シード {seed} のマップアイコンを生成できませんでした"
+    },
+    "map-icon.output.saved": {
+      "message": "マップアイコンを {name} として保存しました"
+    },
+    "map-icon.output.save-failed": {
+      "message": "マップアイコンを保存できませんでした"
+    },
+    "map-icon.lightbox.close": {
+      "message": "マップアイコンのプレビューを閉じる"
+    },
+    "map-icon.lightbox.title": {
+      "message": "マップアイコン"
+    },
+    "map-icon.view-tools": {
+      "message": "マップアイコンの表示"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "ひし形表示"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "真上からの表示"
+    },
+    "map-icon.look.minimap": {
+      "message": "ミニマップ色"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "テクスチャ色"
+    },
+    "map-icon.look.game-textures": {
+      "message": "ゲームのテクスチャ"
+    },
+    "map-icon.look.pending": {
+      "message": "ゲームのテクスチャを適用中"
+    },
+    "map-icon.look.fallback": {
+      "message": "ゲームのテクスチャを利用できないため、アイコンにはテクスチャ色を使用します。"
+    },
+    "map-icon.relief": {
+      "message": "地形の起伏"
+    },
+    "map-icon.relief.hide": {
+      "message": "地形の起伏を非表示"
+    },
+    "map-icon.relief.show": {
+      "message": "地形の起伏を表示"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "地形の境界を滑らかにする"
+    },
+    "map-icon.random-seed": {
+      "message": "ランダムシード"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "エディターのシードを使用"
+    },
+    "map-icon.seed": {
+      "message": "マップアイコンのシード"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "エディターのシード"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "プレイヤーの四角形"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "遊牧型の足跡"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "開始位置マーカーなし"
+    },
+    "map-icon.spawn-size": {
+      "message": "開始位置マーカーのサイズ"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "開始位置マーカーを小さくする"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "開始位置マーカーを大きくする"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "マップの幅の {value}%"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "開始位置マーカーのサイズ（マップの幅に対する %）"
+    },
+    "map-icon.art.trees.show": {
+      "message": "木を表示"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "木を非表示"
+    },
+    "map-icon.art.trees.options": {
+      "message": "木の表示設定"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "木の表示量"
+    },
+    "map-icon.art.trees.size": {
+      "message": "木の表示サイズ"
+    },
+    "map-icon.art.resources.show": {
+      "message": "金と石を表示"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "金と石を非表示"
+    },
+    "map-icon.art.resources.options": {
+      "message": "金と石の表示設定"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "金と石の表示量"
+    },
+    "map-icon.art.resources.size": {
+      "message": "金と石の表示サイズ"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "少なく"
+    },
+    "map-icon.art.amount.more": {
+      "message": "多く"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "種類ごとに 1 つ"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "オブジェクトごとに 1 つ"
+    },
+    "map-icon.art.amount.few": {
+      "message": "少ない"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "中程度"
+    },
+    "map-icon.art.amount.many": {
+      "message": "多い"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "小さく"
+    },
+    "map-icon.art.size.larger": {
+      "message": "大きく"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "最小"
+    },
+    "map-icon.art.size.small": {
+      "message": "小"
+    },
+    "map-icon.art.size.medium": {
+      "message": "中"
+    },
+    "map-icon.art.size.large": {
+      "message": "大"
+    },
+    "map-icon.art.size.largest": {
+      "message": "最大"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "開始位置マーカーの下にも表示"
+    },
+    "workbench.application-menu.label": {
+      "message": "アプリケーションメニュー"
+    },
+    "workbench.explorer.collapse": {
+      "message": "ファイルエクスプローラーを折りたたむ"
+    },
+    "workbench.explorer.expand": {
+      "message": "ファイルエクスプローラーを展開"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "エクスプローラーを折りたたむ"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "エクスプローラーを展開"
+    },
+    "workbench.explorer.resize": {
+      "message": "ファイルエクスプローラーの幅を変更"
+    },
+    "workbench.preview.resize": {
+      "message": "リアルタイムマッププレビューの幅を変更"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "次回の実行から生成途中のマップを表示します"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "次回の実行から生成途中のマップを非表示にします"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "問題と出力のパネル"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "問題・出力・テスト結果のパネル"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "問題と出力のパネルの高さを変更"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} 出力"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} 問題"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} テスト結果"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "出力"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "問題"
+    },
+    "workbench.native.restart-label": {
+      "message": "エラーが発生した {name} プロセスを再起動"
+    },
+    "workbench.native.failed": {
+      "message": "{name} でエラーが発生しました"
+    },
+    "workbench.native.restarted": {
+      "message": "{name} を再起動しました"
+    },
+    "workbench.native.restart-failed": {
+      "message": "{name} を再起動できませんでした"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} が停止しました"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "{name} のテストレポートを読み込みました"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "マップテストのレポートを読み込めませんでした"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "テストレポートを書き出しました"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "マップテストのレポートを書き出せませんでした"
+    },
+    "workbench.map-test.replayed": {
+      "message": "記録されたシードで検出結果のマップを再現しました"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "記録されたシード {seed} で検出結果のマップを再現しました"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "ゲームフォルダーのリンクを解除できませんでした"
+    },
+    "code-editor.panel.label": {
+      "message": "RMS ソースエディター"
+    },
+    "code-editor.tabs.label": {
+      "message": "開いているファイル"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "エディターのタブを左へスクロール"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "エディターのタブを右へスクロール"
+    },
+    "code-editor.tab.close": {
+      "message": "{name} を閉じる"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "未保存の変更"
+    },
+    "code-editor.tab.read-only": {
+      "message": "読み取り専用"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "未保存の変更、読み取り専用"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "MOD として配置…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "保存"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "複製／名前を付けて保存…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "名前を付けて保存…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "閉じる"
+    },
+    "code-editor.run.preview": {
+      "message": "プレビューを実行"
+    },
+    "code-editor.run.map-test": {
+      "message": "マップテストを実行"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "プレビューとゲーム内テストを実行"
+    },
+    "code-editor.run.stop": {
+      "message": "停止"
+    },
+    "code-editor.run.tooltip": {
+      "message": "実行（{shortcut}）"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "プレビューとゲーム内テストを実行（{shortcut}）"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "停止（{shortcut}）"
+    },
+    "code-editor.run-menu.label": {
+      "message": "プレビューの実行オプション"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "実行するスクリプト"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "実行するスクリプトを固定"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "シード"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "シードをコピー"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "シード {seed} をコピー"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "シードをコピーしました"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "固定"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "実行ごとにランダム化"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "現在の対戦のシードを使用"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "実行中のシングルプレイヤーのランダムマップ対戦が確認できる必要があります。"
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Age of Empires II: Definitive Edition のゲームフォルダーを選択"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Age of Empires II: Definitive Edition のゲームフォルダーを選択中"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "インストール済みの Age of Empires II: Definitive Edition のゲームフォルダーを検索中"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "実行時にゲーム内テスト"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "プレビューを生成した後、AoE2DE で続行"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "有効な AoE2Control 実行ファイルを選択してください"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "AoE2Control を選択"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "AoE2Control を選択中…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "ゲーム内テスト用の AoE2Control.exe を選択"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "ゲーム内テスト用の AoE2Control.exe を選択中"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "AoE2Control をダウンロード"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "AoE2Control のリリースページを開く"
+    },
+    "code-editor.control.remove.title": {
+      "message": "AoE2Control の選択を解除しますか？"
+    },
+    "code-editor.control.remove.description": {
+      "message": "選択した AoE2Control 実行ファイルの登録を解除し、現在のゲーム内テストセッションとの接続を切ります。次のゲーム内テストで実行中の対戦を置き換える際は、再度確認します。"
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "選択を解除"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "AoE2Control のリリースページを開けませんでした"
+    },
+    "code-editor.control-download.title": {
+      "message": "AoE2Control を展開する前に"
+    },
+    "code-editor.control-download.description": {
+      "message": "AoE2Control.zip の展開パスワードは {password} です。AoE2Control はゲーム内で Lua を実行するために DLL を注入するので、Windows Defender などのウイルス対策ソフトがヒューリスティック検出で誤検知することがあります。実行が中断されないよう、展開先のフォルダーをウイルス対策ソフトの除外対象に追加してください。"
+    },
+    "code-editor.control-download.confirm": {
+      "message": "確認しました"
+    },
+    "code-editor.preview.collapse": {
+      "message": "リアルタイムマッププレビューを折りたたむ"
+    },
+    "code-editor.preview.expand": {
+      "message": "リアルタイムマッププレビューを展開"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "プレビューを折りたたむ"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "プレビューを展開"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "スクリプト実行失敗の通知を閉じる"
+    },
+    "code-editor.notice.recovery": {
+      "message": "未保存の作業を復元しました"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "復元の通知を閉じる"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "プレビューでゲームのテクスチャを使用するようになりました"
+    },
+    "code-editor.font-size.label": {
+      "message": "エディターの文字サイズ"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent}%"
+    },
+    "code-editor.read-only-message": {
+      "message": "このインストール済みファイルまたは登録済み MOD のソースは保護されています。「複製」または「名前を付けて保存」を使用してください。"
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "インクルード先のファイルを開く"
+    },
+    "code-editor.include.open": {
+      "message": "{name} を開く"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "ここではスクリプトの意味を変えずに名前を変更できません。"
+    },
+    "code-editor.rename.not-proven": {
+      "message": "厳密な意味の同一性を確認できませんでした。"
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} は保護されたゲームファイルです。この名前の変更では、そのファイルも変更されます。"
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "この行で {code} を無視"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "このワークスペースで {code} を無効化"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "エディターのモデルを利用できません。"
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "スクリプトの言語が変更されました。"
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "整形を開始する前にドキュメントが変更されました。"
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "整形を準備している間にドキュメントが変更されました。"
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "要求がキャンセルされました。"
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Starlark ソースにエラーがある間は整形できません。"
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "整形するには、インデントがあらかじめ正しくスペース 4 個単位になっている必要があります。トークンの構造は変更していません。"
+    },
+    "code-editor.completion.content.object": {
+      "message": "オブジェクト {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "地形 {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "マップテスト"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Starlark 組み込み関数"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Starlark の {type} メソッド"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "定義済みの Starlark 関数"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Starlark 関数の引数"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "定義済みの Starlark 変数"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Starlark のループ変数"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} は、このドキュメントの前の部分で定義されています。"
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Starlark 関数"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "RMS と XS のソース"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "RMS、XS、マップテストのソース"
+    },
+    "native-dialog.open-files.title": {
+      "message": "ソースファイルを開く"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "RMS フォルダーを開く"
+    },
+    "native-dialog.save-as.title": {
+      "message": "ソースに名前を付けて保存"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "マップテストレポート"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "マップテストレポートをエクスポート"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "マップテストレポートをインポート"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Age of Empires II: Definitive Edition のフォルダーを選択"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "編集用マップの複製を作成する親フォルダーを選択"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "AoE2Control 実行ファイルを選択"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "AoE2Control 実行ファイル"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "マップアイコンを保存"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "PNG 画像"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "インクルード先のファイルを更新できませんでした"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "削除後にセッションを更新できませんでした"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "一部のフォルダーをエクスプローラーに表示できませんでした"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, other {ゲームのライブラリファイルと同じ名前のファイルがワークスペースにあります}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}。これらのファイルは編集できますが、インクルードではゲームのファイルが選ばれる場合があります。"
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, other {{paths, list, unit}、ほか # 件。これらのファイルは編集できますが、インクルードではゲームのファイルが選ばれる場合があります。}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "ファイル名を変更してください"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "ゲームのライブラリファイルとの名前の重複を確認しきれませんでした"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "何も開きませんでした"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, other {指定されたファイルとフォルダーの合計が # 件を超えています。}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "指定されたパスの長さが AoE2RMSIDE の上限を超えています。"
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "一度に多くの項目を開く要求が届きました。残りの項目をもう一度開いてください。"
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "{name} を開けませんでした"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "存在しないか、アクセスできません。"
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "有効なファイルまたはフォルダーのパスではありません。"
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE で開けるのは、フォルダーと .rms、.rms2、.inc、.def、.xs ファイルです。"
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE で開けるのは、フォルダーと .rms、.rms2、.inc、.def、.xs、.rmstest ファイルです。"
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "一度に開けるフォルダーは 1 つです。"
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "一度に開けるフォルダーは 1 つです。{folder} を開きました。"
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "読み取れませんでした。"
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, other {ほかに # 件の項目を開けませんでした}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "存在しないか、読み取れないか、AoE2RMSIDE が対応していないファイルです。"
+    },
+    "file-actions.entry.name-exists": {
+      "message": "同じ名前のファイルまたはフォルダーが既にあります"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "同じ名前か、それに一致する短縮名（8.3 形式）のファイルまたはフォルダーが既にあります"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "Windows のファイル名またはフォルダー名として使用できません"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "対応するソースファイルは .rms、.rms2、.inc、.def、.xs のみです"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "対応するソースファイルは .rms、.rms2、.inc、.def、.rmstest、.xs のみです"
+    },
+    "file-actions.entry.read-only": {
+      "message": "ワークスペースの項目が読み取り専用か、保護されています"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "ワークスペースのルートフォルダーは名前の変更や削除ができません"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "「{name}」はゲームの標準リソース用に予約された名前です。別のファイル名を選んでください。"
+    },
+    "notice.recovery.read-failed": {
+      "message": "前回のセッションの未保存の作業を読み取れなかったため、復元しませんでした"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "復元対象のワークスペースフォルダーを利用できません。"
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "前回のワークスペースフォルダーを利用できないため、開きませんでした。"
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "前回のタブ {name} を利用できないため、開きませんでした。"
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "元のソースを利用できないため、{name} を未保存のタブとして復元しました。"
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, other {リンク先のゲームの地形ファイルを {seconds, number, ::.0 group-off} 秒で {converted} 個変換し、{reused} 個再利用しました}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "ローカルキャッシュは {megabytes, number, ::.0 unit/megabyte group-off} です。"
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, other {地形ファイル # 個を変換できないため、ミニマップ色を使用します}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "例：{asset}：{reason}。"
+    },
+    "preview-panel.name.object-number": {
+      "message": "オブジェクト {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "地形 {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name}（{constant}）"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "壁 {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "プレイヤー {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "ガイア"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "補助オブジェクト"
+    },
+    "preview-panel.material.cliff": {
+      "message": "崖"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "崖の種類 {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "陸地の接続"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "水域の接続"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "道路の接続"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "不明な接続"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "経路が見つからなかった接続探索"
+    },
+    "preview-panel.material.description": {
+      "message": "{name}（{details, list, unit}）"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "プレビューの選択対象に複数の配置元があります：{layer} · {count, plural, other {# 個選択}} · {sources, plural, other {配置元 # か所}} · {location} を表示します。"
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "草地"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "浅瀬"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "水域"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "砂浜"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "地面"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "石地"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "土"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "崖面"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "陸地"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "標高"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "崖"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "地形"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "接続"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "オブジェクト"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "完了"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "生成中 · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "サンプル {sample}（シード {seed}）· {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "サンプル {sample}（シード {seed}）完了 · バッチは実行中"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "矢印キーでタイルを選択、Shift+矢印キーで選択範囲を拡張、Ctrl+矢印キーで表示位置を移動します。+ と - で拡大縮小、0 でマップ全体を表示、Ctrl+A でマップ全体を選択、Escape で選択を解除します。"
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "選択を解除しました"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "タイル {x}、{y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "タイル {fromX}、{fromY} から {toX}、{toY}、{count, plural, other {# タイル}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}。レイヤーはありません"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name}：{count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}。{count, plural, other {# レイヤー}}：{shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}。{count, plural, other {# レイヤー}}：{shown, list, unit}、ほか {more} レイヤー"
+    },
+    "preview-panel.run.include-only": {
+      "message": ".inc、.def、.xs のドキュメントはインクルード専用のため、単独では実行できません。"
+    },
+    "preview-panel.tool.objects": {
+      "message": "オブジェクトと町の中心の占有範囲"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "崖の縁"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "接続による地形の変更"
+    },
+    "preview-panel.tool.connections": {
+      "message": "接続線"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "接続線表示なし"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "探索した接続経路"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "経路 {total, number} 件中 {shown, number} 件を表示"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "探索した経路はマップの完成後に表示されます"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "このマップでは探索した経路を利用できません"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "標高表示なし"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "地形の起伏"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "高さマップ"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "真上からの表示"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "ひし形表示"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "ミニマップ色"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "テクスチャ色"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "ゲームのテクスチャ"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "ゲームのテクスチャを適用中"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "タイルのグリッド"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "ミニマップ色で真上から見たマップのプレビュー"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "テクスチャ色で真上から見たマップのプレビュー"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "ゲームのテクスチャで真上から見たマップのプレビュー"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "ミニマップ色による横縦比 2:1 のひし形マッププレビュー"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "テクスチャ色による横縦比 2:1 のひし形マッププレビュー"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "ゲームのテクスチャによる横縦比 2:1 のひし形マッププレビュー"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "マップ"
+    },
+    "preview-panel.announce.ready": {
+      "message": "マッププレビューの準備ができました"
+    },
+    "preview-panel.announce.updated": {
+      "message": "マッププレビューを更新しました"
+    },
+    "preview-panel.panel.label": {
+      "message": "リアルタイムマッププレビュー"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "マップの表示操作"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "接続レイヤー"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "矢印キーでタイルを選択"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "プレビューの状態"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "未認証"
+    },
+    "preview-panel.status.seed": {
+      "message": "シード {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "リビジョン {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "生成"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "キャッシュ {entries} 件 · 再利用 {hits} 回"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "編集中"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "解析中"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "変更なし"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "未更新 - ソースにエラー"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "生成中"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "最新"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "未更新 - 生成失敗"
+    },
+    "preview-panel.legend.label": {
+      "message": "選択したタイルのレイヤー凡例"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "選択した項目を絞り込む"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "選択した項目の絞り込みを解除"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "絞り込み"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "一致する項目はありません"
+    },
+    "preview-panel.legend.rows": {
+      "message": "選択したレイヤーの行"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}、現時点で {count} 個選択"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "{name} の配置元を開く、{count} 個選択"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "補助オブジェクトを表示（{count}）"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "補助オブジェクトを非表示（{count}）"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "開発用の内部テストデータ"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "内部テストデータ · 未認証"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "内部用 · 未認証"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "テストデータ {fixture} を実行"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "読み取り中"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "ゲームの画像一覧を読み取り中"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "ゲームの画像一覧を読み取り中、{percent}%（{unit, select, graphics {画像 {total} 枚中 {completed} 枚} other {ファイル {total} 個中 {completed} 個}}）"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "取り込み中"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "地形テクスチャを取り込み中"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "地形テクスチャを取り込み中、{percent}%（{unit, select, graphics {画像 {total} 枚中 {completed} 枚} other {ファイル {total} 個中 {completed} 個}}）"
+    },
+    "game-art.progress.blends.action": {
+      "message": "合成中"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "地形の境界をなじませています"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "地形の境界をなじませています、{percent}%（{unit, select, graphics {画像 {total} 枚中 {completed} 枚} other {ファイル {total} 個中 {completed} 個}}）"
+    },
+    "game-art.progress.masks.action": {
+      "message": "マスク準備中"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "地形を重ねるマスクを準備中"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "地形を重ねるマスクを準備中、{percent}%（{unit, select, graphics {画像 {total} 枚中 {completed} 枚} other {ファイル {total} 個中 {completed} 個}}）"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "スプライト変換中"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "このマップのオブジェクトのスプライトを変換中"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "このマップのオブジェクトのスプライトを変換中、{percent}%（{unit, select, graphics {画像 {total} 枚中 {completed} 枚} other {ファイル {total} 個中 {completed} 個}}）"
+    },
+    "game-art.progress.label": {
+      "message": "ゲームの画像を変換中"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, other {オブジェクト # 種類にリンク先のゲームのスプライトがないため、ミニマップ記号で表示します：{names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, other {オブジェクト # 種類にリンク先のゲームのスプライトがないため、ミニマップ記号で表示します：{names, list, unit}、ほか {more} 種類}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name}（オブジェクト {id}）"
+    },
+    "game-art.glyphs.object": {
+      "message": "オブジェクト {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, other {崖の部品 # 個にリンク先のゲームのスプライトがないため、線で表示します}}"
+    },
+    "profiler.group.parse": {
+      "message": "構文解析"
+    },
+    "profiler.group.setup": {
+      "message": "初期設定"
+    },
+    "profiler.group.land": {
+      "message": "陸地"
+    },
+    "profiler.group.elevation": {
+      "message": "標高"
+    },
+    "profiler.group.cliffs": {
+      "message": "崖"
+    },
+    "profiler.group.terrain": {
+      "message": "地形"
+    },
+    "profiler.group.connections": {
+      "message": "接続"
+    },
+    "profiler.group.objects": {
+      "message": "オブジェクト"
+    },
+    "profiler.group.finalize": {
+      "message": "最終処理"
+    },
+    "profiler.step.parse-script": {
+      "message": "スクリプトの構文解析"
+    },
+    "profiler.step.setup-players": {
+      "message": "プレイヤーの初期設定"
+    },
+    "profiler.step.land-generate": {
+      "message": "陸地の生成"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "標高の生成"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "崖の生成"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "地形の生成"
+    },
+    "profiler.step.connections-generate": {
+      "message": "接続の生成"
+    },
+    "profiler.step.objects-generate": {
+      "message": "オブジェクトの配置"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "ゲームモードの最終処理"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "オブジェクトの並べ替え"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "地形の合成"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, other {処理 # 回}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, other {乱数取得 # 回}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, other {候補 # 個}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, other {# タイル}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, other {経路探索 # 回}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, other {経路探索の処理量 #}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, other {却下 # 回}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, other {オブジェクト # 個}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, other {# タイルを確認}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, other {# タイルを陸地に追加}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "陸地を広げる際に候補として取り出し、確認したタイル数です。追加されたタイルは陸地の一部になりました。"
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, other {拡張中に # タイルを確認}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, other {# タイルの標高を上昇}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "丘を広げる際に候補として取り出し、確認したタイル数です。標高を上げたタイルには、確認数に含まれない各丘の開始タイルも含まれます。"
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, other {崖の配置候補 # か所}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "崖を配置できる候補として検討したマップ上の位置です。"
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, other {経路探索 # 回}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, other {探索 # ステップ}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, other {# タイルの地形を変更}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "各経路探索では 2 つの接続点の間の経路を探します。地形を変更したタイル数は、経路に沿ったすべての地形変更を数えます。"
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, other {配置候補 # か所}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, other {グループの却下 # 回}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, other {オブジェクト # 個を配置}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "配置候補は配置を試みるたびに数えるため、同じタイルを複数回数える場合があります。位置が条件を満たさないか、候補の位置がなくなるたびに、グループを却下します。"
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "最初の処理の完了を待機中"
+    },
+    "profiler.pending.group": {
+      "message": "{group} を処理中"
+    },
+    "profiler.pending.step": {
+      "message": "{step} を処理中"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "0.1% 未満"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off}%"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off}%"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "0.1 パーセント未満"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "{percent, number, ::precision-integer group-off} パーセント"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} パーセント"
+    },
+    "profiler.row.name": {
+      "message": "{step}（{group}）、{duration}、{percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}。{second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "実行プロファイラー：生成中、エンジンの応答を待機中"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "実行プロファイラー：生成中、エンジンの応答を待機中、{seconds, number, ::.00 group-off} 秒"
+    },
+    "profiler.status.running.steps": {
+      "message": "実行プロファイラー：生成中、{total} ステップ中 {completed} ステップ完了"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "実行プロファイラー：生成中、{total} ステップ中 {completed} ステップ完了、{seconds, number, ::.00 group-off} 秒"
+    },
+    "profiler.status.cached": {
+      "message": "実行プロファイラー：キャッシュを再利用、{seconds, number, ::.00 group-off} 秒、このプレビューを最初に生成した際の測定値"
+    },
+    "profiler.status.committed": {
+      "message": "実行プロファイラー：RMS の実行時間 {seconds, number, ::.00 group-off} 秒"
+    },
+    "profiler.status.unsupported": {
+      "message": "実行プロファイラー：このプレビューの測定値はありません"
+    },
+    "profiler.status.idle": {
+      "message": "実行プロファイラー"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "生成中、エンジンの応答を待機中"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "生成中、{total} ステップ中 {completed} ステップ完了"
+    },
+    "profiler.tooltip.cached": {
+      "message": "実行時間（キャッシュの再利用）"
+    },
+    "profiler.tooltip.committed": {
+      "message": "実行時間"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "実行時間の測定値なし"
+    },
+    "profiler.description": {
+      "message": "このコンピューターでの 1 回の実行から得た、処理の複雑さの目安です。ゲーム内の生成時間を予測するものではありません。"
+    },
+    "profiler.description.cached": {
+      "message": "キャッシュの再利用：このプレビューを最初に生成した際の測定値です。エンジンは再実行していません。このコンピューターでの 1 回の実行から得た、処理の複雑さの目安であり、ゲーム内の生成時間を予測するものではありません。"
+    },
+    "profiler.description.map-test": {
+      "message": "複数のサンプルを並列に生成する場合があるマップテスト中の測定値です。このコンピューターでの 1 回の実行から得た、処理の複雑さの目安であり、ゲーム内の生成時間を予測するものではありません。"
+    },
+    "profiler.panel.label": {
+      "message": "実行時間プロファイラー"
+    },
+    "profiler.panel.steps": {
+      "message": "実行ステップ"
+    },
+    "profiler.panel.table": {
+      "message": "所要時間順の実行ステップ"
+    },
+    "profiler.panel.empty": {
+      "message": "このプレビューには実行時間の測定値がありません。"
+    },
+    "profiler.chart.label": {
+      "message": "生成工程別の RMS 実行時間"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}：{duration}、{percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "成功"
+    },
+    "test-results.results.status.failed": {
+      "message": "失敗"
+    },
+    "test-results.results.status.error": {
+      "message": "エラー"
+    },
+    "test-results.results.status.stopped": {
+      "message": "停止"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, other {検出結果 # 件}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{seeds, plural, other {# 個のシードで}} {findings, plural, other {検出結果 # 件}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, other {マップ # 個}} · {assertions, plural, other {検証 # 回}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}、{line} 行目"
+    },
+    "test-results.results.check-headline": {
+      "message": "{line} 行目の検証"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {検出結果はありません。このマップのすべての検証に成功しました。} other {検出結果はありません。# 個すべてのマップで、すべての検証に成功しました。}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "検出結果はありません。このテストでは {maps, plural, other {# 個のマップ}}に対して検証を行っていません。"
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "エクスポート"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "この結果をレポートファイルに保存します。スクリプト、生成したマップ、完全なファイルパスは含めません。"
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, other {マップテストの検出結果 # 件}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "{location} に移動"
+    },
+    "test-results.results.check-source": {
+      "message": "検証"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "{line} 行目の検証の検出結果を非表示"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "{line} 行目の検証の検出結果を表示"
+    },
+    "test-results.results.check-findings": {
+      "message": "{line} 行目の検証の検出結果"
+    },
+    "test-results.results.show-more": {
+      "message": "さらに {count} 件表示"
+    },
+    "test-results.results.not-shown": {
+      "message": "· 未表示 {count, number} 件"
+    },
+    "test-results.results.show-seed": {
+      "message": "{map} のシード {seed} をプレビューに表示"
+    },
+    "test-results.results.seed": {
+      "message": "シード {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "検出結果"
+    },
+    "game-options.map-size.tiny": {
+      "message": "極小"
+    },
+    "game-options.map-size.small": {
+      "message": "小"
+    },
+    "game-options.map-size.medium": {
+      "message": "中"
+    },
+    "game-options.map-size.normal": {
+      "message": "普通"
+    },
+    "game-options.map-size.large": {
+      "message": "大"
+    },
+    "game-options.map-size.huge": {
+      "message": "広大"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "滑稽"
+    },
+    "game-options.map-size.option": {
+      "message": "{size}（{width}×{height}）"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "ランダムマップ"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "チェックメイト"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "デスマッチ"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "キングオブザヒル"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "民族の象徴の建造"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "民族の象徴の防衛"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "ターボランダムマップ"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "聖遺物の確保"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "サドンデス"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "バトルロイヤル"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "エンパイアウォーズ"
+    },
+    "game-options.resources.standard": {
+      "message": "標準の資源"
+    },
+    "game-options.resources.low": {
+      "message": "少ない資源"
+    },
+    "game-options.resources.medium": {
+      "message": "中程度の資源"
+    },
+    "game-options.resources.high": {
+      "message": "多い資源"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "非常に多い資源"
+    },
+    "game-options.resources.infinite": {
+      "message": "無限の資源"
+    },
+    "game-options.resources.random": {
+      "message": "ランダムな資源"
+    },
+    "game-options.age.standard": {
+      "message": "標準の開始時代"
+    },
+    "game-options.age.dark-age": {
+      "message": "暗黒の時代"
+    },
+    "game-options.age.feudal-age": {
+      "message": "領主の時代"
+    },
+    "game-options.age.castle-age": {
+      "message": "城主の時代"
+    },
+    "game-options.age.imperial-age": {
+      "message": "帝国の時代"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "帝国の時代以降"
+    },
+    "game-options.positions.random": {
+      "message": "ランダムな位置"
+    },
+    "game-options.positions.fixed": {
+      "message": "位置の固定"
+    },
+    "game-options.positions.team-together": {
+      "message": "チームを一緒に"
+    },
+    "game-options.color.blue": {
+      "message": "青"
+    },
+    "game-options.color.red": {
+      "message": "赤"
+    },
+    "game-options.color.green": {
+      "message": "緑"
+    },
+    "game-options.color.yellow": {
+      "message": "黄色"
+    },
+    "game-options.color.cyan": {
+      "message": "水色"
+    },
+    "game-options.color.purple": {
+      "message": "紫"
+    },
+    "game-options.color.gray": {
+      "message": "グレー"
+    },
+    "game-options.color.orange": {
+      "message": "オレンジ"
+    },
+    "game-options.team.none": {
+      "message": "チームなし"
+    },
+    "game-options.team.numbered": {
+      "message": "チーム {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "ターボ"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "全テクノロジー系統図"
+    },
+    "game-options.flag.antiquity": {
+      "message": "古代"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "堅固な畑"
+    },
+    "game-options.civilization.random": {
+      "message": "ランダム"
+    },
+    "game-options.civilization.britons": {
+      "message": "ブリトン"
+    },
+    "game-options.civilization.franks": {
+      "message": "フランク"
+    },
+    "game-options.civilization.goths": {
+      "message": "ゴート"
+    },
+    "game-options.civilization.teutons": {
+      "message": "チュートン"
+    },
+    "game-options.civilization.japanese": {
+      "message": "日本"
+    },
+    "game-options.civilization.chinese": {
+      "message": "中国"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "ビザンティン"
+    },
+    "game-options.civilization.persians": {
+      "message": "ペルシア"
+    },
+    "game-options.civilization.saracens": {
+      "message": "サラセン"
+    },
+    "game-options.civilization.turks": {
+      "message": "オスマン帝国"
+    },
+    "game-options.civilization.vikings": {
+      "message": "バイキング"
+    },
+    "game-options.civilization.mongols": {
+      "message": "モンゴル"
+    },
+    "game-options.civilization.celts": {
+      "message": "ケルト"
+    },
+    "game-options.civilization.spanish": {
+      "message": "スペイン"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "アステカ"
+    },
+    "game-options.civilization.mayans": {
+      "message": "マヤ"
+    },
+    "game-options.civilization.huns": {
+      "message": "フン"
+    },
+    "game-options.civilization.koreans": {
+      "message": "朝鮮"
+    },
+    "game-options.civilization.italians": {
+      "message": "イタリア"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "ヒンドゥスタン"
+    },
+    "game-options.civilization.incas": {
+      "message": "インカ"
+    },
+    "game-options.civilization.magyars": {
+      "message": "マジャール"
+    },
+    "game-options.civilization.slavs": {
+      "message": "スラヴ"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "ポルトガル"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "エチオピア"
+    },
+    "game-options.civilization.malians": {
+      "message": "マリ"
+    },
+    "game-options.civilization.berbers": {
+      "message": "ベルベル"
+    },
+    "game-options.civilization.khmer": {
+      "message": "クメール"
+    },
+    "game-options.civilization.malay": {
+      "message": "マレー"
+    },
+    "game-options.civilization.burmese": {
+      "message": "ビルマ"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "ベトナム"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "ブルガリア"
+    },
+    "game-options.civilization.tatars": {
+      "message": "タタール"
+    },
+    "game-options.civilization.cumans": {
+      "message": "クマン"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "リトアニア"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "ブルゴーニュ"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "シチリア"
+    },
+    "game-options.civilization.poles": {
+      "message": "ポーランド"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "ボヘミア"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "ドラヴィダ"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "ベンガル"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "グルジャラ"
+    },
+    "game-options.civilization.romans": {
+      "message": "東ローマ"
+    },
+    "game-options.civilization.armenians": {
+      "message": "アルメニア"
+    },
+    "game-options.civilization.georgians": {
+      "message": "グルジア"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "アケメネス朝"
+    },
+    "game-options.civilization.athenians": {
+      "message": "アテナイ"
+    },
+    "game-options.civilization.spartans": {
+      "message": "スパルタ"
+    },
+    "game-options.civilization.shu": {
+      "message": "古蜀"
+    },
+    "game-options.civilization.wu": {
+      "message": "呉"
+    },
+    "game-options.civilization.wei": {
+      "message": "魏"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "女真"
+    },
+    "game-options.civilization.khitans": {
+      "message": "契丹"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "マケドニア"
+    },
+    "game-options.civilization.thracians": {
+      "message": "トラキア"
+    },
+    "game-options.civilization.puru": {
+      "message": "プル"
+    },
+    "game-options.civilization.muisca": {
+      "message": "ムイスカ族"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "マプチェ族"
+    },
+    "game-options.civilization.tupi": {
+      "message": "トゥピ族"
+    },
+    "game-options.civilization.saxons": {
+      "message": "サクソン人"
+    },
+    "game-options.civilization.varangians": {
+      "message": "ヴァリャーグ"
+    },
+    "game-options.civilization.danes": {
+      "message": "デーン"
+    },
+    "game-options.civilization.unknown": {
+      "message": "文明 {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "プレビュー"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "プレビューを生成中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.connecting": {
+      "message": "接続中"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "AoE2Control に接続中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.checking": {
+      "message": "確認中"
+    },
+    "live-test.progress.ending": {
+      "message": "終了中"
+    },
+    "live-test.progress.copying": {
+      "message": "コピー中"
+    },
+    "live-test.progress.selecting": {
+      "message": "選択中"
+    },
+    "live-test.progress.starting": {
+      "message": "開始中"
+    },
+    "live-test.progress.verifying": {
+      "message": "検証中"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "対戦を検証中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.waiting": {
+      "message": "待機中"
+    },
+    "live-test.progress.verified": {
+      "message": "検証済み"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "対戦を検証しました"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "AoE2Control を確認中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "ゲームを確認中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "現在の対戦を終了中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "マップをゲームにコピー中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "ゲーム内でマップを選択中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "対戦を開始中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "前の AoE2Control がゲームから取り外されるのを待機中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "ゲーム内での AoE2Control の起動を待機中（全 {total} ステップ中 {step}）"
+    },
+    "live-test.progress.label": {
+      "message": "ゲーム内テスト"
+    },
+    "live-test.replace-match.title": {
+      "message": "実行中の対戦を置き換えますか？"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE はシングルプレイヤーの対戦を終了し、このプレビューの内容で新しい対戦を開始します。AoE2Control の選択を解除するまでは、再度確認しません。"
+    },
+    "live-test.replace-match.confirm": {
+      "message": "対戦を終了して置き換える"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "先に有効な AoE2Control 実行ファイルを選択してください。"
+    },
+    "live-test.seed.configure-control": {
+      "message": "現在の対戦のシードを読み取るには、AoE2Control を設定してください。"
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control は接続中です。接続の確認が完了してから、もう一度お試しください。"
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "対戦の情報を読み取れません。AoE2Control に再接続して、もう一度お試しください。"
+    },
+    "live-test.seed.replay": {
+      "message": "リプレイのシードは取り込めません。"
+    },
+    "live-test.seed.multiplayer": {
+      "message": "マルチプレイヤーの対戦のシードは取り込めません。"
+    },
+    "live-test.seed.state-changing": {
+      "message": "対戦の状態が変化しているか、不明です。しばらく待ってから、もう一度お試しください。"
+    },
+    "live-test.seed.no-match": {
+      "message": "先に対応するシングルプレイヤーのランダムマップ対戦を開始してください。"
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "現在の対戦の設定を読み取れません。AoE2Control に再接続して、もう一度お試しください。"
+    },
+    "live-test.seed.not-random-map": {
+      "message": "現在の対戦は、対応するランダムマップ対戦ではありません。"
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "現在の対戦のシードを読み取れません。AoE2Control に再接続して、もう一度お試しください。"
+    },
+    "live-test.seed.busy": {
+      "message": "AoE2Control の別の操作が既に進行中です。"
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control から対戦のシードが返されませんでした。"
+    },
+    "live-test.control.missing": {
+      "message": "選択した実行ファイルが移動または削除されました。"
+    },
+    "live-test.control.changed": {
+      "message": "選択した実行ファイルが変更されました。新しいファイルを信頼するには、再度選択してください。"
+    },
+    "live-test.control.invalid": {
+      "message": "選択したファイルは、有効な公開版 AoE2Control 実行ファイルではありません。"
+    },
+    "workspace.format.save-skipped": {
+      "message": "{name} の保存時の整形を省略しました"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "{name} の保存をキャンセルしました"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} は読み取り専用のため、整形しませんでした"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} は既に整形されています"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} を整形しませんでした"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "整形が制限時間内に完了しませんでした。"
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "厳密な意味の同一性を確認できませんでした。"
+    },
+    "workspace.format.reason.stale": {
+      "message": "整形中にテキストが変更され、整形の要求が古くなりました。"
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} が AoE2RMSIDE の外部で削除されました"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "テキストはエディターで開いたままです。"
+    },
+    "workspace.files.reloaded": {
+      "message": "ディスク上で変更された {name} を再読み込みしました"
+    },
+    "workspace.recovery.restored": {
+      "message": "前回のセッションから {count, plural, other {# 個の未保存のタブ}}を復元しました"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "ソースファイルは上書きしていません。"
+    },
+    "workspace.failed.save": {
+      "message": "ファイルを保存できませんでした"
+    },
+    "workspace.failed.open-file": {
+      "message": "ファイルを開けませんでした"
+    },
+    "workspace.failed.open-folder": {
+      "message": "フォルダーを開けませんでした"
+    },
+    "workspace.failed.open-recent": {
+      "message": "最近使った項目を開けませんでした"
+    },
+    "workspace.failed.open-requested": {
+      "message": "指定された項目を開けませんでした"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "ドロップされた項目を開けませんでした"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "このマップ上の項目を配置したスクリプトを開けませんでした"
+    },
+    "workspace.failed.create": {
+      "message": "項目を作成できませんでした"
+    },
+    "workspace.failed.rename": {
+      "message": "項目の名前を変更できませんでした"
+    },
+    "workspace.failed.delete": {
+      "message": "項目を削除できませんでした"
+    },
+    "workspace.failed.restore-session": {
+      "message": "前回のセッションを復元できませんでした"
+    },
+    "workspace.failed.back-up": {
+      "message": "未保存の作業をバックアップできませんでした"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "ソースの少ないフォルダーを使用するか、ソースのタブをいくつか閉じてから、もう一度お試しください。"
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "更新待ちの診断が上限に達したため、一部のエディター診断を省略しました。"
+    },
+    "editor-assistance.limited.headline": {
+      "message": "エディターの支援機能が制限されています"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "「詳細」で対象のソースを確認してから、もう一度お試しください。"
+    },
+    "editor-assistance.limited.sources": {
+      "message": "一部のエディター検査で現在のソースファイルを使用できませんでした。"
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "フォルダーの階層数"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "ディレクトリ内の項目数"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "名前のメタデータ（バイト）"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "インクルードパス数"
+    },
+    "file-actions.included-files.changed": {
+      "message": "インクルードの確認中にソースが変更されました。もう一度実行してください。"
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "インクルード探索中、{scope} で{budget}の上限を超えました。使用量：{used, number, integer}、上限：{maximum, number, integer}。"
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "インクルード用のフォルダーを小さくするか、必要なインクルードを減らしてください。"
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "マップテストのソースを準備できませんでした"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "マップテストのソースデータが上限の {limit, number, integer} MiB を超えています。1 回のテストで使うマップを減らしてください。"
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "マップテストのマップ数が上限の {limit, number, integer} 個を超えています。1 回のテストで使うマップを減らしてください。"
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "マップテストのソースメタデータが上限の {limit, number, integer} MiB を超えています。1 回のテストで使うマップを減らしてください。"
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "マップテストのソースレコード数が上限の {limit, number, integer} 件を超えています。1 回のテストで使うマップを減らしてください。"
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} がファイルごとの上限の {limit, number, integer} MiB を超えています。"
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "必要なソースファイルの合計が上限の {limit, number, integer} MiB を超えています。"
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "必要なソースファイル数が上限の {limit, number, integer} 個を超えています。"
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "必要なソース情報がメタデータの上限の {limit, number, integer} MiB を超えています。"
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "必要なソースデータを減らしてから、もう一度実行してください。"
+    },
+    "release-check.newer.headline": {
+      "message": "AoE2RMSIDE {version} が利用可能です"
+    },
+    "release-check.newer.cause": {
+      "message": "現在のバージョンは {current} です。"
+    },
+    "release-check.newer.action": {
+      "message": "リリースページを開く"
+    }
+  }
+}

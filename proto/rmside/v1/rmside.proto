@@ -1,0 +1,1026 @@
+syntax = "proto3";
+
+package rmside.v1;
+
+message ArtifactVersion {
+  uint32 major = 1;
+  uint32 minor = 2;
+  uint32 patch = 3;
+}
+
+message CompatibilityRange {
+  uint32 minimum_major = 1;
+  uint32 maximum_major = 2;
+}
+
+enum ErrorCode {
+  ERROR_CODE_UNSPECIFIED = 0;
+  ERROR_CODE_UNSUPPORTED_VERSION = 1;
+  ERROR_CODE_MALFORMED_REQUEST = 2;
+  ERROR_CODE_CANCELLED = 3;
+  ERROR_CODE_UNSUPPORTED_CAPABILITY = 4;
+  ERROR_CODE_STALE_DOCUMENT = 5;
+  ERROR_CODE_INTERNAL = 6;
+}
+
+message StructuredError {
+  ErrorCode code = 1;
+  string message = 2;
+  bool retryable = 3;
+  map<string, string> details = 4;
+}
+
+message RequestIdentity {
+  string request_id = 1;
+  uint64 document_revision = 2;
+}
+
+message DocumentIdentity {
+  string uri = 1;
+  uint64 revision = 2;
+  bytes semantic_hash = 3;
+  bytes source_graph_hash = 4;
+  bytes source_catalog_hash = 5;
+}
+
+message HandshakeRequest {
+  ArtifactVersion protocol_version = 1;
+  CompatibilityRange supported_protocol = 2;
+  string client_name = 3;
+}
+
+message Capabilities {
+  bool analysis = 1;
+  bool generation = 2;
+  bool cancellation = 3;
+  bool progress = 4;
+  reserved 5;
+  bool configuration_catalog = 6;
+  bool source_catalog_v1 = 7;
+  bool map_testing = 8;
+  bool presentation_string_ids = 9;
+  bool execution_cost = 10;
+  bool local_content_import = 11;
+  bool progressive_preview = 12;
+  bool game_art = 13;
+  bool map_test_progress = 14;
+  bool map_test_automatic_workers = 15;
+  bool map_test_report_request_revision = 16;
+  bool connection_routes = 17;
+  bool control_pipe_exchange = 18;
+}
+
+enum MapTestStatus {
+  MAP_TEST_STATUS_UNSPECIFIED = 0;
+  MAP_TEST_STATUS_PASSED = 1;
+  MAP_TEST_STATUS_FAILED = 2;
+  MAP_TEST_STATUS_ERROR = 3;
+  MAP_TEST_STATUS_CANCELLED = 4;
+}
+
+message MapTestRunRequest {
+  RequestIdentity identity = 1;
+  uint32 semantic_api_major = 2;
+  bytes script = 3;
+  string script_name = 4;
+  string workspace_name = 5;
+  string default_source_path = 6;
+  repeated SourceCatalog source_catalogs = 7;
+  string profile_id = 8;
+  string content_pack_id = 9;
+  uint32 width = 10;
+  uint32 height = 11;
+  string map_size = 12;
+  repeated PlayerConfiguration players = 13;
+  SetupContext setup_context = 14;
+  uint32 workers = 15;
+  bytes behavior_profile_hash = 16;
+  string content_pack_version = 17;
+  bytes content_pack_hash = 18;
+  string content_source_fingerprint = 19;
+  LocalContentSource local_content = 20;
+  bool progressive_preview = 21;
+  bool sample_progress = 22;
+  bool automatic_workers = 23;
+  bool report_request_revision = 24;
+}
+
+message MapTestOutputEvent {
+  RequestIdentity identity = 1;
+  uint32 ordinal = 2;
+  string text = 3;
+}
+
+message MapTestPreview {
+  uint32 seed = 1;
+  bytes request_hash = 2;
+  bytes map_hash = 3;
+  ColumnarMapState map_state = 4;
+  string source_path = 5;
+  bytes source_graph_hash = 6;
+  ExecutionCostSummary execution_cost = 7;
+}
+
+message MapTestPreviewEvent {
+  RequestIdentity identity = 1;
+  uint32 ordinal = 2;
+  MapTestPreview preview = 3;
+}
+
+message MapTestProgressEvent {
+  RequestIdentity identity = 1;
+  uint32 completed_samples = 2;
+  uint32 requested_samples = 3;
+}
+
+message MapTestRunResponse {
+  RequestIdentity identity = 1;
+  MapTestStatus status = 2;
+  bytes report_json = 3;
+  bytes report_identity = 4;
+  repeated Diagnostic diagnostics = 5;
+  MapTestPreview preview = 6;
+}
+
+message HandshakeResponse {
+  ArtifactVersion protocol_version = 1;
+  CompatibilityRange supported_protocol = 2;
+  string server_name = 3;
+  Capabilities capabilities = 4;
+}
+
+message SourcePosition {
+  uint32 line = 1;
+  uint32 utf16_column = 2;
+}
+
+message SourceRange {
+  SourcePosition start = 1;
+  SourcePosition end = 2;
+  uint64 byte_start = 3;
+  uint64 byte_end = 4;
+}
+
+enum DiagnosticSeverity {
+  DIAGNOSTIC_SEVERITY_UNSPECIFIED = 0;
+  DIAGNOSTIC_SEVERITY_ERROR = 1;
+  DIAGNOSTIC_SEVERITY_WARNING = 2;
+  DIAGNOSTIC_SEVERITY_INFORMATION = 3;
+  DIAGNOSTIC_SEVERITY_HINT = 4;
+}
+
+message Diagnostic {
+  string code = 1;
+  string message = 2;
+  DiagnosticSeverity severity = 3;
+  string source_id = 4;
+  SourceRange range = 5;
+}
+
+message AnalysisRequest {
+  RequestIdentity identity = 1;
+  DocumentIdentity document = 2;
+  bytes source = 3;
+  string profile_id = 4;
+  SourceCatalog source_catalog = 5;
+}
+
+message AnalysisResponse {
+  RequestIdentity identity = 1;
+  DocumentIdentity document = 2;
+  repeated Diagnostic diagnostics = 3;
+  bytes semantic_hash = 4;
+}
+
+enum GenerationBackend {
+  GENERATION_BACKEND_UNSPECIFIED = 0;
+  GENERATION_BACKEND_EXACT = 1;
+  GENERATION_BACKEND_SYNTHETIC_TEST = 2;
+}
+
+enum TraceLevel {
+  TRACE_LEVEL_UNSPECIFIED = 0;
+  TRACE_LEVEL_OFF = 1;
+  TRACE_LEVEL_SUMMARY = 2;
+  TRACE_LEVEL_FULL = 3;
+}
+
+enum GameMode {
+  GAME_MODE_UNSPECIFIED = 0;
+  GAME_MODE_RANDOM_MAP = 1;
+  GAME_MODE_REGICIDE = 2;
+  GAME_MODE_DEATH_MATCH = 3;
+  GAME_MODE_KING_OF_THE_HILL = 4;
+  GAME_MODE_WONDER_RACE = 5;
+  GAME_MODE_DEFEND_THE_WONDER = 6;
+  GAME_MODE_TURBO_RANDOM_MAP = 7;
+  GAME_MODE_CAPTURE_THE_RELIC = 8;
+  GAME_MODE_SUDDEN_DEATH = 9;
+  GAME_MODE_BATTLE_ROYALE = 10;
+  GAME_MODE_EMPIRE_WARS = 11;
+}
+
+enum StartingResourcePolicy {
+  STARTING_RESOURCE_POLICY_UNSPECIFIED = 0;
+  STARTING_RESOURCE_POLICY_STANDARD = 1;
+  STARTING_RESOURCE_POLICY_LOW = 2;
+  STARTING_RESOURCE_POLICY_MEDIUM = 3;
+  STARTING_RESOURCE_POLICY_HIGH = 4;
+  STARTING_RESOURCE_POLICY_ULTRA_HIGH = 5;
+  STARTING_RESOURCE_POLICY_INFINITE = 6;
+  STARTING_RESOURCE_POLICY_RANDOM = 7;
+}
+
+enum StartingAge {
+  STARTING_AGE_UNSPECIFIED = 0;
+  STARTING_AGE_STANDARD = 1;
+  STARTING_AGE_DARK_AGE = 2;
+  STARTING_AGE_FEUDAL_AGE = 3;
+  STARTING_AGE_CASTLE_AGE = 4;
+  STARTING_AGE_IMPERIAL_AGE = 5;
+  STARTING_AGE_POST_IMPERIAL_AGE = 6;
+}
+
+enum PositionPolicy {
+  POSITION_POLICY_UNSPECIFIED = 0;
+  POSITION_POLICY_RANDOM = 1;
+  POSITION_POLICY_FIXED = 2;
+  POSITION_POLICY_TEAM_TOGETHER = 3;
+}
+
+enum GameModeModifier {
+  GAME_MODE_MODIFIER_UNSPECIFIED = 0;
+  GAME_MODE_MODIFIER_EMPIRE_WARS = 1;
+  GAME_MODE_MODIFIER_SUDDEN_DEATH = 2;
+  GAME_MODE_MODIFIER_REGICIDE = 3;
+  GAME_MODE_MODIFIER_KING_OF_THE_HILL = 4;
+}
+
+message SetupContext {
+  ArtifactVersion contract_version = 1;
+  GameMode game_mode = 2;
+  StartingResourcePolicy starting_resources = 3;
+  StartingAge starting_age = 4;
+  PositionPolicy position_policy = 5;
+  repeated uint32 computer_player_slots = 6;
+  repeated GameModeModifier game_mode_modifiers = 7;
+  bool turbo_mode = 8;
+  bool full_tech_tree = 9;
+  bool antiquity_mode = 10;
+  bool solid_farms = 11;
+}
+
+message PlayerConfiguration {
+  uint32 slot = 1;
+  uint32 team = 2;
+  uint32 civilization_id = 3;
+  uint32 color = 4;
+}
+
+enum SourceCatalogOrigin {
+  SOURCE_CATALOG_ORIGIN_UNSPECIFIED = 0;
+  SOURCE_CATALOG_ORIGIN_WORKSPACE = 1;
+  SOURCE_CATALOG_ORIGIN_DIRTY_BUFFER = 2;
+  SOURCE_CATALOG_ORIGIN_DEPLOYED_MAP = 3;
+  SOURCE_CATALOG_ORIGIN_GAME_DATA = 4;
+  SOURCE_CATALOG_ORIGIN_IMPLICIT_ENVIRONMENT = 5;
+}
+
+enum SourceCatalogRole {
+  SOURCE_CATALOG_ROLE_UNSPECIFIED = 0;
+  SOURCE_CATALOG_ROLE_RMS_ENTRY = 1;
+  SOURCE_CATALOG_ROLE_RMS_DEPENDENCY = 2;
+  SOURCE_CATALOG_ROLE_EXTERNAL_XS = 3;
+}
+
+message SourceCatalogEntry {
+  string normalized_path = 1;
+  string source_id = 2;
+  bytes raw_hash = 3;
+  bytes source = 4;
+  SourceCatalogOrigin origin = 5;
+  SourceCatalogRole role = 6;
+  optional uint64 buffer_revision = 7;
+}
+
+message SourceCatalogRoots {
+  repeated string opened_or_configured = 1;
+  string deployed_map_context = 2;
+  string game_gamedata_x2 = 3;
+  string implicit_environment = 4;
+  string game_xs = 5;
+  repeated string standard_includes = 6;
+  bool standard_includes_authorized = 7;
+}
+
+message ImplicitDefinition {
+  string name = 1;
+  string value = 2;
+}
+
+message SourceCatalog {
+  ArtifactVersion contract_version = 1;
+  uint64 revision = 2;
+  string entry_path = 3;
+  repeated SourceCatalogEntry sources = 4;
+  SourceCatalogRoots roots = 5;
+  bool case_sensitive = 6;
+  string profile_id = 7;
+  string content_identity = 8;
+  repeated ImplicitDefinition implicit_definitions = 9;
+  bytes implicit_environment_hash = 10;
+  bytes catalog_hash = 11;
+  bytes rms_graph_hash = 12;
+  bytes external_asset_hash = 13;
+}
+
+message GenerationRequest {
+  RequestIdentity identity = 1;
+  DocumentIdentity document = 2;
+  string profile_id = 3;
+  string content_pack_id = 4;
+  GenerationBackend backend = 5;
+  uint32 width = 6;
+  uint32 height = 7;
+  uint64 seed = 8;
+  reserved 9, 10;
+  bytes source = 11;
+  string map_size = 12;
+  repeated PlayerConfiguration players = 13;
+  reserved 14;
+  TraceLevel trace_level = 15;
+  bytes behavior_profile_hash = 16;
+  string content_pack_version = 17;
+  bytes content_pack_hash = 18;
+  string content_source_fingerprint = 19;
+  bytes source_hash = 20;
+  InternalFixtureScenario internal_fixture_scenario = 21;
+  SetupContext setup_context = 22;
+  SourceCatalog source_catalog = 23;
+  string local_product_version = 24;
+  bool execution_progress = 25;
+  LocalContentSource local_content = 26;
+  bool progressive_preview = 27;
+  bool connection_routes = 28;
+}
+
+enum GenerationCertification {
+  GENERATION_CERTIFICATION_UNSPECIFIED = 0;
+  GENERATION_CERTIFICATION_VERSION_MAPPED = 1;
+  GENERATION_CERTIFICATION_UNVERIFIED_PRODUCT_VERSION = 2;
+}
+
+enum InternalFixtureScenario {
+  INTERNAL_FIXTURE_SCENARIO_UNSPECIFIED = 0;
+  INTERNAL_FIXTURE_SCENARIO_REPRESENTATIVE = 1;
+  INTERNAL_FIXTURE_SCENARIO_COLOCATED = 2;
+  INTERNAL_FIXTURE_SCENARIO_LEGEND = 3;
+  INTERNAL_FIXTURE_SCENARIO_LARGE = 4;
+  INTERNAL_FIXTURE_SCENARIO_DELAYED = 5;
+  INTERNAL_FIXTURE_SCENARIO_FAILURE = 6;
+  INTERNAL_FIXTURE_SCENARIO_CANCELLABLE = 7;
+}
+
+message ProgressEvent {
+  RequestIdentity identity = 1;
+  uint32 completed = 2;
+  uint32 total = 3;
+  string stage = 4;
+}
+
+enum GenerationEventKind {
+  GENERATION_EVENT_KIND_UNSPECIFIED = 0;
+  GENERATION_EVENT_KIND_GENERATION_STARTED = 1;
+  GENERATION_EVENT_KIND_STAGE_STARTED = 2;
+  GENERATION_EVENT_KIND_DELTA_BATCH = 3;
+  GENERATION_EVENT_KIND_STAGE_COMPLETED = 4;
+  GENERATION_EVENT_KIND_GENERATION_COMPLETED = 5;
+  GENERATION_EVENT_KIND_FAILED = 6;
+  GENERATION_EVENT_KIND_CANCELLED = 7;
+  GENERATION_EVENT_KIND_DIAGNOSTIC = 8;
+}
+
+enum MutationOperation {
+  MUTATION_OPERATION_UNSPECIFIED = 0;
+  MUTATION_OPERATION_REPLACE = 1;
+  MUTATION_OPERATION_REMOVE = 2;
+}
+
+message TileMutation {
+  uint32 tile_index = 1;
+  uint32 terrain_id = 2;
+  sint32 elevation = 3;
+  uint32 terrain_zone = 4;
+  uint32 land_id = 5;
+  uint32 layer_id = 6;
+  uint32 flags = 7;
+  MutationOperation operation = 8;
+  uint32 provenance_operation_index = 9;
+}
+
+message ObjectMutation {
+  uint32 object_index = 1;
+  uint32 object_id = 2;
+  uint32 x_256 = 3;
+  uint32 y_256 = 4;
+  uint32 owner = 5;
+  uint32 facet = 6;
+  uint32 footprint_width_256 = 7;
+  uint32 footprint_height_256 = 8;
+  uint32 presentation_kind = 9;
+  MutationOperation operation = 10;
+  uint32 provenance_operation_index = 11;
+  reserved 12;
+  reserved "resource_remaining";
+  sint32 resource_delta = 13;
+  sint32 status = 14;
+  sint32 death_state = 15;
+  sint32 data_status = 16;
+  uint32 selection_flags = 17;
+  uint32 behavior_flags = 18;
+  sint32 resource_type = 19;
+  fixed32 resource_quantity_f32_bits = 20;
+}
+
+message CliffMutation {
+  uint32 cliff_index = 1;
+  uint32 from_x = 2;
+  uint32 from_y = 3;
+  uint32 to_x = 4;
+  uint32 to_y = 5;
+  uint32 cliff_type = 6;
+  MutationOperation operation = 7;
+  uint32 provenance_operation_index = 8;
+}
+
+message ConnectionMutation {
+  uint32 connection_index = 1;
+  uint32 start_x = 2;
+  uint32 start_y = 3;
+  uint32 end_x = 4;
+  uint32 end_y = 5;
+  uint32 kind = 6;
+  MutationOperation operation = 7;
+  uint32 provenance_operation_index = 8;
+}
+
+message DeltaBatch {
+  repeated TileMutation tiles = 1;
+  repeated ObjectMutation objects = 2;
+  repeated CliffMutation cliffs = 3;
+  repeated ConnectionMutation connections = 4;
+}
+
+message GenerationInitialization {
+  uint32 width = 1;
+  uint32 height = 2;
+  string backend_identity = 3;
+  bytes semantic_program_hash = 4;
+  bytes request_hash = 5;
+  repeated ProvenanceOperation provenance_operations = 6;
+  uint64 source_catalog_revision = 7;
+  bytes source_catalog_hash = 8;
+  bytes source_graph_hash = 9;
+  bytes external_asset_hash = 10;
+}
+
+message GenerationEvent {
+  RequestIdentity identity = 1;
+  uint64 sequence = 2;
+  GenerationEventKind kind = 3;
+  string stage = 4;
+  uint32 completed = 5;
+  uint32 total = 6;
+  bytes state_hash = 7;
+  DeltaBatch delta = 8;
+  string detail = 9;
+  GenerationInitialization initialization = 10;
+}
+
+message CancellationRequest {
+  string request_id = 1;
+}
+
+message CancellationResponse {
+  string request_id = 1;
+  bool accepted = 2;
+}
+
+message ObjectColumns {
+  bytes ids_le = 1;
+  bytes x_le = 2;
+  bytes y_le = 3;
+  bytes owners_le = 4;
+  bytes facets_le = 5;
+  bytes footprint_widths_256_le = 6;
+  bytes footprint_heights_256_le = 7;
+  bytes presentation_kinds = 8;
+  reserved 9;
+  reserved "resource_remaining_le";
+  bytes resource_deltas_le = 10;
+  bytes statuses_le = 11;
+  bytes death_states = 12;
+  bytes data_statuses_le = 13;
+  bytes selection_flags = 14;
+  bytes behavior_flags_le = 15;
+  bytes resource_type_le = 16;
+  bytes resource_quantity_f32_bits_le = 17;
+}
+
+message ConnectionColumns {
+  bytes start_x_le = 1;
+  bytes start_y_le = 2;
+  bytes end_x_le = 3;
+  bytes end_y_le = 4;
+  bytes kinds = 5;
+}
+
+message ColumnarMapState {
+  uint32 width = 1;
+  uint32 height = 2;
+  bytes terrain_ids_le = 3;
+  bytes elevations = 4;
+  bytes zones_le = 5;
+  bytes land_ids_le = 6;
+  bytes cliff_edges = 7;
+  ObjectColumns objects = 8;
+  bytes layer_ids_le = 9;
+  bytes flags_le = 10;
+  ConnectionColumns connections = 11;
+  bytes pre_connection_terrain_ids_le = 12;
+  bytes cliff_pieces_le = 13;
+  bytes appearance_objects_le = 14;
+  ConnectionRoutes connection_routes = 15;
+}
+
+message ConnectionRoutes {
+  uint32 format_major = 1;
+  uint32 format_minor = 2;
+  uint64 total_attempts = 3;
+  uint64 successful_attempts = 4;
+  uint64 failed_attempts = 5;
+  uint32 retained_attempts = 6;
+  uint32 retained_successful_attempts = 7;
+  uint32 omission_reasons = 8;
+  bytes records_le = 9;
+  bytes vertices_le = 10;
+}
+
+message ProvenanceColumns {
+  repeated string source_ids = 1;
+  bytes tile_source_indices_le = 2;
+  bytes tile_byte_starts_le = 3;
+  bytes tile_byte_ends_le = 4;
+  repeated string include_chain = 5;
+  repeated ProvenanceOperation operations = 6;
+  bytes tile_operation_indices_le = 7;
+  bytes object_operation_indices_le = 8;
+  bytes cliff_operation_indices_le = 9;
+  bytes connection_operation_indices_le = 10;
+}
+
+message ProvenanceOperation {
+  string source_id = 1;
+  uint32 byte_start = 2;
+  uint32 byte_end = 3;
+  bytes operation_identity = 4;
+  repeated string include_chain = 5;
+  string display_name = 6;
+}
+
+message GenerationResponse {
+  RequestIdentity identity = 1;
+  DocumentIdentity document = 2;
+  ColumnarMapState map_state = 3;
+  ProvenanceColumns provenance = 4;
+  bytes semantic_hash = 5;
+  bool committed = 6;
+  bytes request_hash = 7;
+  repeated StageHash stage_hashes = 8;
+  repeated GenerationWarning warnings = 9;
+  map<string, uint64> metrics = 10;
+  uint64 source_catalog_revision = 11;
+  bytes source_catalog_hash = 12;
+  bytes source_graph_hash = 13;
+  bytes external_asset_hash = 14;
+  repeated string resolved_rms_source_ids = 15;
+  repeated string external_asset_source_ids = 16;
+  GenerationCertification certification = 17;
+  ExecutionCostSummary execution_cost = 18;
+  ConstructVerification construct_verification = 19;
+}
+
+enum ConstructVerificationStatus {
+  CONSTRUCT_VERIFICATION_STATUS_UNSPECIFIED = 0;
+  CONSTRUCT_VERIFICATION_STATUS_ALL_CERTIFIED = 1;
+  CONSTRUCT_VERIFICATION_STATUS_UNCERTIFIED_CONSTRUCTS = 2;
+}
+
+message ConstructReference {
+  string context = 1;
+  string name = 2;
+  uint32 first_operation_index = 3;
+}
+
+message ConstructVerification {
+  ConstructVerificationStatus status = 1;
+  repeated ConstructReference uncertified = 2;
+  uint32 omitted_uncertified = 3;
+  uint32 executed_constructs = 4;
+  string table_id = 5;
+}
+
+enum ExecutionCostContext {
+  EXECUTION_COST_CONTEXT_UNSPECIFIED = 0;
+  EXECUTION_COST_CONTEXT_ISOLATED = 1;
+  EXECUTION_COST_CONTEXT_MAP_TEST = 2;
+}
+
+message ExecutionCostCounter {
+  string counter = 1;
+  uint64 value = 2;
+}
+
+message ExecutionCostStep {
+  string step = 1;
+  uint64 duration_us = 2;
+  repeated ExecutionCostCounter counters = 3;
+}
+
+message ExecutionCostGroup {
+  string group = 1;
+  uint64 duration_us = 2;
+  repeated ExecutionCostStep steps = 3;
+}
+
+message ExecutionCostSummary {
+  uint32 contract_major = 1;
+  uint32 contract_minor = 2;
+  uint64 total_us = 3;
+  repeated ExecutionCostGroup groups = 4;
+  ExecutionCostContext context = 5;
+}
+
+enum ExecutionProgressKind {
+  EXECUTION_PROGRESS_KIND_UNSPECIFIED = 0;
+  EXECUTION_PROGRESS_KIND_STARTED = 1;
+  EXECUTION_PROGRESS_KIND_STEP_COMPLETED = 2;
+}
+
+message ExecutionProgressEvent {
+  RequestIdentity identity = 1;
+  ExecutionProgressKind kind = 2;
+  uint32 contract_major = 3;
+  uint32 contract_minor = 4;
+  repeated string plan = 5;
+  ExecutionCostStep step = 6;
+  uint32 completed_steps = 7;
+  uint64 measured_total_us = 8;
+  uint64 elapsed_us = 9;
+}
+
+enum VisualCheckpointStage {
+  VISUAL_CHECKPOINT_STAGE_UNSPECIFIED = 0;
+  VISUAL_CHECKPOINT_STAGE_LAND = 1;
+  VISUAL_CHECKPOINT_STAGE_ELEVATION = 2;
+  VISUAL_CHECKPOINT_STAGE_CLIFFS = 3;
+  VISUAL_CHECKPOINT_STAGE_TERRAIN = 4;
+  VISUAL_CHECKPOINT_STAGE_CONNECTIONS = 5;
+  VISUAL_CHECKPOINT_STAGE_OBJECTS = 6;
+  VISUAL_CHECKPOINT_STAGE_SAMPLE_COMPLETE = 7;
+}
+
+message VisualCheckpointChunk {
+  uint32 chunk_x = 1;
+  uint32 chunk_y = 2;
+  bytes terrain_ids_le = 3;
+  bytes elevations = 4;
+  bytes cliff_edges = 5;
+  bytes objects = 6;
+}
+
+message VisualCheckpointSample {
+  uint32 ordinal = 1;
+  uint32 seed = 2;
+}
+
+message VisualCheckpointEvent {
+  RequestIdentity identity = 1;
+  uint32 contract_major = 2;
+  uint32 contract_minor = 3;
+  uint64 revision = 4;
+  uint64 base_revision = 5;
+  VisualCheckpointStage stage = 6;
+  uint32 width = 7;
+  uint32 height = 8;
+  repeated VisualCheckpointChunk chunks = 9;
+  uint64 elapsed_us = 10;
+  VisualCheckpointSample sample = 11;
+}
+
+message StageHash {
+  string stage = 1;
+  bytes hash = 2;
+}
+
+message GenerationWarning {
+  string code = 1;
+  string message = 2;
+}
+
+message ConfigurationCatalogRequest {}
+
+message TerrainMinimapColor {
+  uint32 terrain_id = 1;
+  uint32 high_color = 2;
+  uint32 medium_color = 3;
+  uint32 low_color = 4;
+}
+
+message NeutralObjectMinimapColor {
+  uint32 object_id = 1;
+  uint32 color = 2;
+}
+
+message CliffMinimapColor {
+  uint32 cliff_type = 1;
+  uint32 left_color = 2;
+  uint32 right_color = 3;
+}
+
+message MinimapPaletteDescriptor {
+  string palette_id = 1;
+  string product_version = 2;
+  bytes palette_hash = 3;
+  repeated TerrainMinimapColor terrain_colors = 4;
+  repeated NeutralObjectMinimapColor neutral_object_colors = 5;
+  repeated CliffMinimapColor cliff_colors = 6;
+}
+
+message TerrainTextureColor {
+  uint32 terrain_id = 1;
+  uint32 color = 2;
+}
+
+message ObjectTextureColor {
+  uint32 object_id = 1;
+  uint32 color = 2;
+}
+
+message CliffTextureColor {
+  uint32 cliff_type = 1;
+  uint32 color = 2;
+}
+
+message TexturePaletteDescriptor {
+  string palette_id = 1;
+  string product_version = 2;
+  bytes palette_hash = 3;
+  repeated TerrainTextureColor terrain_colors = 4;
+  repeated ObjectTextureColor object_colors = 5;
+  string derivation_tool = 6;
+  string installation_build = 7;
+  string derived_on = 8;
+  repeated CliffTextureColor cliff_colors = 9;
+}
+
+message BehaviorProfileDescriptor {
+  string profile_id = 1;
+  string behavior_version = 2;
+  bytes profile_hash = 3;
+  repeated string product_versions = 4;
+  map<string, string> capabilities = 5;
+  repeated MinimapPaletteDescriptor minimap_palettes = 6;
+  repeated TexturePaletteDescriptor texture_palettes = 7;
+}
+
+message ContentPackDescriptor {
+  string pack_id = 1;
+  string pack_version = 2;
+  bytes content_hash = 3;
+  string source_fingerprint = 4;
+  repeated string compatible_profile_ids = 5;
+  bool synthetic = 6;
+  repeated ObjectNameDescriptor object_names = 7;
+  repeated ImplicitDefinition implicit_definitions = 8;
+  repeated string standard_includes = 9;
+  string product_version = 10;
+  bool packaged_bundle = 11;
+  repeated uint32 graphicless_object_ids = 12;
+  repeated uint32 tree_object_ids = 13;
+  repeated uint32 gold_object_ids = 14;
+  repeated uint32 stone_object_ids = 15;
+}
+
+message ObjectNameDescriptor {
+  uint32 object_id = 1;
+  string name = 2;
+}
+
+message ConfigurationCatalogResponse {
+  repeated BehaviorProfileDescriptor behavior_profiles = 1;
+  repeated ContentPackDescriptor content_packs = 2;
+}
+
+message LocalContentSource {
+  string dat_path = 1;
+  string object_replacements_path = 2;
+  string definitions_path = 3;
+  string product_version = 4;
+  string profile_id = 5;
+}
+
+message LocalContentImportRequest {
+  LocalContentSource source = 1;
+}
+
+enum LocalContentImportStatus {
+  LOCAL_CONTENT_IMPORT_STATUS_UNSPECIFIED = 0;
+  LOCAL_CONTENT_IMPORT_STATUS_AVAILABLE = 1;
+  LOCAL_CONTENT_IMPORT_STATUS_UNREADABLE = 2;
+  LOCAL_CONTENT_IMPORT_STATUS_UNSUPPORTED_LAYOUT = 3;
+  LOCAL_CONTENT_IMPORT_STATUS_INVALID = 4;
+}
+
+message LocalContentImportResponse {
+  LocalContentImportStatus status = 1;
+  ContentPackDescriptor content_pack = 2;
+  string message = 3;
+  uint64 import_microseconds = 4;
+}
+
+message PresentationStringIdsRequest {
+  string dat_path = 1;
+}
+
+enum PresentationStringIdsStatus {
+  PRESENTATION_STRING_IDS_STATUS_UNSPECIFIED = 0;
+  PRESENTATION_STRING_IDS_STATUS_AVAILABLE = 1;
+  PRESENTATION_STRING_IDS_STATUS_UNSUPPORTED_LAYOUT = 2;
+  PRESENTATION_STRING_IDS_STATUS_UNREADABLE = 3;
+}
+
+message PresentationStringId {
+  uint32 id = 1;
+  uint32 string_id = 2;
+}
+
+message PresentationTerrainMinimapIndices {
+  uint32 id = 1;
+  uint32 high_index = 2;
+  uint32 medium_index = 3;
+  uint32 low_index = 4;
+}
+
+message PresentationObjectSlot {
+  uint32 id = 1;
+  bool standing_graphic = 2;
+}
+
+message PresentationStringIdsResponse {
+  PresentationStringIdsStatus status = 1;
+  repeated PresentationStringId objects = 2;
+  repeated PresentationStringId terrains = 3;
+  repeated PresentationObjectSlot object_slots = 4;
+  uint32 terrain_slot_count = 5;
+  repeated PresentationTerrainMinimapIndices terrain_minimap_indices = 6;
+}
+
+message ShutdownRequest {}
+
+message ShutdownResponse {
+  bool accepted = 1;
+}
+
+message GameArtSource {
+  string installation_root = 1;
+  string product_version = 2;
+  string cache_root = 3;
+}
+
+message GameArtPrepareRequest {
+  GameArtSource source = 1;
+}
+
+message GameArtObject {
+  uint32 object_id = 1;
+  uint32 civilization_id = 2;
+}
+
+message GameArtSpritesRequest {
+  GameArtSource source = 1;
+  repeated GameArtObject objects = 2;
+}
+
+enum GameArtStatus {
+  GAME_ART_STATUS_UNSPECIFIED = 0;
+  GAME_ART_STATUS_AVAILABLE = 1;
+  GAME_ART_STATUS_UNREADABLE = 2;
+  GAME_ART_STATUS_UNSUPPORTED_LAYOUT = 3;
+  GAME_ART_STATUS_CANCELLED = 4;
+  GAME_ART_STATUS_INVALID = 5;
+}
+
+enum GameArtPhase {
+  GAME_ART_PHASE_UNSPECIFIED = 0;
+  GAME_ART_PHASE_CATALOG = 1;
+  GAME_ART_PHASE_TERRAIN = 2;
+  GAME_ART_PHASE_BLENDS = 3;
+  GAME_ART_PHASE_MASKS = 4;
+  GAME_ART_PHASE_SPRITES = 5;
+}
+
+message GameArtProgressEvent {
+  GameArtPhase phase = 1;
+  uint32 completed = 2;
+  uint32 total = 3;
+}
+
+message GameArtFallback {
+  string asset = 1;
+  string reason = 2;
+}
+
+message GameArtResponse {
+  GameArtStatus status = 1;
+  string message = 2;
+  string cache_key = 3;
+  uint32 converted = 4;
+  uint32 reused = 5;
+  repeated GameArtFallback fallbacks = 6;
+  uint32 fallback_count = 7;
+  uint64 cache_bytes = 8;
+  uint64 elapsed_microseconds = 9;
+  uint32 evicted = 10;
+}
+
+message ControlPipeExchangeRequest {
+  uint32 expected_server_process_id = 1;
+  bytes request = 2;
+  uint32 timeout_milliseconds = 3;
+  uint32 maximum_response_bytes = 4;
+}
+
+message ControlPipeResponseChunk {
+  bytes data = 1;
+}
+
+enum ControlPipeExchangeStatus {
+  CONTROL_PIPE_EXCHANGE_STATUS_UNSPECIFIED = 0;
+  CONTROL_PIPE_EXCHANGE_STATUS_COMPLETE = 1;
+  CONTROL_PIPE_EXCHANGE_STATUS_UNAVAILABLE = 2;
+  CONTROL_PIPE_EXCHANGE_STATUS_SERVER_PROCESS_MISMATCH = 3;
+  CONTROL_PIPE_EXCHANGE_STATUS_SERVER_PROCESS_UNKNOWN = 4;
+  CONTROL_PIPE_EXCHANGE_STATUS_FAILED = 5;
+  CONTROL_PIPE_EXCHANGE_STATUS_RESPONSE_TOO_LARGE = 6;
+  CONTROL_PIPE_EXCHANGE_STATUS_TIMED_OUT = 7;
+  CONTROL_PIPE_EXCHANGE_STATUS_CANCELLED = 8;
+  CONTROL_PIPE_EXCHANGE_STATUS_INVALID = 9;
+}
+
+message ControlPipeExchangeResponse {
+  ControlPipeExchangeStatus status = 1;
+  uint64 response_bytes = 2;
+}
+
+message Envelope {
+  ArtifactVersion artifact_version = 1;
+  CompatibilityRange compatibility = 2;
+  string request_id = 3;
+
+  oneof payload {
+    HandshakeRequest handshake_request = 10;
+    HandshakeResponse handshake_response = 11;
+    AnalysisRequest analysis_request = 12;
+    AnalysisResponse analysis_response = 13;
+    GenerationRequest generation_request = 14;
+    ProgressEvent progress_event = 15;
+    GenerationResponse generation_response = 16;
+    CancellationRequest cancellation_request = 17;
+    CancellationResponse cancellation_response = 18;
+    StructuredError error = 19;
+    ShutdownRequest shutdown_request = 20;
+    ShutdownResponse shutdown_response = 21;
+    ConfigurationCatalogRequest configuration_catalog_request = 22;
+    ConfigurationCatalogResponse configuration_catalog_response = 23;
+    GenerationEvent generation_event = 24;
+    MapTestRunRequest map_test_run_request = 25;
+    MapTestOutputEvent map_test_output_event = 26;
+    MapTestRunResponse map_test_run_response = 27;
+    MapTestPreviewEvent map_test_preview_event = 28;
+    PresentationStringIdsRequest presentation_string_ids_request = 29;
+    PresentationStringIdsResponse presentation_string_ids_response = 30;
+    ExecutionProgressEvent execution_progress_event = 31;
+    LocalContentImportRequest local_content_import_request = 32;
+    LocalContentImportResponse local_content_import_response = 33;
+    VisualCheckpointEvent visual_checkpoint_event = 34;
+    GameArtPrepareRequest game_art_prepare_request = 35;
+    GameArtSpritesRequest game_art_sprites_request = 36;
+    GameArtProgressEvent game_art_progress_event = 37;
+    GameArtResponse game_art_response = 38;
+    MapTestProgressEvent map_test_progress_event = 39;
+    ControlPipeExchangeRequest control_pipe_exchange_request = 40;
+    ControlPipeResponseChunk control_pipe_response_chunk = 41;
+    ControlPipeExchangeResponse control_pipe_exchange_response = 42;
+  }
+}

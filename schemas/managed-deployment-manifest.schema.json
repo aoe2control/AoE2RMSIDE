@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/managed-deployment-manifest-v1.json",
+  "title": "AoE2RMSIDE managed deployment manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "compatibility", "deployments"],
+  "properties": {
+    "$schema": {
+      "const": "https://rmside.invalid/schemas/managed-deployment-manifest-v1.json"
+    },
+    "schemaVersion": { "const": "1.0.0" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readerMajor"],
+      "properties": {
+        "readerMajor": { "const": 1 }
+      }
+    },
+    "deployments": {
+      "type": "object",
+      "maxProperties": 128,
+      "propertyNames": { "pattern": "^[a-f0-9]{64}$" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["schemaVersion", "compatibility", "profileId", "sourceCatalogHash", "files"],
+        "properties": {
+          "schemaVersion": { "const": "1.0.0" },
+          "compatibility": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["readerMajor"],
+            "properties": { "readerMajor": { "const": 1 } }
+          },
+          "profileId": { "type": "string", "pattern": "^[0-9]{3,20}$" },
+          "sourceCatalogHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "files": {
+            "type": "object",
+            "minProperties": 2,
+            "maxProperties": 2048,
+            "propertyNames": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096,
+              "pattern": "^(?:info\\.json|resources/_common/(?:random-map-scripts|xs)/[^\\\\:]+)$"
+            },
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

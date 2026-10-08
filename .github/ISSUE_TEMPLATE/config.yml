@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/aoe2control/AoE2RMSIDE/security/advisories/new
+    about: Report vulnerabilities privately, never in a public issue.
+  - name: Feature ideas and questions
+    url: https://discord.gg/CpVxzRfvm7
+    about: Suggest features, ask questions, and talk about random map scripting on Discord.
+  - name: Documentation
+    url: https://aoe2control.github.io/aoe2rmside/
+    about: How to use AoE2RMSIDE.

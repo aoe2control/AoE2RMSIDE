@@ -1,0 +1,11 @@
+[package]
+name = "xs-analysis"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+rms-source.workspace = true
+serde_json.workspace = true
+xs-syntax.workspace = true

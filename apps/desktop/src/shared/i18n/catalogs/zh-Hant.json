@@ -1,0 +1,4626 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "zh-Hant",
+  "name": "繁體中文",
+  "direction": "ltr",
+  "listPatterns": {
+    "unit": {
+      "two": "{0}、{1}",
+      "start": "{0}、{1}",
+      "middle": "{0}、{1}",
+      "end": "{0}、{1}"
+    }
+  },
+  "messages": {
+    "app-menu.file.name": {
+      "message": "檔案"
+    },
+    "app-menu.edit.name": {
+      "message": "編輯"
+    },
+    "app-menu.view.name": {
+      "message": "檢視"
+    },
+    "app-menu.help.name": {
+      "message": "說明"
+    },
+    "app-menu.file.new-file": {
+      "message": "新增檔案"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "新增地圖測試指令碼"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "產生定義檔…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "新增 XS 指令碼"
+    },
+    "app-menu.file.open-file": {
+      "message": "開啟檔案…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "開啟資料夾…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "瀏覽已安裝的地圖…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "部署為模組…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "開啟遊戲資料夾"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "取消連結遊戲資料夾"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "匯入測試報告…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "開啟最近使用的項目"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "沒有最近使用的檔案或資料夾"
+    },
+    "app-menu.file.save": {
+      "message": "儲存"
+    },
+    "app-menu.file.save-as": {
+      "message": "另存新檔…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "選擇 RMS 檔案的預設應用程式…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "無法開啟 Windows 設定"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "已開啟 Windows 設定的預設應用程式頁面"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "若要使用 AoE2RMSIDE 開啟 .rms 和 .rms2 檔案，請在該頁面選取它。Windows 會在你確認後才變更預設應用程式。"
+    },
+    "app-menu.file.close-tab": {
+      "message": "關閉分頁"
+    },
+    "app-menu.file.close-folder": {
+      "message": "關閉資料夾"
+    },
+    "app-menu.file.close-window": {
+      "message": "關閉視窗"
+    },
+    "app-menu.file.exit": {
+      "message": "結束"
+    },
+    "app-menu.edit.undo": {
+      "message": "復原"
+    },
+    "app-menu.edit.redo": {
+      "message": "重做"
+    },
+    "app-menu.edit.cut": {
+      "message": "剪下"
+    },
+    "app-menu.edit.copy": {
+      "message": "複製"
+    },
+    "app-menu.edit.paste": {
+      "message": "貼上"
+    },
+    "app-menu.edit.select-all": {
+      "message": "全選"
+    },
+    "app-menu.edit.format-document": {
+      "message": "格式化文件"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "儲存時格式化"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "縮排 if/else 區塊"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "刪除時略過資源回收筒"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "重設版面配置"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "GPU 地圖繪製"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "即時顯示產生階段"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "顯示行內提示"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "程式碼檢查規則"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title}（{code}）"
+    },
+    "app-menu.view.language": {
+      "message": "語言…"
+    },
+    "app-menu.view.theme": {
+      "message": "佈景主題"
+    },
+    "app-menu.view.theme.system": {
+      "message": "跟隨系統"
+    },
+    "app-menu.view.theme.light": {
+      "message": "淺色"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "深色"
+    },
+    "app-menu.view.actual-size": {
+      "message": "實際大小"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "放大"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "縮小"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "切換全螢幕"
+    },
+    "app-menu.help.documentation": {
+      "message": "說明文件"
+    },
+    "app-menu.help.join-discord": {
+      "message": "加入 Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "回報錯誤"
+    },
+    "app-menu.help.about": {
+      "message": "關於 {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "無法開啟已連結的遊戲資料夾"
+    },
+    "about.version": {
+      "message": "版本 {version}（{commit}）"
+    },
+    "about.edition.xs-preview": {
+      "message": "XS 指令碼編輯器"
+    },
+    "about.edition.rms-preview": {
+      "message": "RMS 與 XS 指令碼編輯器"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "獨立開發的非官方隨機地圖指令碼編輯器。以自行實作的方式，重現 Age of Empires II: Definitive Edition 讀取隨機地圖指令碼並產生地圖的行為。"
+    },
+    "about.disclosure.independent": {
+      "message": "獨立開發的非官方 Age of Empires II: Definitive Edition 指令碼編輯器。"
+    },
+    "about.disclosure.verified-versions": {
+      "message": "僅針對已驗證的遊戲版本，保證產生的地圖與遊戲一致；較新的版本仍可使用，但不提供此保證。為使地圖的行為相同，部分遊戲特有的行為也會刻意重現。"
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE 不附帶遊戲檔案或遊戲美術素材。官方資源只從本機安裝的遊戲讀取，遊戲紋理也只從已安裝的遊戲檔案擷取。"
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE 不附帶遊戲檔案或遊戲美術素材。官方資源只從本機安裝的遊戲讀取。"
+    },
+    "about.disclosure.affiliation": {
+      "message": "本專案與 Microsoft、Xbox Game Studios、World's Edge 或 Activision 無關聯，也未獲其背書。"
+    },
+    "about.credits": {
+      "message": "致謝\n{maintainer} — 專案創作者與維護者"
+    },
+    "about.credits.research": {
+      "message": "感謝 {author}；我們從其撰寫的 {guide} 學到了許多隨機地圖指令碼知識。"
+    },
+    "about.credits.xs-research": {
+      "message": "感謝 {author}；其在 {guide} 撰寫的 XS 文件，是本專案支援 XS 的起點。"
+    },
+    "about.close": {
+      "message": "關閉"
+    },
+    "about.documentation": {
+      "message": "說明文件"
+    },
+    "dialog.confirm.title": {
+      "message": "確認操作"
+    },
+    "dialog.confirm.cancel": {
+      "message": "取消"
+    },
+    "dialog.confirm.continue": {
+      "message": "繼續"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "儲存 {name} 的變更？"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, other {儲存 {count} 個檔案的變更？}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "關閉視窗將遺失尚未儲存的變更。"
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "關閉此分頁將遺失尚未儲存的變更。"
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "關閉此資料夾將遺失尚未儲存的變更。"
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "刪除 {name} 將遺失尚未儲存的變更。"
+    },
+    "dialog.unsaved.save": {
+      "message": "儲存"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "全部儲存"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "不要儲存"
+    },
+    "dialog.external-change.title": {
+      "message": "{name} 已在 AoE2RMSIDE 外遭到變更"
+    },
+    "dialog.external-change.save.description": {
+      "message": "取代檔案會捨棄外部版本。請選擇從磁碟重新載入、以編輯器內容取代，或取消。"
+    },
+    "dialog.external-change.replace": {
+      "message": "取代磁碟上的檔案"
+    },
+    "dialog.external-change.reload": {
+      "message": "從磁碟重新載入"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "重新載入將捨棄尚未儲存的編輯內容。也可以繼續編輯，在儲存時解決衝突。"
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "繼續編輯"
+    },
+    "dialog.delete-entry.title": {
+      "message": "將 {name} 移至資源回收筒？"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "資料夾不是空的。它及其中所有項目都會移至資源回收筒。"
+    },
+    "dialog.delete-entry.description": {
+      "message": "此項目將移至資源回收筒。"
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "移至資源回收筒"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "永久刪除 {name}？"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "資料夾不是空的。它及其中所有項目都會永久刪除，不會移至資源回收筒。此操作無法復原。"
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "此項目將永久刪除，不會移至資源回收筒。此操作無法復原。"
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "永久刪除"
+    },
+    "output.clear": {
+      "message": "清除輸出"
+    },
+    "output.source.run": {
+      "message": "執行"
+    },
+    "output.source.script": {
+      "message": "指令碼"
+    },
+    "output.source.preview": {
+      "message": "預覽"
+    },
+    "output.source.map-test": {
+      "message": "地圖測試"
+    },
+    "output.source.deploy": {
+      "message": "部署"
+    },
+    "output.source.live-test": {
+      "message": "遊戲內測試"
+    },
+    "output.source.recovery": {
+      "message": "復原"
+    },
+    "output.source.update": {
+      "message": "更新"
+    },
+    "output.source.files": {
+      "message": "檔案"
+    },
+    "output.source.game-folder": {
+      "message": "遊戲資料夾"
+    },
+    "output.source.game-textures": {
+      "message": "遊戲紋理"
+    },
+    "output.source.app": {
+      "message": "應用程式"
+    },
+    "output.log.label": {
+      "message": "{count, plural, other {{count} 則輸出訊息}}"
+    },
+    "output.empty": {
+      "message": "執行地圖後，可在這裡查看結果。"
+    },
+    "output.empty.filtered": {
+      "message": "沒有符合篩選條件的訊息。"
+    },
+    "output.jump-to-latest": {
+      "message": "跳至最新（{count} 則新訊息）"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, other {重複 {count} 次}}"
+    },
+    "output.details": {
+      "message": "詳細資料"
+    },
+    "output.run.show": {
+      "message": "顯示執行訊息"
+    },
+    "output.run.hide": {
+      "message": "隱藏執行訊息"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, other {較早的 {count} 行未顯示}}"
+    },
+    "output.run.seed": {
+      "message": "種子 {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, other {{count} 位玩家}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, other {{count} 張地圖}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} 毫秒"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} 秒"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} 分 {seconds} 秒"
+    },
+    "output.constructs.heading": {
+      "message": "未與遊戲比對"
+    },
+    "output.constructs.label": {
+      "message": "未與遊戲比對的指令"
+    },
+    "output.constructs.go-to": {
+      "message": "前往首次使用的位置"
+    },
+    "output.constructs.more": {
+      "message": "以及另外 {count} 項"
+    },
+    "installed-maps.filter.group": {
+      "message": "地圖來源"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "內建地圖（{count, number}）"
+    },
+    "installed-maps.filter.local": {
+      "message": "本機模組地圖（{count, number}）"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "訂閱的模組地圖（{count, number}）"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "所有地圖來源皆已關閉。請開啟一個來源以列出地圖。"
+    },
+    "installed-maps.empty.origins": {
+      "message": "所選來源沒有已安裝的隨機地圖。"
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "所選來源沒有符合搜尋條件的已安裝隨機地圖。"
+    },
+    "installed-maps.empty.none": {
+      "message": "未找到內建、本機模組或訂閱模組的隨機地圖。"
+    },
+    "installed-maps.empty.search": {
+      "message": "沒有符合搜尋條件的已安裝隨機地圖。"
+    },
+    "installed-maps.title": {
+      "message": "已安裝的隨機地圖"
+    },
+    "installed-maps.close": {
+      "message": "關閉已安裝的隨機地圖"
+    },
+    "installed-maps.search": {
+      "message": "搜尋已安裝的隨機地圖"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "搜尋地圖"
+    },
+    "installed-maps.search.clear": {
+      "message": "清除地圖搜尋"
+    },
+    "installed-maps.loading": {
+      "message": "正在載入已安裝的隨機地圖"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "選擇遊戲資料夾以列出已安裝的 RMS 檔案"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "內建"
+    },
+    "installed-maps.origin.local": {
+      "message": "本機模組"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "訂閱的模組"
+    },
+    "installed-maps.clone": {
+      "message": "建立可編輯副本"
+    },
+    "installed-maps.open-failed": {
+      "message": "無法開啟地圖"
+    },
+    "installed-maps.clone-failed": {
+      "message": "無法建立地圖副本"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "無法列出已安裝的地圖"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, other {已複製 # 個地圖檔案供編輯}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "未複製 {name}"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "地圖副本參照此檔案，但它不屬於已安裝地圖的內容。"
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "此檔案由遊戲提供，不屬於已安裝地圖的內容。"
+    },
+    "run-menu.control.detach": {
+      "message": "中斷 AoE2Control 連線"
+    },
+    "run-menu.control.remove": {
+      "message": "移除 AoE2Control"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control 正在連線"
+    },
+    "run-menu.control.detaching": {
+      "message": "正在中斷 AoE2Control 連線…"
+    },
+    "run-menu.control.busy": {
+      "message": "請等目前的 AoE2Control 操作完成"
+    },
+    "run-menu.run-on-save": {
+      "message": "儲存時執行"
+    },
+    "run-menu.run-on-edit": {
+      "message": "編輯時執行"
+    },
+    "run-menu.preset.default-name": {
+      "message": "預設集"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "預設集 {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "預覽預設集設定"
+    },
+    "run-menu.preset.manage": {
+      "message": "管理預覽預設集"
+    },
+    "run-menu.preset.new": {
+      "message": "新增預設集"
+    },
+    "run-menu.preset.new-name": {
+      "message": "為新的預覽預設集命名"
+    },
+    "run-menu.preset.rename": {
+      "message": "重新命名 {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "儲存 {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "編輯 {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "刪除 {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "刪除預設集 {name}？"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "這會移除此預設集儲存的預覽設定。"
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "刪除"
+    },
+    "run-menu.preset.name-length": {
+      "message": "預設集名稱須包含 1 至 64 個字元"
+    },
+    "run-menu.preset.exists": {
+      "message": "名為 {name} 的預設集已存在"
+    },
+    "run-menu.preset.limit": {
+      "message": "最多可儲存 64 個預設集"
+    },
+    "run-menu.map-size": {
+      "message": "地圖尺寸"
+    },
+    "run-menu.game-mode": {
+      "message": "遊戲模式"
+    },
+    "run-menu.starting-resources": {
+      "message": "起始資源"
+    },
+    "run-menu.starting-age": {
+      "message": "起始時代"
+    },
+    "run-menu.ending-age": {
+      "message": "結束時代"
+    },
+    "run-menu.position-policy": {
+      "message": "位置設定"
+    },
+    "run-menu.select-placeholder": {
+      "message": "選擇"
+    },
+    "run-menu.turbo-note": {
+      "message": "加速隨機地圖是舊模式，會維持原有行為。選擇隨機地圖並開啟加速，才會提供遊戲的加速標籤。"
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "使用隨機地圖 + 加速"
+    },
+    "run-menu.players.configure": {
+      "message": "設定玩家"
+    },
+    "run-menu.players.count": {
+      "message": "玩家人數"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, other {# 位玩家}}"
+    },
+    "run-menu.players.slot": {
+      "message": "玩家 {player} 的位置編號"
+    },
+    "run-menu.players.color": {
+      "message": "玩家 {player} 的顏色"
+    },
+    "run-menu.players.civilization": {
+      "message": "玩家 {player} 的文明"
+    },
+    "run-menu.players.team": {
+      "message": "玩家 {player} 的隊伍"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "玩家 {player} 是否由電腦控制"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "電腦玩家（定義 AI_PLAYERS）"
+    },
+    "run-menu.players.live-computer": {
+      "message": "遊戲內測試會將 P1 之後的玩家全部設為電腦"
+    },
+    "run-menu.players.live-note": {
+      "message": "遊戲內測試會將 P1 之後的玩家全部設為電腦。"
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "遊戲內測試會將 P1 之後的玩家全部設為電腦。請在 P1 指定一位玩家，由你操作。"
+    },
+    "run-menu.lobby.label": {
+      "message": "大廳選項"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "大廳選項，已開啟 {count} 項"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "遊戲模式附加規則"
+    },
+    "run-menu.lobby.options": {
+      "message": "選項"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode}（遊戲模式）"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "在遊戲模式中加入帝國戰爭規則。定義 EMPIRE_WARS。"
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "在遊戲模式中加入主城保衛戰規則。定義 SUDDEN_DEATH。"
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "在遊戲模式中加入弒君模式規則。定義 REGICIDE。"
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "在遊戲模式中加入佔山為王規則。定義 KING_OT_HILL。"
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "加快遊戲節奏。定義 TURBO_MODE，在隨機地圖模式下也會定義 TURBO_RANDOM_MAP。"
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "所有文明都能研發全部科技。定義 FULL_TECH_TREE。"
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "古代模式。定義 ANTIQUITY_MODE；許多地圖會隨此選項改變。"
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "單位無法穿越農田。定義 SOLID_FARMS。"
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "弒君模式需要每位玩家都有國王。若地圖沒有國王，遊戲會立刻結束對局。"
+    },
+    "run-menu.version.local-folder": {
+      "message": "本機遊戲資料夾"
+    },
+    "run-menu.version.local": {
+      "message": "{version}（本機）"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version}（未驗證）"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "沒有內建行為設定檔"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "沒有隨附版本"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "預覽使用的遊戲版本"
+    },
+    "run-menu.version.game-version": {
+      "message": "遊戲版本"
+    },
+    "run-menu.version.local-selected": {
+      "message": "已選擇本機遊戲版本，正在重新執行預覽"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} 尚未通過 RMS 驗證；預覽使用最新的已驗證行為設定檔（{profile}）。功能可能不受影響。若產生的地圖與遊戲不同，請檢查 IDE 更新或至 {url} 回報"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "無法使用"
+    },
+    "run-menu.game-folder.select": {
+      "message": "選擇遊戲資料夾"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "正在選擇遊戲資料夾…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "正在使用本機 AoE2DE {version}"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "正在使用所選的本機 AoE2DE 安裝"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "無法載入執行設定"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "執行設定未儲存"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "編輯器無法使用執行設定"
+    },
+    "run-menu.run.warning": {
+      "message": "這張地圖有一項警告"
+    },
+    "run-menu.cache-cleared": {
+      "message": "已清除預覽快取"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "開發測試範例需要非空白的 .rms 或 .rms2 指令碼"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "這次預覽的隨機文明：{players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "玩家 {player}：{civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "遊戲內測試會讓遊戲自行抽選文明。"
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, other {# 位玩家}}"
+    },
+    "run-menu.result.error": {
+      "message": "錯誤"
+    },
+    "run-menu.result.failed": {
+      "message": "失敗"
+    },
+    "run-menu.result.passed": {
+      "message": "通過"
+    },
+    "run-menu.result.stopped": {
+      "message": "已停止"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "已停止，保留上一張地圖"
+    },
+    "run-menu.result.synthetic": {
+      "message": "模擬測試範例，未經認證"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "模擬測試範例，未經認證，已重用"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "已產生，已重用"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "已產生 · 遊戲版本未驗證"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "已產生，已重用 · 遊戲版本未驗證"
+    },
+    "run-menu.blocked.headline": {
+      "message": "無法執行預覽"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "目前的原始碼為空白。"
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "目前的原始碼有語法錯誤。"
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "所選行為設定檔無法使用。"
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "所選遊戲版本沒有可用的相容內容套件。"
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "此行為設定檔沒有可用的相容內容套件。"
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "另一項執行作業仍在進行。"
+    },
+    "run-menu.blocked.loading": {
+      "message": "預覽設定仍在載入。"
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "只能部署 .rms 和 .rms2 主檔案。"
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "所選 RMS 原始碼為空白。"
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "所選 RMS 原始碼有語法錯誤。"
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "無法安排所選 RMS 原始碼的執行作業。"
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "種子鎖定狀態無效。"
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "儲存時執行的狀態無效。"
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "編輯時執行的狀態無效。"
+    },
+    "run-menu.invalid.seed": {
+      "message": "種子必須是 0 至 4294967295 之間的整數。"
+    },
+    "run-menu.invalid.map-size": {
+      "message": "地圖尺寸必須符合支援的遊戲選項。"
+    },
+    "run-menu.invalid.player-count": {
+      "message": "玩家人數必須介於 1 至 8。"
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "玩家位置編號必須包含八個有效值。"
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "參與遊戲的玩家位置編號不可重複。"
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "玩家顏色必須包含八個有效值。"
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "參與遊戲的玩家顏色不可重複。"
+    },
+    "run-menu.invalid.teams": {
+      "message": "玩家隊伍必須包含八個值，範圍為不組隊至隊伍 4。"
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "文明預設值必須包含八個玩家位置。"
+    },
+    "run-menu.invalid.controllers": {
+      "message": "玩家控制方式必須包含八個值。"
+    },
+    "run-menu.invalid.profile": {
+      "message": "需要已知的行為設定檔。"
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "版本選擇範圍無效。"
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "必須指定模式或情境。"
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "遊戲模式附加規則必須有效且不可重複。"
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "大廳選項必須為開啟或關閉。"
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "起始資源無效。"
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "起始時代無效。"
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "結束時代無效。"
+    },
+    "run-menu.invalid.age-order": {
+      "message": "結束時代不可早於起始時代。"
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "位置設定無效。"
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "追蹤資料收集層級無效。"
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "測試核心數必須為自動或 1 至 32。"
+    },
+    "run-menu.standard-include.headline": {
+      "message": "遊戲標準引入檔需要遊戲資料夾"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "遊戲標準引入檔需要本機遊戲版本，但目前選擇的是隨附版本。"
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "遊戲標準引入檔需要已連結的遊戲資料夾，目前尚未連結。"
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "遊戲標準引入檔需要已連結遊戲資料夾中的 resources/_common/drs/gamedata_x2，但此目錄不存在。"
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "無法分析指令碼"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "無法檢查指令碼"
+    },
+    "run-menu.failure.not-started": {
+      "message": "無法開始執行"
+    },
+    "run-menu.failure.generation": {
+      "message": "產生失敗"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "地圖測試"
+    },
+    "settings.language.title": {
+      "message": "語言"
+    },
+    "settings.language.description": {
+      "message": "選單、對話方塊與訊息會使用此語言。指令碼指令、記錄與支援套件仍使用英文。"
+    },
+    "settings.language.label": {
+      "message": "介面語言"
+    },
+    "settings.language.system": {
+      "message": "Windows 顯示語言（{language}）"
+    },
+    "settings.language.close": {
+      "message": "關閉"
+    },
+    "settings.language.close-label": {
+      "message": "關閉語言設定"
+    },
+    "settings.language.editor-next-start": {
+      "message": "程式碼編輯器本身的選單會在下次啟動時切換語言。"
+    },
+    "message.action.report-problem": {
+      "message": "回報此問題"
+    },
+    "message.action.get-newer-control": {
+      "message": "取得較新的 AoE2Control 版本"
+    },
+    "message.action.link-game-folder": {
+      "message": "連結遊戲資料夾"
+    },
+    "message.action.verify-game-files": {
+      "message": "在 Steam 驗證遊戲檔案"
+    },
+    "message.action.select-local-game-version": {
+      "message": "選擇本機遊戲版本"
+    },
+    "message.action.check-include-name": {
+      "message": "檢查引入檔的名稱"
+    },
+    "message.action.open-problems": {
+      "message": "開啟問題面板"
+    },
+    "message.action.choose-map-size": {
+      "message": "選擇其他地圖尺寸"
+    },
+    "message.action.change-player-count": {
+      "message": "變更玩家人數"
+    },
+    "message.action.open-players-menu": {
+      "message": "開啟玩家選單"
+    },
+    "message.action.try-another-seed": {
+      "message": "試用其他種子"
+    },
+    "message.action.reinstall": {
+      "message": "重新安裝或更新 AoE2RMSIDE"
+    },
+    "message.action.check-update": {
+      "message": "檢查 AoE2RMSIDE 更新"
+    },
+    "message.action.reconnect-control": {
+      "message": "重新連線 AoE2Control 後再試一次"
+    },
+    "message.action.check-control-file": {
+      "message": "確認選取的 AoE2Control 檔案可正常使用，再試一次"
+    },
+    "message.action.wait-run-again": {
+      "message": "稍候片刻，再按一次執行"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "再按一次執行；若持續發生，請重新啟動 AoE2DE"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "重新啟動 AoE2DE，再按一次執行"
+    },
+    "message.action.check-game-window": {
+      "message": "查看遊戲視窗，再按一次執行"
+    },
+    "message.action.press-run-again": {
+      "message": "再按一次執行"
+    },
+    "message.action.wait-try-again": {
+      "message": "稍候片刻再試一次"
+    },
+    "message.action.open-deploy-again": {
+      "message": "重新開啟「部署為模組」"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "選擇其他模組名稱"
+    },
+    "message.action.rerun-map-test": {
+      "message": "重新執行地圖測試"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "某個玩家位置"
+    },
+    "message.format.located": {
+      "message": "{location}：{text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}，第 {line} 行"
+    },
+    "message.format.the-script": {
+      "message": "此指令碼"
+    },
+    "message.format.the-folder": {
+      "message": "此資料夾"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "玩家設定檔的 XS 資料夾"
+    },
+    "message.format.the-map-test": {
+      "message": "此地圖測試"
+    },
+    "message.format.a-map-test": {
+      "message": "一個地圖測試"
+    },
+    "message.format.preview-kept": {
+      "message": "已保留預覽。"
+    },
+    "message.format.preview-works-without-it": {
+      "message": "不使用此功能也能執行預覽。"
+    },
+    "message.format.sentence": {
+      "message": "{text}。"
+    },
+    "message.generation.source-changed.headline": {
+      "message": "產生地圖時，指令碼已變更"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "接下來會執行較新的版本。"
+    },
+    "message.xs-syntax.headline": {
+      "message": "某個 XS 檔案有語法錯誤"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} 有 XS 語法錯誤"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name} 第 {line} 行使遊戲無法載入地圖的 XS，因此未變更遊戲。"
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "遊戲無法載入地圖的 XS，因此未變更遊戲。"
+    },
+    "message.control.xs-syntax.action": {
+      "message": "修正問題面板中列出的錯誤，再執行遊戲內測試"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "玩家設定檔的 XS 資料夾已有 XS 檔案"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "玩家設定檔的 XS 資料夾已有 {name}"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "它不是 AoE2RMSIDE 建立的檔案（{folder}），因此遊戲內測試已停止，未取代此檔案。"
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "它不是 AoE2RMSIDE 建立的檔案，因此遊戲內測試已停止，未取代此檔案。"
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "重新命名 XS 檔案，或移除現有檔案"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "玩家設定檔 XS 資料夾中的 XS 檔案已在 AoE2RMSIDE 外變更"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "玩家設定檔 XS 資料夾中的 {name} 已在 AoE2RMSIDE 外變更"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE 曾為遊戲內測試將它複製至 {folder}，且不會覆寫外部的修改，因此測試已停止。"
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "將修改內容移至其他位置或移除檔案，再執行遊戲內測試"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "無法將 XS 檔案複製至玩家設定檔的 XS 資料夾"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "無法將 {name} 複製至玩家設定檔的 XS 資料夾"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "遊戲內測試會以 #includeXS 指定的不含路徑檔名複製每個 XS 檔案，但此名稱包含資料夾。"
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "在 #includeXS 行中只填寫檔名"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "兩個 XS 檔案複製後會使用相同名稱"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "兩個 XS 檔案都會複製為 {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "玩家設定檔的 XS 資料夾只能有一個同名檔案。"
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "重新命名其中一個 XS 檔案"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "無法使用玩家設定檔的 XS 資料夾"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} 不是一般資料夾，或指向另一個位置。AoE2RMSIDE 不會透過重新導向的資料夾複製檔案。"
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "無法讀取 AoE2RMSIDE 的 XS 檔案複製紀錄"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "沒有此紀錄，AoE2RMSIDE 無法辨識玩家設定檔中的哪些 XS 檔案是自己建立的。"
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "無法將 XS 檔案複製至玩家設定檔的 XS 資料夾"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "地圖載入的 XS 檔案數量超過遊戲內測試的複製上限。"
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "這次遊戲內測試在 {folder} 變更的部分 XS 檔案無法還原；AoE2RMSIDE 仍將它們視為自己管理的檔案。"
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "這次遊戲內測試在 {folder} 變更的所有 XS 檔案皆已還原。"
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "遊戲內測試期間，AoE2RMSIDE 對 {folder} 中 XS 檔案的紀錄已變更。"
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "確認資料夾可供寫入，再執行遊戲內測試"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE 尚未執行"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "啟動 AoE2DE，再按一次執行"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control 在完成啟動前便已關閉"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control 未能啟動"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control 未完成連線"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "此 AoE2Control 版本缺少所選的文明"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "撒克遜人、瓦蘭吉人與丹麥人需要 AoE2Control 1.1.1 或更新版本。"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control 不提供所選的文明"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "請選擇 AoE2Control 1.1.1 或更新版本，或改用其他文明。"
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "目前執行的遊戲版本缺少所選的文明"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "選擇其他文明"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "此遊戲版本不支援遊戲內測試"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "上一個 AoE2Control 仍在從遊戲卸載"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "先前的 AoE2Control 啟動作業仍在遊戲中進行"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control 未能及時完成啟動"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "AoE2DE 視窗尚未就緒"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "開啟遊戲視窗並保持非最小化狀態，再按一次執行"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "另一個版本的 AoE2Control 正在遊戲中執行"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "AoE2Control 先前已在這次遊戲中啟動失敗"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control 無法附加至遊戲"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "另一個 AoE2Control 啟動器正在執行"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "關閉它，再按一次執行"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "此 AoE2Control 發行版不相容"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "選擇相容的 AoE2Control 公開發行版"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "遊戲設定與執行設定不符"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "與 AoE2Control 的連線已中斷"
+    },
+    "message.control.connection-lost.action": {
+      "message": "必要時請先啟動 AoE2DE，再試一次"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control 未能及時回應"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control 尚未回應便關閉連線"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "遊戲可能正在忙碌或顯示訊息。"
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "開始對局時，遊戲停止回應"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE 可能正在顯示訊息，例如指令碼錯誤。"
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "關閉遊戲中的訊息，再按一次執行"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "遊戲未能及時確認新對局"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "目前的對局未能及時結束"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "將地圖複製到遊戲時，地圖已變更"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "遊戲的地圖資料夾已有另一張同名地圖"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "重新命名地圖，再按一次執行"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "無法將地圖複製到遊戲"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "遊戲未確認對局已開始"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "重新連線以確認目前對局，再試一次"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "遊戲未確認上一場對局已結束"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "重新連線確認後再試一次"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "無法辨識遊戲資料夾或玩家設定檔"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "檢查已連結的遊戲資料夾"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "無法為遊戲內測試部署地圖"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control 在完成連線前已停止"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control 無法確認穩定的單人遊戲工作階段"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control 傳回了 AoE2RMSIDE 無法使用的回應"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "遊戲目前的狀態不支援遊戲內測試"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "返回主選單或單人對局後再試一次"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "必須先結束正在進行的對局"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "再按一次執行，並允許結束對局"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control 尚未連線"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "再按一次執行以連線"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "所選的 AoE2Control 檔案已變更"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "重新選擇 AoE2Control"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control 正忙碌"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "此系統不支援遊戲內測試"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "遊戲內測試未取代進行中的對局"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "遊戲內測試詢問是否取代之前，AoE2DE 已開始一場對局。"
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control 無法結束目前的對局"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "遊戲內測試啟動地圖之前，遊戲狀態已改變"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "遊戲內測試準備期間，AoE2DE 開始了對局或離開了單人遊戲設定畫面。"
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "遊戲內測試期間 AoE2DE 或 AoE2Control 已重新啟動"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "AoE2DE 未列出複製的地圖"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "遊戲的模組地圖清單中沒有複製的地圖，或該地圖出現不只一次。"
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "某位玩家的設定無法傳送給 AoE2Control"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "某個文明、隊伍或顏色超出此 AoE2Control 可接受的範圍。"
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE 無法準備遊戲內測試"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control 無法設定隨機地圖對局"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "返回 AoE2DE 主選單再試一次；若持續發生，請開啟一次單人遊戲 → 遭遇戰"
+    },
+    "message.control.headline": {
+      "message": "遊戲內測試失敗"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "此 AoE2Control 版本無法設定大廳選項"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "大廳選項需要 AoE2Control 1.1.1 或更新版本。遊戲未被變更。"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "遊戲內測試需要在 P1 指定玩家"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "P1 的玩家由你操作；其餘玩家皆由電腦控制。"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "開啟玩家選單，在 P1 指定一位玩家"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control 不接受 P1 之後的人類玩家"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "遊戲內測試會啟動單人遊戲，P1 之後的玩家都由電腦控制。"
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control 拒絕電腦玩家清單"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "電腦玩家未依位置編號排序。"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "電腦玩家被列在沒有玩家的位置。"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control 不接受 P1 設為電腦玩家"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "P1 是你在遊戲內測試時操作的玩家，因此不能設為電腦。"
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "部分大廳設定未還原"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "遊戲內測試失敗，{fields} 可能與先前不同。"
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "遊戲內測試失敗，部分大廳設定可能與先前不同。"
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "下次遊戲前，請檢查 AoE2DE 的大廳設定"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "遊戲模式"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "地圖尺寸"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "起始資源"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "起始時代"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "結束時代"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "地圖顯示"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "玩家人數"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "隊伍位置"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "遊戲模式附加規則"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "加速"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "全科技樹"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "古代"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "堅固農田"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "所選地圖"
+    },
+    "message.lobby-setting.seed": {
+      "message": "種子"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot} {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "隊伍"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "讓分"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "顏色"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "文明"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "人類或電腦設定"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "設定"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "正在啟動 AoE2Control"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "正在等待上一個 AoE2Control 從遊戲卸載"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "正在等待 AoE2Control 在遊戲中完成啟動"
+    },
+    "message.live.game-detected.headline": {
+      "message": "已偵測到 AoE2DE"
+    },
+    "message.live.attach.headline": {
+      "message": "正在附加至執行中的遊戲"
+    },
+    "message.live.handshake.headline": {
+      "message": "正在檢查 AoE2Control"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control 已就緒"
+    },
+    "message.live.clean-end.headline": {
+      "message": "正在結束目前的對局"
+    },
+    "message.live.deploy.headline": {
+      "message": "正在將地圖部署到遊戲"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, other {地圖的 XS 檔案 {files} 也已放入玩家設定檔的 XS 資料夾。}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "遊戲已有這個版本的地圖"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "正在遊戲中選擇地圖"
+    },
+    "message.live.match-start.headline": {
+      "message": "正在以種子 {seed} 啟動隨機地圖"
+    },
+    "message.live.verified.headline": {
+      "message": "已驗證對局使用種子 {seed}"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} 尚未驗證，因此對局可能與預覽不同。"
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} 尚未通過遊戲內測試驗證"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "遊戲內測試可使用，但對局可能與預覽不同。"
+    },
+    "message.live.cancelled.headline": {
+      "message": "已取消遊戲內測試"
+    },
+    "message.live.cancelled.cause": {
+      "message": "未對遊戲進行後續變更。"
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control 已中斷連線"
+    },
+    "message.live.stopped.headline": {
+      "message": "遊戲內測試已停止，未變更遊戲"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "無法產生預覽。"
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "指令碼有錯誤。"
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "產生預覽時，指令碼或執行設定已變更。"
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "預覽已不再符合指令碼。"
+    },
+    "message.live.match-kept.cause": {
+      "message": "正在進行的對局未被變更。"
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "無法儲存取代目前對局的許可。"
+    },
+    "message.live.control-selected.headline": {
+      "message": "已選擇 AoE2Control"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "此檔案不是可用的 AoE2Control 執行檔"
+    },
+    "message.live.control-rejected.action": {
+      "message": "選擇 AoE2Control 公開發行版"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "已移除 AoE2Control 選擇設定"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "無法移除 AoE2Control 選擇設定"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "中斷連線後再試一次"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "無法取得 AoE2Control 狀態"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "無法匯入目前對局的種子"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "已匯入並鎖定對局種子 {seed}"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "部署期間，模組資料夾已變更"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "模組資料夾中的檔案已在 AoE2RMSIDE 外變更"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE 不會覆寫外部修改。"
+    },
+    "message.deploy.external-edits.action": {
+      "message": "將這些修改移至其他位置，再重新部署"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "部署預覽已過期"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "此資料夾已由另一個模組使用"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE 只會取代自己部署的模組。"
+    },
+    "message.deploy.profile.headline": {
+      "message": "尚未選擇玩家設定檔"
+    },
+    "message.deploy.profile.action": {
+      "message": "選擇玩家設定檔"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "內建地圖無法直接部署"
+    },
+    "message.deploy.built-in.action": {
+      "message": "請先在工作區建立地圖副本"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "模組檔案過多，無法部署"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "模組資料夾指向另一個位置"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE 不會透過重新導向的資料夾部署。"
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "尚未確認取代現有模組"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "重新部署並確認取代"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "沒有你自己的地圖可供部署"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "模組需要工作區中的 .rms 指令碼。"
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "此模組名稱保留供遊戲內測試使用"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "此模組名稱無法用作資料夾名稱"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "請使用單一資料夾名稱，不含 < > : \" / \\ | ? *，且結尾不可為句點或空格。"
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}，第 {line} 行：{error} 遊戲無法載入，因此未部署任何內容。"
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "遊戲無法載入，因此未部署任何內容。"
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "修正問題面板中列出的錯誤，再重新部署"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "無法使用地圖圖示"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "重新產生地圖圖示"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "產生地圖圖示需要單獨執行，但另一個預覽、地圖測試或遊戲內測試正在執行。"
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "待其完成後再試一次"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "地圖圖示需要目前的預覽，而預覽已變更。"
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "等待新的預覽後再試一次"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "地圖圖示是以另一個遊戲資料夾的遊戲紋理繪製的。"
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "尚未連結有效的 AoE2DE 安裝。"
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "玩家設定檔資料夾或其模組資料夾不是 AoE2RMSIDE 可使用的一般資料夾。"
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "有兩個檔案會被複製到模組中的 {path}。"
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "地圖使用的某個檔案在模組資料夾中沒有對應位置。"
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE 無法讀取其已部署模組的紀錄。"
+    },
+    "message.deploy.headline": {
+      "message": "部署失敗"
+    },
+    "message.map-test.replay.headline": {
+      "message": "無法顯示此發現項目的地圖"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "地圖測試超出其程序的記憶體上限，已被停止。未重新執行。"
+    },
+    "message.map-test.child-memory.action": {
+      "message": "減少指令碼配置的記憶體，例如大型重複或保留的大量地圖"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "地圖測試的值或呼叫巢狀過深，超出其程序的堆疊，因此已被停止。未重新執行。"
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "地圖測試程序已中止，很可能達到記憶體或堆疊上限。未重新執行。"
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() 需要指向已開啟資料夾中 .rms 或 .rms2 檔案、加上引號的相對路徑。"
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "測試預設執行的地圖位於已開啟的資料夾之外。"
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "從未儲存過的地圖測試需要開啟一個資料夾。"
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "這個檔案不是 AoE2RMSIDE 可以讀取的地圖測試報告。"
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "這個檔案大於 {limit, number, integer} MiB。"
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "地圖測試在執行後已變更。"
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "地圖或其中一個引入檔在執行後已變更。"
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "測試當時使用的遊戲版本目前無法使用。"
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "重新產生的地圖與測試執行時不同。"
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "報告未包含此發現項目。"
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "開啟 {script} 以顯示此地圖"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "此發現項目的地圖會由當時記錄它的地圖測試重新產生。"
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "開啟 {script} 以前往此檢查"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "此報告是匯入的，因此無法確定地圖測試檔案。"
+    },
+    "message.map-test.results-running.headline": {
+      "message": "地圖測試正在執行"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "地圖測試正在執行 · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "這裡顯示上次執行的結果；本次執行結束後會更新。"
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "最近一次執行因錯誤而停止"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "這裡顯示前一次執行的結果。"
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "在問題與輸出面板查看錯誤"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "最近一次執行已停止"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "已匯入 {script} 的報告"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "只要地圖測試、地圖與遊戲版本皆與執行時相同，就能顯示此發現項目的地圖。"
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} / {requested, plural, other {# 張地圖}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "已測試"
+    },
+    "message.map-test.progress.testing": {
+      "message": "測試中"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {已測試 # 張地圖} other {已測試 # 張地圖}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "正在測試地圖，{percent}%（{counts}）"
+    },
+    "message.map-test.progress.starting": {
+      "message": "正在啟動地圖測試"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "此資料夾不是 AoE2DE 的遊戲資料夾"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "此資料夾不是 Age of Empires II: Definitive Edition 的完整安裝。"
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "選擇遊戲的安裝資料夾，例如 Steam 收藏庫中的 steamapps\\common\\AoE2DE"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "連結的 AoE2DE 安裝無法使用。"
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "無法安全讀取遊戲資料夾的部分內容：它過大或層級過深、連結到其他位置，或包含不受支援的檔案名稱。"
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "請選擇遊戲資料夾與已安裝地圖之外的一般資料夾。"
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "這個資料夾中已有 {name}。"
+    },
+    "message.installed-source.limit.cause": {
+      "message": "檔案或資料夾過多，或某個檔案過大。"
+    },
+    "message.installed-source.changed.cause": {
+      "message": "已安裝的地圖在此期間已變更。"
+    },
+    "message.installed-source.changed.action": {
+      "message": "重新開啟已安裝的地圖"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "在此期間，指令碼或其引入檔之一已變更。"
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} 不是地圖可以引入的檔案類型。"
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "有多個檔案與 {path} 僅大小寫不同。"
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} 位於 AoE2RMSIDE 可讀取的資料夾之外。"
+    },
+    "message.source-catalog.authority.action": {
+      "message": "將引入檔放在已開啟的資料夾或連結的遊戲資料夾中"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "使用較小的引入檔資料夾，或減少必要的引入檔"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "減少必要的原始檔資料，然後重新執行"
+    },
+    "message.session.save-failed.headline": {
+      "message": "無法記住已開啟的分頁與版面配置"
+    },
+    "message.session.save-failed.cause": {
+      "message": "檔案不受影響，但下次啟動可能會還原較早的分頁與版面配置。"
+    },
+    "message.native.exited.cause": {
+      "message": "{name} 意外結束。"
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} 未在執行。"
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} 未能及時回應。"
+    },
+    "message.execution.busy.cause": {
+      "message": "另一個預覽、地圖測試或遊戲內測試正在執行。"
+    },
+    "message.editor.busy.cause": {
+      "message": "編輯器的待處理要求過多。"
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "重新選擇遊戲版本"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Windows 檔案總管無法開啟資料夾：{reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "這個檔案是二進位檔、過大、無法讀取或類型不受支援。"
+    },
+    "message.files.too-many.cause": {
+      "message": "一次最多開啟 {limit, number, integer} 個檔案或資料夾。"
+    },
+    "message.files.recent-missing.cause": {
+      "message": "這個項目已不在最近使用清單中。"
+    },
+    "message.files.encoding.cause": {
+      "message": "地圖測試指令碼必須以 UTF-8 儲存。"
+    },
+    "message.files.too-large.cause": {
+      "message": "地圖測試指令碼最大為 {limit, number, integer} MiB。"
+    },
+    "message.files.protected-target.cause": {
+      "message": "無法將檔案儲存到遊戲資料夾或已安裝的地圖中。"
+    },
+    "message.files.extension-required.cause": {
+      "message": "檔案名稱必須以 {extension} 結尾。"
+    },
+    "message.files.entry-stale.cause": {
+      "message": "這個項目已在 AoE2RMSIDE 之外變更或移動。"
+    },
+    "message.files.not-a-file.cause": {
+      "message": "已有同名的資料夾。"
+    },
+    "message.files.outside-folder.cause": {
+      "message": "這個檔案位於已開啟的資料夾之外。"
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "這個資料夾包含的檔案和資料夾過多，無法列出。"
+    },
+    "message.files.traversal-limit.action": {
+      "message": "開啟較小的資料夾"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "刪除前資源回收筒設定已變更。"
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "再次刪除該項目"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "未儲存的變更過大，無法保留以供復原。"
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "儲存變更以保留它們"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "復原檔案已損毀，或由其他 AoE2RMSIDE 發行版寫入。"
+    },
+    "message.game-textures.cause": {
+      "message": "預覽與地圖圖示改用紋理配色。"
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} 預覽與地圖圖示改用紋理配色。"
+    },
+    "message.game-textures.failed.headline": {
+      "message": "無法準備遊戲紋理"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "已連結的遊戲資料夾無法提供遊戲紋理"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "無法讀取轉換後的地形"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "已取消遊戲紋理轉換"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "已轉換的檔案會保留。再次選擇遊戲紋理即可繼續。"
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "無法讀取物件圖像"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "這台電腦無法使用 GPU 地圖繪製"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "地圖仍可繪製，但大型地圖可能需要更多時間。"
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "這台電腦未使用 GPU 地圖繪製"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "沒有可用於繪製地圖的顯示卡，因此不使用顯示卡繪製；大型地圖可能需要更多時間。"
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "GPU 地圖繪製已停止"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "顯示卡已重設。在重新啟動應用程式前，地圖將不使用顯示卡繪製。"
+    },
+    "message.map-test.preview-note.look": {
+      "message": "地圖測試預覽一律使用小地圖配色"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "地圖測試只顯示完成的地圖"
+    },
+    "message.generation-result.generated": {
+      "message": "已產生"
+    },
+    "message.generation-result.reused": {
+      "message": "已重用"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "遊戲版本未驗證"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "遊戲版本未驗證"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "此遊戲版本尚無法產生地圖。"
+    },
+    "message.map-test.workers.label": {
+      "message": "測試核心數"
+    },
+    "message.map-test.workers.hint": {
+      "message": "地圖測試最多使用的處理器核心數，也就是同時產生的地圖數量（{maximum, plural, =1 {這台電腦可用 1 個} other {這台電腦可用 1 至 {maximum} 個}}）。留白表示自動，會配合這台電腦與地圖大小選擇。各種設定的結果皆相同。"
+    },
+    "message.map-test.workers.automatic": {
+      "message": "自動"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "使用自動設定"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, other {{count} 個指令未與遊戲比對}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "部分指令未與遊戲比對"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {已記錄的遊戲地圖尚未在此處使用此指令，因此其作用位置的預覽可能與遊戲不同：{list}。} other {已記錄的遊戲地圖尚未在此處使用這些指令，因此其作用位置的預覽可能與遊戲不同：{list}。}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {已記錄的遊戲地圖尚未在此處使用此指令，因此其作用位置的預覽可能與遊戲不同。} other {已記錄的遊戲地圖尚未在此處使用這些指令，因此其作用位置的預覽可能與遊戲不同。}}"
+    },
+    "message.construct.in-context": {
+      "message": "{context} 中的 {name}"
+    },
+    "message.construct.list-more": {
+      "message": "{names}，以及另外 {more} 項"
+    },
+    "message.fallback.run": {
+      "message": "執行失敗"
+    },
+    "message.fallback.script": {
+      "message": "指令碼失敗"
+    },
+    "message.fallback.preview": {
+      "message": "預覽失敗"
+    },
+    "message.fallback.map-test": {
+      "message": "地圖測試失敗"
+    },
+    "message.fallback.recovery": {
+      "message": "復原失敗"
+    },
+    "message.fallback.update": {
+      "message": "更新失敗"
+    },
+    "message.fallback.files": {
+      "message": "檔案操作失敗"
+    },
+    "message.fallback.game-folder": {
+      "message": "無法使用遊戲資料夾"
+    },
+    "message.fallback.app": {
+      "message": "發生問題"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "修正顯示的問題後，即可查看其餘問題。"
+    },
+    "message.action.choose-another-name": {
+      "message": "選擇其他名稱"
+    },
+    "message.action.use-or-remove": {
+      "message": "使用或移除它（可透過快速修正移除）"
+    },
+    "explorer.create.definition-file": {
+      "message": "定義檔…"
+    },
+    "explorer.create.script": {
+      "message": "指令碼"
+    },
+    "explorer.create.map-test-script": {
+      "message": "地圖測試指令碼"
+    },
+    "explorer.create.xs-script": {
+      "message": "XS 指令碼"
+    },
+    "explorer.create.folder": {
+      "message": "資料夾"
+    },
+    "explorer.create.label": {
+      "message": "在 {name} 中建立"
+    },
+    "explorer.label": {
+      "message": "檔案總管"
+    },
+    "explorer.search.label": {
+      "message": "搜尋工作區檔案"
+    },
+    "explorer.search.placeholder": {
+      "message": "搜尋檔案"
+    },
+    "explorer.search.clear": {
+      "message": "清除檔案搜尋"
+    },
+    "explorer.search.searching": {
+      "message": "正在搜尋工作區檔案"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "沒有符合的 RMS 檔案"
+    },
+    "explorer.search.no-results": {
+      "message": "沒有符合的檔案"
+    },
+    "explorer.open-file.label": {
+      "message": "開啟檔案"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "開啟檔案"
+    },
+    "explorer.open-folder.label": {
+      "message": "開啟資料夾"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "開啟資料夾"
+    },
+    "explorer.tree.label": {
+      "message": "{name} 的檔案"
+    },
+    "explorer.empty.maps": {
+      "message": "開啟資料夾以瀏覽及編輯其中的地圖。"
+    },
+    "explorer.empty.scripts": {
+      "message": "開啟資料夾以瀏覽及編輯其中的指令碼。"
+    },
+    "explorer.indexing": {
+      "message": "正在建立工作區資料夾的索引"
+    },
+    "explorer.read-failed": {
+      "message": "無法讀取此資料夾"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "在 Windows 檔案總管開啟"
+    },
+    "explorer.context.rename": {
+      "message": "重新命名"
+    },
+    "explorer.context.delete": {
+      "message": "刪除"
+    },
+    "explorer.inline.create-file": {
+      "message": "建立檔案"
+    },
+    "explorer.inline.create-folder": {
+      "message": "建立資料夾"
+    },
+    "explorer.inline.rename-file": {
+      "message": "重新命名檔案"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "重新命名資料夾"
+    },
+    "definition-file.title": {
+      "message": "產生定義檔"
+    },
+    "definition-file.close-label": {
+      "message": "關閉"
+    },
+    "definition-file.loading": {
+      "message": "正在讀取所選遊戲版本中的名稱…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "遊戲版本"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version}（未驗證）"
+    },
+    "definition-file.identity.target": {
+      "message": "儲存位置"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "產生時選擇"
+    },
+    "definition-file.groups.label": {
+      "message": "內容群組"
+    },
+    "definition-file.group.terrains": {
+      "message": "地形"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "用於 terrain_type、base_terrain 與其他地形設定的地形 ID"
+    },
+    "definition-file.group.objects": {
+      "message": "物件"
+    },
+    "definition-file.group.objects.description": {
+      "message": "用於 create_object 與其他物件設定的物件 ID"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, other {# 個名稱}}"
+    },
+    "definition-file.built-in": {
+      "message": "包含內建名稱"
+    },
+    "definition-file.built-in.description": {
+      "message": "遊戲已定義的名稱。指令碼不需要此檔案也能使用。"
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "連結遊戲資料夾，可為遊戲未命名的物件與地形加入名稱。"
+    },
+    "definition-file.note.other-version": {
+      "message": "遊戲資料夾的版本不同，因此不使用其中的名稱。"
+    },
+    "definition-file.note.no-text": {
+      "message": "無法針對此遊戲版本讀取遊戲資料夾中的名稱。"
+    },
+    "definition-file.note.nothing-new": {
+      "message": "所有已命名的物件與地形都已有內建名稱。"
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, other {已省略 # 個內建名稱，因為此資料夾中的指令碼已定義它們。}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, other {已省略來自遊戲資料夾的 # 個名稱，因為無法為它們產生不重複的名稱。}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "無法檢查此資料夾中部分指令碼已定義的名稱。"
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "所選遊戲版本的遊戲資料不完整，無法產生定義檔。"
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "沒有可用於產生定義檔的遊戲版本。"
+    },
+    "definition-file.unavailable.failed": {
+      "message": "無法讀取所選遊戲版本中的名稱。"
+    },
+    "definition-file.file-name.label": {
+      "message": "檔名"
+    },
+    "definition-file.file-name.empty": {
+      "message": "請輸入檔名。"
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Windows 無法使用此檔名。"
+    },
+    "definition-file.file-name.extension": {
+      "message": "檔名必須以 .inc 結尾。"
+    },
+    "definition-file.file-name.reserved": {
+      "message": "此名稱屬於遊戲程式庫檔案。請選擇其他名稱。"
+    },
+    "definition-file.generate": {
+      "message": "產生"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "產生…"
+    },
+    "definition-file.error": {
+      "message": "無法寫入定義檔。請在輸出面板查看詳細資料。"
+    },
+    "definition-file.replace.title": {
+      "message": "取代 {name}？"
+    },
+    "definition-file.replace.description": {
+      "message": "{folder} 已有同名檔案。取代會覆寫其內容。"
+    },
+    "definition-file.replace.confirm": {
+      "message": "取代"
+    },
+    "definition-file.output.failed": {
+      "message": "無法寫入定義檔"
+    },
+    "definition-file.output.unavailable": {
+      "message": "無法讀取定義檔所需的名稱"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "儲存定義檔"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "定義檔"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "啟用模組"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "在遊戲的模組清單啟用模組。重新啟動遊戲後，才會顯示地圖與圖示。"
+    },
+    "deploy-panel.success.enabled": {
+      "message": "模組已啟用。重新啟動遊戲即可看到地圖與圖示。"
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "請在遊戲的模組 → 我的模組啟用此模組，再重新啟動遊戲，即可看到地圖與圖示。"
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {模組未啟用：無法讀取遊戲的模組清單檔案。} unexpected-layout {模組未啟用：IDE 無法辨識遊戲的模組清單檔案格式。} duplicate-entry {模組未啟用：遊戲的模組清單重複列出此模組。} unexpected-entry {模組未啟用：IDE 無法辨識遊戲中此模組項目的格式。} changed {模組未啟用：遊戲同時變更了模組清單。} unsafe-path {模組未啟用：玩家設定檔的模組資料夾或模組清單連結至其他位置。} other {模組未啟用：無法儲存遊戲的模組清單。}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "遊戲正在執行：變更會在重新啟動後生效，但遊戲關閉時可能撤銷此變更。如果重新啟動後模組仍未啟用，請關閉遊戲再部署一次。"
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "開啟模組資料夾"
+    },
+    "deploy-panel.success.finish": {
+      "message": "完成"
+    },
+    "deploy-panel.success.title": {
+      "message": "模組已成功部署"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "模組已儲存至"
+    },
+    "deploy-panel.success.path": {
+      "message": "已部署模組的路徑"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "複製模組路徑"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "已複製模組路徑"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, other {# 個檔案。}} 模組已啟用；重新啟動遊戲即可看到地圖與圖示。"
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, other {# 個檔案。}} 請在遊戲的模組 → 我的模組啟用此模組，再重新啟動遊戲，即可看到地圖與圖示。"
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "模組已部署，但未啟用"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {無法讀取遊戲的模組清單檔案，因此未變更清單。} unexpected-layout {IDE 無法辨識遊戲的模組清單檔案格式，因此未變更清單。} duplicate-entry {遊戲的模組清單重複列出此模組，因此未變更清單。} unexpected-entry {IDE 無法辨識遊戲中此模組項目的格式，因此未變更清單。} changed {遊戲同時變更了模組清單，因此保留遊戲寫入的清單。} unsafe-path {玩家設定檔的模組資料夾或模組清單連結至其他位置，因此未變更清單。} other {無法儲存遊戲的模組清單；原本的清單仍保留。}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "在遊戲的模組 → 我的模組啟用此模組，再重新啟動遊戲"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "遊戲執行期間，模組清單已變更"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "變更會在重新啟動後生效，但遊戲關閉時可能撤銷此變更。如果重新啟動後模組仍未啟用，請關閉遊戲再部署一次。"
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "正在使用 {name} 目前的預覽"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "無法重用目前的預覽，正在重新產生"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "無法產生此地圖以供部署"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "已將 {mod} 部署至玩家設定檔 {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "無法開啟模組資料夾"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "在 Windows 檔案總管開啟目標目錄"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "無法開啟目標目錄"
+    },
+    "deploy-panel.target": {
+      "message": "目標目錄"
+    },
+    "deploy-panel.target.copy": {
+      "message": "複製目標目錄"
+    },
+    "deploy-panel.target.copied": {
+      "message": "已複製目標目錄"
+    },
+    "deploy-panel.title": {
+      "message": "部署為模組"
+    },
+    "deploy-panel.close": {
+      "message": "關閉模組部署"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "選擇用於部署的遊戲資料夾"
+    },
+    "deploy-panel.source": {
+      "message": "RMS 原始檔"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "開啟 RMS 主檔案"
+    },
+    "deploy-panel.source.failed": {
+      "message": "無法產生此地圖，因此目前無法部署。請修正輸出面板顯示的問題，再重新開啟「部署為模組」。"
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "無法產生此地圖，因此目前無法部署。{guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "已取消所選 RMS 原始檔的預覽。"
+    },
+    "deploy-panel.mod-name": {
+      "message": "模組名稱"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "選擇先前部署的模組名稱"
+    },
+    "deploy-panel.profile": {
+      "message": "玩家設定檔"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "選擇玩家設定檔"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · 建議使用"
+    },
+    "deploy-panel.tree": {
+      "message": "部署檔案樹"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "正在載入部署檔案樹"
+    },
+    "deploy-panel.no-source": {
+      "message": "開啟 .rms 或 .rms2 主檔案以部署。"
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}：{names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "部署模組"
+    },
+    "deploy-panel.replace.title": {
+      "message": "取代現有模組？"
+    },
+    "deploy-panel.replace.description": {
+      "message": "現有模組 {name} 的所有檔案都會移除。"
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "取代模組"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, other {{count} 個問題}}"
+    },
+    "problems-panel.empty": {
+      "message": "沒有語法問題。"
+    },
+    "problems-panel.empty.filtered": {
+      "message": "沒有符合篩選條件的問題（已隱藏 {hidden} 個）。"
+    },
+    "problems-panel.severity.error": {
+      "message": "錯誤"
+    },
+    "problems-panel.severity.warning": {
+      "message": "警告"
+    },
+    "problems-panel.severity.info": {
+      "message": "提示"
+    },
+    "problems-panel.group.file": {
+      "message": "檔案"
+    },
+    "problems-panel.group.game-file": {
+      "message": "遊戲檔案"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, other {{count} 個錯誤}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, other {{count} 個警告}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, other {{count} 則提示}}"
+    },
+    "problems-panel.group.show": {
+      "message": "顯示 {file} 的問題"
+    },
+    "problems-panel.group.hide": {
+      "message": "隱藏 {file} 的問題"
+    },
+    "problems-panel.group.label": {
+      "message": "{file} 的問題"
+    },
+    "problems-panel.row.go-to": {
+      "message": "前往 {location}"
+    },
+    "severity-filter.label": {
+      "message": "{panel} 嚴重程度篩選"
+    },
+    "severity-filter.errors.label": {
+      "message": "顯示錯誤（{count}）"
+    },
+    "severity-filter.errors.show": {
+      "message": "顯示錯誤"
+    },
+    "severity-filter.errors.hide": {
+      "message": "隱藏錯誤"
+    },
+    "severity-filter.warnings.label": {
+      "message": "顯示警告（{count}）"
+    },
+    "severity-filter.warnings.show": {
+      "message": "顯示警告"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "隱藏警告"
+    },
+    "severity-filter.notes.label": {
+      "message": "顯示提示（{count}）"
+    },
+    "severity-filter.notes.show": {
+      "message": "顯示提示"
+    },
+    "severity-filter.notes.hide": {
+      "message": "隱藏提示"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "無法列出 {folder} 的地圖：{error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "已略過遊戲檔案遺失或無法讀取的安裝。"
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "已略過無法使用的安裝。"
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "已安裝來源的根目錄數量已達安全上限。"
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "已安裝來源的項目數量已達安全上限。"
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version}（未驗證）"
+    },
+    "linked-game.content-read": {
+      "message": "正在使用 {label} 的遊戲資料"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, other {{objects} 個物件，已載入。}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, other {{objects} 個物件，讀取耗時 {milliseconds} 毫秒。}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "無法讀取 {label} 的遊戲資料"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "此版本的預覽使用隨附的 {version} 資料，無法產生之後新增的物件與地形。"
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "未知指令"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "未使用的定義"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "指令在此處沒有作用"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "屬性重複設定"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "永遠不會選到的隨機分支"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "第一個分支的機率為零"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "數值被限制在允許範圍內"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "常數已定義"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "遊戲不將此內容視為註解"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "需要名稱的位置使用了數字"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "名稱可能未定義"
+    },
+    "map-icon.generate": {
+      "message": "產生地圖圖示"
+    },
+    "map-icon.open-larger": {
+      "message": "開啟放大的地圖圖示"
+    },
+    "map-icon.save-image": {
+      "message": "儲存影像"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "儲存影像…"
+    },
+    "map-icon.frame.generating": {
+      "message": "正在產生地圖圖示"
+    },
+    "map-icon.frame.ready": {
+      "message": "地圖圖示預覽"
+    },
+    "map-icon.frame.original": {
+      "message": "原始地圖圖示"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "無法顯示原始地圖圖示"
+    },
+    "map-icon.frame.none": {
+      "message": "沒有產生的地圖圖示"
+    },
+    "map-icon.switch.no-source": {
+      "message": "開啟 .rms 或 .rms2 主檔案以產生地圖圖示。"
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "產生地圖圖示前，必須成功產生此原始檔的預覽。"
+    },
+    "map-icon.switch.unavailable": {
+      "message": "無法產生地圖圖示：{reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "地圖圖示無法使用：{reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "地圖圖示：正在以種子 {seed} 產生地圖"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "地圖圖示需要先成功產生此原始檔的預覽。"
+    },
+    "map-icon.status.rendering": {
+      "message": "地圖圖示：正在依目前的預覽繪製"
+    },
+    "map-icon.status.waiting": {
+      "message": "地圖圖示：正在等待部署預覽"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "地圖圖示：已產生 {file}，僅取代本次部署快照中的原始圖示"
+    },
+    "map-icon.status.generated": {
+      "message": "地圖圖示：已依目前的預覽產生 {file}"
+    },
+    "map-icon.status.original": {
+      "message": "地圖圖示：使用原始檔資料夾中的原始圖示 {file}"
+    },
+    "map-icon.status.none": {
+      "message": "地圖圖示：無"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "產生的圖示"
+    },
+    "map-icon.tree.original": {
+      "message": "原始圖示"
+    },
+    "map-icon.render-failed": {
+      "message": "無法繪製地圖圖示"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "未能記住地圖圖示選項"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "無法使用種子 {seed} 產生地圖圖示"
+    },
+    "map-icon.output.saved": {
+      "message": "已將地圖圖示儲存為 {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "無法儲存地圖圖示"
+    },
+    "map-icon.lightbox.close": {
+      "message": "關閉地圖圖示預覽"
+    },
+    "map-icon.lightbox.title": {
+      "message": "地圖圖示"
+    },
+    "map-icon.view-tools": {
+      "message": "地圖圖示視角"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "菱形視角"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "俯視視角"
+    },
+    "map-icon.look.minimap": {
+      "message": "小地圖配色"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "紋理配色"
+    },
+    "map-icon.look.game-textures": {
+      "message": "遊戲紋理"
+    },
+    "map-icon.look.pending": {
+      "message": "正在套用遊戲紋理"
+    },
+    "map-icon.look.fallback": {
+      "message": "遊戲紋理無法使用，因此圖示改用紋理配色。"
+    },
+    "map-icon.relief": {
+      "message": "地形起伏"
+    },
+    "map-icon.relief.hide": {
+      "message": "隱藏地形起伏"
+    },
+    "map-icon.relief.show": {
+      "message": "顯示地形起伏"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "平滑地形交界"
+    },
+    "map-icon.random-seed": {
+      "message": "隨機種子"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "使用編輯器種子"
+    },
+    "map-icon.seed": {
+      "message": "地圖圖示種子"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "編輯器種子"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "玩家方框"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "游牧腳印"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "不顯示出生點標記"
+    },
+    "map-icon.spawn-size": {
+      "message": "出生點標記大小"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "縮小出生點標記"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "放大出生點標記"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "地圖寬度的 {value}%"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "出生點標記大小（占地圖寬度的百分比）"
+    },
+    "map-icon.art.trees.show": {
+      "message": "顯示樹木"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "隱藏樹木"
+    },
+    "map-icon.art.trees.options": {
+      "message": "樹木選項"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "樹木數量"
+    },
+    "map-icon.art.trees.size": {
+      "message": "樹木大小"
+    },
+    "map-icon.art.resources.show": {
+      "message": "顯示黃金和石頭"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "隱藏黃金和石頭"
+    },
+    "map-icon.art.resources.options": {
+      "message": "黃金和石頭選項"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "黃金和石頭數量"
+    },
+    "map-icon.art.resources.size": {
+      "message": "黃金和石頭大小"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "較少"
+    },
+    "map-icon.art.amount.more": {
+      "message": "較多"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "每種一個"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "每個物件一個"
+    },
+    "map-icon.art.amount.few": {
+      "message": "少量"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "中等"
+    },
+    "map-icon.art.amount.many": {
+      "message": "大量"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "較小"
+    },
+    "map-icon.art.size.larger": {
+      "message": "較大"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "最小"
+    },
+    "map-icon.art.size.small": {
+      "message": "小"
+    },
+    "map-icon.art.size.medium": {
+      "message": "中"
+    },
+    "map-icon.art.size.large": {
+      "message": "大"
+    },
+    "map-icon.art.size.largest": {
+      "message": "最大"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "顯示於出生點標記下方"
+    },
+    "workbench.application-menu.label": {
+      "message": "應用程式選單"
+    },
+    "workbench.explorer.collapse": {
+      "message": "收合檔案總管"
+    },
+    "workbench.explorer.expand": {
+      "message": "展開檔案總管"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "收合檔案總管"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "展開檔案總管"
+    },
+    "workbench.explorer.resize": {
+      "message": "調整檔案總管大小"
+    },
+    "workbench.preview.resize": {
+      "message": "調整即時地圖預覽大小"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "從下次執行起顯示即時產生階段"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "從下次執行起隱藏即時產生階段"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "問題與輸出面板"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "問題、輸出與測試結果面板"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "調整問題與輸出面板大小"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} 輸出"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} 問題"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} 測試結果"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "輸出"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "問題"
+    },
+    "workbench.native.restart-label": {
+      "message": "重新啟動已失敗的 {name} 處理程序"
+    },
+    "workbench.native.failed": {
+      "message": "{name} 失敗"
+    },
+    "workbench.native.restarted": {
+      "message": "已重新啟動 {name}"
+    },
+    "workbench.native.restart-failed": {
+      "message": "無法重新啟動 {name}"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} 已停止"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "已匯入 {name} 的測試報告"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "無法匯入地圖測試報告"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "已匯出測試報告"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "無法匯出地圖測試報告"
+    },
+    "workbench.map-test.replayed": {
+      "message": "已使用記錄的種子重現發現項目"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "已使用記錄的種子 {seed} 重現發現項目"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "無法取消遊戲資料夾的連結"
+    },
+    "code-editor.panel.label": {
+      "message": "RMS 原始碼編輯器"
+    },
+    "code-editor.tabs.label": {
+      "message": "已開啟的檔案"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "向左捲動編輯器分頁"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "向右捲動編輯器分頁"
+    },
+    "code-editor.tab.close": {
+      "message": "關閉 {name}"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "尚未儲存的變更"
+    },
+    "code-editor.tab.read-only": {
+      "message": "唯讀"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "尚未儲存的變更，唯讀"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "部署為模組…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "儲存"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "複製／另存新檔…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "另存新檔…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "關閉"
+    },
+    "code-editor.run.preview": {
+      "message": "執行預覽"
+    },
+    "code-editor.run.map-test": {
+      "message": "執行地圖測試"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "執行預覽與遊戲內測試"
+    },
+    "code-editor.run.stop": {
+      "message": "停止"
+    },
+    "code-editor.run.tooltip": {
+      "message": "執行（{shortcut}）"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "執行預覽與遊戲內測試（{shortcut}）"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "停止（{shortcut}）"
+    },
+    "code-editor.run-menu.label": {
+      "message": "預覽執行選項"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "執行的指令碼"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "釘選執行的指令碼"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "種子"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "複製種子"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "複製種子 {seed}"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "已複製種子"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "已鎖定"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "每次執行時隨機產生"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "使用目前對局的種子"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "必須有已驗證且正在進行的單人隨機地圖對局。"
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "選擇 Age of Empires II: Definitive Edition 遊戲資料夾"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "正在選擇 Age of Empires II: Definitive Edition 遊戲資料夾"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "正在尋找已安裝的 Age of Empires II: Definitive Edition 遊戲資料夾"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "執行時進行遊戲內測試"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "執行預覽後，在 AoE2DE 中繼續"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "選擇有效的 AoE2Control 執行檔"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "選擇 AoE2Control"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "正在選擇 AoE2Control…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "選擇用於遊戲內測試的 AoE2Control.exe"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "正在選擇用於遊戲內測試的 AoE2Control.exe"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "下載 AoE2Control"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "開啟 AoE2Control 發行頁面"
+    },
+    "code-editor.control.remove.title": {
+      "message": "移除 AoE2Control？"
+    },
+    "code-editor.control.remove.description": {
+      "message": "這會移除所選 AoE2Control 執行檔的設定，並中斷目前的遊戲內測試連線。下次遊戲內測試在取代進行中的對局前，會再次詢問。"
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "移除"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "無法開啟 AoE2Control 發行頁面"
+    },
+    "code-editor.control-download.title": {
+      "message": "解壓縮 AoE2Control 之前"
+    },
+    "code-editor.control-download.description": {
+      "message": "AoE2Control.zip 的解壓縮密碼是 {password}。AoE2Control 會注入 DLL，在遊戲中執行 Lua，因此包括 Windows Defender 在內的啟發式防毒工具可能誤判為威脅。請將解壓縮後的資料夾加入防毒排除項目，讓引擎能持續執行。"
+    },
+    "code-editor.control-download.confirm": {
+      "message": "知道了"
+    },
+    "code-editor.preview.collapse": {
+      "message": "收合即時地圖預覽"
+    },
+    "code-editor.preview.expand": {
+      "message": "展開即時地圖預覽"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "收合預覽"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "展開預覽"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "關閉指令碼執行失敗通知"
+    },
+    "code-editor.notice.recovery": {
+      "message": "已復原尚未儲存的工作"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "關閉復原通知"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "預覽現在使用你的遊戲紋理"
+    },
+    "code-editor.font-size.label": {
+      "message": "編輯器字型大小"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent}%"
+    },
+    "code-editor.read-only-message": {
+      "message": "這個安裝目錄或已訂閱模組中的原始檔受到保護。請使用「複製」或「另存新檔」。"
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "開啟引入檔"
+    },
+    "code-editor.include.open": {
+      "message": "開啟 {name}"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "在此處重新命名無法確保語意不變。"
+    },
+    "code-editor.rename.not-proven": {
+      "message": "未能證明嚴格等價。"
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} 是受保護的遊戲檔案；重新命名會修改它。"
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "在這一行忽略 {code}"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "在此工作區停用 {code}"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "編輯器模型無法使用。"
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "指令碼的語言類型已變更。"
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "文件在開始格式化前已變更。"
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "文件在等待格式化時已變更。"
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "請求已取消。"
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Starlark 原始碼無效時，無法進行格式化。"
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "格式化要求原本的縮排已符合四個空格的規則；語彙單元結構未變更。"
+    },
+    "code-editor.completion.content.object": {
+      "message": "物件 {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "地形 {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "地圖測試"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Starlark 內建函式"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Starlark {type} 方法"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "先前定義的 Starlark 函式"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Starlark 函式參數"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "先前定義的 Starlark 變數"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Starlark 迴圈變數"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} 已在此文件前面定義。"
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Starlark 函式"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "RMS 與 XS 原始檔"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "RMS、XS 與地圖測試原始檔"
+    },
+    "native-dialog.open-files.title": {
+      "message": "開啟原始檔"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "開啟 RMS 資料夾"
+    },
+    "native-dialog.save-as.title": {
+      "message": "原始檔另存新檔"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "地圖測試報告"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "匯出地圖測試報告"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "匯入地圖測試報告"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "選擇 Age of Empires II: Definitive Edition 資料夾"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "選擇可編輯地圖副本的上層資料夾"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "選擇 AoE2Control 執行檔"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "AoE2Control 執行檔"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "儲存地圖圖示"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "PNG 影像"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "無法重新整理引入檔"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "刪除後無法更新工作階段"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "部分資料夾無法顯示於檔案總管"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, other {工作區檔案與遊戲程式庫檔案同名}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}。這些檔案仍可編輯，但引入時可能會選用遊戲的檔案。"
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, other {{paths, list, unit}，以及另外 {count} 個檔案。這些檔案仍可編輯，但引入時可能會選用遊戲的檔案。}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "重新命名這些檔案"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "遊戲程式庫檔名檢查未完成"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "未開啟任何項目"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, other {此請求指定的檔案和資料夾超過 {count} 個。}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "此請求的路徑長度超過 AoE2RMSIDE 可接受的範圍。"
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "同時收到太多開啟請求。請重新開啟其餘項目。"
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "未開啟 {name}"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "此項目不存在或無法存取。"
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "這不是有效的檔案或資料夾路徑。"
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE 可開啟資料夾以及 .rms、.rms2、.inc、.def 和 .xs 檔案。"
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE 可開啟資料夾以及 .rms、.rms2、.inc、.def、.xs 和 .rmstest 檔案。"
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "一次只能開啟一個資料夾。"
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "一次只能開啟一個資料夾；目前開啟的是 {folder}。"
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "無法讀取此項目。"
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, other {另有 # 個項目未開啟}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "這些項目不存在、無法讀取，或不是 AoE2RMSIDE 可開啟的檔案。"
+    },
+    "file-actions.entry.name-exists": {
+      "message": "已有同名項目"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "已有同名項目，或有項目的短檔名別名與此名稱相同"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "此名稱不是有效的 Windows 檔案或資料夾名稱"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "僅支援 .rms、.rms2、.inc、.def 和 .xs 原始檔"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "僅支援 .rms、.rms2、.inc、.def、.rmstest 和 .xs 原始檔"
+    },
+    "file-actions.entry.read-only": {
+      "message": "工作區項目為唯讀或受到保護"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "無法重新命名或刪除工作區根資料夾"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "''{name}'' 是標準遊戲資源的保留名稱；請使用其他檔名。"
+    },
+    "notice.recovery.read-failed": {
+      "message": "無法讀取上次工作階段尚未儲存的工作，已略過"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "復原的工作區資料夾無法使用。"
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "先前的工作區資料夾無法使用，已略過。"
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "已略過無法使用的工作階段分頁 {name}。"
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "{name} 的原始檔無法使用，已復原至尚未儲存的編輯分頁。"
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, other {已在 {seconds, number, ::.0 group-off} 秒內，轉換連結遊戲的 {converted} 個地形檔並重用 {reused} 個地形檔}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "本機快取 {megabytes, number, ::.0 unit/megabyte group-off}。"
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, other {有 {count} 個地形檔無法轉換，改用小地圖配色}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "例如 {asset}：{reason}。"
+    },
+    "preview-panel.name.object-number": {
+      "message": "物件 {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "地形 {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name}（{constant}）"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "城牆 {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "玩家 {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "大地之母"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "輔助物件"
+    },
+    "preview-panel.material.cliff": {
+      "message": "懸崖"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "懸崖類型 {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "陸地連接"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "水路連接"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "道路連接"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "未知連接"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "未找到路徑的連接搜尋"
+    },
+    "preview-panel.material.description": {
+      "message": "{name}（{details, list, unit}）"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "預覽選取項目有多個來源：{layer} · {count, plural, other {已選取 {count} 個}} · {sources, plural, other {{sources} 處不同來源}} · 使用 {location}。"
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "草地"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "淺灘"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "水域"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "沙灘"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "裸地"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "石地"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "泥地"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "崖面"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "陸地"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "高度"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "懸崖"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "地形"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "連接"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "物件"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "完成"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "正在產生 · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "樣本 {sample}（種子 {seed}）· {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "樣本 {sample}（種子 {seed}）已完成 · 整批仍在執行"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "方向鍵（Arrow）選取地圖格，Shift+Arrow 擴大選取範圍，Ctrl+Arrow 平移，加號與減號縮放，0 顯示完整地圖，Ctrl+A 選取整張地圖，Escape 清除選取範圍。"
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "已清除選取範圍"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "地圖格 {x}、{y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "地圖格 {fromX}、{fromY} 至 {toX}、{toY}，{count, plural, other {共 {count} 格}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}。沒有圖層"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}。{count, plural, other {{count} 個圖層}}：{shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}。{count, plural, other {{count} 個圖層}}：{shown, list, unit}，另有 {more} 個"
+    },
+    "preview-panel.run.include-only": {
+      "message": ".inc、.def 和 .xs 文件只能作為引入檔，無法單獨執行。"
+    },
+    "preview-panel.tool.objects": {
+      "message": "物件與城鎮中心占地範圍"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "懸崖邊緣"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "連接造成的地形變化"
+    },
+    "preview-panel.tool.connections": {
+      "message": "連接線"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "關閉連接線顯示"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "連接的搜尋路徑"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "已顯示 {total, number} 條路徑中的 {shown, number} 條"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "地圖完成後才會顯示搜尋路徑"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "此地圖沒有可用的搜尋路徑"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "關閉高度顯示"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "地形起伏"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "高度圖"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "俯視視角"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "菱形視角"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "小地圖配色"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "紋理配色"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "遊戲紋理"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "正在套用遊戲紋理"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "地圖格線"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "使用小地圖配色的俯視地圖預覽"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "使用紋理配色的俯視地圖預覽"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "使用遊戲紋理的俯視地圖預覽"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "使用小地圖配色、寬高比為 2:1 的菱形地圖預覽"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "使用紋理配色、寬高比為 2:1 的菱形地圖預覽"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "使用遊戲紋理、寬高比為 2:1 的菱形地圖預覽"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "地圖"
+    },
+    "preview-panel.announce.ready": {
+      "message": "地圖預覽已就緒"
+    },
+    "preview-panel.announce.updated": {
+      "message": "地圖預覽已更新"
+    },
+    "preview-panel.panel.label": {
+      "message": "即時地圖預覽"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "地圖檢視控制項"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "連接圖層"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "方向鍵選取地圖格"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "預覽狀態"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "未認證"
+    },
+    "preview-panel.status.seed": {
+      "message": "種子 {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "修訂 {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "產生地圖"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "快取 {entries} 筆 · 命中 {hits} 次"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "編輯中"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "分析中"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "未變更"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "已過期－原始碼無效"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "正在產生"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "最新"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "已過期－產生失敗"
+    },
+    "preview-panel.legend.label": {
+      "message": "所選地圖格的圖層圖例"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "篩選已選項目"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "清除已選項目篩選條件"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "篩選"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "沒有符合的項目"
+    },
+    "preview-panel.legend.rows": {
+      "message": "已選圖層清單"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}，目前已選取 {count} 個"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "開啟 {name} 的原始碼，已選取 {count} 個"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "顯示輔助物件（{count}）"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "隱藏輔助物件（{count}）"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "內部開發測試範例"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "內部測試範例 · 未認證"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "內部 · 未認證"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "執行 {fixture} 測試範例"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "讀取中"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "正在讀取遊戲美術資源目錄"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "正在讀取遊戲美術資源目錄，{percent}%（{total} 個{unit, select, graphics {圖形} other {檔案}}中的 {completed} 個）"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "匯入中"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "正在匯入地形紋理"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "正在匯入地形紋理，{percent}%（{total} 個{unit, select, graphics {圖形} other {檔案}}中的 {completed} 個）"
+    },
+    "game-art.progress.blends.action": {
+      "message": "混合中"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "正在混合地形交界"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "正在混合地形交界，{percent}%（{total} 個{unit, select, graphics {圖形} other {檔案}}中的 {completed} 個）"
+    },
+    "game-art.progress.masks.action": {
+      "message": "準備遮罩"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "正在準備地形覆蓋遮罩"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "正在準備地形覆蓋遮罩，{percent}%（{total} 個{unit, select, graphics {圖形} other {檔案}}中的 {completed} 個）"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "物件圖像"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "正在轉換這張地圖的物件圖像"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "正在轉換這張地圖的物件圖像，{percent}%（{total} 個{unit, select, graphics {圖形} other {檔案}}中的 {completed} 個）"
+    },
+    "game-art.progress.label": {
+      "message": "正在轉換遊戲美術資源"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, other {連結的遊戲中沒有 {count} 種物件的圖像，這些物件會保留小地圖符號：{names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, other {連結的遊戲中沒有 {count} 種物件的圖像，這些物件會保留小地圖符號：{names, list, unit}，以及另外 {more} 種}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name}（物件 {id}）"
+    },
+    "game-art.glyphs.object": {
+      "message": "物件 {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, other {連結的遊戲中沒有 {count} 個懸崖片段的圖像，這些片段會保留懸崖線條}}"
+    },
+    "profiler.group.parse": {
+      "message": "剖析"
+    },
+    "profiler.group.setup": {
+      "message": "初始化"
+    },
+    "profiler.group.land": {
+      "message": "陸地"
+    },
+    "profiler.group.elevation": {
+      "message": "高度"
+    },
+    "profiler.group.cliffs": {
+      "message": "懸崖"
+    },
+    "profiler.group.terrain": {
+      "message": "地形"
+    },
+    "profiler.group.connections": {
+      "message": "連接"
+    },
+    "profiler.group.objects": {
+      "message": "物件"
+    },
+    "profiler.group.finalize": {
+      "message": "收尾"
+    },
+    "profiler.step.parse-script": {
+      "message": "指令碼剖析"
+    },
+    "profiler.step.setup-players": {
+      "message": "玩家初始化"
+    },
+    "profiler.step.land-generate": {
+      "message": "產生陸地"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "產生高度"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "產生懸崖"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "產生地形"
+    },
+    "profiler.step.connections-generate": {
+      "message": "產生連接"
+    },
+    "profiler.step.objects-generate": {
+      "message": "放置物件"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "遊戲模式收尾"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "物件排序"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "合成地形"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, other {# 次操作}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, other {# 次 RNG 取值}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, other {# 個候選位置}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, other {# 個地圖格}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, other {# 次路徑搜尋}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, other {# 單位路徑搜尋工作量}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, other {# 次拒絕}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, other {# 個物件}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, other {已檢查 # 個地圖格}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, other {已擴展 # 格}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "陸地擴展時取出並檢查的地圖格；擴展成功的格子會加入陸地。"
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, other {擴展時檢查了 # 個地圖格}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, other {已升高 # 格}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "山丘擴展時取出並檢查的地圖格。升高的格子也包含各山丘的起始格，這些起始格不計入檢查數量。"
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, other {已考慮 # 處懸崖位置}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "可放置懸崖的地圖位置。"
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, other {# 次路徑搜尋}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, other {# 個搜尋步驟}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, other {已繪製 # 個地圖格}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "每次路徑搜尋都會尋找兩個連接點之間的路線；繪製格數計入沿途的每一次地形變更。"
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, other {# 個可能位置}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, other {已拒絕 # 次物件群組}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, other {已放置 # 個物件}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "可能位置依每次放置嘗試計數，因此同一格可能計入多次。每當位置未通過檢查或沒有剩餘位置時，物件群組就會被拒絕一次。"
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "等待第一個步驟完成"
+    },
+    "profiler.pending.group": {
+      "message": "{group}進行中"
+    },
+    "profiler.pending.step": {
+      "message": "{step}進行中"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0.1%"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off}%"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off}%"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "低於百分之零點一"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "百分之{percent, number, ::precision-integer group-off}"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "百分之{percent, number, ::.0 group-off}"
+    },
+    "profiler.row.name": {
+      "message": "{step}（{group}），{duration}，{percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}。{second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "執行效能分析：正在產生，等待引擎回報"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "執行效能分析：正在產生，等待引擎回報，{seconds, number, ::.00 group-off} 秒"
+    },
+    "profiler.status.running.steps": {
+      "message": "執行效能分析：正在產生，已完成 {total} 個步驟中的 {completed} 個"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "執行效能分析：正在產生，已完成 {total} 個步驟中的 {completed} 個，{seconds, number, ::.00 group-off} 秒"
+    },
+    "profiler.status.cached": {
+      "message": "執行效能分析：快取結果，{seconds, number, ::.00 group-off} 秒，於首次產生此預覽時測得"
+    },
+    "profiler.status.committed": {
+      "message": "執行效能分析：RMS 執行耗時 {seconds, number, ::.00 group-off} 秒"
+    },
+    "profiler.status.unsupported": {
+      "message": "執行效能分析：此預覽沒有測量資料"
+    },
+    "profiler.status.idle": {
+      "message": "執行效能分析"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "正在產生，等待引擎回報"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "正在產生，已完成 {total} 個步驟中的 {completed} 個"
+    },
+    "profiler.tooltip.cached": {
+      "message": "執行耗時（快取結果）"
+    },
+    "profiler.tooltip.committed": {
+      "message": "執行耗時"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "沒有執行耗時測量資料"
+    },
+    "profiler.description": {
+      "message": "這是在此電腦上執行一次所得的粗略複雜度指標，並非遊戲內產生地圖所需時間的預測。"
+    },
+    "profiler.description.cached": {
+      "message": "快取結果：數據於首次產生此預覽時測得，引擎未再次執行。這是在此電腦上執行一次所得的粗略複雜度指標，並非遊戲內產生地圖所需時間的預測。"
+    },
+    "profiler.description.map-test": {
+      "message": "數據於地圖測試期間測得，各樣本可能同時執行。這是在此電腦上執行一次所得的粗略複雜度指標，並非遊戲內產生地圖所需時間的預測。"
+    },
+    "profiler.panel.label": {
+      "message": "執行耗時分析"
+    },
+    "profiler.panel.steps": {
+      "message": "執行步驟"
+    },
+    "profiler.panel.table": {
+      "message": "依耗時排列的執行步驟"
+    },
+    "profiler.panel.empty": {
+      "message": "此預覽沒有執行耗時測量資料。"
+    },
+    "profiler.chart.label": {
+      "message": "各產生階段的 RMS 執行時間"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}：{duration}，{percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "通過"
+    },
+    "test-results.results.status.failed": {
+      "message": "失敗"
+    },
+    "test-results.results.status.error": {
+      "message": "錯誤"
+    },
+    "test-results.results.status.stopped": {
+      "message": "已停止"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, other {# 個發現項目}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{seeds, plural, other {# 個種子上共有}}{findings, plural, other { # 個發現項目}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, other {# 張地圖}} · {assertions, plural, other {# 次斷言}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}，第 {line} 行"
+    },
+    "test-results.results.check-headline": {
+      "message": "第 {line} 行的檢查"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {沒有發現項目。這張地圖的所有檢查均已通過。} other {沒有發現項目。全部 # 張地圖的所有檢查均已通過。}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "沒有發現項目。測試並未對其{maps, plural, other { # 張地圖}}進行檢查。"
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "匯出"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "將這些結果儲存為報告檔案。報告不包含你的指令碼、產生的地圖或完整檔案路徑。"
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, other {{count} 個地圖測試發現項目}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "前往 {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "檢查"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "隱藏第 {line} 行檢查的發現項目"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "顯示第 {line} 行檢查的發現項目"
+    },
+    "test-results.results.check-findings": {
+      "message": "第 {line} 行檢查的發現項目"
+    },
+    "test-results.results.show-more": {
+      "message": "再顯示 {count} 個"
+    },
+    "test-results.results.not-shown": {
+      "message": "· 尚有 {count, number} 個未顯示"
+    },
+    "test-results.results.show-seed": {
+      "message": "在預覽中顯示 {map} 的種子 {seed}"
+    },
+    "test-results.results.seed": {
+      "message": "種子 {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "發現項目"
+    },
+    "game-options.map-size.tiny": {
+      "message": "微小"
+    },
+    "game-options.map-size.small": {
+      "message": "小型"
+    },
+    "game-options.map-size.medium": {
+      "message": "中型"
+    },
+    "game-options.map-size.normal": {
+      "message": "一般"
+    },
+    "game-options.map-size.large": {
+      "message": "大型"
+    },
+    "game-options.map-size.huge": {
+      "message": "特大"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "大得荒謬"
+    },
+    "game-options.map-size.option": {
+      "message": "{size}（{width}×{height}）"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "隨機地圖"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "弒君模式"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "死亡競賽"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "佔山為王"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "世界奇觀競賽"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "保護世界奇觀"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "加速隨機地圖"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "爭奪聖物"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "主城保衛戰"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "大逃殺"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "帝國戰爭"
+    },
+    "game-options.resources.standard": {
+      "message": "標準資源"
+    },
+    "game-options.resources.low": {
+      "message": "少量資源"
+    },
+    "game-options.resources.medium": {
+      "message": "中量資源"
+    },
+    "game-options.resources.high": {
+      "message": "大量資源"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "超大量資源"
+    },
+    "game-options.resources.infinite": {
+      "message": "無限資源"
+    },
+    "game-options.resources.random": {
+      "message": "隨機資源"
+    },
+    "game-options.age.standard": {
+      "message": "標準起始時代"
+    },
+    "game-options.age.dark-age": {
+      "message": "黑暗時代"
+    },
+    "game-options.age.feudal-age": {
+      "message": "封建時代"
+    },
+    "game-options.age.castle-age": {
+      "message": "城堡時代"
+    },
+    "game-options.age.imperial-age": {
+      "message": "帝王時代"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "後帝王時代"
+    },
+    "game-options.positions.random": {
+      "message": "隨機位置"
+    },
+    "game-options.positions.fixed": {
+      "message": "固定起點"
+    },
+    "game-options.positions.team-together": {
+      "message": "協同作戰"
+    },
+    "game-options.color.blue": {
+      "message": "藍色"
+    },
+    "game-options.color.red": {
+      "message": "紅色"
+    },
+    "game-options.color.green": {
+      "message": "綠色"
+    },
+    "game-options.color.yellow": {
+      "message": "黃色"
+    },
+    "game-options.color.cyan": {
+      "message": "青色"
+    },
+    "game-options.color.purple": {
+      "message": "紫色"
+    },
+    "game-options.color.gray": {
+      "message": "灰色"
+    },
+    "game-options.color.orange": {
+      "message": "橙色"
+    },
+    "game-options.team.none": {
+      "message": "不組隊"
+    },
+    "game-options.team.numbered": {
+      "message": "隊伍 {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "加速"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "全科技樹"
+    },
+    "game-options.flag.antiquity": {
+      "message": "古代"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "堅固農田"
+    },
+    "game-options.civilization.random": {
+      "message": "隨機"
+    },
+    "game-options.civilization.britons": {
+      "message": "不列顛人"
+    },
+    "game-options.civilization.franks": {
+      "message": "法蘭克人"
+    },
+    "game-options.civilization.goths": {
+      "message": "哥德人"
+    },
+    "game-options.civilization.teutons": {
+      "message": "條頓人"
+    },
+    "game-options.civilization.japanese": {
+      "message": "日本人"
+    },
+    "game-options.civilization.chinese": {
+      "message": "中國人"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "拜占庭人"
+    },
+    "game-options.civilization.persians": {
+      "message": "波斯人"
+    },
+    "game-options.civilization.saracens": {
+      "message": "薩拉森人"
+    },
+    "game-options.civilization.turks": {
+      "message": "土耳其人"
+    },
+    "game-options.civilization.vikings": {
+      "message": "維京人"
+    },
+    "game-options.civilization.mongols": {
+      "message": "蒙古人"
+    },
+    "game-options.civilization.celts": {
+      "message": "塞爾特人"
+    },
+    "game-options.civilization.spanish": {
+      "message": "西班牙人"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "阿茲特克人"
+    },
+    "game-options.civilization.mayans": {
+      "message": "馬雅"
+    },
+    "game-options.civilization.huns": {
+      "message": "匈人"
+    },
+    "game-options.civilization.koreans": {
+      "message": "朝鮮人"
+    },
+    "game-options.civilization.italians": {
+      "message": "義大利人"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "印度斯坦人"
+    },
+    "game-options.civilization.incas": {
+      "message": "印加"
+    },
+    "game-options.civilization.magyars": {
+      "message": "馬札爾人"
+    },
+    "game-options.civilization.slavs": {
+      "message": "斯拉夫人"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "葡萄牙人"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "衣索比亞人"
+    },
+    "game-options.civilization.malians": {
+      "message": "馬利人"
+    },
+    "game-options.civilization.berbers": {
+      "message": "柏柏人"
+    },
+    "game-options.civilization.khmer": {
+      "message": "高棉人"
+    },
+    "game-options.civilization.malay": {
+      "message": "馬來人"
+    },
+    "game-options.civilization.burmese": {
+      "message": "緬甸人"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "越南人"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "保加利亞人"
+    },
+    "game-options.civilization.tatars": {
+      "message": "韃靼人"
+    },
+    "game-options.civilization.cumans": {
+      "message": "庫曼人"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "立陶宛人"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "勃根地人"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "西西里人"
+    },
+    "game-options.civilization.poles": {
+      "message": "波蘭人"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "波希米亞人"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "達羅毗荼人"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "孟加拉人"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "瞿折羅人"
+    },
+    "game-options.civilization.romans": {
+      "message": "羅馬人"
+    },
+    "game-options.civilization.armenians": {
+      "message": "亞美尼亞人"
+    },
+    "game-options.civilization.georgians": {
+      "message": "喬治亞人"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "阿契美尼德人"
+    },
+    "game-options.civilization.athenians": {
+      "message": "雅典人"
+    },
+    "game-options.civilization.spartans": {
+      "message": "斯巴達人"
+    },
+    "game-options.civilization.shu": {
+      "message": "蜀國"
+    },
+    "game-options.civilization.wu": {
+      "message": "吳國"
+    },
+    "game-options.civilization.wei": {
+      "message": "魏國"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "女真人"
+    },
+    "game-options.civilization.khitans": {
+      "message": "契丹人"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "馬其頓人"
+    },
+    "game-options.civilization.thracians": {
+      "message": "色雷斯人"
+    },
+    "game-options.civilization.puru": {
+      "message": "波魯"
+    },
+    "game-options.civilization.muisca": {
+      "message": "穆伊斯卡人"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "曼帕契人"
+    },
+    "game-options.civilization.tupi": {
+      "message": "圖皮人"
+    },
+    "game-options.civilization.saxons": {
+      "message": "撒克遜人"
+    },
+    "game-options.civilization.varangians": {
+      "message": "瓦蘭吉人"
+    },
+    "game-options.civilization.danes": {
+      "message": "丹麥人"
+    },
+    "game-options.civilization.unknown": {
+      "message": "文明 {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "預覽"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "正在產生預覽（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.connecting": {
+      "message": "連線中"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "正在連線至 AoE2Control（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.checking": {
+      "message": "檢查中"
+    },
+    "live-test.progress.ending": {
+      "message": "結束中"
+    },
+    "live-test.progress.copying": {
+      "message": "複製中"
+    },
+    "live-test.progress.selecting": {
+      "message": "選擇中"
+    },
+    "live-test.progress.starting": {
+      "message": "啟動中"
+    },
+    "live-test.progress.verifying": {
+      "message": "驗證中"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "正在驗證對局（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.waiting": {
+      "message": "等待中"
+    },
+    "live-test.progress.verified": {
+      "message": "已驗證"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "對局已驗證"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "正在檢查 AoE2Control（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "正在檢查遊戲（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "正在結束目前的對局（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "正在將地圖複製到遊戲（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "正在遊戲中選擇地圖（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "正在開始對局（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "正在等待先前的 AoE2Control 卸載（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "正在等待 AoE2Control 在遊戲中啟動（第 {step} 步，共 {total} 步）"
+    },
+    "live-test.progress.label": {
+      "message": "遊戲內測試"
+    },
+    "live-test.replace-match.title": {
+      "message": "取代進行中的對局？"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE 將結束單人對局，並啟動此預覽版本。在你移除 AoE2Control 設定之前，不會再次詢問。"
+    },
+    "live-test.replace-match.confirm": {
+      "message": "結束並取代對局"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "請先選擇有效的 AoE2Control 執行檔。"
+    },
+    "live-test.seed.configure-control": {
+      "message": "請設定 AoE2Control，以讀取目前對局的種子。"
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control 正在連線。請等待交握完成後再試。"
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "無法讀回對局資料。請重新連線 AoE2Control 後再試。"
+    },
+    "live-test.seed.replay": {
+      "message": "無法匯入重播的種子。"
+    },
+    "live-test.seed.multiplayer": {
+      "message": "無法匯入多人對局的種子。"
+    },
+    "live-test.seed.state-changing": {
+      "message": "對局狀態正在變更或無法確認。請稍候再試。"
+    },
+    "live-test.seed.no-match": {
+      "message": "請先開始支援的單人隨機地圖對局。"
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "無法讀取目前對局的設定。請重新連線 AoE2Control 後再試。"
+    },
+    "live-test.seed.not-random-map": {
+      "message": "目前對局不是支援的隨機地圖對局。"
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "無法讀取目前對局的種子。請重新連線 AoE2Control 後再試。"
+    },
+    "live-test.seed.busy": {
+      "message": "已有 AoE2Control 操作正在進行。"
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control 未傳回對局種子。"
+    },
+    "live-test.control.missing": {
+      "message": "所選的執行檔已移動或移除。"
+    },
+    "live-test.control.changed": {
+      "message": "所選的執行檔已變更。請重新選擇，以信任新的檔案。"
+    },
+    "live-test.control.invalid": {
+      "message": "所選檔案不是有效的公開版 AoE2Control 執行檔。"
+    },
+    "workspace.format.save-skipped": {
+      "message": "已略過 {name} 的儲存時格式化"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "已取消儲存 {name}"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} 為唯讀，未進行格式化"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} 已符合格式"
+    },
+    "workspace.format.not-formatted": {
+      "message": "未格式化 {name}"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "格式化工具未在時限內完成。"
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "未能證明嚴格等價。"
+    },
+    "workspace.format.reason.stale": {
+      "message": "格式化請求已過期。"
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} 已在 AoE2RMSIDE 外遭到刪除"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "文字仍保留在編輯器中。"
+    },
+    "workspace.files.reloaded": {
+      "message": "{name} 在磁碟上變更後，已重新載入"
+    },
+    "workspace.recovery.restored": {
+      "message": "已從上次工作階段復原{count, plural, other { {count} 個尚未儲存的編輯分頁}}"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "原始檔未被覆寫。"
+    },
+    "workspace.failed.save": {
+      "message": "無法儲存檔案"
+    },
+    "workspace.failed.open-file": {
+      "message": "無法開啟檔案"
+    },
+    "workspace.failed.open-folder": {
+      "message": "無法開啟資料夾"
+    },
+    "workspace.failed.open-recent": {
+      "message": "無法開啟最近使用的項目"
+    },
+    "workspace.failed.open-requested": {
+      "message": "無法開啟請求的項目"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "無法開啟拖入的項目"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "無法開啟產生此地圖項目的指令碼"
+    },
+    "workspace.failed.create": {
+      "message": "無法建立項目"
+    },
+    "workspace.failed.rename": {
+      "message": "無法重新命名項目"
+    },
+    "workspace.failed.delete": {
+      "message": "無法刪除項目"
+    },
+    "workspace.failed.restore-session": {
+      "message": "無法還原上次工作階段"
+    },
+    "workspace.failed.back-up": {
+      "message": "無法備份尚未儲存的工作"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "請使用較小的原始檔資料夾，或關閉部分原始檔分頁後再試。"
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "更新佇列已滿，部分編輯器診斷已略過。"
+    },
+    "editor-assistance.limited.headline": {
+      "message": "編輯器輔助功能受限"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "請在「詳細資料」中查看受影響的原始檔，然後再試。"
+    },
+    "editor-assistance.limited.sources": {
+      "message": "部分編輯器檢查無法使用目前的原始檔。"
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "資料夾深度"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "目錄項目數"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "名稱中繼資料（位元組）"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "引入路徑數"
+    },
+    "file-actions.included-files.changed": {
+      "message": "檢查引入檔時，原始檔已變更。請重新執行。"
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "尋找引入檔時，{scope} 的{budget}超過限制：已使用 {used, number, integer}，上限為 {maximum, number, integer}。"
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "請使用較小的引入檔資料夾，或減少必要的引入檔。"
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "無法準備地圖測試的原始檔"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "地圖測試超過 {limit, number, integer} MiB 的原始檔資料上限。請減少單次測試的地圖數量。"
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "地圖測試超過 {limit, number, integer} 張地圖的上限。請減少單次測試的地圖數量。"
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "地圖測試超過 {limit, number, integer} MiB 的原始檔中繼資料上限。請減少單次測試的地圖數量。"
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "地圖測試超過 {limit, number, integer} 筆原始檔記錄的上限。請減少單次測試的地圖數量。"
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} 超過單一檔案 {limit, number, integer} MiB 的上限。"
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "必要的原始檔超過總計 {limit, number, integer} MiB 的上限。"
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "必要的原始檔超過 {limit, number, integer} 個檔案的上限。"
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "必要的原始檔資訊超過 {limit, number, integer} MiB 的中繼資料上限。"
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "請減少必要的原始檔資料，然後重新執行。"
+    },
+    "release-check.newer.headline": {
+      "message": "AoE2RMSIDE {version} 現已推出"
+    },
+    "release-check.newer.cause": {
+      "message": "你正在使用 {current}。"
+    },
+    "release-check.newer.action": {
+      "message": "開啟發行頁面"
+    }
+  }
+}

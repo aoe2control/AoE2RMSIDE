@@ -1,0 +1,37 @@
+[package]
+name = "rmsd"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[features]
+default = ["internal-fixtures"]
+internal-fixtures = ["dep:rms-testkit"]
+latency-profile = []
+
+[dependencies]
+anyhow.workspace = true
+prost.workspace = true
+rms-analysis.workspace = true
+rms-content.workspace = true
+rms-engine.workspace = true
+rms-profile.workspace = true
+rms-protocol.workspace = true
+rms-semantics.workspace = true
+rms-source.workspace = true
+rms-testkit = { workspace = true, optional = true }
+rms-trace.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { workspace = true, features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_Storage_FileSystem",
+    "Win32_System_IO",
+    "Win32_System_Pipes",
+    "Win32_System_Threading",
+] }

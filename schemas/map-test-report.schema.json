@@ -1,0 +1,438 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/map-test-report/v1",
+  "title": "AoE2RMSIDE map-test report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "compatibility",
+    "semanticApiMajor",
+    "reportIdentity",
+    "status",
+    "script",
+    "workspaceName",
+    "engineVersion",
+    "protocolVersion",
+    "profile",
+    "content",
+    "settings",
+    "generatedMaps",
+    "assertionCount",
+    "findings",
+    "output",
+    "preview"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://rmside.invalid/schemas/map-test-report/v1"
+    },
+    "schemaVersion": {
+      "enum": ["1.0.0", "1.1.0"]
+    },
+    "compatibility": {
+      "$ref": "#/definitions/compatibility"
+    },
+    "semanticApiMajor": {
+      "const": 2
+    },
+    "reportIdentity": {
+      "$ref": "#/definitions/hash"
+    },
+    "status": {
+      "enum": ["passed", "failed"]
+    },
+    "script": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "semanticHash"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "semanticHash": {
+          "$ref": "#/definitions/hash"
+        }
+      }
+    },
+    "workspaceName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "engineVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "protocolVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "profile": {
+      "$ref": "#/definitions/artifact"
+    },
+    "content": {
+      "$ref": "#/definitions/artifact"
+    },
+    "settings": {
+      "$ref": "#/definitions/settings"
+    },
+    "generatedMaps": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4096
+    },
+    "assertionCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4096
+    },
+    "findings": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "$ref": "#/definitions/finding"
+      }
+    },
+    "output": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "string",
+        "maxLength": 8192
+      }
+    },
+    "preview": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/preview"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": {
+          "const": 1
+        },
+        "maximumMajor": {
+          "const": 1
+        }
+      }
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "hash"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "hash": {
+          "$ref": "#/definitions/hash"
+        }
+      }
+    },
+    "player": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slot", "team", "civilizationId", "color"],
+      "properties": {
+        "slot": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 255
+        },
+        "team": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "civilizationId": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "color": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        }
+      }
+    },
+    "setupContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contractVersion",
+        "gameMode",
+        "startingResources",
+        "startingAge",
+        "positionPolicy"
+      ],
+      "properties": {
+        "contractVersion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["major", "minor", "patch"],
+          "properties": {
+            "major": {
+              "const": 1
+            },
+            "minor": {
+              "const": 0
+            },
+            "patch": {
+              "const": 0
+            }
+          }
+        },
+        "gameMode": {
+          "enum": [
+            "random-map",
+            "regicide",
+            "death-match",
+            "king-of-the-hill",
+            "wonder-race",
+            "defend-the-wonder",
+            "turbo-random-map",
+            "capture-the-relic",
+            "sudden-death",
+            "battle-royale",
+            "empire-wars"
+          ]
+        },
+        "startingResources": {
+          "enum": ["standard", "low", "medium", "high", "ultra-high", "infinite", "random"]
+        },
+        "startingAge": {
+          "enum": [
+            "standard",
+            "dark-age",
+            "feudal-age",
+            "castle-age",
+            "imperial-age",
+            "post-imperial-age"
+          ]
+        },
+        "positionPolicy": {
+          "enum": ["random", "fixed", "team-together"]
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "mapSize", "players", "setupContext"],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 512
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 512
+        },
+        "mapSize": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "players": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/definitions/player"
+          }
+        },
+        "setupContext": {
+          "$ref": "#/definitions/setupContext"
+        }
+      }
+    },
+    "measurement": {
+      "anyOf": [
+        {
+          "type": "string",
+          "maxLength": 1024
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "findingId",
+        "assertionId",
+        "code",
+        "message",
+        "scriptLine",
+        "scriptColumn",
+        "seed",
+        "sourcePath",
+        "sourceGraphHash",
+        "requestHash",
+        "mapHash",
+        "measurements"
+      ],
+      "properties": {
+        "findingId": {
+          "$ref": "#/definitions/hash"
+        },
+        "assertionId": {
+          "$ref": "#/definitions/hash"
+        },
+        "code": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192
+        },
+        "scriptLine": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "scriptColumn": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "sourcePath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\:]+$"
+        },
+        "sourceGraphHash": {
+          "$ref": "#/definitions/hash"
+        },
+        "requestHash": {
+          "$ref": "#/definitions/hash"
+        },
+        "mapHash": {
+          "$ref": "#/definitions/hash"
+        },
+        "measurements": {
+          "type": "object",
+          "maxProperties": 32,
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/measurement"
+          }
+        },
+        "requestDocumentRevision": {
+          "$ref": "#/definitions/u64Decimal"
+        }
+      }
+    },
+    "preview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seed", "requestHash", "mapHash"],
+      "properties": {
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "requestHash": {
+          "$ref": "#/definitions/hash"
+        },
+        "mapHash": {
+          "$ref": "#/definitions/hash"
+        }
+      }
+    },
+    "u64Decimal": {
+      "type": "string",
+      "maxLength": 20,
+      "pattern": "^(?:0|[1-9][0-9]{0,18}|1[0-7][0-9]{18}|18[0-3][0-9]{17}|184[0-3][0-9]{16}|1844[0-5][0-9]{15}|18446[0-6][0-9]{14}|184467[0-3][0-9]{13}|1844674[0-3][0-9]{12}|184467440[0-6][0-9]{10}|1844674407[0-2][0-9]{9}|18446744073[0-6][0-9]{8}|1844674407370[0-8][0-9]{6}|18446744073709[0-4][0-9]{5}|184467440737095[0-4][0-9]{4}|18446744073709550[0-9]{3}|18446744073709551[0-5][0-9]{2}|1844674407370955160[0-9]{1}|1844674407370955161[0-4]|18446744073709551615)$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "1.1.0"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "findings": {
+            "items": {
+              "required": ["requestDocumentRevision"],
+              "type": "object",
+              "properties": {
+                "requestDocumentRevision": {}
+              }
+            },
+            "type": "array"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "findings": {
+            "items": {
+              "type": "object",
+              "properties": {
+                "requestDocumentRevision": false
+              }
+            },
+            "type": "array"
+          }
+        }
+      }
+    }
+  ]
+}

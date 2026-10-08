@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/texture-palettes/v1",
+  "title": "Shipped Texture colors palettes of one behavior profile",
+  "description": "Presentation only: averaged colors derived offline from installation textures and sprites, shipped beside the frozen profile files and bound by profileId; outside every behavior, minimap palette, and generation identity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "compatibility", "profileId", "derivationContract", "entries"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "compatibility": {
+      "$ref": "#/definitions/compatibility"
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "derivationContract": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/definitions/texturePaletteEntry"
+      }
+    }
+  },
+  "definitions": {
+    "rgb24": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16777215
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": {
+          "const": 1
+        },
+        "maximumMajor": {
+          "const": 1
+        }
+      }
+    },
+    "terrainTextureColor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["terrainId", "color"],
+      "properties": {
+        "terrainId": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "color": {
+          "$ref": "#/definitions/rgb24"
+        }
+      }
+    },
+    "objectTextureColor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectId", "color"],
+      "properties": {
+        "objectId": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "color": {
+          "$ref": "#/definitions/rgb24"
+        }
+      }
+    },
+    "cliffTextureColor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cliffType", "color"],
+      "properties": {
+        "cliffType": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "color": {
+          "$ref": "#/definitions/rgb24"
+        }
+      }
+    },
+    "texturePaletteEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "paletteId",
+        "productVersion",
+        "source",
+        "provenance",
+        "terrainColors",
+        "objectColors",
+        "cliffColors"
+      ],
+      "properties": {
+        "paletteId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$"
+        },
+        "productVersion": {
+          "type": "string",
+          "pattern": "^[0-9]+(?:\\.[0-9]+)*$"
+        },
+        "source": {
+          "const": "installation-texture-averages"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tool", "installationBuild", "derivedOn"],
+          "properties": {
+            "tool": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "installationBuild": {
+              "type": "string",
+              "pattern": "^[0-9]+(?:\\.[0-9]+)*$"
+            },
+            "derivedOn": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$"
+            }
+          }
+        },
+        "terrainColors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4096,
+          "items": {
+            "$ref": "#/definitions/terrainTextureColor"
+          }
+        },
+        "objectColors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100000,
+          "items": {
+            "$ref": "#/definitions/objectTextureColor"
+          }
+        },
+        "cliffColors": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4096,
+          "items": {
+            "$ref": "#/definitions/cliffTextureColor"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,415 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/xs-builtin-catalog/v1",
+  "title": "Versioned AoE2 XS built-in function catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "compatibility",
+    "catalogId",
+    "builds",
+    "runtimes",
+    "builtins"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://rmside.invalid/schemas/xs-builtin-catalog/v1"
+    },
+    "schemaVersion": {
+      "enum": ["1.0.0", "1.1.0"]
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": {
+          "const": 1
+        },
+        "maximumMajor": {
+          "const": 1
+        }
+      }
+    },
+    "catalogId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]{1,64}$"
+    },
+    "builds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "productVersion"],
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/buildId"
+          },
+          "productVersion": {
+            "type": "string",
+            "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/runtimeId"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        }
+      }
+    },
+    "builtins": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2048,
+      "items": {
+        "$ref": "#/definitions/builtin"
+      }
+    }
+  },
+  "definitions": {
+    "buildId": {
+      "enum": ["4x", "5x"]
+    },
+    "runtimeId": {
+      "enum": ["rms", "trigger", "ai"]
+    },
+    "valueType": {
+      "enum": ["int", "float", "bool", "string", "vector"]
+    },
+    "returnType": {
+      "enum": ["void", "int", "float", "bool", "string", "vector"]
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,63}$"
+    },
+    "builtin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "category",
+        "builds",
+        "runtimes",
+        "returnType",
+        "parameters",
+        "summary",
+        "basis"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/identifier"
+        },
+        "category": {
+          "enum": [
+            "language-library",
+            "rule-scheduling",
+            "runtime-meta",
+            "input-time",
+            "input-random",
+            "input-lobby-setup",
+            "input-world-read",
+            "write-map-objects",
+            "write-player-state",
+            "write-object-or-tech-data",
+            "gameplay-only",
+            "file-io"
+          ]
+        },
+        "builds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/buildId"
+          }
+        },
+        "runtimes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/runtimeId"
+          }
+        },
+        "returnType": {
+          "$ref": "#/definitions/returnType"
+        },
+        "parameters": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "type"],
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/identifier"
+              },
+              "type": {
+                "$ref": "#/definitions/valueType"
+              },
+              "default": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "string",
+                    "maxLength": 64
+                  }
+                ]
+              },
+              "documentation": {
+                "$ref": "#/definitions/documentation"
+              }
+            }
+          }
+        },
+        "parameterNamesKnown": {
+          "const": false
+        },
+        "buildDifferences": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["build", "parameterCount", "returnType"],
+            "properties": {
+              "build": {
+                "$ref": "#/definitions/buildId"
+              },
+              "parameterCount": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 16
+              },
+              "returnType": {
+                "$ref": "#/definitions/returnType"
+              }
+            }
+          }
+        },
+        "successor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["build", "name"],
+          "properties": {
+            "build": {
+              "$ref": "#/definitions/buildId"
+            },
+            "name": {
+              "$ref": "#/definitions/identifier"
+            }
+          }
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        },
+        "basis": {
+          "enum": ["help", "signature", "unknown", "reference"]
+        },
+        "referenceSource": {
+          "const": "aoe2de-ugc-guide"
+        },
+        "returnDocumentation": {
+          "$ref": "#/definitions/documentation"
+        },
+        "relatedIdentifiers": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/identifier"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "required": ["basis"],
+                "properties": {
+                  "basis": {
+                    "const": "reference"
+                  }
+                },
+                "type": "object"
+              },
+              {
+                "required": ["returnDocumentation"],
+                "properties": {
+                  "returnDocumentation": {
+                    "required": ["basis"],
+                    "properties": {
+                      "basis": {
+                        "const": "reference"
+                      }
+                    },
+                    "type": "object"
+                  }
+                },
+                "type": "object"
+              },
+              {
+                "required": ["parameters"],
+                "properties": {
+                  "parameters": {
+                    "contains": {
+                      "required": ["documentation"],
+                      "properties": {
+                        "documentation": {
+                          "required": ["basis"],
+                          "properties": {
+                            "basis": {
+                              "const": "reference"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          },
+          "then": {
+            "required": ["referenceSource"],
+            "type": "object",
+            "properties": {
+              "referenceSource": {}
+            }
+          },
+          "else": {
+            "not": {
+              "required": ["referenceSource"],
+              "type": "object",
+              "properties": {
+                "referenceSource": {}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "documentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "basis"],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 800
+        },
+        "basis": {
+          "enum": ["help", "signature", "unknown", "reference"]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": ["schemaVersion"],
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0.0"
+          }
+        },
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "builtins": {
+            "items": {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": ["referenceSource"],
+                    "type": "object",
+                    "properties": {
+                      "referenceSource": {}
+                    }
+                  },
+                  {
+                    "required": ["returnDocumentation"],
+                    "type": "object",
+                    "properties": {
+                      "returnDocumentation": {}
+                    }
+                  },
+                  {
+                    "required": ["relatedIdentifiers"],
+                    "type": "object",
+                    "properties": {
+                      "relatedIdentifiers": {}
+                    }
+                  },
+                  {
+                    "required": ["basis"],
+                    "properties": {
+                      "basis": {
+                        "const": "reference"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "required": ["parameters"],
+                    "properties": {
+                      "parameters": {
+                        "contains": {
+                          "required": ["documentation"],
+                          "type": "object",
+                          "properties": {
+                            "documentation": {}
+                          }
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ]
+              }
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      }
+    }
+  ]
+}

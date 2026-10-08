@@ -1,0 +1,4626 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "ms",
+  "name": "Bahasa Melayu",
+  "direction": "ltr",
+  "listPatterns": {
+    "unit": {
+      "two": "{0}, {1}",
+      "start": "{0}, {1}",
+      "middle": "{0}, {1}",
+      "end": "{0}, {1}"
+    }
+  },
+  "messages": {
+    "app-menu.file.name": {
+      "message": "Fail"
+    },
+    "app-menu.edit.name": {
+      "message": "Edit"
+    },
+    "app-menu.view.name": {
+      "message": "Paparan"
+    },
+    "app-menu.help.name": {
+      "message": "Bantuan"
+    },
+    "app-menu.file.new-file": {
+      "message": "Fail Baharu"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Skrip Ujian Peta Baharu"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Jana Fail Takrif…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Skrip XS Baharu"
+    },
+    "app-menu.file.open-file": {
+      "message": "Buka Fail…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Buka Folder…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Semak Imbas Peta Terpasang…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Pasang sebagai Mod…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Buka Folder Permainan"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Nyahpaut Folder Permainan"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Import Laporan Ujian…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Buka Terkini"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Tiada Fail atau Folder Terkini"
+    },
+    "app-menu.file.save": {
+      "message": "Simpan"
+    },
+    "app-menu.file.save-as": {
+      "message": "Simpan Sebagai…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "Pilih Aplikasi Lalai untuk Fail RMS…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Tetapan Windows tidak dapat dibuka"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "Tetapan Windows dibuka pada Aplikasi lalai"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "Untuk membuka fail .rms dan .rms2 dengan AoE2RMSIDE, pilih aplikasi ini di situ. Windows hanya mengubah aplikasi lalai setelah anda mengesahkannya."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Tutup Tab"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Tutup Folder"
+    },
+    "app-menu.file.close-window": {
+      "message": "Tutup Tetingkap"
+    },
+    "app-menu.file.exit": {
+      "message": "Keluar"
+    },
+    "app-menu.edit.undo": {
+      "message": "Buat Asal"
+    },
+    "app-menu.edit.redo": {
+      "message": "Buat Semula"
+    },
+    "app-menu.edit.cut": {
+      "message": "Potong"
+    },
+    "app-menu.edit.copy": {
+      "message": "Salin"
+    },
+    "app-menu.edit.paste": {
+      "message": "Tampal"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Pilih Semua"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Format Dokumen"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Format Semasa Menyimpan"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "Inden Blok if/else"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Langkau Tong Kitar Semula Semasa Memadam"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Tetapkan Semula Susun Atur"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Pemaparan Peta dengan GPU"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Tunjukkan Peringkat Penjanaan Langsung"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Tunjukkan Petunjuk Sebaris"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Peraturan Semakan Kod"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Bahasa…"
+    },
+    "app-menu.view.theme": {
+      "message": "Tema"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Ikut Sistem"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Cerah"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Gelap"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Saiz Sebenar"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Zum Masuk"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Zum Keluar"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Togol Skrin Penuh"
+    },
+    "app-menu.help.documentation": {
+      "message": "Dokumentasi"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Sertai Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Laporkan Pepijat"
+    },
+    "app-menu.help.about": {
+      "message": "Perihal {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "Folder permainan yang dipautkan tidak dapat dibuka"
+    },
+    "about.version": {
+      "message": "Versi {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "Penyunting skrip XS"
+    },
+    "about.edition.rms-preview": {
+      "message": "Penyunting skrip RMS dan XS"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Penyunting skrip peta rawak bebas dan tidak rasmi. Pelaksanaannya sendiri menghasilkan semula cara Age of Empires II: Definitive Edition membaca skrip peta rawak dan menjana peta."
+    },
+    "about.disclosure.independent": {
+      "message": "Penyunting skrip bebas dan tidak rasmi untuk Age of Empires II: Definitive Edition."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "Peta yang dijana hanya dijamin sepadan dengan permainan bagi versi permainan yang telah disahkan; versi lebih baharu berfungsi tanpa jaminan itu. Sesetengah keanehan permainan dihasilkan semula dengan sengaja supaya peta berkelakuan sama."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE tidak mengedarkan fail atau grafik permainan. Sumber rasmi hanya dibaca daripada pemasangan setempat, dan Tekstur permainan hanya diekstrak daripada fail permainan yang terpasang."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE tidak mengedarkan fail atau grafik permainan. Sumber rasmi hanya dibaca daripada pemasangan setempat."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Tidak bersekutu dengan atau diperakui oleh Microsoft, Xbox Game Studios, World's Edge atau Activision."
+    },
+    "about.credits": {
+      "message": "Penghargaan\n{maintainer} — Pencipta dan penyelenggara projek"
+    },
+    "about.credits.research": {
+      "message": "Terima kasih kepada {author}; panduan {guide} beliau mengajar kami banyak perkara tentang skrip peta rawak."
+    },
+    "about.credits.xs-research": {
+      "message": "Terima kasih kepada {author}; dokumentasi XS beliau dalam {guide} menjadi titik permulaan bagi sokongan XS."
+    },
+    "about.close": {
+      "message": "Tutup"
+    },
+    "about.documentation": {
+      "message": "Dokumentasi"
+    },
+    "dialog.confirm.title": {
+      "message": "Sahkan tindakan"
+    },
+    "dialog.confirm.cancel": {
+      "message": "Batal"
+    },
+    "dialog.confirm.continue": {
+      "message": "Teruskan"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "Simpan perubahan pada {name}?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, other {Simpan perubahan pada {count} fail?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "Perubahan yang belum disimpan akan hilang jika anda menutup tetingkap."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "Perubahan yang belum disimpan akan hilang jika anda menutup tab ini."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "Perubahan yang belum disimpan akan hilang jika anda menutup folder ini."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "Perubahan yang belum disimpan akan hilang jika anda memadam {name}."
+    },
+    "dialog.unsaved.save": {
+      "message": "Simpan"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Simpan Semua"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Jangan Simpan"
+    },
+    "dialog.external-change.title": {
+      "message": "{name} diubah di luar AoE2RMSIDE"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Menggantikan fail akan membuang versi luaran. Muat semula fail, gantikannya dengan teks penyunting ini, atau batalkan."
+    },
+    "dialog.external-change.replace": {
+      "message": "Ganti pada cakera"
+    },
+    "dialog.external-change.reload": {
+      "message": "Muat semula dari cakera"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Memuat semula akan membuang teks yang belum disimpan. Teruskan menyunting untuk menyelesaikan konflik semasa menyimpan."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Teruskan menyunting"
+    },
+    "dialog.delete-entry.title": {
+      "message": "Alih {name} ke Tong Kitar Semula?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "Folder ini tidak kosong. Folder dan semua kandungannya akan dialih ke Tong Kitar Semula."
+    },
+    "dialog.delete-entry.description": {
+      "message": "Item ini akan dialih ke Tong Kitar Semula."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Alih ke Tong Kitar Semula"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "Padam {name} secara kekal?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "Folder ini tidak kosong. Folder dan semua kandungannya akan dipadam secara kekal tanpa melalui Tong Kitar Semula. Tindakan ini tidak boleh dibuat asal."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "Item ini akan dipadam secara kekal tanpa melalui Tong Kitar Semula. Tindakan ini tidak boleh dibuat asal."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Padam Secara Kekal"
+    },
+    "output.clear": {
+      "message": "Kosongkan keluaran"
+    },
+    "output.source.run": {
+      "message": "Jalankan"
+    },
+    "output.source.script": {
+      "message": "Skrip"
+    },
+    "output.source.preview": {
+      "message": "Pratonton"
+    },
+    "output.source.map-test": {
+      "message": "Ujian peta"
+    },
+    "output.source.deploy": {
+      "message": "Pasang mod"
+    },
+    "output.source.live-test": {
+      "message": "Ujian langsung"
+    },
+    "output.source.recovery": {
+      "message": "Pemulihan"
+    },
+    "output.source.update": {
+      "message": "Kemas kini"
+    },
+    "output.source.files": {
+      "message": "Fail"
+    },
+    "output.source.game-folder": {
+      "message": "Folder permainan"
+    },
+    "output.source.game-textures": {
+      "message": "Tekstur permainan"
+    },
+    "output.source.app": {
+      "message": "Aplikasi"
+    },
+    "output.log.label": {
+      "message": "{count, plural, other {{count} mesej keluaran}}"
+    },
+    "output.empty": {
+      "message": "Jalankan peta untuk melihat hasilnya di sini."
+    },
+    "output.empty.filtered": {
+      "message": "Tiada mesej yang sepadan dengan penapis."
+    },
+    "output.jump-to-latest": {
+      "message": "Ke yang terkini ({count} baharu)"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, other {Diulang {count} kali}}"
+    },
+    "output.details": {
+      "message": "Butiran"
+    },
+    "output.run.show": {
+      "message": "Tunjukkan mesej pelaksanaan"
+    },
+    "output.run.hide": {
+      "message": "Sembunyikan mesej pelaksanaan"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, other {{count} baris terdahulu tidak ditunjukkan}}"
+    },
+    "output.run.seed": {
+      "message": "benih {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, other {{count} pemain}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, other {{count} peta}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ms"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} s"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} min {seconds} s"
+    },
+    "output.constructs.heading": {
+      "message": "Tidak dibandingkan dengan permainan"
+    },
+    "output.constructs.label": {
+      "message": "Perintah yang tidak dibandingkan dengan permainan"
+    },
+    "output.constructs.go-to": {
+      "message": "Pergi ke penggunaan pertama"
+    },
+    "output.constructs.more": {
+      "message": "dan {count} lagi"
+    },
+    "installed-maps.filter.group": {
+      "message": "Asal peta"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Peta terbina dalam ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Peta mod setempat ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Peta mod dilanggan ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Semua asal peta dimatikan. Hidupkan salah satu untuk menyenaraikan petanya."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Tiada peta rawak terpasang daripada asal yang dipilih."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Tiada peta rawak terpasang daripada asal yang dipilih sepadan dengan carian ini."
+    },
+    "installed-maps.empty.none": {
+      "message": "Tiada peta rawak terbina dalam, setempat atau dilanggan ditemukan."
+    },
+    "installed-maps.empty.search": {
+      "message": "Tiada peta rawak terpasang sepadan dengan carian ini."
+    },
+    "installed-maps.title": {
+      "message": "Peta rawak terpasang"
+    },
+    "installed-maps.close": {
+      "message": "Tutup peta rawak terpasang"
+    },
+    "installed-maps.search": {
+      "message": "Cari peta rawak terpasang"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Cari peta"
+    },
+    "installed-maps.search.clear": {
+      "message": "Kosongkan carian peta"
+    },
+    "installed-maps.loading": {
+      "message": "Memuatkan peta rawak terpasang"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Pilih folder permainan untuk menyenaraikan fail RMS terpasang"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Terbina dalam"
+    },
+    "installed-maps.origin.local": {
+      "message": "Mod setempat"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Mod dilanggan"
+    },
+    "installed-maps.clone": {
+      "message": "Klon untuk Disunting"
+    },
+    "installed-maps.open-failed": {
+      "message": "Peta tidak dapat dibuka"
+    },
+    "installed-maps.clone-failed": {
+      "message": "Peta tidak dapat diklon"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Peta terpasang tidak dapat disenaraikan"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, other {# fail peta telah diklon untuk disunting}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "{name} tidak disalin"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "Peta yang diklon merujuk kepadanya, tetapi fail itu bukan sebahagian daripada peta terpasang."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Permainan menyediakan fail ini; ia bukan sebahagian daripada peta terpasang."
+    },
+    "run-menu.control.detach": {
+      "message": "Putuskan AoE2Control"
+    },
+    "run-menu.control.remove": {
+      "message": "Buang pilihan AoE2Control"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control sedang menyambung"
+    },
+    "run-menu.control.detaching": {
+      "message": "Memutuskan sambungan AoE2Control…"
+    },
+    "run-menu.control.busy": {
+      "message": "Tunggu operasi AoE2Control semasa selesai"
+    },
+    "run-menu.run-on-save": {
+      "message": "Jalankan apabila disimpan"
+    },
+    "run-menu.run-on-edit": {
+      "message": "Jalankan apabila disunting"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Pratetap"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Pratetap {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Tetapan pratetap pratonton"
+    },
+    "run-menu.preset.manage": {
+      "message": "Urus pratetap pratonton"
+    },
+    "run-menu.preset.new": {
+      "message": "Pratetap baharu"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Namakan pratetap pratonton baharu"
+    },
+    "run-menu.preset.rename": {
+      "message": "Namakan semula {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "Simpan {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "Edit {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "Padam {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "Padam pratetap {name}?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "Ini membuang tetapan pratonton yang disimpan untuk pratetap ini."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Padam"
+    },
+    "run-menu.preset.name-length": {
+      "message": "Nama pratetap memerlukan 1 hingga 64 aksara"
+    },
+    "run-menu.preset.exists": {
+      "message": "Pratetap bernama {name} sudah wujud"
+    },
+    "run-menu.preset.limit": {
+      "message": "Maksimum 64 pratetap boleh disimpan"
+    },
+    "run-menu.map-size": {
+      "message": "Saiz peta"
+    },
+    "run-menu.game-mode": {
+      "message": "Mod main"
+    },
+    "run-menu.starting-resources": {
+      "message": "Sumber permulaan"
+    },
+    "run-menu.starting-age": {
+      "message": "Zaman permulaan"
+    },
+    "run-menu.ending-age": {
+      "message": "Zaman akhir"
+    },
+    "run-menu.position-policy": {
+      "message": "Dasar kedudukan"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Pilih"
+    },
+    "run-menu.turbo-note": {
+      "message": "Peta Rawak Turbo ialah mod lama dan dikekalkan seperti dahulu. Peta Rawak dengan Turbo menyediakan label turbo permainan."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Guna Peta Rawak + Turbo"
+    },
+    "run-menu.players.configure": {
+      "message": "Tetapkan pemain"
+    },
+    "run-menu.players.count": {
+      "message": "Bilangan pemain"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, other {# Pemain}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Slot pemain {player}"
+    },
+    "run-menu.players.color": {
+      "message": "Warna pemain {player}"
+    },
+    "run-menu.players.civilization": {
+      "message": "Tamadun pemain {player}"
+    },
+    "run-menu.players.team": {
+      "message": "Pasukan pemain {player}"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Komputer bagi pemain {player}"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Pemain komputer (mentakrifkan AI_PLAYERS)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "Ujian langsung menjadikan setiap pemain selepas P1 pemain komputer"
+    },
+    "run-menu.players.live-note": {
+      "message": "Ujian langsung menjadikan setiap pemain selepas P1 pemain komputer."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "Ujian langsung menjadikan setiap pemain selepas P1 pemain komputer. Letakkan seorang pemain di P1, iaitu pemain yang anda kawal."
+    },
+    "run-menu.lobby.label": {
+      "message": "Pilihan lobi"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Pilihan lobi, {count} dihidupkan"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Pengubah mod main"
+    },
+    "run-menu.lobby.options": {
+      "message": "Pilihan"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (mod main)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Menambah Perang Empayar pada mod main. Mentakrifkan EMPIRE_WARS."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Menambah Kalah Mati pada mod main. Mentakrifkan SUDDEN_DEATH."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Menambah Pembunuhan Raja pada mod main. Mentakrifkan REGICIDE."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Menambah Raja Bukit pada mod main. Mentakrifkan KING_OT_HILL."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Permainan lebih pantas. Mentakrifkan TURBO_MODE, serta TURBO_RANDOM_MAP dalam Peta Rawak."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Setiap tamadun boleh menyelidik semua teknologi. Mentakrifkan FULL_TECH_TREE."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Mod Zaman Purba. Mentakrifkan ANTIQUITY_MODE; banyak peta berubah apabila mod ini digunakan."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Unit tidak boleh berjalan merentasi ladang. Mentakrifkan SOLID_FARMS."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "Pembunuhan Raja memerlukan raja bagi setiap pemain. Pada peta tanpa raja, permainan menamatkan perlawanan serta-merta."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Folder permainan setempat"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (setempat)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (belum disahkan)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Tiada profil disertakan"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Tiada versi disertakan"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Versi permainan pratonton"
+    },
+    "run-menu.version.game-version": {
+      "message": "Versi permainan"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Versi permainan setempat anda dipilih; menjalankan pratonton semula"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} belum disahkan untuk RMS; pratonton menggunakan profil tingkah laku terkini yang telah disahkan ({profile}). Fungsi mungkin tidak terjejas. Jika penjanaan tidak sepadan dengan permainan, semak kemas kini IDE atau laporkan di {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "tidak tersedia"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Pilih folder permainan"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Memilih folder permainan…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "Menggunakan AoE2DE {version} setempat"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "Menggunakan pemasangan AoE2DE setempat yang dipilih"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "Tetapan pelaksanaan tidak dapat dimuatkan"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "Tetapan pelaksanaan tidak disimpan"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "Penyunting tidak dapat menggunakan tetapan pelaksanaan"
+    },
+    "run-menu.run.warning": {
+      "message": "Peta mempunyai amaran"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Cache pratonton dikosongkan"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "Data ujian pembangunan memerlukan skrip .rms atau .rms2 yang tidak kosong"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Tamadun rawak untuk pratonton ini: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Pemain {player}: {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "Ujian langsung membolehkan permainan membuat pilihan rawaknya sendiri."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, other {# pemain}}"
+    },
+    "run-menu.result.error": {
+      "message": "Ralat"
+    },
+    "run-menu.result.failed": {
+      "message": "Gagal"
+    },
+    "run-menu.result.passed": {
+      "message": "Lulus"
+    },
+    "run-menu.result.stopped": {
+      "message": "Dihentikan"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Dihentikan, peta terakhir dikekalkan"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Data ujian sintetik, belum diperakui"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Data ujian sintetik, belum diperakui, diguna semula"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Dijana, diguna semula"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Dijana · versi permainan belum disahkan"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Dijana, diguna semula · versi permainan belum disahkan"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Pratonton tidak boleh dijalankan"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "Sumber semasa kosong."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "Sumber semasa mengandungi ralat sintaks."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Profil tingkah laku yang dipilih tidak tersedia."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Tiada pek kandungan serasi tersedia untuk versi permainan yang dipilih."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Tiada pek kandungan serasi tersedia untuk profil ini."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Pelaksanaan lain masih sedang berjalan."
+    },
+    "run-menu.blocked.loading": {
+      "message": "Konfigurasi pratonton masih dimuatkan."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "Hanya fail utama .rms dan .rms2 boleh dipasang sebagai mod."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "Sumber RMS yang dipilih kosong."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "Sumber RMS yang dipilih mengandungi ralat sintaks."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "Sumber RMS yang dipilih tidak dapat dijadualkan."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "Keadaan kunci benih tidak sah."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "Keadaan Jalankan apabila disimpan tidak sah."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "Keadaan Jalankan apabila disunting tidak sah."
+    },
+    "run-menu.invalid.seed": {
+      "message": "Benih mestilah integer antara 0 hingga 4294967295."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "Saiz peta mestilah sepadan dengan pilihan permainan yang disokong."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Bilangan pemain mestilah antara 1 hingga 8."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "Slot pemain mestilah mengandungi lapan nilai sah."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Slot pemain aktif mestilah unik."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "Warna pemain mestilah mengandungi lapan nilai sah."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Warna pemain aktif mestilah unik."
+    },
+    "run-menu.invalid.teams": {
+      "message": "Pasukan pemain mestilah mengandungi lapan nilai daripada Tiada pasukan hingga Pasukan 4."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "Tamadun lalai mestilah mengandungi lapan slot pemain."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "Tetapan kawalan pemain mestilah mengandungi lapan nilai."
+    },
+    "run-menu.invalid.profile": {
+      "message": "Profil tingkah laku yang diketahui diperlukan."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "Skop pemilihan versi tidak sah."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "Mod main diperlukan."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "Pengubah mod main mestilah unik dan diketahui."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Pilihan lobi mestilah hidup atau mati."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "Sumber permulaan tidak sah."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "Zaman permulaan tidak sah."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "Zaman akhir tidak sah."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "Zaman akhir tidak boleh mendahului zaman permulaan."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "Dasar kedudukan tidak sah."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "Tahap pengumpulan jejak tidak sah."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Teras ujian mestilah Automatik atau 1 hingga 32."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "Fail include standard permainan memerlukan folder permainan anda"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "Fail include standard permainan memerlukan versi permainan setempat, tetapi versi yang disertakan telah dipilih."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "Fail include standard permainan memerlukan folder permainan yang dipautkan, tetapi tiada folder dipautkan."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "Fail include standard permainan memerlukan resources/_common/drs/gamedata_x2 dalam folder permainan yang dipautkan, tetapi folder itu tiada."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Skrip tidak dapat dianalisis"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Skrip tidak dapat disemak"
+    },
+    "run-menu.failure.not-started": {
+      "message": "Pelaksanaan tidak dapat dimulakan"
+    },
+    "run-menu.failure.generation": {
+      "message": "Penjanaan gagal"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Ujian peta"
+    },
+    "settings.language.title": {
+      "message": "Bahasa"
+    },
+    "settings.language.description": {
+      "message": "Menu, dialog dan mesej menggunakan bahasa ini. Perintah skrip, log dan pakej sokongan kekal dalam bahasa Inggeris."
+    },
+    "settings.language.label": {
+      "message": "Bahasa antara muka"
+    },
+    "settings.language.system": {
+      "message": "Bahasa paparan Windows ({language})"
+    },
+    "settings.language.close": {
+      "message": "Tutup"
+    },
+    "settings.language.close-label": {
+      "message": "Tutup tetapan bahasa"
+    },
+    "settings.language.editor-next-start": {
+      "message": "Menu milik penyunting kod akan bertukar bahasa pada permulaan seterusnya."
+    },
+    "message.action.report-problem": {
+      "message": "Laporkan masalah ini"
+    },
+    "message.action.get-newer-control": {
+      "message": "Dapatkan keluaran AoE2Control yang lebih baharu"
+    },
+    "message.action.link-game-folder": {
+      "message": "Pautkan folder permainan anda"
+    },
+    "message.action.verify-game-files": {
+      "message": "Sahkan fail permainan dalam Steam"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Pilih versi permainan setempat anda"
+    },
+    "message.action.check-include-name": {
+      "message": "Semak nama fail include"
+    },
+    "message.action.open-problems": {
+      "message": "Buka panel Masalah"
+    },
+    "message.action.choose-map-size": {
+      "message": "Pilih saiz peta lain"
+    },
+    "message.action.change-player-count": {
+      "message": "Ubah bilangan pemain"
+    },
+    "message.action.open-players-menu": {
+      "message": "Buka menu pemain"
+    },
+    "message.action.try-another-seed": {
+      "message": "Cuba benih lain"
+    },
+    "message.action.reinstall": {
+      "message": "Pasang semula atau kemas kini AoE2RMSIDE"
+    },
+    "message.action.check-update": {
+      "message": "Semak kemas kini AoE2RMSIDE"
+    },
+    "message.action.reconnect-control": {
+      "message": "Sambungkan semula AoE2Control dan cuba lagi"
+    },
+    "message.action.check-control-file": {
+      "message": "Semak bahawa fail AoE2Control yang dipilih berfungsi, kemudian cuba lagi"
+    },
+    "message.action.wait-run-again": {
+      "message": "Tunggu sebentar, kemudian tekan Jalankan semula"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Tekan Jalankan semula; jika masalah berterusan, mulakan semula AoE2DE"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "Mulakan semula AoE2DE, kemudian tekan Jalankan semula"
+    },
+    "message.action.check-game-window": {
+      "message": "Semak tetingkap permainan, kemudian tekan Jalankan semula"
+    },
+    "message.action.press-run-again": {
+      "message": "Tekan Jalankan semula"
+    },
+    "message.action.wait-try-again": {
+      "message": "Tunggu sebentar, kemudian cuba lagi"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Buka Pasang sebagai Mod semula"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Pilih nama mod lain"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Jalankan ujian peta semula"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Satu slot pemain"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, baris {line}"
+    },
+    "message.format.the-script": {
+      "message": "Skrip"
+    },
+    "message.format.the-folder": {
+      "message": "Folder"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "folder XS profil anda"
+    },
+    "message.format.the-map-test": {
+      "message": "ujian peta"
+    },
+    "message.format.a-map-test": {
+      "message": "satu ujian peta"
+    },
+    "message.format.preview-kept": {
+      "message": "Pratonton dikekalkan."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "Pratonton masih berfungsi tanpanya."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Skrip berubah semasa penjanaan"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "Versi lebih baharu akan dijalankan seterusnya."
+    },
+    "message.xs-syntax.headline": {
+      "message": "Satu fail XS mengandungi ralat sintaks"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} mengandungi ralat sintaks XS"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name}, baris {line} menghalang permainan daripada memuatkan XS peta, maka permainan tidak diubah."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Permainan tidak dapat memuatkan XS peta, maka permainan tidak diubah."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Betulkan ralat yang disenaraikan dalam Masalah, kemudian jalankan ujian langsung semula"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "Satu fail XS sudah wujud dalam folder XS profil anda"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "{name} sudah wujud dalam folder XS profil anda"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Fail itu bukan dicipta oleh AoE2RMSIDE ({folder}), maka ujian langsung dihentikan tanpa menggantikannya."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Fail itu bukan dicipta oleh AoE2RMSIDE, maka ujian langsung dihentikan tanpa menggantikannya."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "Namakan semula fail XS atau buang fail yang sedia ada"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Satu fail XS dalam folder XS profil anda diubah di luar AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "{name} dalam folder XS profil anda diubah di luar AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE menyalinnya ke {folder} untuk ujian langsung dan tidak pernah menulis ganti suntingan pihak lain, maka ujian langsung dihentikan."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Pindahkan suntingan anda ke tempat lain atau buang fail itu, kemudian jalankan ujian langsung semula"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Satu fail XS tidak dapat disalin ke folder XS profil anda"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "{name} tidak dapat disalin ke folder XS profil anda"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Ujian langsung menyalin setiap fail XS menggunakan nama fail sahaja yang ditulis dalam #includeXS, tetapi nama ini mengandungi folder."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "Tulis nama fail sahaja pada baris #includeXS"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "Dua fail XS akan disalin dengan nama yang sama"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "Kedua-dua fail XS akan disalin sebagai {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "Folder XS profil anda hanya boleh menyimpan satu fail dengan nama itu."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "Namakan semula salah satu fail XS"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "Folder XS profil anda tidak dapat digunakan"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} bukan folder biasa atau menghala ke tempat lain, dan AoE2RMSIDE tidak pernah menyalin melalui folder yang dialih hala."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "Rekod fail XS yang disalin oleh AoE2RMSIDE tidak dapat dibaca"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Tanpanya, AoE2RMSIDE tidak dapat mengenal pasti fail XS dalam profil anda yang diciptanya."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "Fail XS tidak dapat disalin ke folder XS profil anda"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "Peta memuatkan lebih banyak fail XS daripada yang boleh disalin oleh ujian langsung."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Sesetengah fail XS yang diubah oleh ujian langsung ini dalam {folder} tidak dapat dipulihkan; AoE2RMSIDE masih menganggapnya sebagai fail ciptaannya."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Semua fail XS yang diubah oleh ujian langsung ini dalam {folder} telah dipulihkan."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "Rekod AoE2RMSIDE tentang fail XS dalam {folder} berubah semasa ujian langsung."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Semak bahawa folder boleh ditulis, kemudian jalankan ujian langsung semula"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE tidak berjalan"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "Mulakan AoE2DE, kemudian tekan Jalankan semula"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control ditutup sebelum ia bermula"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control tidak bermula"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control tidak selesai menyambung"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "Versi AoE2Control ini tidak mempunyai tamadun yang dipilih"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Saxon, Varangian dan Denmark memerlukan AoE2Control 1.1.1 atau lebih baharu."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control tidak menawarkan tamadun yang dipilih"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "Pilih AoE2Control 1.1.1 atau lebih baharu, atau pilih tamadun lain."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "Versi permainan yang sedang berjalan tidak mempunyai tamadun yang dipilih"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Pilih tamadun lain"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Versi permainan ini tidak disokong untuk ujian langsung"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "AoE2Control terdahulu masih sedang dikeluarkan daripada permainan"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Proses permulaan AoE2Control terdahulu masih berjalan dalam permainan"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control tidak selesai bermula dalam masa yang ditetapkan"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "Tetingkap AoE2DE belum bersedia"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Buka tetingkap permainan tanpa meminimumkannya, kemudian tekan Jalankan semula"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "Versi AoE2Control lain sedang berjalan dalam permainan"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "AoE2Control gagal bermula lebih awal dalam sesi permainan ini"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control tidak dapat menyambung pada permainan"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Pelancar AoE2Control lain sedang berjalan"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Tutup pelancar itu, kemudian tekan Jalankan semula"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Keluaran AoE2Control ini tidak serasi"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Pilih keluaran awam AoE2Control yang serasi"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "Tetapan permainan tidak sepadan dengan tetapan pelaksanaan"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "Sambungan ke AoE2Control terputus"
+    },
+    "message.control.connection-lost.action": {
+      "message": "Mulakan AoE2DE jika perlu, kemudian cuba lagi"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control tidak menjawab dalam masa yang ditetapkan"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control menutup sambungan tanpa jawapan"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Permainan mungkin sedang sibuk atau memaparkan mesej."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Permainan berhenti menjawab semasa perlawanan bermula"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE mungkin sedang memaparkan mesej, seperti ralat skrip."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Tutup mesej dalam permainan, kemudian tekan Jalankan semula"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Permainan tidak mengesahkan perlawanan baharu dalam masa yang ditetapkan"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "Perlawanan semasa tidak tamat dalam masa yang ditetapkan"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "Peta berubah semasa disalin ke permainan"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "Peta lain dengan nama fail ini berada dalam folder peta permainan"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Namakan semula peta, kemudian tekan Jalankan semula"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "Peta tidak dapat disalin ke permainan"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Permainan tidak mengesahkan permulaan perlawanan"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Sambung semula untuk menyemak perlawanan semasa sebelum mencuba lagi"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Permainan tidak mengesahkan bahawa perlawanan terdahulu telah tamat"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Sambung semula untuk menyemak sebelum mencuba lagi"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "Folder permainan atau profil permainan tidak dapat dikenal pasti"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Semak folder permainan yang dipautkan"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "Peta tidak dapat dipasang untuk ujian langsung"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control berhenti sebelum bersambung"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control tidak dapat mengesahkan sesi pemain tunggal yang stabil"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control menghantar jawapan yang tidak dapat digunakan oleh AoE2RMSIDE"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "Keadaan permainan tidak disokong oleh ujian langsung"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Kembali ke menu utama atau perlawanan pemain tunggal, kemudian cuba lagi"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "Perlawanan yang sedang berjalan perlu ditamatkan dahulu"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Tekan Jalankan semula dan benarkan perlawanan ditamatkan"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control tidak bersambung"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Tekan Jalankan semula untuk menyambung"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Fail AoE2Control yang dipilih telah berubah"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "Pilih AoE2Control semula"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control sedang sibuk"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Ujian langsung tidak disokong pada sistem ini"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "Ujian langsung tidak menggantikan perlawanan yang sedang berlangsung"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "Satu perlawanan bermula dalam AoE2DE sebelum ujian langsung sempat bertanya sama ada mahu menggantikannya."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control tidak dapat menamatkan perlawanan semasa"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Permainan berubah sebelum ujian langsung sempat memulakan peta"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "AoE2DE memulakan perlawanan atau meninggalkan tetapan pemain tunggal semasa ujian langsung sedang disediakan."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "AoE2DE atau AoE2Control dimulakan semula semasa ujian langsung"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "AoE2DE tidak menyenaraikan peta yang disalin"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "Senarai peta mod permainan tidak menunjukkan peta yang disalin, atau menunjukkannya lebih daripada sekali."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "Tetapan seorang pemain tidak dapat dihantar kepada AoE2Control"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Satu tamadun, pasukan atau warna berada di luar julat yang diterima oleh AoE2Control ini."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE tidak dapat menyediakan ujian langsung"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control tidak dapat menyediakan perlawanan Peta Rawak"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "Kembali ke menu utama AoE2DE dan cuba lagi; jika masalah berterusan, buka Pemain Tunggal → Pertempuran sekali"
+    },
+    "message.control.headline": {
+      "message": "Ujian langsung gagal"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Versi AoE2Control ini tidak boleh menetapkan pilihan lobi"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Pilihan lobi memerlukan AoE2Control 1.1.1 atau lebih baharu. Permainan tidak diubah."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Ujian langsung memerlukan pemain dalam P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "Anda mengawal pemain dalam P1; semua pemain lain ialah komputer."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Buka menu pemain dan letakkan pemain dalam P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control menolak pemain manusia selepas P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Ujian langsung memulakan permainan pemain tunggal, dengan semua pemain selepas P1 dikawal oleh komputer."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control menolak senarai pemain komputer"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "Pemain komputer tidak disenaraikan mengikut turutan slot."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Pemain komputer disenaraikan dalam slot yang tiada pemain."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control menolak pemain komputer dalam P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "P1 ialah pemain yang anda kawal dalam ujian langsung, jadi ia tidak boleh menjadi komputer."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Sesetengah tetapan lobi tidak dipulihkan"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "Ujian langsung gagal, dan {fields} mungkin berbeza daripada sebelumnya."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "Ujian langsung gagal, dan sesetengah tetapan lobi mungkin berbeza daripada sebelumnya."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Semak tetapan lobi dalam AoE2DE sebelum permainan seterusnya"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "mod main"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "saiz peta"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "sumber permulaan"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "zaman permulaan"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "zaman akhir"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "pendedahan peta"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "bilangan pemain"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "kedudukan pasukan"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "pengubah mod main"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Turbo"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Pokok tekno penuh"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Zaman Purba"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Ladang pepejal"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "peta yang dipilih"
+    },
+    "message.lobby-setting.seed": {
+      "message": "benih"
+    },
+    "message.lobby-setting.player": {
+      "message": "{setting} P{slot}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "pasukan"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "handikap"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "warna"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "tamadun"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "tetapan manusia atau komputer"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "tetapan"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "Memulakan AoE2Control"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "Menunggu AoE2Control terdahulu dikeluarkan daripada permainan"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "Menunggu AoE2Control selesai bermula dalam permainan"
+    },
+    "message.live.game-detected.headline": {
+      "message": "AoE2DE dikesan"
+    },
+    "message.live.attach.headline": {
+      "message": "Menyambung pada permainan yang sedang berjalan"
+    },
+    "message.live.handshake.headline": {
+      "message": "Menyemak AoE2Control"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control sudah bersedia"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Menamatkan perlawanan semasa"
+    },
+    "message.live.deploy.headline": {
+      "message": "Memasang peta dalam permainan"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, other {Fail XS peta, {files}, juga berada dalam folder XS profil anda.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "Permainan sudah mempunyai versi peta ini"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Memilih peta dalam permainan"
+    },
+    "message.live.match-start.headline": {
+      "message": "Memulakan Peta Rawak dengan benih {seed}"
+    },
+    "message.live.verified.headline": {
+      "message": "Perlawanan disahkan dengan benih {seed}"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} belum disahkan, maka perlawanan mungkin berbeza daripada pratonton."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} belum disahkan untuk ujian langsung"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "Ujian langsung berfungsi, tetapi perlawanan mungkin berbeza daripada pratonton."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Ujian langsung dibatalkan"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Permainan tidak diubah lagi selepas itu."
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control diputuskan"
+    },
+    "message.live.stopped.headline": {
+      "message": "Ujian langsung dihentikan sebelum permainan diubah"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "Pratonton tidak dapat dijana."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "Skrip mengandungi ralat."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Skrip atau tetapan pelaksanaan berubah semasa pratonton dijana."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "Pratonton tidak lagi sepadan dengan skrip."
+    },
+    "message.live.match-kept.cause": {
+      "message": "Perlawanan aktif tidak diubah."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "Kebenaran untuk menggantikan perlawanan aktif tidak dapat disimpan."
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control dipilih"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Fail ini bukan fail boleh laksana AoE2Control yang boleh digunakan"
+    },
+    "message.live.control-rejected.action": {
+      "message": "Pilih keluaran awam AoE2Control"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "Pilihan AoE2Control dibuang"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "Pilihan AoE2Control tidak dapat dibuang"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Putuskan sambungannya dan cuba lagi"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "Status AoE2Control tidak tersedia"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "Benih perlawanan semasa tidak boleh diimport"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "Benih perlawanan {seed} telah diimport dan dikunci"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "Folder mod berubah semasa pemasangan"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Fail dalam folder mod diubah di luar AoE2RMSIDE"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE tidak pernah menulis ganti suntingan yang bukan dibuatnya."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Pindahkan suntingan itu ke tempat lain, kemudian pasang mod semula"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "Pratonton pemasangan mod sudah lapuk"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Mod lain sudah menggunakan folder ini"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE hanya menggantikan mod yang dipasangnya sendiri."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Tiada profil permainan dipilih"
+    },
+    "message.deploy.profile.action": {
+      "message": "Pilih profil"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Peta terbina dalam tidak boleh dipasang secara terus"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Klon peta ke ruang kerja anda dahulu"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "Mod mempunyai terlalu banyak fail untuk dipasang"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "Folder mod menghala ke tempat lain"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE tidak pernah memasang mod melalui folder yang dialih hala."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "Penggantian mod sedia ada tidak disahkan"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Pasang mod semula dan sahkan penggantian"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Tiada peta milik anda untuk dipasang"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Mod memerlukan skrip .rms daripada ruang kerja anda."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Nama mod ini dikhaskan untuk ujian langsung"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Nama mod ini tidak boleh digunakan sebagai nama folder"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "Gunakan satu nama folder tanpa < > : \" / \\ | ? *, dan tanpa titik atau ruang di hujung."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, baris {line}: {error} Permainan tidak dapat memuatkannya, maka tiada apa-apa dipasang."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Permainan tidak dapat memuatkannya, maka tiada apa-apa dipasang."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Betulkan ralat yang disenaraikan dalam Masalah, kemudian pasang mod semula"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "Ikon peta tidak dapat digunakan"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Jana ikon peta semula"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "Penjanaan ikon peta perlu berjalan sendirian, tetapi pratonton, ujian peta atau ujian langsung lain sedang berjalan."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Cuba lagi apabila ia selesai"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "Ikon peta memerlukan pratonton semasa, dan pratonton telah berubah."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Tunggu pratonton baharu, kemudian cuba lagi"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "Ikon peta dilukis dengan tekstur permainan daripada folder permainan lain."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Tiada pemasangan AoE2DE yang sah dipautkan."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "Folder profil atau folder modnya bukan folder biasa yang boleh digunakan oleh AoE2RMSIDE."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "Dua fail akan disalin ke {path} dalam mod."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Satu fail yang digunakan oleh peta tiada tempat dalam folder mod."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE tidak dapat membaca rekod mod yang telah dipasang."
+    },
+    "message.deploy.headline": {
+      "message": "Pemasangan mod gagal"
+    },
+    "message.map-test.replay.headline": {
+      "message": "Peta bagi dapatan ini tidak dapat ditunjukkan"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "Ujian peta melebihi had memori prosesnya dan dihentikan. Larian itu tidak dicuba semula."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Kurangkan apa yang diperuntukkan oleh skrip, seperti ulangan besar atau banyak peta yang disimpan"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "Ujian peta menyarangkan nilai atau panggilan terlalu dalam dan melebihi tindanan prosesnya, jadi ia dihentikan. Larian itu tidak dicuba semula."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Proses ujian peta terhenti, kemungkinan besar pada had memori atau tindanannya. Larian itu tidak dicuba semula."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() memerlukan laluan relatif dalam tanda petikan kepada fail .rms atau .rms2 di dalam folder yang dibuka."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "Peta yang dijalankan oleh ujian secara lalai berada di luar folder yang dibuka."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Ujian peta yang belum pernah disimpan memerlukan folder yang dibuka."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Fail ini bukan laporan ujian peta yang boleh dibaca oleh AoE2RMSIDE."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Fail ini lebih besar daripada {limit, number, integer} MiB."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "Ujian peta berubah sejak pelaksanaan itu."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "Peta atau salah satu fail includenya berubah sejak pelaksanaan itu."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "Versi permainan yang digunakan oleh ujian itu tidak tersedia sekarang."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "Peta yang terhasil berbeza daripada ketika ujian dijalankan."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "Laporan tidak mengandungi dapatan ini."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Buka {script} untuk menunjukkan peta ini"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "Peta bagi sesuatu dapatan dijana semula daripada ujian peta yang menemuinya."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Buka {script} untuk pergi ke semakan ini"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Laporan ini diimport, maka fail ujian petanya tidak diketahui."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "Ujian peta sedang berjalan"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "Ujian peta sedang berjalan · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Ini hasil pelaksanaan terdahulu; hasil ini berubah apabila pelaksanaan semasa tamat."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "Pelaksanaan terkini terhenti akibat ralat"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Ini hasil pelaksanaan sebelumnya."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Lihat Masalah dan Keluaran untuk ralat tersebut"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "Pelaksanaan terkini dihentikan"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "Laporan {script} yang diimport"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "Peta bagi sesuatu dapatan boleh ditunjukkan selagi ujian peta ini, petanya dan versi permainan masih sama seperti ketika ujian dijalankan."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} daripada {requested, plural, other {# peta}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Telah diuji"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Sedang diuji"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {# peta telah diuji} other {# peta telah diuji}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Menguji peta, {percent}% ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Memulakan ujian peta"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Folder ini bukan folder permainan AoE2DE"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "Folder ini bukan pemasangan lengkap Age of Empires II: Definitive Edition."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Pilih folder pemasangan permainan, contohnya steamapps\\common\\AoE2DE dalam pustaka Steam anda"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "Pemasangan AoE2DE yang dipautkan tidak tersedia."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Sebahagian folder permainan tidak dapat dibaca dengan selamat: ia terlalu besar atau terlalu dalam, memaut ke tempat lain, atau mengandungi nama fail yang tidak disokong."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Pilih folder biasa di luar folder permainan dan peta terpasang."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} sudah wujud dalam folder itu."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Terdapat terlalu banyak fail atau folder, atau satu fail terlalu besar."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "Peta terpasang telah berubah sementara itu."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Buka Peta Terpasang semula"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "Skrip atau salah satu include-nya berubah sementara itu."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} bukan jenis fail yang boleh di-include oleh peta."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Beberapa fail berbeza daripada {path} hanya dari segi huruf besar dan kecil."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} berada di luar folder yang boleh dibaca oleh AoE2RMSIDE."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Simpan fail include di dalam folder yang dibuka atau folder permainan yang dipautkan"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Gunakan folder include yang lebih kecil atau kurangkan include yang diperlukan"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Kurangkan data sumber yang diperlukan, kemudian jalankan semula"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Tab terbuka dan susun atur anda tidak dapat diingati"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Fail anda tidak terjejas, tetapi permulaan seterusnya mungkin membuka semula set tab dan susun atur yang lebih lama."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} tamat tanpa diduga."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} tidak berjalan."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} tidak menjawab dalam masa."
+    },
+    "message.execution.busy.cause": {
+      "message": "Pratonton, ujian peta atau ujian langsung lain sedang berjalan."
+    },
+    "message.editor.busy.cause": {
+      "message": "Editor mempunyai terlalu banyak permintaan yang belum selesai."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Pilih versi permainan semula"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Windows Explorer tidak dapat membuka folder: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Fail ini binari, terlalu besar, tidak boleh dibaca atau jenisnya tidak disokong."
+    },
+    "message.files.too-many.cause": {
+      "message": "Buka paling banyak {limit, number, integer} fail atau folder sekali gus."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "Item ini tiada lagi dalam senarai terkini."
+    },
+    "message.files.encoding.cause": {
+      "message": "Skrip ujian peta mesti disimpan sebagai UTF-8."
+    },
+    "message.files.too-large.cause": {
+      "message": "Skrip ujian peta boleh bersaiz paling banyak {limit, number, integer} MiB."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Fail tidak boleh disimpan ke dalam folder permainan atau peta terpasang."
+    },
+    "message.files.extension-required.cause": {
+      "message": "Nama fail mesti berakhir dengan {extension}."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "Item ini telah berubah atau dialihkan di luar AoE2RMSIDE."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Folder dengan nama itu sudah wujud."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Fail ini berada di luar folder yang dibuka."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "Folder ini mengandungi terlalu banyak fail dan folder untuk disenaraikan."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Buka folder yang lebih kecil"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "Tetapan Tong Kitar Semula berubah sebelum pemadaman."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Padam item itu semula"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "Perubahan yang belum disimpan terlalu besar untuk disimpan bagi pemulihan."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Simpan perubahan anda untuk mengekalkannya"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Fail pemulihan rosak atau ditulis oleh keluaran AoE2RMSIDE yang lain."
+    },
+    "message.game-textures.cause": {
+      "message": "Pratonton dan ikon peta menggunakan warna tekstur sebagai gantinya."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} Pratonton dan ikon peta menggunakan warna tekstur sebagai gantinya."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Tekstur permainan tidak dapat disediakan"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Tekstur permainan tidak tersedia untuk folder permainan yang dipautkan"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Rupa bumi yang ditukar tidak dapat dibaca"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Penukaran Tekstur permainan dibatalkan"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "Fail yang telah ditukar dikekalkan, dan pemilihan Tekstur permainan semula akan menyambung proses itu."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Sprite objek tidak dapat dibaca"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Pemaparan peta dengan GPU tidak tersedia pada komputer ini"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "Peta dilukis tanpanya, yang mungkin mengambil masa lebih lama untuk peta besar."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Pemaparan peta dengan GPU tidak digunakan pada komputer ini"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Tiada kad grafik tersedia untuk melukis peta, maka peta dilukis tanpanya, yang mungkin mengambil masa lebih lama untuk peta besar."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "Pemaparan peta dengan GPU terhenti"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "Kad grafik telah ditetapkan semula, maka peta dilukis tanpanya sehingga aplikasi dimulakan semula."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "Pratonton ujian peta sentiasa menggunakan warna peta mini"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "Ujian peta hanya menunjukkan peta yang siap"
+    },
+    "message.generation-result.generated": {
+      "message": "Dijana"
+    },
+    "message.generation-result.reused": {
+      "message": "Diguna semula"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "versi permainan belum disahkan"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Versi permainan belum disahkan"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "Penjanaan peta belum tersedia untuk versi permainan ini."
+    },
+    "message.map-test.workers.label": {
+      "message": "Teras ujian"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Bilangan maksimum teras pemproses yang digunakan oleh ujian peta, iaitu bilangan peta yang dijana serentak ({maximum, plural, =1 {1 pada komputer ini} other {1 hingga {maximum} pada komputer ini}}). Biarkan kosong untuk Automatik, yang sesuai dengan komputer ini dan saiz peta. Hasilnya sama untuk setiap pilihan."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Automatik"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Gunakan Automatik"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, other {{count} perintah tidak dibandingkan dengan permainan}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Sesetengah perintah tidak dibandingkan dengan permainan"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Tiada peta permainan yang direkodkan telah menggunakannya di situ, maka pratonton mungkin berbeza daripada permainan pada bahagian yang terlibat: {list}.} other {Tiada peta permainan yang direkodkan telah menggunakannya di situ, maka pratonton mungkin berbeza daripada permainan pada bahagian yang terlibat: {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Tiada peta permainan yang direkodkan telah menggunakannya di situ, maka pratonton mungkin berbeza daripada permainan pada bahagian yang terlibat.} other {Tiada peta permainan yang direkodkan telah menggunakannya di situ, maka pratonton mungkin berbeza daripada permainan pada bahagian yang terlibat.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} dalam {context}"
+    },
+    "message.construct.list-more": {
+      "message": "{names}, dan {more} lagi"
+    },
+    "message.fallback.run": {
+      "message": "Pelaksanaan gagal"
+    },
+    "message.fallback.script": {
+      "message": "Skrip gagal"
+    },
+    "message.fallback.preview": {
+      "message": "Pratonton gagal"
+    },
+    "message.fallback.map-test": {
+      "message": "Ujian peta gagal"
+    },
+    "message.fallback.recovery": {
+      "message": "Pemulihan gagal"
+    },
+    "message.fallback.update": {
+      "message": "Kemas kini gagal"
+    },
+    "message.fallback.files": {
+      "message": "Operasi fail gagal"
+    },
+    "message.fallback.game-folder": {
+      "message": "Folder permainan tidak dapat digunakan"
+    },
+    "message.fallback.app": {
+      "message": "Sesuatu tidak kena"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Betulkan yang ditunjukkan untuk melihat selebihnya."
+    },
+    "message.action.choose-another-name": {
+      "message": "Pilih nama lain"
+    },
+    "message.action.use-or-remove": {
+      "message": "Gunakannya atau buangkannya (pembaikan pantas boleh membuangnya)"
+    },
+    "explorer.create.definition-file": {
+      "message": "Fail Takrif…"
+    },
+    "explorer.create.script": {
+      "message": "Skrip"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Skrip Ujian Peta"
+    },
+    "explorer.create.xs-script": {
+      "message": "Skrip XS"
+    },
+    "explorer.create.folder": {
+      "message": "Folder"
+    },
+    "explorer.create.label": {
+      "message": "Cipta dalam {name}"
+    },
+    "explorer.label": {
+      "message": "Penjelajah fail"
+    },
+    "explorer.search.label": {
+      "message": "Cari fail ruang kerja"
+    },
+    "explorer.search.placeholder": {
+      "message": "Cari fail"
+    },
+    "explorer.search.clear": {
+      "message": "Kosongkan carian fail"
+    },
+    "explorer.search.searching": {
+      "message": "Mencari fail ruang kerja"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Tiada fail RMS yang sepadan"
+    },
+    "explorer.search.no-results": {
+      "message": "Tiada fail yang sepadan"
+    },
+    "explorer.open-file.label": {
+      "message": "Buka fail"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Buka Fail"
+    },
+    "explorer.open-folder.label": {
+      "message": "Buka folder"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Buka Folder"
+    },
+    "explorer.tree.label": {
+      "message": "Fail {name}"
+    },
+    "explorer.empty.maps": {
+      "message": "Buka folder untuk menyemak imbas dan menyunting petanya."
+    },
+    "explorer.empty.scripts": {
+      "message": "Buka folder untuk menyemak imbas dan menyunting skripnya."
+    },
+    "explorer.indexing": {
+      "message": "Mengindeks folder ruang kerja"
+    },
+    "explorer.read-failed": {
+      "message": "Folder ini tidak dapat dibaca"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Buka dalam Explorer"
+    },
+    "explorer.context.rename": {
+      "message": "Namakan Semula"
+    },
+    "explorer.context.delete": {
+      "message": "Padam"
+    },
+    "explorer.inline.create-file": {
+      "message": "Cipta fail"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Cipta folder"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Namakan semula fail"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Namakan semula folder"
+    },
+    "definition-file.title": {
+      "message": "Jana Fail Takrif"
+    },
+    "definition-file.close-label": {
+      "message": "Tutup"
+    },
+    "definition-file.loading": {
+      "message": "Membaca nama bagi versi permainan yang dipilih…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Versi permainan"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (belum disahkan)"
+    },
+    "definition-file.identity.target": {
+      "message": "Disimpan ke"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "Dipilih semasa penjanaan"
+    },
+    "definition-file.groups.label": {
+      "message": "Kumpulan kandungan"
+    },
+    "definition-file.group.terrains": {
+      "message": "Rupa bumi"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "ID rupa bumi untuk terrain_type, base_terrain dan tetapan rupa bumi lain"
+    },
+    "definition-file.group.objects": {
+      "message": "Objek"
+    },
+    "definition-file.group.objects.description": {
+      "message": "ID objek untuk create_object dan tetapan objek lain"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, other {# nama}}"
+    },
+    "definition-file.built-in": {
+      "message": "Sertakan nama terbina dalam"
+    },
+    "definition-file.built-in.description": {
+      "message": "Nama yang sudah ditakrifkan oleh permainan. Skrip boleh menggunakannya tanpa fail ini."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Pautkan folder permainan anda untuk menambah nama bagi objek dan rupa bumi yang tidak dinamakan oleh permainan."
+    },
+    "definition-file.note.other-version": {
+      "message": "Folder permainan anda mempunyai versi permainan lain, maka namanya tidak digunakan."
+    },
+    "definition-file.note.no-text": {
+      "message": "Nama dalam folder permainan anda tidak boleh dibaca untuk versi permainan ini."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Setiap objek dan rupa bumi yang bernama sudah mempunyai nama terbina dalam."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, other {# nama terbina dalam ditinggalkan kerana skrip dalam folder ini sudah mentakrifkannya.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, other {# nama daripada folder permainan ditinggalkan kerana tiada nama unik yang tinggal untuknya.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "Sesetengah skrip dalam folder ini tidak dapat diperiksa untuk nama yang sudah ditakrifkannya."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Fail Takrif tidak boleh dijana untuk versi permainan yang dipilih kerana data permainannya tidak lengkap."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Tiada versi permainan tersedia untuk menjana Fail Takrif."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "Nama bagi versi permainan yang dipilih tidak dapat dibaca."
+    },
+    "definition-file.file-name.label": {
+      "message": "Nama fail"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Masukkan nama fail."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Nama ini tidak boleh digunakan untuk fail dalam Windows."
+    },
+    "definition-file.file-name.extension": {
+      "message": "Nama fail mesti berakhir dengan .inc."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Nama ini milik fail pustaka permainan. Pilih nama lain."
+    },
+    "definition-file.generate": {
+      "message": "Jana"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Jana…"
+    },
+    "definition-file.error": {
+      "message": "Fail Takrif tidak dapat ditulis. Butiran ada dalam Keluaran."
+    },
+    "definition-file.replace.title": {
+      "message": "Gantikan {name}?"
+    },
+    "definition-file.replace.description": {
+      "message": "Fail dengan nama ini sudah berada dalam {folder}. Penggantian akan menulis ganti kandungannya."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Gantikan"
+    },
+    "definition-file.output.failed": {
+      "message": "Fail Takrif tidak dapat ditulis"
+    },
+    "definition-file.output.unavailable": {
+      "message": "Nama untuk Fail Takrif tidak dapat dibaca"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Simpan Fail Takrif"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "Fail Takrif"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Dayakan mod"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Menghidupkan mod dalam senarai mod permainan. Peta dan ikonnya muncul selepas permainan dimulakan semula."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "Mod didayakan. Mulakan semula permainan untuk melihat peta dan ikonnya."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Dayakan mod dalam permainan di bawah Mod → Mod Saya, kemudian mulakan semula permainan untuk melihat peta dan ikonnya."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {Mod tidak didayakan: fail senarai mod permainan tidak dapat dibaca.} unexpected-layout {Mod tidak didayakan: fail senarai mod permainan mempunyai susun atur yang tidak dikenali oleh IDE.} duplicate-entry {Mod tidak didayakan: senarai mod permainan menyenaraikan mod ini lebih daripada sekali.} unexpected-entry {Mod tidak didayakan: entri permainan untuk mod ini mempunyai susun atur yang tidak dikenali oleh IDE.} changed {Mod tidak didayakan: permainan mengubah senarai modnya pada masa yang sama.} unsafe-path {Mod tidak didayakan: folder mod atau senarai mod profil ialah pautan ke tempat lain.} other {Mod tidak didayakan: senarai mod permainan tidak dapat disimpan.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Permainan sedang berjalan: perubahan berkuat kuasa selepas dimulakan semula, dan permainan mungkin membatalkannya apabila ditutup. Jika mod masih tidak aktif selepas dimulakan semula, tutup permainan dan pasang mod semula."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Buka folder mod"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Selesai"
+    },
+    "deploy-panel.success.title": {
+      "message": "Mod berjaya dipasang"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "Mod disimpan ke"
+    },
+    "deploy-panel.success.path": {
+      "message": "Laluan mod yang dipasang"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Salin laluan mod"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Laluan mod disalin"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, other {# fail.}} Mod didayakan; mulakan semula permainan untuk melihat peta dan ikonnya."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, other {# fail.}} Dayakan mod dalam permainan di bawah Mod → Mod Saya, kemudian mulakan semula permainan untuk melihat peta dan ikonnya."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "Mod dipasang tetapi tidak didayakan"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Fail senarai mod permainan tidak dapat dibaca, maka fail itu tidak diubah.} unexpected-layout {Fail senarai mod permainan mempunyai susun atur yang tidak dikenali oleh IDE, maka fail itu tidak diubah.} duplicate-entry {Senarai mod permainan menyenaraikan mod ini lebih daripada sekali, maka senarai itu tidak diubah.} unexpected-entry {Entri permainan untuk mod ini mempunyai susun atur yang tidak dikenali oleh IDE, maka entri itu tidak diubah.} changed {Permainan mengubah senarai modnya pada masa yang sama, maka senarai itu dikekalkan seperti yang ditulis oleh permainan.} unsafe-path {Folder mod atau senarai mod profil ialah pautan ke tempat lain, maka ia tidak diubah.} other {Senarai mod permainan tidak dapat disimpan; senarai terdahulu masih dikekalkan.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Dayakan mod dalam permainan di bawah Mod → Mod Saya, kemudian mulakan semula permainan"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "Senarai mod berubah semasa permainan berjalan"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "Perubahan berkuat kuasa selepas dimulakan semula, dan permainan mungkin membatalkannya apabila ditutup. Jika mod masih tidak aktif selepas dimulakan semula, tutup permainan dan pasang mod semula."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "Menggunakan pratonton semasa bagi {name}"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "Pratonton semasa tidak dapat digunakan semula, maka ia dijana semula"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Peta ini tidak dapat dijana untuk pemasangan mod"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "{mod} dipasang ke profil {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "Folder mod tidak dapat dibuka"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Buka direktori sasaran dalam Windows Explorer"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "Direktori sasaran tidak dapat dibuka"
+    },
+    "deploy-panel.target": {
+      "message": "Direktori sasaran"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Salin direktori sasaran"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Direktori sasaran disalin"
+    },
+    "deploy-panel.title": {
+      "message": "Pasang sebagai mod"
+    },
+    "deploy-panel.close": {
+      "message": "Tutup pemasangan mod"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Pilih folder permainan untuk pemasangan mod"
+    },
+    "deploy-panel.source": {
+      "message": "Sumber RMS"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Buka fail utama RMS"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Peta ini tidak dapat dijana, maka ia belum boleh dipasang. Betulkan masalah yang ditunjukkan dalam Keluaran, kemudian buka Pasang sebagai Mod semula."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Peta ini tidak dapat dijana, maka ia belum boleh dipasang. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "Pratonton sumber RMS yang dipilih dibatalkan."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Nama mod"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Pilih eksport terdahulu"
+    },
+    "deploy-panel.profile": {
+      "message": "Profil pengguna"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Pilih profil"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · dicadangkan"
+    },
+    "deploy-panel.tree": {
+      "message": "Pepohon fail pemasangan mod"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Memuatkan pepohon fail pemasangan mod"
+    },
+    "deploy-panel.no-source": {
+      "message": "Buka fail utama .rms atau .rms2 untuk dipasang."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Pasang mod"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Gantikan mod sedia ada?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Setiap fail daripada mod sedia ada {name} akan dibuang."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Gantikan mod"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, other {{count} masalah}}"
+    },
+    "problems-panel.empty": {
+      "message": "Tiada masalah sintaks."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Tiada masalah sepadan dengan penapis ({hidden} tersembunyi)."
+    },
+    "problems-panel.severity.error": {
+      "message": "Ralat"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Amaran"
+    },
+    "problems-panel.severity.info": {
+      "message": "Nota"
+    },
+    "problems-panel.group.file": {
+      "message": "Fail"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Fail permainan"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, other {{count} ralat}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, other {{count} amaran}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, other {{count} nota}}"
+    },
+    "problems-panel.group.show": {
+      "message": "Tunjukkan masalah dalam {file}"
+    },
+    "problems-panel.group.hide": {
+      "message": "Sembunyikan masalah dalam {file}"
+    },
+    "problems-panel.group.label": {
+      "message": "Masalah dalam {file}"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Pergi ke {location}"
+    },
+    "severity-filter.label": {
+      "message": "Penapis keterukan {panel}"
+    },
+    "severity-filter.errors.label": {
+      "message": "Tunjukkan ralat ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Tunjukkan ralat"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Sembunyikan ralat"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Tunjukkan amaran ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Tunjukkan amaran"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Sembunyikan amaran"
+    },
+    "severity-filter.notes.label": {
+      "message": "Tunjukkan nota ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Tunjukkan nota"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Sembunyikan nota"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "Peta dalam {folder} tidak dapat disenaraikan: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "Pemasangan dengan fail permainan yang hilang atau tidak dapat dibaca telah dilangkau."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "Pemasangan yang tidak tersedia telah dilangkau."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Bilangan folder akar sumber terpasang mencapai had keselamatannya."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Bilangan entri sumber terpasang mencapai had keselamatannya."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (belum disahkan)"
+    },
+    "linked-game.content-read": {
+      "message": "Menggunakan data permainan {label}"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, other {{objects} objek, sudah dimuatkan.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, other {{objects} objek, dibaca dalam {milliseconds} ms.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "Data permainan {label} tidak dapat dibaca"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Pratonton versi itu menggunakan data {version} yang disertakan, yang tidak boleh menjana objek dan rupa bumi yang ditambah kemudian."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Perintah tidak dikenali"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Takrif tidak digunakan"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Perintah tiada kesan di sini"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Atribut ditetapkan semula"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Cabang rawak tidak pernah dipilih"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "Cabang pertama berpeluang sifar"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Nilai dihadkan"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Pemalar sudah ditakrifkan"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Bukan komen dalam permainan"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Nombor di tempat nama diperlukan"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Nama mungkin tidak ditakrifkan"
+    },
+    "map-icon.generate": {
+      "message": "Jana ikon peta"
+    },
+    "map-icon.open-larger": {
+      "message": "Buka ikon peta yang lebih besar"
+    },
+    "map-icon.save-image": {
+      "message": "Simpan imej"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Simpan imej…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Menjana ikon peta"
+    },
+    "map-icon.frame.ready": {
+      "message": "Pratonton ikon peta"
+    },
+    "map-icon.frame.original": {
+      "message": "Ikon peta asal"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "Ikon peta asal tidak boleh dipaparkan"
+    },
+    "map-icon.frame.none": {
+      "message": "Tiada ikon peta yang dijana"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Buka fail utama .rms atau .rms2 untuk menjana ikon peta."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "Penjanaan ikon peta memerlukan pratonton sumber ini yang berjaya."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "Penjanaan ikon peta tidak tersedia: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Ikon peta tidak tersedia: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Ikon peta: menjana peta daripada benih {seed}"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "Ikon peta memerlukan pratonton sumber ini yang berjaya."
+    },
+    "map-icon.status.rendering": {
+      "message": "Ikon peta: melukis daripada pratonton semasa"
+    },
+    "map-icon.status.waiting": {
+      "message": "Ikon peta: menunggu pratonton pemasangan mod"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Ikon peta: {file} dijana, menggantikan ikon asal hanya dalam salinan mod yang dipasang ini"
+    },
+    "map-icon.status.generated": {
+      "message": "Ikon peta: {file} dijana daripada pratonton semasa"
+    },
+    "map-icon.status.original": {
+      "message": "Ikon peta: {file} asal daripada folder sumber"
+    },
+    "map-icon.status.none": {
+      "message": "Ikon peta: tiada"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "ikon dijana"
+    },
+    "map-icon.tree.original": {
+      "message": "ikon asal"
+    },
+    "map-icon.render-failed": {
+      "message": "Ikon peta tidak dapat dilukis"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "Pilihan ikon peta tidak diingati"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "Ikon peta daripada benih {seed} tidak dapat dijana"
+    },
+    "map-icon.output.saved": {
+      "message": "Ikon peta disimpan sebagai {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "Ikon peta tidak dapat disimpan"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Tutup pratonton ikon peta"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Ikon peta"
+    },
+    "map-icon.view-tools": {
+      "message": "Paparan ikon peta"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Paparan berlian"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Pandangan atas"
+    },
+    "map-icon.look.minimap": {
+      "message": "Warna peta mini"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Warna tekstur"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Tekstur permainan"
+    },
+    "map-icon.look.pending": {
+      "message": "Menerapkan tekstur permainan"
+    },
+    "map-icon.look.fallback": {
+      "message": "Tekstur permainan tidak tersedia, maka ikon menggunakan warna tekstur."
+    },
+    "map-icon.relief": {
+      "message": "Relief rupa bumi"
+    },
+    "map-icon.relief.hide": {
+      "message": "Sembunyikan relief rupa bumi"
+    },
+    "map-icon.relief.show": {
+      "message": "Tunjukkan relief rupa bumi"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Licinkan peralihan rupa bumi"
+    },
+    "map-icon.random-seed": {
+      "message": "Benih rawak"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Gunakan benih penyunting"
+    },
+    "map-icon.seed": {
+      "message": "Benih ikon peta"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Benih penyunting"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Petak pemain"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Jejak kaki nomad"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Tiada penanda permulaan"
+    },
+    "map-icon.spawn-size": {
+      "message": "Saiz penanda permulaan"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Kecilkan penanda permulaan"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Besarkan penanda permulaan"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "{value}% daripada lebar peta"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Saiz penanda permulaan (% daripada lebar peta)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Tunjukkan pokok"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Sembunyikan pokok"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Pilihan pokok"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "bilangan pokok"
+    },
+    "map-icon.art.trees.size": {
+      "message": "saiz pokok"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Tunjukkan emas dan batu"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Sembunyikan emas dan batu"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Pilihan emas dan batu"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "bilangan emas dan batu"
+    },
+    "map-icon.art.resources.size": {
+      "message": "saiz emas dan batu"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Kurang"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Lebih"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "Satu bagi setiap jenis"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "Satu bagi setiap objek"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Sedikit"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Sederhana"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Banyak"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Lebih kecil"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Lebih besar"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "Paling kecil"
+    },
+    "map-icon.art.size.small": {
+      "message": "Kecil"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Sederhana"
+    },
+    "map-icon.art.size.large": {
+      "message": "Besar"
+    },
+    "map-icon.art.size.largest": {
+      "message": "Paling besar"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Tunjukkan di bawah penanda permulaan"
+    },
+    "workbench.application-menu.label": {
+      "message": "Menu aplikasi"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Runtuhkan penjelajah fail"
+    },
+    "workbench.explorer.expand": {
+      "message": "Kembangkan penjelajah fail"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Runtuhkan Penjelajah"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Kembangkan Penjelajah"
+    },
+    "workbench.explorer.resize": {
+      "message": "Ubah saiz penjelajah fail"
+    },
+    "workbench.preview.resize": {
+      "message": "Ubah saiz pratonton peta langsung"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Peringkat penjanaan langsung ditunjukkan mulai pelaksanaan seterusnya"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Peringkat penjanaan langsung disembunyikan mulai pelaksanaan seterusnya"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Panel Masalah dan Keluaran"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Panel Masalah, Keluaran dan Hasil Ujian"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Ubah saiz panel Masalah dan Keluaran"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Keluaran"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Masalah"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Hasil Ujian"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Keluaran"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Masalah"
+    },
+    "workbench.native.restart-label": {
+      "message": "Mulakan semula proses {name} yang gagal"
+    },
+    "workbench.native.failed": {
+      "message": "{name} gagal"
+    },
+    "workbench.native.restarted": {
+      "message": "{name} dimulakan semula"
+    },
+    "workbench.native.restart-failed": {
+      "message": "{name} tidak dapat dimulakan semula"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} terhenti"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "Laporan ujian {name} diimport"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Laporan ujian peta tidak dapat diimport"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Laporan ujian dieksport"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Laporan ujian peta tidak dapat dieksport"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Dapatan dijana semula dengan benih yang direkodkan"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Dapatan dijana semula dengan benih {seed} yang direkodkan"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "Pautan folder permainan tidak dapat dibuang"
+    },
+    "code-editor.panel.label": {
+      "message": "Penyunting sumber RMS"
+    },
+    "code-editor.tabs.label": {
+      "message": "Fail terbuka"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Tatal tab penyunting ke kiri"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Tatal tab penyunting ke kanan"
+    },
+    "code-editor.tab.close": {
+      "message": "Tutup {name}"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Perubahan belum disimpan"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Baca sahaja"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Perubahan belum disimpan, Baca sahaja"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Pasang sebagai Mod…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Simpan"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Klon / Simpan Sebagai…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Simpan Sebagai…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Tutup"
+    },
+    "code-editor.run.preview": {
+      "message": "Jalankan pratonton"
+    },
+    "code-editor.run.map-test": {
+      "message": "Jalankan ujian peta"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Jalankan pratonton dan ujian langsung"
+    },
+    "code-editor.run.stop": {
+      "message": "Hentikan"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Jalankan ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Jalankan pratonton dan ujian langsung ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Hentikan ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Pilihan pelaksanaan pratonton"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Skrip yang dijalankan"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Pin skrip yang dijalankan"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Benih"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Salin benih"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "Salin benih {seed}"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Benih disalin"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Dikunci"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Rawakkan setiap pelaksanaan"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Gunakan benih perlawanan semasa"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Perlawanan peta rawak pemain tunggal yang aktif dan disahkan diperlukan."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Pilih folder permainan Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Memilih folder permainan Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Mencari folder permainan Age of Empires II: Definitive Edition yang terpasang"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Ujian langsung setiap pelaksanaan"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Jalankan pratonton, kemudian teruskan dalam AoE2DE"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Pilih fail boleh laksana AoE2Control yang sah"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "Pilih AoE2Control"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "Memilih AoE2Control…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "Pilih AoE2Control.exe untuk ujian langsung"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "Memilih AoE2Control.exe untuk ujian langsung"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "Muat turun AoE2Control"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "Buka keluaran AoE2Control"
+    },
+    "code-editor.control.remove.title": {
+      "message": "Buang pilihan AoE2Control?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "Ini membuang pilihan fail boleh laksana AoE2Control dan memutuskan sesi ujian langsung semasa. Ujian langsung seterusnya akan meminta kebenaran semula sebelum menggantikan perlawanan yang sedang berjalan."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Buang"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "Halaman keluaran AoE2Control tidak dapat dibuka"
+    },
+    "code-editor.control-download.title": {
+      "message": "Sebelum mengekstrak AoE2Control"
+    },
+    "code-editor.control-download.description": {
+      "message": "Kata laluan pengekstrakan AoE2Control.zip ialah {password}. Oleh sebab AoE2Control menyuntik DLL untuk menjalankan Lua dalam permainan, alat antivirus heuristik—termasuk Windows Defender—mungkin menandainya sebagai positif palsu. Tambahkan pengecualian folder antivirus untuk fail yang diekstrak supaya enjin boleh berjalan tanpa gangguan."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Faham"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Runtuhkan pratonton peta langsung"
+    },
+    "code-editor.preview.expand": {
+      "message": "Kembangkan pratonton peta langsung"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Runtuhkan Pratonton"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Kembangkan Pratonton"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Tutup notis kegagalan pelaksanaan skrip"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Kerja yang belum disimpan dipulihkan"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Tutup notis pemulihan"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "Pratonton kini menggunakan tekstur permainan anda"
+    },
+    "code-editor.font-size.label": {
+      "message": "Saiz fon penyunting"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent}%"
+    },
+    "code-editor.read-only-message": {
+      "message": "Sumber pemasangan atau mod langganan ini dilindungi. Gunakan Klon atau Simpan Sebagai."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Buka Fail Include"
+    },
+    "code-editor.include.open": {
+      "message": "Buka {name}"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "Penamaan semula tidak selamat dari segi semantik di sini."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "Kesetaraan ketat tidak dapat dibuktikan."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} ialah fail permainan yang dilindungi; penamaan semula akan mengubahnya."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "Abaikan {code} pada baris ini"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "Matikan {code} dalam ruang kerja ini"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Model penyunting tidak tersedia."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "Identiti bahasa berubah."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Dokumen berubah sebelum pemformatan bermula."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Dokumen berubah semasa menunggu pemformatan."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "Permintaan dibatalkan."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Pemformatan tidak tersedia selagi sumber Starlark tidak sah."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "Pemformatan memerlukan inden empat ruang yang sudah sah; struktur token tidak diubah."
+    },
+    "code-editor.completion.content.object": {
+      "message": "objek {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "rupa bumi {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Ujian peta"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Terbina dalam Starlark"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Kaedah {type} Starlark"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Fungsi Starlark yang ditakrifkan terdahulu"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Parameter fungsi Starlark"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Pemboleh ubah Starlark yang ditakrifkan terdahulu"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Pemboleh ubah gelung Starlark"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} telah ditakrifkan lebih awal dalam dokumen ini."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Fungsi Starlark"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "Sumber RMS dan XS"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "Sumber RMS, XS dan Ujian Peta"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Buka fail sumber"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "Buka folder RMS"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Simpan sumber sebagai"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Laporan Ujian Peta"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Eksport Laporan Ujian Peta"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Import Laporan Ujian Peta"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Pilih folder Age of Empires II: Definitive Edition"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Pilih folder induk untuk klon peta yang boleh disunting"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "Pilih fail boleh laksana AoE2Control"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "Fail boleh laksana AoE2Control"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Simpan ikon peta"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "Imej PNG"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Fail include tidak dapat dimuat semula"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "Sesi tidak dapat dikemas kini selepas pemadaman"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Sesetengah folder tidak dapat ditunjukkan dalam Penjelajah"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, other {Fail ruang kerja mempunyai nama yang sama dengan fail pustaka permainan}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Fail ini masih boleh disunting, tetapi include mungkin memilih fail permainan sebagai gantinya."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, other {{paths, list, unit}, dan {count} lagi. Fail ini masih boleh disunting, tetapi include mungkin memilih fail permainan sebagai gantinya.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Namakan semula fail itu"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "Semakan nama fail pustaka permainan tidak lengkap"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Tiada apa-apa dibuka"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, other {Permintaan menyenaraikan lebih daripada {count} fail dan folder.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "Laluan dalam permintaan lebih panjang daripada yang diterima oleh AoE2RMSIDE."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Terlalu banyak permintaan buka diterima serentak. Buka item yang selebihnya semula."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "{name} tidak dibuka"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Ia tidak wujud atau tidak dapat dicapai."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Ia bukan laluan fail atau folder yang sah."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE membuka folder serta fail .rms, .rms2, .inc, .def dan .xs."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE membuka folder serta fail .rms, .rms2, .inc, .def, .xs dan .rmstest."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Satu folder dibuka pada satu masa."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Satu folder dibuka pada satu masa; {folder} dibuka sebagai folder tersebut."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Ia tidak dapat dibaca."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, other {# lagi item tidak dibuka}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Item itu tidak wujud, tidak dapat dibaca atau bukan fail yang boleh dibuka oleh AoE2RMSIDE."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "entri dengan nama itu sudah wujud"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "entri dengan nama itu, atau alias nama pendeknya, sudah wujud"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "nama tidak sah sebagai nama fail atau folder Windows"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "hanya fail sumber .rms, .rms2, .inc, .def dan .xs disokong"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "hanya fail sumber .rms, .rms2, .inc, .def, .rmstest dan .xs disokong"
+    },
+    "file-actions.entry.read-only": {
+      "message": "entri ruang kerja ialah baca sahaja atau dilindungi"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "akar ruang kerja tidak boleh dinamakan semula atau dipadam"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "''{name}'' dikhaskan untuk sumber permainan standard; pilih nama fail lain."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Kerja yang belum disimpan daripada sesi terakhir tidak dapat dibaca dan dilangkau"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "Folder ruang kerja yang dipulihkan tidak tersedia."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "Folder ruang kerja terdahulu tidak tersedia dan dilangkau."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "Tab sesi {name} yang tidak tersedia dilangkau."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "{name} dipulihkan sebagai penimbal yang belum disimpan kerana sumbernya tidak tersedia."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, other {{converted} fail rupa bumi ditukar dan {reused} diguna semula daripada permainan yang dipautkan dalam {seconds, number, ::.0 group-off} s}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Cache setempat {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, other {{count} fail rupa bumi tidak dapat ditukar dan menggunakan warna peta mini}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Contohnya {asset}: {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Objek {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Rupa bumi {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Tembok {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Pemain {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Objek pembantu"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Tebing"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Jenis tebing {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Sambungan darat"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Sambungan air"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Sambungan jalan"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Sambungan tidak diketahui"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Carian sambungan tanpa laluan"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Pilihan pratonton kabur: {layer} · {count, plural, other {{count} dipilih}} · {sources, plural, other {{sources} sumber berbeza}} · menggunakan {location}."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Rumput"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Air cetek"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Air"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Pantai"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Tanah"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Batu"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Tanah"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Permukaan tebing"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Darat"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Ketinggian"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Tebing"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Rupa bumi"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Sambungan"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Objek"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Selesai"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Menjana · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Sampel {sample} (benih {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Sampel {sample} (benih {seed}) selesai · kelompok masih berjalan"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Kekunci Arrow memilih petak, Shift+Arrow meluaskan pilihan, Ctrl+Arrow mengalih pandangan, tambah dan tolak mengezum, 0 memuatkan peta pada paparan, Ctrl+A memilih seluruh peta, Escape mengosongkan pilihan."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Pilihan dikosongkan"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Petak {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "Petak {fromX}, {fromY} hingga {toX}, {toY}, {count, plural, other {{count} petak}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Tiada lapisan"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, other {{count} lapisan}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, other {{count} lapisan}}: {shown, list, unit}, dan {more} lagi"
+    },
+    "preview-panel.run.include-only": {
+      "message": "Dokumen .inc, .def dan .xs hanya untuk include dan tidak boleh dijalankan."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Objek dan tapak Pusat Bandar"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Pinggir tebing"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Perubahan rupa bumi sambungan"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Garisan sambungan"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Garisan sambungan dimatikan"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "Laluan sambungan yang dijejak"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "{shown, number} daripada {total, number} laluan ditunjukkan"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "Laluan yang dijejak ditunjukkan setelah peta siap"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "Laluan yang dijejak tidak tersedia untuk peta ini"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Ketinggian dimatikan"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Relief rupa bumi"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Peta ketinggian"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Pandangan atas"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Paparan berlian"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Warna peta mini"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Warna tekstur"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Tekstur permainan"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Menerapkan tekstur permainan"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Grid petak"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "pratonton peta dari atas dengan warna peta mini"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "pratonton peta dari atas dengan warna tekstur"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "pratonton peta dari atas dengan tekstur permainan"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "pratonton peta berlian 2 berbanding 1 dengan warna peta mini"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "pratonton peta berlian 2 berbanding 1 dengan warna tekstur"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "pratonton peta berlian 2 berbanding 1 dengan tekstur permainan"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "peta"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Pratonton peta bersedia"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Pratonton peta dikemas kini"
+    },
+    "preview-panel.panel.label": {
+      "message": "Pratonton peta langsung"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Kawalan paparan peta"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Lapisan sambungan"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Kekunci Arrow memilih petak"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "Status pratonton"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Belum diperakui"
+    },
+    "preview-panel.status.seed": {
+      "message": "Benih {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Semakan {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "penjanaan"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "Cache {entries} · {hits} penggunaan semula"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Menyunting"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Menganalisis"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Tidak berubah"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Lapuk - Sumber Tidak Sah"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Menjana"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "Terkini"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Lapuk - Penjanaan Gagal"
+    },
+    "preview-panel.legend.label": {
+      "message": "Petunjuk lapisan petak terpilih"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Tapis item terpilih"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Kosongkan penapis item terpilih"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Tapis"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Tiada item sepadan"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Baris lapisan terpilih"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, {count} dipilih setakat ini"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Buka sumber untuk {name}, {count} dipilih"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Tunjukkan objek pembantu ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Sembunyikan objek pembantu ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Data ujian pembangunan dalaman"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Data ujian dalaman · Belum diperakui"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Dalaman · Belum diperakui"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "Jalankan data ujian {fixture}"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Membaca"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Membaca katalog grafik permainan"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Membaca katalog grafik permainan, {percent}% ({completed} daripada {total} {unit, select, graphics {grafik} other {fail}})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "Mengimport"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Mengimport tekstur rupa bumi"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Mengimport tekstur rupa bumi, {percent}% ({completed} daripada {total} {unit, select, graphics {grafik} other {fail}})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Mengadun"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Mengadun peralihan rupa bumi"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Mengadun peralihan rupa bumi, {percent}% ({completed} daripada {total} {unit, select, graphics {grafik} other {fail}})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Menopeng"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Menyediakan topeng tindihan rupa bumi"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Menyediakan topeng tindihan rupa bumi, {percent}% ({completed} daripada {total} {unit, select, graphics {grafik} other {fail}})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Sprite"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Menukar sprite objek peta ini"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Menukar sprite objek peta ini, {percent}% ({completed} daripada {total} {unit, select, graphics {grafik} other {fail}})"
+    },
+    "game-art.progress.label": {
+      "message": "Menukar grafik permainan"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, other {{count} jenis objek tiada sprite daripada permainan yang dipautkan dan mengekalkan simbol peta mininya: {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, other {{count} jenis objek tiada sprite daripada permainan yang dipautkan dan mengekalkan simbol peta mininya: {names, list, unit}, dan {more} lagi}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (objek {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "objek {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, other {{count} bahagian tebing tiada sprite daripada permainan yang dipautkan dan mengekalkan garisan tebingnya}}"
+    },
+    "profiler.group.parse": {
+      "message": "Penghuraian"
+    },
+    "profiler.group.setup": {
+      "message": "Persediaan"
+    },
+    "profiler.group.land": {
+      "message": "Darat"
+    },
+    "profiler.group.elevation": {
+      "message": "Ketinggian"
+    },
+    "profiler.group.cliffs": {
+      "message": "Tebing"
+    },
+    "profiler.group.terrain": {
+      "message": "Rupa bumi"
+    },
+    "profiler.group.connections": {
+      "message": "Sambungan"
+    },
+    "profiler.group.objects": {
+      "message": "Objek"
+    },
+    "profiler.group.finalize": {
+      "message": "Pemuktamadan"
+    },
+    "profiler.step.parse-script": {
+      "message": "Penghuraian skrip"
+    },
+    "profiler.step.setup-players": {
+      "message": "Persediaan pemain"
+    },
+    "profiler.step.land-generate": {
+      "message": "Penjanaan darat"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Penjanaan ketinggian"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Penjanaan tebing"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Penjanaan rupa bumi"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Penjanaan sambungan"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Peletakan objek"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Pemuktamadan mod permainan"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Penyusunan objek"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Rupa bumi komposit"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, other {# operasi}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, other {# cabutan RNG}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, other {# calon}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, other {# petak}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, other {# carian laluan}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, other {# kerja laluan}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, other {# penolakan}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, other {# objek}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, other {# petak diperiksa}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, other {# dikembangkan}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Petak yang diambil dan diuji semasa darat berkembang; petak yang dikembangkan menyertai kawasan darat."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, other {# petak diperiksa semasa pengembangan}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, other {# ditinggikan}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Petak yang diambil dan diuji semasa bukit berkembang. Petak yang ditinggikan juga merangkumi petak permulaan setiap bukit, yang tidak dikira sebagai diperiksa."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, other {# kedudukan tebing dipertimbangkan}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Kedudukan pada peta yang boleh diletakkan tebing."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, other {# carian laluan}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, other {# langkah carian}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, other {# petak diwarnakan}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Setiap carian mencari laluan antara dua titik sambungan; petak yang diwarnakan mengira setiap perubahan rupa bumi sepanjang laluan itu."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, other {# lokasi berpotensi}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, other {# kumpulan ditolak}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, other {# objek diletakkan}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Lokasi berpotensi dikira bagi setiap cubaan peletakan, maka satu petak boleh dikira lebih daripada sekali. Kumpulan ditolak setiap kali lokasi gagal semakan atau tiada lokasi yang tinggal."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "Menunggu langkah pertama selesai"
+    },
+    "profiler.pending.group": {
+      "message": "{group} sedang berjalan"
+    },
+    "profiler.pending.step": {
+      "message": "{step} sedang berjalan"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0.1%"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off}%"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off}%"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "kurang daripada 0.1 peratus"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "{percent, number, ::precision-integer group-off} peratus"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} peratus"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Pemprofil pelaksanaan: menjana, menunggu enjin"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Pemprofil pelaksanaan: menjana, menunggu enjin, {seconds, number, ::.00 group-off} saat"
+    },
+    "profiler.status.running.steps": {
+      "message": "Pemprofil pelaksanaan: menjana, {completed} daripada {total} langkah selesai"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Pemprofil pelaksanaan: menjana, {completed} daripada {total} langkah selesai, {seconds, number, ::.00 group-off} saat"
+    },
+    "profiler.status.cached": {
+      "message": "Pemprofil pelaksanaan: pelaksanaan daripada cache, {seconds, number, ::.00 group-off} saat, diukur semasa pratonton ini mula-mula dijana"
+    },
+    "profiler.status.committed": {
+      "message": "Pemprofil pelaksanaan: {seconds, number, ::.00 group-off} saat pelaksanaan RMS"
+    },
+    "profiler.status.unsupported": {
+      "message": "Pemprofil pelaksanaan: tiada ukuran bagi pratonton ini"
+    },
+    "profiler.status.idle": {
+      "message": "Pemprofil pelaksanaan"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Menjana, menunggu enjin"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Menjana, {completed} daripada {total} langkah"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Kos pelaksanaan (daripada cache)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Kos pelaksanaan"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Tiada ukuran kos pelaksanaan"
+    },
+    "profiler.description": {
+      "message": "Petunjuk anggaran kerumitan setempat daripada satu pelaksanaan pada komputer ini, bukan ramalan masa penjanaan dalam permainan."
+    },
+    "profiler.description.cached": {
+      "message": "Pelaksanaan daripada cache: diukur semasa pratonton ini mula-mula dijana; enjin tidak dijalankan semula. Petunjuk anggaran kerumitan setempat daripada satu pelaksanaan pada komputer ini, bukan ramalan masa penjanaan dalam permainan."
+    },
+    "profiler.description.map-test": {
+      "message": "Diukur semasa ujian peta yang sampelnya mungkin dijalankan serentak. Petunjuk anggaran kerumitan setempat daripada satu pelaksanaan pada komputer ini, bukan ramalan masa penjanaan dalam permainan."
+    },
+    "profiler.panel.label": {
+      "message": "Pemprofil kos pelaksanaan"
+    },
+    "profiler.panel.steps": {
+      "message": "Langkah pelaksanaan"
+    },
+    "profiler.panel.table": {
+      "message": "Langkah pelaksanaan mengikut masa"
+    },
+    "profiler.panel.empty": {
+      "message": "Pratonton ini tiada ukuran kos pelaksanaan."
+    },
+    "profiler.chart.label": {
+      "message": "Masa pelaksanaan RMS mengikut kumpulan penjanaan"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Lulus"
+    },
+    "test-results.results.status.failed": {
+      "message": "Gagal"
+    },
+    "test-results.results.status.error": {
+      "message": "Ralat"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Dihentikan"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, other {# dapatan}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{findings, plural, other {# dapatan}} pada {seeds, plural, other {# benih}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, other {# peta}} · {assertions, plural, other {# penegasan}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, baris {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Semakan pada baris {line}"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Tiada dapatan. Setiap semakan lulus pada peta itu.} other {Tiada dapatan. Setiap semakan lulus pada kesemua # peta.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Tiada dapatan. Ujian tidak membuat semakan pada {maps, plural, other {# petanya}}."
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Eksport"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Simpan hasil ini sebagai fail laporan. Skrip anda, peta yang dijana dan laluan fail penuh tidak disertakan."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, other {{count} dapatan ujian peta}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Pergi ke {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "Semakan"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Sembunyikan dapatan semakan pada baris {line}"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Tunjukkan dapatan semakan pada baris {line}"
+    },
+    "test-results.results.check-findings": {
+      "message": "Dapatan semakan pada baris {line}"
+    },
+    "test-results.results.show-more": {
+      "message": "Tunjukkan {count} lagi"
+    },
+    "test-results.results.not-shown": {
+      "message": "· {count, number} tidak ditunjukkan"
+    },
+    "test-results.results.show-seed": {
+      "message": "Tunjukkan benih {seed} bagi {map} dalam pratonton"
+    },
+    "test-results.results.seed": {
+      "message": "benih {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Dapatan"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Sangat kecil"
+    },
+    "game-options.map-size.small": {
+      "message": "Kecil"
+    },
+    "game-options.map-size.medium": {
+      "message": "Sederhana"
+    },
+    "game-options.map-size.normal": {
+      "message": "Biasa"
+    },
+    "game-options.map-size.large": {
+      "message": "Besar"
+    },
+    "game-options.map-size.huge": {
+      "message": "Amat besar"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Luar biasa besar"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Peta Rawak"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Pembunuhan Raja"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "Perlawanan Mati"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "Raja Bukit"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "Perlumbaan Bina Struktur"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Pertahanan Struktur Keajaiban"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Peta Rawak Turbo"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Tawan Relik"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Kalah Mati"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Battle Royale"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "Perang Empayar"
+    },
+    "game-options.resources.standard": {
+      "message": "Sumber standard"
+    },
+    "game-options.resources.low": {
+      "message": "Sumber rendah"
+    },
+    "game-options.resources.medium": {
+      "message": "Sumber sederhana"
+    },
+    "game-options.resources.high": {
+      "message": "Sumber tinggi"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Sumber amat tinggi"
+    },
+    "game-options.resources.infinite": {
+      "message": "Sumber tanpa had"
+    },
+    "game-options.resources.random": {
+      "message": "Sumber rawak"
+    },
+    "game-options.age.standard": {
+      "message": "Zaman permulaan standard"
+    },
+    "game-options.age.dark-age": {
+      "message": "Zaman Kelam"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Zaman Feudal"
+    },
+    "game-options.age.castle-age": {
+      "message": "Zaman Kastil"
+    },
+    "game-options.age.imperial-age": {
+      "message": "Zaman Empayar"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "Zaman Pascaempayar"
+    },
+    "game-options.positions.random": {
+      "message": "Kedudukan rawak"
+    },
+    "game-options.positions.fixed": {
+      "message": "Kedudukan tetap"
+    },
+    "game-options.positions.team-together": {
+      "message": "Pasukan bersama"
+    },
+    "game-options.color.blue": {
+      "message": "Biru"
+    },
+    "game-options.color.red": {
+      "message": "Merah"
+    },
+    "game-options.color.green": {
+      "message": "Hijau"
+    },
+    "game-options.color.yellow": {
+      "message": "Kuning"
+    },
+    "game-options.color.cyan": {
+      "message": "Sian"
+    },
+    "game-options.color.purple": {
+      "message": "Ungu"
+    },
+    "game-options.color.gray": {
+      "message": "Kelabu"
+    },
+    "game-options.color.orange": {
+      "message": "Jingga"
+    },
+    "game-options.team.none": {
+      "message": "Tiada pasukan"
+    },
+    "game-options.team.numbered": {
+      "message": "Pasukan {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "Turbo"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Pokok tekno penuh"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Zaman Purba"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Ladang pepejal"
+    },
+    "game-options.civilization.random": {
+      "message": "Rawak"
+    },
+    "game-options.civilization.britons": {
+      "message": "Orang British"
+    },
+    "game-options.civilization.franks": {
+      "message": "Orang Frank"
+    },
+    "game-options.civilization.goths": {
+      "message": "Orang Goth"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Orang Teuton"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Orang Jepun"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Orang Cina"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Orang Byzantine"
+    },
+    "game-options.civilization.persians": {
+      "message": "Orang Parsi"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Orang Saracen"
+    },
+    "game-options.civilization.turks": {
+      "message": "Orang Turki"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Orang Viking"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Orang Mongol"
+    },
+    "game-options.civilization.celts": {
+      "message": "Orang Celt"
+    },
+    "game-options.civilization.spanish": {
+      "message": "Orang Sepanyol"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Orang Aztec"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Orang Maya"
+    },
+    "game-options.civilization.huns": {
+      "message": "Orang Hun"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Orang Korea"
+    },
+    "game-options.civilization.italians": {
+      "message": "Orang Itali"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Orang Hindustan"
+    },
+    "game-options.civilization.incas": {
+      "message": "Orang Inca"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Orang Magyar"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Orang Slavik"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Orang Portugis"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Orang Etiopia"
+    },
+    "game-options.civilization.malians": {
+      "message": "Orang Mali"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Orang Berber"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Orang Khmer"
+    },
+    "game-options.civilization.malay": {
+      "message": "Orang Melayu"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Orang Burma"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "Orang Vietnam"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Orang Bulgaria"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Orang Tatar"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Orang Cuman"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Orang Lithuania"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Orang Burgundy"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Orang Sicily"
+    },
+    "game-options.civilization.poles": {
+      "message": "Orang Poland"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Orang Bohemia"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Orang Dravidia"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Orang Bengali"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Orang Gurjara"
+    },
+    "game-options.civilization.romans": {
+      "message": "Orang Rom"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Orang Armenia"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Orang Georgia"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Orang Achaemenid"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Orang Athens"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Orang Sparta"
+    },
+    "game-options.civilization.shu": {
+      "message": "Orang Shu"
+    },
+    "game-options.civilization.wu": {
+      "message": "Orang Wu"
+    },
+    "game-options.civilization.wei": {
+      "message": "Orang Wei"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Orang Jurchen"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Orang Khitan"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Orang Macedonian"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Orang Thrace"
+    },
+    "game-options.civilization.puru": {
+      "message": "Orang Puru"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Orang Muisca"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Orang Mapuche"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Orang Tupi"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Orang Saxon"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Orang Varangian"
+    },
+    "game-options.civilization.danes": {
+      "message": "Orang Denmark"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Tamadun {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Pratonton"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Menjana pratonton (langkah {step} daripada {total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Menyambung"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "Menyambung ke AoE2Control (langkah {step} daripada {total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Menyemak"
+    },
+    "live-test.progress.ending": {
+      "message": "Menamatkan"
+    },
+    "live-test.progress.copying": {
+      "message": "Menyalin"
+    },
+    "live-test.progress.selecting": {
+      "message": "Memilih"
+    },
+    "live-test.progress.starting": {
+      "message": "Memulakan"
+    },
+    "live-test.progress.verifying": {
+      "message": "Mengesahkan"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Mengesahkan perlawanan (langkah {step} daripada {total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Menunggu"
+    },
+    "live-test.progress.verified": {
+      "message": "Disahkan"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Perlawanan disahkan"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "Menyemak AoE2Control (langkah {step} daripada {total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Menyemak permainan (langkah {step} daripada {total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Menamatkan perlawanan semasa (langkah {step} daripada {total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Menyalin peta ke permainan (langkah {step} daripada {total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Memilih peta dalam permainan (langkah {step} daripada {total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Memulakan perlawanan (langkah {step} daripada {total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "Menunggu AoE2Control terdahulu dikeluarkan (langkah {step} daripada {total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "Menunggu AoE2Control bermula dalam permainan (langkah {step} daripada {total})"
+    },
+    "live-test.progress.label": {
+      "message": "Ujian langsung"
+    },
+    "live-test.replace-match.title": {
+      "message": "Gantikan perlawanan aktif?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE akan menamatkan perlawanan pemain tunggal dan memulakan semakan pratonton ini. Ia tidak akan meminta kebenaran lagi sehingga anda membuang pilihan AoE2Control."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Tamatkan dan Gantikan Perlawanan"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Pilih fail boleh laksana AoE2Control yang sah dahulu."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Konfigurasikan AoE2Control untuk membaca benih perlawanan semasa."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control sedang menyambung. Cuba lagi selepas pengesahan sambungan selesai."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "Bacaan semula perlawanan tidak tersedia. Sambungkan semula AoE2Control dan cuba lagi."
+    },
+    "live-test.seed.replay": {
+      "message": "Benih rakaman permainan tidak boleh diimport."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Benih perlawanan berbilang pemain tidak boleh diimport."
+    },
+    "live-test.seed.state-changing": {
+      "message": "Keadaan perlawanan sedang berubah atau tidak diketahui. Tunggu sebentar dan cuba lagi."
+    },
+    "live-test.seed.no-match": {
+      "message": "Mulakan perlawanan peta rawak pemain tunggal yang disokong dahulu."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "Persediaan perlawanan aktif tidak dapat dibaca. Sambungkan semula AoE2Control dan cuba lagi."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "Perlawanan aktif bukan perlawanan Peta Rawak yang disokong."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "Benih perlawanan aktif tidak dapat dibaca. Sambungkan semula AoE2Control dan cuba lagi."
+    },
+    "live-test.seed.busy": {
+      "message": "Operasi AoE2Control sedang berjalan."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control tidak mengembalikan benih perlawanan."
+    },
+    "live-test.control.missing": {
+      "message": "Fail boleh laksana yang dipilih telah dipindahkan atau dibuang."
+    },
+    "live-test.control.changed": {
+      "message": "Fail boleh laksana yang dipilih telah berubah. Pilih semula untuk mempercayai fail baharu itu."
+    },
+    "live-test.control.invalid": {
+      "message": "Fail yang dipilih bukan fail boleh laksana awam AoE2Control yang sah."
+    },
+    "workspace.format.save-skipped": {
+      "message": "Pemformatan semasa simpan dilangkau bagi {name}"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "Penyimpanan {name} dibatalkan"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} ialah baca sahaja dan tidak diformat"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} sudah diformat"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} tidak diformat"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "Pemformat tidak selesai dalam masa yang ditetapkan."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "Kesetaraan ketat tidak dapat dibuktikan."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Permintaan pemformatan menjadi lapuk."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} dipadam di luar AoE2RMSIDE"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "Teksnya kekal terbuka dalam penyunting."
+    },
+    "workspace.files.reloaded": {
+      "message": "{name} dimuat semula selepas berubah pada cakera"
+    },
+    "workspace.recovery.restored": {
+      "message": "{count, plural, other {{count} penimbal yang belum disimpan dipulihkan}} daripada sesi terdahulu"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "Fail sumber tidak ditulis ganti."
+    },
+    "workspace.failed.save": {
+      "message": "Fail tidak dapat disimpan"
+    },
+    "workspace.failed.open-file": {
+      "message": "Fail tidak dapat dibuka"
+    },
+    "workspace.failed.open-folder": {
+      "message": "Folder tidak dapat dibuka"
+    },
+    "workspace.failed.open-recent": {
+      "message": "Item terkini tidak dapat dibuka"
+    },
+    "workspace.failed.open-requested": {
+      "message": "Item yang diminta tidak dapat dibuka"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "Item yang dilepaskan tidak dapat dibuka"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Skrip di sebalik item peta ini tidak dapat dibuka"
+    },
+    "workspace.failed.create": {
+      "message": "Item tidak dapat dicipta"
+    },
+    "workspace.failed.rename": {
+      "message": "Item tidak dapat dinamakan semula"
+    },
+    "workspace.failed.delete": {
+      "message": "Item tidak dapat dipadam"
+    },
+    "workspace.failed.restore-session": {
+      "message": "Sesi terdahulu tidak dapat dipulihkan"
+    },
+    "workspace.failed.back-up": {
+      "message": "Kerja yang belum disimpan tidak dapat disandarkan"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Gunakan folder sumber yang lebih kecil atau tutup beberapa tab sumber, kemudian cuba lagi."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Sesetengah diagnostik penyunting dilangkau kerana baris gilir kemas kini penuh."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "Bantuan penyunting terhad"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Semak Butiran untuk sumber yang terjejas, kemudian cuba lagi."
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Sesetengah semakan penyunting tidak dapat menggunakan fail sumber semasa."
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "kedalaman folder"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "entri direktori"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "metadata nama (bait)"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "laluan include"
+    },
+    "file-actions.included-files.changed": {
+      "message": "Sumber berubah semasa include diperiksa. Jalankan semula."
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "Penemuan include melebihi had {budget} bagi {scope}: {used, number, integer} digunakan; had {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Gunakan folder include yang lebih kecil atau kurangkan include yang diperlukan."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "Sumber untuk ujian peta tidak dapat disediakan"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "Ujian peta melebihi had data sumber {limit, number, integer} MiB. Jalankan lebih sedikit peta dalam satu ujian."
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "Ujian peta melebihi had {limit, number, integer} peta. Jalankan lebih sedikit peta dalam satu ujian."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "Ujian peta melebihi had metadata sumber {limit, number, integer} MiB. Jalankan lebih sedikit peta dalam satu ujian."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "Ujian peta melebihi had {limit, number, integer} rekod sumber. Jalankan lebih sedikit peta dalam satu ujian."
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} melebihi had setiap fail {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "Fail sumber yang diperlukan melebihi had keseluruhan {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Fail sumber yang diperlukan melebihi had {limit, number, integer} fail."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "Maklumat sumber yang diperlukan melebihi had metadata {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Kurangkan data sumber yang diperlukan, kemudian jalankan semula."
+    },
+    "release-check.newer.headline": {
+      "message": "AoE2RMSIDE {version} kini tersedia"
+    },
+    "release-check.newer.cause": {
+      "message": "Anda menggunakan {current}."
+    },
+    "release-check.newer.action": {
+      "message": "Buka halaman keluaran"
+    }
+  }
+}

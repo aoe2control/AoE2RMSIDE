@@ -1,0 +1,4386 @@
+{
+  "$schema": "https://rmside.invalid/schemas/rms-documentation-catalog/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "catalogId": "aoe2de-rms-documentation-v1",
+  "profiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+  "sources": [
+    {
+      "id": "strict-parser",
+      "title": "RMSIDE strict parser and command table",
+      "role": "primary"
+    },
+    {
+      "id": "exact-engine",
+      "title": "RMSIDE exact generation engine",
+      "role": "primary"
+    },
+    {
+      "id": "setup-context",
+      "title": "RMSIDE setup context and its run-setting labels",
+      "role": "primary"
+    },
+    {
+      "id": "support-bundles",
+      "title": "Packaged support bundles: the built-in names and values of each shipped profile",
+      "role": "primary"
+    },
+    {
+      "id": "community-guide",
+      "title": "Community random map scripting documentation, chiefly Zetnus' Definitive Random Map Scripting Guide; research evidence only, no text reproduced",
+      "role": "research"
+    }
+  ],
+  "terms": [
+    {
+      "name": "<PLAYER_SETUP>",
+      "kind": "section",
+      "summary": "Starts the section that decides how players are placed on the map.",
+      "details": [
+        "It holds `random_placement`, `grouped_by_team`, `direct_placement`, `nomad_resources`, and `force_nomad_treaty`; those commands have no effect in any other section.",
+        "Sections may appear in any order and more than once; a header only decides where the commands after it belong. The game always generates player setup, lands, elevation, cliffs, terrains, connections, and objects in that order, whatever the order in the script."
+      ],
+      "example": ["<PLAYER_SETUP>", "random_placement"],
+      "related": ["<LAND_GENERATION>", "random_placement", "direct_placement"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "<LAND_GENERATION>",
+      "kind": "section",
+      "summary": "Starts the section that lays the base terrain and grows the lands: one for each player and any number of neutral ones.",
+      "details": [
+        "Outside blocks it takes `base_terrain` and `base_layer`; `create_player_lands` and `create_land` open the blocks that describe each land. The lands paint their starting squares in script order and then grow together, one tile per land at a time, until each reaches its size.",
+        "Sections may appear in any order and more than once; a header only decides where the commands after it belong. The game always generates player setup, lands, elevation, cliffs, terrains, connections, and objects in that order, whatever the order in the script."
+      ],
+      "example": [
+        "<LAND_GENERATION>",
+        "base_terrain WATER",
+        "create_player_lands",
+        "{",
+        "    terrain_type GRASS",
+        "    land_percent 70",
+        "}"
+      ],
+      "related": ["create_player_lands", "create_land", "base_terrain"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "<ELEVATION_GENERATION>",
+      "kind": "section",
+      "summary": "Starts the section that raises hills with `create_elevation`.",
+      "details": [
+        "Elevation runs after the lands and before cliffs and terrains, so its `base_terrain` filters see the terrain the lands left. Whether or not the section exists, the heights are smoothed afterwards so that neighbouring tiles differ by at most one level.",
+        "Sections may appear in any order and more than once; a header only decides where the commands after it belong. The game always generates player setup, lands, elevation, cliffs, terrains, connections, and objects in that order, whatever the order in the script."
+      ],
+      "related": ["create_elevation", "<CLIFF_GENERATION>"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "<CLIFF_GENERATION>",
+      "kind": "section",
+      "summary": "Starts the section that draws cliffs; its commands set their number, length, shape, and spacing.",
+      "details": [
+        "Cliffs are only made when the section holds at least one command: a header alone makes none, while any one setting, even at its default value, is enough. The commands are read outside blocks only; anything inside braces is ignored. Cliffs keep clear of every land origin and of water.",
+        "Sections may appear in any order and more than once; a header only decides where the commands after it belong. The game always generates player setup, lands, elevation, cliffs, terrains, connections, and objects in that order, whatever the order in the script."
+      ],
+      "example": [
+        "<CLIFF_GENERATION>",
+        "min_number_of_cliffs 2",
+        "max_number_of_cliffs 5",
+        "cliff_curliness 20"
+      ],
+      "related": ["cliff_type", "min_number_of_cliffs", "min_length_of_cliff"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "An empty section makes no cliffs in our engine; a community guide says a bare header makes default cliffs."
+      }
+    },
+    {
+      "name": "<TERRAIN_GENERATION>",
+      "kind": "section",
+      "summary": "Starts the section that paints terrains in clumps with `create_terrain`.",
+      "details": [
+        "Each `create_terrain` paints in script order on top of what the lands, cliffs, and earlier terrains left, so a later terrain can use an earlier one as its `base_terrain`.",
+        "Sections may appear in any order and more than once; a header only decides where the commands after it belong. The game always generates player setup, lands, elevation, cliffs, terrains, connections, and objects in that order, whatever the order in the script."
+      ],
+      "related": ["create_terrain", "<CONNECTION_GENERATION>"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "<CONNECTION_GENERATION>",
+      "kind": "section",
+      "summary": "Starts the section that paints paths between lands, for example roads or shallows across water.",
+      "details": [
+        "Each `create_connect_…` command chooses which lands to join; its block sets what paths cost to cross each terrain and what they paint. After the connections, land next to water gets its shore terrain.",
+        "Sections may appear in any order and more than once; a header only decides where the commands after it belong. The game always generates player setup, lands, elevation, cliffs, terrains, connections, and objects in that order, whatever the order in the script."
+      ],
+      "related": ["create_connect_all_players_land", "accumulate_connections", "terrain_cost"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "<OBJECTS_GENERATION>",
+      "kind": "section",
+      "summary": "Starts the section that places objects: units, buildings, resources, and decorations.",
+      "details": [
+        "Objects are placed in script order, and each placement takes up space that later commands cannot use. `create_object` places one kind of object, `create_object_group` names a weighted set of kinds, and `create_actor_area` marks an area for later rules.",
+        "Sections may appear in any order and more than once; a header only decides where the commands after it belong. The game always generates player setup, lands, elevation, cliffs, terrains, connections, and objects in that order, whatever the order in the script."
+      ],
+      "related": ["create_object", "create_object_group", "create_actor_area"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "#define",
+      "kind": "directive",
+      "summary": "Defines a label, so that `if` with that label holds.",
+      "parameters": [
+        {
+          "name": "name",
+          "kind": "name",
+          "description": "The label to define."
+        }
+      ],
+      "details": [
+        "Used as a number the label stands for 0; `if` only asks whether it is defined. The first definition of a name wins: a later `#define` or `#const` of the same name is ignored, and so is a name the game already defines. Inside a branch that does not run, nothing is defined."
+      ],
+      "example": [
+        "#define ISLAND_START",
+        "if ISLAND_START",
+        "    #const START_TERRAIN WATER",
+        "endif"
+      ],
+      "related": ["#const", "if", "#undefine"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "#undefine",
+      "kind": "directive",
+      "summary": "Accepted, but the name stays defined afterwards: it does not turn a label off.",
+      "parameters": [
+        {
+          "name": "name",
+          "kind": "label",
+          "description": "The label it names."
+        }
+      ],
+      "details": [
+        "Do not rely on it to switch a label off later in the script; choose labels with `if` and `else` instead."
+      ],
+      "related": ["#define", "#const"],
+      "evidence": {
+        "status": "uncertain",
+        "sources": ["strict-parser", "community-guide"],
+        "note": "Our strict parser treats it as inert (parser test); community documentation says it removes the name. Not checked against the game."
+      }
+    },
+    {
+      "name": "#const",
+      "kind": "directive",
+      "summary": "Defines a named number.",
+      "parameters": [
+        {
+          "name": "name",
+          "kind": "name",
+          "description": "The name to define."
+        },
+        {
+          "name": "value",
+          "kind": "number",
+          "description": "A number, a defined name, `rnd(min,max)`, or a calculation in parentheses such as `(WIDTH * 2 + 1)`."
+        }
+      ],
+      "details": [
+        "The value is worked out once, where the constant is defined; every later use reads that same number, so a constant holding `rnd(…)` keeps one result for the whole script. The first definition of a name wins, including the names the game defines before the script runs.",
+        "In a calculation, `(` touches the first value and `)` the last, with spaces around each of `+`, `-`, `*`, `/`, and `%`. It is worked out strictly from left to right, without operator precedence: `(2 + 3 * 4)` is 20. Dividing by zero gives 0, and `%` works on whole numbers.",
+        "Inside a branch that does not run, the value is still worked out (and its random numbers drawn), but the name is not defined. Without a value nothing is defined."
+      ],
+      "example": [
+        "#const RIVER_WIDTH 4",
+        "#const GOLD_PILES rnd(5,7)",
+        "#const BANK_WIDTH (RIVER_WIDTH * 2)"
+      ],
+      "related": ["#define", "rnd"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "#include",
+      "kind": "directive",
+      "summary": "Runs another script file at this point, as if its text were written here.",
+      "parameters": [
+        {
+          "name": "file",
+          "kind": "file",
+          "description": "A relative path, with or without quotes."
+        }
+      ],
+      "details": [
+        "The file is looked up next to the script first, then in the game folders. Paths use `/` or `\\`, and may not contain `..` or a drive. Each file runs at most once: a repeated or circular include is skipped. A missing file is skipped with a warning, as in the game. A quoted path may contain spaces. Includes inside a branch that does not run, or inside a comment, are skipped.",
+        "The game’s own include files open only while a game folder is linked."
+      ],
+      "example": ["#include shared_settings.inc"],
+      "related": ["#include_drs", "#includeXS"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "#include_drs",
+      "kind": "directive",
+      "summary": "Runs a file from the game’s data at this point; it works like `#include`.",
+      "parameters": [
+        {
+          "name": "file",
+          "kind": "file",
+          "description": "A relative path, usually `random_map.def`."
+        }
+      ],
+      "details": [
+        "The game reads the definitions of `random_map.def` before every script, so including it again changes nothing."
+      ],
+      "example": ["#include_drs random_map.def"],
+      "related": ["#include"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "#includeXS",
+      "kind": "directive",
+      "summary": "Attaches an XS script file to the map; its code runs in the game, not while the map is generated.",
+      "parameters": [
+        {
+          "name": "file",
+          "kind": "file",
+          "description": "The XS file, looked up next to the script and then in the game’s XS folder."
+        }
+      ],
+      "details": ["The file must exist. Map generation, and so the preview, never runs its code."],
+      "example": ["#includeXS map_effects.xs"],
+      "related": ["#include"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "if",
+      "kind": "control",
+      "summary": "Runs the lines that follow only when the label is defined.",
+      "parameters": [
+        {
+          "name": "label",
+          "kind": "label",
+          "description": "Defined by `#define` or `#const`, by the game, or by the run settings."
+        }
+      ],
+      "details": [
+        "Only whether the label exists counts, not its value: a label defined as 0 holds. The run settings define labels such as the map size (`MEDIUM_MAP`), the game mode (`RANDOM_MAP`), and the player count (`4_PLAYER_GAME`).",
+        "Close the block with `endif`; `elseif` and `else` add alternatives, and only the first branch that holds runs. Blocks nest. An `if` inside a random branch that does not run is not evaluated."
+      ],
+      "example": [
+        "if TINY_MAP",
+        "    #const GOLD_PILES 4",
+        "elseif SMALL_MAP",
+        "    #const GOLD_PILES 5",
+        "else",
+        "    #const GOLD_PILES 7",
+        "endif"
+      ],
+      "related": ["elseif", "else", "endif", "run-setting-labels"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "elseif",
+      "kind": "control",
+      "summary": "Starts a branch that runs when no earlier branch of the `if` ran and its label is defined.",
+      "parameters": [
+        {
+          "name": "label",
+          "kind": "label",
+          "description": "The label to check."
+        }
+      ],
+      "related": ["if", "else", "endif"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "else",
+      "kind": "control",
+      "summary": "Starts the branch that runs when no earlier branch of the `if` ran.",
+      "related": ["if", "elseif", "endif"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "endif",
+      "kind": "control",
+      "summary": "Ends an `if` block.",
+      "details": [
+        "An `endif` without an open `if` is ignored; an `if` left open ends with the script."
+      ],
+      "related": ["if"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "start_random",
+      "kind": "control",
+      "summary": "Starts a random block: one roll from 0 to 99 chooses at most one of its `percent_chance` branches.",
+      "details": [
+        "The weights add up in order, and the first branch whose running total reaches the roll runs. If the weights add up to less than 100, sometimes no branch runs; branches after the total passes 100 never run.",
+        "Lines in the branches that do not run are skipped, but random values inside them (`rnd`, nested random blocks) are still drawn, so editing a skipped branch can change later results. Close the block with `end_random`; random blocks and `if` blocks can be nested in each other."
+      ],
+      "example": [
+        "start_random",
+        "percent_chance 60",
+        "    #define DRY_MAP",
+        "percent_chance 40",
+        "    #define WET_MAP",
+        "end_random"
+      ],
+      "related": ["percent_chance", "end_random", "rnd"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "percent_chance",
+      "kind": "control",
+      "summary": "Starts a branch of a random block, with its weight out of 100.",
+      "parameters": [
+        {
+          "name": "weight",
+          "kind": "number",
+          "description": "The branch’s share of the roll, rounded to a whole number."
+        }
+      ],
+      "details": [
+        "The first branch also runs on a roll of 0, so it has one extra chance in a hundred. A negative weight is never chosen. Outside a random block the line is ignored, although its value is still worked out."
+      ],
+      "related": ["start_random", "end_random"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"],
+        "note": "The extra chance of the first branch follows from the parser’s comparison; no dedicated test."
+      }
+    },
+    {
+      "name": "end_random",
+      "kind": "control",
+      "summary": "Ends a random block.",
+      "details": [
+        "A `start_random` without `end_random` is an error; an `end_random` without a block is ignored."
+      ],
+      "related": ["start_random", "percent_chance"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "{",
+      "kind": "delimiter",
+      "summary": "Opens the block of attributes that belongs to the command before it.",
+      "details": [
+        "Braces are words of their own: put spaces or line breaks around them. Blocks do not nest; the game only tracks whether it is inside braces, so a second `{` changes nothing and the first `}` ends the block."
+      ],
+      "related": ["}"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "}",
+      "kind": "delimiter",
+      "summary": "Closes a block of attributes.",
+      "details": ["A `}` outside a block changes nothing."],
+      "related": ["{"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "/*",
+      "kind": "delimiter",
+      "summary": "Starts a comment; everything up to the matching `*/` is ignored.",
+      "details": [
+        "Write `/*` and `*/` as words of their own, with spaces around them. Comments nest. Includes inside a comment are skipped, but `rnd` values inside one are still drawn. A comment left open ends with its file."
+      ],
+      "example": ["/* Gold for every player */", "create_object GOLD"],
+      "related": ["*/"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "*/",
+      "kind": "delimiter",
+      "summary": "Ends a comment started with `/*`.",
+      "details": ["A `*/` outside a comment is ignored."],
+      "related": ["/*"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "rnd",
+      "kind": "function",
+      "summary": "A random whole number from the minimum to the maximum, both included.",
+      "parameters": [
+        {
+          "name": "minimum",
+          "kind": "number",
+          "description": "The lowest result, written as a whole number."
+        },
+        {
+          "name": "maximum",
+          "kind": "number",
+          "description": "The highest result, written as a whole number; not below the minimum."
+        }
+      ],
+      "details": [
+        "Write it as one word without spaces, such as `rnd(3,7)`; the bounds must be plain numbers, not names. It works wherever a number is expected, including `#const` and `percent_chance`.",
+        "Every use draws one random number, even `rnd(4,4)`, so adding or removing one changes every random result after it. Put it in a `#const` to reuse one result."
+      ],
+      "example": ["number_of_objects rnd(4,6)"],
+      "related": ["#const", "start_random"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["strict-parser"]
+      }
+    },
+    {
+      "name": "random_placement",
+      "kind": "command",
+      "summary": "Places the players around the map in an order the game chooses.",
+      "usages": [
+        {
+          "where": ["player_setup"],
+          "summary": "Places the players around the map in an order the game chooses."
+        }
+      ],
+      "details": [
+        "This is the default. Players stand on a circle when a land block sets `circle_radius`, otherwise along a rectangle around the map. The lobby’s team setting still applies: with teams kept together, teammates end up next to each other."
+      ],
+      "related": ["grouped_by_team", "direct_placement", "circle_radius"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "grouped_by_team",
+      "kind": "command",
+      "summary": "Places teammates next to each other, with a gap between teams.",
+      "usages": [
+        {
+          "where": ["player_setup"],
+          "summary": "Places teammates next to each other, with a gap between teams."
+        }
+      ],
+      "details": [
+        "It takes effect when the lobby keeps teams together or fixes positions; with random lobby positions the order stays random. Teammates are spaced by their lands’ `base_size`."
+      ],
+      "related": ["random_placement", "set_zone_by_team"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "direct_placement",
+      "kind": "command",
+      "summary": "Starts each player land at its own `land_position` instead of placing players around the map.",
+      "usages": [
+        {
+          "where": ["player_setup"],
+          "summary": "Starts each player land at its own `land_position` instead of placing players around the map."
+        }
+      ],
+      "details": [
+        "Give each player a `create_land` with `assign_to_player` (or `assign_to`) and `land_position`. Positions inside `create_player_lands` are ignored, so those lands get random positions. `circle_radius` has no effect."
+      ],
+      "example": [
+        "<PLAYER_SETUP>",
+        "direct_placement",
+        "<LAND_GENERATION>",
+        "create_land",
+        "{",
+        "    assign_to_player 1",
+        "    land_position 20 50",
+        "}"
+      ],
+      "related": ["land_position", "assign_to_player"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "nomad_resources",
+      "kind": "command",
+      "summary": "Gives each player the resources for a town center, for starts without one.",
+      "usages": [
+        {
+          "where": ["player_setup"],
+          "summary": "Gives each player the resources for a town center, for starts without one."
+        }
+      ],
+      "details": ["It changes nothing on the generated map."],
+      "related": ["force_nomad_treaty"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "The engine records the flag; no generation stage reads it."
+      }
+    },
+    {
+      "name": "force_nomad_treaty",
+      "kind": "command",
+      "summary": "Keeps players from attacking each other early in a nomad start.",
+      "usages": [
+        {
+          "where": ["player_setup"],
+          "summary": "Keeps players from attacking each other early in a nomad start."
+        }
+      ],
+      "details": ["It changes nothing on the generated map."],
+      "related": ["nomad_resources"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "The engine records the flag; no generation stage reads it."
+      }
+    },
+    {
+      "name": "min_distance",
+      "kind": "command",
+      "summary": "Recognized in `<PLAYER_SETUP>`, but it has no effect.",
+      "details": ["It takes no value: a number after it is read as a separate word and ignored."],
+      "related": ["random_placement"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "Listed in the command table; nothing reads it, and community documentation calls it non-functional."
+      }
+    },
+    {
+      "name": "max_distance",
+      "kind": "command",
+      "summary": "Recognized in `<PLAYER_SETUP>`, but it has no effect.",
+      "details": ["It takes no value: a number after it is read as a separate word and ignored."],
+      "related": ["random_placement"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "Listed in the command table; nothing reads it, and community documentation calls it non-functional."
+      }
+    },
+    {
+      "name": "set_position",
+      "kind": "command",
+      "summary": "Recognized in `<PLAYER_SETUP>`, but it has no effect.",
+      "details": [
+        "It takes no value. To start player lands at chosen spots, use `direct_placement` with `land_position`."
+      ],
+      "related": ["direct_placement"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "Listed in the command table; nothing reads it, and community documentation calls it non-functional."
+      }
+    },
+    {
+      "name": "behavior_version",
+      "kind": "command",
+      "summary": "Opts the script into later corrections of the generation rules.",
+      "parameters": [
+        {
+          "name": "value",
+          "kind": "number",
+          "description": "The set of corrections to use; 0 keeps the original rules.",
+          "default": "0"
+        }
+      ],
+      "details": [
+        "With 1 or more, the square a land starts with counts toward its `land_percent` or `number_of_tiles`, so lands come out at the size asked for; with 0 the square is usually added on top. It runs in any section; the last one wins."
+      ],
+      "default": "The original rules, as with 0.",
+      "example": ["behavior_version 1"],
+      "related": ["number_of_tiles", "land_percent", "base_size"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "Our engine models only the land-size correction; community documentation describes further corrections at value 2 that are not modeled."
+      }
+    },
+    {
+      "name": "override_map_size",
+      "kind": "command",
+      "summary": "Makes the map a square with the given side length, in tiles.",
+      "parameters": [
+        {
+          "name": "side",
+          "kind": "number",
+          "description": "The side length.",
+          "range": "36 to 480; other values are clamped"
+        }
+      ],
+      "details": ["It runs in any section, the last one wins, and every stage uses the new size."],
+      "example": ["override_map_size 144"],
+      "related": ["set_scaling_to_map_size"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "set_gaia_civilization",
+      "kind": "command",
+      "summary": "Sets the civilization of Gaia (neutral) objects, which picks their civilization-specific variants.",
+      "parameters": [
+        {
+          "name": "civilization",
+          "kind": "constant",
+          "description": "A `CIVILIZATION_…` name or its number.",
+          "default": "`CIVILIZATION_GAIA` (0)"
+        }
+      ],
+      "details": [
+        "It runs in any section. The last one in the script decides which object variants Gaia gets; in `<OBJECTS_GENERATION>` it can also change the look of Gaia objects."
+      ],
+      "example": ["set_gaia_civilization CIVILIZATION_BRITONS"],
+      "related": ["civilizations", "set_gaia_object_only"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "ai_info_map_type",
+      "kind": "command",
+      "summary": "Tells computer players what kind of map this is, so that their strategy fits it.",
+      "parameters": [
+        {
+          "name": "map_type",
+          "kind": "constant",
+          "description": "A built-in map type name, such as `ARABIA`."
+        },
+        {
+          "name": "nomad",
+          "kind": "number",
+          "optional": true,
+          "description": "Marks a start without town centers when 1."
+        },
+        {
+          "name": "michi",
+          "kind": "number",
+          "optional": true,
+          "description": "Marks a map whose players are separated by forest when 1."
+        },
+        {
+          "name": "show_type",
+          "kind": "number",
+          "optional": true,
+          "description": "Shows the map type in game when 1."
+        }
+      ],
+      "details": ["It runs in any section and does not change the generated map."],
+      "example": ["ai_info_map_type ARABIA 0 0 0"],
+      "related": ["map-types"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "The engine reads nothing from it; operand meanings come from community documentation."
+      }
+    },
+    {
+      "name": "effect_amount",
+      "kind": "command",
+      "summary": "Changes an attribute of an object type, or a player resource, when the game starts, as a technology would.",
+      "parameters": [
+        {
+          "name": "effect",
+          "kind": "constant",
+          "description": "What to do: `SET_ATTRIBUTE`, `ADD_ATTRIBUTE`, `MUL_ATTRIBUTE`, and the other effect names; the `GAIA_…` forms change only Gaia."
+        },
+        {
+          "name": "object",
+          "kind": "object",
+          "description": "The object type, or a class (`…_CLASS`) for every object of that class."
+        },
+        {
+          "name": "attribute",
+          "kind": "constant",
+          "description": "An `ATTR_…` attribute, or an `AMOUNT_…` resource for resource effects."
+        },
+        {
+          "name": "value",
+          "kind": "number",
+          "description": "The amount, which may have decimals."
+        }
+      ],
+      "details": [
+        "Effects run in script order before the map is generated, from any section. Attributes that matter for generation reach the preview: footprint size, movement speed, stored resource amounts, hit points, foundation terrain, standing graphic, and the terrain an object may stand on. Resource effects reach the preview where generation reads the resource: the starting villagers, the starting scout, and the objects some farm types add around their edge when they are completed. Technology effects do not change the map.",
+        "The effect, object and attribute must be names: when one of them is a plain number the game ignores the whole command, so give the number a name with `#const`. The value is a plain number."
+      ],
+      "example": ["effect_amount SET_ATTRIBUTE FORAGE ATTR_STORAGE_VALUE 200"],
+      "related": ["effect_percent", "effect-types", "object-attributes"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "effect_percent",
+      "kind": "command",
+      "summary": "Works like `effect_amount`, but the value is given in hundredths.",
+      "parameters": [
+        {
+          "name": "effect",
+          "kind": "constant",
+          "description": "What to do, as for `effect_amount`."
+        },
+        {
+          "name": "object",
+          "kind": "object",
+          "description": "The object type or class."
+        },
+        {
+          "name": "attribute",
+          "kind": "constant",
+          "description": "An `ATTR_…` attribute or an `AMOUNT_…` resource."
+        },
+        {
+          "name": "percent",
+          "kind": "number",
+          "description": "The amount times 100: 150 means 1.5."
+        }
+      ],
+      "example": ["effect_percent MUL_ATTRIBUTE DEER ATTR_STORAGE_VALUE 150"],
+      "related": ["effect_amount", "effect-types"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "guard_state",
+      "kind": "command",
+      "summary": "Ties a player rule to an object type: defeat without it, a resource trickle from it, or both.",
+      "parameters": [
+        {
+          "name": "object",
+          "kind": "object",
+          "description": "The object type the rule watches."
+        },
+        {
+          "name": "resource",
+          "kind": "constant",
+          "description": "The resource that trickles, an `AMOUNT_…` name."
+        },
+        {
+          "name": "amount",
+          "kind": "number",
+          "description": "The trickle amount."
+        },
+        {
+          "name": "flags",
+          "kind": "number",
+          "description": "Sum of 1 (a player without the object loses), 2 (the resource trickles in), and 4 (inverts the condition)."
+        }
+      ],
+      "details": ["It does not change the generated map."],
+      "related": ["player-resources"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "The engine reads nothing from it; operand meanings come from community documentation."
+      }
+    },
+    {
+      "name": "water_definition",
+      "kind": "command",
+      "summary": "Chooses how water looks: its color and surface.",
+      "parameters": [
+        {
+          "name": "look",
+          "kind": "constant",
+          "description": "A `WD_…` name.",
+          "default": "`WD_DEFAULT`"
+        }
+      ],
+      "details": ["It does not change the generated map."],
+      "example": ["water_definition WD_CALM"],
+      "related": ["water-definitions", "color_correction", "enable_waves"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "The engine reads nothing from it."
+      }
+    },
+    {
+      "name": "color_correction",
+      "kind": "command",
+      "summary": "Chooses the color grading of the map, such as a darker or warmer mood.",
+      "parameters": [
+        {
+          "name": "mood",
+          "kind": "constant",
+          "description": "A `CC_…` name.",
+          "default": "`CC_DEFAULT`"
+        }
+      ],
+      "details": ["It does not change the generated map."],
+      "example": ["color_correction CC_AUTUMN"],
+      "related": ["color-corrections", "water_definition"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "The engine reads nothing from it."
+      }
+    },
+    {
+      "name": "enable_waves",
+      "kind": "command",
+      "summary": "Turns shore waves on (1) or off (0).",
+      "parameters": [
+        {
+          "name": "enabled",
+          "kind": "number",
+          "description": "1 shows waves along shores, 0 hides them.",
+          "default": "1"
+        }
+      ],
+      "details": ["It does not change the generated map."],
+      "related": ["water_definition"],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "strict-parser"],
+        "note": "The engine reads nothing from it."
+      }
+    },
+    {
+      "name": "create_player_lands",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Creates one land for every player, each grown from that player’s start position.",
+      "usages": [
+        {
+          "where": ["land_generation"],
+          "summary": "Creates one land for every player, each grown from that player’s start position."
+        }
+      ],
+      "details": [
+        "The attributes in its block apply to every player land. A `land_percent` is shared out between the players, while `number_of_tiles` applies to each land. `land_position` is ignored here. Each player land is in a zone of its own unless a zone command says otherwise."
+      ],
+      "example": [
+        "create_player_lands",
+        "{",
+        "    terrain_type GRASS",
+        "    land_percent 60",
+        "    base_size 10",
+        "}"
+      ],
+      "related": ["create_land", "land_percent", "base_size"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_land",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Creates one land, grown from its `land_position` (or a random spot), or from a player’s position when assigned to one.",
+      "usages": [
+        {
+          "where": ["land_generation"],
+          "summary": "Creates one land, grown from its `land_position` (or a random spot), or from a player’s position when assigned to one."
+        }
+      ],
+      "details": [
+        "Without `assign_to_player` or `assign_to` the land is neutral. Neutral lands without a `zone` share one zone, so they may grow into each other."
+      ],
+      "example": [
+        "create_land",
+        "{",
+        "    terrain_type DESERT",
+        "    land_percent 8",
+        "    land_position 50 50",
+        "    base_size 6",
+        "}"
+      ],
+      "related": ["create_player_lands", "land_position", "assign_to_player"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "terrain_type",
+      "kind": "attribute",
+      "summary": "The terrain the land paints.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "A terrain name. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "The terrain the land paints."
+        }
+      ],
+      "default": "`GRASS` (terrain 0); a land does not take the section’s `base_terrain`.",
+      "related": ["base_terrain", "create_land"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "base_size",
+      "kind": "attribute",
+      "summary": "The radius of the square the land starts with, around its origin.",
+      "parameters": [
+        {
+          "name": "radius",
+          "kind": "number",
+          "description": "In tiles; the square is 2 × radius + 1 tiles wide.",
+          "range": "0 to 65535"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "The radius of the square the land starts with, around its origin."
+        }
+      ],
+      "details": [
+        "The base is painted before the lands grow, in script order, so a later land’s base covers an earlier one. It also keeps players and randomly placed lands apart, and keeps player positions away from the map edge."
+      ],
+      "default": "3",
+      "related": ["set_circular_base", "land_percent", "behavior_version"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "left_border",
+      "kind": "attribute",
+      "summary": "Keeps the land back from the left edge of the map, in percent of the map width.",
+      "parameters": [
+        {
+          "name": "percent",
+          "kind": "number",
+          "description": "Distance from the edge; decimals are allowed."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Keeps the land back from the left edge of the map, in percent of the map width."
+        }
+      ],
+      "details": [
+        "`border_fuzziness` decides how strictly growth respects the border. The borders also limit where a randomly placed land starts and where players are placed."
+      ],
+      "default": "0 (no border)",
+      "related": ["right_border", "top_border", "bottom_border", "border_fuzziness"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "right_border",
+      "kind": "attribute",
+      "summary": "Keeps the land back from the right edge of the map, in percent of the map width.",
+      "parameters": [
+        {
+          "name": "percent",
+          "kind": "number",
+          "description": "Distance from the edge; decimals are allowed."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Keeps the land back from the right edge of the map, in percent of the map width."
+        }
+      ],
+      "details": ["`border_fuzziness` decides how strictly growth respects the border."],
+      "default": "0 (no border)",
+      "related": ["left_border", "top_border", "bottom_border", "border_fuzziness"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "top_border",
+      "kind": "attribute",
+      "summary": "Keeps the land back from the top edge of the map, in percent of the map height.",
+      "parameters": [
+        {
+          "name": "percent",
+          "kind": "number",
+          "description": "Distance from the edge; decimals are allowed."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Keeps the land back from the top edge of the map, in percent of the map height."
+        }
+      ],
+      "details": ["`border_fuzziness` decides how strictly growth respects the border."],
+      "default": "0 (no border)",
+      "related": ["left_border", "right_border", "bottom_border", "border_fuzziness"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "bottom_border",
+      "kind": "attribute",
+      "summary": "Keeps the land back from the bottom edge of the map, in percent of the map height.",
+      "parameters": [
+        {
+          "name": "percent",
+          "kind": "number",
+          "description": "Distance from the edge; decimals are allowed."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Keeps the land back from the bottom edge of the map, in percent of the map height."
+        }
+      ],
+      "details": ["`border_fuzziness` decides how strictly growth respects the border."],
+      "default": "0 (no border)",
+      "related": ["left_border", "right_border", "top_border", "border_fuzziness"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "border_fuzziness",
+      "kind": "attribute",
+      "summary": "How strictly the land respects its borders while it grows.",
+      "parameters": [
+        {
+          "name": "chance",
+          "kind": "number",
+          "description": "Percent chance, per tile of distance beyond a border, that a tile is refused."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "How strictly the land respects its borders while it grows."
+        }
+      ],
+      "details": [
+        "It only applies together with a border (`left_border`, `right_border`, `top_border`, or `bottom_border`). A tile one step past a border is refused with this chance, two steps with twice the chance, and so on; 100 or more refuses every tile past the border. 0 turns the check off, so the borders no longer limit growth. A `land_conformity` above 0 also turns it off."
+      ],
+      "default": "20",
+      "related": ["left_border", "land_conformity"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "A community guide says negative values make borders absolute; our engine never refuses a tile then."
+      }
+    },
+    {
+      "name": "zone",
+      "kind": "attribute",
+      "summary": "Puts the land in a zone: lands of one zone may grow into each other, lands of other zones keep apart.",
+      "parameters": [
+        {
+          "name": "zone",
+          "kind": "number",
+          "description": "Any whole number; lands with the same number share a zone."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Puts the land in a zone: lands of one zone may grow into each other, lands of other zones keep apart."
+        }
+      ],
+      "details": [
+        "Without a zone command each player land has a zone of its own and every `create_land` shares one common zone; writing `zone 0` is not the same as leaving it out. `zone`, `set_zone_by_team`, and `set_zone_randomly` replace each other. `other_zone_avoidance_distance` sets how far apart different zones stay."
+      ],
+      "related": [
+        "set_zone_by_team",
+        "set_zone_randomly",
+        "other_zone_avoidance_distance",
+        "create_connect_land_zones"
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "set_zone_by_team",
+      "kind": "attribute",
+      "summary": "Puts each player’s land in a zone shared with teammates, so a team’s lands can merge.",
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Puts each player’s land in a zone shared with teammates, so a team’s lands can merge."
+        }
+      ],
+      "details": [
+        "A player without a team keeps a zone of its own. A land that belongs to no player gets player 1’s zone."
+      ],
+      "related": ["zone", "set_zone_randomly", "grouped_by_team"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "set_zone_randomly",
+      "kind": "attribute",
+      "summary": "Puts each land of this command in a randomly chosen zone, so some lands may share one.",
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Puts each land of this command in a randomly chosen zone, so some lands may share one."
+        }
+      ],
+      "details": [
+        "The zones are chosen from as many as there are players, with one random draw per land."
+      ],
+      "related": ["zone", "set_zone_by_team"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "other_zone_avoidance_distance",
+      "kind": "attribute",
+      "summary": "Keeps the land at least this many tiles away from lands of other zones while it grows.",
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Keeps the land at least this many tiles away from lands of other zones while it grows."
+        }
+      ],
+      "details": [
+        "It also spaces randomly placed lands apart when `min_placement_distance` is not set."
+      ],
+      "default": "0",
+      "related": ["zone", "min_placement_distance"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "min_placement_distance",
+      "kind": "attribute",
+      "summary": "The least distance from other lands when this land’s start is chosen at random.",
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "The least distance from other lands when this land’s start is chosen at random."
+        }
+      ],
+      "details": [
+        "It only matters for lands without a fixed position: a neutral land without `land_position`, or a player land under `direct_placement` without one. When no spot fits after many tries, the land starts at the map center."
+      ],
+      "default": "A spacing worked out from both lands’ `base_size` and `other_zone_avoidance_distance`.",
+      "related": ["land_position", "other_zone_avoidance_distance", "generate_mode"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "set_circular_base",
+      "kind": "attribute",
+      "summary": "Makes the land start from a circle instead of a square.",
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Makes the land start from a circle instead of a square."
+        }
+      ],
+      "details": ["The radius is `base_size`. Growth around the base is not limited by it."],
+      "related": ["base_size", "land_conformity"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "land_conformity",
+      "kind": "attribute",
+      "summary": "How strongly the land keeps a compact square (or round) shape around its origin.",
+      "parameters": [
+        {
+          "name": "strength",
+          "kind": "number",
+          "description": "In percent.",
+          "range": "0 to 100"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "How strongly the land keeps a compact square (or round) shape around its origin."
+        }
+      ],
+      "details": [
+        "Each candidate tile outside the shape is refused with this chance. 100 or more paints the shape directly instead of growing it. Any value above 0 turns off the border check of `border_fuzziness`."
+      ],
+      "default": "0",
+      "related": ["set_circular_base", "border_fuzziness"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "A community guide calls it unreliable and says 0 equals leaving it out; our engine still checks the shape on about 1 % of tiles at 0."
+      }
+    },
+    {
+      "name": "generate_mode",
+      "kind": "attribute",
+      "summary": "How a randomly placed land picks its start: 1 allows any spot inside its borders, 0 avoids the corners.",
+      "parameters": [
+        {
+          "name": "mode",
+          "kind": "number",
+          "description": "0 or 1."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "How a randomly placed land picks its start: 1 allows any spot inside its borders, 0 avoids the corners."
+        },
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Has no effect inside `create_terrain`."
+        }
+      ],
+      "default": "0",
+      "related": ["min_placement_distance", "land_position"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "land_position",
+      "kind": "attribute",
+      "summary": "Where the land starts, in percent of the map width (x) and height (y).",
+      "parameters": [
+        {
+          "name": "x",
+          "kind": "number",
+          "description": "Across the map width.",
+          "range": "0 to 100"
+        },
+        {
+          "name": "y",
+          "kind": "number",
+          "description": "Across the map height.",
+          "range": "0 to 100"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land"],
+          "summary": "Where the land starts, in percent of the map width (x) and height (y)."
+        },
+        {
+          "where": ["land_generation/create_player_lands"],
+          "summary": "Has no effect inside `create_player_lands`; player lands start at the player positions."
+        }
+      ],
+      "details": [
+        "A land assigned to a player only uses it under `direct_placement`. 100 lies one tile past the edge; the preview refuses objects aimed at a land there."
+      ],
+      "example": [
+        "create_land",
+        "{",
+        "    terrain_type WATER",
+        "    land_percent 10",
+        "    land_position 50 50",
+        "}"
+      ],
+      "related": ["direct_placement", "min_placement_distance", "generate_mode"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "assign_to_player",
+      "kind": "attribute",
+      "summary": "Gives the land to the player in this lobby slot; the land then grows from that player’s position.",
+      "parameters": [
+        {
+          "name": "slot",
+          "kind": "number",
+          "description": "Lobby slot 1 to 8; 0 leaves the land neutral."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Gives the land to the player in this lobby slot; the land then grows from that player’s position."
+        }
+      ],
+      "details": [
+        "If the slot is not in the game, the land and the rest of its block are dropped. It resets `land_id`, so write `land_id` after it. Assigned lands receive `set_place_for_every_player` objects."
+      ],
+      "related": ["assign_to", "land_id", "direct_placement"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "assign_to",
+      "kind": "attribute",
+      "summary": "Gives the land to a player chosen by player number, team or color.",
+      "parameters": [
+        {
+          "name": "target",
+          "kind": "constant",
+          "description": "`AT_PLAYER` (by player number), `AT_TEAM` (by team) or `AT_COLOR` (by player color)."
+        },
+        {
+          "name": "number",
+          "kind": "number",
+          "description": "The player, team or color number (colors 1 blue to 8 orange); 0 accepts any player or team, and with `AT_TEAM` a negative number means any team except that one."
+        },
+        {
+          "name": "pick_first",
+          "kind": "number",
+          "description": "0 picks a random eligible player, any other value the first one."
+        },
+        {
+          "name": "reuse",
+          "kind": "number",
+          "description": "1 also allows players who already got a land, 2 does not count this land as used, 0 allows only unused players."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Gives the land to a player chosen by player number, team or color."
+        }
+      ],
+      "details": [
+        "Teams are counted in lobby order; a team needs at least two players, and other players count as team 0. With `AT_COLOR` the first player in lobby order with that color gets the land, never a random one. When no player fits, the land is dropped. It resets `land_id`, so write `land_id` after it."
+      ],
+      "example": ["create_land", "{", "    terrain_type GRASS", "    assign_to AT_TEAM 1 0 0", "}"],
+      "related": ["assign_to_player", "assignment-targets"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "The player-number range follows the engine (0 to the player count); not checked against the game."
+      }
+    },
+    {
+      "name": "circle_radius",
+      "kind": "attribute",
+      "summary": "Places the players on a circle around the map center instead of along a rectangle.",
+      "parameters": [
+        {
+          "name": "radius",
+          "kind": "number",
+          "description": "In percent of the map width."
+        },
+        {
+          "name": "variance",
+          "kind": "number",
+          "optional": true,
+          "description": "Random offset in tiles on each axis.",
+          "default": "0"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land"],
+          "summary": "Places the players on a circle around the map center instead of along a rectangle; in any land, also one without a player, it moves every player’s land."
+        },
+        {
+          "where": ["land_generation/create_player_lands"],
+          "summary": "Places the players on a circle around the map center instead of along a rectangle."
+        }
+      ],
+      "details": [
+        "It only counts inside a land block, but it applies to all players’ lands, whichever land block it is written in; the last one wins. It has no effect with `direct_placement` or without player lands."
+      ],
+      "example": [
+        "create_player_lands",
+        "{",
+        "    terrain_type GRASS",
+        "    circle_radius 38 2",
+        "}"
+      ],
+      "related": ["random_placement", "direct_placement"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "base_terrain",
+      "kind": "attribute",
+      "summary": "A terrain to fill the map with, or to build on, depending on where it is used.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "A terrain name. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation"],
+          "summary": "Fills the whole map with this terrain before the lands grow.",
+          "details": [
+            "The last one outside blocks wins, and it clears an earlier `base_layer`. Lands do not take it over: a land paints its own `terrain_type`. Inside a land block it has no effect."
+          ],
+          "default": "`GRASS` (terrain 0).",
+          "example": ["<LAND_GENERATION>", "base_terrain WATER"]
+        },
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Places the new terrain only on tiles that have this terrain now.",
+          "details": [
+            "Without `base_terrain` and `base_layer` the terrain goes only on `GRASS` (terrain 0). With `base_layer` but no `base_terrain`, any terrain under the layer qualifies."
+          ],
+          "default": "`GRASS` (terrain 0).",
+          "example": [
+            "create_terrain FOREST",
+            "{",
+            "    base_terrain GRASS",
+            "    land_percent 10",
+            "}"
+          ]
+        },
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "Raises hills only on tiles with this terrain.",
+          "details": [
+            "Elevation runs before `<TERRAIN_GENERATION>`, so this is the terrain the lands painted."
+          ],
+          "default": "`GRASS` (terrain 0)."
+        }
+      ],
+      "related": ["base_layer", "terrain_type", "create_terrain"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "base_layer",
+      "kind": "attribute",
+      "summary": "A terrain layer to lay under the map, or to require, depending on where it is used.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "A terrain name. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation"],
+          "summary": "Gives every tile this terrain as its layer before the lands grow; tiles a land paints lose it.",
+          "details": [
+            "Write it after `base_terrain`, which clears it. Later `base_layer` filters and `layer_to_place_on` read the layer."
+          ]
+        },
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Places the new terrain only on tiles whose layer is this terrain.",
+          "details": [
+            "Without `base_terrain` as well, the terrain under the layer does not matter."
+          ]
+        },
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "Raises hills only on tiles whose layer is this terrain.",
+          "details": [
+            "When the land section set a `base_layer`, unpainted tiles carry it, so elevation needs the same `base_layer` to build there."
+          ]
+        }
+      ],
+      "default": "No layer: only tiles without a layer qualify.",
+      "related": ["base_terrain", "layer_to_place_on", "terrain_mask"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "number_of_tiles",
+      "kind": "attribute",
+      "summary": "A size in tiles: of a land, a terrain, or each level of a hill.",
+      "parameters": [
+        {
+          "name": "tiles",
+          "kind": "number",
+          "description": "A whole number of tiles."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "The size of the land in tiles; every player land gets this many.",
+          "details": [
+            "It replaces an earlier `land_percent`. Whether the starting square counts toward it depends on `behavior_version`."
+          ],
+          "default": "The whole map: the land grows until it meets other lands or its borders."
+        },
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "How many tiles to paint with the terrain.",
+          "details": [
+            "It replaces an earlier `land_percent`. `set_scale_by_size` and `set_scale_by_groups` scale it with the map area."
+          ],
+          "default": "The whole map."
+        },
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "How many tiles to raise on each level of the hill.",
+          "details": ["`set_scale_by_size` scales it with the map area."],
+          "default": "The whole map."
+        }
+      ],
+      "related": ["land_percent", "number_of_clumps", "set_scale_by_size"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "land_percent",
+      "kind": "attribute",
+      "summary": "A size in percent of the whole map: of a land or of a terrain.",
+      "parameters": [
+        {
+          "name": "percent",
+          "kind": "number",
+          "description": "In percent; decimals are allowed."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "The size of the land in percent of the map; for player lands, the share of all players together.",
+          "details": [
+            "It replaces an earlier `number_of_tiles`. A value of 100 or more counts as 100 and does not replace a size set earlier in the block."
+          ]
+        },
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "How much of the whole map to paint with the terrain, in percent.",
+          "details": [
+            "It replaces an earlier `number_of_tiles`, and `set_scale_by_size` does not scale it. The percentage is not capped at 100."
+          ]
+        }
+      ],
+      "example": ["create_player_lands", "{", "    terrain_type GRASS", "    land_percent 60", "}"],
+      "related": ["number_of_tiles", "percent_of_land"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "number_of_clumps",
+      "kind": "attribute",
+      "summary": "How many separate clumps a terrain or each level of a hill starts from.",
+      "parameters": [
+        {
+          "name": "count",
+          "kind": "number",
+          "description": "A whole number; at most 999 are used."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "How many separate clumps the terrain starts from.",
+          "details": [
+            "The clumps grow in turn, one tile each, until the size is reached. 0 paints nothing. `set_scale_by_groups` scales it with the map area."
+          ]
+        },
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "How many separate hills each level starts from.",
+          "details": ["`set_scale_by_groups` scales it with the map area."]
+        }
+      ],
+      "default": "1",
+      "related": ["number_of_tiles", "set_scale_by_groups"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "clumping_factor",
+      "kind": "attribute",
+      "summary": "How compact a land or terrain grows: higher values favour tiles next to what is already painted.",
+      "parameters": [
+        {
+          "name": "factor",
+          "kind": "number",
+          "description": "A whole number; negative values favour loose, spread-out growth."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "How compact the land grows: higher values favour tiles next to the land.",
+          "default": "8"
+        },
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "How compact the terrain grows: higher values favour tiles next to the clump.",
+          "default": "20"
+        }
+      ],
+      "related": ["number_of_clumps", "land_conformity"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "base_elevation",
+      "kind": "attribute",
+      "summary": "The height of a land’s tiles.",
+      "parameters": [
+        {
+          "name": "height",
+          "kind": "number",
+          "description": "A whole number.",
+          "range": "0 to 255"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "The height of the land’s tiles.",
+          "details": [
+            "Hills are smoothed afterwards, so neighbouring tiles differ by at most one level.",
+            "A land of water or ice terrain stays at height 0 whatever this value is."
+          ],
+          "default": "0"
+        },
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "Has no effect inside `create_elevation`; each level of a hill sets its own height."
+        }
+      ],
+      "related": ["create_elevation"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "land_id",
+      "kind": "attribute",
+      "summary": "Gives the land a number that `place_on_specific_land_id` can aim at.",
+      "parameters": [
+        {
+          "name": "id",
+          "kind": "number",
+          "description": "A whole number."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "summary": "Gives the land a number that `place_on_specific_land_id` can aim at.",
+          "details": [
+            "Write it after `assign_to_player` or `assign_to`, which reset it. A player land with a `land_id` no longer receives `set_place_for_every_player` objects. It does not change the land’s zone."
+          ]
+        },
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "Has no effect inside `create_elevation`; use `base_layer` or `base_terrain` to choose where hills go."
+        }
+      ],
+      "example": ["create_land", "{", "    terrain_type DESERT", "    land_id 20", "}"],
+      "related": ["place_on_specific_land_id", "assign_to_player"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "set_scale_by_size",
+      "kind": "attribute",
+      "summary": "Scales the tile count with the map area; a 100 × 100 map is unscaled.",
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Scales `number_of_tiles` with the map area; a 100 × 100 map is unscaled.",
+          "details": [
+            "A `land_percent` is not scaled. It and `set_scale_by_groups` replace each other."
+          ]
+        },
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "Scales `number_of_tiles` with the map area; a 100 × 100 map is unscaled.",
+          "details": ["It and `set_scale_by_groups` replace each other."]
+        }
+      ],
+      "related": ["set_scale_by_groups", "number_of_tiles"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "set_scale_by_groups",
+      "kind": "attribute",
+      "summary": "Scales the clump count with the map area; a 100 × 100 map is unscaled.",
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Scales `number_of_clumps`, and `number_of_tiles` as well, with the map area; a 100 × 100 map is unscaled.",
+          "details": [
+            "A `land_percent` is not scaled. It and `set_scale_by_size` replace each other."
+          ]
+        },
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "Scales `number_of_clumps` with the map area; the tile count stays as written.",
+          "details": ["It and `set_scale_by_size` replace each other."]
+        }
+      ],
+      "example": [
+        "create_terrain FOREST",
+        "{",
+        "    land_percent 6",
+        "    number_of_clumps 4",
+        "    set_scale_by_groups",
+        "}"
+      ],
+      "related": ["set_scale_by_size", "number_of_clumps"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "set_avoid_player_start_areas",
+      "kind": "attribute",
+      "summary": "Keeps the terrain away from the players’ starting areas.",
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "optional": true,
+          "description": "In tiles from each player land’s origin.",
+          "default": "13"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Keeps the terrain away from the players’ starting areas.",
+          "details": [
+            "Clumps never start within the distance of a player land’s origin, and growth there becomes less likely the closer it gets. Neutral lands do not count."
+          ]
+        },
+        {
+          "where": [
+            "connection_generation/create_connect_all_players_land",
+            "connection_generation/create_connect_teams_lands",
+            "connection_generation/create_connect_all_lands",
+            "connection_generation/create_connect_same_land_zones",
+            "connection_generation/create_connect_land_zones",
+            "connection_generation/create_connect_to_nonplayer_land"
+          ],
+          "summary": "Has no effect inside connection blocks."
+        }
+      ],
+      "related": ["create_terrain", "min_distance_to_players"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "height_limits",
+      "kind": "attribute",
+      "summary": "Places the terrain only on tiles whose height lies between the two values.",
+      "parameters": [
+        {
+          "name": "min",
+          "kind": "number",
+          "description": "The lowest height allowed."
+        },
+        {
+          "name": "max",
+          "kind": "number",
+          "description": "The highest height allowed; not below `min`."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Places the terrain only on tiles whose height lies between the two values, both included.",
+          "default": "0 to 255: any height."
+        },
+        {
+          "where": [
+            "connection_generation/create_connect_all_players_land",
+            "connection_generation/create_connect_teams_lands",
+            "connection_generation/create_connect_all_lands",
+            "connection_generation/create_connect_same_land_zones",
+            "connection_generation/create_connect_land_zones",
+            "connection_generation/create_connect_to_nonplayer_land"
+          ],
+          "summary": "Has no effect inside connection blocks."
+        }
+      ],
+      "example": [
+        "create_terrain SNOW",
+        "{",
+        "    base_terrain GRASS",
+        "    height_limits 3 7",
+        "}"
+      ],
+      "related": ["create_elevation", "set_flat_terrain_only"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_elevation",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Raises hills up to the given height, one level at a time, each grown on the level below.",
+      "parameters": [
+        {
+          "name": "height",
+          "kind": "number",
+          "description": "The highest level, rounded to a whole number.",
+          "range": "0 to 255"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["elevation_generation"],
+          "summary": "Raises hills up to the given height, one level at a time, each grown on the level below."
+        }
+      ],
+      "details": [
+        "Each level starts from `number_of_clumps` seeds on tiles at the level below and grows to `number_of_tiles`. Hills keep clear of the players’ starting areas (about 9 tiles around each player land’s origin). A height of 0 raises nothing."
+      ],
+      "example": [
+        "create_elevation 4",
+        "{",
+        "    base_terrain GRASS",
+        "    number_of_tiles 600",
+        "    number_of_clumps 6",
+        "    set_scale_by_groups",
+        "    spacing 2",
+        "}"
+      ],
+      "related": ["spacing", "number_of_clumps", "enable_balanced_elevation"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "spacing",
+      "kind": "attribute",
+      "summary": "Keeps each level of a hill at least this many tiles inside the level below it.",
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "Keeps each level of a hill at least this many tiles inside the level below it."
+        }
+      ],
+      "details": ["The first level always uses 2; the value applies from the second level on."],
+      "default": "1 from the second level on.",
+      "related": ["create_elevation"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "A community guide gives 1 as the default for every level; our engine fixes the first level at 2."
+      }
+    },
+    {
+      "name": "enable_balanced_elevation",
+      "kind": "attribute",
+      "summary": "Lets hill seeds start close to each other, which spreads hills more evenly across the map.",
+      "usages": [
+        {
+          "where": ["elevation_generation/create_elevation"],
+          "summary": "Lets hill seeds start close to each other, which spreads hills more evenly across the map."
+        }
+      ],
+      "details": ["It turns off the gap each new seed normally clears around itself."],
+      "related": ["create_elevation", "number_of_clumps"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "cliff_type",
+      "kind": "attribute",
+      "summary": "Chooses the cliff style.",
+      "parameters": [
+        {
+          "name": "style",
+          "kind": "constant",
+          "description": "A `CT_…` name. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`.",
+          "range": "0 to 5; other values are clamped"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["cliff_generation"],
+          "summary": "Chooses the cliff style."
+        }
+      ],
+      "default": "`CT_GRANITE` (0)",
+      "example": ["<CLIFF_GENERATION>", "cliff_type CT_DESERT"],
+      "related": ["cliff-types", "min_number_of_cliffs"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "min_number_of_cliffs",
+      "kind": "attribute",
+      "summary": "The fewest cliffs to draw.",
+      "parameters": [
+        {
+          "name": "count",
+          "kind": "number",
+          "description": "A whole number.",
+          "range": "0 to 65535"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["cliff_generation"],
+          "summary": "The fewest cliffs to draw."
+        }
+      ],
+      "details": [
+        "The number of cliffs is chosen from this value up to one less than `max_number_of_cliffs`; when both are equal, exactly that many. A minimum above the maximum is an error."
+      ],
+      "default": "3 (with the default maximum of 9: 3 to 8 cliffs)",
+      "related": ["max_number_of_cliffs", "min_length_of_cliff"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "A community guide describes the maximum as inclusive for lengths; our engine excludes it for both count and length."
+      }
+    },
+    {
+      "name": "max_number_of_cliffs",
+      "kind": "attribute",
+      "summary": "One more than the most cliffs to draw.",
+      "parameters": [
+        {
+          "name": "count",
+          "kind": "number",
+          "description": "A whole number.",
+          "range": "0 to 65535"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["cliff_generation"],
+          "summary": "One more than the most cliffs to draw."
+        }
+      ],
+      "details": [
+        "The number of cliffs is chosen from `min_number_of_cliffs` up to one less than this value."
+      ],
+      "default": "9",
+      "related": ["min_number_of_cliffs"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "min_length_of_cliff",
+      "kind": "attribute",
+      "summary": "The shortest cliff, in steps of 3 tiles.",
+      "parameters": [
+        {
+          "name": "steps",
+          "kind": "number",
+          "description": "A whole number.",
+          "range": "0 to 65535"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["cliff_generation"],
+          "summary": "The shortest cliff, in steps of 3 tiles."
+        }
+      ],
+      "details": [
+        "Each cliff’s length is chosen from this value up to one less than `max_length_of_cliff`. A length below 3 makes no cliff. A cliff stops early where it cannot go on."
+      ],
+      "default": "5",
+      "related": ["max_length_of_cliff", "cliff_curliness"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "max_length_of_cliff",
+      "kind": "attribute",
+      "summary": "One more than the longest cliff, in steps of 3 tiles.",
+      "parameters": [
+        {
+          "name": "steps",
+          "kind": "number",
+          "description": "A whole number.",
+          "range": "up to 512"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["cliff_generation"],
+          "summary": "One more than the longest cliff, in steps of 3 tiles."
+        }
+      ],
+      "default": "9",
+      "related": ["min_length_of_cliff"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "cliff_curliness",
+      "kind": "attribute",
+      "summary": "The chance, in percent, that a cliff turns at each step.",
+      "parameters": [
+        {
+          "name": "chance",
+          "kind": "number",
+          "description": "In percent.",
+          "range": "0 to 100"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["cliff_generation"],
+          "summary": "The chance, in percent, that a cliff turns at each step."
+        }
+      ],
+      "details": ["Turns go left or right about equally often; 0 draws straight cliffs."],
+      "default": "36",
+      "related": ["min_length_of_cliff"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "min_distance_cliffs",
+      "kind": "attribute",
+      "summary": "The gap kept between cliffs, in steps of 3 tiles.",
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In steps of 3 tiles."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["cliff_generation"],
+          "summary": "The gap kept between cliffs, in steps of 3 tiles."
+        }
+      ],
+      "default": "2",
+      "related": ["min_terrain_distance"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "min_terrain_distance",
+      "kind": "attribute",
+      "summary": "Keeps cliffs away from water and other terrain they cannot cross, in steps of 3 tiles.",
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In steps of 3 tiles."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["cliff_generation"],
+          "summary": "Keeps cliffs away from water and other terrain they cannot cross, in steps of 3 tiles."
+        }
+      ],
+      "default": "2",
+      "related": ["min_distance_cliffs"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_terrain",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Paints one terrain over the map in clumps.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "The terrain to paint."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation"],
+          "summary": "Paints one terrain over the map in clumps."
+        }
+      ],
+      "details": [
+        "Its block sets where the terrain may go (`base_terrain`, `base_layer`, `height_limits`, spacing), how much to paint (`land_percent` or `number_of_tiles`), and how it clumps. Without `base_terrain` it goes only on `GRASS` (terrain 0)."
+      ],
+      "example": [
+        "create_terrain FOREST",
+        "{",
+        "    base_terrain GRASS",
+        "    land_percent 8",
+        "    number_of_clumps 12",
+        "    set_avoid_player_start_areas",
+        "    set_scale_by_groups",
+        "}"
+      ],
+      "related": ["base_terrain", "land_percent", "number_of_clumps"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "percent_of_land",
+      "kind": "attribute",
+      "summary": "Recognized, but it has no effect; use `land_percent` for a terrain’s share of the map.",
+      "parameters": [
+        {
+          "name": "percent",
+          "kind": "number",
+          "description": "Ignored."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Has no effect in `<TERRAIN_GENERATION>`; use `land_percent`."
+        }
+      ],
+      "related": ["land_percent"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "spacing_to_other_terrain_types",
+      "kind": "attribute",
+      "summary": "Keeps the terrain at least this many tiles away from terrains other than its base terrain.",
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "optional": true,
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Keeps the terrain at least this many tiles away from terrains other than its base terrain."
+        }
+      ],
+      "details": [
+        "Every tile within the distance, diagonals included, must be the base terrain or this terrain. It is checked alongside `spacing_to_specific_terrain`."
+      ],
+      "default": "0 (no spacing)",
+      "related": ["spacing_to_specific_terrain", "set_flat_terrain_only"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "spacing_to_specific_terrain",
+      "kind": "attribute",
+      "summary": "Keeps the terrain at least this many tiles away from one other terrain; repeat it for several.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "The terrain to keep away from."
+        },
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Keeps the terrain at least this many tiles away from one other terrain; repeat it for several."
+        }
+      ],
+      "details": [
+        "It only applies together with a base terrain (written or default), not with `base_layer` alone."
+      ],
+      "example": [
+        "create_terrain DESERT",
+        "{",
+        "    base_terrain GRASS",
+        "    spacing_to_specific_terrain WATER 3",
+        "}"
+      ],
+      "related": ["spacing_to_other_terrain_types"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "set_flat_terrain_only",
+      "kind": "attribute",
+      "summary": "Places the terrain only where the ground is flat.",
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Places the terrain only where the ground is flat."
+        }
+      ],
+      "details": [
+        "It only takes effect with a `spacing_to_other_terrain_types` of at least 1, which sets how far around each tile the ground must be flat."
+      ],
+      "related": ["spacing_to_other_terrain_types", "height_limits"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "terrain_mask",
+      "kind": "attribute",
+      "summary": "Paints the terrain as a layer instead of replacing the terrain below.",
+      "parameters": [
+        {
+          "name": "mode",
+          "kind": "number",
+          "description": "0, 1, or 2."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "Paints the terrain as a layer instead of replacing the terrain below."
+        }
+      ],
+      "details": [
+        "1 keeps each tile’s terrain and records the new terrain as its layer; without `base_layer` only tiles without a layer qualify. 2 paints the new terrain and keeps the old one as the layer. 0 paints normally and clears the layer."
+      ],
+      "default": "0",
+      "related": ["base_layer", "layer_to_place_on"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "beach_terrain",
+      "kind": "attribute",
+      "summary": "The terrain used for this terrain’s shores where it meets water.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "The shore terrain."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["terrain_generation/create_terrain"],
+          "summary": "The terrain used for this terrain’s shores where it meets water."
+        }
+      ],
+      "details": ["Shores are painted at the end, on tiles this terrain covers next to water."],
+      "default": "The game’s usual shore terrain.",
+      "related": ["create_terrain"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_connect_all_players_land",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Connects every player land with every other player land.",
+      "usages": [
+        {
+          "where": ["connection_generation"],
+          "summary": "Connects every player land with every other player land."
+        }
+      ],
+      "details": [
+        "Paths run between the lands’ origins, avoiding terrain whose `terrain_cost` is 0, and paint what `replace_terrain` and `default_terrain_replacement` say; without either, nothing is painted."
+      ],
+      "example": [
+        "create_connect_all_players_land",
+        "{",
+        "    replace_terrain WATER SHALLOW",
+        "    terrain_cost WATER 7",
+        "    terrain_size WATER 2 1",
+        "}"
+      ],
+      "related": ["create_connect_teams_lands", "replace_terrain", "terrain_cost"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_connect_teams_lands",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Connects the lands of teammates with each other; different teams stay unconnected.",
+      "usages": [
+        {
+          "where": ["connection_generation"],
+          "summary": "Connects the lands of teammates with each other; different teams stay unconnected."
+        }
+      ],
+      "details": [
+        "Paths run between the lands’ origins, avoiding terrain whose `terrain_cost` is 0, and paint what `replace_terrain` and `default_terrain_replacement` say; without either, nothing is painted.",
+        "A player without a team counts as a team of one."
+      ],
+      "related": ["create_connect_all_players_land"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_connect_all_lands",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Connects every land with every other land, player and neutral alike.",
+      "usages": [
+        {
+          "where": ["connection_generation"],
+          "summary": "Connects every land with every other land, player and neutral alike."
+        }
+      ],
+      "details": [
+        "Paths run between the lands’ origins, avoiding terrain whose `terrain_cost` is 0, and paint what `replace_terrain` and `default_terrain_replacement` say; without either, nothing is painted."
+      ],
+      "related": ["create_connect_all_players_land", "create_connect_same_land_zones"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_connect_same_land_zones",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Connects lands; it works the same as `create_connect_all_lands`.",
+      "usages": [
+        {
+          "where": ["connection_generation"],
+          "summary": "Connects lands; it works the same as `create_connect_all_lands`."
+        }
+      ],
+      "details": [
+        "Paths run between the lands’ origins, avoiding terrain whose `terrain_cost` is 0, and paint what `replace_terrain` and `default_terrain_replacement` say; without either, nothing is painted."
+      ],
+      "related": ["create_connect_all_lands", "create_connect_land_zones"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_connect_land_zones",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Connects all lands of two zones, including the lands within each zone.",
+      "parameters": [
+        {
+          "name": "zone",
+          "kind": "number",
+          "description": "The first zone, as written with `zone`.",
+          "range": "-10 to 245"
+        },
+        {
+          "name": "zone",
+          "kind": "number",
+          "description": "The second zone.",
+          "range": "-10 to 245"
+        }
+      ],
+      "usages": [
+        {
+          "where": ["connection_generation"],
+          "summary": "Connects all lands of two zones, including the lands within each zone."
+        }
+      ],
+      "details": [
+        "Paths run between the lands’ origins, avoiding terrain whose `terrain_cost` is 0, and paint what `replace_terrain` and `default_terrain_replacement` say; without either, nothing is painted.",
+        "A `create_land` without a `zone` is in zone -10; a player land without one is in its lobby slot number minus 10."
+      ],
+      "related": ["zone", "create_connect_same_land_zones"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "The zone numbers of lands without `zone` are derived from the engine’s storage; no test covers them."
+      }
+    },
+    {
+      "name": "create_connect_to_nonplayer_land",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Connects each player land to the neutral lands, but not players to each other.",
+      "usages": [
+        {
+          "where": ["connection_generation"],
+          "summary": "Connects each player land to the neutral lands, but not players to each other."
+        }
+      ],
+      "details": [
+        "Paths run between the lands’ origins, avoiding terrain whose `terrain_cost` is 0, and paint what `replace_terrain` and `default_terrain_replacement` say; without either, nothing is painted.",
+        "Write it after the other connection commands: it can replace connection commands that follow it."
+      ],
+      "related": ["create_connect_all_players_land", "create_land"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "default_terrain_replacement",
+      "kind": "attribute",
+      "summary": "The terrain painted along the paths, for every terrain they cross.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "The terrain to paint."
+        }
+      ],
+      "usages": [
+        {
+          "where": [
+            "connection_generation/create_connect_all_players_land",
+            "connection_generation/create_connect_teams_lands",
+            "connection_generation/create_connect_all_lands",
+            "connection_generation/create_connect_same_land_zones",
+            "connection_generation/create_connect_land_zones",
+            "connection_generation/create_connect_to_nonplayer_land"
+          ],
+          "summary": "The terrain painted along the paths, for every terrain they cross."
+        }
+      ],
+      "details": [
+        "It replaces every earlier `replace_terrain` in the block; a later `replace_terrain` still overrides it for its terrain."
+      ],
+      "default": "Nothing is painted.",
+      "related": ["replace_terrain", "terrain_size"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "replace_terrain",
+      "kind": "attribute",
+      "summary": "Where a path crosses one terrain, paints another.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "The terrain the path crosses."
+        },
+        {
+          "name": "replacement",
+          "kind": "terrain",
+          "description": "The terrain to paint there."
+        }
+      ],
+      "usages": [
+        {
+          "where": [
+            "connection_generation/create_connect_all_players_land",
+            "connection_generation/create_connect_teams_lands",
+            "connection_generation/create_connect_all_lands",
+            "connection_generation/create_connect_same_land_zones",
+            "connection_generation/create_connect_land_zones",
+            "connection_generation/create_connect_to_nonplayer_land"
+          ],
+          "summary": "Where a path crosses one terrain, paints another."
+        }
+      ],
+      "details": ["Repeat it for several terrains; for the same terrain the last one wins."],
+      "example": ["replace_terrain FOREST GRASS"],
+      "related": ["default_terrain_replacement", "terrain_cost"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "terrain_cost",
+      "kind": "attribute",
+      "summary": "What it costs a path to cross one terrain; 0 makes the terrain impassable.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "The terrain."
+        },
+        {
+          "name": "cost",
+          "kind": "number",
+          "description": "Decimals are allowed; 0 or less blocks the path."
+        }
+      ],
+      "usages": [
+        {
+          "where": [
+            "connection_generation/create_connect_all_players_land",
+            "connection_generation/create_connect_teams_lands",
+            "connection_generation/create_connect_all_lands",
+            "connection_generation/create_connect_same_land_zones",
+            "connection_generation/create_connect_land_zones",
+            "connection_generation/create_connect_to_nonplayer_land"
+          ],
+          "summary": "What it costs a path to cross one terrain; 0 makes the terrain impassable."
+        }
+      ],
+      "details": ["Paths prefer cheap terrain. Repeat it for several terrains."],
+      "default": "1 for every terrain",
+      "related": ["replace_terrain", "terrain_size"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "terrain_size",
+      "kind": "attribute",
+      "summary": "How wide the path is painted where it crosses one terrain.",
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "The terrain the path crosses."
+        },
+        {
+          "name": "size",
+          "kind": "number",
+          "description": "Tiles painted on each side of the path."
+        },
+        {
+          "name": "variance",
+          "kind": "number",
+          "description": "Random change of the size, drawn for every path tile."
+        }
+      ],
+      "usages": [
+        {
+          "where": [
+            "connection_generation/create_connect_all_players_land",
+            "connection_generation/create_connect_teams_lands",
+            "connection_generation/create_connect_all_lands",
+            "connection_generation/create_connect_same_land_zones",
+            "connection_generation/create_connect_land_zones",
+            "connection_generation/create_connect_to_nonplayer_land"
+          ],
+          "summary": "How wide the path is painted where it crosses one terrain."
+        }
+      ],
+      "details": [
+        "Size 0 paints the path tile only. A variance larger than the size can leave gaps."
+      ],
+      "default": "Size 1 and variance 0: a path 3 tiles wide.",
+      "related": ["terrain_cost", "replace_terrain"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "accumulate_connections",
+      "kind": "attribute",
+      "summary": "Makes each connection command build on the paths painted by the ones before it.",
+      "usages": [
+        {
+          "where": ["connection_generation"],
+          "summary": "Makes each connection command build on the paths painted by the ones before it."
+        }
+      ],
+      "details": [
+        "Without it, every connection command plans and paints on the terrain as it was before the connections, and the results are combined at the end. Write it outside blocks; inside braces it has no effect."
+      ],
+      "related": ["create_connect_all_lands"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_object",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Places objects of one type: a unit, building, resource, or decoration.",
+      "parameters": [
+        {
+          "name": "object",
+          "kind": "object",
+          "description": "An object name, or the name of an object group. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["objects_generation"],
+          "summary": "Places objects of one type: a unit, building, resource, or decoration."
+        }
+      ],
+      "details": [
+        "Without attributes it places one Gaia object anywhere on the map. Its block sets how many, how they group, whose they are, and where they may go; `set_place_for_every_player` places them around every player.",
+        "With an object group’s name, each object is drawn from the group (see `add_object`). Objects are placed in script order, so earlier commands get the first choice of space."
+      ],
+      "example": [
+        "create_object GOLD",
+        "{",
+        "    number_of_objects 7",
+        "    group_placement_radius 2",
+        "    set_tight_grouping",
+        "    set_gaia_object_only",
+        "    set_place_for_every_player",
+        "    min_distance_to_players 12",
+        "    max_distance_to_players 16",
+        "}"
+      ],
+      "related": ["number_of_objects", "set_place_for_every_player", "create_object_group"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_object_group",
+      "kind": "command",
+      "opensBlock": true,
+      "summary": "Names a group of object types that `create_object` and `second_object` can place; `add_object` fills it.",
+      "parameters": [
+        {
+          "name": "name",
+          "kind": "name",
+          "description": "The group’s name, written directly (not a constant)."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["objects_generation"],
+          "summary": "Names a group of object types that `create_object` and `second_object` can place; `add_object` fills it."
+        }
+      ],
+      "details": [
+        "Naming a group again adds to it; `create_object` commands written before that keep the entries they saw. A `#const` or `#define` of the same name takes precedence over the group."
+      ],
+      "example": [
+        "create_object_group HUNTABLES",
+        "{",
+        "    add_object DEER 50",
+        "    add_object BOAR 50",
+        "}",
+        "create_object HUNTABLES",
+        "{",
+        "    number_of_objects 4",
+        "}"
+      ],
+      "related": ["add_object", "create_object", "second_object"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "add_object",
+      "kind": "attribute",
+      "summary": "Adds an object type, with a weight, to an object group.",
+      "parameters": [
+        {
+          "name": "object",
+          "kind": "object",
+          "description": "An object name. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`."
+        },
+        {
+          "name": "weight",
+          "kind": "number",
+          "description": "A whole number, compared with the roll."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["objects_generation/create_object_group"],
+          "summary": "Adds an object type, with a weight, to an object group."
+        },
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Has no effect inside `create_object`; write it in a `create_object_group` block."
+        }
+      ],
+      "details": [
+        "Each object placed from the group rolls a number from 0 to 99. The entries whose weight passes the roll qualify, and the roll picks one of them in the order they were written; when none qualifies, the first entry is used. Outside a group block it has no effect."
+      ],
+      "profileNotes": [
+        {
+          "profiles": ["aoe2de-101.103.48987-rms-v1"],
+          "text": "An entry qualifies when its weight is at most the roll: weight 0 always qualifies, and 100 or more never does (such an entry is only used as the first entry when nothing qualifies)."
+        },
+        {
+          "profiles": ["aoe2de-101.103.54800-rms-v1"],
+          "text": "An entry qualifies when its weight is at least the roll: 99 or more always qualifies, and weight 0 only on a roll of 0."
+        }
+      ],
+      "related": ["create_object_group"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "create_actor_area",
+      "kind": "command",
+      "summary": "Marks a square area on the map, without placing an object, for `actor_area_to_place_in` and `avoid_actor_area`.",
+      "parameters": [
+        {
+          "name": "x",
+          "kind": "number",
+          "description": "Center column, in tiles."
+        },
+        {
+          "name": "y",
+          "kind": "number",
+          "description": "Center row, in tiles."
+        },
+        {
+          "name": "id",
+          "kind": "number",
+          "description": "The area’s number, which the other commands refer to."
+        },
+        {
+          "name": "radius",
+          "kind": "number",
+          "description": "Half the side of the square, in tiles; negative covers nothing."
+        }
+      ],
+      "usages": [
+        {
+          "where": ["objects_generation"],
+          "summary": "Marks a square area on the map, without placing an object, for `actor_area_to_place_in` and `avoid_actor_area`."
+        }
+      ],
+      "details": [
+        "It takes no block. Marking an id again adds to the same area. The part outside the map is cut off."
+      ],
+      "example": [
+        "create_actor_area 60 60 7 10",
+        "create_object RELIC",
+        "{",
+        "    actor_area_to_place_in 7",
+        "}"
+      ],
+      "related": ["actor_area", "actor_area_to_place_in", "avoid_actor_area"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      }
+    },
+    {
+      "name": "number_of_objects",
+      "kind": "attribute",
+      "summary": "How many objects to place: separate objects without grouping, the objects of each group with it.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "How many objects to place: separate objects without grouping, the objects of each group with it."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "count",
+          "kind": "number",
+          "description": "A whole number, not negative."
+        }
+      ],
+      "details": [
+        "Without grouping, each object is placed on its own. With `set_loose_grouping` or `set_tight_grouping` (or `number_of_groups`) it is the size of each group, varied by `group_variance`."
+      ],
+      "default": "1",
+      "related": ["number_of_groups", "group_variance", "set_scaling_to_map_size"]
+    },
+    {
+      "name": "number_of_groups",
+      "kind": "attribute",
+      "summary": "How many groups to place; it turns on loose grouping unless tight grouping is set.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "How many groups to place; it turns on loose grouping unless tight grouping is set."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "count",
+          "kind": "number",
+          "description": "A whole number, not negative; 0 places nothing."
+        }
+      ],
+      "details": ["Each group holds `number_of_objects` objects around its own center."],
+      "default": "1",
+      "related": ["number_of_objects", "set_loose_grouping"]
+    },
+    {
+      "name": "group_variance",
+      "kind": "attribute",
+      "summary": "Varies the size of each group by up to this many objects.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Varies the size of each group by up to this many objects."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "variance",
+          "kind": "number",
+          "description": "A whole number, not negative."
+        }
+      ],
+      "details": [
+        "A group gets from `number_of_objects` minus the variance up to `number_of_objects` plus the variance minus 1 objects, and at least 1, drawn again for every group. It only applies with grouping."
+      ],
+      "default": "0",
+      "related": ["number_of_objects", "number_of_groups"]
+    },
+    {
+      "name": "group_placement_radius",
+      "kind": "attribute",
+      "summary": "How far the objects of a group may spread from its center, in tiles.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "How far the objects of a group may spread from its center, in tiles."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "radius",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "details": [
+        "It only applies with grouping. With `set_circular_placement` the area is a circle instead of a square."
+      ],
+      "default": "3",
+      "related": ["set_loose_grouping", "set_tight_grouping"]
+    },
+    {
+      "name": "set_loose_grouping",
+      "kind": "attribute",
+      "summary": "Scatters the objects of each group within the group radius.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Scatters the objects of each group within the group radius."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": ["It and `set_tight_grouping` replace each other."],
+      "related": ["set_tight_grouping", "group_placement_radius"]
+    },
+    {
+      "name": "set_tight_grouping",
+      "kind": "attribute",
+      "summary": "Places the objects of each group next to each other, as one cluster.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places the objects of each group next to each other, as one cluster."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": [
+        "Typical for gold, stone, and berries. It and `set_loose_grouping` replace each other."
+      ],
+      "related": ["set_loose_grouping", "group_placement_radius"]
+    },
+    {
+      "name": "set_scaling_to_map_size",
+      "kind": "attribute",
+      "summary": "Scales the count with the map area; a 100 × 100 map is unscaled.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Scales the count with the map area; a 100 × 100 map is unscaled."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": [
+        "With grouping it scales `number_of_groups`, otherwise `number_of_objects`; the result is at least 1. It and `set_scaling_to_player_number` replace each other."
+      ],
+      "related": ["set_scaling_to_player_number", "number_of_groups"]
+    },
+    {
+      "name": "set_scaling_to_player_number",
+      "kind": "attribute",
+      "summary": "Multiplies the count by the number of players.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Multiplies the count by the number of players."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": [
+        "With grouping it scales `number_of_groups`, otherwise `number_of_objects`. It and `set_scaling_to_map_size` replace each other."
+      ],
+      "related": ["set_scaling_to_map_size", "set_place_for_every_player"]
+    },
+    {
+      "name": "set_place_for_every_player",
+      "kind": "attribute",
+      "summary": "Places the objects once for every player, around that player’s land and owned by that player.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places the objects once for every player, around that player’s land and owned by that player."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": [
+        "Player lands from `create_player_lands`, and lands assigned with `assign_to_player` or `assign_to`, qualify; a `land_id` removes a land from it. Distances such as `max_distance_to_players` are then measured from that player’s land."
+      ],
+      "related": ["set_gaia_object_only", "max_distance_to_players", "place_on_specific_land_id"]
+    },
+    {
+      "name": "set_gaia_object_only",
+      "kind": "attribute",
+      "summary": "Makes the objects Gaia (neutral), even when they are placed around each player.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Makes the objects Gaia (neutral), even when they are placed around each player."
+        }
+      ],
+      "details": [
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`; objects placed anywhere on the map are Gaia already."
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "related": ["set_place_for_every_player", "set_gaia_unconvertible"]
+    },
+    {
+      "name": "place_on_specific_land_id",
+      "kind": "attribute",
+      "summary": "Places the objects on the lands with this `land_id`, once for each such land.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places the objects on the lands with this `land_id`, once for each such land."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"],
+        "note": "A community guide describes -11 as a random position; the preview refuses negative values."
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "kind": "number",
+          "description": "The number given with `land_id`; not negative."
+        }
+      ],
+      "details": [
+        "The objects belong to the land’s player, if it has one. When no land has the id, nothing is placed. It takes precedence over `set_place_for_every_player`."
+      ],
+      "related": ["land_id", "set_place_for_every_player"]
+    },
+    {
+      "name": "generate_for_first_land_only",
+      "kind": "attribute",
+      "summary": "Limits per-land placement to one land per player.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Limits per-land placement to one land per player."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": [
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`. Placement stops at the first land whose player has already received these objects. Lands without a player count as player 1."
+      ],
+      "related": ["set_place_for_every_player", "place_on_specific_land_id"]
+    },
+    {
+      "name": "set_gaia_unconvertible",
+      "kind": "attribute",
+      "summary": "Makes the Gaia objects of this command impossible to convert.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Makes the Gaia objects of this command impossible to convert."
+        }
+      ],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "exact-engine"],
+        "note": "The engine copies the flag onto the objects; no generation step reads it."
+      },
+      "details": ["It changes nothing on the generated map."],
+      "related": ["set_gaia_object_only"]
+    },
+    {
+      "name": "set_building_capturable",
+      "kind": "attribute",
+      "summary": "Lets units capture the buildings of this command.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Lets units capture the buildings of this command."
+        }
+      ],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "exact-engine"],
+        "note": "The engine copies the flag onto the objects; no generation step reads it."
+      },
+      "details": ["It changes nothing on the generated map."],
+      "related": ["set_gaia_object_only"]
+    },
+    {
+      "name": "make_indestructible",
+      "kind": "attribute",
+      "summary": "Makes the objects of this command indestructible.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Makes the objects of this command indestructible."
+        }
+      ],
+      "evidence": {
+        "status": "documented",
+        "sources": ["community-guide", "exact-engine"],
+        "note": "The engine copies the flag onto the objects; no generation step reads it."
+      },
+      "details": ["It changes nothing on the generated map."],
+      "related": ["set_gaia_object_only"]
+    },
+    {
+      "name": "set_facet",
+      "kind": "attribute",
+      "summary": "Shows the objects with a chosen frame (facing or look) instead of a random one.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Shows the objects with a chosen frame (facing or look) instead of a random one."
+        }
+      ],
+      "evidence": {
+        "status": "uncertain",
+        "sources": ["exact-engine", "strict-parser", "community-guide"],
+        "note": "Whether frames count from 0 or 1 is not established; the engine stores the value as written."
+      },
+      "parameters": [
+        {
+          "name": "frame",
+          "kind": "number",
+          "description": "The frame number, not negative."
+        }
+      ],
+      "details": [
+        "The number picks the frame directly and is not checked against the object’s frames. It applies to the main objects, not to `second_object`."
+      ],
+      "related": ["second_object"]
+    },
+    {
+      "name": "resource_delta",
+      "kind": "attribute",
+      "summary": "Adds this amount to the resources each object holds, for example more gold in a mine.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Adds this amount to the resources each object holds, for example more gold in a mine."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "amount",
+          "kind": "number",
+          "description": "A whole number; negative takes resources away."
+        }
+      ],
+      "details": ["It applies to the main objects, not to `second_object`."],
+      "default": "0",
+      "related": ["effect_amount"]
+    },
+    {
+      "name": "second_object",
+      "kind": "attribute",
+      "summary": "Places a second object at the exact position of each object.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places a second object at the exact position of each object."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "object",
+          "kind": "object",
+          "description": "An object name, or an object group. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`."
+        }
+      ],
+      "details": [
+        "The second object belongs to the same player and needs no room of its own. A group draws a new entry for every object."
+      ],
+      "related": ["create_object", "create_object_group"]
+    },
+    {
+      "name": "terrain_to_place_on",
+      "kind": "attribute",
+      "summary": "Places the objects only on tiles with this terrain.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places the objects only on tiles with this terrain."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "A terrain name. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`."
+        }
+      ],
+      "details": [
+        "The objects of a tight group grow from the first one without checking it again."
+      ],
+      "related": ["layer_to_place_on", "ignore_terrain_restrictions"]
+    },
+    {
+      "name": "layer_to_place_on",
+      "kind": "attribute",
+      "summary": "Places the objects only on tiles whose layer is this terrain.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places the objects only on tiles whose layer is this terrain."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "terrain",
+          "kind": "terrain",
+          "description": "A terrain name. A plain number does not work here: the game ignores the whole command, so give the number a name with `#const`."
+        }
+      ],
+      "related": ["terrain_to_place_on", "base_layer", "terrain_mask"]
+    },
+    {
+      "name": "ignore_terrain_restrictions",
+      "kind": "attribute",
+      "summary": "Lets the objects stand on terrain they normally cannot, for example land objects in water.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Lets the objects stand on terrain they normally cannot, for example land objects in water."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": [
+        "For objects placed anywhere on the map, the first object of each group still needs terrain it can stand on; the rest of the group may ignore it."
+      ],
+      "related": ["terrain_to_place_on"]
+    },
+    {
+      "name": "min_distance_to_players",
+      "kind": "attribute",
+      "summary": "Keeps the objects at least this many tiles from every player land’s origin.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects at least this many tiles from every player land’s origin."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "details": [
+        "Distances are measured as squares unless `set_circular_placement` makes them circles."
+      ],
+      "default": "0",
+      "related": ["max_distance_to_players", "set_circular_placement"]
+    },
+    {
+      "name": "max_distance_to_players",
+      "kind": "attribute",
+      "summary": "Keeps the objects within this many tiles of the player’s land origin.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects within this many tiles of the player’s land origin."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "details": [
+        "It keeps the objects near a player only when they are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`. For objects placed anywhere on the map it does not keep them near a player, but 0 there can leave them unplaced."
+      ],
+      "default": "No limit.",
+      "related": ["min_distance_to_players", "set_place_for_every_player"]
+    },
+    {
+      "name": "set_circular_placement",
+      "kind": "attribute",
+      "summary": "Measures player distances and the group radius as circles instead of squares.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Measures player distances and the group radius as circles instead of squares."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "related": ["min_distance_to_players", "max_distance_to_players", "group_placement_radius"]
+    },
+    {
+      "name": "min_distance_group_placement",
+      "kind": "attribute",
+      "summary": "Keeps a free square of this radius around each group, for this command and every later one.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps a free square of this radius around each group, for this command and every later one."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "details": [
+        "Use `temp_min_distance_group_placement` to space this command’s groups without affecting later commands."
+      ],
+      "default": "0",
+      "related": ["temp_min_distance_group_placement"]
+    },
+    {
+      "name": "temp_min_distance_group_placement",
+      "kind": "attribute",
+      "summary": "Keeps this command’s groups at least this many tiles apart, without affecting later commands.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps this command’s groups at least this many tiles apart, without affecting later commands."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "default": "0",
+      "related": ["min_distance_group_placement"]
+    },
+    {
+      "name": "max_distance_to_other_zones",
+      "kind": "attribute",
+      "summary": "Keeps the objects at least this many tiles from terrain they cannot stand on.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects at least this many tiles from terrain they cannot stand on."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "details": [
+        "Despite its name it is about terrain, for example keeping land objects away from water."
+      ],
+      "default": "0 (no check)",
+      "related": ["avoid_other_land_zones"]
+    },
+    {
+      "name": "place_on_forest_zone",
+      "kind": "attribute",
+      "summary": "Places the objects only right next to forest.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places the objects only right next to forest."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "related": ["avoid_forest_zone"]
+    },
+    {
+      "name": "avoid_forest_zone",
+      "kind": "attribute",
+      "summary": "Keeps the objects away from forest.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects away from forest."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "optional": true,
+          "description": "In tiles.",
+          "default": "1"
+        },
+        {
+          "name": "extra",
+          "kind": "number",
+          "optional": true,
+          "description": "Accepted, but it has no known effect."
+        }
+      ],
+      "related": ["place_on_forest_zone", "avoid_cliff_zone"]
+    },
+    {
+      "name": "avoid_cliff_zone",
+      "kind": "attribute",
+      "summary": "Keeps the objects away from cliffs.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects away from cliffs."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "optional": true,
+          "description": "In tiles.",
+          "default": "1"
+        }
+      ],
+      "related": ["avoid_forest_zone"]
+    },
+    {
+      "name": "min_distance_to_map_edge",
+      "kind": "attribute",
+      "summary": "Keeps the objects at least this many tiles from the edge of the map.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects at least this many tiles from the edge of the map."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "description": "In tiles.",
+          "range": "0 to 65535"
+        }
+      ],
+      "default": "0",
+      "related": ["find_closest_to_map_edge"]
+    },
+    {
+      "name": "find_closest",
+      "kind": "attribute",
+      "summary": "Takes the free spots closest to the player’s land origin first.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Takes the free spots closest to the player’s land origin first."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": [
+        "It applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`, and with grouping and `min_connected_tiles`, where it takes the first fitting connected spot instead of a random one. It takes precedence over `find_closest_to_map_center` and `find_closest_to_map_edge`."
+      ],
+      "related": ["find_closest_to_map_center", "find_closest_to_map_edge", "enable_tile_shuffling"]
+    },
+    {
+      "name": "find_closest_to_map_center",
+      "kind": "attribute",
+      "summary": "Takes the spots closest to the map center first; with 1, the farthest first.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Takes the spots closest to the map center first; with 1, the farthest first."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "mode",
+          "kind": "number",
+          "optional": true,
+          "description": "1 reverses the order."
+        }
+      ],
+      "details": [
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`."
+      ],
+      "related": ["find_closest", "find_closest_to_map_edge"]
+    },
+    {
+      "name": "find_closest_to_map_edge",
+      "kind": "attribute",
+      "summary": "Takes the spots closest to the map edge first; with 1, the farthest first.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Takes the spots closest to the map edge first; with 1, the farthest first."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "mode",
+          "kind": "number",
+          "optional": true,
+          "description": "1 reverses the order."
+        }
+      ],
+      "details": [
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`."
+      ],
+      "related": ["find_closest", "find_closest_to_map_center"]
+    },
+    {
+      "name": "enable_tile_shuffling",
+      "kind": "attribute",
+      "summary": "Shuffles spots at the same distance when a `find_closest` command orders them.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Shuffles spots at the same distance when a `find_closest` command orders them."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "related": ["find_closest"]
+    },
+    {
+      "name": "require_path",
+      "kind": "attribute",
+      "summary": "Uses only spots that can be reached from the player’s land, by a path at most this many tiles longer than the straight line.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Uses only spots that can be reached from the player’s land, by a path at most this many tiles longer than the straight line."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "detour",
+          "kind": "number",
+          "optional": true,
+          "description": "Extra tiles allowed; 0 or no value only asks for some path.",
+          "default": "0"
+        }
+      ],
+      "details": [
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`."
+      ],
+      "related": ["find_closest", "force_placement"]
+    },
+    {
+      "name": "force_placement",
+      "kind": "attribute",
+      "summary": "Places the remaining objects even when no spot meets every rule; only the object’s own terrain needs still count.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places the remaining objects even when no spot meets every rule; only the object’s own terrain needs still count."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "details": [
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`. Each forced placement places one object, without its group."
+      ],
+      "related": ["require_path"]
+    },
+    {
+      "name": "min_connected_tiles",
+      "kind": "attribute",
+      "summary": "Places a group only where at least this many connected spots are free.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places a group only where at least this many connected spots are free."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "tiles",
+          "kind": "number",
+          "description": "A whole number; 1 or less turns it off."
+        }
+      ],
+      "details": ["It only applies with grouping."],
+      "related": ["set_tight_grouping"]
+    },
+    {
+      "name": "avoid_other_land_zones",
+      "kind": "attribute",
+      "summary": "Keeps the objects inside the zone of the player’s land.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects inside the zone of the player’s land."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "distance",
+          "kind": "number",
+          "optional": true,
+          "description": "Also keeps this many tiles from other zones.",
+          "default": "0"
+        }
+      ],
+      "details": [
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`."
+      ],
+      "related": ["zone", "max_distance_to_other_zones"]
+    },
+    {
+      "name": "actor_area",
+      "kind": "attribute",
+      "summary": "Marks the area around each placed object with this number, for later `avoid_actor_area` and `actor_area_to_place_in` rules.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Marks the area around each placed object with this number, for later `avoid_actor_area` and `actor_area_to_place_in` rules."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "kind": "number",
+          "description": "A whole number above 0."
+        }
+      ],
+      "details": ["The area is a square of `actor_area_radius` around each object."],
+      "related": [
+        "actor_area_radius",
+        "avoid_actor_area",
+        "actor_area_to_place_in",
+        "create_actor_area"
+      ]
+    },
+    {
+      "name": "actor_area_radius",
+      "kind": "attribute",
+      "summary": "The radius of the areas `actor_area` marks, in tiles.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "The radius of the areas `actor_area` marks, in tiles."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "radius",
+          "kind": "number",
+          "description": "In tiles; 0 marks one tile.",
+          "range": "0 to 65535"
+        }
+      ],
+      "default": "1 (a 3 × 3 square)",
+      "related": ["actor_area"]
+    },
+    {
+      "name": "actor_area_to_place_in",
+      "kind": "attribute",
+      "summary": "Places the objects only inside areas marked with this number.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Places the objects only inside areas marked with this number."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "kind": "number",
+          "description": "An area number from `actor_area` or `create_actor_area`."
+        }
+      ],
+      "details": [
+        "With per-player placement, only areas of the same player (or of no player) count. Without such an area nothing is placed."
+      ],
+      "related": ["actor_area", "create_actor_area", "avoid_actor_area"]
+    },
+    {
+      "name": "avoid_actor_area",
+      "kind": "attribute",
+      "summary": "Keeps the objects out of areas marked with this number; repeat it for several numbers.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects out of areas marked with this number; repeat it for several numbers."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "kind": "number",
+          "description": "An area number from `actor_area` or `create_actor_area`."
+        }
+      ],
+      "related": ["avoid_all_actor_areas", "actor_area"]
+    },
+    {
+      "name": "avoid_all_actor_areas",
+      "kind": "attribute",
+      "summary": "Keeps the objects out of every marked area.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "Keeps the objects out of every marked area."
+        }
+      ],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
+      },
+      "related": ["avoid_actor_area"]
+    },
+    {
+      "name": "override_actor_radius_if_required",
+      "kind": "attribute",
+      "summary": "When per-land placement runs out of spots, moves the last candidate to the nearest tile where the object fits.",
+      "usages": [
+        {
+          "where": ["objects_generation/create_object"],
+          "summary": "When per-land placement runs out of spots, moves the last candidate to the nearest tile where the object fits."
+        }
+      ],
+      "evidence": {
+        "status": "uncertain",
+        "sources": ["exact-engine", "strict-parser", "community-guide"],
+        "note": "Our engine ties it only to the exhausted per-land fallback; a community guide links it to actor areas and buildings."
+      },
+      "details": [
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`."
+      ],
+      "related": ["force_placement", "actor_area"]
+    }
+  ],
+  "families": [
+    {
+      "id": "object-attributes",
+      "title": "Object attributes",
+      "source": "definitions",
+      "summary": "Object attributes such as hit points, speed, or stored resources, for the third value of `effect_amount` and `effect_percent`.",
+      "usedBy": ["effect_amount", "effect_percent"],
+      "membership": {
+        "prefixes": ["ATTR_"]
+      },
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["support-bundles", "exact-engine"]
+      }
+    },
+    {
+      "id": "effect-types",
+      "title": "Effect types",
+      "source": "definitions",
+      "summary": "What `effect_amount` and `effect_percent` do: set, add to, or multiply an attribute, change a resource, enable or upgrade objects, and more. The `GAIA_…` forms change only Gaia.",
+      "usedBy": ["effect_amount", "effect_percent"],
+      "membership": {
+        "prefixes": ["GAIA_"],
+        "names": [
+          "SET_ATTRIBUTE",
+          "ADD_ATTRIBUTE",
+          "MUL_ATTRIBUTE",
+          "MOD_RESOURCE",
+          "MUL_RESOURCE",
+          "ENABLE_OBJECT",
+          "UPGRADE_UNIT",
+          "SPAWN_UNIT",
+          "MODIFY_TECH",
+          "SET_PLAYER_DATA",
+          "SET_TECH_COST",
+          "ADD_TECH_COST",
+          "DISABLE_TECH",
+          "MOD_TECH_TIME"
+        ]
+      },
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["support-bundles", "exact-engine"]
+      }
+    },
+    {
+      "id": "player-resources",
+      "title": "Player resources",
+      "source": "definitions",
+      "summary": "Player resources and counters, such as food, gold, or population, for resource effects and `guard_state`.",
+      "usedBy": ["effect_amount", "effect_percent", "guard_state"],
+      "membership": {
+        "prefixes": ["AMOUNT_"]
+      },
+      "evidence": {
+        "status": "documented",
+        "sources": ["support-bundles", "community-guide"]
+      }
+    },
+    {
+      "id": "object-classes",
+      "title": "Object classes",
+      "source": "definitions",
+      "summary": "Object classes, for the second value of `effect_amount` and `effect_percent`, which then change every object of the class.",
+      "usedBy": ["effect_amount", "effect_percent"],
+      "membership": {
+        "suffixes": ["_CLASS"]
+      },
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["support-bundles", "exact-engine"]
+      }
+    },
+    {
+      "id": "civilizations",
+      "title": "Civilizations",
+      "source": "definitions",
+      "summary": "Civilizations, for `set_gaia_civilization`.",
+      "usedBy": ["set_gaia_civilization"],
+      "membership": {
+        "prefixes": ["CIVILIZATION_"]
+      },
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["support-bundles", "exact-engine"]
+      }
+    },
+    {
+      "id": "cliff-types",
+      "title": "Cliff styles",
+      "source": "definitions",
+      "summary": "Cliff styles, for `cliff_type`.",
+      "usedBy": ["cliff_type"],
+      "membership": {
+        "prefixes": ["CT_"]
+      },
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["support-bundles", "exact-engine"]
+      }
+    },
+    {
+      "id": "color-corrections",
+      "title": "Color moods",
+      "source": "definitions",
+      "summary": "Color moods for the map’s lighting, for `color_correction`.",
+      "usedBy": ["color_correction"],
+      "membership": {
+        "prefixes": ["CC_"]
+      },
+      "evidence": {
+        "status": "documented",
+        "sources": ["support-bundles", "community-guide"]
+      }
+    },
+    {
+      "id": "water-definitions",
+      "title": "Water looks",
+      "source": "definitions",
+      "summary": "Looks for the map’s water, for `water_definition`.",
+      "usedBy": ["water_definition"],
+      "membership": {
+        "prefixes": ["WD_"]
+      },
+      "evidence": {
+        "status": "documented",
+        "sources": ["support-bundles", "community-guide"]
+      }
+    },
+    {
+      "id": "assignment-targets",
+      "title": "Assignment targets",
+      "source": "definitions",
+      "summary": "How `assign_to` picks a player: by player number (`AT_PLAYER`), team (`AT_TEAM`), or color (`AT_COLOR`).",
+      "usedBy": ["assign_to"],
+      "membership": {
+        "prefixes": ["AT_"]
+      },
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["support-bundles", "exact-engine"]
+      }
+    },
+    {
+      "id": "map-types",
+      "title": "Map types",
+      "source": "definitions",
+      "summary": "Map type names for `ai_info_map_type`.",
+      "details": [
+        "Classic map type names, such as `ARABIA`, share no prefix and are shown with the other built-in names."
+      ],
+      "usedBy": ["ai_info_map_type"],
+      "membership": {
+        "prefixes": ["REAL_WORLD_", "SPECIAL_MAP_", "EM_"]
+      },
+      "evidence": {
+        "status": "documented",
+        "sources": ["support-bundles", "community-guide"]
+      }
+    },
+    {
+      "id": "other-built-ins",
+      "title": "Objects, terrains, and other built-in names",
+      "source": "definitions",
+      "summary": "Names the game defines before every script runs. Most stand for an object (a unit, building, resource, or decoration) or a terrain; what a name means depends on where it is used.",
+      "details": [
+        "A script cannot redefine them: the first definition of a name wins, and these come first."
+      ],
+      "usedBy": ["create_object", "create_terrain", "terrain_type", "base_terrain"],
+      "membership": {
+        "remainder": true
+      },
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["support-bundles", "strict-parser"]
+      }
+    },
+    {
+      "id": "run-setting-labels",
+      "title": "Run-setting labels",
+      "source": "run-settings",
+      "summary": "Labels the game defines from the lobby settings: map size, game mode, resources, starting age, positions, players, and teams. Test them with `if`.",
+      "details": [
+        "Each label exists only when its setting applies; the run settings decide which ones the preview uses."
+      ],
+      "usedBy": ["if", "elseif"],
+      "membership": {
+        "patterns": ["#_PLAYER_GAME", "#_TEAM_GAME", "TEAM#_SIZE#", "PLAYER#_TEAM#"]
+      },
+      "members": {
+        "DE_AVAILABLE": "Always defined.",
+        "DE_GAME_AGE2": "Always defined.",
+        "TINY_MAP": "Defined when the map size is Tiny.",
+        "MAPSIZE_TINY": "Defined when the map size is Tiny.",
+        "SMALL_MAP": "Defined when the map size is Small.",
+        "MAPSIZE_SMALL": "Defined when the map size is Small.",
+        "MEDIUM_MAP": "Defined when the map size is Medium.",
+        "MAPSIZE_MEDIUM": "Defined when the map size is Medium.",
+        "LARGE_MAP": "Defined when the map size is Normal.",
+        "MAPSIZE_NORMAL": "Defined when the map size is Normal.",
+        "HUGE_MAP": "Defined when the map size is Large.",
+        "MAPSIZE_LARGE": "Defined when the map size is Large.",
+        "GIGANTIC_MAP": "Defined when the map size is Huge.",
+        "MAPSIZE_HUGE": "Defined when the map size is Huge.",
+        "LUDIKRIS_MAP": "Defined when the map size is Ludicrous.",
+        "MAPSIZE_LUDICROUS": "Defined when the map size is Ludicrous.",
+        "RANDOM_MAP": "Defined in the Random Map game mode.",
+        "REGICIDE": "Defined in Regicide, as the game mode or as a modifier.",
+        "DEATH_MATCH": "Defined in Death Match, and with ultra-high starting resources.",
+        "KING_OT_HILL": "Defined in King of the Hill, as the game mode or as a modifier.",
+        "WONDER_RACE": "Defined in Wonder Race.",
+        "DEFEND_WONDER": "Defined in Defend the Wonder.",
+        "TURBO_RANDOM_MAP": "Defined in Turbo Random Map, and in Random Map with turbo on.",
+        "TURBO_MODE": "Defined whenever turbo is on, including Turbo Random Map.",
+        "CAPTURE_THE_RELIC": "Defined in Capture the Relic.",
+        "SUDDEN_DEATH": "Defined in Sudden Death, as the game mode or as a modifier.",
+        "BATTLE_ROYALE": "Defined in Battle Royale.",
+        "EMPIRE_WARS": "Defined in Empire Wars, as the game mode or as a modifier.",
+        "DEFAULT_RESOURCES": "Defined with standard starting resources.",
+        "LOW_RESOURCES": "Defined with low starting resources.",
+        "MEDIUM_RESOURCES": "Defined with medium starting resources.",
+        "HIGH_RESOURCES": "Defined with high starting resources.",
+        "INFINITE_RESOURCES": "Defined with infinite resources.",
+        "RANDOM_RESOURCES": "Defined with random starting resources.",
+        "DARK_AGE_START": "Defined when the game starts in the Dark Age, the standard start of most modes.",
+        "FEUDAL_AGE_START": "Defined when the game starts in the Feudal Age, the standard start of Empire Wars.",
+        "CASTLE_AGE_START": "Defined when the game starts in the Castle Age.",
+        "IMPERIAL_AGE_START": "Defined when the game starts in the Imperial Age.",
+        "POST_IMPERIAL_AGE_START": "Defined when the game starts after the Imperial Age, the standard start of Death Match and Battle Royale.",
+        "FIXED_POSITIONS": "Defined when the lobby keeps teams together or fixes positions.",
+        "TEAM_POSITIONS": "Defined when the lobby fixes team positions.",
+        "AI_PLAYERS": "Defined when a computer player takes part.",
+        "FULL_TECH_TREE": "Defined when the full tech tree option is on.",
+        "ANTIQUITY_MODE": "Defined when the antiquity option is on.",
+        "SOLID_FARMS": "Defined when farms are solid rather than walkable.",
+        "#_PLAYER_GAME": "The number of players, such as `4_PLAYER_GAME`.",
+        "#_TEAM_GAME": "The number of teams with at least two players, from `0_TEAM_GAME` to `4_TEAM_GAME`.",
+        "TEAM#_SIZE#": "The size of each team in lobby order, such as `TEAM1_SIZE2`; a player without allies counts as a team of one.",
+        "PLAYER#_TEAM#": "The team of each player slot, such as `PLAYER3_TEAM2`; team 0 means no team."
+      },
+      "example": ["if 2_TEAM_GAME", "    #define TEAM_MAP", "endif"],
+      "evidence": {
+        "status": "engine-verified",
+        "sources": ["setup-context"]
+      }
+    }
+  ],
+  "snippets": [
+    {
+      "id": "random-block",
+      "label": "start_random … end_random",
+      "prefix": "start_random",
+      "where": ["*"],
+      "summary": "A random block: the game rolls once and runs the first branch the roll reaches.",
+      "body": ["start_random", "percent_chance ${1:50}", "$0", "end_random"]
+    },
+    {
+      "id": "if-block",
+      "label": "if … endif",
+      "prefix": "if",
+      "where": ["*"],
+      "summary": "A conditional block: the lines run only when the label is defined.",
+      "body": ["if ${1:CONDITION}", "\t$0", "endif"]
+    },
+    {
+      "id": "if-else-block",
+      "label": "if … else … endif",
+      "prefix": "if",
+      "where": ["*"],
+      "summary": "A conditional block with an alternative.",
+      "body": ["if ${1:CONDITION}", "\t$2", "else", "\t$0", "endif"]
+    },
+    {
+      "id": "player-lands",
+      "label": "create_player_lands { … }",
+      "prefix": "create_player_lands",
+      "where": ["land_generation"],
+      "summary": "One land for every player: terrain, combined size, and starting square.",
+      "body": [
+        "create_player_lands",
+        "{",
+        "\tterrain_type ${1:GRASS}",
+        "\tland_percent ${2:60}",
+        "\tbase_size ${3:10}",
+        "\t$0",
+        "}"
+      ]
+    },
+    {
+      "id": "neutral-land",
+      "label": "create_land { … }",
+      "prefix": "create_land",
+      "where": ["land_generation"],
+      "summary": "One neutral land: terrain, size, and position in percent of the map.",
+      "body": [
+        "create_land",
+        "{",
+        "\tterrain_type ${1:DESERT}",
+        "\tland_percent ${2:10}",
+        "\tland_position ${3:50} ${4:50}",
+        "\t$0",
+        "}"
+      ]
+    },
+    {
+      "id": "elevation",
+      "label": "create_elevation … { … }",
+      "prefix": "create_elevation",
+      "where": ["elevation_generation"],
+      "summary": "Hills: height, base terrain, size of each level, and number of hills.",
+      "body": [
+        "create_elevation ${1:3}",
+        "{",
+        "\tbase_terrain ${2:GRASS}",
+        "\tnumber_of_tiles ${3:500}",
+        "\tnumber_of_clumps ${4:8}",
+        "\tset_scale_by_groups",
+        "\t$0",
+        "}"
+      ]
+    },
+    {
+      "id": "cliffs",
+      "label": "cliff settings",
+      "prefix": "cliff_type",
+      "where": ["cliff_generation"],
+      "summary": "The cliff section’s settings: style, number, length, curliness, and spacing.",
+      "body": [
+        "cliff_type ${1:CT_GRANITE}",
+        "min_number_of_cliffs ${2:3}",
+        "max_number_of_cliffs ${3:6}",
+        "min_length_of_cliff ${4:4}",
+        "max_length_of_cliff ${5:8}",
+        "cliff_curliness ${6:20}",
+        "min_distance_cliffs ${7:3}",
+        "$0"
+      ]
+    },
+    {
+      "id": "terrain",
+      "label": "create_terrain … { … }",
+      "prefix": "create_terrain",
+      "where": ["terrain_generation"],
+      "summary": "A terrain painted in clumps, away from the players’ starting areas.",
+      "body": [
+        "create_terrain ${1:FOREST}",
+        "{",
+        "\tbase_terrain ${2:GRASS}",
+        "\tland_percent ${3:10}",
+        "\tnumber_of_clumps ${4:10}",
+        "\tset_avoid_player_start_areas",
+        "\tset_scale_by_groups",
+        "\t$0",
+        "}"
+      ]
+    },
+    {
+      "id": "player-connections",
+      "label": "create_connect_all_players_land { … }",
+      "prefix": "create_connect_all_players_land",
+      "where": ["connection_generation"],
+      "summary": "Paths between all players: what they paint across one terrain, its cost, and the path width.",
+      "body": [
+        "create_connect_all_players_land",
+        "{",
+        "\treplace_terrain ${1:WATER} ${2:SHALLOW}",
+        "\tterrain_cost ${1:WATER} ${3:7}",
+        "\tterrain_size ${1:WATER} ${4:2} ${5:1}",
+        "\t$0",
+        "}"
+      ]
+    },
+    {
+      "id": "player-objects",
+      "label": "create_object … { … } (every player)",
+      "prefix": "create_object",
+      "where": ["objects_generation"],
+      "summary": "A cluster of Gaia objects near every player, such as gold or berries.",
+      "body": [
+        "create_object ${1:GOLD}",
+        "{",
+        "\tnumber_of_objects ${2:6}",
+        "\tgroup_placement_radius ${3:2}",
+        "\tset_tight_grouping",
+        "\tset_gaia_object_only",
+        "\tset_place_for_every_player",
+        "\tmin_distance_to_players ${4:12}",
+        "\tmax_distance_to_players ${5:16}",
+        "\t$0",
+        "}"
+      ]
+    },
+    {
+      "id": "scattered-objects",
+      "label": "create_object … { … } (scattered)",
+      "prefix": "create_object",
+      "where": ["objects_generation"],
+      "summary": "Groups of Gaia objects scattered over the map, scaled with its size.",
+      "body": [
+        "create_object ${1:DEER}",
+        "{",
+        "\tnumber_of_groups ${2:6}",
+        "\tnumber_of_objects ${3:3}",
+        "\tset_loose_grouping",
+        "\tset_gaia_object_only",
+        "\tset_scaling_to_map_size",
+        "\tmin_distance_to_players ${4:20}",
+        "\t$0",
+        "}"
+      ]
+    },
+    {
+      "id": "object-group",
+      "label": "create_object_group … { … }",
+      "prefix": "create_object_group",
+      "where": ["objects_generation"],
+      "summary": "A named group of object types with weights, for `create_object` to draw from.",
+      "body": [
+        "create_object_group ${1:HUNTABLES}",
+        "{",
+        "\tadd_object ${2:DEER} ${3:50}",
+        "\tadd_object ${4:BOAR} ${5:50}",
+        "}",
+        "$0"
+      ]
+    }
+  ],
+  "evidenceGaps": []
+}

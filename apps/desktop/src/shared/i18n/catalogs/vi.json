@@ -1,0 +1,4626 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "vi",
+  "name": "Tiếng Việt",
+  "direction": "ltr",
+  "listPatterns": {
+    "unit": {
+      "two": "{0}, {1}",
+      "start": "{0}, {1}",
+      "middle": "{0}, {1}",
+      "end": "{0}, {1}"
+    }
+  },
+  "messages": {
+    "app-menu.file.name": {
+      "message": "Tệp"
+    },
+    "app-menu.edit.name": {
+      "message": "Chỉnh sửa"
+    },
+    "app-menu.view.name": {
+      "message": "Xem"
+    },
+    "app-menu.help.name": {
+      "message": "Trợ giúp"
+    },
+    "app-menu.file.new-file": {
+      "message": "Tệp mới"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Kịch bản kiểm thử bản đồ mới"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Tạo tệp định nghĩa…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Kịch bản XS mới"
+    },
+    "app-menu.file.open-file": {
+      "message": "Mở tệp…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Mở thư mục…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Duyệt bản đồ đã cài…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Triển khai thành mod…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Mở thư mục trò chơi"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Bỏ liên kết thư mục trò chơi"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Nhập báo cáo kiểm thử…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Mở gần đây"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Chưa có tệp hoặc thư mục gần đây"
+    },
+    "app-menu.file.save": {
+      "message": "Lưu"
+    },
+    "app-menu.file.save-as": {
+      "message": "Lưu thành…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "Chọn ứng dụng mặc định cho tệp RMS…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Không mở được Cài đặt Windows"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "Đã mở mục Ứng dụng mặc định trong Cài đặt Windows"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "Để mở tệp .rms và .rms2 bằng AoE2RMSIDE, hãy chọn ứng dụng tại đó. Windows chỉ đổi ứng dụng mặc định sau khi bạn xác nhận."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Đóng thẻ"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Đóng thư mục"
+    },
+    "app-menu.file.close-window": {
+      "message": "Đóng cửa sổ"
+    },
+    "app-menu.file.exit": {
+      "message": "Thoát"
+    },
+    "app-menu.edit.undo": {
+      "message": "Hoàn tác"
+    },
+    "app-menu.edit.redo": {
+      "message": "Làm lại"
+    },
+    "app-menu.edit.cut": {
+      "message": "Cắt"
+    },
+    "app-menu.edit.copy": {
+      "message": "Sao chép"
+    },
+    "app-menu.edit.paste": {
+      "message": "Dán"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Chọn tất cả"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Định dạng tài liệu"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Định dạng khi lưu"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "Thụt lề khối if/else"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Bỏ qua Thùng rác khi xóa"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Đặt lại bố cục"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Vẽ bản đồ bằng GPU"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Hiện các giai đoạn tạo trực tiếp"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Hiện gợi ý trong dòng"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Quy tắc kiểm tra mã"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Ngôn ngữ…"
+    },
+    "app-menu.view.theme": {
+      "message": "Giao diện"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Theo hệ thống"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Sáng"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Tối"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Kích thước thực"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Phóng to"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Thu nhỏ"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Bật/tắt toàn màn hình"
+    },
+    "app-menu.help.documentation": {
+      "message": "Tài liệu"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Tham gia Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Báo lỗi"
+    },
+    "app-menu.help.about": {
+      "message": "Giới thiệu {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "Không mở được thư mục trò chơi đã liên kết"
+    },
+    "about.version": {
+      "message": "Phiên bản {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "Trình soạn thảo kịch bản XS"
+    },
+    "about.edition.rms-preview": {
+      "message": "Trình soạn thảo kịch bản RMS và XS"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Trình soạn thảo kịch bản bản đồ ngẫu nhiên độc lập, không chính thức. Phần triển khai riêng của ứng dụng tái hiện cách Age of Empires II: Definitive Edition đọc kịch bản bản đồ ngẫu nhiên và tạo bản đồ."
+    },
+    "about.disclosure.independent": {
+      "message": "Trình soạn thảo kịch bản độc lập, không chính thức cho Age of Empires II: Definitive Edition."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "Bản đồ được tạo chỉ được bảo đảm khớp với trò chơi ở các phiên bản đã xác minh; phiên bản mới hơn vẫn hoạt động nhưng không có bảo đảm này. Một số đặc điểm bất thường của trò chơi được tái hiện có chủ ý để bản đồ hoạt động giống nhau."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE không phân phối tệp hay hình ảnh của trò chơi. Tài nguyên chính thức chỉ được đọc từ bản cài đặt cục bộ và Họa tiết trò chơi chỉ được trích xuất từ các tệp trò chơi đã cài."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE không phân phối tệp hay hình ảnh của trò chơi. Tài nguyên chính thức chỉ được đọc từ bản cài đặt cục bộ."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Không liên kết với và không được Microsoft, Xbox Game Studios, World's Edge hay Activision bảo trợ."
+    },
+    "about.credits": {
+      "message": "Ghi công\n{maintainer} — Người tạo và duy trì dự án"
+    },
+    "about.credits.research": {
+      "message": "Cảm ơn {author}; tài liệu {guide} đã giúp chúng tôi hiểu phần lớn kiến thức về kịch bản bản đồ ngẫu nhiên."
+    },
+    "about.credits.xs-research": {
+      "message": "Cảm ơn {author}; tài liệu XS trong {guide} là cơ sở ban đầu để xây dựng hỗ trợ XS."
+    },
+    "about.close": {
+      "message": "Đóng"
+    },
+    "about.documentation": {
+      "message": "Tài liệu"
+    },
+    "dialog.confirm.title": {
+      "message": "Xác nhận thao tác"
+    },
+    "dialog.confirm.cancel": {
+      "message": "Hủy"
+    },
+    "dialog.confirm.continue": {
+      "message": "Tiếp tục"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "Lưu thay đổi trong {name}?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, other {Lưu thay đổi trong {count} tệp?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "Các thay đổi chưa lưu sẽ mất nếu bạn đóng cửa sổ."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "Các thay đổi chưa lưu sẽ mất nếu bạn đóng thẻ này."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "Các thay đổi chưa lưu sẽ mất nếu bạn đóng thư mục này."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "Các thay đổi chưa lưu sẽ mất nếu bạn xóa {name}."
+    },
+    "dialog.unsaved.save": {
+      "message": "Lưu"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Lưu tất cả"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Không lưu"
+    },
+    "dialog.external-change.title": {
+      "message": "{name} đã thay đổi bên ngoài AoE2RMSIDE"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Ghi đè tệp sẽ loại bỏ phiên bản bên ngoài. Hãy tải lại, ghi đè bằng nội dung đang soạn thảo hoặc hủy."
+    },
+    "dialog.external-change.replace": {
+      "message": "Ghi đè trên đĩa"
+    },
+    "dialog.external-change.reload": {
+      "message": "Tải lại từ đĩa"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Tải lại sẽ loại bỏ nội dung chưa lưu. Tiếp tục chỉnh sửa để giải quyết xung đột khi lưu."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Tiếp tục chỉnh sửa"
+    },
+    "dialog.delete-entry.title": {
+      "message": "Chuyển {name} vào Thùng rác?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "Thư mục không trống. Thư mục và mọi mục bên trong sẽ được chuyển vào Thùng rác."
+    },
+    "dialog.delete-entry.description": {
+      "message": "Mục này sẽ được chuyển vào Thùng rác."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Chuyển vào Thùng rác"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "Xóa vĩnh viễn {name}?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "Thư mục không trống. Thư mục và mọi mục bên trong sẽ bị xóa vĩnh viễn, không qua Thùng rác. Không thể hoàn tác."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "Mục này sẽ bị xóa vĩnh viễn, không qua Thùng rác. Không thể hoàn tác."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Xóa vĩnh viễn"
+    },
+    "output.clear": {
+      "message": "Xóa đầu ra"
+    },
+    "output.source.run": {
+      "message": "Chạy"
+    },
+    "output.source.script": {
+      "message": "Kịch bản"
+    },
+    "output.source.preview": {
+      "message": "Xem trước"
+    },
+    "output.source.map-test": {
+      "message": "Thử bản đồ"
+    },
+    "output.source.deploy": {
+      "message": "Triển khai"
+    },
+    "output.source.live-test": {
+      "message": "Thử trò chơi"
+    },
+    "output.source.recovery": {
+      "message": "Khôi phục"
+    },
+    "output.source.update": {
+      "message": "Cập nhật"
+    },
+    "output.source.files": {
+      "message": "Tệp"
+    },
+    "output.source.game-folder": {
+      "message": "Thư mục trò chơi"
+    },
+    "output.source.game-textures": {
+      "message": "Họa tiết trò chơi"
+    },
+    "output.source.app": {
+      "message": "Ứng dụng"
+    },
+    "output.log.label": {
+      "message": "{count, plural, other {{count} thông báo đầu ra}}"
+    },
+    "output.empty": {
+      "message": "Chạy một bản đồ để xem kết quả tại đây."
+    },
+    "output.empty.filtered": {
+      "message": "Không có thông báo khớp với bộ lọc."
+    },
+    "output.jump-to-latest": {
+      "message": "Đến mới nhất ({count} mới)"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, other {Lặp lại {count} lần}}"
+    },
+    "output.details": {
+      "message": "Chi tiết"
+    },
+    "output.run.show": {
+      "message": "Hiện thông báo của lượt chạy"
+    },
+    "output.run.hide": {
+      "message": "Ẩn thông báo của lượt chạy"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, other {Không hiện {count} dòng trước đó}}"
+    },
+    "output.run.seed": {
+      "message": "hạt giống {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, other {{count} người chơi}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, other {{count} bản đồ}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ms"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} s"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} phút {seconds} s"
+    },
+    "output.constructs.heading": {
+      "message": "Không được đối chiếu với trò chơi"
+    },
+    "output.constructs.label": {
+      "message": "Các lệnh không được đối chiếu với trò chơi"
+    },
+    "output.constructs.go-to": {
+      "message": "Đến lần dùng đầu tiên"
+    },
+    "output.constructs.more": {
+      "message": "và {count} mục khác"
+    },
+    "installed-maps.filter.group": {
+      "message": "Nguồn bản đồ"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Bản đồ có sẵn ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Bản đồ mod cục bộ ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Bản đồ mod đã đăng ký ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Mọi nguồn bản đồ đều đang tắt. Bật một nguồn để liệt kê bản đồ của nguồn đó."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Không có bản đồ ngẫu nhiên đã cài thuộc các nguồn đã chọn."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Không có bản đồ ngẫu nhiên đã cài thuộc các nguồn đã chọn khớp với tìm kiếm này."
+    },
+    "installed-maps.empty.none": {
+      "message": "Không tìm thấy bản đồ ngẫu nhiên có sẵn, từ mod cục bộ hoặc mod đã đăng ký."
+    },
+    "installed-maps.empty.search": {
+      "message": "Không có bản đồ ngẫu nhiên đã cài khớp với tìm kiếm này."
+    },
+    "installed-maps.title": {
+      "message": "Bản đồ ngẫu nhiên đã cài"
+    },
+    "installed-maps.close": {
+      "message": "Đóng danh sách bản đồ ngẫu nhiên đã cài"
+    },
+    "installed-maps.search": {
+      "message": "Tìm bản đồ ngẫu nhiên đã cài"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Tìm bản đồ"
+    },
+    "installed-maps.search.clear": {
+      "message": "Xóa nội dung tìm bản đồ"
+    },
+    "installed-maps.loading": {
+      "message": "Đang tải bản đồ ngẫu nhiên đã cài"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Chọn thư mục trò chơi để liệt kê các tệp RMS đã cài"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Có sẵn"
+    },
+    "installed-maps.origin.local": {
+      "message": "Mod cục bộ"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Mod đã đăng ký"
+    },
+    "installed-maps.clone": {
+      "message": "Sao chép để chỉnh sửa"
+    },
+    "installed-maps.open-failed": {
+      "message": "Không mở được bản đồ"
+    },
+    "installed-maps.clone-failed": {
+      "message": "Không tạo được bản sao của bản đồ"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Không liệt kê được bản đồ đã cài"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, other {Đã sao chép # tệp bản đồ để chỉnh sửa}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "Chưa sao chép {name}"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "Bản đồ được sao chép tham chiếu đến tệp này nhưng tệp không thuộc bản đồ đã cài."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Trò chơi cung cấp tệp này; tệp không thuộc bản đồ đã cài."
+    },
+    "run-menu.control.detach": {
+      "message": "Ngắt kết nối AoE2Control"
+    },
+    "run-menu.control.remove": {
+      "message": "Bỏ chọn AoE2Control"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control đang kết nối"
+    },
+    "run-menu.control.detaching": {
+      "message": "Đang ngắt kết nối AoE2Control…"
+    },
+    "run-menu.control.busy": {
+      "message": "Đợi thao tác AoE2Control hiện tại hoàn tất"
+    },
+    "run-menu.run-on-save": {
+      "message": "Chạy khi lưu"
+    },
+    "run-menu.run-on-edit": {
+      "message": "Chạy khi sửa"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Cấu hình sẵn"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Cấu hình sẵn {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Thiết lập cấu hình xem trước"
+    },
+    "run-menu.preset.manage": {
+      "message": "Quản lý cấu hình xem trước"
+    },
+    "run-menu.preset.new": {
+      "message": "Cấu hình sẵn mới"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Đặt tên cấu hình xem trước mới"
+    },
+    "run-menu.preset.rename": {
+      "message": "Đổi tên {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "Lưu {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "Chỉnh sửa {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "Xóa {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "Xóa cấu hình sẵn {name}?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "Thao tác này xóa các thiết lập xem trước đã lưu trong cấu hình này."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Xóa"
+    },
+    "run-menu.preset.name-length": {
+      "message": "Tên cấu hình sẵn phải có từ 1 đến 64 ký tự"
+    },
+    "run-menu.preset.exists": {
+      "message": "Đã có cấu hình sẵn mang tên {name}"
+    },
+    "run-menu.preset.limit": {
+      "message": "Chỉ lưu được tối đa 64 cấu hình sẵn"
+    },
+    "run-menu.map-size": {
+      "message": "Cỡ bản đồ"
+    },
+    "run-menu.game-mode": {
+      "message": "Kiểu chơi"
+    },
+    "run-menu.starting-resources": {
+      "message": "Tài nguyên khởi đầu"
+    },
+    "run-menu.starting-age": {
+      "message": "Thời kỳ bắt đầu"
+    },
+    "run-menu.ending-age": {
+      "message": "Thời đại kết thúc"
+    },
+    "run-menu.position-policy": {
+      "message": "Cách bố trí vị trí"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Chọn"
+    },
+    "run-menu.turbo-note": {
+      "message": "Bản đồ ngẫu nhiên siêu tốc là chế độ cũ và được giữ nguyên. Bản đồ ngẫu nhiên kết hợp với Turbo cung cấp các nhãn turbo của trò chơi."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Dùng Bản đồ ngẫu nhiên + Turbo"
+    },
+    "run-menu.players.configure": {
+      "message": "Thiết lập người chơi"
+    },
+    "run-menu.players.count": {
+      "message": "Số người chơi"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, other {# người chơi}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Ô của người chơi {player}"
+    },
+    "run-menu.players.color": {
+      "message": "Màu của người chơi {player}"
+    },
+    "run-menu.players.civilization": {
+      "message": "Nền văn minh của người chơi {player}"
+    },
+    "run-menu.players.team": {
+      "message": "Đội của người chơi {player}"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Máy điều khiển người chơi {player}"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Người chơi máy (định nghĩa AI_PLAYERS)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "Khi thử trong trò chơi, mọi người chơi sau P1 đều do máy điều khiển"
+    },
+    "run-menu.players.live-note": {
+      "message": "Khi thử trong trò chơi, mọi người chơi sau P1 đều do máy điều khiển."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "Khi thử trong trò chơi, mọi người chơi sau P1 đều do máy điều khiển. Hãy đặt một người chơi vào P1, vị trí do bạn điều khiển."
+    },
+    "run-menu.lobby.label": {
+      "message": "Tùy chọn phòng chờ"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Tùy chọn phòng chờ, {count} đang bật"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Điều chỉnh kiểu chơi"
+    },
+    "run-menu.lobby.options": {
+      "message": "Tùy chọn"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (kiểu chơi)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Thêm Chiến tranh đế quốc vào kiểu chơi. Định nghĩa EMPIRE_WARS."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Thêm Cái chết bất ngờ vào kiểu chơi. Định nghĩa SUDDEN_DEATH."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Thêm Hành thích vào kiểu chơi. Định nghĩa REGICIDE."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Thêm Bá chủ núi đồi vào kiểu chơi. Định nghĩa KING_OT_HILL."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Tăng tốc độ chơi. Định nghĩa TURBO_MODE và thêm TURBO_RANDOM_MAP khi chơi Bản đồ ngẫu nhiên."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Mọi nền văn minh có thể nghiên cứu tất cả công nghệ. Định nghĩa FULL_TECH_TREE."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Chế độ Cổ đại. Định nghĩa ANTIQUITY_MODE; nhiều bản đồ sẽ thay đổi khi bật."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Đơn vị không thể đi qua ruộng. Định nghĩa SOLID_FARMS."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "Hành thích cần một vua cho mỗi người chơi. Trên bản đồ không có vua, trò chơi kết thúc trận ngay lập tức."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Thư mục trò chơi cục bộ"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (cục bộ)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (chưa xác minh)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Không có hồ sơ đi kèm"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Không có phiên bản đi kèm"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Phiên bản trò chơi để xem trước"
+    },
+    "run-menu.version.game-version": {
+      "message": "Phiên bản trò chơi"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Đã chọn phiên bản trò chơi cục bộ; đang chạy lại bản xem trước"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} chưa được xác minh về RMS; bản xem trước dùng hồ sơ hành vi mới nhất đã xác minh ({profile}). Chức năng có thể không bị ảnh hưởng. Nếu kết quả tạo bản đồ không khớp với trò chơi, hãy kiểm tra bản cập nhật IDE hoặc báo lỗi tại {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "không có"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Chọn thư mục trò chơi"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Đang chọn thư mục trò chơi…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "Đang dùng AoE2DE {version} cục bộ"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "Đang dùng bản cài đặt AoE2DE cục bộ đã chọn"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "Không tải được thiết lập chạy"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "Chưa lưu được thiết lập chạy"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "Trình soạn thảo không dùng được thiết lập chạy"
+    },
+    "run-menu.run.warning": {
+      "message": "Bản đồ có cảnh báo"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Đã xóa bộ nhớ đệm xem trước"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "Dữ liệu thử nghiệm phát triển cần kịch bản .rms hoặc .rms2 không trống"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Nền văn minh ngẫu nhiên cho bản xem trước này: {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Người chơi {player}: {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "Khi thử trong trò chơi, trò chơi sẽ tự chọn ngẫu nhiên."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, other {# người chơi}}"
+    },
+    "run-menu.result.error": {
+      "message": "Lỗi"
+    },
+    "run-menu.result.failed": {
+      "message": "Thất bại"
+    },
+    "run-menu.result.passed": {
+      "message": "Đạt"
+    },
+    "run-menu.result.stopped": {
+      "message": "Đã dừng"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Đã dừng, giữ lại bản đồ trước"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Dữ liệu thử tổng hợp, chưa chứng nhận"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Dữ liệu thử tổng hợp, chưa chứng nhận, dùng lại"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Đã tạo, dùng lại"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Đã tạo · phiên bản trò chơi chưa xác minh"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Đã tạo, dùng lại · phiên bản trò chơi chưa xác minh"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Không chạy được bản xem trước"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "Mã nguồn hiện tại trống."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "Mã nguồn hiện tại có lỗi cú pháp."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Không có hồ sơ hành vi đã chọn."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Không có gói nội dung tương thích với phiên bản trò chơi đã chọn."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Không có gói nội dung tương thích với hồ sơ hành vi."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Một lượt chạy khác vẫn đang diễn ra."
+    },
+    "run-menu.blocked.loading": {
+      "message": "Cấu hình xem trước vẫn đang tải."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "Chỉ triển khai được tệp chính .rms và .rms2."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "Mã nguồn RMS đã chọn trống."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "Mã nguồn RMS đã chọn có lỗi cú pháp."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "Không đưa được mã nguồn RMS đã chọn vào lịch chạy."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "Trạng thái khóa hạt giống không hợp lệ."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "Trạng thái Chạy khi lưu không hợp lệ."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "Trạng thái Chạy khi sửa không hợp lệ."
+    },
+    "run-menu.invalid.seed": {
+      "message": "Hạt giống phải là số nguyên từ 0 đến 4294967295."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "Cỡ bản đồ phải khớp với một tùy chọn được trò chơi hỗ trợ."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Số người chơi phải từ 1 đến 8."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "Các ô người chơi phải gồm tám giá trị hợp lệ."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Các ô người chơi đang dùng không được trùng nhau."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "Màu người chơi phải gồm tám giá trị hợp lệ."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Màu người chơi đang dùng không được trùng nhau."
+    },
+    "run-menu.invalid.teams": {
+      "message": "Đội của người chơi phải gồm tám giá trị từ Không có đội đến Đội 4."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "Các nền văn minh mặc định phải có đủ tám ô người chơi."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "Thiết lập người hoặc máy điều khiển phải gồm tám giá trị."
+    },
+    "run-menu.invalid.profile": {
+      "message": "Cần một hồ sơ hành vi đã biết."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "Phạm vi lựa chọn phiên bản không hợp lệ."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "Cần chọn kiểu chơi."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "Các điều chỉnh kiểu chơi phải được hỗ trợ và không trùng nhau."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Tùy chọn phòng chờ phải ở trạng thái bật hoặc tắt."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "Tài nguyên khởi đầu không hợp lệ."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "Thời kỳ bắt đầu không hợp lệ."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "Thời đại kết thúc không hợp lệ."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "Thời đại kết thúc không thể trước thời kỳ bắt đầu."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "Cách bố trí vị trí không hợp lệ."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "Mức thu thập dấu vết không hợp lệ."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Số lõi kiểm thử phải là Tự động hoặc từ 1 đến 32."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "Tệp include chuẩn của trò chơi cần thư mục trò chơi của bạn"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "Tệp include chuẩn cần phiên bản trò chơi cục bộ, nhưng đang chọn phiên bản đi kèm IDE."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "Tệp include chuẩn cần thư mục trò chơi đã liên kết, nhưng chưa có thư mục nào được liên kết."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "Tệp include chuẩn cần resources/_common/drs/gamedata_x2 trong thư mục trò chơi đã liên kết, nhưng thư mục này bị thiếu."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Không phân tích được kịch bản"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Không kiểm tra được kịch bản"
+    },
+    "run-menu.failure.not-started": {
+      "message": "Không bắt đầu được lượt chạy"
+    },
+    "run-menu.failure.generation": {
+      "message": "Tạo bản đồ thất bại"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Kiểm thử bản đồ"
+    },
+    "settings.language.title": {
+      "message": "Ngôn ngữ"
+    },
+    "settings.language.description": {
+      "message": "Menu, hộp thoại và thông báo dùng ngôn ngữ này. Lệnh kịch bản, nhật ký và gói hỗ trợ vẫn dùng tiếng Anh."
+    },
+    "settings.language.label": {
+      "message": "Ngôn ngữ giao diện"
+    },
+    "settings.language.system": {
+      "message": "Ngôn ngữ hiển thị Windows ({language})"
+    },
+    "settings.language.close": {
+      "message": "Đóng"
+    },
+    "settings.language.close-label": {
+      "message": "Đóng thiết lập ngôn ngữ"
+    },
+    "settings.language.editor-next-start": {
+      "message": "Menu riêng của trình soạn thảo mã sẽ đổi ngôn ngữ vào lần khởi động tiếp theo."
+    },
+    "message.action.report-problem": {
+      "message": "Báo vấn đề này"
+    },
+    "message.action.get-newer-control": {
+      "message": "Tải bản phát hành AoE2Control mới hơn"
+    },
+    "message.action.link-game-folder": {
+      "message": "Liên kết thư mục trò chơi của bạn"
+    },
+    "message.action.verify-game-files": {
+      "message": "Xác minh tệp trò chơi trong Steam"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Chọn phiên bản trò chơi cục bộ"
+    },
+    "message.action.check-include-name": {
+      "message": "Kiểm tra tên tệp include"
+    },
+    "message.action.open-problems": {
+      "message": "Mở bảng Vấn đề"
+    },
+    "message.action.choose-map-size": {
+      "message": "Chọn cỡ bản đồ khác"
+    },
+    "message.action.change-player-count": {
+      "message": "Đổi số người chơi"
+    },
+    "message.action.open-players-menu": {
+      "message": "Mở menu người chơi"
+    },
+    "message.action.try-another-seed": {
+      "message": "Thử hạt giống khác"
+    },
+    "message.action.reinstall": {
+      "message": "Cài lại hoặc cập nhật AoE2RMSIDE"
+    },
+    "message.action.check-update": {
+      "message": "Kiểm tra bản cập nhật AoE2RMSIDE"
+    },
+    "message.action.reconnect-control": {
+      "message": "Kết nối lại AoE2Control rồi thử lại"
+    },
+    "message.action.check-control-file": {
+      "message": "Kiểm tra tệp AoE2Control đã chọn có hoạt động, rồi thử lại"
+    },
+    "message.action.wait-run-again": {
+      "message": "Đợi một lát rồi nhấn Chạy lần nữa"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Nhấn Chạy lần nữa; nếu vẫn xảy ra, hãy khởi động lại AoE2DE"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "Khởi động lại AoE2DE rồi nhấn Chạy lần nữa"
+    },
+    "message.action.check-game-window": {
+      "message": "Kiểm tra cửa sổ trò chơi rồi nhấn Chạy lần nữa"
+    },
+    "message.action.press-run-again": {
+      "message": "Nhấn Chạy lần nữa"
+    },
+    "message.action.wait-try-again": {
+      "message": "Đợi một lát rồi thử lại"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Mở lại Triển khai thành mod"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Chọn tên mod khác"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Chạy lại kiểm thử bản đồ"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Một ô người chơi"
+    },
+    "message.format.located": {
+      "message": "{location}: {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, dòng {line}"
+    },
+    "message.format.the-script": {
+      "message": "Kịch bản"
+    },
+    "message.format.the-folder": {
+      "message": "Thư mục"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "thư mục XS trong hồ sơ người chơi của bạn"
+    },
+    "message.format.the-map-test": {
+      "message": "kiểm thử bản đồ"
+    },
+    "message.format.a-map-test": {
+      "message": "một kiểm thử bản đồ"
+    },
+    "message.format.preview-kept": {
+      "message": "Đã giữ nguyên bản xem trước."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "Bản xem trước vẫn hoạt động mà không cần thành phần này."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Kịch bản đã thay đổi trong lúc tạo bản đồ"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "Phiên bản mới hơn sẽ chạy tiếp theo."
+    },
+    "message.xs-syntax.headline": {
+      "message": "Một tệp XS có lỗi cú pháp"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} có lỗi cú pháp XS"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "Dòng {line} trong {name} ngăn trò chơi tải XS của bản đồ, nên trò chơi chưa bị thay đổi."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Trò chơi không tải được XS của bản đồ, nên trò chơi chưa bị thay đổi."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Sửa các lỗi trong Vấn đề rồi thử lại trong trò chơi"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "Đã có một tệp XS trong thư mục XS của hồ sơ người chơi"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "{name} đã có trong thư mục XS của hồ sơ người chơi"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Tệp không do AoE2RMSIDE tạo ({folder}), nên lượt thử trong trò chơi đã dừng mà không ghi đè tệp."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Tệp không do AoE2RMSIDE tạo, nên lượt thử trong trò chơi đã dừng mà không ghi đè tệp."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "Đổi tên tệp XS hoặc xóa tệp đang có"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Một tệp XS trong thư mục XS của hồ sơ người chơi đã bị sửa bên ngoài AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "{name} trong thư mục XS của hồ sơ người chơi đã bị sửa bên ngoài AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE đã sao chép tệp vào {folder} để thử trong trò chơi và không bao giờ ghi đè thay đổi do bên khác tạo, nên lượt thử đã dừng."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Chuyển nội dung đã sửa sang nơi khác hoặc xóa tệp, rồi thử lại trong trò chơi"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Không sao chép được một tệp XS vào thư mục XS của hồ sơ người chơi"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "Không sao chép được {name} vào thư mục XS của hồ sơ người chơi"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Lượt thử trong trò chơi sao chép từng tệp XS bằng tên tệp đơn thuần ghi trong #includeXS, nhưng tên này có chứa thư mục."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "Chỉ ghi tên tệp trong dòng #includeXS"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "Hai tệp XS sẽ được sao chép với cùng một tên"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "Hai tệp XS đều sẽ được sao chép thành {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "Thư mục XS của hồ sơ người chơi chỉ chứa được một tệp có tên đó."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "Đổi tên một trong hai tệp XS"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "Không dùng được thư mục XS của hồ sơ người chơi"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} không phải thư mục thông thường hoặc trỏ tới nơi khác. AoE2RMSIDE không bao giờ sao chép qua thư mục chuyển hướng."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "Không đọc được bản ghi tệp XS đã sao chép của AoE2RMSIDE"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Không có bản ghi này, AoE2RMSIDE không biết những tệp XS nào trong hồ sơ người chơi do ứng dụng tạo."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "Không sao chép được các tệp XS vào thư mục XS của hồ sơ người chơi"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "Bản đồ tải nhiều tệp XS hơn giới hạn sao chép của lượt thử trong trò chơi."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Không khôi phục được một số tệp XS mà lượt thử này đã sửa trong {folder}; AoE2RMSIDE vẫn coi chúng là tệp do mình tạo."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Đã khôi phục mọi tệp XS mà lượt thử này đã sửa trong {folder}."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "Bản ghi của AoE2RMSIDE về các tệp XS trong {folder} đã thay đổi trong lượt thử trong trò chơi."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Kiểm tra quyền ghi vào thư mục rồi thử lại trong trò chơi"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE chưa chạy"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "Mở AoE2DE rồi nhấn Chạy lần nữa"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control đã đóng trước khi khởi động"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control chưa khởi động"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control chưa kết nối xong"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "Phiên bản AoE2Control này thiếu một nền văn minh đã chọn"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Người Saxon, Quân Varangian và Người Dane cần AoE2Control 1.1.1 trở lên."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control không cung cấp một nền văn minh đã chọn"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "Chọn AoE2Control 1.1.1 trở lên hoặc chọn nền văn minh khác."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "Phiên bản trò chơi đang chạy thiếu một nền văn minh đã chọn"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Chọn nền văn minh khác"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Phiên bản trò chơi này không hỗ trợ thử trực tiếp trong trò chơi"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "AoE2Control trước đó vẫn đang được gỡ khỏi trò chơi"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Một lần khởi động AoE2Control trước đó vẫn đang diễn ra trong trò chơi"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control không khởi động xong trong thời gian cho phép"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "Cửa sổ AoE2DE chưa sẵn sàng"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Mở cửa sổ trò chơi, không thu nhỏ, rồi nhấn Chạy lần nữa"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "Một phiên bản AoE2Control khác đang chạy trong trò chơi"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "AoE2Control đã khởi động thất bại trước đó trong phiên trò chơi này"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control không gắn được vào trò chơi"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Một trình khởi chạy AoE2Control khác đang chạy"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Đóng trình đó rồi nhấn Chạy lần nữa"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Bản phát hành AoE2Control này không tương thích"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Chọn bản phát hành công khai AoE2Control tương thích"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "Thiết lập trong trò chơi không khớp với thiết lập chạy"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "Đã mất kết nối với AoE2Control"
+    },
+    "message.control.connection-lost.action": {
+      "message": "Mở AoE2DE nếu cần rồi thử lại"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control không phản hồi trong thời gian cho phép"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control đã đóng kết nối mà không phản hồi"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Trò chơi có thể đang bận hoặc đang hiện thông báo."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Trò chơi ngừng phản hồi trong lúc bắt đầu trận"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE có thể đang hiện thông báo, chẳng hạn lỗi kịch bản."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Đóng thông báo trong trò chơi rồi nhấn Chạy lần nữa"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Trò chơi không xác nhận trận mới trong thời gian cho phép"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "Trận hiện tại không kết thúc trong thời gian cho phép"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "Bản đồ đã thay đổi trong lúc sao chép vào trò chơi"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "Thư mục bản đồ của trò chơi có bản đồ khác mang cùng tên tệp"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Đổi tên bản đồ rồi nhấn Chạy lần nữa"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "Không sao chép được bản đồ vào trò chơi"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Trò chơi chưa xác nhận việc bắt đầu trận"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Kết nối lại để kiểm tra trận hiện tại trước khi thử lại"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Trò chơi chưa xác nhận rằng trận trước đã kết thúc"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Kết nối lại để kiểm tra trước khi thử lại"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "Không xác định được thư mục trò chơi hoặc hồ sơ người chơi"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Kiểm tra thư mục trò chơi đã liên kết"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "Không triển khai được bản đồ để thử trong trò chơi"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control đã dừng trước khi kết nối"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control không xác nhận được một phiên chơi đơn ổn định"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control gửi phản hồi mà AoE2RMSIDE không dùng được"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "Trạng thái trò chơi không được chức năng thử trong trò chơi hỗ trợ"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Trở về menu chính hoặc một trận chơi đơn rồi thử lại"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "Cần kết thúc trận đang chạy trước"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Nhấn Chạy lần nữa và cho phép kết thúc trận"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control chưa kết nối"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Nhấn Chạy lần nữa để kết nối"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Tệp AoE2Control đã chọn đã thay đổi"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "Chọn lại AoE2Control"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control đang bận"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Hệ thống này không hỗ trợ thử trong trò chơi"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "Lượt thử trong trò chơi không thay thế trận đang diễn ra"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "Một trận đã bắt đầu trong AoE2DE trước khi lượt thử kịp hỏi có thay thế trận đó không."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control không kết thúc được trận hiện tại"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Trò chơi đã thay đổi trước khi lượt thử kịp khởi chạy bản đồ"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "Trong lúc chuẩn bị lượt thử, AoE2DE đã bắt đầu một trận hoặc rời màn hình thiết lập chơi đơn."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "AoE2DE hoặc AoE2Control đã khởi động lại trong lượt thử trong trò chơi"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "AoE2DE không liệt kê bản đồ đã sao chép"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "Danh sách bản đồ mod của trò chơi không có bản đồ đã sao chép, hoặc hiện bản đồ đó nhiều lần."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "Không gửi được thiết lập của một người chơi tới AoE2Control"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Một nền văn minh, đội hoặc màu nằm ngoài phạm vi mà AoE2Control này chấp nhận."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE không chuẩn bị được lượt thử trong trò chơi"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control không thiết lập được trận Bản đồ ngẫu nhiên"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "Trở về menu chính AoE2DE rồi thử lại; nếu vẫn xảy ra, hãy mở Chơi đơn → Giao tranh một lần"
+    },
+    "message.control.headline": {
+      "message": "Thử trong trò chơi thất bại"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Phiên bản AoE2Control này không đặt được tùy chọn phòng chờ"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Tùy chọn phòng chờ cần AoE2Control 1.1.1 trở lên. Trò chơi chưa bị thay đổi."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Thử trong trò chơi cần một người chơi ở P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "Bạn điều khiển người chơi ở P1; mọi người chơi khác do máy điều khiển."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Mở menu người chơi và đặt một người chơi vào P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control từ chối người chơi thật ở vị trí sau P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Chức năng thử trong trò chơi bắt đầu trận chơi đơn, trong đó mọi người chơi sau P1 đều do máy điều khiển."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control từ chối danh sách người chơi máy"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "Người chơi máy chưa được liệt kê theo thứ tự ô."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Danh sách có người chơi máy ở một ô không có người chơi."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control từ chối người chơi máy ở P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "P1 là người chơi bạn điều khiển khi thử trong trò chơi, nên không thể do máy điều khiển."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Chưa khôi phục được một số thiết lập phòng chờ"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "Lượt thử trong trò chơi thất bại và {fields} có thể khác trước."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "Lượt thử trong trò chơi thất bại và một số thiết lập phòng chờ có thể khác trước."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Kiểm tra thiết lập phòng chờ trong AoE2DE trước trận tiếp theo"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "kiểu chơi"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "cỡ bản đồ"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "tài nguyên khởi đầu"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "thời kỳ bắt đầu"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "thời đại kết thúc"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "hiện bản đồ"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "số người chơi"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "vị trí đội"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "điều chỉnh kiểu chơi"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Turbo"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Cây kỹ thuật đầy đủ"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Cổ đại"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Nông trại kiên cố"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "bản đồ đã chọn"
+    },
+    "message.lobby-setting.seed": {
+      "message": "hạt giống"
+    },
+    "message.lobby-setting.player": {
+      "message": "{setting} của P{slot}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "đội"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "mức hỗ trợ"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "màu"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "nền văn minh"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "thiết lập người hoặc máy điều khiển"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "thiết lập"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "Đang khởi động AoE2Control"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "Đang đợi AoE2Control trước đó được gỡ khỏi trò chơi"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "Đang đợi AoE2Control khởi động xong trong trò chơi"
+    },
+    "message.live.game-detected.headline": {
+      "message": "Đã phát hiện AoE2DE"
+    },
+    "message.live.attach.headline": {
+      "message": "Đang gắn vào trò chơi đang chạy"
+    },
+    "message.live.handshake.headline": {
+      "message": "Đang kiểm tra AoE2Control"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control đã sẵn sàng"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Đang kết thúc trận hiện tại"
+    },
+    "message.live.deploy.headline": {
+      "message": "Đang triển khai bản đồ vào trò chơi"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, other {Tệp XS của bản đồ, {files}, cũng đã có trong thư mục XS của hồ sơ người chơi.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "Trò chơi đã có phiên bản bản đồ này"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Đang chọn bản đồ trong trò chơi"
+    },
+    "message.live.match-start.headline": {
+      "message": "Đang bắt đầu Bản đồ ngẫu nhiên với hạt giống {seed}"
+    },
+    "message.live.verified.headline": {
+      "message": "Đã xác minh trận với hạt giống {seed}"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} chưa được xác minh, nên trận đấu có thể khác bản xem trước."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} chưa được xác minh để thử trong trò chơi"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "Vẫn có thể thử trong trò chơi, nhưng trận đấu có thể khác bản xem trước."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Đã hủy lượt thử trong trò chơi"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Trò chơi không bị thay đổi thêm."
+    },
+    "message.live.detached.headline": {
+      "message": "Đã ngắt kết nối AoE2Control"
+    },
+    "message.live.stopped.headline": {
+      "message": "Đã dừng lượt thử trước khi thay đổi trò chơi"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "Không tạo được bản xem trước."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "Kịch bản có lỗi."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Kịch bản hoặc thiết lập chạy đã thay đổi trong lúc tạo bản xem trước."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "Bản xem trước không còn khớp với kịch bản."
+    },
+    "message.live.match-kept.cause": {
+      "message": "Trận đang chạy không bị thay đổi."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "Không lưu được quyền thay thế trận đang chạy."
+    },
+    "message.live.control-selected.headline": {
+      "message": "Đã chọn AoE2Control"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Tệp này không phải tệp thực thi AoE2Control có thể sử dụng"
+    },
+    "message.live.control-rejected.action": {
+      "message": "Chọn bản phát hành công khai AoE2Control"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "Đã bỏ chọn AoE2Control"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "Không bỏ chọn được AoE2Control"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Ngắt kết nối rồi thử lại"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "Không có trạng thái AoE2Control"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "Không nhập được hạt giống của trận hiện tại"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "Đã nhập và khóa hạt giống {seed} của trận"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "Thư mục mod đã thay đổi trong lúc triển khai"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Các tệp trong thư mục mod đã bị sửa bên ngoài AoE2RMSIDE"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE không bao giờ ghi đè thay đổi do bên khác tạo."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Chuyển nội dung đã sửa sang nơi khác rồi triển khai lại"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "Bản xem trước triển khai không còn mới nhất"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Một mod khác đã dùng thư mục này"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE chỉ thay thế mod do chính ứng dụng triển khai."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Chưa chọn hồ sơ người chơi"
+    },
+    "message.deploy.profile.action": {
+      "message": "Chọn hồ sơ"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Không thể triển khai trực tiếp bản đồ có sẵn"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Trước tiên hãy sao chép bản đồ vào không gian làm việc"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "Mod có quá nhiều tệp để triển khai"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "Thư mục mod trỏ tới nơi khác"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE không bao giờ triển khai qua thư mục chuyển hướng."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "Chưa xác nhận thay thế mod hiện có"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Triển khai lại và xác nhận thay thế"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Chưa có bản đồ của bạn để triển khai"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Mod cần một kịch bản .rms trong không gian làm việc của bạn."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Tên mod này dành riêng cho thử trong trò chơi"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Không dùng được tên mod này làm tên thư mục"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "Dùng một tên thư mục không chứa < > : \" / \\ | ? * và không kết thúc bằng dấu chấm hoặc dấu cách."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, dòng {line}: {error} Trò chơi không tải được tệp nên chưa triển khai gì."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Trò chơi không tải được tệp nên chưa triển khai gì."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Sửa các lỗi trong Vấn đề rồi triển khai lại"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "Không dùng được biểu tượng bản đồ"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Tạo lại biểu tượng bản đồ"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "Việc tạo biểu tượng bản đồ cần chạy riêng, nhưng một bản xem trước, kiểm thử bản đồ hoặc lượt thử trong trò chơi khác đang chạy."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Thử lại khi việc đó hoàn tất"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "Biểu tượng bản đồ cần bản xem trước hiện tại, nhưng bản xem trước đã thay đổi."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Đợi bản xem trước mới rồi thử lại"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "Biểu tượng bản đồ được vẽ bằng Họa tiết trò chơi của một thư mục trò chơi khác."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Chưa liên kết bản cài đặt AoE2DE hợp lệ nào."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "Thư mục hồ sơ hoặc thư mục mod của nó không phải là thư mục thông thường mà AoE2RMSIDE dùng được."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "Hai tệp sẽ được sao chép vào {path} trong mod."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Một tệp mà bản đồ dùng không có vị trí trong thư mục mod."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE không đọc được bản ghi các mod đã triển khai."
+    },
+    "message.deploy.headline": {
+      "message": "Triển khai thất bại"
+    },
+    "message.map-test.replay.headline": {
+      "message": "Không hiện được bản đồ của phát hiện này"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "Kiểm thử bản đồ đã vượt giới hạn bộ nhớ của tiến trình và bị dừng. Lượt chạy không được thử lại."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Giảm lượng bộ nhớ kịch bản cấp phát, như các vòng lặp lớn hoặc giữ lại nhiều bản đồ"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "Kiểm thử bản đồ lồng giá trị hoặc lời gọi quá sâu và vượt ngăn xếp của tiến trình nên đã bị dừng. Lượt chạy không được thử lại."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Tiến trình kiểm thử bản đồ đã bị hủy, nhiều khả năng do chạm giới hạn bộ nhớ hoặc ngăn xếp. Lượt chạy không được thử lại."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() cần một đường dẫn tương đối trong dấu ngoặc kép tới tệp .rms hoặc .rms2 trong thư mục đang mở."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "Bản đồ mà bài kiểm thử chạy mặc định nằm ngoài thư mục đang mở."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Bài kiểm thử bản đồ chưa từng được lưu cần một thư mục đang mở."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Tệp này không phải là báo cáo kiểm thử bản đồ mà AoE2RMSIDE đọc được."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Tệp lớn hơn {limit, number, integer} MiB."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "Kiểm thử bản đồ đã thay đổi kể từ lượt chạy."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "Bản đồ hoặc một tệp include đã thay đổi kể từ lượt chạy."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "Phiên bản trò chơi dùng để kiểm thử hiện không có sẵn."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "Bản đồ được tạo khác với kết quả trong lượt chạy."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "Báo cáo không chứa phát hiện này."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Mở {script} để hiện bản đồ này"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "Bản đồ của một phát hiện được tạo lại từ kịch bản kiểm thử đã tìm ra nó."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Mở {script} để đến phép kiểm tra này"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Báo cáo này được nhập từ tệp nên chưa biết vị trí tệp kiểm thử bản đồ."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "Một kiểm thử bản đồ đang chạy"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "Một kiểm thử bản đồ đang chạy · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Đây là kết quả của lượt chạy trước; kết quả sẽ đổi khi lượt chạy hiện tại kết thúc."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "Lượt chạy mới nhất đã dừng do lỗi"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Đây là kết quả của lượt chạy trước đó."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Xem lỗi trong Vấn đề và Đầu ra"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "Lượt chạy mới nhất đã bị dừng"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "Báo cáo đã nhập của {script}"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "Có thể hiện bản đồ của phát hiện khi kịch bản kiểm thử, bản đồ và phiên bản trò chơi vẫn giống lúc chạy."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} / {requested, plural, other {# bản đồ}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Đã kiểm thử"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Đang kiểm thử"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {Đã kiểm thử # bản đồ} other {Đã kiểm thử # bản đồ}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Đang kiểm thử bản đồ, {percent}% ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Đang bắt đầu kiểm thử bản đồ"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Đây không phải thư mục trò chơi AoE2DE"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "Thư mục này không chứa bản cài đặt đầy đủ của Age of Empires II: Definitive Edition."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Chọn thư mục cài đặt trò chơi, ví dụ steamapps\\common\\AoE2DE trong thư viện Steam của bạn"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "Không truy cập được bản cài đặt AoE2DE đã liên kết."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Không đọc an toàn được một phần thư mục trò chơi: phần đó quá lớn hoặc quá sâu, liên kết tới nơi khác hoặc chứa tên tệp không được hỗ trợ."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Hãy chọn một thư mục thông thường nằm ngoài thư mục trò chơi và các bản đồ đã cài."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} đã có trong thư mục đó."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Có quá nhiều tệp hoặc thư mục, hoặc một tệp quá lớn."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "Các bản đồ đã cài đã thay đổi trong lúc đó."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Mở lại bản đồ đã cài"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "Trong lúc đó, kịch bản hoặc một tệp include của nó đã thay đổi."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} không phải loại tệp mà bản đồ có thể include."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Có nhiều tệp chỉ khác {path} ở chữ hoa và chữ thường."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} nằm ngoài các thư mục mà AoE2RMSIDE được phép đọc."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Đặt các tệp include trong thư mục đang mở hoặc thư mục trò chơi đã liên kết"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Dùng thư mục include nhỏ hơn hoặc giảm số tệp include cần thiết"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Giảm lượng dữ liệu nguồn cần thiết, rồi chạy lại"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Không lưu lại được các thẻ đang mở và bố cục"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Tệp của bạn không bị ảnh hưởng, nhưng lần khởi động sau có thể mở lại bộ thẻ và bố cục cũ hơn."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} đã dừng bất ngờ."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} không chạy."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} không phản hồi kịp thời."
+    },
+    "message.execution.busy.cause": {
+      "message": "Một bản xem trước, kiểm thử bản đồ hoặc lượt thử trong trò chơi khác đang chạy."
+    },
+    "message.editor.busy.cause": {
+      "message": "Trình soạn thảo có quá nhiều yêu cầu đang chờ."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Chọn lại phiên bản trò chơi"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "Windows Explorer không mở được thư mục: {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Tệp là tệp nhị phân, quá lớn, không đọc được hoặc thuộc loại không được hỗ trợ."
+    },
+    "message.files.too-many.cause": {
+      "message": "Mỗi lần chỉ mở tối đa {limit, number, integer} tệp hoặc thư mục."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "Mục này không còn trong danh sách gần đây."
+    },
+    "message.files.encoding.cause": {
+      "message": "Kịch bản kiểm thử bản đồ phải được lưu dưới dạng UTF-8."
+    },
+    "message.files.too-large.cause": {
+      "message": "Kịch bản kiểm thử bản đồ tối đa {limit, number, integer} MiB."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Không thể lưu tệp vào thư mục trò chơi hoặc bản đồ đã cài."
+    },
+    "message.files.extension-required.cause": {
+      "message": "Tên tệp phải kết thúc bằng {extension}."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "Mục này đã bị thay đổi hoặc di chuyển bên ngoài AoE2RMSIDE."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Đã có thư mục mang tên đó."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Tệp nằm ngoài thư mục đang mở."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "Thư mục chứa quá nhiều tệp và thư mục để liệt kê."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Mở một thư mục nhỏ hơn"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "Thiết lập Thùng rác đã thay đổi trước khi xóa."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Xóa lại mục này"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "Các thay đổi chưa lưu quá lớn để giữ lại cho việc khôi phục."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Lưu các thay đổi để giữ chúng"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Tệp khôi phục bị hỏng hoặc do một bản phát hành AoE2RMSIDE khác ghi."
+    },
+    "message.game-textures.cause": {
+      "message": "Bản xem trước và biểu tượng bản đồ dùng màu họa tiết để thay thế."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} Bản xem trước và biểu tượng bản đồ dùng màu họa tiết để thay thế."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Không chuẩn bị được Họa tiết trò chơi"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Họa tiết trò chơi không khả dụng cho thư mục trò chơi đã liên kết"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Không đọc được địa hình đã chuyển đổi"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Đã hủy chuyển đổi Họa tiết trò chơi"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "Các tệp đã chuyển đổi được giữ lại; chọn lại Họa tiết trò chơi sẽ tiếp tục."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Không đọc được ảnh sprite của đối tượng"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Máy tính này không hỗ trợ vẽ bản đồ bằng GPU"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "Bản đồ được vẽ không dùng GPU; bản đồ lớn có thể mất nhiều thời gian hơn."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Máy tính này không dùng GPU để vẽ bản đồ"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Không có card đồ họa để vẽ bản đồ, nên bản đồ được vẽ không dùng card; bản đồ lớn có thể mất nhiều thời gian hơn."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "Vẽ bản đồ bằng GPU đã dừng"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "Card đồ họa đã được đặt lại, nên bản đồ được vẽ không dùng card cho đến khi ứng dụng khởi động lại."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "Bản xem trước của kiểm thử luôn dùng màu bản đồ nhỏ"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "Kiểm thử chỉ hiện bản đồ đã hoàn tất"
+    },
+    "message.generation-result.generated": {
+      "message": "Đã tạo"
+    },
+    "message.generation-result.reused": {
+      "message": "Dùng lại"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "phiên bản trò chơi chưa xác minh"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Phiên bản trò chơi chưa xác minh"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "Chưa tạo được bản đồ cho phiên bản trò chơi này."
+    },
+    "message.map-test.workers.label": {
+      "message": "Lõi kiểm thử"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Số lõi xử lý tối đa mà kiểm thử bản đồ dùng, cũng là số bản đồ tạo đồng thời ({maximum, plural, =1 {1 trên máy tính này} other {từ 1 đến {maximum} trên máy tính này}}). Để trống để dùng Tự động, phù hợp với máy tính và kích thước bản đồ. Mọi lựa chọn đều cho cùng kết quả."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Tự động"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Dùng Tự động"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, other {{count} lệnh không được đối chiếu với trò chơi}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Một số lệnh không được đối chiếu với trò chơi"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Chưa có bản đồ trò chơi được ghi nhận nào dùng lệnh này tại vị trí đó, nên bản xem trước có thể khác trò chơi tại nơi lệnh có tác dụng: {list}.} other {Chưa có bản đồ trò chơi được ghi nhận nào dùng các lệnh này tại những vị trí đó, nên bản xem trước có thể khác trò chơi tại nơi chúng có tác dụng: {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Chưa có bản đồ trò chơi được ghi nhận nào dùng lệnh này tại vị trí đó, nên bản xem trước có thể khác trò chơi tại nơi lệnh có tác dụng.} other {Chưa có bản đồ trò chơi được ghi nhận nào dùng các lệnh này tại những vị trí đó, nên bản xem trước có thể khác trò chơi tại nơi chúng có tác dụng.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} trong {context}"
+    },
+    "message.construct.list-more": {
+      "message": "{names} và {more} lệnh khác"
+    },
+    "message.fallback.run": {
+      "message": "Lượt chạy thất bại"
+    },
+    "message.fallback.script": {
+      "message": "Kịch bản thất bại"
+    },
+    "message.fallback.preview": {
+      "message": "Xem trước thất bại"
+    },
+    "message.fallback.map-test": {
+      "message": "Kiểm thử bản đồ thất bại"
+    },
+    "message.fallback.recovery": {
+      "message": "Khôi phục thất bại"
+    },
+    "message.fallback.update": {
+      "message": "Cập nhật thất bại"
+    },
+    "message.fallback.files": {
+      "message": "Thao tác với tệp thất bại"
+    },
+    "message.fallback.game-folder": {
+      "message": "Không dùng được thư mục trò chơi"
+    },
+    "message.fallback.app": {
+      "message": "Đã xảy ra sự cố"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Sửa các lỗi đang hiện để xem phần còn lại."
+    },
+    "message.action.choose-another-name": {
+      "message": "Chọn tên khác"
+    },
+    "message.action.use-or-remove": {
+      "message": "Sử dụng hoặc xóa mục này (có thể xóa bằng sửa nhanh)"
+    },
+    "explorer.create.definition-file": {
+      "message": "Tệp định nghĩa…"
+    },
+    "explorer.create.script": {
+      "message": "Kịch bản"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Kịch bản kiểm thử bản đồ"
+    },
+    "explorer.create.xs-script": {
+      "message": "Kịch bản XS"
+    },
+    "explorer.create.folder": {
+      "message": "Thư mục"
+    },
+    "explorer.create.label": {
+      "message": "Tạo trong {name}"
+    },
+    "explorer.label": {
+      "message": "Trình duyệt tệp"
+    },
+    "explorer.search.label": {
+      "message": "Tìm tệp trong không gian làm việc"
+    },
+    "explorer.search.placeholder": {
+      "message": "Tìm tệp"
+    },
+    "explorer.search.clear": {
+      "message": "Xóa nội dung tìm tệp"
+    },
+    "explorer.search.searching": {
+      "message": "Đang tìm tệp trong không gian làm việc"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Không có tệp RMS khớp"
+    },
+    "explorer.search.no-results": {
+      "message": "Không có tệp khớp"
+    },
+    "explorer.open-file.label": {
+      "message": "Mở tệp"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Mở tệp"
+    },
+    "explorer.open-folder.label": {
+      "message": "Mở thư mục"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Mở thư mục"
+    },
+    "explorer.tree.label": {
+      "message": "Các tệp trong {name}"
+    },
+    "explorer.empty.maps": {
+      "message": "Mở thư mục để duyệt và chỉnh sửa bản đồ bên trong."
+    },
+    "explorer.empty.scripts": {
+      "message": "Mở thư mục để duyệt và chỉnh sửa kịch bản bên trong."
+    },
+    "explorer.indexing": {
+      "message": "Đang lập chỉ mục thư mục làm việc"
+    },
+    "explorer.read-failed": {
+      "message": "Không đọc được thư mục này"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Mở trong File Explorer"
+    },
+    "explorer.context.rename": {
+      "message": "Đổi tên"
+    },
+    "explorer.context.delete": {
+      "message": "Xóa"
+    },
+    "explorer.inline.create-file": {
+      "message": "Tạo tệp"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Tạo thư mục"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Đổi tên tệp"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Đổi tên thư mục"
+    },
+    "definition-file.title": {
+      "message": "Tạo tệp định nghĩa"
+    },
+    "definition-file.close-label": {
+      "message": "Đóng"
+    },
+    "definition-file.loading": {
+      "message": "Đang đọc tên đối tượng và địa hình của phiên bản trò chơi đã chọn…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Phiên bản trò chơi"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (chưa xác minh)"
+    },
+    "definition-file.identity.target": {
+      "message": "Lưu vào"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "Chọn khi tạo tệp"
+    },
+    "definition-file.groups.label": {
+      "message": "Nhóm nội dung"
+    },
+    "definition-file.group.terrains": {
+      "message": "Địa hình"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "ID địa hình cho terrain_type, base_terrain và các thiết lập địa hình khác"
+    },
+    "definition-file.group.objects": {
+      "message": "Đối tượng"
+    },
+    "definition-file.group.objects.description": {
+      "message": "ID đối tượng cho create_object và các thiết lập đối tượng khác"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, other {# tên}}"
+    },
+    "definition-file.built-in": {
+      "message": "Gồm cả tên có sẵn"
+    },
+    "definition-file.built-in.description": {
+      "message": "Các tên mà trò chơi đã định nghĩa. Kịch bản có thể dùng chúng mà không cần tệp này."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Liên kết thư mục trò chơi để thêm tên cho các đối tượng và địa hình mà trò chơi chưa đặt tên."
+    },
+    "definition-file.note.other-version": {
+      "message": "Thư mục trò chơi của bạn chứa phiên bản khác nên không dùng tên từ đó."
+    },
+    "definition-file.note.no-text": {
+      "message": "Không đọc được tên trong thư mục trò chơi cho phiên bản này."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Mọi đối tượng và địa hình có tên đều đã có tên được định nghĩa sẵn."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, other {Bỏ qua # tên có sẵn vì các kịch bản trong thư mục này đã định nghĩa chúng.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, other {Bỏ qua # tên từ thư mục trò chơi vì không còn tên duy nhất để gán cho chúng.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "Không kiểm tra được các tên đã định nghĩa trong một số kịch bản của thư mục này."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Không tạo được Tệp định nghĩa cho phiên bản trò chơi đã chọn vì dữ liệu trò chơi không đầy đủ."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Không có phiên bản trò chơi để tạo Tệp định nghĩa."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "Không đọc được tên đối tượng và địa hình của phiên bản trò chơi đã chọn."
+    },
+    "definition-file.file-name.label": {
+      "message": "Tên tệp"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Nhập tên tệp."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Không dùng được tên này cho tệp trong Windows."
+    },
+    "definition-file.file-name.extension": {
+      "message": "Tên tệp phải kết thúc bằng .inc."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Tên này thuộc một tệp thư viện trò chơi. Hãy chọn tên khác."
+    },
+    "definition-file.generate": {
+      "message": "Tạo"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Tạo…"
+    },
+    "definition-file.error": {
+      "message": "Không ghi được Tệp định nghĩa. Xem chi tiết trong Đầu ra."
+    },
+    "definition-file.replace.title": {
+      "message": "Thay thế {name}?"
+    },
+    "definition-file.replace.description": {
+      "message": "Đã có tệp mang tên này trong {folder}. Thay thế sẽ ghi đè nội dung tệp."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Thay thế"
+    },
+    "definition-file.output.failed": {
+      "message": "Không ghi được Tệp định nghĩa"
+    },
+    "definition-file.output.unavailable": {
+      "message": "Không đọc được các tên để tạo Tệp định nghĩa"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Lưu Tệp định nghĩa"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "Tệp định nghĩa"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Bật mod"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Bật mod trong danh sách mod của trò chơi. Bản đồ và biểu tượng sẽ xuất hiện sau khi khởi động lại trò chơi."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "Mod đã được bật. Khởi động lại trò chơi để thấy bản đồ và biểu tượng."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Bật mod trong trò chơi tại Mod → Mod của tôi, rồi khởi động lại trò chơi để thấy bản đồ và biểu tượng."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {Chưa bật mod: không đọc được tệp danh sách mod của trò chơi.} unexpected-layout {Chưa bật mod: tệp danh sách mod có cấu trúc mà IDE không nhận biết.} duplicate-entry {Chưa bật mod: danh sách mod của trò chơi chứa mod này nhiều lần.} unexpected-entry {Chưa bật mod: mục dành cho mod này trong trò chơi có cấu trúc mà IDE không nhận biết.} changed {Chưa bật mod: trò chơi đã thay đổi danh sách mod cùng lúc.} unsafe-path {Chưa bật mod: thư mục mod hoặc danh sách mod của hồ sơ người chơi là liên kết tới nơi khác.} other {Chưa bật mod: không lưu được danh sách mod của trò chơi.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Trò chơi đang chạy: thay đổi có hiệu lực sau khi khởi động lại, và trò chơi có thể hoàn tác thay đổi khi đóng. Nếu mod bị tắt sau khi khởi động lại, hãy đóng trò chơi rồi triển khai lại."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Mở thư mục mod"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Hoàn tất"
+    },
+    "deploy-panel.success.title": {
+      "message": "Đã triển khai mod thành công"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "Đã lưu mod vào"
+    },
+    "deploy-panel.success.path": {
+      "message": "Đường dẫn mod đã triển khai"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Sao chép đường dẫn mod"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Đã sao chép đường dẫn mod"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, other {# tệp.}} Mod đã được bật; khởi động lại trò chơi để thấy bản đồ và biểu tượng."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, other {# tệp.}} Bật mod trong trò chơi tại Mod → Mod của tôi, rồi khởi động lại trò chơi để thấy bản đồ và biểu tượng."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "Đã triển khai mod nhưng chưa bật"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Không đọc được tệp danh sách mod của trò chơi nên tệp được giữ nguyên.} unexpected-layout {Tệp danh sách mod có cấu trúc mà IDE không nhận biết nên tệp được giữ nguyên.} duplicate-entry {Danh sách mod của trò chơi chứa mod này nhiều lần nên danh sách được giữ nguyên.} unexpected-entry {Mục dành cho mod này trong trò chơi có cấu trúc mà IDE không nhận biết nên mục được giữ nguyên.} changed {Trò chơi thay đổi danh sách mod cùng lúc nên giữ nguyên danh sách do trò chơi ghi.} unsafe-path {Thư mục mod hoặc danh sách mod của hồ sơ người chơi là liên kết tới nơi khác nên được giữ nguyên.} other {Không lưu được danh sách mod của trò chơi; danh sách trước đó vẫn được giữ nguyên.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Bật mod trong trò chơi tại Mod → Mod của tôi, rồi khởi động lại trò chơi"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "Danh sách mod đã thay đổi trong khi trò chơi đang chạy"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "Thay đổi có hiệu lực sau khi khởi động lại, và trò chơi có thể hoàn tác thay đổi khi đóng. Nếu mod bị tắt sau khi khởi động lại, hãy đóng trò chơi rồi triển khai lại."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "Đang dùng bản xem trước hiện tại của {name}"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "Không dùng lại được bản xem trước hiện tại nên đang tạo lại"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Không tạo được bản đồ này để triển khai"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "Đã triển khai {mod} vào hồ sơ {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "Không mở được thư mục mod"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Mở thư mục đích trong Windows Explorer"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "Không mở được thư mục đích"
+    },
+    "deploy-panel.target": {
+      "message": "Thư mục đích"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Sao chép đường dẫn thư mục đích"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Đã sao chép đường dẫn thư mục đích"
+    },
+    "deploy-panel.title": {
+      "message": "Triển khai thành mod"
+    },
+    "deploy-panel.close": {
+      "message": "Đóng triển khai mod"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Chọn thư mục trò chơi để triển khai"
+    },
+    "deploy-panel.source": {
+      "message": "Mã nguồn RMS"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Mở một tệp RMS chính"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Không tạo được bản đồ này nên chưa thể triển khai. Sửa vấn đề trong Đầu ra rồi mở lại Triển khai thành mod."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Không tạo được bản đồ này nên chưa thể triển khai. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "Đã hủy bản xem trước của mã nguồn RMS đã chọn."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Tên mod"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Chọn tên mod đã triển khai trước"
+    },
+    "deploy-panel.profile": {
+      "message": "Hồ sơ người chơi"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Chọn hồ sơ"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · đề xuất"
+    },
+    "deploy-panel.tree": {
+      "message": "Cây tệp triển khai"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Đang tải cây tệp triển khai"
+    },
+    "deploy-panel.no-source": {
+      "message": "Mở tệp chính .rms hoặc .rms2 để triển khai."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note}: {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Triển khai mod"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Thay thế mod hiện có?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Mọi tệp trong mod hiện có {name} sẽ bị xóa."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Thay thế mod"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, other {{count} vấn đề}}"
+    },
+    "problems-panel.empty": {
+      "message": "Không có vấn đề cú pháp."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Không có vấn đề khớp với bộ lọc (ẩn {hidden})."
+    },
+    "problems-panel.severity.error": {
+      "message": "Lỗi"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Cảnh báo"
+    },
+    "problems-panel.severity.info": {
+      "message": "Ghi chú"
+    },
+    "problems-panel.group.file": {
+      "message": "Tệp"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Tệp game"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, other {{count} lỗi}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, other {{count} cảnh báo}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, other {{count} ghi chú}}"
+    },
+    "problems-panel.group.show": {
+      "message": "Hiện vấn đề trong {file}"
+    },
+    "problems-panel.group.hide": {
+      "message": "Ẩn vấn đề trong {file}"
+    },
+    "problems-panel.group.label": {
+      "message": "Vấn đề trong {file}"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Đến {location}"
+    },
+    "severity-filter.label": {
+      "message": "Bộ lọc mức độ của {panel}"
+    },
+    "severity-filter.errors.label": {
+      "message": "Hiện lỗi ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Hiện lỗi"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Ẩn lỗi"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Hiện cảnh báo ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Hiện cảnh báo"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Ẩn cảnh báo"
+    },
+    "severity-filter.notes.label": {
+      "message": "Hiện ghi chú ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Hiện ghi chú"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Ẩn ghi chú"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "Không liệt kê được bản đồ trong {folder}: {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "Đã bỏ qua một bản cài đặt có tệp trò chơi bị thiếu hoặc không đọc được."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "Đã bỏ qua một bản cài đặt không truy cập được."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Số thư mục gốc của nguồn đã cài đạt giới hạn an toàn."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Số mục nguồn đã cài đạt giới hạn an toàn."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (chưa xác minh)"
+    },
+    "linked-game.content-read": {
+      "message": "Đang dùng dữ liệu trò chơi của {label}"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, other {{objects} đối tượng, đã được tải trước đó.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, other {{objects} đối tượng, đọc trong {milliseconds} ms.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "Không đọc được dữ liệu trò chơi của {label}"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Bản xem trước của phiên bản đó dùng dữ liệu {version} đi kèm IDE, nên không thể tạo các đối tượng và địa hình được thêm sau này."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Lệnh không xác định"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Định nghĩa không dùng"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Lệnh không có tác dụng tại đây"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Thuộc tính được đặt lại"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Nhánh ngẫu nhiên không bao giờ được chọn"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "Nhánh đầu có xác suất bằng không"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Giá trị bị giới hạn"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Hằng đã được định nghĩa"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Trò chơi không coi là chú thích"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Số ở chỗ cần tên"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Tên có thể chưa được định nghĩa"
+    },
+    "map-icon.generate": {
+      "message": "Tạo biểu tượng bản đồ"
+    },
+    "map-icon.open-larger": {
+      "message": "Mở biểu tượng bản đồ lớn hơn"
+    },
+    "map-icon.save-image": {
+      "message": "Lưu ảnh"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Lưu ảnh…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Đang tạo biểu tượng bản đồ"
+    },
+    "map-icon.frame.ready": {
+      "message": "Xem trước biểu tượng bản đồ"
+    },
+    "map-icon.frame.original": {
+      "message": "Biểu tượng bản đồ gốc"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "Không hiện được biểu tượng bản đồ gốc"
+    },
+    "map-icon.frame.none": {
+      "message": "Chưa có biểu tượng bản đồ được tạo"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Mở tệp chính .rms hoặc .rms2 để tạo biểu tượng bản đồ."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "Để tạo biểu tượng bản đồ, mã nguồn này cần có bản xem trước được tạo thành công."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "Không thể tạo biểu tượng bản đồ: {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Không có biểu tượng bản đồ: {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Biểu tượng bản đồ: đang tạo bản đồ từ hạt giống {seed}"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "Biểu tượng bản đồ cần bản xem trước được tạo thành công từ mã nguồn này."
+    },
+    "map-icon.status.rendering": {
+      "message": "Biểu tượng bản đồ: đang vẽ từ bản xem trước hiện tại"
+    },
+    "map-icon.status.waiting": {
+      "message": "Biểu tượng bản đồ: đang đợi bản xem trước triển khai"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Biểu tượng bản đồ: đã tạo {file}, chỉ thay thế ảnh gốc trong bản triển khai này"
+    },
+    "map-icon.status.generated": {
+      "message": "Biểu tượng bản đồ: đã tạo {file} từ bản xem trước hiện tại"
+    },
+    "map-icon.status.original": {
+      "message": "Biểu tượng bản đồ: tệp gốc {file} trong thư mục mã nguồn"
+    },
+    "map-icon.status.none": {
+      "message": "Biểu tượng bản đồ: không có"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "biểu tượng đã tạo"
+    },
+    "map-icon.tree.original": {
+      "message": "biểu tượng gốc"
+    },
+    "map-icon.render-failed": {
+      "message": "Không vẽ được biểu tượng bản đồ"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "Không lưu lại được tùy chọn biểu tượng bản đồ"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "Không tạo được biểu tượng bản đồ từ hạt giống {seed}"
+    },
+    "map-icon.output.saved": {
+      "message": "Đã lưu biểu tượng bản đồ thành {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "Không lưu được biểu tượng bản đồ"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Đóng xem trước biểu tượng bản đồ"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Biểu tượng bản đồ"
+    },
+    "map-icon.view-tools": {
+      "message": "Cách xem biểu tượng bản đồ"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Góc nhìn hình thoi"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Nhìn từ trên xuống"
+    },
+    "map-icon.look.minimap": {
+      "message": "Màu bản đồ nhỏ"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Màu họa tiết"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Họa tiết trò chơi"
+    },
+    "map-icon.look.pending": {
+      "message": "Đang áp dụng họa tiết trò chơi"
+    },
+    "map-icon.look.fallback": {
+      "message": "Họa tiết trò chơi không khả dụng nên biểu tượng dùng màu họa tiết."
+    },
+    "map-icon.relief": {
+      "message": "Đổ bóng địa hình"
+    },
+    "map-icon.relief.hide": {
+      "message": "Ẩn đổ bóng địa hình"
+    },
+    "map-icon.relief.show": {
+      "message": "Hiện đổ bóng địa hình"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Làm mượt ranh giới địa hình"
+    },
+    "map-icon.random-seed": {
+      "message": "Hạt giống ngẫu nhiên"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Dùng hạt giống trình soạn thảo"
+    },
+    "map-icon.seed": {
+      "message": "Hạt giống biểu tượng bản đồ"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Hạt giống trình soạn thảo"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Ô vuông người chơi"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Dấu chân Du mục"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Không đánh dấu điểm xuất phát"
+    },
+    "map-icon.spawn-size": {
+      "message": "Cỡ dấu điểm xuất phát"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Giảm cỡ dấu điểm xuất phát"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Tăng cỡ dấu điểm xuất phát"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "{value}% chiều rộng bản đồ"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Cỡ dấu điểm xuất phát (% chiều rộng bản đồ)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Hiện cây"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Ẩn cây"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Tùy chọn cây"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "số cây"
+    },
+    "map-icon.art.trees.size": {
+      "message": "cỡ cây"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Hiện vàng và đá"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Ẩn vàng và đá"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Tùy chọn vàng và đá"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "số mỏ vàng và đá"
+    },
+    "map-icon.art.resources.size": {
+      "message": "cỡ mỏ vàng và đá"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Ít hơn"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Nhiều hơn"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "Một ảnh mỗi loại"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "Một ảnh mỗi đối tượng"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Ít"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Vừa"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Nhiều"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Nhỏ hơn"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Lớn hơn"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "Nhỏ nhất"
+    },
+    "map-icon.art.size.small": {
+      "message": "Nhỏ"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Vừa"
+    },
+    "map-icon.art.size.large": {
+      "message": "Lớn"
+    },
+    "map-icon.art.size.largest": {
+      "message": "Lớn nhất"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Hiện dưới dấu điểm xuất phát"
+    },
+    "workbench.application-menu.label": {
+      "message": "Menu ứng dụng"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Thu gọn trình duyệt tệp"
+    },
+    "workbench.explorer.expand": {
+      "message": "Mở rộng trình duyệt tệp"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Thu gọn Trình duyệt tệp"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Mở rộng Trình duyệt tệp"
+    },
+    "workbench.explorer.resize": {
+      "message": "Đổi kích thước trình duyệt tệp"
+    },
+    "workbench.preview.resize": {
+      "message": "Đổi kích thước xem trước bản đồ trực tiếp"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Các giai đoạn tạo sẽ hiện trực tiếp từ lượt chạy sau"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Các giai đoạn tạo sẽ không hiện trực tiếp từ lượt chạy sau"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Bảng Vấn đề và Đầu ra"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Bảng Vấn đề, Đầu ra và Kết quả kiểm thử"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Đổi kích thước bảng Vấn đề và Đầu ra"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Đầu ra"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Vấn đề"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Kết quả kiểm thử"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Đầu ra"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Vấn đề"
+    },
+    "workbench.native.restart-label": {
+      "message": "Khởi động lại tiến trình {name} bị lỗi"
+    },
+    "workbench.native.failed": {
+      "message": "{name} bị lỗi"
+    },
+    "workbench.native.restarted": {
+      "message": "Đã khởi động lại {name}"
+    },
+    "workbench.native.restart-failed": {
+      "message": "Không khởi động lại được {name}"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} đã dừng"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "Đã nhập báo cáo kiểm thử của {name}"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Không nhập được báo cáo kiểm thử bản đồ"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Đã xuất báo cáo kiểm thử"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Không xuất được báo cáo kiểm thử bản đồ"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Đã tái hiện phát hiện bằng hạt giống đã ghi nhận"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Đã tái hiện phát hiện bằng hạt giống {seed} đã ghi nhận"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "Không bỏ liên kết được thư mục trò chơi"
+    },
+    "code-editor.panel.label": {
+      "message": "Trình soạn thảo mã nguồn RMS"
+    },
+    "code-editor.tabs.label": {
+      "message": "Các tệp đang mở"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Cuộn thẻ soạn thảo sang trái"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Cuộn thẻ soạn thảo sang phải"
+    },
+    "code-editor.tab.close": {
+      "message": "Đóng {name}"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Thay đổi chưa lưu"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Chỉ đọc"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Thay đổi chưa lưu, Chỉ đọc"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Triển khai thành mod…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Lưu"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Tạo bản sao / Lưu thành…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Lưu thành…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Đóng"
+    },
+    "code-editor.run.preview": {
+      "message": "Chạy xem trước"
+    },
+    "code-editor.run.map-test": {
+      "message": "Chạy kiểm thử bản đồ"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Chạy xem trước và thử trong trò chơi"
+    },
+    "code-editor.run.stop": {
+      "message": "Dừng"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Chạy ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Chạy xem trước và thử trong trò chơi ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Dừng ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Tùy chọn chạy xem trước"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Kịch bản được chạy"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Ghim kịch bản được chạy"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Hạt giống"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Sao chép hạt giống"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "Sao chép hạt giống {seed}"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Đã sao chép hạt giống"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Đã khóa"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Ngẫu nhiên mỗi lượt chạy"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Dùng hạt giống của trận hiện tại"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Cần một trận bản đồ ngẫu nhiên chơi đơn đang chạy và đã được xác minh."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Chọn thư mục trò chơi Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Đang chọn thư mục trò chơi Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Đang tìm thư mục Age of Empires II: Definitive Edition đã cài"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Thử trong trò chơi khi chạy"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Chạy xem trước rồi tiếp tục trong AoE2DE"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Chọn tệp thực thi AoE2Control hợp lệ"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "Chọn AoE2Control"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "Đang chọn AoE2Control…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "Chọn AoE2Control.exe để thử trong trò chơi"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "Đang chọn AoE2Control.exe để thử trong trò chơi"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "Tải AoE2Control"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "Mở trang phát hành AoE2Control"
+    },
+    "code-editor.control.remove.title": {
+      "message": "Bỏ chọn AoE2Control?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "Thao tác này bỏ chọn tệp thực thi AoE2Control và ngắt kết nối phiên thử trong trò chơi hiện tại. Lượt thử tiếp theo sẽ hỏi lại trước khi thay thế một trận đang chạy."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Bỏ chọn"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "Không mở được trang phát hành AoE2Control"
+    },
+    "code-editor.control-download.title": {
+      "message": "Trước khi giải nén AoE2Control"
+    },
+    "code-editor.control-download.description": {
+      "message": "Mật khẩu giải nén AoE2Control.zip là {password}. AoE2Control chèn DLL để chạy Lua trong trò chơi, nên phần mềm diệt virus dựa trên suy đoán, kể cả Windows Defender, có thể nhận diện nhầm là mối đe dọa. Thêm ngoại lệ thư mục cho các tệp đã giải nén trong phần mềm diệt virus để bộ thực thi chạy không bị gián đoạn."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Đã hiểu"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Thu gọn xem trước bản đồ trực tiếp"
+    },
+    "code-editor.preview.expand": {
+      "message": "Mở rộng xem trước bản đồ trực tiếp"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Thu gọn Xem trước"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Mở rộng Xem trước"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Đóng thông báo chạy kịch bản thất bại"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Đã khôi phục công việc chưa lưu"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Đóng thông báo khôi phục"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "Bản xem trước hiện dùng họa tiết từ trò chơi của bạn"
+    },
+    "code-editor.font-size.label": {
+      "message": "Cỡ chữ trình soạn thảo"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent}%"
+    },
+    "code-editor.read-only-message": {
+      "message": "Mã nguồn từ bản cài đặt hoặc mod đã đăng ký được bảo vệ. Hãy dùng Tạo bản sao hoặc Lưu thành."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Mở tệp include"
+    },
+    "code-editor.include.open": {
+      "message": "Mở {name}"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "Đổi tên tại đây có thể làm thay đổi ý nghĩa của kịch bản."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "Chưa chứng minh được tính tương đương nghiêm ngặt."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} là tệp trò chơi được bảo vệ; đổi tên sẽ làm thay đổi tệp đó."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "Bỏ qua {code} trên dòng này"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "Tắt {code} trong không gian làm việc này"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Mô hình trình soạn thảo không khả dụng."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "Loại ngôn ngữ kịch bản đã thay đổi."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Tài liệu đã thay đổi trước khi bắt đầu định dạng."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Tài liệu đã thay đổi trong lúc đợi định dạng."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "Yêu cầu đã bị hủy."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Không thể định dạng khi mã nguồn Starlark chưa hợp lệ."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "Định dạng yêu cầu thụt lề hợp lệ theo từng bốn dấu cách; cấu trúc token được giữ nguyên."
+    },
+    "code-editor.completion.content.object": {
+      "message": "đối tượng {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "địa hình {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Kiểm thử bản đồ"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Mục có sẵn của Starlark"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Phương thức {type} của Starlark"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Hàm Starlark đã định nghĩa trước"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Tham số hàm Starlark"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Biến Starlark đã định nghĩa trước"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Biến vòng lặp Starlark"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} đã được định nghĩa trước trong tài liệu này."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Hàm Starlark"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "Mã nguồn RMS và XS"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "Mã nguồn RMS, XS và kiểm thử bản đồ"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Mở tệp mã nguồn"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "Mở thư mục RMS"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Lưu mã nguồn thành"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Báo cáo kiểm thử bản đồ"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Xuất báo cáo kiểm thử bản đồ"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Nhập báo cáo kiểm thử bản đồ"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Chọn thư mục Age of Empires II: Definitive Edition"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Chọn thư mục cha để chứa bản sao bản đồ có thể chỉnh sửa"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "Chọn tệp thực thi AoE2Control"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "Tệp thực thi AoE2Control"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Lưu biểu tượng bản đồ"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "Ảnh PNG"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Không làm mới được các tệp include"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "Không cập nhật được phiên làm việc sau khi xóa"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Không hiện được một số thư mục trong Trình duyệt tệp"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, other {Tệp trong không gian làm việc trùng tên với tệp thư viện trò chơi}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Vẫn có thể chỉnh sửa, nhưng include có thể chọn tệp của trò chơi thay thế."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, other {{paths, list, unit} và {count} tệp khác. Vẫn có thể chỉnh sửa, nhưng include có thể chọn tệp của trò chơi thay thế.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Đổi tên các tệp đó"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "Chưa hoàn tất kiểm tra tên tệp thư viện trò chơi"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Chưa mở mục nào"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, other {Yêu cầu chỉ định hơn {count} tệp và thư mục.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "Đường dẫn trong yêu cầu dài hơn mức AoE2RMSIDE chấp nhận."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Có quá nhiều yêu cầu mở cùng lúc. Hãy mở lại các mục còn lại."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "Chưa mở {name}"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Mục này không tồn tại hoặc không truy cập được."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Đây không phải đường dẫn tệp hoặc thư mục hợp lệ."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE mở thư mục và tệp .rms, .rms2, .inc, .def, .xs."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE mở thư mục và tệp .rms, .rms2, .inc, .def, .xs, .rmstest."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Mỗi lần chỉ mở một thư mục."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Mỗi lần chỉ mở một thư mục; đã mở {folder}."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Không đọc được mục này."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, other {Chưa mở thêm # mục khác}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Các mục không tồn tại, không đọc được hoặc không phải loại tệp AoE2RMSIDE hỗ trợ."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "đã có mục mang tên này"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "đã có mục mang tên này hoặc tên ngắn Windows 8.3 trùng với tên này"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "tên không hợp lệ cho tệp hoặc thư mục Windows"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "chỉ hỗ trợ tệp mã nguồn .rms, .rms2, .inc, .def và .xs"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "chỉ hỗ trợ tệp mã nguồn .rms, .rms2, .inc, .def, .rmstest và .xs"
+    },
+    "file-actions.entry.read-only": {
+      "message": "mục trong không gian làm việc chỉ đọc hoặc được bảo vệ"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "không thể đổi tên hoặc xóa thư mục gốc của không gian làm việc"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "''{name}'' dành riêng cho tài nguyên chuẩn của trò chơi; hãy chọn tên tệp khác."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Không đọc được công việc chưa lưu từ phiên trước nên đã bỏ qua"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "Không truy cập được thư mục làm việc đã khôi phục."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "Không truy cập được thư mục làm việc trước đó nên đã bỏ qua."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "Đã bỏ qua thẻ {name} của phiên trước vì không truy cập được."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "Đã khôi phục {name} thành nội dung chưa lưu vì không truy cập được tệp nguồn."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, other {Đã chuyển đổi {converted} và dùng lại {reused} tệp địa hình từ trò chơi đã liên kết trong {seconds, number, ::.0 group-off} s}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Bộ nhớ đệm cục bộ: {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, other {Không chuyển đổi được {count} tệp địa hình nên dùng màu bản đồ nhỏ}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Ví dụ {asset}: {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Đối tượng {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Địa hình {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Tường {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Người chơi {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Đối tượng hỗ trợ"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Vách đá"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Loại vách đá {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Kết nối đất"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Kết nối nước"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Kết nối đường"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Kết nối không xác định"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Tìm kết nối không thấy tuyến"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Vùng chọn xem trước có nhiều nguồn: {layer} · {count, plural, other {đã chọn {count}}} · {sources, plural, other {{sources} vị trí nguồn khác nhau}} · dùng {location}."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Cỏ"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Nước nông"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Nước"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Bãi biển"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Đất trống"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Nền đá"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Đất"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Mặt vách đá"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Vùng đất"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Độ cao"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Vách đá"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Địa hình"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Kết nối"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Đối tượng"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Hoàn tất"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Đang tạo · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Mẫu {sample} (hạt giống {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Mẫu {sample} (hạt giống {seed}) hoàn tất · đợt chạy vẫn tiếp tục"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Phím Arrow chọn ô, Shift+Arrow mở rộng vùng chọn, Ctrl+Arrow di chuyển khung nhìn, phím cộng và trừ để thu phóng, phím 0 hiện vừa toàn bản đồ, Ctrl+A chọn toàn bản đồ, Escape bỏ chọn."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Đã bỏ chọn"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Ô {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "Các ô từ {fromX}, {fromY} đến {toX}, {toY}, {count, plural, other {{count} ô}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Không có lớp"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name}: {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, other {{count} lớp}}: {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, other {{count} lớp}}: {shown, list, unit} và {more} lớp khác"
+    },
+    "preview-panel.run.include-only": {
+      "message": "Tài liệu .inc, .def và .xs chỉ dùng để include, không chạy riêng được."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Đối tượng và diện tích chiếm chỗ của Nhà chính"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Rìa vách đá"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Thay đổi địa hình do kết nối"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Đường kết nối"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Tắt hiển thị đường kết nối"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "Tuyến kết nối đã dò"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "Hiện {shown, number}/{total, number} tuyến"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "Tuyến đã dò hiện khi bản đồ hoàn tất"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "Bản đồ này không có tuyến đã dò"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Tắt hiển thị độ cao"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Đổ bóng địa hình"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Bản đồ độ cao"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Nhìn từ trên xuống"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Góc nhìn hình thoi"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Màu bản đồ nhỏ"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Màu họa tiết"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Họa tiết trò chơi"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Đang áp dụng họa tiết trò chơi"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Lưới ô"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "bản xem trước nhìn từ trên xuống bằng màu bản đồ nhỏ"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "bản xem trước nhìn từ trên xuống bằng màu họa tiết"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "bản xem trước nhìn từ trên xuống bằng họa tiết trò chơi"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "bản xem trước hình thoi rộng gấp đôi chiều cao bằng màu bản đồ nhỏ"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "bản xem trước hình thoi rộng gấp đôi chiều cao bằng màu họa tiết"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "bản xem trước hình thoi rộng gấp đôi chiều cao bằng họa tiết trò chơi"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "bản đồ"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Bản xem trước đã sẵn sàng"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Đã cập nhật bản xem trước"
+    },
+    "preview-panel.panel.label": {
+      "message": "Xem trước bản đồ trực tiếp"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Điều khiển xem bản đồ"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Các lớp kết nối"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Phím mũi tên chọn ô"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "Trạng thái xem trước"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Chưa chứng nhận"
+    },
+    "preview-panel.status.seed": {
+      "message": "Hạt giống {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Bản sửa đổi {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "tạo bản đồ"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "Bộ nhớ đệm: {entries} · dùng lại {hits} lần"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Đang chỉnh sửa"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Đang phân tích"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Không đổi"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Chưa cập nhật - Mã nguồn lỗi"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Đang tạo"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "Đã cập nhật"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Chưa cập nhật - Tạo thất bại"
+    },
+    "preview-panel.legend.label": {
+      "message": "Chú giải lớp của các ô đã chọn"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Lọc các mục đã chọn"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Xóa bộ lọc mục đã chọn"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Lọc"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Không có mục khớp"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Các dòng lớp đã chọn"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, đã chọn {count} tính đến lúc này"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Mở mã nguồn cho {name}, đã chọn {count}"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Hiện đối tượng hỗ trợ ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Ẩn đối tượng hỗ trợ ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Dữ liệu thử nghiệm phát triển nội bộ"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Dữ liệu thử nội bộ · Chưa chứng nhận"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Nội bộ · Chưa chứng nhận"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "Chạy dữ liệu thử {fixture}"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Đang đọc"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Đang đọc danh mục hình ảnh trò chơi"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Đang đọc danh mục hình ảnh trò chơi, {percent}% ({completed}/{total} {unit, select, graphics {hình ảnh} other {tệp}})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "Đang nhập"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Đang nhập họa tiết địa hình"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Đang nhập họa tiết địa hình, {percent}% ({completed}/{total} {unit, select, graphics {hình ảnh} other {tệp}})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Đang pha trộn"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Đang pha trộn ranh giới địa hình"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Đang pha trộn ranh giới địa hình, {percent}% ({completed}/{total} {unit, select, graphics {hình ảnh} other {tệp}})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Tạo mặt nạ"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Đang chuẩn bị mặt nạ phủ địa hình"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Đang chuẩn bị mặt nạ phủ địa hình, {percent}% ({completed}/{total} {unit, select, graphics {hình ảnh} other {tệp}})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Ảnh sprite"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Đang chuyển đổi ảnh sprite đối tượng của bản đồ này"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Đang chuyển đổi ảnh sprite đối tượng của bản đồ này, {percent}% ({completed}/{total} {unit, select, graphics {hình ảnh} other {tệp}})"
+    },
+    "game-art.progress.label": {
+      "message": "Đang chuyển đổi hình ảnh trò chơi"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, other {{count} loại đối tượng không có ảnh sprite từ trò chơi đã liên kết nên giữ ký hiệu bản đồ nhỏ: {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, other {{count} loại đối tượng không có ảnh sprite từ trò chơi đã liên kết nên giữ ký hiệu bản đồ nhỏ: {names, list, unit} và {more} loại khác}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (đối tượng {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "đối tượng {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, other {{count} đoạn vách đá không có ảnh sprite từ trò chơi đã liên kết nên giữ đường vách đá}}"
+    },
+    "profiler.group.parse": {
+      "message": "Phân tích cú pháp"
+    },
+    "profiler.group.setup": {
+      "message": "Thiết lập"
+    },
+    "profiler.group.land": {
+      "message": "Vùng đất"
+    },
+    "profiler.group.elevation": {
+      "message": "Độ cao"
+    },
+    "profiler.group.cliffs": {
+      "message": "Vách đá"
+    },
+    "profiler.group.terrain": {
+      "message": "Địa hình"
+    },
+    "profiler.group.connections": {
+      "message": "Kết nối"
+    },
+    "profiler.group.objects": {
+      "message": "Đối tượng"
+    },
+    "profiler.group.finalize": {
+      "message": "Hoàn tất"
+    },
+    "profiler.step.parse-script": {
+      "message": "Phân tích cú pháp kịch bản"
+    },
+    "profiler.step.setup-players": {
+      "message": "Thiết lập người chơi"
+    },
+    "profiler.step.land-generate": {
+      "message": "Tạo vùng đất"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Tạo độ cao"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Tạo vách đá"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Tạo địa hình"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Tạo kết nối"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Đặt đối tượng"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Hoàn tất chế độ chơi"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Sắp xếp đối tượng"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Tổng hợp địa hình"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, other {# thao tác}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, other {# lần lấy số ngẫu nhiên}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, other {# ứng viên}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, other {# ô}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, other {# lần tìm đường}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, other {khối lượng tìm đường: #}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, other {# lần từ chối}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, other {# đối tượng}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, other {đã kiểm tra # ô}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, other {đã mở rộng # ô}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Các ô được chọn và kiểm tra khi mở rộng vùng đất; các ô được thêm vào vùng đất được tính là đã mở rộng."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, other {đã kiểm tra # ô khi mở rộng}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, other {đã nâng # ô}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Các ô được chọn và kiểm tra khi mở rộng đồi. Số ô được nâng còn gồm các ô khởi đầu của mỗi đồi, vốn không được tính là đã kiểm tra."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, other {đã xét # vị trí vách đá}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Các vị trí trên bản đồ có thể đặt vách đá."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, other {# lần tìm đường}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, other {# bước tìm kiếm}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, other {# lần đổi địa hình ô}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Mỗi lần tìm đường tìm một tuyến giữa hai điểm kết nối; số lần đổi địa hình ô tính mọi thay đổi địa hình dọc các tuyến."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, other {# vị trí có thể đặt}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, other {# lần từ chối nhóm}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, other {đã đặt # đối tượng}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Vị trí có thể đặt được đếm theo mỗi lần thử đặt, nên một ô có thể được tính nhiều lần. Nhóm bị từ chối mỗi khi vị trí không đạt kiểm tra hoặc không còn vị trí nào."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "Đang đợi bước đầu tiên hoàn tất"
+    },
+    "profiler.pending.group": {
+      "message": "Đang thực hiện {group}"
+    },
+    "profiler.pending.step": {
+      "message": "Đang thực hiện {step}"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0,1%"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off}%"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off}%"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "dưới 0,1 phần trăm"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "{percent, number, ::precision-integer group-off} phần trăm"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} phần trăm"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Bộ phân tích thực thi: đang tạo, đợi bộ tạo bản đồ"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Bộ phân tích thực thi: đang tạo, đợi bộ tạo bản đồ, {seconds, number, ::.00 group-off} giây"
+    },
+    "profiler.status.running.steps": {
+      "message": "Bộ phân tích thực thi: đang tạo, đã hoàn tất {completed}/{total} bước"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Bộ phân tích thực thi: đang tạo, đã hoàn tất {completed}/{total} bước, {seconds, number, ::.00 group-off} giây"
+    },
+    "profiler.status.cached": {
+      "message": "Bộ phân tích thực thi: lượt chạy từ bộ nhớ đệm, {seconds, number, ::.00 group-off} giây, đo khi tạo bản xem trước này lần đầu"
+    },
+    "profiler.status.committed": {
+      "message": "Bộ phân tích thực thi: {seconds, number, ::.00 group-off} giây thực thi RMS"
+    },
+    "profiler.status.unsupported": {
+      "message": "Bộ phân tích thực thi: không có số đo cho bản xem trước này"
+    },
+    "profiler.status.idle": {
+      "message": "Bộ phân tích thực thi"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Đang tạo, đợi bộ tạo bản đồ"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Đang tạo, {completed}/{total} bước"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Chi phí thực thi (lượt từ bộ nhớ đệm)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Chi phí thực thi"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Không có số đo chi phí thực thi"
+    },
+    "profiler.description": {
+      "message": "Chỉ báo độ phức tạp gần đúng từ một lượt chạy trên máy này, không phải dự đoán thời gian tạo bản đồ trong trò chơi."
+    },
+    "profiler.description.cached": {
+      "message": "Lượt chạy từ bộ nhớ đệm: số đo lấy khi tạo bản xem trước lần đầu; bộ tạo bản đồ không chạy lại. Đây là chỉ báo độ phức tạp gần đúng từ một lượt chạy trên máy này, không phải dự đoán thời gian tạo bản đồ trong trò chơi."
+    },
+    "profiler.description.map-test": {
+      "message": "Đo trong một lượt kiểm thử bản đồ có thể chạy nhiều mẫu đồng thời. Đây là chỉ báo độ phức tạp gần đúng từ một lượt chạy trên máy này, không phải dự đoán thời gian tạo bản đồ trong trò chơi."
+    },
+    "profiler.panel.label": {
+      "message": "Bộ phân tích chi phí thực thi"
+    },
+    "profiler.panel.steps": {
+      "message": "Các bước thực thi"
+    },
+    "profiler.panel.table": {
+      "message": "Các bước thực thi theo thời lượng"
+    },
+    "profiler.panel.empty": {
+      "message": "Bản xem trước này không có số đo chi phí thực thi."
+    },
+    "profiler.chart.label": {
+      "message": "Thời gian thực thi RMS theo nhóm tạo bản đồ"
+    },
+    "profiler.chart.segment": {
+      "message": "{group}: {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Đạt"
+    },
+    "test-results.results.status.failed": {
+      "message": "Thất bại"
+    },
+    "test-results.results.status.error": {
+      "message": "Lỗi"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Đã dừng"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, other {# phát hiện}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{findings, plural, other {# phát hiện}} trên {seeds, plural, other {# hạt giống}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, other {# bản đồ}} · {assertions, plural, other {# phép kiểm tra}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, dòng {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Phép kiểm tra ở dòng {line}"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Không có phát hiện. Mọi phép kiểm tra đều đạt trên bản đồ này.} other {Không có phát hiện. Mọi phép kiểm tra đều đạt trên cả # bản đồ.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Không có phát hiện. Kiểm thử không thực hiện phép kiểm tra nào trên {maps, plural, other {# bản đồ}}."
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Xuất"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Lưu kết quả này thành tệp báo cáo. Báo cáo không chứa kịch bản, bản đồ đã tạo hay đường dẫn tệp đầy đủ."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, other {{count} phát hiện từ kiểm thử bản đồ}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Đến {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "Kiểm tra"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Ẩn phát hiện của phép kiểm tra ở dòng {line}"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Hiện phát hiện của phép kiểm tra ở dòng {line}"
+    },
+    "test-results.results.check-findings": {
+      "message": "Phát hiện của phép kiểm tra ở dòng {line}"
+    },
+    "test-results.results.show-more": {
+      "message": "Hiện thêm {count}"
+    },
+    "test-results.results.not-shown": {
+      "message": "· chưa hiện {count, number}"
+    },
+    "test-results.results.show-seed": {
+      "message": "Hiện bản đồ {map} với hạt giống {seed} trong bản xem trước"
+    },
+    "test-results.results.seed": {
+      "message": "hạt giống {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Phát hiện"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Rất nhỏ"
+    },
+    "game-options.map-size.small": {
+      "message": "Nhỏ"
+    },
+    "game-options.map-size.medium": {
+      "message": "Trung bình"
+    },
+    "game-options.map-size.normal": {
+      "message": "Bình thường"
+    },
+    "game-options.map-size.large": {
+      "message": "Lớn"
+    },
+    "game-options.map-size.huge": {
+      "message": "Rất lớn"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Nực cười"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Bản đồ ngẫu nhiên"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Hành thích"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "Tử chiến"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "Bá chủ núi đồi"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "Cuộc đua kỳ quan"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Bảo vệ kỳ quan"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Bản đồ ngẫu nhiên siêu tốc"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Chiếm di vật"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Cái chết bất ngờ"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Trận chiến sinh tồn"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "Chiến tranh đế quốc"
+    },
+    "game-options.resources.standard": {
+      "message": "Tài nguyên tiêu chuẩn"
+    },
+    "game-options.resources.low": {
+      "message": "Ít tài nguyên"
+    },
+    "game-options.resources.medium": {
+      "message": "Tài nguyên vừa"
+    },
+    "game-options.resources.high": {
+      "message": "Nhiều tài nguyên"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Rất nhiều tài nguyên"
+    },
+    "game-options.resources.infinite": {
+      "message": "Tài nguyên vô hạn"
+    },
+    "game-options.resources.random": {
+      "message": "Tài nguyên ngẫu nhiên"
+    },
+    "game-options.age.standard": {
+      "message": "Thời kỳ bắt đầu tiêu chuẩn"
+    },
+    "game-options.age.dark-age": {
+      "message": "Thời tăm tối"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Thời phong kiến"
+    },
+    "game-options.age.castle-age": {
+      "message": "Thời lâu đài"
+    },
+    "game-options.age.imperial-age": {
+      "message": "Thời đế quốc"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "Thời hậu đế quốc"
+    },
+    "game-options.positions.random": {
+      "message": "Vị trí ngẫu nhiên"
+    },
+    "game-options.positions.fixed": {
+      "message": "Vị trí cố định"
+    },
+    "game-options.positions.team-together": {
+      "message": "Tổ đội cùng nhau"
+    },
+    "game-options.color.blue": {
+      "message": "Xanh lam"
+    },
+    "game-options.color.red": {
+      "message": "Đỏ"
+    },
+    "game-options.color.green": {
+      "message": "Xanh lục"
+    },
+    "game-options.color.yellow": {
+      "message": "Vàng"
+    },
+    "game-options.color.cyan": {
+      "message": "Xanh ngọc"
+    },
+    "game-options.color.purple": {
+      "message": "Tía"
+    },
+    "game-options.color.gray": {
+      "message": "Xám"
+    },
+    "game-options.color.orange": {
+      "message": "Cam"
+    },
+    "game-options.team.none": {
+      "message": "Không có đội"
+    },
+    "game-options.team.numbered": {
+      "message": "Đội {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "Turbo"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Cây kỹ thuật đầy đủ"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Cổ đại"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Nông trại kiên cố"
+    },
+    "game-options.civilization.random": {
+      "message": "Ngẫu nhiên"
+    },
+    "game-options.civilization.britons": {
+      "message": "Briton"
+    },
+    "game-options.civilization.franks": {
+      "message": "Frank"
+    },
+    "game-options.civilization.goths": {
+      "message": "Goth"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Teuton"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Nhật Bản"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Trung Quốc"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Đông La Mã"
+    },
+    "game-options.civilization.persians": {
+      "message": "Ba Tư"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Saracen"
+    },
+    "game-options.civilization.turks": {
+      "message": "Thổ"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Viking"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Mông Cổ"
+    },
+    "game-options.civilization.celts": {
+      "message": "Celt"
+    },
+    "game-options.civilization.spanish": {
+      "message": "Tây Ban Nha"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Aztec"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Maya"
+    },
+    "game-options.civilization.huns": {
+      "message": "Hung"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Triều Tiên"
+    },
+    "game-options.civilization.italians": {
+      "message": "Ý"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Quân Hindustan"
+    },
+    "game-options.civilization.incas": {
+      "message": "Inca"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Magyar"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Slav"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Bồ Đào Nha"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Ethiopia"
+    },
+    "game-options.civilization.malians": {
+      "message": "Mali"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Berber"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Khmer"
+    },
+    "game-options.civilization.malay": {
+      "message": "Mã Lai"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Miến Điện"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "Đại Việt"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Bulgaria"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Tatar"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Cuman"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Lithuania"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Burgundy"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Sicily"
+    },
+    "game-options.civilization.poles": {
+      "message": "Ba Lan"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Bohemia"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Quân Dravida"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Quân Bengal"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Quân Gurjara"
+    },
+    "game-options.civilization.romans": {
+      "message": "La Mã"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Quân Armenia"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Quân Gruzia"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Quân Achaemenids"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Người Athens"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Quân Sparta"
+    },
+    "game-options.civilization.shu": {
+      "message": "Thục"
+    },
+    "game-options.civilization.wu": {
+      "message": "Ngô"
+    },
+    "game-options.civilization.wei": {
+      "message": "Ngụy"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Nữ Chân"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Khiết Đan"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Macedo"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Người Thrace"
+    },
+    "game-options.civilization.puru": {
+      "message": "Puru"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Muisca"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Mapuche"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Tupi"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Người Saxon"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Quân Varangian"
+    },
+    "game-options.civilization.danes": {
+      "message": "Người Dane"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Nền văn minh {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Xem trước"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Đang tạo bản xem trước (bước {step}/{total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Kết nối"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "Đang kết nối với AoE2Control (bước {step}/{total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Kiểm tra"
+    },
+    "live-test.progress.ending": {
+      "message": "Kết thúc"
+    },
+    "live-test.progress.copying": {
+      "message": "Sao chép"
+    },
+    "live-test.progress.selecting": {
+      "message": "Chọn"
+    },
+    "live-test.progress.starting": {
+      "message": "Khởi động"
+    },
+    "live-test.progress.verifying": {
+      "message": "Xác minh"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Đang xác minh trận đấu (bước {step}/{total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Chờ"
+    },
+    "live-test.progress.verified": {
+      "message": "Đã xác minh"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Đã xác minh trận đấu"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "Đang kiểm tra AoE2Control (bước {step}/{total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Đang kiểm tra trò chơi (bước {step}/{total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Đang kết thúc trận đấu hiện tại (bước {step}/{total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Đang sao chép bản đồ vào trò chơi (bước {step}/{total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Đang chọn bản đồ trong trò chơi (bước {step}/{total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Đang bắt đầu trận đấu (bước {step}/{total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "Đang chờ AoE2Control trước đó được gỡ khỏi bộ nhớ (bước {step}/{total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "Đang chờ AoE2Control khởi động trong trò chơi (bước {step}/{total})"
+    },
+    "live-test.progress.label": {
+      "message": "Thử trong trò chơi"
+    },
+    "live-test.replace-match.title": {
+      "message": "Thay thế trận đấu đang diễn ra?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE sẽ kết thúc trận chơi đơn và bắt đầu trận mới với bản sửa đổi của bản xem trước này. Ứng dụng sẽ không hỏi lại cho đến khi bạn bỏ chọn AoE2Control."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Kết thúc và thay trận đấu"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Trước tiên, hãy chọn tệp thực thi AoE2Control hợp lệ."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Cấu hình AoE2Control để đọc hạt giống của trận đấu hiện tại."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control đang kết nối. Hãy thử lại sau khi quá trình bắt tay hoàn tất."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "Không thể đọc lại thông tin trận đấu. Hãy kết nối lại AoE2Control rồi thử lại."
+    },
+    "live-test.seed.replay": {
+      "message": "Không thể nhập hạt giống từ bản phát lại."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Không thể nhập hạt giống từ trận đấu nhiều người chơi."
+    },
+    "live-test.seed.state-changing": {
+      "message": "Trạng thái trận đấu đang thay đổi hoặc chưa xác định. Hãy chờ một lát rồi thử lại."
+    },
+    "live-test.seed.no-match": {
+      "message": "Trước tiên, hãy bắt đầu một trận chơi đơn thuộc chế độ Bản đồ ngẫu nhiên được hỗ trợ."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "Không đọc được thiết lập của trận đấu đang diễn ra. Hãy kết nối lại AoE2Control rồi thử lại."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "Trận đấu đang diễn ra không thuộc chế độ Bản đồ ngẫu nhiên được hỗ trợ."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "Không đọc được hạt giống của trận đấu đang diễn ra. Hãy kết nối lại AoE2Control rồi thử lại."
+    },
+    "live-test.seed.busy": {
+      "message": "Một thao tác AoE2Control đang được thực hiện."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control không trả về hạt giống trận đấu."
+    },
+    "live-test.control.missing": {
+      "message": "Tệp thực thi đã chọn đã được di chuyển hoặc xóa."
+    },
+    "live-test.control.changed": {
+      "message": "Tệp thực thi đã chọn đã thay đổi. Hãy chọn lại để tin cậy tệp mới."
+    },
+    "live-test.control.invalid": {
+      "message": "Tệp đã chọn không phải là tệp thực thi AoE2Control công khai hợp lệ."
+    },
+    "workspace.format.save-skipped": {
+      "message": "Đã bỏ qua định dạng khi lưu {name}"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "Đã hủy lưu {name}"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} chỉ đọc nên không được định dạng"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} đã được định dạng"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} không được định dạng"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "Trình định dạng không hoàn tất kịp thời."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "Chưa chứng minh được tính tương đương nghiêm ngặt."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Văn bản đã thay đổi trong khi chờ định dạng."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} đã bị xóa bên ngoài AoE2RMSIDE"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "Văn bản của tệp vẫn mở trong trình soạn thảo."
+    },
+    "workspace.files.reloaded": {
+      "message": "Đã tải lại {name} sau khi tệp thay đổi trên đĩa"
+    },
+    "workspace.recovery.restored": {
+      "message": "Đã khôi phục {count, plural, other {{count} thẻ có nội dung chưa lưu}} từ phiên trước"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "Các tệp nguồn không bị ghi đè."
+    },
+    "workspace.failed.save": {
+      "message": "Không thể lưu tệp"
+    },
+    "workspace.failed.open-file": {
+      "message": "Không thể mở tệp"
+    },
+    "workspace.failed.open-folder": {
+      "message": "Không thể mở thư mục"
+    },
+    "workspace.failed.open-recent": {
+      "message": "Không thể mở mục gần đây"
+    },
+    "workspace.failed.open-requested": {
+      "message": "Không thể mở các mục được yêu cầu"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "Không thể mở các mục đã thả vào"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Không thể mở mã lệnh đã tạo mục này trên bản đồ"
+    },
+    "workspace.failed.create": {
+      "message": "Không thể tạo mục"
+    },
+    "workspace.failed.rename": {
+      "message": "Không thể đổi tên mục"
+    },
+    "workspace.failed.delete": {
+      "message": "Không thể xóa mục"
+    },
+    "workspace.failed.restore-session": {
+      "message": "Không thể khôi phục phiên trước"
+    },
+    "workspace.failed.back-up": {
+      "message": "Không thể sao lưu phần chưa lưu"
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Dùng thư mục nguồn nhỏ hơn hoặc đóng bớt thẻ nguồn, rồi thử lại."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Một số thông báo chẩn đoán của trình soạn thảo đã bị bỏ qua vì hàng đợi cập nhật đã đầy."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "Hỗ trợ soạn thảo bị hạn chế"
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Xem Chi tiết để biết các tệp nguồn bị ảnh hưởng, rồi thử lại."
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Một số phép kiểm tra trong trình soạn thảo không thể sử dụng các tệp nguồn hiện tại."
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "độ sâu thư mục"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "mục trong thư mục"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "siêu dữ liệu tên (byte)"
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "đường dẫn include"
+    },
+    "file-actions.included-files.changed": {
+      "message": "Nguồn đã thay đổi trong lúc kiểm tra các tệp include. Hãy chạy lại."
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "Việc tìm tệp include đã vượt giới hạn {budget} cho {scope}: đã dùng {used, number, integer}; giới hạn {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Dùng thư mục include nhỏ hơn hoặc giảm số tệp include cần thiết."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "Không thể chuẩn bị nguồn cho kiểm thử bản đồ"
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "Kiểm thử bản đồ vượt giới hạn dữ liệu nguồn {limit, number, integer} MiB. Hãy chạy ít bản đồ hơn trong mỗi lần kiểm thử."
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "Kiểm thử bản đồ vượt giới hạn {limit, number, integer} bản đồ. Hãy chạy ít bản đồ hơn trong mỗi lần kiểm thử."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "Kiểm thử bản đồ vượt giới hạn siêu dữ liệu nguồn {limit, number, integer} MiB. Hãy chạy ít bản đồ hơn trong mỗi lần kiểm thử."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "Kiểm thử bản đồ vượt giới hạn {limit, number, integer} bản ghi nguồn. Hãy chạy ít bản đồ hơn trong mỗi lần kiểm thử."
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} vượt giới hạn {limit, number, integer} MiB cho mỗi tệp."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "Các tệp nguồn cần thiết vượt tổng giới hạn {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Các tệp nguồn cần thiết vượt giới hạn {limit, number, integer} tệp."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "Thông tin nguồn cần thiết vượt giới hạn siêu dữ liệu {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Giảm lượng dữ liệu nguồn cần thiết, rồi chạy lại."
+    },
+    "release-check.newer.headline": {
+      "message": "Đã có AoE2RMSIDE {version}"
+    },
+    "release-check.newer.cause": {
+      "message": "Bạn đang dùng {current}."
+    },
+    "release-check.newer.action": {
+      "message": "Mở trang phát hành"
+    }
+  }
+}

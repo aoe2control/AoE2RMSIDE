@@ -1,0 +1,48 @@
+{
+  "name": "@rmside/desktop",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Sandboxed AoE2RMSIDE desktop shell",
+  "author": "AoE2RMSIDE contributors",
+  "license": "Apache-2.0",
+  "main": "dist/main.cjs",
+  "scripts": {
+    "build": "pnpm build:main && pnpm build:preload && pnpm build:renderer",
+    "build:main": "vite build --config vite.main.config.ts",
+    "build:preload": "vite build --config vite.preload.config.ts",
+    "build:renderer": "vite build",
+    "lint": "tsc --noEmit",
+    "package": "pnpm build && node ../../tools/native-release-build.mjs --workspace && pnpm package:prepared",
+    "package:prepared": "pwsh -NoProfile -File ../../tools/stage-native.ps1 && electron-forge package --arch=x64",
+    "start": "pnpm build && electron ."
+  },
+  "dependencies": {
+    "@animateicons/react": "catalog:",
+    "@base-ui/react": "catalog:",
+    "@bufbuild/protobuf": "2.14.0",
+    "@fontsource-variable/inter": "catalog:",
+    "class-variance-authority": "catalog:",
+    "clsx": "catalog:",
+    "lucide-react": "catalog:",
+    "monaco-editor": "0.56.0",
+    "pixi.js": "8.20.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "shadcn": "catalog:",
+    "tailwind-merge": "catalog:",
+    "tw-animate-css": "catalog:"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "7.11.2",
+    "@tailwindcss/vite": "catalog:",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "@vitejs/plugin-react": "6.1.1",
+    "electron": "43.4.1",
+    "tailwindcss": "catalog:",
+    "typescript": "7.0.2",
+    "vite": "8.2.2"
+  }
+}

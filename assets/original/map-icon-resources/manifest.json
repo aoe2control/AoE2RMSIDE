@@ -1,0 +1,21 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2rmside-map-icon-resource-sprites",
+  "files": [
+    {
+      "path": "assets/original/map-icon-resources/resource-spritesheet-v1.webp",
+      "sha256": "95321ad41a779a7f7bf9daee6078dded1d4cd472d39005ad7a2df1da9b42c0bc",
+      "authorship": "AoE2RMSIDE project owner; original art created for AoE2RMSIDE on 2026-10-02 and accepted by the project owner.",
+      "license": "Apache-2.0",
+      "sourceClassification": "generated-independent",
+      "created": "2026-10-02",
+      "containsGameContent": false,
+      "transformation": "Copied byte-for-byte as delivered: a 1254 x 1254 WebP. Gold and stone piles in a 2 x 2 grid on a flat magenta (#FF00FF) key background, cells left to right, top to bottom: small gold, large gold, small stone, large stone. Bundled with the desktop renderer and processed at run time (chroma key, one-pixel erosion, re-outline, per-cell crop, downscale) into the generated map icon's gold and stone layer."
+    }
+  ]
+}

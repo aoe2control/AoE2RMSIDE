@@ -1,0 +1,769 @@
+body.rmside-monaco-056 {
+  --rmside-monaco-surface-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --rmside-monaco-row-selected: color-mix(in oklch, var(--foreground) 10%, transparent);
+  --rmside-monaco-row-hover: color-mix(in oklch, var(--foreground) 5%, transparent);
+  --rmside-monaco-separator: color-mix(in oklch, var(--foreground) 8%, transparent);
+  --rmside-monaco-input-fill: color-mix(in oklch, var(--input) 20%, transparent);
+  --rmside-monaco-control-hover: var(--muted);
+  --rmside-monaco-control-pressed: color-mix(in oklch, var(--foreground) 8%, transparent);
+  --rmside-monaco-code-fill: color-mix(in oklch, var(--foreground) 6%, transparent);
+  --rmside-monaco-thumb: color-mix(in oklch, var(--foreground) 32%, transparent);
+  --rmside-monaco-thumb-hover: color-mix(in oklch, var(--foreground) 48%, transparent);
+  --rmside-monaco-thumb-active: color-mix(in oklch, var(--foreground) 62%, transparent);
+}
+
+.dark body.rmside-monaco-056 {
+  --rmside-monaco-input-fill: color-mix(in oklch, var(--input) 30%, transparent);
+  --rmside-monaco-control-hover: color-mix(in oklch, var(--muted) 50%, transparent);
+}
+
+.rmside-monaco-056 :is(.monaco-editor, .monaco-diff-editor, .monaco-component) {
+  --vscode-cornerRadius-small: var(--radius-sm);
+  --vscode-cornerRadius-medium: var(--radius-md);
+  --vscode-cornerRadius-large: var(--radius-lg);
+  --vscode-cornerRadius-xLarge: var(--radius-xl);
+  --vscode-shadow-md: var(--rmside-monaco-surface-shadow);
+  --vscode-shadow-lg: var(--rmside-monaco-surface-shadow);
+  --vscode-shadow-xl: var(--rmside-monaco-surface-shadow);
+  --vscode-widget-shadow: transparent;
+  --vscode-widget-border: transparent;
+  --vscode-focusBorder: transparent;
+  --monaco-monospace-font: 'Cascadia Code', Consolas, monospace;
+
+  --vscode-foreground: var(--popover-foreground);
+  --vscode-descriptionForeground: var(--muted-foreground);
+  --vscode-disabledForeground: color-mix(in oklch, var(--popover-foreground) 50%, transparent);
+  --vscode-errorForeground: var(--destructive);
+  --vscode-icon-foreground: var(--muted-foreground);
+  --vscode-textLink-foreground: var(--primary);
+  --vscode-textLink-activeForeground: color-mix(in oklch, var(--primary) 82%, var(--foreground));
+  --vscode-textCodeBlock-background: var(--rmside-monaco-code-fill);
+  --vscode-textPreformat-foreground: var(--popover-foreground);
+  --vscode-textPreformat-background: var(--rmside-monaco-code-fill);
+  --vscode-textBlockQuote-background: var(--rmside-monaco-code-fill);
+  --vscode-textBlockQuote-border: var(--rmside-monaco-separator);
+  --vscode-textSeparator-foreground: var(--rmside-monaco-separator);
+
+  --vscode-editorWidget-background: var(--popover);
+  --vscode-editorWidget-foreground: var(--popover-foreground);
+  --vscode-editorWidget-border: transparent;
+  --vscode-editorWidget-resizeBorder: transparent;
+  --vscode-editorSuggestWidget-background: var(--popover);
+  --vscode-editorSuggestWidget-border: transparent;
+  --vscode-editorSuggestWidget-foreground: var(--popover-foreground);
+  --vscode-editorSuggestWidget-selectedBackground: var(--rmside-monaco-row-selected);
+  --vscode-editorSuggestWidget-selectedForeground: var(--popover-foreground);
+  --vscode-editorSuggestWidget-selectedIconForeground: var(--popover-foreground);
+  --vscode-editorSuggestWidget-highlightForeground: var(--popover-foreground);
+  --vscode-editorSuggestWidget-focusHighlightForeground: var(--popover-foreground);
+  --vscode-editorSuggestWidgetStatus-foreground: var(--muted-foreground);
+  --vscode-editorHoverWidget-background: var(--popover);
+  --vscode-editorHoverWidget-foreground: var(--popover-foreground);
+  --vscode-editorHoverWidget-border: var(--rmside-monaco-separator);
+  --vscode-editorHoverWidget-statusBarBackground: var(--popover);
+  --vscode-editorHoverWidget-highlightForeground: var(--popover-foreground);
+  --vscode-editorMarkerNavigation-background: var(--popover);
+
+  --vscode-list-hoverBackground: var(--rmside-monaco-row-hover);
+  --vscode-list-hoverForeground: var(--popover-foreground);
+  --vscode-list-activeSelectionBackground: var(--rmside-monaco-row-selected);
+  --vscode-list-activeSelectionForeground: var(--popover-foreground);
+  --vscode-list-activeSelectionIconForeground: var(--popover-foreground);
+  --vscode-list-inactiveSelectionBackground: var(--rmside-monaco-row-selected);
+  --vscode-list-inactiveSelectionForeground: var(--popover-foreground);
+  --vscode-list-focusBackground: var(--rmside-monaco-row-selected);
+  --vscode-list-focusForeground: var(--popover-foreground);
+  --vscode-list-focusOutline: transparent;
+  --vscode-list-inactiveFocusOutline: transparent;
+  --vscode-list-focusAndSelectionOutline: transparent;
+  --vscode-list-highlightForeground: var(--popover-foreground);
+  --vscode-list-focusHighlightForeground: var(--popover-foreground);
+  --vscode-quickInput-background: var(--popover);
+  --vscode-quickInput-foreground: var(--popover-foreground);
+  --vscode-quickInputTitle-background: transparent;
+  --vscode-quickInputList-focusBackground: var(--rmside-monaco-row-selected);
+  --vscode-quickInputList-focusForeground: var(--popover-foreground);
+  --vscode-quickInputList-focusIconForeground: var(--popover-foreground);
+  --vscode-quickInputList-focusHighlightForeground: var(--popover-foreground);
+  --vscode-pickerGroup-foreground: var(--muted-foreground);
+  --vscode-pickerGroup-border: var(--rmside-monaco-separator);
+  --vscode-editorActionList-background: var(--popover);
+  --vscode-editorActionList-foreground: var(--popover-foreground);
+  --vscode-editorActionList-focusBackground: var(--rmside-monaco-row-selected);
+  --vscode-editorActionList-focusForeground: var(--popover-foreground);
+  --vscode-menu-background: var(--popover);
+  --vscode-menu-foreground: var(--popover-foreground);
+  --vscode-menu-selectionBackground: var(--rmside-monaco-row-selected);
+  --vscode-menu-selectionForeground: var(--popover-foreground);
+  --vscode-menu-selectionBorder: transparent;
+  --vscode-menu-separatorBackground: var(--rmside-monaco-separator);
+  --vscode-menu-border: transparent;
+
+  --vscode-input-background: var(--rmside-monaco-input-fill);
+  --vscode-input-foreground: var(--popover-foreground);
+  --vscode-input-border: transparent;
+  --vscode-input-placeholderForeground: var(--muted-foreground);
+  --vscode-inputOption-activeBackground: var(--rmside-monaco-control-pressed);
+  --vscode-inputOption-activeForeground: var(--foreground);
+  --vscode-inputOption-activeBorder: transparent;
+  --vscode-inputOption-hoverBackground: var(--rmside-monaco-control-hover);
+  --vscode-inputValidation-errorBackground: var(--popover);
+  --vscode-inputValidation-errorForeground: var(--popover-foreground);
+  --vscode-inputValidation-errorBorder: var(--destructive);
+  --vscode-inputValidation-warningBackground: var(--popover);
+  --vscode-inputValidation-warningForeground: var(--popover-foreground);
+  --vscode-inputValidation-warningBorder: var(--caution);
+  --vscode-inputValidation-infoBackground: var(--popover);
+  --vscode-inputValidation-infoForeground: var(--popover-foreground);
+  --vscode-inputValidation-infoBorder: transparent;
+  --vscode-toolbar-hoverBackground: var(--rmside-monaco-control-hover);
+  --vscode-toolbar-activeBackground: var(--rmside-monaco-control-pressed);
+  --vscode-actionBar-toggledBackground: var(--rmside-monaco-control-pressed);
+  --vscode-button-background: var(--primary);
+  --vscode-button-foreground: var(--primary-foreground);
+  --vscode-button-hoverBackground: color-mix(in oklch, var(--primary) 80%, transparent);
+  --vscode-button-border: transparent;
+  --vscode-button-separator: color-mix(in oklch, var(--primary-foreground) 40%, transparent);
+  --vscode-button-secondaryBackground: var(--secondary);
+  --vscode-button-secondaryForeground: var(--secondary-foreground);
+  --vscode-button-secondaryHoverBackground: color-mix(
+    in oklch,
+    var(--secondary),
+    var(--foreground) 5%
+  );
+  --vscode-button-secondaryBorder: transparent;
+  --vscode-keybindingLabel-background: transparent;
+  --vscode-keybindingLabel-foreground: var(--muted-foreground);
+  --vscode-keybindingLabel-border: transparent;
+  --vscode-keybindingLabel-bottomBorder: transparent;
+  --vscode-progressBar-background: var(--foreground);
+
+  --vscode-scrollbar-shadow: transparent;
+  --vscode-scrollbarSlider-background: var(--rmside-monaco-thumb);
+  --vscode-scrollbarSlider-hoverBackground: var(--rmside-monaco-thumb-hover);
+  --vscode-scrollbarSlider-activeBackground: var(--rmside-monaco-thumb-active);
+  --vscode-sash-hoverBorder: var(--ring);
+  --vscode-peekView-border: transparent;
+  --vscode-peekViewTitle-background: var(--popover);
+  --vscode-peekViewTitleLabel-foreground: var(--popover-foreground);
+  --vscode-peekViewTitleDescription-foreground: var(--muted-foreground);
+  --vscode-peekViewResult-background: var(--popover);
+  --vscode-peekViewResult-fileForeground: var(--popover-foreground);
+  --vscode-peekViewResult-lineForeground: var(--muted-foreground);
+  --vscode-peekViewResult-selectionBackground: var(--rmside-monaco-row-selected);
+  --vscode-peekViewResult-selectionForeground: var(--popover-foreground);
+  --vscode-peekViewEditor-background: var(--popover);
+  --vscode-peekViewEditorGutter-background: var(--popover);
+  --vscode-peekViewEditorStickyScroll-background: var(--popover);
+  --vscode-peekViewEditorStickyScrollGutter-background: var(--popover);
+
+  --vscode-editorLineNumber-foreground: var(--muted-foreground);
+  --vscode-editorLineNumber-activeForeground: var(--foreground);
+  --vscode-editorGutter-foldingControlForeground: var(--muted-foreground);
+  --vscode-editorLightBulb-foreground: var(--caution);
+  --vscode-editorLightBulbAutoFix-foreground: var(--caution);
+  --vscode-editorLightBulbAi-foreground: var(--caution);
+  --vscode-editorInlayHint-foreground: var(--muted-foreground);
+  --vscode-editorInlayHint-background: var(--rmside-monaco-code-fill);
+  --vscode-editorInlayHint-typeForeground: var(--muted-foreground);
+  --vscode-editorInlayHint-typeBackground: var(--rmside-monaco-code-fill);
+  --vscode-editorInlayHint-parameterForeground: var(--muted-foreground);
+  --vscode-editorInlayHint-parameterBackground: var(--rmside-monaco-code-fill);
+  --vscode-editorStickyScroll-shadow: transparent;
+  --vscode-editorStickyScroll-border: var(--rmside-monaco-separator);
+  --vscode-editorStickyScrollHover-background: var(--rmside-monaco-row-hover);
+  --vscode-editorCodeLens-foreground: var(--muted-foreground);
+}
+
+.rmside-monaco-056
+  .monaco-editor
+  :is(.suggest-widget, .suggest-details, .find-widget, .rename-box, .parameter-hints-widget) {
+  background: var(--popover) !important;
+  border: 0 !important;
+  box-shadow: var(--rmside-monaco-surface-shadow) !important;
+  color: var(--popover-foreground) !important;
+  outline: none !important;
+}
+
+.rmside-monaco-056 .monaco-editor :is(.suggest-widget, .suggest-details, .find-widget) {
+  border-radius: var(--radius-lg) !important;
+}
+
+.rmside-monaco-056 .monaco-editor :is(.suggest-widget, .suggest-details) {
+  overflow: hidden;
+}
+
+.rmside-monaco-056 .monaco-editor :is(.rename-box, .parameter-hints-widget) {
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+}
+
+.rmside-monaco-056 .monaco-editor .monaco-resizable-hover {
+  background: var(--popover) !important;
+  border: 0 !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--rmside-monaco-surface-shadow) !important;
+  outline: none !important;
+  overflow: hidden;
+}
+
+.rmside-monaco-056 .monaco-hover {
+  background: var(--popover) !important;
+  border: 0 !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+  color: var(--popover-foreground) !important;
+  outline: none !important;
+  overflow: hidden;
+}
+
+@media (max-height: 600px) {
+  .rmside-monaco-056 .monaco-editor .monaco-resizable-hover,
+  .rmside-monaco-056 .monaco-editor .monaco-resizable-hover > .monaco-hover,
+  .rmside-monaco-056
+    .monaco-editor
+    .monaco-resizable-hover
+    > .monaco-hover
+    > .monaco-scrollable-element,
+  .rmside-monaco-056
+    .monaco-editor
+    .monaco-resizable-hover
+    > .monaco-hover
+    > .monaco-scrollable-element
+    > .monaco-hover-content,
+  .rmside-monaco-056 .monaco-editor .suggest-details,
+  .rmside-monaco-056 .monaco-editor .suggest-details > .monaco-scrollable-element,
+  .rmside-monaco-056 .monaco-editor .suggest-details > .monaco-scrollable-element > .body {
+    max-height: min(250px, calc(50vh - 48px)) !important;
+  }
+}
+
+.rmside-monaco-056 .context-view.monaco-component > .monaco-hover,
+.rmside-monaco-056 .context-view.monaco-component .monaco-hover.workbench-hover {
+  box-shadow: var(--rmside-monaco-surface-shadow) !important;
+}
+
+.rmside-monaco-056 .context-view.monaco-component .workbench-hover-pointer::after {
+  background: var(--popover) !important;
+  border-color: transparent !important;
+}
+
+.rmside-monaco-056 .action-widget {
+  background: var(--popover) !important;
+  border: 0 !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--rmside-monaco-surface-shadow) !important;
+  box-sizing: content-box !important;
+  color: var(--popover-foreground) !important;
+  outline: none !important;
+}
+
+.rmside-monaco-056 .action-widget .monaco-list-row.action > .codicon {
+  flex: none;
+  width: 12px;
+}
+
+.rmside-monaco-056 .action-widget .monaco-list-row.action[style*='width: auto'] .title {
+  padding-right: 2px;
+}
+
+.rmside-monaco-056
+  :is(
+    .monaco-editor .find-widget,
+    .monaco-hover,
+    .monaco-editor .parameter-hints-widget .docs,
+    .monaco-editor .suggest-details .docs,
+    .monaco-editor .suggest-widget > .message,
+    .monaco-editor .rename-box .rename-label,
+    .monaco-editor .monaco-editor-overlaymessage .message,
+    .monaco-editor .peekview-widget > .head,
+    .quick-input-widget,
+    .action-widget
+  ) {
+  font-family: var(--font-sans);
+}
+
+.rmside-monaco-056
+  :is(
+    .monaco-hover .hover-contents,
+    .monaco-hover .hover-row.status-bar,
+    .monaco-editor .parameter-hints-widget .docs,
+    .monaco-editor .suggest-details .docs,
+    .monaco-editor .monaco-editor-overlaymessage .message,
+    .monaco-editor .peekview-widget > .head,
+    .action-widget
+  ) {
+  font-size: 12px;
+}
+
+.rmside-monaco-056 .monaco-hover code {
+  background: var(--rmside-monaco-code-fill);
+  border-radius: var(--radius-sm);
+}
+
+.rmside-monaco-056
+  :is(
+    .monaco-editor .suggest-widget,
+    .quick-input-widget .quick-input-list,
+    .action-widget,
+    .monaco-editor .reference-zone-widget .ref-tree
+  )
+  .monaco-list-row {
+  border-radius: var(--radius-md);
+}
+
+.rmside-monaco-056 .monaco-editor .suggest-widget .monaco-list .monaco-list-row {
+  left: 4px;
+  width: calc(100% - 8px);
+}
+
+.rmside-monaco-056 .monaco-editor .suggest-widget .monaco-list .monaco-list-row:not(.focused):hover,
+.rmside-monaco-056 .quick-input-widget .monaco-list-row:not(.focused):hover {
+  background: var(--rmside-monaco-row-hover) !important;
+}
+
+.rmside-monaco-056 .quick-input-widget .monaco-list-row.focused,
+.rmside-monaco-056 .monaco-editor .suggest-widget .monaco-list .monaco-list-row.focused {
+  background: var(--rmside-monaco-row-selected) !important;
+  color: var(--popover-foreground) !important;
+}
+
+.rmside-monaco-056
+  .action-widget
+  .monaco-list
+  .monaco-list-row.action.focused:not(.option-disabled) {
+  background: var(--rmside-monaco-row-selected) !important;
+  color: var(--popover-foreground) !important;
+  outline: none !important;
+}
+
+.rmside-monaco-056 .action-widget .monaco-list-row.group-header {
+  color: var(--muted-foreground) !important;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.rmside-monaco-056
+  :is(
+    .monaco-editor .suggest-widget,
+    .quick-input-widget,
+    .action-widget,
+    .monaco-editor .reference-zone-widget .ref-tree
+  )
+  .monaco-list-row:is(.focused, .selected)
+  :is(
+    .label-description,
+    .details-label,
+    .monaco-keybinding-key,
+    .monaco-keybinding-key-separator,
+    .quick-input-list-separator
+  ) {
+  color: var(--popover-foreground) !important;
+}
+
+.rmside-monaco-056 .monaco-keybinding > .monaco-keybinding-key {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: var(--muted-foreground) !important;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.rmside-monaco-056 .monaco-keybinding > .monaco-keybinding-key-separator {
+  color: var(--muted-foreground);
+  font-size: 10px;
+  padding-inline: 1px;
+}
+
+.rmside-monaco-056 .monaco-inputbox,
+.rmside-monaco-056 .monaco-inputbox input,
+.rmside-monaco-056 .monaco-inputbox textarea {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.rmside-monaco-056 .monaco-inputbox {
+  border-radius: var(--radius-md) !important;
+}
+
+.rmside-monaco-056 .monaco-inputbox.synthetic-focus,
+.rmside-monaco-056 .monaco-inputbox:focus-within {
+  border-color: var(--ring) !important;
+  border-width: 2px !important;
+}
+
+.rmside-monaco-056 .monaco-editor .find-widget .monaco-inputbox input,
+.rmside-monaco-056 .monaco-editor .find-widget .monaco-inputbox textarea,
+.rmside-monaco-056 .quick-input-widget .monaco-inputbox input {
+  font-family: var(--font-sans);
+  font-size: 12px;
+}
+
+.rmside-monaco-056 .monaco-editor .rename-box .rename-input-with-button {
+  background: var(--rmside-monaco-input-fill) !important;
+  border: 2px solid var(--ring) !important;
+  border-radius: var(--radius-md) !important;
+  box-sizing: border-box;
+  outline: none !important;
+  width: 100% !important;
+}
+
+.rmside-monaco-056 .monaco-editor .rename-box .rename-input {
+  background: transparent !important;
+  color: var(--popover-foreground) !important;
+}
+
+.rmside-monaco-056
+  :is(
+    .monaco-editor .find-widget .button,
+    .monaco-editor .parameter-hints-widget .button,
+    .monaco-editor .suggest-details .codicon-close,
+    .monaco-editor .suggest-widget .readMore,
+    .monaco-editor .rename-box .rename-suggestions-button,
+    .monaco-editor .peekview-widget .head .action-label,
+    .monaco-hover .hover-copy-button,
+    .quick-input-widget .action-label,
+    .quick-input-widget .monaco-button
+  ) {
+  border-radius: var(--radius-sm) !important;
+}
+
+.rmside-monaco-056 .monaco-custom-toggle {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--muted-foreground) !important;
+}
+
+.rmside-monaco-056 .monaco-custom-toggle:hover:not(.checked):not([aria-checked='true']) {
+  background: var(--rmside-monaco-control-hover) !important;
+  color: var(--foreground) !important;
+}
+
+.rmside-monaco-056 .monaco-custom-toggle.checked,
+.rmside-monaco-056 .monaco-custom-toggle[aria-checked='true'] {
+  background: var(--rmside-monaco-control-pressed) !important;
+  color: var(--foreground) !important;
+}
+
+.rmside-monaco-056 :is(.monaco-editor, .context-view.monaco-component, .quick-input-widget) :focus {
+  outline: none !important;
+}
+
+.rmside-monaco-056
+  :is(.monaco-editor, .context-view.monaco-component, .quick-input-widget)
+  :focus:not(:focus-visible):not(input):not(textarea),
+.rmside-monaco-056
+  :is(.monaco-editor, .context-view.monaco-component, .quick-input-widget)
+  :is(.monaco-list, .monaco-list-row, .monaco-scrollable-element):focus-visible {
+  box-shadow: none !important;
+}
+
+.rmside-monaco-056
+  :is(.monaco-editor, .context-view.monaco-component, .quick-input-widget)
+  :is(
+    .button,
+    .monaco-button,
+    .monaco-custom-toggle,
+    .action-label,
+    .hover-copy-button,
+    .codicon-close,
+    .readMore,
+    .rename-suggestions-button,
+    a,
+    [role='button']
+  ):focus-visible {
+  border-color: transparent !important;
+  box-shadow: var(--focus-ring-chrome) !important;
+  outline: none !important;
+}
+
+.rmside-monaco-056 .monaco-hover .hover-row.status-bar .actions .action-container a,
+.rmside-monaco-056 .monaco-hover .markdown-hover a:not(.code-link),
+.rmside-monaco-056 .monaco-editor .parameter-hints-widget .docs a,
+.rmside-monaco-056 .monaco-editor .suggest-details .docs a {
+  color: var(--primary) !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rmside-monaco-056 .monaco-hover .hover-row.status-bar .actions .action-container a:hover,
+.rmside-monaco-056 .monaco-hover .markdown-hover a:not(.code-link):hover {
+  color: var(--vscode-textLink-activeForeground) !important;
+}
+
+.rmside-monaco-056 .monaco-hover .hover-row.status-bar .actions .action-container a .icon.codicon {
+  color: inherit !important;
+}
+
+.rmside-monaco-056
+  :is(.monaco-editor, .monaco-component, .quick-input-widget)
+  .monaco-scrollable-element
+  > .scrollbar
+  > .slider {
+  background-clip: padding-box !important;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  box-sizing: border-box;
+}
+
+@keyframes rmside-monaco-surface-in {
+  from {
+    opacity: 0;
+    scale: var(--motion-scale-surface);
+  }
+}
+
+@keyframes rmside-monaco-tooltip-in {
+  from {
+    opacity: 0;
+    scale: var(--motion-scale-tooltip);
+  }
+}
+
+@keyframes rmside-monaco-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes rmside-monaco-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rmside-monaco-056 .monaco-editor :is(.suggest-widget, .parameter-hints-widget),
+  .rmside-monaco-056 .quick-input-widget {
+    animation: rmside-monaco-surface-in var(--motion-duration-surface) var(--motion-ease-out);
+    transform-origin: top left;
+  }
+
+  .rmside-monaco-056 .action-widget {
+    animation: rmside-monaco-fade-in var(--motion-duration-surface) var(--motion-ease-out);
+  }
+
+  .rmside-monaco-056 .monaco-hover.fade-in:not(.monaco-hover *),
+  .rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage.fadeIn {
+    animation: rmside-monaco-tooltip-in var(--motion-duration-tooltip) var(--motion-ease-out);
+  }
+
+  .rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage.fadeOut {
+    animation: rmside-monaco-fade-out var(--motion-duration-tooltip) var(--motion-ease-in);
+  }
+
+  .rmside-monaco-056 .monaco-hover.fade-in .monaco-hover.fade-in {
+    animation: none;
+  }
+
+  .rmside-monaco-056 .monaco-editor .find-widget {
+    transition: transform var(--motion-duration-surface) var(--motion-ease-out);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rmside-monaco-056 .monaco-hover.fade-in,
+  .rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage:is(.fadeIn, .fadeOut),
+  .rmside-monaco-056 .monaco-editor .margin-view-overlays .codicon {
+    animation: none !important;
+  }
+
+  .rmside-monaco-056 .monaco-editor .find-widget,
+  .rmside-monaco-056 .monaco-editor .margin-view-overlays .codicon,
+  .rmside-monaco-056 .monaco-editor .sticky-widget .codicon {
+    transition: none !important;
+  }
+}
+
+.rmside-monaco-056 .monaco-editor .zone-widget .zone-widget-container.reference-zone-widget {
+  background: var(--popover) !important;
+  border: 0 !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+  color: var(--popover-foreground) !important;
+  outline: none !important;
+  overflow: hidden;
+}
+
+.rmside-monaco-056 .monaco-editor .reference-zone-widget.peekview-widget,
+.rmside-monaco-056 .monaco-editor .reference-zone-widget.peekview-widget .head,
+.rmside-monaco-056 .monaco-editor .reference-zone-widget.peekview-widget > .body,
+.rmside-monaco-056 .monaco-editor .reference-zone-widget .ref-tree,
+.rmside-monaco-056 .monaco-editor .reference-zone-widget .preview {
+  background: var(--popover) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.rmside-monaco-056 .monaco-editor .reference-zone-widget.peekview-widget {
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.rmside-monaco-056 .monaco-editor .reference-zone-widget.peekview-widget > .body {
+  border-top: 0 !important;
+}
+
+.rmside-monaco-056
+  .monaco-editor
+  .reference-zone-widget
+  .preview
+  .monaco-editor
+  :is(.monaco-editor-background, .inputarea.ime-input, .margin) {
+  background: var(--popover) !important;
+}
+
+.rmside-monaco-056
+  .monaco-editor
+  .zone-widget
+  .zone-widget-container.peekview-widget:has(> .marker-widget) {
+  background: var(--popover) !important;
+  border-bottom-width: 0 !important;
+  border-radius: var(--radius-md) !important;
+  border-top-width: 2px !important;
+  box-shadow: none !important;
+  color: var(--popover-foreground) !important;
+  overflow: hidden;
+}
+
+.rmside-monaco-056 .monaco-editor .zone-widget .peekview-widget > .marker-widget,
+.rmside-monaco-056
+  .monaco-editor
+  .zone-widget
+  .peekview-widget
+  > .marker-widget
+  .descriptioncontainer {
+  background: var(--popover) !important;
+  color: var(--popover-foreground) !important;
+}
+
+.rmside-monaco-056 .monaco-editor .zone-widget .peekview-widget:has(> .marker-widget) > .head {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.rmside-monaco-056 .monaco-editor .marker-widget .descriptioncontainer .filename,
+.rmside-monaco-056 .monaco-editor .marker-widget .descriptioncontainer .message a.code-link > span {
+  color: var(--primary) !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rmside-monaco-056 .monaco-editor .marker-widget .descriptioncontainer .filename:hover {
+  color: color-mix(in oklch, var(--primary) 82%, var(--foreground)) !important;
+}
+
+.rmside-monaco-056 .monaco-editor .marker-widget:focus-visible,
+.rmside-monaco-056 .monaco-editor .marker-widget .descriptioncontainer .filename:focus-visible,
+.rmside-monaco-056 .monaco-editor .marker-widget .descriptioncontainer a:focus-visible {
+  border-radius: 3px;
+  box-shadow: none !important;
+  outline: 2px solid var(--ring) !important;
+  outline-offset: -2px;
+}
+
+.rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage .message {
+  background: var(--popover) !important;
+  border: 0 !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--rmside-monaco-surface-shadow) !important;
+  color: var(--popover-foreground) !important;
+  line-height: 16px;
+  outline: none !important;
+  overflow: hidden;
+  padding: 6px 12px !important;
+}
+
+.rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage .anchor.top {
+  border-bottom-color: var(--popover) !important;
+}
+
+.rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage .anchor.below {
+  border-top-color: var(--popover) !important;
+}
+
+.rmside-monaco-056 .context-view.monaco-component:has(.monaco-hover) {
+  outline: none !important;
+  z-index: 20 !important;
+}
+
+.rmside-monaco-056 .quick-input-widget {
+  background: var(--popover) !important;
+  border: 0 !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--rmside-monaco-surface-shadow) !important;
+  color: var(--popover-foreground) !important;
+  overflow: visible;
+}
+
+.rmside-monaco-056:has(.quick-input-widget:not([style*='display: none']))
+  .context-view.monaco-component.right:has(.monaco-hover.workbench-hover.with-pointer) {
+  left: auto !important;
+  max-width: calc(100% - 16px);
+  right: 8px;
+}
+
+.rmside-monaco-056:has(.quick-input-widget:not([style*='display: none']))
+  .monaco-hover.workbench-hover.with-pointer {
+  max-width: min(320px, calc(100vw - 16px)) !important;
+  min-width: min(220px, calc(100vw - 16px));
+}
+
+.rmside-monaco-056 .quick-input-widget .quick-input-header {
+  padding: 8px !important;
+}
+
+.rmside-monaco-056 .quick-input-widget .monaco-inputbox {
+  background: var(--rmside-monaco-input-fill) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--popover-foreground) !important;
+  outline: none !important;
+}
+
+.rmside-monaco-056 .quick-input-widget .monaco-inputbox:focus-within {
+  border-color: var(--ring) !important;
+  border-width: 2px !important;
+  box-shadow: none !important;
+}
+
+.rmside-monaco-056 .quick-input-widget .quick-input-list {
+  padding: 0 4px 4px;
+}
+
+.rmside-monaco-056 .quick-input-widget .monaco-icon-label,
+.rmside-monaco-056 .quick-input-widget .monaco-list-row.focused .codicon {
+  color: inherit !important;
+}
+
+@media (forced-colors: active) {
+  .rmside-monaco-056
+    .monaco-editor
+    .zone-widget
+    .zone-widget-container.peekview-widget:has(> .marker-widget) {
+    border: 1px solid CanvasText !important;
+    forced-color-adjust: auto;
+  }
+
+  .rmside-monaco-056
+    :is(
+      .quick-input-widget,
+      .quick-input-widget .monaco-inputbox,
+      .action-widget,
+      .monaco-editor .suggest-widget,
+      .monaco-editor .suggest-details,
+      .monaco-editor .find-widget,
+      .monaco-editor .rename-box,
+      .monaco-editor .parameter-hints-widget,
+      .monaco-editor .monaco-resizable-hover,
+      .context-view.monaco-component > .monaco-hover
+    ) {
+    border: 1px solid CanvasText !important;
+    box-shadow: none !important;
+    forced-color-adjust: auto;
+  }
+}

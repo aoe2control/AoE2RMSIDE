@@ -1,0 +1,4618 @@
+{
+  "$schema": "https://rmside.invalid/schemas/message-catalog/v1",
+  "schemaVersion": "1.1.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "locale": "fr",
+  "name": "Français",
+  "direction": "ltr",
+  "messages": {
+    "app-menu.file.name": {
+      "message": "Fichier"
+    },
+    "app-menu.edit.name": {
+      "message": "Édition"
+    },
+    "app-menu.view.name": {
+      "message": "Affichage"
+    },
+    "app-menu.help.name": {
+      "message": "Aide"
+    },
+    "app-menu.file.new-file": {
+      "message": "Nouveau fichier"
+    },
+    "app-menu.file.new-map-test-script": {
+      "message": "Nouveau script de test de cartes"
+    },
+    "app-menu.file.generate-definition-file": {
+      "message": "Générer un fichier de définitions…"
+    },
+    "app-menu.file.new-xs-script": {
+      "message": "Nouveau script XS"
+    },
+    "app-menu.file.open-file": {
+      "message": "Ouvrir un fichier…"
+    },
+    "app-menu.file.open-folder": {
+      "message": "Ouvrir un dossier…"
+    },
+    "app-menu.file.browse-installed-sources": {
+      "message": "Parcourir les cartes installées…"
+    },
+    "app-menu.file.deploy-managed-mod": {
+      "message": "Déployer comme mod…"
+    },
+    "app-menu.file.open-linked-game-folder": {
+      "message": "Ouvrir le dossier du jeu"
+    },
+    "app-menu.file.unlink-game-folder": {
+      "message": "Dissocier le dossier du jeu"
+    },
+    "app-menu.file.import-map-test-report": {
+      "message": "Importer un rapport de test…"
+    },
+    "app-menu.file.open-recent": {
+      "message": "Ouvrir un élément récent"
+    },
+    "app-menu.file.open-recent.empty": {
+      "message": "Aucun fichier ni dossier récent"
+    },
+    "app-menu.file.save": {
+      "message": "Enregistrer"
+    },
+    "app-menu.file.save-as": {
+      "message": "Enregistrer sous…"
+    },
+    "app-menu.file.choose-default-app": {
+      "message": "Choisir l’application par défaut pour RMS…"
+    },
+    "app-menu.file.choose-default-app.failed": {
+      "message": "Impossible d’ouvrir les paramètres Windows"
+    },
+    "app-menu.file.choose-default-app.notice.headline": {
+      "message": "La page Applications par défaut de Windows est ouverte"
+    },
+    "app-menu.file.choose-default-app.notice.cause": {
+      "message": "Pour ouvrir les fichiers .rms et .rms2 avec AoE2RMSIDE, sélectionnez-le dans cette page. Windows ne modifie l’application par défaut qu’après votre confirmation."
+    },
+    "app-menu.file.close-tab": {
+      "message": "Fermer l’onglet"
+    },
+    "app-menu.file.close-folder": {
+      "message": "Fermer le dossier"
+    },
+    "app-menu.file.close-window": {
+      "message": "Fermer la fenêtre"
+    },
+    "app-menu.file.exit": {
+      "message": "Quitter"
+    },
+    "app-menu.edit.undo": {
+      "message": "Annuler"
+    },
+    "app-menu.edit.redo": {
+      "message": "Rétablir"
+    },
+    "app-menu.edit.cut": {
+      "message": "Couper"
+    },
+    "app-menu.edit.copy": {
+      "message": "Copier"
+    },
+    "app-menu.edit.paste": {
+      "message": "Coller"
+    },
+    "app-menu.edit.select-all": {
+      "message": "Tout sélectionner"
+    },
+    "app-menu.edit.format-document": {
+      "message": "Mettre en forme le document"
+    },
+    "app-menu.edit.format-on-save": {
+      "message": "Mettre en forme à l’enregistrement"
+    },
+    "app-menu.edit.indent-conditionals": {
+      "message": "Indenter les blocs if/else"
+    },
+    "app-menu.edit.delete-permanently": {
+      "message": "Supprimer sans passer par la corbeille"
+    },
+    "app-menu.view.reset-layout": {
+      "message": "Réinitialiser la disposition"
+    },
+    "app-menu.view.gpu-map-rendering": {
+      "message": "Rendu des cartes par GPU"
+    },
+    "app-menu.view.live-generation-stages": {
+      "message": "Afficher les étapes de génération"
+    },
+    "app-menu.view.inlay-hints": {
+      "message": "Afficher les indications dans le code"
+    },
+    "app-menu.view.lint-rules": {
+      "message": "Règles d’analyse"
+    },
+    "app-menu.view.lint-rule": {
+      "message": "{title} ({code})"
+    },
+    "app-menu.view.language": {
+      "message": "Langue…"
+    },
+    "app-menu.view.theme": {
+      "message": "Thème"
+    },
+    "app-menu.view.theme.system": {
+      "message": "Système"
+    },
+    "app-menu.view.theme.light": {
+      "message": "Clair"
+    },
+    "app-menu.view.theme.dark": {
+      "message": "Sombre"
+    },
+    "app-menu.view.actual-size": {
+      "message": "Taille réelle"
+    },
+    "app-menu.view.zoom-in": {
+      "message": "Agrandir"
+    },
+    "app-menu.view.zoom-out": {
+      "message": "Réduire"
+    },
+    "app-menu.view.toggle-full-screen": {
+      "message": "Basculer en plein écran"
+    },
+    "app-menu.help.documentation": {
+      "message": "Documentation"
+    },
+    "app-menu.help.join-discord": {
+      "message": "Rejoindre le Discord"
+    },
+    "app-menu.help.report-bug": {
+      "message": "Signaler un problème"
+    },
+    "app-menu.help.about": {
+      "message": "À propos de {product}"
+    },
+    "app-menu.file.open-linked-game-folder.failed": {
+      "message": "Impossible d’ouvrir le dossier du jeu lié"
+    },
+    "about.version": {
+      "message": "Version {version} ({commit})"
+    },
+    "about.edition.xs-preview": {
+      "message": "Éditeur de scripts XS"
+    },
+    "about.edition.rms-preview": {
+      "message": "Éditeur de scripts RMS et XS"
+    },
+    "about.disclosure.independent.preview": {
+      "message": "Un éditeur indépendant et non officiel de scripts de cartes aléatoires. Son implémentation reproduit la façon dont Age of Empires II: Definitive Edition lit ces scripts et génère les cartes."
+    },
+    "about.disclosure.independent": {
+      "message": "Un éditeur de scripts indépendant et non officiel pour Age of Empires II: Definitive Edition."
+    },
+    "about.disclosure.verified-versions": {
+      "message": "La correspondance entre les cartes générées et celles du jeu n’est garantie que pour les versions vérifiées du jeu ; les versions plus récentes fonctionnent sans cette garantie. Certaines particularités du jeu sont reproduites volontairement pour que les cartes se comportent de la même manière."
+    },
+    "about.disclosure.game-files.textures": {
+      "message": "AoE2RMSIDE ne distribue aucun fichier ni élément graphique du jeu. Les ressources officielles sont lues uniquement depuis une installation locale, et les Textures du jeu sont extraites uniquement des fichiers du jeu installé."
+    },
+    "about.disclosure.game-files": {
+      "message": "AoE2RMSIDE ne distribue aucun fichier ni élément graphique du jeu. Les ressources officielles sont lues uniquement depuis une installation locale."
+    },
+    "about.disclosure.affiliation": {
+      "message": "Sans affiliation ni approbation de Microsoft, Xbox Game Studios, World's Edge ou Activision."
+    },
+    "about.credits": {
+      "message": "Crédits\n{maintainer} — Créateur et responsable du projet"
+    },
+    "about.credits.research": {
+      "message": "Merci à {author}, dont le {guide} nous a beaucoup appris sur les scripts de cartes aléatoires."
+    },
+    "about.credits.xs-research": {
+      "message": "Merci à {author}, dont la documentation XS dans le {guide} a servi de point de départ à la prise en charge de XS."
+    },
+    "about.close": {
+      "message": "Fermer"
+    },
+    "about.documentation": {
+      "message": "Documentation"
+    },
+    "dialog.confirm.title": {
+      "message": "Confirmer l’action"
+    },
+    "dialog.confirm.cancel": {
+      "message": "Annuler"
+    },
+    "dialog.confirm.continue": {
+      "message": "Continuer"
+    },
+    "dialog.unsaved.title.one": {
+      "message": "Enregistrer les modifications de {name} ?"
+    },
+    "dialog.unsaved.title.many": {
+      "message": "{count, plural, one {Enregistrer les modifications de {count} fichier ?} many {Enregistrer les modifications de {count} fichiers ?} other {Enregistrer les modifications de {count} fichiers ?}}"
+    },
+    "dialog.unsaved.description.close-window": {
+      "message": "Les modifications non enregistrées seront perdues si vous fermez la fenêtre."
+    },
+    "dialog.unsaved.description.close-tab": {
+      "message": "Les modifications non enregistrées seront perdues si vous fermez cet onglet."
+    },
+    "dialog.unsaved.description.close-folder": {
+      "message": "Les modifications non enregistrées seront perdues si vous fermez ce dossier."
+    },
+    "dialog.unsaved.description.delete": {
+      "message": "Les modifications non enregistrées seront perdues si vous supprimez {name}."
+    },
+    "dialog.unsaved.save": {
+      "message": "Enregistrer"
+    },
+    "dialog.unsaved.save-all": {
+      "message": "Tout enregistrer"
+    },
+    "dialog.unsaved.dont-save": {
+      "message": "Ne pas enregistrer"
+    },
+    "dialog.external-change.title": {
+      "message": "{name} a été modifié en dehors d’AoE2RMSIDE"
+    },
+    "dialog.external-change.save.description": {
+      "message": "Remplacer le fichier effacerait sa version externe. Rechargez-le, remplacez-le par le contenu de l’éditeur ou annulez."
+    },
+    "dialog.external-change.replace": {
+      "message": "Remplacer sur le disque"
+    },
+    "dialog.external-change.reload": {
+      "message": "Recharger du disque"
+    },
+    "dialog.external-change.dirty.description": {
+      "message": "Le rechargement effacera le contenu non enregistré de l’éditeur. Continuez à modifier le fichier pour résoudre le conflit à l’enregistrement."
+    },
+    "dialog.external-change.keep-editing": {
+      "message": "Continuer à modifier"
+    },
+    "dialog.delete-entry.title": {
+      "message": "Placer {name} dans la corbeille ?"
+    },
+    "dialog.delete-entry.description.folder": {
+      "message": "Ce dossier n’est pas vide. Il sera placé dans la corbeille avec tout son contenu."
+    },
+    "dialog.delete-entry.description": {
+      "message": "L’élément sera placé dans la corbeille."
+    },
+    "dialog.delete-entry.confirm": {
+      "message": "Placer dans la corbeille"
+    },
+    "dialog.delete-entry.permanent.title": {
+      "message": "Supprimer définitivement {name} ?"
+    },
+    "dialog.delete-entry.permanent.description.folder": {
+      "message": "Ce dossier n’est pas vide. Il sera supprimé définitivement avec tout son contenu, sans passer par la corbeille. Cette action est irréversible."
+    },
+    "dialog.delete-entry.permanent.description": {
+      "message": "L’élément sera supprimé définitivement, sans passer par la corbeille. Cette action est irréversible."
+    },
+    "dialog.delete-entry.permanent.confirm": {
+      "message": "Supprimer définitivement"
+    },
+    "output.clear": {
+      "message": "Effacer la sortie"
+    },
+    "output.source.run": {
+      "message": "Exécution"
+    },
+    "output.source.script": {
+      "message": "Script"
+    },
+    "output.source.preview": {
+      "message": "Aperçu"
+    },
+    "output.source.map-test": {
+      "message": "Test de cartes"
+    },
+    "output.source.deploy": {
+      "message": "Déploiement"
+    },
+    "output.source.live-test": {
+      "message": "Test en jeu"
+    },
+    "output.source.recovery": {
+      "message": "Récupération"
+    },
+    "output.source.update": {
+      "message": "Mise à jour"
+    },
+    "output.source.files": {
+      "message": "Fichiers"
+    },
+    "output.source.game-folder": {
+      "message": "Dossier du jeu"
+    },
+    "output.source.game-textures": {
+      "message": "Textures du jeu"
+    },
+    "output.source.app": {
+      "message": "Application"
+    },
+    "output.log.label": {
+      "message": "{count, plural, one {{count} message de sortie} many {{count} messages de sortie} other {{count} messages de sortie}}"
+    },
+    "output.empty": {
+      "message": "Exécutez une carte pour voir ses résultats ici."
+    },
+    "output.empty.filtered": {
+      "message": "Aucun message ne correspond au filtre."
+    },
+    "output.jump-to-latest": {
+      "message": "Derniers messages ({count} nouveaux)"
+    },
+    "output.repeat": {
+      "message": "×{count}"
+    },
+    "output.repeat.tooltip": {
+      "message": "{count, plural, one {Répété {count} fois} many {Répété {count} fois} other {Répété {count} fois}}"
+    },
+    "output.details": {
+      "message": "Détails"
+    },
+    "output.run.show": {
+      "message": "Afficher les messages de l’exécution"
+    },
+    "output.run.hide": {
+      "message": "Masquer les messages de l’exécution"
+    },
+    "output.run.dropped": {
+      "message": "{count, plural, one {{count} ligne antérieure masquée} many {{count} lignes antérieures masquées} other {{count} lignes antérieures masquées}}"
+    },
+    "output.run.seed": {
+      "message": "graine {seed}"
+    },
+    "output.run.players": {
+      "message": "{count, plural, one {{count} joueur} many {{count} joueurs} other {{count} joueurs}}"
+    },
+    "output.run.maps": {
+      "message": "{count, plural, one {{count} carte} many {{count} cartes} other {{count} cartes}}"
+    },
+    "output.duration.milliseconds": {
+      "message": "{value, number, integer} ms"
+    },
+    "output.duration.seconds": {
+      "message": "{value, number, ::.0} s"
+    },
+    "output.duration.minutes": {
+      "message": "{minutes} min {seconds} s"
+    },
+    "output.constructs.heading": {
+      "message": "Non comparé au jeu"
+    },
+    "output.constructs.label": {
+      "message": "Commandes non comparées au jeu"
+    },
+    "output.constructs.go-to": {
+      "message": "Aller à sa première utilisation"
+    },
+    "output.constructs.more": {
+      "message": "et {count} de plus"
+    },
+    "installed-maps.filter.group": {
+      "message": "Origine des cartes"
+    },
+    "installed-maps.filter.built-in": {
+      "message": "Cartes du jeu ({count, number})"
+    },
+    "installed-maps.filter.local": {
+      "message": "Cartes des mods locaux ({count, number})"
+    },
+    "installed-maps.filter.subscribed": {
+      "message": "Cartes des mods suivis ({count, number})"
+    },
+    "installed-maps.empty.no-origin": {
+      "message": "Toutes les origines de cartes sont désactivées. Activez-en une pour afficher ses cartes."
+    },
+    "installed-maps.empty.origins": {
+      "message": "Aucune carte aléatoire installée ne provient des origines sélectionnées."
+    },
+    "installed-maps.empty.origins-search": {
+      "message": "Aucune carte aléatoire installée des origines sélectionnées ne correspond à cette recherche."
+    },
+    "installed-maps.empty.none": {
+      "message": "Aucune carte aléatoire du jeu, d’un mod local ou d’un mod suivi n’a été trouvée."
+    },
+    "installed-maps.empty.search": {
+      "message": "Aucune carte aléatoire installée ne correspond à cette recherche."
+    },
+    "installed-maps.title": {
+      "message": "Cartes aléatoires installées"
+    },
+    "installed-maps.close": {
+      "message": "Fermer les cartes aléatoires installées"
+    },
+    "installed-maps.search": {
+      "message": "Rechercher des cartes aléatoires installées"
+    },
+    "installed-maps.search.placeholder": {
+      "message": "Rechercher des cartes"
+    },
+    "installed-maps.search.clear": {
+      "message": "Effacer la recherche de cartes"
+    },
+    "installed-maps.loading": {
+      "message": "Chargement des cartes aléatoires installées"
+    },
+    "installed-maps.select-game-folder": {
+      "message": "Sélectionnez le dossier du jeu pour lister les fichiers RMS installés"
+    },
+    "installed-maps.origin.built-in": {
+      "message": "Du jeu"
+    },
+    "installed-maps.origin.local": {
+      "message": "Mod local"
+    },
+    "installed-maps.origin.subscribed": {
+      "message": "Mod suivi"
+    },
+    "installed-maps.clone": {
+      "message": "Cloner pour modifier"
+    },
+    "installed-maps.open-failed": {
+      "message": "Impossible d’ouvrir la carte"
+    },
+    "installed-maps.clone-failed": {
+      "message": "Impossible de cloner la carte"
+    },
+    "installed-maps.output.list-failed": {
+      "message": "Impossible de lister les cartes installées"
+    },
+    "installed-maps.output.cloned": {
+      "message": "{count, plural, one {# fichier de carte cloné pour modification} many {# fichiers de carte clonés pour modification} other {# fichiers de carte clonés pour modification}}"
+    },
+    "installed-maps.output.not-copied": {
+      "message": "{name} n’a pas été copié"
+    },
+    "installed-maps.output.not-copied.cause": {
+      "message": "La carte clonée y fait référence, mais il ne fait pas partie de la carte installée."
+    },
+    "installed-maps.output.not-copied.game-provided.cause": {
+      "message": "Le jeu fournit ce fichier ; il ne fait pas partie de la carte installée."
+    },
+    "run-menu.control.detach": {
+      "message": "Déconnecter AoE2Control"
+    },
+    "run-menu.control.remove": {
+      "message": "Retirer AoE2Control"
+    },
+    "run-menu.control.connecting": {
+      "message": "AoE2Control se connecte"
+    },
+    "run-menu.control.detaching": {
+      "message": "Déconnexion d’AoE2Control…"
+    },
+    "run-menu.control.busy": {
+      "message": "Attendez la fin de l’opération AoE2Control en cours"
+    },
+    "run-menu.run-on-save": {
+      "message": "À la sauvegarde"
+    },
+    "run-menu.run-on-edit": {
+      "message": "Après saisie"
+    },
+    "run-menu.preset.default-name": {
+      "message": "Préréglage"
+    },
+    "run-menu.preset.numbered-name": {
+      "message": "Préréglage {number}"
+    },
+    "run-menu.preset.settings": {
+      "message": "Paramètres du préréglage d’aperçu"
+    },
+    "run-menu.preset.manage": {
+      "message": "Gérer les préréglages d’aperçu"
+    },
+    "run-menu.preset.new": {
+      "message": "Nouveau préréglage"
+    },
+    "run-menu.preset.new-name": {
+      "message": "Nommer le nouveau préréglage d’aperçu"
+    },
+    "run-menu.preset.rename": {
+      "message": "Renommer {name}"
+    },
+    "run-menu.preset.save": {
+      "message": "Enregistrer {name}"
+    },
+    "run-menu.preset.edit": {
+      "message": "Modifier {name}"
+    },
+    "run-menu.preset.delete": {
+      "message": "Supprimer {name}"
+    },
+    "run-menu.preset.delete.title": {
+      "message": "Supprimer le préréglage {name} ?"
+    },
+    "run-menu.preset.delete.description": {
+      "message": "Les paramètres d’aperçu enregistrés dans ce préréglage seront supprimés."
+    },
+    "run-menu.preset.delete.confirm": {
+      "message": "Supprimer"
+    },
+    "run-menu.preset.name-length": {
+      "message": "Les noms de préréglage doivent contenir de 1 à 64 caractères"
+    },
+    "run-menu.preset.exists": {
+      "message": "Un préréglage nommé {name} existe déjà"
+    },
+    "run-menu.preset.limit": {
+      "message": "Vous pouvez enregistrer au maximum 64 préréglages"
+    },
+    "run-menu.map-size": {
+      "message": "Taille de la carte"
+    },
+    "run-menu.game-mode": {
+      "message": "Mode de jeu"
+    },
+    "run-menu.starting-resources": {
+      "message": "Ressources initiales"
+    },
+    "run-menu.starting-age": {
+      "message": "Âge de départ"
+    },
+    "run-menu.ending-age": {
+      "message": "Âge final"
+    },
+    "run-menu.position-policy": {
+      "message": "Placement des joueurs"
+    },
+    "run-menu.select-placeholder": {
+      "message": "Sélectionner"
+    },
+    "run-menu.turbo-note": {
+      "message": "Carte aléatoire turbo est l’ancien mode, conservé tel quel. Carte aléatoire avec Turbo fournit les libellés turbo du jeu."
+    },
+    "run-menu.turbo-note.use-turbo": {
+      "message": "Utiliser Carte aléatoire + Turbo"
+    },
+    "run-menu.players.configure": {
+      "message": "Configurer les joueurs"
+    },
+    "run-menu.players.count": {
+      "message": "Nombre de joueurs"
+    },
+    "run-menu.players.count-option": {
+      "message": "{count, plural, one {# joueur} many {# joueurs} other {# joueurs}}"
+    },
+    "run-menu.players.slot": {
+      "message": "Emplacement du joueur {player}"
+    },
+    "run-menu.players.color": {
+      "message": "Couleur du joueur {player}"
+    },
+    "run-menu.players.civilization": {
+      "message": "Civilisation du joueur {player}"
+    },
+    "run-menu.players.team": {
+      "message": "Équipe du joueur {player}"
+    },
+    "run-menu.players.slot-option": {
+      "message": "P{slot}"
+    },
+    "run-menu.players.computer": {
+      "message": "Joueur {player} contrôlé par l’ordinateur"
+    },
+    "run-menu.players.computer-tooltip": {
+      "message": "Joueur contrôlé par l’ordinateur (définit AI_PLAYERS)"
+    },
+    "run-menu.players.live-computer": {
+      "message": "Les tests en jeu confient tous les joueurs après P1 à l’ordinateur"
+    },
+    "run-menu.players.live-note": {
+      "message": "Les tests en jeu confient tous les joueurs après P1 à l’ordinateur."
+    },
+    "run-menu.players.live-note.no-p1": {
+      "message": "Les tests en jeu confient tous les joueurs après P1 à l’ordinateur. Placez un joueur en P1 : c’est celui que vous contrôlez."
+    },
+    "run-menu.lobby.label": {
+      "message": "Options du salon"
+    },
+    "run-menu.lobby.label.selected": {
+      "message": "Options du salon, {count} activées"
+    },
+    "run-menu.lobby.modifiers": {
+      "message": "Modificateurs du mode de jeu"
+    },
+    "run-menu.lobby.options": {
+      "message": "Options"
+    },
+    "run-menu.lobby.modifier.base": {
+      "message": "{mode} (mode de jeu)"
+    },
+    "run-menu.lobby.modifier.empire-wars.tooltip": {
+      "message": "Ajoute Guerres d’empires au mode de jeu. Définit EMPIRE_WARS."
+    },
+    "run-menu.lobby.modifier.sudden-death.tooltip": {
+      "message": "Ajoute Mort subite au mode de jeu. Définit SUDDEN_DEATH."
+    },
+    "run-menu.lobby.modifier.regicide.tooltip": {
+      "message": "Ajoute Régicide au mode de jeu. Définit REGICIDE."
+    },
+    "run-menu.lobby.modifier.king-of-the-hill.tooltip": {
+      "message": "Ajoute Roi de la colline au mode de jeu. Définit KING_OT_HILL."
+    },
+    "run-menu.lobby.flag.turbo.tooltip": {
+      "message": "Accélère le jeu. Définit TURBO_MODE et, en Carte aléatoire, TURBO_RANDOM_MAP."
+    },
+    "run-menu.lobby.flag.full-tech-tree.tooltip": {
+      "message": "Toutes les civilisations peuvent rechercher toutes les technologies. Définit FULL_TECH_TREE."
+    },
+    "run-menu.lobby.flag.antiquity.tooltip": {
+      "message": "Mode Antiquité. Définit ANTIQUITY_MODE ; de nombreuses cartes changent avec ce mode."
+    },
+    "run-menu.lobby.flag.solid-farms.tooltip": {
+      "message": "Les unités ne peuvent pas traverser les fermes. Définit SOLID_FARMS."
+    },
+    "run-menu.lobby.regicide-note": {
+      "message": "Régicide exige un roi par joueur. Sur une carte sans rois, le jeu termine immédiatement la partie."
+    },
+    "run-menu.version.local-folder": {
+      "message": "Dossier local du jeu"
+    },
+    "run-menu.version.local": {
+      "message": "{version} (locale)"
+    },
+    "run-menu.version.not-verified": {
+      "message": "{version} (non vérifiée)"
+    },
+    "run-menu.version.no-bundled": {
+      "message": "Aucun profil fourni"
+    },
+    "run-menu.version.no-packaged": {
+      "message": "Aucune version fournie"
+    },
+    "run-menu.version.preview-game-version": {
+      "message": "Version du jeu pour l’aperçu"
+    },
+    "run-menu.version.game-version": {
+      "message": "Version du jeu"
+    },
+    "run-menu.version.local-selected": {
+      "message": "Votre version locale du jeu est sélectionnée ; l’aperçu est relancé"
+    },
+    "run-menu.version.unverified-description": {
+      "message": "AoE2DE {version} n’est pas une version vérifiée pour RMS ; les aperçus utilisent le profil de comportement vérifié le plus récent ({profile}). Le fonctionnement peut rester inchangé. Si la génération diffère du jeu, recherchez une mise à jour de l’IDE ou signalez le problème sur {url}"
+    },
+    "run-menu.version.profile-unavailable": {
+      "message": "indisponible"
+    },
+    "run-menu.game-folder.select": {
+      "message": "Choisir le dossier du jeu"
+    },
+    "run-menu.game-folder.selecting": {
+      "message": "Sélection du dossier du jeu…"
+    },
+    "run-menu.game-folder.linked-version": {
+      "message": "Utilisation d’AoE2DE {version} installé localement"
+    },
+    "run-menu.game-folder.linked": {
+      "message": "Utilisation de l’installation locale d’AoE2DE sélectionnée"
+    },
+    "run-menu.settings.load-failed": {
+      "message": "Impossible de charger les paramètres d’exécution"
+    },
+    "run-menu.settings.save-failed": {
+      "message": "Les paramètres d’exécution n’ont pas été enregistrés"
+    },
+    "run-menu.settings.editor-failed": {
+      "message": "L’éditeur n’a pas pu utiliser les paramètres d’exécution"
+    },
+    "run-menu.run.warning": {
+      "message": "La carte présente un avertissement"
+    },
+    "run-menu.cache-cleared": {
+      "message": "Cache de l’aperçu vidé"
+    },
+    "run-menu.fixture.needs-source": {
+      "message": "Les cas de test internes nécessitent un script .rms ou .rms2 non vide"
+    },
+    "run-menu.random-civilizations.headline": {
+      "message": "Civilisations tirées au sort pour cet aperçu : {players, list, unit}"
+    },
+    "run-menu.random-civilizations.player": {
+      "message": "Joueur {player} {civilization}"
+    },
+    "run-menu.random-civilizations.cause": {
+      "message": "Un test en jeu laisse le jeu faire son propre tirage."
+    },
+    "run-menu.status.settings": {
+      "message": "{size} · {count, plural, one {# joueur} many {# joueurs} other {# joueurs}}"
+    },
+    "run-menu.result.error": {
+      "message": "Erreur"
+    },
+    "run-menu.result.failed": {
+      "message": "Échec"
+    },
+    "run-menu.result.passed": {
+      "message": "Réussi"
+    },
+    "run-menu.result.stopped": {
+      "message": "Arrêté"
+    },
+    "run-menu.result.stopped-kept": {
+      "message": "Arrêté, dernière carte conservée"
+    },
+    "run-menu.result.synthetic": {
+      "message": "Cas de test synthétique, non certifié"
+    },
+    "run-menu.result.synthetic-reused": {
+      "message": "Cas de test synthétique, non certifié, réutilisé"
+    },
+    "run-menu.result.generated-reused": {
+      "message": "Généré, réutilisé"
+    },
+    "run-menu.result.generated-unverified": {
+      "message": "Généré · version du jeu non vérifiée"
+    },
+    "run-menu.result.generated-reused-unverified": {
+      "message": "Généré, réutilisé · version du jeu non vérifiée"
+    },
+    "run-menu.blocked.headline": {
+      "message": "Impossible de lancer l’aperçu"
+    },
+    "run-menu.blocked.source-empty": {
+      "message": "Le script actuel est vide."
+    },
+    "run-menu.blocked.syntax-errors": {
+      "message": "Le script actuel contient des erreurs de syntaxe."
+    },
+    "run-menu.blocked.profile-unavailable": {
+      "message": "Le profil de comportement sélectionné est indisponible."
+    },
+    "run-menu.blocked.content-pack-unavailable": {
+      "message": "Aucun pack de contenu compatible n’est disponible pour la version du jeu sélectionnée."
+    },
+    "run-menu.blocked.content-pack-unavailable-profile": {
+      "message": "Aucun pack de contenu compatible n’est disponible pour ce profil."
+    },
+    "run-menu.blocked.execution-busy": {
+      "message": "Une autre exécution est encore en cours."
+    },
+    "run-menu.blocked.loading": {
+      "message": "La configuration de l’aperçu est encore en cours de chargement."
+    },
+    "run-menu.blocked.not-main-file": {
+      "message": "Seuls les fichiers principaux .rms et .rms2 peuvent être déployés."
+    },
+    "run-menu.blocked.selected-source-empty": {
+      "message": "Le script RMS sélectionné est vide."
+    },
+    "run-menu.blocked.selected-source-syntax": {
+      "message": "Le script RMS sélectionné contient des erreurs de syntaxe."
+    },
+    "run-menu.blocked.not-scheduled": {
+      "message": "L’exécution du script RMS sélectionné n’a pas pu être programmée."
+    },
+    "run-menu.invalid.seed-lock": {
+      "message": "L’état du verrouillage de la graine est invalide."
+    },
+    "run-menu.invalid.run-on-save": {
+      "message": "L’état de l’exécution à l’enregistrement est invalide."
+    },
+    "run-menu.invalid.run-on-edit": {
+      "message": "L’état de l’exécution à la modification est invalide."
+    },
+    "run-menu.invalid.seed": {
+      "message": "La graine doit être un entier de 0 à 4294967295."
+    },
+    "run-menu.invalid.map-size": {
+      "message": "La taille de la carte doit correspondre à une option prise en charge par le jeu."
+    },
+    "run-menu.invalid.player-count": {
+      "message": "Le nombre de joueurs doit être compris entre 1 et 8."
+    },
+    "run-menu.invalid.player-slots": {
+      "message": "Les emplacements des joueurs doivent contenir huit valeurs valides."
+    },
+    "run-menu.invalid.duplicate-slots": {
+      "message": "Chaque joueur actif doit occuper un emplacement différent."
+    },
+    "run-menu.invalid.player-colors": {
+      "message": "Les couleurs des joueurs doivent contenir huit valeurs valides."
+    },
+    "run-menu.invalid.duplicate-colors": {
+      "message": "Chaque joueur actif doit avoir une couleur différente."
+    },
+    "run-menu.invalid.teams": {
+      "message": "Les équipes des joueurs doivent contenir huit valeurs allant de Pas d’équipe à Équipe 4."
+    },
+    "run-menu.invalid.civilizations": {
+      "message": "Les civilisations par défaut doivent couvrir huit emplacements de joueurs."
+    },
+    "run-menu.invalid.controllers": {
+      "message": "Le choix humain ou ordinateur doit contenir huit valeurs."
+    },
+    "run-menu.invalid.profile": {
+      "message": "Un profil de comportement connu est nécessaire."
+    },
+    "run-menu.invalid.version-scope": {
+      "message": "La portée de la sélection de version est invalide."
+    },
+    "run-menu.invalid.game-mode": {
+      "message": "Un mode ou contexte de jeu est nécessaire."
+    },
+    "run-menu.invalid.modifiers": {
+      "message": "Les modificateurs du mode de jeu doivent être connus et ne pas se répéter."
+    },
+    "run-menu.invalid.lobby-options": {
+      "message": "Les options du salon doivent être activées ou désactivées."
+    },
+    "run-menu.invalid.starting-resources": {
+      "message": "Les ressources initiales sont invalides."
+    },
+    "run-menu.invalid.starting-age": {
+      "message": "L’âge de départ est invalide."
+    },
+    "run-menu.invalid.ending-age": {
+      "message": "L’âge final est invalide."
+    },
+    "run-menu.invalid.age-order": {
+      "message": "L’âge final ne peut pas précéder l’âge de départ."
+    },
+    "run-menu.invalid.position-policy": {
+      "message": "Le placement des joueurs est invalide."
+    },
+    "run-menu.invalid.trace-level": {
+      "message": "Le niveau de collecte des traces est invalide."
+    },
+    "run-menu.invalid.test-cores": {
+      "message": "Le nombre de cœurs de test doit être Automatique ou compris entre 1 et 32."
+    },
+    "run-menu.standard-include.headline": {
+      "message": "Les inclusions standard du jeu nécessitent le dossier du jeu"
+    },
+    "run-menu.standard-include.cause.packaged-selection": {
+      "message": "Les inclusions standard nécessitent la version locale du jeu, mais une version fournie avec l’IDE est sélectionnée."
+    },
+    "run-menu.standard-include.cause.no-linked-installation": {
+      "message": "Les inclusions standard nécessitent un dossier du jeu lié, mais aucun n’est lié."
+    },
+    "run-menu.standard-include.cause.missing-gamedata": {
+      "message": "Les inclusions standard nécessitent resources/_common/drs/gamedata_x2 dans le dossier du jeu lié, mais ce dossier est absent."
+    },
+    "run-menu.failure.not-analyzed": {
+      "message": "Impossible d’analyser le script"
+    },
+    "run-menu.failure.not-checked": {
+      "message": "Impossible de vérifier le script"
+    },
+    "run-menu.failure.not-started": {
+      "message": "L’exécution n’a pas pu démarrer"
+    },
+    "run-menu.failure.generation": {
+      "message": "Échec de la génération"
+    },
+    "run-menu.map-test-progress.label": {
+      "message": "Test de cartes"
+    },
+    "settings.language.title": {
+      "message": "Langue"
+    },
+    "settings.language.description": {
+      "message": "Les menus, dialogues et messages utilisent cette langue. Les commandes des scripts, les journaux et les paquets d’assistance restent en anglais."
+    },
+    "settings.language.label": {
+      "message": "Langue de l’interface"
+    },
+    "settings.language.system": {
+      "message": "Langue d’affichage de Windows ({language})"
+    },
+    "settings.language.close": {
+      "message": "Fermer"
+    },
+    "settings.language.close-label": {
+      "message": "Fermer les paramètres de langue"
+    },
+    "settings.language.editor-next-start": {
+      "message": "Les menus propres à l’éditeur de code changeront au prochain démarrage."
+    },
+    "message.action.report-problem": {
+      "message": "Signaler ce problème"
+    },
+    "message.action.get-newer-control": {
+      "message": "Obtenir une version plus récente d’AoE2Control"
+    },
+    "message.action.link-game-folder": {
+      "message": "Liez le dossier du jeu"
+    },
+    "message.action.verify-game-files": {
+      "message": "Vérifiez les fichiers du jeu dans Steam"
+    },
+    "message.action.select-local-game-version": {
+      "message": "Sélectionnez votre version locale du jeu"
+    },
+    "message.action.check-include-name": {
+      "message": "Vérifiez le nom du fichier inclus"
+    },
+    "message.action.open-problems": {
+      "message": "Ouvrez le panneau Problèmes"
+    },
+    "message.action.choose-map-size": {
+      "message": "Choisissez une autre taille de carte"
+    },
+    "message.action.change-player-count": {
+      "message": "Modifiez le nombre de joueurs"
+    },
+    "message.action.open-players-menu": {
+      "message": "Ouvrez le menu des joueurs"
+    },
+    "message.action.try-another-seed": {
+      "message": "Essayez une autre graine"
+    },
+    "message.action.reinstall": {
+      "message": "Réinstallez ou mettez à jour AoE2RMSIDE"
+    },
+    "message.action.check-update": {
+      "message": "Recherchez une mise à jour d’AoE2RMSIDE"
+    },
+    "message.action.reconnect-control": {
+      "message": "Reconnectez AoE2Control et réessayez"
+    },
+    "message.action.check-control-file": {
+      "message": "Vérifiez que le fichier AoE2Control sélectionné fonctionne, puis réessayez"
+    },
+    "message.action.wait-run-again": {
+      "message": "Attendez un instant, puis appuyez à nouveau sur Exécuter"
+    },
+    "message.action.run-again-or-restart-game": {
+      "message": "Appuyez à nouveau sur Exécuter ; si le problème persiste, redémarrez AoE2DE"
+    },
+    "message.action.restart-game-run-again": {
+      "message": "Redémarrez AoE2DE, puis appuyez à nouveau sur Exécuter"
+    },
+    "message.action.check-game-window": {
+      "message": "Vérifiez la fenêtre du jeu, puis appuyez à nouveau sur Exécuter"
+    },
+    "message.action.press-run-again": {
+      "message": "Appuyez à nouveau sur Exécuter"
+    },
+    "message.action.wait-try-again": {
+      "message": "Attendez un instant, puis réessayez"
+    },
+    "message.action.open-deploy-again": {
+      "message": "Rouvrez Déployer comme mod"
+    },
+    "message.action.choose-another-mod-name": {
+      "message": "Choisissez un autre nom de mod"
+    },
+    "message.action.rerun-map-test": {
+      "message": "Relancez le test de cartes"
+    },
+    "message.format.player-slot": {
+      "message": "P{slot}"
+    },
+    "message.format.player-slot-unknown": {
+      "message": "Un emplacement de joueur"
+    },
+    "message.format.located": {
+      "message": "{location} : {text}"
+    },
+    "message.format.file-line": {
+      "message": "{name}, ligne {line}"
+    },
+    "message.format.the-script": {
+      "message": "Le script"
+    },
+    "message.format.the-folder": {
+      "message": "Le dossier"
+    },
+    "message.format.profile-xs-folder": {
+      "message": "le dossier XS de votre profil"
+    },
+    "message.format.the-map-test": {
+      "message": "le test de cartes"
+    },
+    "message.format.a-map-test": {
+      "message": "un test de cartes"
+    },
+    "message.format.preview-kept": {
+      "message": "L’aperçu a été conservé."
+    },
+    "message.format.preview-works-without-it": {
+      "message": "L’aperçu fonctionne sans cet élément."
+    },
+    "message.format.sentence": {
+      "message": "{text}."
+    },
+    "message.generation.source-changed.headline": {
+      "message": "Le script a changé pendant la génération"
+    },
+    "message.generation.source-changed.cause": {
+      "message": "La nouvelle version sera exécutée ensuite."
+    },
+    "message.xs-syntax.headline": {
+      "message": "Un fichier XS contient des erreurs de syntaxe"
+    },
+    "message.xs-syntax.headline.named": {
+      "message": "{name} contient des erreurs de syntaxe XS"
+    },
+    "message.control.xs-syntax.cause.located": {
+      "message": "{name}, ligne {line}, empêche le jeu de charger le XS de la carte ; le jeu n’a donc pas été modifié."
+    },
+    "message.control.xs-syntax.cause": {
+      "message": "Le jeu n’a pas pu charger le XS de la carte ; il n’a donc pas été modifié."
+    },
+    "message.control.xs-syntax.action": {
+      "message": "Corrigez les erreurs du panneau Problèmes, puis relancez le test en jeu"
+    },
+    "message.control.xs-profile-file-not-owned.headline": {
+      "message": "Un fichier XS existe déjà dans le dossier XS de votre profil"
+    },
+    "message.control.xs-profile-file-not-owned.headline.named": {
+      "message": "{name} existe déjà dans le dossier XS de votre profil"
+    },
+    "message.control.xs-profile-file-not-owned.cause.folder": {
+      "message": "Ce fichier n’a pas été créé par AoE2RMSIDE ({folder}) ; le test en jeu s’est donc arrêté sans le remplacer."
+    },
+    "message.control.xs-profile-file-not-owned.cause": {
+      "message": "Ce fichier n’a pas été créé par AoE2RMSIDE ; le test en jeu s’est donc arrêté sans le remplacer."
+    },
+    "message.control.xs-profile-file-not-owned.action": {
+      "message": "Renommez le fichier XS ou supprimez celui qui existe déjà"
+    },
+    "message.control.xs-profile-file-changed.headline": {
+      "message": "Un fichier XS du dossier XS de votre profil a été modifié en dehors d’AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.headline.named": {
+      "message": "{name}, dans le dossier XS de votre profil, a été modifié en dehors d’AoE2RMSIDE"
+    },
+    "message.control.xs-profile-file-changed.cause": {
+      "message": "AoE2RMSIDE l’a copié vers {folder} pour un test en jeu et n’écrase jamais les modifications faites ailleurs ; le test s’est donc arrêté."
+    },
+    "message.control.xs-profile-file-changed.action": {
+      "message": "Déplacez vos modifications ailleurs ou supprimez le fichier, puis relancez le test en jeu"
+    },
+    "message.control.xs-profile-name-invalid.headline": {
+      "message": "Un fichier XS ne peut pas être copié dans le dossier XS de votre profil"
+    },
+    "message.control.xs-profile-name-invalid.headline.named": {
+      "message": "{name} ne peut pas être copié dans le dossier XS de votre profil"
+    },
+    "message.control.xs-profile-name-invalid.cause": {
+      "message": "Un test en jeu copie chaque fichier XS sous le simple nom de fichier écrit dans #includeXS, mais ce nom contient un dossier."
+    },
+    "message.control.xs-profile-name-invalid.action": {
+      "message": "Écrivez uniquement le nom du fichier dans la ligne #includeXS"
+    },
+    "message.control.xs-profile-name-collision.headline": {
+      "message": "Deux fichiers XS seraient copiés sous le même nom"
+    },
+    "message.control.xs-profile-name-collision.headline.named": {
+      "message": "Deux fichiers XS seraient copiés sous le nom {name}"
+    },
+    "message.control.xs-profile-name-collision.cause": {
+      "message": "Le dossier XS de votre profil ne peut contenir qu’un fichier portant ce nom."
+    },
+    "message.control.xs-profile-name-collision.action": {
+      "message": "Renommez l’un des fichiers XS"
+    },
+    "message.control.xs-profile-folder-unsafe.headline": {
+      "message": "Le dossier XS de votre profil ne peut pas être utilisé"
+    },
+    "message.control.xs-profile-folder-unsafe.cause": {
+      "message": "{folder} n’est pas un dossier ordinaire ou pointe vers un autre emplacement. AoE2RMSIDE ne copie jamais de fichiers à travers un dossier redirigé."
+    },
+    "message.control.xs-profile-record-invalid.headline": {
+      "message": "Impossible de lire le registre des fichiers XS copiés par AoE2RMSIDE"
+    },
+    "message.control.xs-profile-record-invalid.cause": {
+      "message": "Sans ce registre, AoE2RMSIDE ne peut pas déterminer quels fichiers XS de votre profil il a créés."
+    },
+    "message.control.xs-profile-staging-failed.headline": {
+      "message": "Les fichiers XS n’ont pas pu être copiés dans le dossier XS de votre profil"
+    },
+    "message.control.xs-profile-staging-failed.cause.too-many": {
+      "message": "La carte charge plus de fichiers XS qu’un test en jeu ne peut en copier."
+    },
+    "message.control.xs-profile-staging-failed.cause.not-restored": {
+      "message": "Certains fichiers XS modifiés par ce test dans {folder} n’ont pas pu être restaurés ; AoE2RMSIDE les considère toujours comme ses propres fichiers."
+    },
+    "message.control.xs-profile-staging-failed.cause.restored": {
+      "message": "Tous les fichiers XS modifiés par ce test dans {folder} ont été restaurés."
+    },
+    "message.control.xs-profile-staging-failed.cause.record-changed": {
+      "message": "Le registre d’AoE2RMSIDE des fichiers XS de {folder} a changé pendant le test en jeu."
+    },
+    "message.control.xs-profile-staging-failed.action": {
+      "message": "Vérifiez que le dossier autorise l’écriture, puis relancez le test en jeu"
+    },
+    "message.control.game-detection-timeout.headline": {
+      "message": "AoE2DE n’est pas lancé"
+    },
+    "message.control.game-detection-timeout.action": {
+      "message": "Lancez AoE2DE, puis appuyez à nouveau sur Exécuter"
+    },
+    "message.control.launcher-exited-before-start.headline": {
+      "message": "AoE2Control s’est fermé avant de démarrer"
+    },
+    "message.control.launcher-start-timeout.headline": {
+      "message": "AoE2Control n’a pas démarré"
+    },
+    "message.control.handshake-timeout.headline": {
+      "message": "AoE2Control n’a pas terminé sa connexion"
+    },
+    "message.control.control-civilization-unsupported.headline": {
+      "message": "Cette version d’AoE2Control ne propose pas une civilisation sélectionnée"
+    },
+    "message.control.control-civilization-unsupported.cause": {
+      "message": "Les Saxons, Varègues et Danois nécessitent AoE2Control 1.1.1 ou une version plus récente."
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.headline": {
+      "message": "AoE2Control ne propose pas une civilisation sélectionnée"
+    },
+    "message.control.endpoint-civilization_unavailable_in_control_catalog.cause": {
+      "message": "Sélectionnez AoE2Control 1.1.1 ou une version plus récente, ou choisissez une autre civilisation."
+    },
+    "message.control.game-civilization-unavailable.headline": {
+      "message": "La version du jeu en cours ne propose pas une civilisation sélectionnée"
+    },
+    "message.control.game-civilization-unavailable.action": {
+      "message": "Choisissez une autre civilisation"
+    },
+    "message.control.unsupported-game-version.headline": {
+      "message": "Cette version du jeu n’est pas prise en charge pour les tests en jeu"
+    },
+    "message.control.launcher-still-unloading.headline": {
+      "message": "La précédente instance d’AoE2Control est encore en cours de déchargement du jeu"
+    },
+    "message.control.launcher-engine-starting-timeout.headline": {
+      "message": "Un démarrage précédent d’AoE2Control est encore en cours dans le jeu"
+    },
+    "message.control.launcher-startup-timeout.headline": {
+      "message": "AoE2Control n’a pas terminé son démarrage à temps"
+    },
+    "message.control.launcher-game-not-ready.headline": {
+      "message": "La fenêtre d’AoE2DE n’est pas prête"
+    },
+    "message.control.launcher-game-not-ready.action": {
+      "message": "Affichez la fenêtre du jeu sans la réduire, puis appuyez à nouveau sur Exécuter"
+    },
+    "message.control.launcher-engine-incompatible.headline": {
+      "message": "Une autre version d’AoE2Control est en cours d’exécution dans le jeu"
+    },
+    "message.control.launcher-engine-failed-earlier.headline": {
+      "message": "AoE2Control a déjà échoué à démarrer dans cette instance du jeu"
+    },
+    "message.control.launcher-injection-failed.headline": {
+      "message": "AoE2Control n’a pas pu se connecter au jeu"
+    },
+    "message.control.launcher-launcher-already-running.headline": {
+      "message": "Un autre lanceur AoE2Control est en cours d’exécution"
+    },
+    "message.control.launcher-launcher-already-running.action": {
+      "message": "Fermez-le, puis appuyez à nouveau sur Exécuter"
+    },
+    "message.control.incompatible-engine.headline": {
+      "message": "Cette version d’AoE2Control n’est pas compatible"
+    },
+    "message.control.incompatible-engine.action": {
+      "message": "Sélectionnez une version publique compatible d’AoE2Control"
+    },
+    "message.control.effective-readback-mismatch.headline": {
+      "message": "La configuration du jeu ne correspondait pas aux paramètres d’exécution"
+    },
+    "message.control.connection-lost.headline": {
+      "message": "La connexion à AoE2Control a été perdue"
+    },
+    "message.control.connection-lost.action": {
+      "message": "Lancez AoE2DE si nécessaire, puis réessayez"
+    },
+    "message.control.endpoint-timeout.headline": {
+      "message": "AoE2Control n’a pas répondu à temps"
+    },
+    "message.control.endpoint-closed.headline": {
+      "message": "AoE2Control a fermé la connexion sans répondre"
+    },
+    "message.control.endpoint-closed.cause": {
+      "message": "Le jeu est peut-être occupé ou affiche un message."
+    },
+    "message.control.match-start-unresponsive.headline": {
+      "message": "Le jeu a cessé de répondre pendant le démarrage de la partie"
+    },
+    "message.control.match-start-unresponsive.cause": {
+      "message": "AoE2DE affiche peut-être un message, par exemple une erreur de script."
+    },
+    "message.control.match-start-unresponsive.action": {
+      "message": "Fermez le message dans le jeu, puis appuyez à nouveau sur Exécuter"
+    },
+    "message.control.active-verification-timeout.headline": {
+      "message": "Le jeu n’a pas confirmé la nouvelle partie à temps"
+    },
+    "message.control.clean-end-timeout.headline": {
+      "message": "La partie en cours ne s’est pas terminée à temps"
+    },
+    "message.control.endpoint-local_mod_source_changed.headline": {
+      "message": "La carte a changé pendant sa copie vers le jeu"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.headline": {
+      "message": "Une autre carte portant ce nom de fichier existe dans le dossier des cartes du jeu"
+    },
+    "message.control.endpoint-local_mod_stage_conflict.action": {
+      "message": "Renommez la carte, puis appuyez à nouveau sur Exécuter"
+    },
+    "message.control.endpoint-local_mod_stage_failed.headline": {
+      "message": "La carte n’a pas pu être copiée vers le jeu"
+    },
+    "message.control.start-response-timeout.headline": {
+      "message": "Le jeu n’a pas confirmé le démarrage de la partie"
+    },
+    "message.control.start-response-timeout.action": {
+      "message": "Reconnectez-vous pour vérifier la partie en cours avant de réessayer"
+    },
+    "message.control.clean-end-response-timeout.headline": {
+      "message": "Le jeu n’a pas confirmé la fin de la partie précédente"
+    },
+    "message.control.clean-end-response-timeout.action": {
+      "message": "Reconnectez-vous pour vérifier avant de réessayer"
+    },
+    "message.control.deployment-target-unavailable.headline": {
+      "message": "Le dossier du jeu ou le profil de jeu n’a pas pu être identifié"
+    },
+    "message.control.deployment-target-unavailable.action": {
+      "message": "Vérifiez le dossier du jeu lié"
+    },
+    "message.control.deployment-identity-invalid.headline": {
+      "message": "La carte n’a pas pu être déployée pour le test en jeu"
+    },
+    "message.control.malformed-launcher-status.headline": {
+      "message": "AoE2Control s’est arrêté avant de se connecter"
+    },
+    "message.control.unsafe-or-unknown-session.headline": {
+      "message": "AoE2Control n’a pas pu confirmer une session solo stable"
+    },
+    "message.control.validation-failed.headline": {
+      "message": "AoE2Control a envoyé une réponse qu’AoE2RMSIDE n’a pas pu utiliser"
+    },
+    "message.control.unsupported-session-state.headline": {
+      "message": "L’état actuel du jeu ne permet pas le test en jeu"
+    },
+    "message.control.unsupported-session-state.action": {
+      "message": "Revenez au menu principal ou à une partie solo, puis réessayez"
+    },
+    "message.control.explicit-clean-end-required.headline": {
+      "message": "La partie en cours doit d’abord se terminer"
+    },
+    "message.control.explicit-clean-end-required.action": {
+      "message": "Appuyez à nouveau sur Exécuter et autorisez la fin de la partie"
+    },
+    "message.control.session-not-connected.headline": {
+      "message": "AoE2Control n’est pas connecté"
+    },
+    "message.control.session-not-connected.action": {
+      "message": "Appuyez à nouveau sur Exécuter pour vous connecter"
+    },
+    "message.control.launcher-artifact-transition.headline": {
+      "message": "Le fichier AoE2Control sélectionné a changé"
+    },
+    "message.control.launcher-artifact-transition.action": {
+      "message": "Sélectionnez à nouveau AoE2Control"
+    },
+    "message.control.operation-queue-full.headline": {
+      "message": "AoE2Control est occupé"
+    },
+    "message.control.unsupported-platform.headline": {
+      "message": "Les tests en jeu ne sont pas pris en charge sur ce système"
+    },
+    "message.control.active-match-confirmation-required.headline": {
+      "message": "Le test en jeu n’a pas remplacé la partie en cours"
+    },
+    "message.control.active-match-confirmation-required.cause": {
+      "message": "Une partie a commencé dans AoE2DE avant que le test en jeu ne puisse demander à la remplacer."
+    },
+    "message.control.clean-end-rejected.headline": {
+      "message": "AoE2Control n’a pas pu terminer la partie en cours"
+    },
+    "message.control.session-changed-before-mutation.headline": {
+      "message": "Le jeu a changé avant que le test en jeu ne puisse lancer la carte"
+    },
+    "message.control.session-changed-before-mutation.cause": {
+      "message": "AoE2DE a lancé une partie ou quitté la configuration solo pendant la préparation du test en jeu."
+    },
+    "message.control.session-identity-changed.headline": {
+      "message": "AoE2DE ou AoE2Control a redémarré pendant le test en jeu"
+    },
+    "message.control.managed-source-unavailable.headline": {
+      "message": "AoE2DE n’a pas répertorié la carte copiée"
+    },
+    "message.control.managed-source-unavailable.cause": {
+      "message": "La liste des cartes de mods du jeu n’affichait pas la carte copiée, ou l’affichait plusieurs fois."
+    },
+    "message.control.invalid-setup-player.headline": {
+      "message": "Les réglages d’un joueur ne peuvent pas être envoyés à AoE2Control"
+    },
+    "message.control.invalid-setup-player.cause": {
+      "message": "Une civilisation, une équipe ou une couleur n’est pas acceptée par cet AoE2Control."
+    },
+    "message.control.invalid-live-request.headline": {
+      "message": "AoE2RMSIDE n’a pas pu préparer le test en jeu"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.headline": {
+      "message": "AoE2Control n’a pas pu préparer la partie en Carte aléatoire"
+    },
+    "message.control.endpoint-rollback_snapshot_unavailable.action": {
+      "message": "Revenez au menu principal d’AoE2DE et réessayez ; si le problème persiste, ouvrez une fois Un joueur → Escarmouche"
+    },
+    "message.control.headline": {
+      "message": "Échec du test en jeu"
+    },
+    "message.control.control-lobby-options-unsupported.headline": {
+      "message": "Cette version d’AoE2Control ne peut pas définir les options du salon"
+    },
+    "message.control.control-lobby-options-unsupported.cause": {
+      "message": "Les options du salon nécessitent AoE2Control 1.1.1 ou une version plus récente. Le jeu n’a pas été modifié."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
+      "message": "Un test en jeu nécessite un joueur en P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.cause": {
+      "message": "Vous contrôlez le joueur en P1 ; tous les autres sont contrôlés par l’ordinateur."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_required.action": {
+      "message": "Ouvrez le menu des joueurs et placez un joueur en P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.headline": {
+      "message": "AoE2Control a refusé un joueur humain après P1"
+    },
+    "message.control.endpoint-invalid_request-human_player_slot_unsupported.cause": {
+      "message": "Un test en jeu lance une partie solo, dans laquelle tous les joueurs après P1 sont contrôlés par l’ordinateur."
+    },
+    "message.control.computer-player-list.headline": {
+      "message": "AoE2Control a refusé la liste des joueurs contrôlés par l’ordinateur"
+    },
+    "message.control.endpoint-invalid_request-computer_player_slots_not_ascending.cause": {
+      "message": "Les joueurs contrôlés par l’ordinateur n’étaient pas listés dans l’ordre des emplacements."
+    },
+    "message.control.endpoint-invalid_request-computer_player_slot_not_a_player.cause": {
+      "message": "Un joueur contrôlé par l’ordinateur était indiqué dans un emplacement sans joueur."
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.headline": {
+      "message": "AoE2Control a refusé un joueur contrôlé par l’ordinateur en P1"
+    },
+    "message.control.endpoint-invalid_request-local_player_slot_one_must_be_human.cause": {
+      "message": "Vous contrôlez P1 lors d’un test en jeu ; il ne peut donc pas être contrôlé par l’ordinateur."
+    },
+    "message.control.rollback-incomplete.headline": {
+      "message": "Certains paramètres du salon n’ont pas été restaurés"
+    },
+    "message.control.rollback-incomplete.cause.fields": {
+      "message": "Le test en jeu a échoué et les paramètres suivants peuvent avoir changé : {fields}."
+    },
+    "message.control.rollback-incomplete.cause": {
+      "message": "Le test en jeu a échoué et certains paramètres du salon peuvent avoir changé."
+    },
+    "message.control.rollback-incomplete.action": {
+      "message": "Vérifiez les paramètres du salon dans AoE2DE avant la prochaine partie"
+    },
+    "message.lobby-setting.game-mode": {
+      "message": "mode de jeu"
+    },
+    "message.lobby-setting.map-size": {
+      "message": "taille de la carte"
+    },
+    "message.lobby-setting.starting-resources": {
+      "message": "ressources initiales"
+    },
+    "message.lobby-setting.starting-age": {
+      "message": "âge de départ"
+    },
+    "message.lobby-setting.ending-age": {
+      "message": "âge final"
+    },
+    "message.lobby-setting.reveal-map": {
+      "message": "révélation de la carte"
+    },
+    "message.lobby-setting.players-count": {
+      "message": "nombre de joueurs"
+    },
+    "message.lobby-setting.team-positions": {
+      "message": "positions des équipes"
+    },
+    "message.lobby-setting.game-mode-modifiers": {
+      "message": "modificateurs du mode de jeu"
+    },
+    "message.lobby-setting.turbo": {
+      "message": "Turbo"
+    },
+    "message.lobby-setting.full-tech-tree": {
+      "message": "Toutes technologies"
+    },
+    "message.lobby-setting.antiquity": {
+      "message": "Antiquité"
+    },
+    "message.lobby-setting.solid-farms": {
+      "message": "Fermes solides"
+    },
+    "message.lobby-setting.selected-map": {
+      "message": "carte sélectionnée"
+    },
+    "message.lobby-setting.seed": {
+      "message": "graine"
+    },
+    "message.lobby-setting.player": {
+      "message": "P{slot} {setting}"
+    },
+    "message.lobby-setting.player.team": {
+      "message": "équipe"
+    },
+    "message.lobby-setting.player.handicap": {
+      "message": "handicap"
+    },
+    "message.lobby-setting.player.color": {
+      "message": "couleur"
+    },
+    "message.lobby-setting.player.civilization": {
+      "message": "civilisation"
+    },
+    "message.lobby-setting.player.player-type": {
+      "message": "choix humain ou ordinateur"
+    },
+    "message.lobby-setting.player.setting": {
+      "message": "paramètre"
+    },
+    "message.live.engine-startup.headline": {
+      "message": "Démarrage d’AoE2Control"
+    },
+    "message.live.engine-unloading.headline": {
+      "message": "En attente du déchargement de la précédente instance d’AoE2Control du jeu"
+    },
+    "message.live.engine-starting.headline": {
+      "message": "En attente de la fin du démarrage d’AoE2Control dans le jeu"
+    },
+    "message.live.game-detected.headline": {
+      "message": "AoE2DE détecté"
+    },
+    "message.live.attach.headline": {
+      "message": "Connexion au jeu en cours d’exécution"
+    },
+    "message.live.handshake.headline": {
+      "message": "Vérification d’AoE2Control"
+    },
+    "message.live.ready.headline": {
+      "message": "AoE2Control est prêt"
+    },
+    "message.live.clean-end.headline": {
+      "message": "Fin de la partie en cours"
+    },
+    "message.live.deploy.headline": {
+      "message": "Déploiement de la carte dans le jeu"
+    },
+    "message.live.deploy.cause": {
+      "message": "{count, plural, one {Le fichier XS {files} de la carte se trouve aussi dans le dossier XS de votre profil.} many {Les fichiers XS {files} de la carte se trouvent aussi dans le dossier XS de votre profil.} other {Les fichiers XS {files} de la carte se trouvent aussi dans le dossier XS de votre profil.}}"
+    },
+    "message.live.deploy-current.headline": {
+      "message": "Le jeu dispose déjà de cette version de la carte"
+    },
+    "message.live.catalog-refresh.headline": {
+      "message": "Sélection de la carte dans le jeu"
+    },
+    "message.live.match-start.headline": {
+      "message": "Démarrage d’une Carte aléatoire avec la graine {seed}"
+    },
+    "message.live.verified.headline": {
+      "message": "Partie vérifiée avec la graine {seed}"
+    },
+    "message.live.verified.cause": {
+      "message": "AoE2DE {version} n’est pas vérifié ; la partie peut donc différer de l’aperçu."
+    },
+    "message.live.unverified-game.headline": {
+      "message": "AoE2DE {version} n’est pas vérifié pour les tests en jeu"
+    },
+    "message.live.unverified-game.cause": {
+      "message": "Les tests en jeu fonctionnent, mais la partie peut différer de l’aperçu."
+    },
+    "message.live.cancelled.headline": {
+      "message": "Test en jeu annulé"
+    },
+    "message.live.cancelled.cause": {
+      "message": "Aucune autre modification n’a été apportée au jeu."
+    },
+    "message.live.detached.headline": {
+      "message": "AoE2Control déconnecté"
+    },
+    "message.live.stopped.headline": {
+      "message": "Test en jeu arrêté avant toute modification du jeu"
+    },
+    "message.live.stopped.generation-failed.cause": {
+      "message": "L’aperçu n’a pas pu être généré."
+    },
+    "message.live.stopped.invalid-source.cause": {
+      "message": "Le script contient des erreurs."
+    },
+    "message.live.stopped.source-changed.cause": {
+      "message": "Le script ou les paramètres d’exécution ont changé pendant la génération de l’aperçu."
+    },
+    "message.live.stopped.stale-preview.cause": {
+      "message": "L’aperçu ne correspond plus au script."
+    },
+    "message.live.match-kept.cause": {
+      "message": "La partie en cours n’a pas été modifiée."
+    },
+    "message.live.permission-not-saved.cause": {
+      "message": "L’autorisation de remplacer la partie en cours n’a pas pu être enregistrée."
+    },
+    "message.live.control-selected.headline": {
+      "message": "AoE2Control sélectionné"
+    },
+    "message.live.control-rejected.headline": {
+      "message": "Ce fichier n’est pas un exécutable AoE2Control utilisable"
+    },
+    "message.live.control-rejected.action": {
+      "message": "Choisissez une version publique d’AoE2Control"
+    },
+    "message.live.control-forgotten.headline": {
+      "message": "Sélection d’AoE2Control retirée"
+    },
+    "message.live.control-forget-failed.headline": {
+      "message": "La sélection d’AoE2Control n’a pas pu être retirée"
+    },
+    "message.live.control-forget-failed.action": {
+      "message": "Déconnectez-le et réessayez"
+    },
+    "message.live.status-unavailable.headline": {
+      "message": "L’état d’AoE2Control est indisponible"
+    },
+    "message.live.seed-unavailable.headline": {
+      "message": "La graine de la partie en cours ne peut pas être importée"
+    },
+    "message.live.seed-imported.headline": {
+      "message": "La graine {seed} de la partie a été importée et verrouillée"
+    },
+    "message.deploy.target-changed.headline": {
+      "message": "Le dossier du mod a changé pendant le déploiement"
+    },
+    "message.deploy.external-edits.headline": {
+      "message": "Des fichiers du dossier du mod ont été modifiés en dehors d’AoE2RMSIDE"
+    },
+    "message.deploy.external-edits.cause": {
+      "message": "AoE2RMSIDE n’écrase jamais les modifications faites ailleurs."
+    },
+    "message.deploy.external-edits.action": {
+      "message": "Déplacez ces modifications ailleurs, puis déployez à nouveau"
+    },
+    "message.deploy.stale-preview.headline": {
+      "message": "L’aperçu du déploiement n’est plus à jour"
+    },
+    "message.deploy.not-managed.headline": {
+      "message": "Un autre mod utilise déjà ce dossier"
+    },
+    "message.deploy.not-managed.cause": {
+      "message": "AoE2RMSIDE ne remplace que les mods qu’il a déployés lui-même."
+    },
+    "message.deploy.profile.headline": {
+      "message": "Aucun profil de jeu n’est sélectionné"
+    },
+    "message.deploy.profile.action": {
+      "message": "Sélectionnez un profil"
+    },
+    "message.deploy.built-in.headline": {
+      "message": "Les cartes du jeu ne peuvent pas être déployées directement"
+    },
+    "message.deploy.built-in.action": {
+      "message": "Clonez d’abord la carte dans votre espace de travail"
+    },
+    "message.deploy.too-large.headline": {
+      "message": "Le mod contient trop de fichiers pour être déployé"
+    },
+    "message.deploy.redirected.headline": {
+      "message": "Le dossier du mod pointe vers un autre emplacement"
+    },
+    "message.deploy.redirected.cause": {
+      "message": "AoE2RMSIDE ne déploie jamais de fichiers à travers un dossier redirigé."
+    },
+    "message.deploy.unconfirmed.headline": {
+      "message": "Le remplacement du mod existant n’a pas été confirmé"
+    },
+    "message.deploy.unconfirmed.action": {
+      "message": "Déployez à nouveau et confirmez le remplacement"
+    },
+    "message.deploy.no-map.headline": {
+      "message": "Vous n’avez aucune carte à déployer"
+    },
+    "message.deploy.no-map.cause": {
+      "message": "Un mod nécessite un script .rms de votre espace de travail."
+    },
+    "message.deploy.reserved-name.headline": {
+      "message": "Ce nom de mod est réservé aux tests en jeu"
+    },
+    "message.deploy.invalid-name.headline": {
+      "message": "Ce nom de mod ne peut pas servir de nom de dossier"
+    },
+    "message.deploy.invalid-name.cause": {
+      "message": "Utilisez un seul nom de dossier sans < > : \" / \\ | ? *, ni point ou espace final."
+    },
+    "message.deploy.xs-syntax.cause.located": {
+      "message": "{name}, ligne {line} : {error} Le jeu n’a pas pu le charger ; aucun fichier n’a donc été déployé."
+    },
+    "message.deploy.xs-syntax.cause": {
+      "message": "Le jeu n’a pas pu le charger ; aucun fichier n’a donc été déployé."
+    },
+    "message.deploy.xs-syntax.action": {
+      "message": "Corrigez les erreurs du panneau Problèmes, puis déployez à nouveau"
+    },
+    "message.deploy.map-icon.headline": {
+      "message": "L’icône de la carte n’a pas pu être utilisée"
+    },
+    "message.deploy.map-icon.action": {
+      "message": "Générez à nouveau l’icône de la carte"
+    },
+    "message.deploy.map-icon-busy.cause": {
+      "message": "La génération de l’icône de carte doit s’exécuter seule, mais un autre aperçu, un test de cartes ou un test en jeu est en cours."
+    },
+    "message.deploy.map-icon-busy.action": {
+      "message": "Réessayez une fois l’opération terminée"
+    },
+    "message.deploy.map-icon-preview-changed.cause": {
+      "message": "L’icône de carte a besoin de l’aperçu actuel, et l’aperçu a changé."
+    },
+    "message.deploy.map-icon-preview-changed.action": {
+      "message": "Attendez le nouvel aperçu, puis réessayez"
+    },
+    "message.deploy.map-icon-textures-changed.cause": {
+      "message": "L’icône de carte a été dessinée avec les Textures du jeu d’un autre dossier de jeu."
+    },
+    "message.deploy.no-installation.cause": {
+      "message": "Aucune installation valide d’AoE2DE n’est liée."
+    },
+    "message.deploy.unsafe-target.cause": {
+      "message": "Le dossier du profil ou son dossier de mods n’est pas un dossier ordinaire qu’AoE2RMSIDE peut utiliser."
+    },
+    "message.deploy.path-collision.cause": {
+      "message": "Deux fichiers seraient copiés vers {path} dans le mod."
+    },
+    "message.deploy.unplaceable-source.cause": {
+      "message": "Un fichier utilisé par la carte n’a pas sa place dans un dossier de mod."
+    },
+    "message.deploy.state-invalid.cause": {
+      "message": "AoE2RMSIDE n’a pas pu lire son registre des mods déployés."
+    },
+    "message.deploy.headline": {
+      "message": "Échec du déploiement"
+    },
+    "message.map-test.replay.headline": {
+      "message": "La carte correspondant à cette anomalie n’a pas pu être affichée"
+    },
+    "message.map-test.child-memory.cause": {
+      "message": "Le test de cartes a dépassé la limite de mémoire de son processus et a été arrêté. L’exécution n’a pas été relancée."
+    },
+    "message.map-test.child-memory.action": {
+      "message": "Réduisez ce que le script alloue, comme les grandes répétitions ou les nombreuses cartes conservées"
+    },
+    "message.map-test.child-stack.cause": {
+      "message": "Le test de cartes a imbriqué des valeurs ou des appels trop profondément et dépassé la pile de son processus ; il a été arrêté. L’exécution n’a pas été relancée."
+    },
+    "message.map-test.child-aborted.cause": {
+      "message": "Le processus du test de cartes s’est interrompu, très probablement à sa limite de mémoire ou de pile. L’exécution n’a pas été relancée."
+    },
+    "message.map-test.source-path.cause": {
+      "message": "rms.source() nécessite un chemin relatif entre guillemets vers un fichier .rms ou .rms2 du dossier ouvert."
+    },
+    "message.map-test.default-source-outside.cause": {
+      "message": "La carte que le test exécute par défaut se trouve hors du dossier ouvert."
+    },
+    "message.map-test.untitled-needs-folder.cause": {
+      "message": "Un test de cartes jamais enregistré a besoin d’un dossier ouvert."
+    },
+    "message.map-test.report-invalid.cause": {
+      "message": "Le fichier n’est pas un rapport de test de cartes qu’AoE2RMSIDE peut lire."
+    },
+    "message.map-test.report-too-large.cause": {
+      "message": "Le fichier dépasse {limit, number, integer} MiB."
+    },
+    "message.map-test.replay-script-changed.cause": {
+      "message": "Le test de cartes a changé depuis l’exécution."
+    },
+    "message.map-test.replay-source-changed.cause": {
+      "message": "La carte ou l’un de ses fichiers inclus a changé depuis l’exécution."
+    },
+    "message.map-test.replay-game-version.cause": {
+      "message": "La version du jeu utilisée pour le test n’est plus disponible."
+    },
+    "message.map-test.replay-different-map.cause": {
+      "message": "La carte obtenue diffère de celle de l’exécution initiale."
+    },
+    "message.map-test.replay-missing.cause": {
+      "message": "Ce rapport ne contient pas cette anomalie."
+    },
+    "message.map-test.replay-needs-script.headline": {
+      "message": "Ouvrez {script} pour afficher cette carte"
+    },
+    "message.map-test.replay-needs-script.cause": {
+      "message": "La carte associée à une anomalie est régénérée à partir du test de cartes qui l’a détectée."
+    },
+    "message.map-test.check-needs-script.headline": {
+      "message": "Ouvrez {script} pour accéder à cette vérification"
+    },
+    "message.map-test.check-needs-script.cause": {
+      "message": "Ce rapport a été importé ; le fichier du test de cartes est donc inconnu."
+    },
+    "message.map-test.results-running.headline": {
+      "message": "Un test de cartes est en cours"
+    },
+    "message.map-test.results-running.headline.counts": {
+      "message": "Un test de cartes est en cours · {counts}"
+    },
+    "message.map-test.results-running.cause": {
+      "message": "Ces résultats sont ceux de l’exécution précédente ; ils seront remplacés à la fin de l’exécution en cours."
+    },
+    "message.map-test.results-after-error.headline": {
+      "message": "La dernière exécution s’est arrêtée sur une erreur"
+    },
+    "message.map-test.results-before.cause": {
+      "message": "Ces résultats sont ceux de l’exécution qui l’a précédée."
+    },
+    "message.map-test.results-after-error.action": {
+      "message": "Consultez Problèmes et Sortie pour voir l’erreur"
+    },
+    "message.map-test.results-after-stop.headline": {
+      "message": "La dernière exécution a été arrêtée"
+    },
+    "message.map-test.results-imported.headline": {
+      "message": "Rapport importé de {script}"
+    },
+    "message.map-test.results-imported.cause": {
+      "message": "La carte associée à une anomalie peut être affichée tant que ce test de cartes, sa carte et la version du jeu restent identiques à ceux de l’exécution."
+    },
+    "message.map-test.progress.counts": {
+      "message": "{done, number} sur {requested, plural, one {# carte} many {# cartes} other {# cartes}}"
+    },
+    "message.map-test.progress.tested": {
+      "message": "Testé"
+    },
+    "message.map-test.progress.testing": {
+      "message": "Test en cours"
+    },
+    "message.map-test.progress.tested-detail": {
+      "message": "{count, plural, =1 {# carte testée} one {# carte testée} many {# cartes testées} other {# cartes testées}}"
+    },
+    "message.map-test.progress.testing-detail": {
+      "message": "Test des cartes, {percent} % ({counts})"
+    },
+    "message.map-test.progress.starting": {
+      "message": "Démarrage du test de cartes"
+    },
+    "message.game-folder.not-steam.headline": {
+      "message": "Ce dossier n’est pas un dossier de jeu d’AoE2DE"
+    },
+    "message.game-folder.not-steam.cause": {
+      "message": "Ce dossier ne contient pas une installation complète d’Age of Empires II: Definitive Edition."
+    },
+    "message.game-folder.not-steam.action": {
+      "message": "Sélectionnez le dossier d’installation du jeu, par exemple steamapps\\common\\AoE2DE dans votre bibliothèque Steam"
+    },
+    "message.game-folder.unavailable.cause": {
+      "message": "L’installation d’AoE2DE liée n’est pas disponible."
+    },
+    "message.game-folder.unsafe.cause": {
+      "message": "Une partie du dossier du jeu n’a pas pu être lue en toute sécurité : elle est trop volumineuse ou trop profonde, renvoie vers un autre emplacement ou contient un nom de fichier non pris en charge."
+    },
+    "message.installed-source.clone-destination.cause": {
+      "message": "Choisissez un dossier ordinaire hors du dossier du jeu et des cartes installées."
+    },
+    "message.installed-source.clone-exists.cause": {
+      "message": "{name} existe déjà dans ce dossier."
+    },
+    "message.installed-source.limit.cause": {
+      "message": "Il y a trop de fichiers ou de dossiers, ou un fichier est trop volumineux."
+    },
+    "message.installed-source.changed.cause": {
+      "message": "Les cartes installées ont changé entre-temps."
+    },
+    "message.installed-source.changed.action": {
+      "message": "Rouvrez les cartes installées"
+    },
+    "message.source-catalog.changed.cause": {
+      "message": "Le script ou l’un de ses fichiers inclus a changé entre-temps."
+    },
+    "message.source-catalog.unsupported-include.cause": {
+      "message": "{path} n’est pas un type de fichier qu’une carte peut inclure."
+    },
+    "message.source-catalog.case-variants.cause": {
+      "message": "Plusieurs fichiers ne diffèrent de {path} que par la casse."
+    },
+    "message.source-catalog.authority.cause": {
+      "message": "{scope} se trouve hors des dossiers qu’AoE2RMSIDE peut lire."
+    },
+    "message.source-catalog.authority.action": {
+      "message": "Conservez les fichiers inclus dans le dossier ouvert ou dans le dossier du jeu lié"
+    },
+    "message.source-catalog.discovery-reduce.action": {
+      "message": "Utilisez un dossier de fichiers inclus plus petit ou réduisez le nombre de fichiers inclus nécessaires"
+    },
+    "message.source-catalog.required-reduce.action": {
+      "message": "Réduisez la quantité de données source nécessaires, puis relancez l’exécution"
+    },
+    "message.session.save-failed.headline": {
+      "message": "Les onglets ouverts et la disposition n’ont pas pu être mémorisés"
+    },
+    "message.session.save-failed.cause": {
+      "message": "Vos fichiers ne sont pas affectés, mais le prochain démarrage peut restaurer des onglets et une disposition plus anciens."
+    },
+    "message.native.exited.cause": {
+      "message": "{name} s’est arrêté de manière inattendue."
+    },
+    "message.native.unavailable.cause": {
+      "message": "{name} n’est pas en cours d’exécution."
+    },
+    "message.native.timeout.cause": {
+      "message": "{name} n’a pas répondu à temps."
+    },
+    "message.execution.busy.cause": {
+      "message": "Un autre aperçu, un test de cartes ou un test en jeu est en cours."
+    },
+    "message.editor.busy.cause": {
+      "message": "L’éditeur a trop de requêtes en attente."
+    },
+    "message.generation.content-unavailable.action": {
+      "message": "Choisissez à nouveau la version du jeu"
+    },
+    "message.shell.open-failed.cause": {
+      "message": "L’Explorateur de fichiers Windows n’a pas pu ouvrir le dossier : {reason}"
+    },
+    "message.files.unsupported.cause": {
+      "message": "Le fichier est binaire, trop volumineux, illisible ou d’un type non pris en charge."
+    },
+    "message.files.too-many.cause": {
+      "message": "Ouvrez au plus {limit, number, integer} fichiers ou dossiers à la fois."
+    },
+    "message.files.recent-missing.cause": {
+      "message": "L’élément ne figure plus dans la liste des éléments récents."
+    },
+    "message.files.encoding.cause": {
+      "message": "Les scripts de test de cartes doivent être enregistrés en UTF-8."
+    },
+    "message.files.too-large.cause": {
+      "message": "Un script de test de cartes peut faire au plus {limit, number, integer} MiB."
+    },
+    "message.files.protected-target.cause": {
+      "message": "Les fichiers ne peuvent pas être enregistrés dans le dossier du jeu ni dans les cartes installées."
+    },
+    "message.files.extension-required.cause": {
+      "message": "Le nom du fichier doit se terminer par {extension}."
+    },
+    "message.files.entry-stale.cause": {
+      "message": "L’élément a été modifié ou déplacé en dehors d’AoE2RMSIDE."
+    },
+    "message.files.not-a-file.cause": {
+      "message": "Un dossier portant ce nom existe déjà."
+    },
+    "message.files.outside-folder.cause": {
+      "message": "Le fichier se trouve hors du dossier ouvert."
+    },
+    "message.files.traversal-limit.cause": {
+      "message": "Le dossier contient trop de fichiers et de dossiers pour être listé."
+    },
+    "message.files.traversal-limit.action": {
+      "message": "Ouvrez un dossier plus petit"
+    },
+    "message.files.delete-setting-changed.cause": {
+      "message": "Le réglage de la corbeille a changé avant la suppression."
+    },
+    "message.files.delete-setting-changed.action": {
+      "message": "Supprimez à nouveau l’élément"
+    },
+    "message.files.recovery-too-large.cause": {
+      "message": "Les modifications non enregistrées sont trop volumineuses pour être conservées pour la récupération."
+    },
+    "message.files.recovery-too-large.action": {
+      "message": "Enregistrez vos modifications pour les conserver"
+    },
+    "message.files.recovery-invalid.cause": {
+      "message": "Le fichier de récupération est endommagé ou a été écrit par une autre version d’AoE2RMSIDE."
+    },
+    "message.game-textures.cause": {
+      "message": "L’aperçu et l’icône de la carte utilisent les couleurs des textures à la place."
+    },
+    "message.game-textures.cause.with-reason": {
+      "message": "{reason} L’aperçu et l’icône de la carte utilisent les couleurs des textures à la place."
+    },
+    "message.game-textures.failed.headline": {
+      "message": "Les Textures du jeu n’ont pas pu être préparées"
+    },
+    "message.game-textures.unavailable.headline": {
+      "message": "Les Textures du jeu sont indisponibles pour le dossier du jeu lié"
+    },
+    "message.game-textures.index-unreadable.headline": {
+      "message": "Les terrains convertis n’ont pas pu être lus"
+    },
+    "message.game-textures.cancelled.headline": {
+      "message": "Conversion des Textures du jeu annulée"
+    },
+    "message.game-textures.cancelled.cause": {
+      "message": "Les fichiers convertis sont conservés. Sélectionner à nouveau Textures du jeu reprend la conversion."
+    },
+    "message.game-textures.sprites-failed.headline": {
+      "message": "Les sprites des objets n’ont pas pu être lus"
+    },
+    "message.preview.gpu-map-rendering-unavailable.headline": {
+      "message": "Le rendu des cartes par GPU est indisponible sur cet ordinateur"
+    },
+    "message.preview.gpu-map-rendering-unavailable.cause": {
+      "message": "La carte est dessinée sans cette fonction, ce qui peut prendre plus de temps sur les grandes cartes."
+    },
+    "message.preview.gpu-map-rendering-software.headline": {
+      "message": "Le rendu des cartes par GPU n’est pas utilisé sur cet ordinateur"
+    },
+    "message.preview.gpu-map-rendering-software.cause": {
+      "message": "Aucune carte graphique n’est disponible pour dessiner la carte. Le rendu s’effectue donc sans elle, ce qui peut prendre plus de temps sur les grandes cartes."
+    },
+    "message.preview.gpu-map-rendering-lost.headline": {
+      "message": "Le rendu des cartes par GPU s’est arrêté"
+    },
+    "message.preview.gpu-map-rendering-lost.cause": {
+      "message": "La carte graphique a été réinitialisée. La carte sera dessinée sans elle jusqu’au redémarrage de l’application."
+    },
+    "message.map-test.preview-note.look": {
+      "message": "Les aperçus des tests de cartes utilisent toujours les couleurs de la mini-carte"
+    },
+    "message.map-test.preview-note.stages": {
+      "message": "Les tests n’affichent que les cartes terminées"
+    },
+    "message.generation-result.generated": {
+      "message": "Généré"
+    },
+    "message.generation-result.reused": {
+      "message": "Réutilisé"
+    },
+    "message.generation-result.unverified-version": {
+      "message": "version du jeu non vérifiée"
+    },
+    "message.generation-result.deployment-unverified-version": {
+      "message": "Version du jeu non vérifiée"
+    },
+    "message.generation-result.generation-unavailable": {
+      "message": "La génération de cartes n’est pas encore disponible pour cette version du jeu."
+    },
+    "message.map-test.workers.label": {
+      "message": "Cœurs de test"
+    },
+    "message.map-test.workers.hint": {
+      "message": "Le nombre maximal de cœurs du processeur utilisés par un test de cartes, donc de cartes générées simultanément ({maximum, plural, one {1 sur cet ordinateur} many {de 1 à {maximum} sur cet ordinateur} other {de 1 à {maximum} sur cet ordinateur}}). Laissez le champ vide pour Automatique, qui s’adapte à cet ordinateur et à la taille de la carte. Le résultat est identique quel que soit le choix."
+    },
+    "message.map-test.workers.automatic": {
+      "message": "Automatique"
+    },
+    "message.map-test.workers.use-automatic": {
+      "message": "Utiliser Automatique"
+    },
+    "message.preview.unchecked-constructs.headline.count": {
+      "message": "{count, plural, one {{count} commande non comparée au jeu} many {{count} commandes non comparées au jeu} other {{count} commandes non comparées au jeu}}"
+    },
+    "message.preview.unchecked-constructs.headline": {
+      "message": "Certaines commandes n’ont pas été comparées au jeu"
+    },
+    "message.preview.unchecked-constructs.cause.list": {
+      "message": "{one, select, one {Aucune carte enregistrée du jeu ne l’a encore utilisée à cet endroit ; l’aperçu peut donc y différer du jeu : {list}.} other {Aucune carte enregistrée du jeu ne les a encore utilisées à ces endroits ; l’aperçu peut donc y différer du jeu : {list}.}}"
+    },
+    "message.preview.unchecked-constructs.cause": {
+      "message": "{one, select, one {Aucune carte enregistrée du jeu ne l’a encore utilisée à cet endroit ; l’aperçu peut donc y différer du jeu.} other {Aucune carte enregistrée du jeu ne les a encore utilisées à ces endroits ; l’aperçu peut donc y différer du jeu.}}"
+    },
+    "message.construct.in-context": {
+      "message": "{name} dans {context}"
+    },
+    "message.construct.list-more": {
+      "message": "{names}, et {more} de plus"
+    },
+    "message.fallback.run": {
+      "message": "L’exécution a échoué"
+    },
+    "message.fallback.script": {
+      "message": "Le script a échoué"
+    },
+    "message.fallback.preview": {
+      "message": "L’aperçu a échoué"
+    },
+    "message.fallback.map-test": {
+      "message": "Le test de cartes a échoué"
+    },
+    "message.fallback.recovery": {
+      "message": "La récupération a échoué"
+    },
+    "message.fallback.update": {
+      "message": "La mise à jour a échoué"
+    },
+    "message.fallback.files": {
+      "message": "L’opération sur le fichier a échoué"
+    },
+    "message.fallback.game-folder": {
+      "message": "Le dossier du jeu n’a pas pu être utilisé"
+    },
+    "message.fallback.app": {
+      "message": "Un problème est survenu"
+    },
+    "message.xs.cause.fix-shown": {
+      "message": "Corrigez les erreurs affichées pour voir les suivantes."
+    },
+    "message.action.choose-another-name": {
+      "message": "Choisissez un autre nom"
+    },
+    "message.action.use-or-remove": {
+      "message": "Utilisez cet élément ou supprimez-le (une correction rapide permet de le supprimer)"
+    },
+    "explorer.create.definition-file": {
+      "message": "Fichier de définitions…"
+    },
+    "explorer.create.script": {
+      "message": "Script"
+    },
+    "explorer.create.map-test-script": {
+      "message": "Script de test de cartes"
+    },
+    "explorer.create.xs-script": {
+      "message": "Script XS"
+    },
+    "explorer.create.folder": {
+      "message": "Dossier"
+    },
+    "explorer.create.label": {
+      "message": "Créer dans {name}"
+    },
+    "explorer.label": {
+      "message": "Explorateur de fichiers"
+    },
+    "explorer.search.label": {
+      "message": "Rechercher des fichiers dans l’espace de travail"
+    },
+    "explorer.search.placeholder": {
+      "message": "Rechercher des fichiers"
+    },
+    "explorer.search.clear": {
+      "message": "Effacer la recherche de fichiers"
+    },
+    "explorer.search.searching": {
+      "message": "Recherche de fichiers dans l’espace de travail"
+    },
+    "explorer.search.no-results.rms": {
+      "message": "Aucun fichier RMS correspondant"
+    },
+    "explorer.search.no-results": {
+      "message": "Aucun fichier correspondant"
+    },
+    "explorer.open-file.label": {
+      "message": "Ouvrir un fichier"
+    },
+    "explorer.open-file.tooltip": {
+      "message": "Ouvrir un fichier"
+    },
+    "explorer.open-folder.label": {
+      "message": "Ouvrir un dossier"
+    },
+    "explorer.open-folder.tooltip": {
+      "message": "Ouvrir un dossier"
+    },
+    "explorer.tree.label": {
+      "message": "Fichiers de {name}"
+    },
+    "explorer.empty.maps": {
+      "message": "Ouvrez un dossier pour parcourir et modifier ses cartes."
+    },
+    "explorer.empty.scripts": {
+      "message": "Ouvrez un dossier pour parcourir et modifier ses scripts."
+    },
+    "explorer.indexing": {
+      "message": "Indexation du dossier de l’espace de travail"
+    },
+    "explorer.read-failed": {
+      "message": "Ce dossier n’a pas pu être lu"
+    },
+    "explorer.context.open-in-explorer": {
+      "message": "Ouvrir dans l’Explorateur"
+    },
+    "explorer.context.rename": {
+      "message": "Renommer"
+    },
+    "explorer.context.delete": {
+      "message": "Supprimer"
+    },
+    "explorer.inline.create-file": {
+      "message": "Créer un fichier"
+    },
+    "explorer.inline.create-folder": {
+      "message": "Créer un dossier"
+    },
+    "explorer.inline.rename-file": {
+      "message": "Renommer le fichier"
+    },
+    "explorer.inline.rename-folder": {
+      "message": "Renommer le dossier"
+    },
+    "definition-file.title": {
+      "message": "Générer un fichier de définitions"
+    },
+    "definition-file.close-label": {
+      "message": "Fermer"
+    },
+    "definition-file.loading": {
+      "message": "Lecture des noms de la version du jeu sélectionnée…"
+    },
+    "definition-file.identity.game-version": {
+      "message": "Version du jeu"
+    },
+    "definition-file.identity.game-version.unverified": {
+      "message": "{version} (non vérifiée)"
+    },
+    "definition-file.identity.target": {
+      "message": "Enregistrer dans"
+    },
+    "definition-file.target.save-dialog": {
+      "message": "À choisir lors de la génération"
+    },
+    "definition-file.groups.label": {
+      "message": "Groupes de contenu"
+    },
+    "definition-file.group.terrains": {
+      "message": "Terrains"
+    },
+    "definition-file.group.terrains.description": {
+      "message": "Identifiants de terrain pour terrain_type, base_terrain et les autres paramètres de terrain"
+    },
+    "definition-file.group.objects": {
+      "message": "Objets"
+    },
+    "definition-file.group.objects.description": {
+      "message": "Identifiants d’objet pour create_object et les autres paramètres d’objet"
+    },
+    "definition-file.group.count": {
+      "message": "{count, plural, one {# nom} many {# noms} other {# noms}}"
+    },
+    "definition-file.built-in": {
+      "message": "Inclure les noms intégrés"
+    },
+    "definition-file.built-in.description": {
+      "message": "Noms déjà définis par le jeu. Les scripts peuvent les utiliser sans ce fichier."
+    },
+    "definition-file.note.no-game-folder": {
+      "message": "Liez le dossier du jeu pour ajouter des noms aux objets et aux terrains que le jeu ne nomme pas."
+    },
+    "definition-file.note.other-version": {
+      "message": "Votre dossier du jeu contient une autre version du jeu ; ses noms ne sont donc pas utilisés."
+    },
+    "definition-file.note.no-text": {
+      "message": "Les noms du dossier du jeu ne peuvent pas être lus pour cette version du jeu."
+    },
+    "definition-file.note.nothing-new": {
+      "message": "Chaque objet et terrain nommé possède déjà un nom intégré."
+    },
+    "definition-file.note.left-out.project": {
+      "message": "{count, plural, one {# nom intégré est omis car un script de ce dossier le définit déjà.} many {# noms intégrés sont omis car des scripts de ce dossier les définissent déjà.} other {# noms intégrés sont omis car des scripts de ce dossier les définissent déjà.}}"
+    },
+    "definition-file.note.left-out.unique": {
+      "message": "{count, plural, one {# nom du dossier du jeu est omis car aucun nom unique n’a pu lui être attribué.} many {# noms du dossier du jeu sont omis car aucun nom unique n’a pu leur être attribué.} other {# noms du dossier du jeu sont omis car aucun nom unique n’a pu leur être attribué.}}"
+    },
+    "definition-file.note.project-partial": {
+      "message": "Certains scripts de ce dossier n’ont pas pu être examinés pour relever les noms qu’ils définissent déjà."
+    },
+    "definition-file.notes.more": {
+      "message": "+{count, number}"
+    },
+    "definition-file.unavailable.incomplete": {
+      "message": "Aucun fichier de définitions ne peut être généré pour la version du jeu sélectionnée, car ses données de jeu sont incomplètes."
+    },
+    "definition-file.unavailable.no-content": {
+      "message": "Aucune version du jeu n’est disponible pour générer un fichier de définitions."
+    },
+    "definition-file.unavailable.failed": {
+      "message": "Les noms de la version du jeu sélectionnée n’ont pas pu être lus."
+    },
+    "definition-file.file-name.label": {
+      "message": "Nom du fichier"
+    },
+    "definition-file.file-name.empty": {
+      "message": "Saisissez un nom de fichier."
+    },
+    "definition-file.file-name.invalid": {
+      "message": "Ce nom ne peut pas être utilisé pour un fichier sous Windows."
+    },
+    "definition-file.file-name.extension": {
+      "message": "Le nom du fichier doit se terminer par .inc."
+    },
+    "definition-file.file-name.reserved": {
+      "message": "Ce nom appartient à un fichier de bibliothèque du jeu. Choisissez un autre nom."
+    },
+    "definition-file.generate": {
+      "message": "Générer"
+    },
+    "definition-file.generate.save-dialog": {
+      "message": "Générer…"
+    },
+    "definition-file.error": {
+      "message": "Le fichier de définitions n’a pas pu être écrit. Le panneau Sortie contient les détails."
+    },
+    "definition-file.replace.title": {
+      "message": "Remplacer {name} ?"
+    },
+    "definition-file.replace.description": {
+      "message": "Un fichier portant ce nom existe déjà dans {folder}. Le remplacer écrase son contenu."
+    },
+    "definition-file.replace.confirm": {
+      "message": "Remplacer"
+    },
+    "definition-file.output.failed": {
+      "message": "Le fichier de définitions n’a pas pu être écrit"
+    },
+    "definition-file.output.unavailable": {
+      "message": "Les noms à écrire dans un fichier de définitions n’ont pas pu être lus"
+    },
+    "definition-file.save-dialog.title": {
+      "message": "Enregistrer le fichier de définitions"
+    },
+    "definition-file.save-dialog.filter": {
+      "message": "Fichiers de définitions"
+    },
+    "deploy-panel.enable-mod": {
+      "message": "Activer le mod"
+    },
+    "deploy-panel.enable-mod.tooltip": {
+      "message": "Active le mod dans la liste des mods du jeu. La carte et son icône apparaissent après le redémarrage du jeu."
+    },
+    "deploy-panel.success.enabled": {
+      "message": "Le mod est activé. Redémarrez le jeu pour voir la carte et son icône."
+    },
+    "deploy-panel.success.enable-yourself": {
+      "message": "Activez le mod dans le jeu sous Mods → Mes Mods, puis redémarrez le jeu pour voir la carte et son icône."
+    },
+    "deploy-panel.success.enable-failed": {
+      "message": "{reason, select, malformed {Le mod n’a pas été activé : le fichier de la liste des mods du jeu n’a pas pu être lu.} unexpected-layout {Le mod n’a pas été activé : le fichier de la liste des mods du jeu utilise une structure inconnue de l’IDE.} duplicate-entry {Le mod n’a pas été activé : la liste des mods du jeu contient plusieurs entrées pour ce mod.} unexpected-entry {Le mod n’a pas été activé : l’entrée de ce mod dans le jeu utilise une structure inconnue de l’IDE.} changed {Le mod n’a pas été activé : le jeu a modifié sa liste de mods au même moment.} unsafe-path {Le mod n’a pas été activé : le dossier des mods ou la liste des mods du profil est un lien vers un autre emplacement.} other {Le mod n’a pas été activé : la liste des mods du jeu n’a pas pu être enregistrée.}}"
+    },
+    "deploy-panel.success.game-running": {
+      "message": "Le jeu est en cours d’exécution : la modification prend effet après un redémarrage, mais le jeu peut l’annuler en se fermant. Si le mod est désactivé après le redémarrage, fermez le jeu et déployez à nouveau."
+    },
+    "deploy-panel.success.open-folder": {
+      "message": "Ouvrir le dossier mods"
+    },
+    "deploy-panel.success.finish": {
+      "message": "Terminer"
+    },
+    "deploy-panel.success.title": {
+      "message": "Mod déployé avec succès"
+    },
+    "deploy-panel.success.saved-to": {
+      "message": "Le mod a été enregistré dans"
+    },
+    "deploy-panel.success.path": {
+      "message": "Chemin du mod déployé"
+    },
+    "deploy-panel.success.path.copy": {
+      "message": "Copier le chemin du mod"
+    },
+    "deploy-panel.success.path.copied": {
+      "message": "Chemin du mod copié"
+    },
+    "deploy-panel.output.cause.enabled": {
+      "message": "{count, plural, one {# fichier.} many {# fichiers.} other {# fichiers.}} Le mod est activé ; redémarrez le jeu pour voir la carte et son icône."
+    },
+    "deploy-panel.output.cause.enable-yourself": {
+      "message": "{count, plural, one {# fichier.} many {# fichiers.} other {# fichiers.}} Activez le mod dans le jeu sous Mods → Mes Mods, puis redémarrez le jeu pour voir la carte et son icône."
+    },
+    "deploy-panel.output.enable-failed": {
+      "message": "Le mod a été déployé mais n’a pas été activé"
+    },
+    "deploy-panel.output.enable-failed.cause": {
+      "message": "{reason, select, malformed {Le fichier de la liste des mods du jeu n’a pas pu être lu et n’a donc pas été modifié.} unexpected-layout {Le fichier de la liste des mods du jeu utilise une structure inconnue de l’IDE et n’a donc pas été modifié.} duplicate-entry {La liste des mods du jeu contient plusieurs entrées pour ce mod et n’a donc pas été modifiée.} unexpected-entry {L’entrée de ce mod dans le jeu utilise une structure inconnue de l’IDE et n’a donc pas été modifiée.} changed {Le jeu a modifié sa liste de mods au même moment ; la liste écrite par le jeu a donc été conservée.} unsafe-path {Le dossier des mods ou la liste des mods du profil est un lien vers un autre emplacement ; aucune modification n’a donc été apportée.} other {La liste des mods du jeu n’a pas pu être enregistrée ; la liste précédente est toujours en place.}}"
+    },
+    "deploy-panel.output.enable-failed.action": {
+      "message": "Activez le mod dans le jeu sous Mods → Mes Mods, puis redémarrez le jeu"
+    },
+    "deploy-panel.output.game-running": {
+      "message": "La liste des mods a été modifiée pendant l’exécution du jeu"
+    },
+    "deploy-panel.output.game-running.cause": {
+      "message": "La modification prend effet après un redémarrage, mais le jeu peut l’annuler en se fermant. Si le mod est désactivé après le redémarrage, fermez le jeu et déployez à nouveau."
+    },
+    "deploy-panel.output.preview-reused": {
+      "message": "Utilisation de l’aperçu actuel de {name}"
+    },
+    "deploy-panel.output.preview-regenerating": {
+      "message": "L’aperçu actuel n’a pas pu être réutilisé ; il est donc généré à nouveau"
+    },
+    "deploy-panel.output.source-failed": {
+      "message": "Cette carte n’a pas pu être générée pour le déploiement"
+    },
+    "deploy-panel.output.deployed": {
+      "message": "{mod} déployé dans le profil {profile}"
+    },
+    "deploy-panel.open-folder.failed": {
+      "message": "Le dossier des mods n’a pas pu être ouvert"
+    },
+    "deploy-panel.target.open-folder": {
+      "message": "Ouvrir le dossier de destination dans l’Explorateur de fichiers Windows"
+    },
+    "deploy-panel.target.open-folder.failed": {
+      "message": "Le dossier de destination n’a pas pu être ouvert"
+    },
+    "deploy-panel.target": {
+      "message": "Dossier de destination"
+    },
+    "deploy-panel.target.copy": {
+      "message": "Copier le chemin du dossier de destination"
+    },
+    "deploy-panel.target.copied": {
+      "message": "Chemin du dossier de destination copié"
+    },
+    "deploy-panel.title": {
+      "message": "Déployer comme mod"
+    },
+    "deploy-panel.close": {
+      "message": "Fermer le déploiement du mod"
+    },
+    "deploy-panel.select-game-folder": {
+      "message": "Sélectionnez le dossier du jeu pour déployer"
+    },
+    "deploy-panel.source": {
+      "message": "Source RMS"
+    },
+    "deploy-panel.source.placeholder": {
+      "message": "Ouvrir un fichier RMS principal"
+    },
+    "deploy-panel.source.failed": {
+      "message": "Cette carte n’a pas pu être générée et ne peut donc pas encore être déployée. Corrigez le problème indiqué dans Sortie, puis ouvrez à nouveau Déployer comme mod."
+    },
+    "deploy-panel.source.failed.guidance": {
+      "message": "Cette carte n’a pas pu être générée et ne peut donc pas encore être déployée. {guidance}"
+    },
+    "deploy-panel.source.cancelled": {
+      "message": "L’aperçu de la source RMS sélectionnée a été annulé."
+    },
+    "deploy-panel.mod-name": {
+      "message": "Nom du mod"
+    },
+    "deploy-panel.mod-name.history": {
+      "message": "Choisir une exportation précédente"
+    },
+    "deploy-panel.profile": {
+      "message": "Profil utilisateur"
+    },
+    "deploy-panel.profile.placeholder": {
+      "message": "Sélectionner un profil"
+    },
+    "deploy-panel.profile.suggested": {
+      "message": "{profile} · suggéré"
+    },
+    "deploy-panel.tree": {
+      "message": "Arborescence des fichiers à déployer"
+    },
+    "deploy-panel.tree.loading": {
+      "message": "Chargement de l’arborescence des fichiers à déployer"
+    },
+    "deploy-panel.no-source": {
+      "message": "Ouvrez un fichier principal .rms ou .rms2 à déployer."
+    },
+    "deploy-panel.constructs.label": {
+      "message": "{note} : {names}"
+    },
+    "deploy-panel.deploy": {
+      "message": "Déployer le mod"
+    },
+    "deploy-panel.replace.title": {
+      "message": "Remplacer le mod existant ?"
+    },
+    "deploy-panel.replace.description": {
+      "message": "Tous les fichiers du mod existant {name} seront supprimés."
+    },
+    "deploy-panel.replace.confirm": {
+      "message": "Remplacer le mod"
+    },
+    "problems-panel.log.label": {
+      "message": "{count, plural, one {{count} problème} many {{count} problèmes} other {{count} problèmes}}"
+    },
+    "problems-panel.empty": {
+      "message": "Aucun problème de syntaxe."
+    },
+    "problems-panel.empty.filtered": {
+      "message": "Aucun problème ne correspond au filtre (problèmes masqués : {hidden})."
+    },
+    "problems-panel.severity.error": {
+      "message": "Erreur"
+    },
+    "problems-panel.severity.warning": {
+      "message": "Attention"
+    },
+    "problems-panel.severity.info": {
+      "message": "Note"
+    },
+    "problems-panel.group.file": {
+      "message": "Fichier"
+    },
+    "problems-panel.group.game-file": {
+      "message": "Jeu"
+    },
+    "problems-panel.group.errors": {
+      "message": "{count, plural, one {{count} erreur} many {{count} erreurs} other {{count} erreurs}}"
+    },
+    "problems-panel.group.warnings": {
+      "message": "{count, plural, one {{count} avertissement} many {{count} avertissements} other {{count} avertissements}}"
+    },
+    "problems-panel.group.notes": {
+      "message": "{count, plural, one {{count} note} many {{count} notes} other {{count} notes}}"
+    },
+    "problems-panel.group.show": {
+      "message": "Afficher les problèmes dans {file}"
+    },
+    "problems-panel.group.hide": {
+      "message": "Masquer les problèmes dans {file}"
+    },
+    "problems-panel.group.label": {
+      "message": "Problèmes dans {file}"
+    },
+    "problems-panel.row.go-to": {
+      "message": "Aller à {location}"
+    },
+    "severity-filter.label": {
+      "message": "Filtre de gravité de {panel}"
+    },
+    "severity-filter.errors.label": {
+      "message": "Afficher les erreurs ({count})"
+    },
+    "severity-filter.errors.show": {
+      "message": "Afficher les erreurs"
+    },
+    "severity-filter.errors.hide": {
+      "message": "Masquer les erreurs"
+    },
+    "severity-filter.warnings.label": {
+      "message": "Afficher les avertissements ({count})"
+    },
+    "severity-filter.warnings.show": {
+      "message": "Afficher les avertissements"
+    },
+    "severity-filter.warnings.hide": {
+      "message": "Masquer les avertissements"
+    },
+    "severity-filter.notes.label": {
+      "message": "Afficher les notes ({count})"
+    },
+    "severity-filter.notes.show": {
+      "message": "Afficher les notes"
+    },
+    "severity-filter.notes.hide": {
+      "message": "Masquer les notes"
+    },
+    "linked-game.installed-maps.root-unreadable": {
+      "message": "Les cartes de {folder} n’ont pas pu être répertoriées : {error}"
+    },
+    "linked-game.installed-maps.installation-unreadable": {
+      "message": "Une installation dont les fichiers du jeu sont absents ou illisibles a été ignorée."
+    },
+    "linked-game.installed-maps.installation-unavailable": {
+      "message": "Une installation indisponible a été ignorée."
+    },
+    "linked-game.installed-maps.root-limit": {
+      "message": "Le nombre de dossiers de cartes installées a atteint la limite de sécurité."
+    },
+    "linked-game.installed-maps.entry-limit": {
+      "message": "Le nombre de fichiers de cartes installées a atteint la limite de sécurité."
+    },
+    "linked-game.unverified-version": {
+      "message": "AoE2DE {version} (non vérifiée)"
+    },
+    "linked-game.content-read": {
+      "message": "Utilisation des données du jeu de {label}"
+    },
+    "linked-game.content-read.cause.loaded": {
+      "message": "{objects, plural, one {{objects} objet, déjà chargé.} many {{objects} objets, déjà chargés.} other {{objects} objets, déjà chargés.}}"
+    },
+    "linked-game.content-read.cause.read": {
+      "message": "{objects, plural, one {{objects} objet, lu en {milliseconds} ms.} many {{objects} objets, lus en {milliseconds} ms.} other {{objects} objets, lus en {milliseconds} ms.}}"
+    },
+    "linked-game.content-unreadable": {
+      "message": "Les données du jeu de {label} n’ont pas pu être lues"
+    },
+    "linked-game.content-unreadable.cause": {
+      "message": "Les aperçus de cette version utilisent les données {version} fournies avec l’IDE, qui ne permettent pas de générer les objets et terrains ajoutés ultérieurement."
+    },
+    "lint-rule.RMS4001.title": {
+      "message": "Commande inconnue"
+    },
+    "lint-rule.RMS4002.title": {
+      "message": "Définition inutilisée"
+    },
+    "lint-rule.RMS4003.title": {
+      "message": "Commande sans effet ici"
+    },
+    "lint-rule.RMS4004.title": {
+      "message": "Attribut défini à nouveau"
+    },
+    "lint-rule.RMS4005.title": {
+      "message": "Branche aléatoire jamais choisie"
+    },
+    "lint-rule.RMS4006.title": {
+      "message": "Première branche sans aucune chance"
+    },
+    "lint-rule.RMS4007.title": {
+      "message": "Valeur limitée"
+    },
+    "lint-rule.RMS4008.title": {
+      "message": "Constante déjà définie"
+    },
+    "lint-rule.RMS4009.title": {
+      "message": "Pas un commentaire pour le jeu"
+    },
+    "lint-rule.RMS4010.title": {
+      "message": "Nombre là où un nom est requis"
+    },
+    "lint-rule.RMS4011.title": {
+      "message": "Nom peut-être non défini"
+    },
+    "map-icon.generate": {
+      "message": "Générer l’icône de carte"
+    },
+    "map-icon.open-larger": {
+      "message": "Agrandir l’icône de carte"
+    },
+    "map-icon.save-image": {
+      "message": "Enregistrer l’image"
+    },
+    "map-icon.save-image.tooltip": {
+      "message": "Enregistrer l’image…"
+    },
+    "map-icon.frame.generating": {
+      "message": "Génération de l’icône de carte"
+    },
+    "map-icon.frame.ready": {
+      "message": "Aperçu de l’icône de carte"
+    },
+    "map-icon.frame.original": {
+      "message": "Icône de carte d’origine"
+    },
+    "map-icon.frame.original-unavailable": {
+      "message": "L’icône de carte d’origine ne peut pas être affichée"
+    },
+    "map-icon.frame.none": {
+      "message": "Aucune icône de carte générée"
+    },
+    "map-icon.switch.no-source": {
+      "message": "Ouvrez un fichier principal .rms ou .rms2 pour générer une icône de carte."
+    },
+    "map-icon.switch.needs-preview": {
+      "message": "La génération de l’icône de carte nécessite un aperçu réussi de cette source."
+    },
+    "map-icon.switch.unavailable": {
+      "message": "La génération de l’icône de carte est indisponible : {reason}"
+    },
+    "map-icon.status.unavailable": {
+      "message": "Icône de carte indisponible : {reason}"
+    },
+    "map-icon.status.generating-seed": {
+      "message": "Icône de carte : génération de la carte avec la graine {seed}"
+    },
+    "map-icon.status.needs-preview": {
+      "message": "L’icône de carte nécessite un aperçu réussi de cette source."
+    },
+    "map-icon.status.rendering": {
+      "message": "Icône de carte : rendu à partir de l’aperçu actuel"
+    },
+    "map-icon.status.waiting": {
+      "message": "Icône de carte : en attente de l’aperçu du déploiement"
+    },
+    "map-icon.status.generated-replacing": {
+      "message": "Icône de carte : {file} généré, remplace l’original uniquement dans cette copie déployée"
+    },
+    "map-icon.status.generated": {
+      "message": "Icône de carte : {file} généré à partir de l’aperçu actuel"
+    },
+    "map-icon.status.original": {
+      "message": "Icône de carte : {file} d’origine, provenant du dossier source"
+    },
+    "map-icon.status.none": {
+      "message": "Icône de carte : aucune"
+    },
+    "map-icon.status.with-fallback": {
+      "message": "{status} {note}"
+    },
+    "map-icon.tree.generated": {
+      "message": "icône générée"
+    },
+    "map-icon.tree.original": {
+      "message": "icône d’origine"
+    },
+    "map-icon.render-failed": {
+      "message": "L’icône de carte n’a pas pu être dessinée"
+    },
+    "map-icon.output.options-not-remembered": {
+      "message": "Les options de l’icône de carte n’ont pas été mémorisées"
+    },
+    "map-icon.output.seed-failed": {
+      "message": "L’icône de carte avec la graine {seed} n’a pas pu être générée"
+    },
+    "map-icon.output.saved": {
+      "message": "Icône de carte enregistrée sous {name}"
+    },
+    "map-icon.output.save-failed": {
+      "message": "L’icône de carte n’a pas pu être enregistrée"
+    },
+    "map-icon.lightbox.close": {
+      "message": "Fermer l’aperçu de l’icône de carte"
+    },
+    "map-icon.lightbox.title": {
+      "message": "Icône de carte"
+    },
+    "map-icon.view-tools": {
+      "message": "Vue de l’icône de carte"
+    },
+    "map-icon.perspective.diamond": {
+      "message": "Vue en losange"
+    },
+    "map-icon.perspective.top-down": {
+      "message": "Vue de dessus"
+    },
+    "map-icon.look.minimap": {
+      "message": "Couleurs de la mini-carte"
+    },
+    "map-icon.look.texture-colors": {
+      "message": "Couleurs des textures"
+    },
+    "map-icon.look.game-textures": {
+      "message": "Textures du jeu"
+    },
+    "map-icon.look.pending": {
+      "message": "Application des textures du jeu"
+    },
+    "map-icon.look.fallback": {
+      "message": "Les textures du jeu sont indisponibles ; l’icône utilise donc les couleurs des textures."
+    },
+    "map-icon.relief": {
+      "message": "Relief du terrain"
+    },
+    "map-icon.relief.hide": {
+      "message": "Masquer le relief du terrain"
+    },
+    "map-icon.relief.show": {
+      "message": "Afficher le relief du terrain"
+    },
+    "map-icon.terrain-smoothing": {
+      "message": "Adoucir les transitions entre terrains"
+    },
+    "map-icon.random-seed": {
+      "message": "Graine aléatoire"
+    },
+    "map-icon.use-editor-seed": {
+      "message": "Graine de l’éditeur"
+    },
+    "map-icon.seed": {
+      "message": "Graine de l’icône de carte"
+    },
+    "map-icon.seed.placeholder": {
+      "message": "Graine éditeur"
+    },
+    "map-icon.spawn-markers.player-squares": {
+      "message": "Carrés des joueurs"
+    },
+    "map-icon.spawn-markers.nomad-feet": {
+      "message": "Empreintes nomades"
+    },
+    "map-icon.spawn-markers.hidden": {
+      "message": "Aucun repère de départ"
+    },
+    "map-icon.spawn-size": {
+      "message": "Taille des repères de départ"
+    },
+    "map-icon.spawn-size.decrease": {
+      "message": "Réduire la taille des repères de départ"
+    },
+    "map-icon.spawn-size.increase": {
+      "message": "Augmenter la taille des repères de départ"
+    },
+    "map-icon.spawn-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.spawn-size.value-text": {
+      "message": "{value} % de la largeur de la carte"
+    },
+    "map-icon.spawn-size.tooltip": {
+      "message": "Taille des repères de départ (% de la largeur de la carte)"
+    },
+    "map-icon.art.trees.show": {
+      "message": "Afficher les arbres"
+    },
+    "map-icon.art.trees.hide": {
+      "message": "Masquer les arbres"
+    },
+    "map-icon.art.trees.options": {
+      "message": "Options des arbres"
+    },
+    "map-icon.art.trees.amount": {
+      "message": "quantité d’arbres"
+    },
+    "map-icon.art.trees.size": {
+      "message": "taille des arbres"
+    },
+    "map-icon.art.resources.show": {
+      "message": "Afficher l’or et la pierre"
+    },
+    "map-icon.art.resources.hide": {
+      "message": "Masquer l’or et la pierre"
+    },
+    "map-icon.art.resources.options": {
+      "message": "Options de l’or et de la pierre"
+    },
+    "map-icon.art.resources.amount": {
+      "message": "quantité d’or et de pierre"
+    },
+    "map-icon.art.resources.size": {
+      "message": "taille des gisements d’or et de pierre"
+    },
+    "map-icon.art.amount.fewer": {
+      "message": "Moins"
+    },
+    "map-icon.art.amount.more": {
+      "message": "Plus"
+    },
+    "map-icon.art.amount.one-per-kind": {
+      "message": "Un par type"
+    },
+    "map-icon.art.amount.one-per-object": {
+      "message": "Un par objet"
+    },
+    "map-icon.art.amount.few": {
+      "message": "Peu"
+    },
+    "map-icon.art.amount.medium": {
+      "message": "Quantité moyenne"
+    },
+    "map-icon.art.amount.many": {
+      "message": "Beaucoup"
+    },
+    "map-icon.art.size.smaller": {
+      "message": "Plus petit"
+    },
+    "map-icon.art.size.larger": {
+      "message": "Plus grand"
+    },
+    "map-icon.art.size.smallest": {
+      "message": "Taille minimale"
+    },
+    "map-icon.art.size.small": {
+      "message": "Petit"
+    },
+    "map-icon.art.size.medium": {
+      "message": "Taille moyenne"
+    },
+    "map-icon.art.size.large": {
+      "message": "Grand"
+    },
+    "map-icon.art.size.largest": {
+      "message": "Taille maximale"
+    },
+    "map-icon.art.spawn-overlap": {
+      "message": "Afficher sous les repères de départ"
+    },
+    "workbench.application-menu.label": {
+      "message": "Menu de l’application"
+    },
+    "workbench.explorer.collapse": {
+      "message": "Masquer l’explorateur de fichiers"
+    },
+    "workbench.explorer.expand": {
+      "message": "Afficher l’explorateur de fichiers"
+    },
+    "workbench.explorer.collapse-tooltip": {
+      "message": "Masquer l’Explorateur"
+    },
+    "workbench.explorer.expand-tooltip": {
+      "message": "Afficher l’Explorateur"
+    },
+    "workbench.explorer.resize": {
+      "message": "Redimensionner l’explorateur de fichiers"
+    },
+    "workbench.preview.resize": {
+      "message": "Redimensionner l’aperçu de carte en direct"
+    },
+    "workbench.preview.stages-shown-next-run": {
+      "message": "Les étapes de génération s’afficheront en direct à partir de la prochaine exécution"
+    },
+    "workbench.preview.stages-hidden-next-run": {
+      "message": "Les étapes de génération en direct seront masquées à partir de la prochaine exécution"
+    },
+    "workbench.bottom-panel.label": {
+      "message": "Panneau Problèmes et Sortie"
+    },
+    "workbench.bottom-panel.label-with-test-results": {
+      "message": "Panneau Problèmes, Sortie et Résultats des tests"
+    },
+    "workbench.bottom-panel.resize": {
+      "message": "Redimensionner le panneau Problèmes et Sortie"
+    },
+    "workbench.bottom-panel.tab.output": {
+      "message": "{count} Sortie"
+    },
+    "workbench.bottom-panel.tab.problems": {
+      "message": "{count} Problèmes"
+    },
+    "workbench.bottom-panel.tab.test-results": {
+      "message": "{count} Résultats des tests"
+    },
+    "workbench.bottom-panel.output": {
+      "message": "Sortie"
+    },
+    "workbench.bottom-panel.problems": {
+      "message": "Problèmes"
+    },
+    "workbench.native.restart-label": {
+      "message": "Redémarrer le processus {name} en échec"
+    },
+    "workbench.native.failed": {
+      "message": "{name} a échoué"
+    },
+    "workbench.native.restarted": {
+      "message": "{name} redémarré"
+    },
+    "workbench.native.restart-failed": {
+      "message": "{name} n’a pas pu être redémarré"
+    },
+    "workbench.native.stopped": {
+      "message": "{name} s’est arrêté"
+    },
+    "workbench.map-test.report-imported": {
+      "message": "Rapport de test de {name} importé"
+    },
+    "workbench.map-test.import-failed": {
+      "message": "Le rapport de test de cartes n’a pas pu être importé"
+    },
+    "workbench.map-test.report-exported": {
+      "message": "Rapport de test exporté"
+    },
+    "workbench.map-test.export-failed": {
+      "message": "Le rapport de test de cartes n’a pas pu être exporté"
+    },
+    "workbench.map-test.replayed": {
+      "message": "Anomalie reproduite avec sa graine enregistrée"
+    },
+    "workbench.map-test.replayed-with-seed": {
+      "message": "Anomalie reproduite avec sa graine enregistrée {seed}"
+    },
+    "workbench.game-folder.unlink-failed": {
+      "message": "Le lien avec le dossier du jeu n’a pas pu être supprimé"
+    },
+    "code-editor.panel.label": {
+      "message": "Éditeur de source RMS"
+    },
+    "code-editor.tabs.label": {
+      "message": "Fichiers ouverts"
+    },
+    "code-editor.tabs.scroll-left": {
+      "message": "Faire défiler les onglets de l’éditeur vers la gauche"
+    },
+    "code-editor.tabs.scroll-right": {
+      "message": "Faire défiler les onglets de l’éditeur vers la droite"
+    },
+    "code-editor.tab.close": {
+      "message": "Fermer {name}"
+    },
+    "code-editor.tab.unsaved": {
+      "message": "Modifications non enregistrées"
+    },
+    "code-editor.tab.read-only": {
+      "message": "Lecture seule"
+    },
+    "code-editor.tab.unsaved-read-only": {
+      "message": "Modifications non enregistrées, lecture seule"
+    },
+    "code-editor.tab-menu.deploy": {
+      "message": "Déployer comme mod…"
+    },
+    "code-editor.tab-menu.save": {
+      "message": "Enregistrer"
+    },
+    "code-editor.tab-menu.clone-save-as": {
+      "message": "Cloner / Enregistrer sous…"
+    },
+    "code-editor.tab-menu.save-as": {
+      "message": "Enregistrer sous…"
+    },
+    "code-editor.tab-menu.close": {
+      "message": "Fermer"
+    },
+    "code-editor.run.preview": {
+      "message": "Lancer l’aperçu"
+    },
+    "code-editor.run.map-test": {
+      "message": "Lancer le test de cartes"
+    },
+    "code-editor.run.preview-and-live-test": {
+      "message": "Lancer l’aperçu et le test en jeu"
+    },
+    "code-editor.run.stop": {
+      "message": "Arrêter"
+    },
+    "code-editor.run.tooltip": {
+      "message": "Exécuter ({shortcut})"
+    },
+    "code-editor.run.preview-and-live-test-tooltip": {
+      "message": "Lancer l’aperçu et le test en jeu ({shortcut})"
+    },
+    "code-editor.run.stop-tooltip": {
+      "message": "Arrêter ({shortcut})"
+    },
+    "code-editor.run-menu.label": {
+      "message": "Options d’exécution de l’aperçu"
+    },
+    "code-editor.run-menu.executed-script": {
+      "message": "Script exécuté"
+    },
+    "code-editor.run-menu.pin": {
+      "message": "Épingler le script exécuté"
+    },
+    "code-editor.run-menu.seed": {
+      "message": "Graine"
+    },
+    "code-editor.run-menu.copy-seed": {
+      "message": "Copier la graine"
+    },
+    "code-editor.run-menu.copy-seed-label": {
+      "message": "Copier la graine {seed}"
+    },
+    "code-editor.run-menu.seed-copied": {
+      "message": "Graine copiée"
+    },
+    "code-editor.run-menu.seed-locked": {
+      "message": "Verrouillée"
+    },
+    "code-editor.run-menu.seed-randomize": {
+      "message": "Aléatoire à chaque exécution"
+    },
+    "code-editor.run-menu.adopt-seed": {
+      "message": "Utiliser la graine de la partie en cours"
+    },
+    "code-editor.run-menu.adopt-seed-required": {
+      "message": "Une partie active et vérifiée sur carte aléatoire en mode solo est requise."
+    },
+    "code-editor.run-menu.game-folder.select": {
+      "message": "Sélectionner le dossier du jeu Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.selecting": {
+      "message": "Sélection du dossier du jeu Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.game-folder.looking": {
+      "message": "Recherche d’un dossier d’installation d’Age of Empires II: Definitive Edition"
+    },
+    "code-editor.run-menu.live-test-on-run": {
+      "message": "Test en jeu à l’exécution"
+    },
+    "code-editor.run-menu.live-test-on-run.tooltip": {
+      "message": "Lancer l’aperçu, puis continuer dans AoE2DE"
+    },
+    "code-editor.run-menu.control.invalid": {
+      "message": "Sélectionner un exécutable AoE2Control valide"
+    },
+    "code-editor.run-menu.control.select": {
+      "message": "Sélectionner AoE2Control"
+    },
+    "code-editor.run-menu.control.selecting": {
+      "message": "Sélection d’AoE2Control…"
+    },
+    "code-editor.run-menu.control.select-tooltip": {
+      "message": "Sélectionner AoE2Control.exe pour les tests en jeu"
+    },
+    "code-editor.run-menu.control.selecting-tooltip": {
+      "message": "Sélection d’AoE2Control.exe pour les tests en jeu"
+    },
+    "code-editor.run-menu.control.download": {
+      "message": "Télécharger AoE2Control"
+    },
+    "code-editor.run-menu.control.releases": {
+      "message": "Ouvrir la page des versions d’AoE2Control"
+    },
+    "code-editor.control.remove.title": {
+      "message": "Retirer AoE2Control ?"
+    },
+    "code-editor.control.remove.description": {
+      "message": "L’exécutable AoE2Control sélectionné sera oublié et la session de test en jeu actuelle sera déconnectée. Le prochain test en jeu demandera à nouveau votre accord avant de remplacer une partie en cours."
+    },
+    "code-editor.control.remove.confirm": {
+      "message": "Retirer"
+    },
+    "code-editor.control.releases-failed": {
+      "message": "La page des versions d’AoE2Control n’a pas pu être ouverte"
+    },
+    "code-editor.control-download.title": {
+      "message": "Avant d’extraire AoE2Control"
+    },
+    "code-editor.control-download.description": {
+      "message": "Le mot de passe d’extraction d’AoE2Control.zip est {password}. AoE2Control injecte une DLL pour exécuter du Lua dans le jeu ; les antivirus heuristiques, dont Windows Defender, peuvent donc le signaler à tort comme une menace. Ajoutez une exclusion de dossier dans votre antivirus pour les fichiers extraits afin que le moteur puisse fonctionner sans interruption."
+    },
+    "code-editor.control-download.confirm": {
+      "message": "Compris"
+    },
+    "code-editor.preview.collapse": {
+      "message": "Masquer l’aperçu de carte en direct"
+    },
+    "code-editor.preview.expand": {
+      "message": "Afficher l’aperçu de carte en direct"
+    },
+    "code-editor.preview.collapse-tooltip": {
+      "message": "Masquer l’Aperçu"
+    },
+    "code-editor.preview.expand-tooltip": {
+      "message": "Afficher l’Aperçu"
+    },
+    "code-editor.notice.execution-failure.dismiss": {
+      "message": "Fermer l’avis d’échec d’exécution du script"
+    },
+    "code-editor.notice.recovery": {
+      "message": "Travail non enregistré récupéré"
+    },
+    "code-editor.notice.recovery.dismiss": {
+      "message": "Fermer l’avis de récupération"
+    },
+    "code-editor.notice.game-textures": {
+      "message": "L’aperçu utilise maintenant les textures de votre jeu"
+    },
+    "code-editor.font-size.label": {
+      "message": "Taille de police de l’éditeur"
+    },
+    "code-editor.font-size.value": {
+      "message": "{percent} %"
+    },
+    "code-editor.read-only-message": {
+      "message": "Ce fichier de l’installation ou d’un mod suivi est protégé. Utilisez Cloner ou Enregistrer sous."
+    },
+    "code-editor.context-menu.open-included-file": {
+      "message": "Ouvrir le fichier inclus"
+    },
+    "code-editor.include.open": {
+      "message": "Ouvrir {name}"
+    },
+    "code-editor.rename.unsafe": {
+      "message": "Renommer ici pourrait modifier le sens du script."
+    },
+    "code-editor.rename.not-proven": {
+      "message": "L’équivalence stricte n’a pas été démontrée."
+    },
+    "code-editor.rename.protected-file": {
+      "message": "{name} est un fichier du jeu protégé ; le renommage le modifierait."
+    },
+    "code-editor.quick-fix.ignore-on-line": {
+      "message": "Ignorer {code} sur cette ligne"
+    },
+    "code-editor.quick-fix.turn-off-rule": {
+      "message": "Désactiver {code} dans cet espace de travail"
+    },
+    "code-editor.format.reason.model-unavailable": {
+      "message": "Le modèle de l’éditeur est indisponible."
+    },
+    "code-editor.format.reason.language-changed": {
+      "message": "Le langage du fichier a changé."
+    },
+    "code-editor.format.reason.changed-before": {
+      "message": "Le document a été modifié avant le début du formatage."
+    },
+    "code-editor.format.reason.changed-while-pending": {
+      "message": "Le document a été modifié pendant la préparation du formatage."
+    },
+    "code-editor.format.reason.cancelled": {
+      "message": "La demande a été annulée."
+    },
+    "code-editor.format.reason.starlark-invalid": {
+      "message": "Le formatage est indisponible tant que le code Starlark n’est pas valide."
+    },
+    "code-editor.format.reason.starlark-indentation": {
+      "message": "Le formatage nécessite une indentation déjà valide par groupes de quatre espaces ; la structure des éléments du script n’a pas été modifiée."
+    },
+    "code-editor.completion.content.object": {
+      "message": "objet {id}"
+    },
+    "code-editor.completion.content.terrain": {
+      "message": "terrain {id}"
+    },
+    "code-editor.completion.content.named": {
+      "message": "{name} · {id}"
+    },
+    "code-editor.completion.map-test": {
+      "message": "Test de cartes"
+    },
+    "code-editor.completion.starlark-built-in": {
+      "message": "Fonction intégrée Starlark"
+    },
+    "code-editor.completion.starlark-method": {
+      "message": "Méthode {type} de Starlark"
+    },
+    "code-editor.completion.starlark-function-defined": {
+      "message": "Fonction Starlark définie précédemment"
+    },
+    "code-editor.completion.starlark-parameter": {
+      "message": "Paramètre de fonction Starlark"
+    },
+    "code-editor.completion.starlark-variable-defined": {
+      "message": "Variable Starlark définie précédemment"
+    },
+    "code-editor.completion.starlark-loop-variable": {
+      "message": "Variable de boucle Starlark"
+    },
+    "code-editor.completion.defined-earlier": {
+      "message": "{name} a été défini plus haut dans ce document."
+    },
+    "code-editor.symbol.starlark-function": {
+      "message": "Fonction Starlark"
+    },
+    "native-dialog.source-files.filter": {
+      "message": "Sources RMS et XS"
+    },
+    "native-dialog.source-files.filter.map-tests": {
+      "message": "Sources RMS, XS et de test de cartes"
+    },
+    "native-dialog.open-files.title": {
+      "message": "Ouvrir des fichiers source"
+    },
+    "native-dialog.open-folder.title": {
+      "message": "Ouvrir un dossier RMS"
+    },
+    "native-dialog.save-as.title": {
+      "message": "Enregistrer la source sous"
+    },
+    "native-dialog.map-test-report.filter": {
+      "message": "Rapport de test de cartes"
+    },
+    "native-dialog.map-test-report.export.title": {
+      "message": "Exporter le rapport de test de cartes"
+    },
+    "native-dialog.map-test-report.import.title": {
+      "message": "Importer un rapport de test de cartes"
+    },
+    "native-dialog.game-folder.title": {
+      "message": "Sélectionner un dossier d’Age of Empires II: Definitive Edition"
+    },
+    "native-dialog.installed-map-clone.title": {
+      "message": "Choisir le dossier parent de la copie modifiable de la carte"
+    },
+    "native-dialog.control-launcher.title": {
+      "message": "Sélectionner l’exécutable AoE2Control"
+    },
+    "native-dialog.control-launcher.filter": {
+      "message": "Exécutable AoE2Control"
+    },
+    "native-dialog.map-icon.title": {
+      "message": "Enregistrer l’icône de carte"
+    },
+    "native-dialog.map-icon.filter": {
+      "message": "Image PNG"
+    },
+    "file-actions.included-files.refresh-failed": {
+      "message": "Les fichiers inclus n’ont pas pu être actualisés"
+    },
+    "file-actions.delete.session-not-updated": {
+      "message": "La session n’a pas pu être mise à jour après la suppression"
+    },
+    "file-actions.explorer.folders-unreadable": {
+      "message": "Certains dossiers n’ont pas pu être affichés dans l’Explorateur"
+    },
+    "file-actions.standard-resource-conflict": {
+      "message": "{count, plural, one {Un fichier de l’espace de travail porte le nom d’un fichier de bibliothèque du jeu} many {Des fichiers de l’espace de travail portent les noms de fichiers de bibliothèque du jeu} other {Des fichiers de l’espace de travail portent les noms de fichiers de bibliothèque du jeu}}"
+    },
+    "file-actions.standard-resource-conflict.cause": {
+      "message": "{paths, list, unit}. Ces fichiers restent modifiables, mais les inclusions peuvent choisir le fichier du jeu à leur place."
+    },
+    "file-actions.standard-resource-conflict.cause.more": {
+      "message": "{count, plural, one {{paths, list, unit}, et {count} autre. Ces fichiers restent modifiables, mais les inclusions peuvent choisir le fichier du jeu à leur place.} many {{paths, list, unit}, et {count} autres. Ces fichiers restent modifiables, mais les inclusions peuvent choisir le fichier du jeu à leur place.} other {{paths, list, unit}, et {count} autres. Ces fichiers restent modifiables, mais les inclusions peuvent choisir le fichier du jeu à leur place.}}"
+    },
+    "file-actions.standard-resource-conflict.action": {
+      "message": "Renommez-les"
+    },
+    "file-actions.standard-resource-conflict.check-incomplete": {
+      "message": "La vérification des noms de fichiers de bibliothèque du jeu est incomplète"
+    },
+    "file-actions.shell-open.refused": {
+      "message": "Aucun élément n’a été ouvert"
+    },
+    "file-actions.shell-open.refused.too-many-targets": {
+      "message": "{count, plural, one {La demande contenait plus de {count} fichier ou dossier.} many {La demande contenait plus de {count} fichiers et dossiers.} other {La demande contenait plus de {count} fichiers et dossiers.}}"
+    },
+    "file-actions.shell-open.refused.too-long": {
+      "message": "Les chemins de la demande dépassent la longueur acceptée par AoE2RMSIDE."
+    },
+    "file-actions.shell-open.refused.too-many-requests": {
+      "message": "Trop de demandes d’ouverture sont arrivées en même temps. Ouvrez à nouveau les éléments restants."
+    },
+    "file-actions.shell-open.rejected": {
+      "message": "{name} n’a pas été ouvert"
+    },
+    "file-actions.shell-open.rejected.missing": {
+      "message": "Cet élément n’existe pas ou est inaccessible."
+    },
+    "file-actions.shell-open.rejected.invalid": {
+      "message": "Ce chemin de fichier ou de dossier n’est pas valide."
+    },
+    "file-actions.shell-open.rejected.unsupported": {
+      "message": "AoE2RMSIDE ouvre les dossiers et les fichiers .rms, .rms2, .inc, .def et .xs."
+    },
+    "file-actions.shell-open.rejected.unsupported.map-tests": {
+      "message": "AoE2RMSIDE ouvre les dossiers et les fichiers .rms, .rms2, .inc, .def, .xs et .rmstest."
+    },
+    "file-actions.shell-open.rejected.second-folder": {
+      "message": "Un seul dossier peut être ouvert à la fois."
+    },
+    "file-actions.shell-open.rejected.second-folder.opened": {
+      "message": "Un seul dossier peut être ouvert à la fois ; le dossier {folder} a été ouvert."
+    },
+    "file-actions.shell-open.rejected.unreadable": {
+      "message": "Cet élément n’a pas pu être lu."
+    },
+    "file-actions.shell-open.rejected.more": {
+      "message": "{count, plural, one {# autre élément n’a pas été ouvert} many {# autres éléments n’ont pas été ouverts} other {# autres éléments n’ont pas été ouverts}}"
+    },
+    "file-actions.shell-open.rejected.more.cause": {
+      "message": "Ils n’existent pas, ne peuvent pas être lus ou ne sont pas des fichiers qu’AoE2RMSIDE peut ouvrir."
+    },
+    "file-actions.entry.name-exists": {
+      "message": "un élément portant ce nom existe déjà"
+    },
+    "file-actions.entry.name-or-alias-exists": {
+      "message": "un élément portant ce nom, ou un nom court équivalent, existe déjà"
+    },
+    "file-actions.entry.invalid-name": {
+      "message": "ce nom n’est pas un nom de fichier ou de dossier Windows valide"
+    },
+    "file-actions.entry.unsupported-kind": {
+      "message": "seuls les fichiers source .rms, .rms2, .inc, .def et .xs sont pris en charge"
+    },
+    "file-actions.entry.unsupported-kind.map-tests": {
+      "message": "seuls les fichiers source .rms, .rms2, .inc, .def, .rmstest et .xs sont pris en charge"
+    },
+    "file-actions.entry.read-only": {
+      "message": "l’élément de l’espace de travail est en lecture seule ou protégé"
+    },
+    "file-actions.entry.root-locked": {
+      "message": "le dossier racine de l’espace de travail ne peut pas être renommé ni supprimé"
+    },
+    "file-actions.entry.reserved-name": {
+      "message": "« {name} » est réservé à une ressource standard du jeu ; choisissez un autre nom de fichier."
+    },
+    "notice.recovery.read-failed": {
+      "message": "Le travail non enregistré de la session précédente n’a pas pu être lu et a été ignoré"
+    },
+    "notice.recovery.folder-unavailable": {
+      "message": "Le dossier de l’espace de travail récupéré est indisponible."
+    },
+    "notice.recovery.previous-folder-skipped": {
+      "message": "Le dossier de l’espace de travail précédent est indisponible et a été ignoré."
+    },
+    "notice.recovery.tab-skipped": {
+      "message": "L’onglet {name} de la session a été ignoré car il est indisponible."
+    },
+    "notice.recovery.recovered-unsaved": {
+      "message": "{name} a été récupéré dans un onglet non enregistré car sa source est indisponible."
+    },
+    "notice.game-textures.terrain-ready": {
+      "message": "{reused, plural, one {Fichiers de terrain du jeu lié — convertis : {converted}, réutilisés : {reused}, durée : {seconds, number, ::.0 group-off} s} many {Fichiers de terrain du jeu lié — convertis : {converted}, réutilisés : {reused}, durée : {seconds, number, ::.0 group-off} s} other {Fichiers de terrain du jeu lié — convertis : {converted}, réutilisés : {reused}, durée : {seconds, number, ::.0 group-off} s}}"
+    },
+    "notice.game-textures.terrain-ready.cause": {
+      "message": "Cache local : {megabytes, number, ::.0 unit/megabyte group-off}."
+    },
+    "notice.game-textures.terrain-fallback": {
+      "message": "{count, plural, one {{count} fichier de terrain n’a pas pu être converti et utilise les couleurs de la mini-carte} many {{count} fichiers de terrain n’ont pas pu être convertis et utilisent les couleurs de la mini-carte} other {{count} fichiers de terrain n’ont pas pu être convertis et utilisent les couleurs de la mini-carte}}"
+    },
+    "notice.game-textures.terrain-fallback.cause": {
+      "message": "Par exemple, {asset} : {reason}."
+    },
+    "preview-panel.name.object-number": {
+      "message": "Objet {id}"
+    },
+    "preview-panel.name.terrain-number": {
+      "message": "Terrain {id}"
+    },
+    "preview-panel.name.with-constant": {
+      "message": "{name} ({constant})"
+    },
+    "preview-panel.name.wall-number": {
+      "message": "Mur {id}"
+    },
+    "preview-panel.material.owner-short": {
+      "message": "P{owner}"
+    },
+    "preview-panel.material.player": {
+      "message": "Joueur {owner}"
+    },
+    "preview-panel.material.gaia": {
+      "message": "Gaïa"
+    },
+    "preview-panel.material.helper-object": {
+      "message": "Objet auxiliaire"
+    },
+    "preview-panel.material.cliff": {
+      "message": "Falaise"
+    },
+    "preview-panel.material.cliff-type": {
+      "message": "Type de falaise {id}"
+    },
+    "preview-panel.material.connection.land": {
+      "message": "Liaison terrestre"
+    },
+    "preview-panel.material.connection.water": {
+      "message": "Liaison aquatique"
+    },
+    "preview-panel.material.connection.road": {
+      "message": "Liaison routière"
+    },
+    "preview-panel.material.connection.unknown": {
+      "message": "Liaison inconnue"
+    },
+    "preview-panel.material.connection.failed": {
+      "message": "Recherche de liaison sans chemin"
+    },
+    "preview-panel.material.description": {
+      "message": "{name} ({details, list, unit})"
+    },
+    "preview-panel.material.selection-ambiguity": {
+      "message": "Sélection ambiguë dans l’aperçu : {layer} · {count, plural, one {{count} élément sélectionné} many {{count} éléments sélectionnés} other {{count} éléments sélectionnés}} · {sources, plural, one {{sources} source distincte} many {{sources} sources distinctes} other {{sources} sources distinctes}} · emplacement utilisé : {location}."
+    },
+    "preview-panel.material.terrain.grass": {
+      "message": "Herbe"
+    },
+    "preview-panel.material.terrain.shallows": {
+      "message": "Hauts-fonds"
+    },
+    "preview-panel.material.terrain.water": {
+      "message": "Eau"
+    },
+    "preview-panel.material.terrain.beach": {
+      "message": "Plage"
+    },
+    "preview-panel.material.terrain.earth": {
+      "message": "Terre"
+    },
+    "preview-panel.material.terrain.stone": {
+      "message": "Pierre"
+    },
+    "preview-panel.material.terrain.dirt": {
+      "message": "Sol nu"
+    },
+    "preview-panel.material.terrain.cliff-facet": {
+      "message": "Paroi de falaise"
+    },
+    "preview-panel.candidate.stage.land": {
+      "message": "Terres"
+    },
+    "preview-panel.candidate.stage.elevation": {
+      "message": "Élévation"
+    },
+    "preview-panel.candidate.stage.cliffs": {
+      "message": "Falaises"
+    },
+    "preview-panel.candidate.stage.terrain": {
+      "message": "Terrains"
+    },
+    "preview-panel.candidate.stage.connections": {
+      "message": "Liaisons"
+    },
+    "preview-panel.candidate.stage.objects": {
+      "message": "Objets"
+    },
+    "preview-panel.candidate.stage.finished": {
+      "message": "Terminé"
+    },
+    "preview-panel.candidate.generating": {
+      "message": "Génération · {stage}"
+    },
+    "preview-panel.candidate.sample-stage": {
+      "message": "Échantillon {sample} (graine {seed}) · {stage}"
+    },
+    "preview-panel.candidate.sample-finished": {
+      "message": "Échantillon {sample} (graine {seed}) terminé · lot toujours en cours"
+    },
+    "preview-panel.keyboard.help": {
+      "message": "Les touches fléchées (Arrow) sélectionnent une case, Shift+Arrow étend la sélection, Ctrl+Arrow déplace la vue, plus et moins règlent le zoom, 0 ajuste la carte, Ctrl+A sélectionne toute la carte, Escape efface la sélection."
+    },
+    "preview-panel.selection.announce.cleared": {
+      "message": "Sélection effacée"
+    },
+    "preview-panel.selection.announce.tile": {
+      "message": "Case {x}, {y}"
+    },
+    "preview-panel.selection.announce.tiles": {
+      "message": "Cases de {fromX}, {fromY} à {toX}, {toY}, {count, plural, one {{count} case} many {{count} cases} other {{count} cases}}"
+    },
+    "preview-panel.selection.announce.no-layers": {
+      "message": "{area}. Aucune couche"
+    },
+    "preview-panel.selection.announce.layer": {
+      "message": "{name} {count}"
+    },
+    "preview-panel.selection.announce.layers": {
+      "message": "{area}. {count, plural, one {{count} couche} many {{count} couches} other {{count} couches}} : {shown, list, unit}"
+    },
+    "preview-panel.selection.announce.layers-more": {
+      "message": "{area}. {count, plural, one {{count} couche} many {{count} couches} other {{count} couches}} : {shown, list, unit}, et encore {more}"
+    },
+    "preview-panel.run.include-only": {
+      "message": "Les documents .inc, .def et .xs sont réservés aux inclusions et ne peuvent pas être exécutés seuls."
+    },
+    "preview-panel.tool.objects": {
+      "message": "Objets et emprise du forum"
+    },
+    "preview-panel.tool.cliffs": {
+      "message": "Bords des falaises"
+    },
+    "preview-panel.tool.connection-terrain": {
+      "message": "Modifications de terrain des liaisons"
+    },
+    "preview-panel.tool.connections": {
+      "message": "Lignes des liaisons"
+    },
+    "preview-panel.tool.connections.off": {
+      "message": "Lignes des liaisons masquées"
+    },
+    "preview-panel.tool.connections.paths": {
+      "message": "Chemins tracés des liaisons"
+    },
+    "preview-panel.tool.connections.paths-partial": {
+      "message": "Chemins affichés : {shown, number} sur {total, number}"
+    },
+    "preview-panel.tool.connections.paths-not-final": {
+      "message": "Les chemins tracés s’affichent une fois la carte terminée"
+    },
+    "preview-panel.tool.connections.paths-unavailable": {
+      "message": "Les chemins tracés sont indisponibles pour cette carte"
+    },
+    "preview-panel.tool.elevation.off": {
+      "message": "Élévation masquée"
+    },
+    "preview-panel.tool.elevation.terrain": {
+      "message": "Relief du terrain"
+    },
+    "preview-panel.tool.elevation.height-map": {
+      "message": "Carte des hauteurs"
+    },
+    "preview-panel.tool.perspective.top-down": {
+      "message": "Vue de dessus"
+    },
+    "preview-panel.tool.perspective.diamond": {
+      "message": "Vue en losange"
+    },
+    "preview-panel.tool.look.minimap": {
+      "message": "Couleurs de la mini-carte"
+    },
+    "preview-panel.tool.look.texture-colors": {
+      "message": "Couleurs des textures"
+    },
+    "preview-panel.tool.look.game-textures": {
+      "message": "Textures du jeu"
+    },
+    "preview-panel.tool.look.applying": {
+      "message": "Application des textures du jeu"
+    },
+    "preview-panel.tool.tile-grid": {
+      "message": "Grille des cases"
+    },
+    "preview-panel.canvas.top-down.minimap": {
+      "message": "aperçu de carte vu de dessus avec les couleurs de la mini-carte"
+    },
+    "preview-panel.canvas.top-down.texture-colors": {
+      "message": "aperçu de carte vu de dessus avec les couleurs des textures"
+    },
+    "preview-panel.canvas.top-down.game-textures": {
+      "message": "aperçu de carte vu de dessus avec les textures du jeu"
+    },
+    "preview-panel.canvas.diamond.minimap": {
+      "message": "aperçu de carte en losange de proportions 2 pour 1 avec les couleurs de la mini-carte"
+    },
+    "preview-panel.canvas.diamond.texture-colors": {
+      "message": "aperçu de carte en losange de proportions 2 pour 1 avec les couleurs des textures"
+    },
+    "preview-panel.canvas.diamond.game-textures": {
+      "message": "aperçu de carte en losange de proportions 2 pour 1 avec les textures du jeu"
+    },
+    "preview-panel.canvas.role-description": {
+      "message": "carte"
+    },
+    "preview-panel.announce.ready": {
+      "message": "Aperçu de carte prêt"
+    },
+    "preview-panel.announce.updated": {
+      "message": "Aperçu de carte actualisé"
+    },
+    "preview-panel.panel.label": {
+      "message": "Aperçu de carte en direct"
+    },
+    "preview-panel.toolbar.label": {
+      "message": "Commandes de vue de la carte"
+    },
+    "preview-panel.toolbar.connections": {
+      "message": "Couches des liaisons"
+    },
+    "preview-panel.toolbar.keyboard-cue": {
+      "message": "Flèches : sélectionner des cases"
+    },
+    "preview-panel.readout.cursor": {
+      "message": "x {x}, y {y}"
+    },
+    "preview-panel.status.label": {
+      "message": "État de l’aperçu"
+    },
+    "preview-panel.status.uncertified": {
+      "message": "Non certifié"
+    },
+    "preview-panel.status.seed": {
+      "message": "Graine {seed}"
+    },
+    "preview-panel.status.revision": {
+      "message": "Révision {revision}"
+    },
+    "preview-panel.status.generation": {
+      "message": "génération"
+    },
+    "preview-panel.status.generation-progress": {
+      "message": "{stage} · {kind} · {completed}/{total}"
+    },
+    "preview-panel.status.generation-time": {
+      "message": "{milliseconds} ms"
+    },
+    "preview-panel.status.cache": {
+      "message": "Cache : {entries} · réutilisations : {hits}"
+    },
+    "preview-panel.status.phase.editing": {
+      "message": "Modification"
+    },
+    "preview-panel.status.phase.analyzing": {
+      "message": "Analyse"
+    },
+    "preview-panel.status.phase.unchanged": {
+      "message": "Inchangé"
+    },
+    "preview-panel.status.phase.invalid": {
+      "message": "Périmé - Source invalide"
+    },
+    "preview-panel.status.phase.generating": {
+      "message": "Génération"
+    },
+    "preview-panel.status.phase.current": {
+      "message": "À jour"
+    },
+    "preview-panel.status.phase.failed": {
+      "message": "Périmé - Échec de génération"
+    },
+    "preview-panel.legend.label": {
+      "message": "Légende des couches des cases sélectionnées"
+    },
+    "preview-panel.legend.filter.label": {
+      "message": "Filtrer les éléments sélectionnés"
+    },
+    "preview-panel.legend.filter.clear": {
+      "message": "Effacer le filtre des éléments sélectionnés"
+    },
+    "preview-panel.legend.filter.placeholder": {
+      "message": "Filtrer"
+    },
+    "preview-panel.legend.filter.empty": {
+      "message": "Aucun élément correspondant"
+    },
+    "preview-panel.legend.rows": {
+      "message": "Lignes des couches sélectionnées"
+    },
+    "preview-panel.legend.row.provisional": {
+      "message": "{name}, sélection provisoire : {count}"
+    },
+    "preview-panel.legend.row.open-source": {
+      "message": "Ouvrir la source de {name}, sélection : {count}"
+    },
+    "preview-panel.legend.helpers.show": {
+      "message": "Afficher les auxiliaires ({count})"
+    },
+    "preview-panel.legend.helpers.hide": {
+      "message": "Masquer les auxiliaires ({count})"
+    },
+    "preview-panel.fixtures.label": {
+      "message": "Cas de test internes de développement"
+    },
+    "preview-panel.fixtures.select-placeholder": {
+      "message": "Tests internes · Non certifiés"
+    },
+    "preview-panel.fixtures.heading": {
+      "message": "Interne · Non certifié"
+    },
+    "preview-panel.fixtures.run": {
+      "message": "Exécuter le cas de test {fixture}"
+    },
+    "game-art.progress.catalog.action": {
+      "message": "Lecture"
+    },
+    "game-art.progress.catalog.detail": {
+      "message": "Lecture du catalogue graphique du jeu"
+    },
+    "game-art.progress.catalog.detail-counted": {
+      "message": "Lecture du catalogue graphique du jeu, {percent} % ({unit, select, graphics {images} other {fichiers}} : {completed} sur {total})"
+    },
+    "game-art.progress.terrain.action": {
+      "message": "Importation"
+    },
+    "game-art.progress.terrain.detail": {
+      "message": "Importation des textures de terrain"
+    },
+    "game-art.progress.terrain.detail-counted": {
+      "message": "Importation des textures de terrain, {percent} % ({unit, select, graphics {images} other {fichiers}} : {completed} sur {total})"
+    },
+    "game-art.progress.blends.action": {
+      "message": "Transitions"
+    },
+    "game-art.progress.blends.detail": {
+      "message": "Adoucissement des transitions entre terrains"
+    },
+    "game-art.progress.blends.detail-counted": {
+      "message": "Adoucissement des transitions entre terrains, {percent} % ({unit, select, graphics {images} other {fichiers}} : {completed} sur {total})"
+    },
+    "game-art.progress.masks.action": {
+      "message": "Masquage"
+    },
+    "game-art.progress.masks.detail": {
+      "message": "Préparation des masques de superposition des terrains"
+    },
+    "game-art.progress.masks.detail-counted": {
+      "message": "Préparation des masques de superposition des terrains, {percent} % ({unit, select, graphics {images} other {fichiers}} : {completed} sur {total})"
+    },
+    "game-art.progress.sprites.action": {
+      "message": "Sprites"
+    },
+    "game-art.progress.sprites.detail": {
+      "message": "Conversion des sprites d’objets de cette carte"
+    },
+    "game-art.progress.sprites.detail-counted": {
+      "message": "Conversion des sprites d’objets de cette carte, {percent} % ({unit, select, graphics {images} other {fichiers}} : {completed} sur {total})"
+    },
+    "game-art.progress.label": {
+      "message": "Conversion des graphismes du jeu"
+    },
+    "game-art.glyphs": {
+      "message": "{count, plural, one {{count} type d’objet n’a pas de sprite dans le jeu lié et conserve son symbole de mini-carte : {names, list, unit}} many {{count} types d’objets n’ont pas de sprite dans le jeu lié et conservent leurs symboles de mini-carte : {names, list, unit}} other {{count} types d’objets n’ont pas de sprite dans le jeu lié et conservent leurs symboles de mini-carte : {names, list, unit}}}"
+    },
+    "game-art.glyphs.more": {
+      "message": "{count, plural, one {{count} type d’objet n’a pas de sprite dans le jeu lié et conserve son symbole de mini-carte : {names, list, unit}, et encore {more}} many {{count} types d’objets n’ont pas de sprite dans le jeu lié et conservent leurs symboles de mini-carte : {names, list, unit}, et encore {more}} other {{count} types d’objets n’ont pas de sprite dans le jeu lié et conservent leurs symboles de mini-carte : {names, list, unit}, et encore {more}}}"
+    },
+    "game-art.glyphs.object-named": {
+      "message": "{name} (objet {id})"
+    },
+    "game-art.glyphs.object": {
+      "message": "objet {id}"
+    },
+    "game-art.cliff-lines": {
+      "message": "{count, plural, one {{count} segment de falaise n’a pas de sprite dans le jeu lié et conserve son trait de falaise} many {{count} segments de falaise n’ont pas de sprite dans le jeu lié et conservent leur trait de falaise} other {{count} segments de falaise n’ont pas de sprite dans le jeu lié et conservent leur trait de falaise}}"
+    },
+    "profiler.group.parse": {
+      "message": "Analyse syntaxique"
+    },
+    "profiler.group.setup": {
+      "message": "Préparation"
+    },
+    "profiler.group.land": {
+      "message": "Terres"
+    },
+    "profiler.group.elevation": {
+      "message": "Élévation"
+    },
+    "profiler.group.cliffs": {
+      "message": "Falaises"
+    },
+    "profiler.group.terrain": {
+      "message": "Terrains"
+    },
+    "profiler.group.connections": {
+      "message": "Liaisons"
+    },
+    "profiler.group.objects": {
+      "message": "Objets"
+    },
+    "profiler.group.finalize": {
+      "message": "Finalisation"
+    },
+    "profiler.step.parse-script": {
+      "message": "Analyse du script"
+    },
+    "profiler.step.setup-players": {
+      "message": "Préparation des joueurs"
+    },
+    "profiler.step.land-generate": {
+      "message": "Génération des terres"
+    },
+    "profiler.step.elevation-generate": {
+      "message": "Génération de l’élévation"
+    },
+    "profiler.step.cliffs-generate": {
+      "message": "Génération des falaises"
+    },
+    "profiler.step.terrain-generate": {
+      "message": "Génération des terrains"
+    },
+    "profiler.step.connections-generate": {
+      "message": "Génération des liaisons"
+    },
+    "profiler.step.objects-generate": {
+      "message": "Placement des objets"
+    },
+    "profiler.step.finalize-game-mode": {
+      "message": "Finalisation du mode de jeu"
+    },
+    "profiler.step.finalize-object-order": {
+      "message": "Ordre des objets"
+    },
+    "profiler.step.finalize-composite-terrain": {
+      "message": "Terrain composite"
+    },
+    "profiler.counter.operations": {
+      "message": "{count, plural, one {# opération} many {# opérations} other {# opérations}}"
+    },
+    "profiler.counter.rng-draws": {
+      "message": "{count, plural, one {# tirage RNG} many {# tirages RNG} other {# tirages RNG}}"
+    },
+    "profiler.counter.candidates-examined": {
+      "message": "{count, plural, one {# candidat} many {# candidats} other {# candidats}}"
+    },
+    "profiler.counter.tiles-accepted": {
+      "message": "{count, plural, one {# case} many {# cases} other {# cases}}"
+    },
+    "profiler.counter.path-searches": {
+      "message": "{count, plural, one {# recherche de chemin} many {# recherches de chemin} other {# recherches de chemin}}"
+    },
+    "profiler.counter.path-work": {
+      "message": "{count, plural, one {travail de recherche de chemin : #} many {travail de recherche de chemin : #} other {travail de recherche de chemin : #}}"
+    },
+    "profiler.counter.placement-rejections": {
+      "message": "{count, plural, one {# rejet} many {# rejets} other {# rejets}}"
+    },
+    "profiler.counter.objects-placed": {
+      "message": "{count, plural, one {# objet} many {# objets} other {# objets}}"
+    },
+    "profiler.counter.land.candidates-examined": {
+      "message": "{count, plural, one {# case examinée} many {# cases examinées} other {# cases examinées}}"
+    },
+    "profiler.counter.land.tiles-accepted": {
+      "message": "{count, plural, one {# ajoutée aux terres} many {# ajoutées aux terres} other {# ajoutées aux terres}}"
+    },
+    "profiler.counter.land.explanation": {
+      "message": "Cases choisies et examinées pendant l’expansion des terres ; les cases ajoutées ont rejoint une zone de terre."
+    },
+    "profiler.counter.elevation.candidates-examined": {
+      "message": "{count, plural, one {# case examinée pendant l’expansion} many {# cases examinées pendant l’expansion} other {# cases examinées pendant l’expansion}}"
+    },
+    "profiler.counter.elevation.tiles-accepted": {
+      "message": "{count, plural, one {# surélevée} many {# surélevées} other {# surélevées}}"
+    },
+    "profiler.counter.elevation.explanation": {
+      "message": "Cases choisies et examinées pendant l’expansion des collines. Les cases surélevées comprennent aussi les cases de départ de chaque colline, qui ne sont pas comptées parmi les cases examinées."
+    },
+    "profiler.counter.cliffs.candidates-examined": {
+      "message": "{count, plural, one {# emplacement de falaise envisagé} many {# emplacements de falaise envisagés} other {# emplacements de falaise envisagés}}"
+    },
+    "profiler.counter.cliffs.explanation": {
+      "message": "Emplacements de la carte où une falaise pourrait être placée."
+    },
+    "profiler.counter.connections.path-searches": {
+      "message": "{count, plural, one {# recherche de chemin} many {# recherches de chemin} other {# recherches de chemin}}"
+    },
+    "profiler.counter.connections.path-work": {
+      "message": "{count, plural, one {# étape de recherche} many {# étapes de recherche} other {# étapes de recherche}}"
+    },
+    "profiler.counter.connections.tiles-accepted": {
+      "message": "{count, plural, one {# case peinte} many {# cases peintes} other {# cases peintes}}"
+    },
+    "profiler.counter.connections.explanation": {
+      "message": "Chaque recherche de chemin cherche un itinéraire entre deux points de liaison ; les cases peintes comptent chaque modification de terrain le long des itinéraires."
+    },
+    "profiler.counter.objects.candidates-examined": {
+      "message": "{count, plural, one {# emplacement possible} many {# emplacements possibles} other {# emplacements possibles}}"
+    },
+    "profiler.counter.objects.placement-rejections": {
+      "message": "{count, plural, one {# groupe rejeté} many {# groupes rejetés} other {# groupes rejetés}}"
+    },
+    "profiler.counter.objects.objects-placed": {
+      "message": "{count, plural, one {# objet placé} many {# objets placés} other {# objets placés}}"
+    },
+    "profiler.counter.objects.explanation": {
+      "message": "Les emplacements possibles sont comptés à chaque tentative de placement ; une case peut donc être comptée plusieurs fois. Un groupe est rejeté chaque fois qu’un emplacement échoue aux vérifications ou qu’il ne reste aucun emplacement."
+    },
+    "profiler.counters.separated": {
+      "message": "{first} · {second}"
+    },
+    "profiler.pending.waiting": {
+      "message": "En attente de la fin de la première étape"
+    },
+    "profiler.pending.group": {
+      "message": "{group} en cours"
+    },
+    "profiler.pending.step": {
+      "message": "{step} en cours"
+    },
+    "profiler.duration.seconds": {
+      "message": "{seconds, number, ::.00 group-off} s"
+    },
+    "profiler.duration.milliseconds.hundredths": {
+      "message": "{milliseconds, number, ::.00 group-off} ms"
+    },
+    "profiler.duration.milliseconds.tenths": {
+      "message": "{milliseconds, number, ::.0 group-off} ms"
+    },
+    "profiler.duration.milliseconds.whole": {
+      "message": "{milliseconds, number, ::precision-integer group-off} ms"
+    },
+    "profiler.percent.below-tenth": {
+      "message": "<0,1 %"
+    },
+    "profiler.percent.whole": {
+      "message": "{percent, number, ::precision-integer group-off} %"
+    },
+    "profiler.percent.tenths": {
+      "message": "{percent, number, ::.0 group-off} %"
+    },
+    "profiler.percent.spoken.below-tenth": {
+      "message": "moins de 0,1 pour cent"
+    },
+    "profiler.percent.spoken.whole": {
+      "message": "{percent, number, ::precision-integer group-off} pour cent"
+    },
+    "profiler.percent.spoken.tenths": {
+      "message": "{percent, number, ::.0 group-off} pour cent"
+    },
+    "profiler.row.name": {
+      "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.work-join": {
+      "message": "{first}. {second}"
+    },
+    "profiler.status.running.waiting": {
+      "message": "Profileur d’exécution : génération, en attente du moteur"
+    },
+    "profiler.status.running.waiting-time": {
+      "message": "Profileur d’exécution : génération, en attente du moteur, durée en secondes : {seconds, number, ::.00 group-off}"
+    },
+    "profiler.status.running.steps": {
+      "message": "Profileur d’exécution : génération, étapes terminées : {completed} sur {total}"
+    },
+    "profiler.status.running.steps-time": {
+      "message": "Profileur d’exécution : génération, étapes terminées : {completed} sur {total}, durée en secondes : {seconds, number, ::.00 group-off}"
+    },
+    "profiler.status.cached": {
+      "message": "Profileur d’exécution : résultat en cache, durée mesurée lors de la première génération de cet aperçu, en secondes : {seconds, number, ::.00 group-off}"
+    },
+    "profiler.status.committed": {
+      "message": "Profileur d’exécution : durée d’exécution RMS en secondes : {seconds, number, ::.00 group-off}"
+    },
+    "profiler.status.unsupported": {
+      "message": "Profileur d’exécution : aucune mesure pour cet aperçu"
+    },
+    "profiler.status.idle": {
+      "message": "Profileur d’exécution"
+    },
+    "profiler.tooltip.running.waiting": {
+      "message": "Génération, en attente du moteur"
+    },
+    "profiler.tooltip.running.steps": {
+      "message": "Génération, étapes : {completed} sur {total}"
+    },
+    "profiler.tooltip.cached": {
+      "message": "Coût d’exécution (résultat en cache)"
+    },
+    "profiler.tooltip.committed": {
+      "message": "Coût d’exécution"
+    },
+    "profiler.tooltip.unsupported": {
+      "message": "Aucune mesure du coût d’exécution"
+    },
+    "profiler.description": {
+      "message": "Une indication approximative de la complexité locale, issue d’une exécution sur cet ordinateur, et non une prévision du temps de génération dans le jeu."
+    },
+    "profiler.description.cached": {
+      "message": "Résultat en cache : mesuré lors de la première génération de cet aperçu ; le moteur n’a pas été relancé. Une indication approximative de la complexité locale, issue d’une exécution sur cet ordinateur, et non une prévision du temps de génération dans le jeu."
+    },
+    "profiler.description.map-test": {
+      "message": "Mesuré pendant un test de cartes dont les échantillons peuvent être exécutés en parallèle. Une indication approximative de la complexité locale, issue d’une exécution sur cet ordinateur, et non une prévision du temps de génération dans le jeu."
+    },
+    "profiler.panel.label": {
+      "message": "Profileur du coût d’exécution"
+    },
+    "profiler.panel.steps": {
+      "message": "Étapes d’exécution"
+    },
+    "profiler.panel.table": {
+      "message": "Étapes d’exécution par durée"
+    },
+    "profiler.panel.empty": {
+      "message": "Cet aperçu n’a aucune mesure du coût d’exécution."
+    },
+    "profiler.chart.label": {
+      "message": "Temps d’exécution RMS par phase de génération"
+    },
+    "profiler.chart.segment": {
+      "message": "{group} : {duration}, {percent}"
+    },
+    "test-results.results.status.passed": {
+      "message": "Réussi"
+    },
+    "test-results.results.status.failed": {
+      "message": "Échec"
+    },
+    "test-results.results.status.error": {
+      "message": "Erreur"
+    },
+    "test-results.results.status.stopped": {
+      "message": "Arrêté"
+    },
+    "test-results.results.findings": {
+      "message": "{findings, plural, one {# anomalie} many {# anomalies} other {# anomalies}}"
+    },
+    "test-results.results.findings-on-seeds": {
+      "message": "{findings, plural, one {# anomalie} many {# anomalies} other {# anomalies}} sur {seeds, plural, one {# graine} many {# graines} other {# graines}}"
+    },
+    "test-results.results.facts": {
+      "message": "{maps, plural, one {# carte} many {# cartes} other {# cartes}} · {assertions, plural, one {# assertion} many {# assertions} other {# assertions}} · {findings}"
+    },
+    "test-results.results.check-location": {
+      "message": "{script}, ligne {line}"
+    },
+    "test-results.results.check-headline": {
+      "message": "Vérification à la ligne {line}"
+    },
+    "test-results.results.no-findings.passed": {
+      "message": "{maps, plural, =1 {Aucune anomalie. Toutes les vérifications ont réussi sur la carte.} one {Aucune anomalie. Toutes les vérifications ont réussi sur # carte.} many {Aucune anomalie. Toutes les vérifications ont réussi sur les # cartes.} other {Aucune anomalie. Toutes les vérifications ont réussi sur les # cartes.}}"
+    },
+    "test-results.results.no-findings.unchecked": {
+      "message": "Aucune anomalie. Le test n’a effectué aucune vérification sur {maps, plural, one {# carte} many {ses # cartes} other {ses # cartes}}."
+    },
+    "test-results.results.summary": {
+      "message": "· {script} · {facts}"
+    },
+    "test-results.results.summary.map": {
+      "message": "· {script} · {map} · {facts}"
+    },
+    "test-results.results.export": {
+      "message": "Exporter"
+    },
+    "test-results.results.export-tooltip": {
+      "message": "Enregistrer ces résultats dans un fichier de rapport. Vos scripts, les cartes générées et les chemins complets des fichiers en sont exclus."
+    },
+    "test-results.results.list-label": {
+      "message": "{count, plural, one {{count} anomalie du test de cartes} many {{count} anomalies du test de cartes} other {{count} anomalies du test de cartes}}"
+    },
+    "test-results.results.go-to-check": {
+      "message": "Aller à {location}"
+    },
+    "test-results.results.check-source": {
+      "message": "Contrôle"
+    },
+    "test-results.results.hide-check-findings": {
+      "message": "Masquer les anomalies de la vérification à la ligne {line}"
+    },
+    "test-results.results.show-check-findings": {
+      "message": "Afficher les anomalies de la vérification à la ligne {line}"
+    },
+    "test-results.results.check-findings": {
+      "message": "Anomalies de la vérification à la ligne {line}"
+    },
+    "test-results.results.show-more": {
+      "message": "Afficher {count} de plus"
+    },
+    "test-results.results.not-shown": {
+      "message": "· anomalies masquées : {count, number}"
+    },
+    "test-results.results.show-seed": {
+      "message": "Afficher la graine {seed} de {map} dans l’aperçu"
+    },
+    "test-results.results.seed": {
+      "message": "graine {seed}"
+    },
+    "test-results.results.finding-source": {
+      "message": "Anomalie"
+    },
+    "game-options.map-size.tiny": {
+      "message": "Très petite"
+    },
+    "game-options.map-size.small": {
+      "message": "Petite"
+    },
+    "game-options.map-size.medium": {
+      "message": "Moyenne"
+    },
+    "game-options.map-size.normal": {
+      "message": "Normale"
+    },
+    "game-options.map-size.large": {
+      "message": "Étendue"
+    },
+    "game-options.map-size.huge": {
+      "message": "Très grande"
+    },
+    "game-options.map-size.ludicrous": {
+      "message": "Gigantesque"
+    },
+    "game-options.map-size.option": {
+      "message": "{size} ({width}×{height})"
+    },
+    "game-options.game-mode.random-map": {
+      "message": "Carte aléatoire"
+    },
+    "game-options.game-mode.regicide": {
+      "message": "Régicide"
+    },
+    "game-options.game-mode.death-match": {
+      "message": "Combat à mort"
+    },
+    "game-options.game-mode.king-of-the-hill": {
+      "message": "Roi de la colline"
+    },
+    "game-options.game-mode.wonder-race": {
+      "message": "Course à la merveille"
+    },
+    "game-options.game-mode.defend-the-wonder": {
+      "message": "Déf. de la merveille"
+    },
+    "game-options.game-mode.turbo-random-map": {
+      "message": "Carte aléatoire turbo"
+    },
+    "game-options.game-mode.capture-the-relic": {
+      "message": "Capture de relique"
+    },
+    "game-options.game-mode.sudden-death": {
+      "message": "Mort subite"
+    },
+    "game-options.game-mode.battle-royale": {
+      "message": "Battle Royale"
+    },
+    "game-options.game-mode.empire-wars": {
+      "message": "Guerres d’empires"
+    },
+    "game-options.resources.standard": {
+      "message": "Ressources standard"
+    },
+    "game-options.resources.low": {
+      "message": "Ressources basses"
+    },
+    "game-options.resources.medium": {
+      "message": "Ressources moyennes"
+    },
+    "game-options.resources.high": {
+      "message": "Ressources hautes"
+    },
+    "game-options.resources.ultra-high": {
+      "message": "Ressources très élevées"
+    },
+    "game-options.resources.infinite": {
+      "message": "Ressources infinies"
+    },
+    "game-options.resources.random": {
+      "message": "Ressources aléatoires"
+    },
+    "game-options.age.standard": {
+      "message": "Âge de départ standard"
+    },
+    "game-options.age.dark-age": {
+      "message": "Âge sombre"
+    },
+    "game-options.age.feudal-age": {
+      "message": "Âge féodal"
+    },
+    "game-options.age.castle-age": {
+      "message": "Âge des châteaux"
+    },
+    "game-options.age.imperial-age": {
+      "message": "Âge impérial"
+    },
+    "game-options.age.post-imperial-age": {
+      "message": "Âge post-impérial"
+    },
+    "game-options.positions.random": {
+      "message": "Positions aléatoires"
+    },
+    "game-options.positions.fixed": {
+      "message": "Positions fixes"
+    },
+    "game-options.positions.team-together": {
+      "message": "Faire équipe"
+    },
+    "game-options.color.blue": {
+      "message": "Bleu"
+    },
+    "game-options.color.red": {
+      "message": "Rouge"
+    },
+    "game-options.color.green": {
+      "message": "Vert"
+    },
+    "game-options.color.yellow": {
+      "message": "Jaune"
+    },
+    "game-options.color.cyan": {
+      "message": "Cyan"
+    },
+    "game-options.color.purple": {
+      "message": "Violet"
+    },
+    "game-options.color.gray": {
+      "message": "Gris"
+    },
+    "game-options.color.orange": {
+      "message": "Orange"
+    },
+    "game-options.team.none": {
+      "message": "Pas d’équipe"
+    },
+    "game-options.team.numbered": {
+      "message": "Équipe {team}"
+    },
+    "game-options.flag.turbo": {
+      "message": "Turbo"
+    },
+    "game-options.flag.full-tech-tree": {
+      "message": "Toutes technologies"
+    },
+    "game-options.flag.antiquity": {
+      "message": "Antiquité"
+    },
+    "game-options.flag.solid-farms": {
+      "message": "Fermes solides"
+    },
+    "game-options.civilization.random": {
+      "message": "Aléatoire"
+    },
+    "game-options.civilization.britons": {
+      "message": "Britanniques"
+    },
+    "game-options.civilization.franks": {
+      "message": "Francs"
+    },
+    "game-options.civilization.goths": {
+      "message": "Goths"
+    },
+    "game-options.civilization.teutons": {
+      "message": "Teutons"
+    },
+    "game-options.civilization.japanese": {
+      "message": "Japonais"
+    },
+    "game-options.civilization.chinese": {
+      "message": "Chinois"
+    },
+    "game-options.civilization.byzantines": {
+      "message": "Byzantins"
+    },
+    "game-options.civilization.persians": {
+      "message": "Perses"
+    },
+    "game-options.civilization.saracens": {
+      "message": "Sarrasins"
+    },
+    "game-options.civilization.turks": {
+      "message": "Turcs"
+    },
+    "game-options.civilization.vikings": {
+      "message": "Vikings"
+    },
+    "game-options.civilization.mongols": {
+      "message": "Mongols"
+    },
+    "game-options.civilization.celts": {
+      "message": "Celtes"
+    },
+    "game-options.civilization.spanish": {
+      "message": "Espagnols"
+    },
+    "game-options.civilization.aztecs": {
+      "message": "Aztèques"
+    },
+    "game-options.civilization.mayans": {
+      "message": "Mayas"
+    },
+    "game-options.civilization.huns": {
+      "message": "Huns"
+    },
+    "game-options.civilization.koreans": {
+      "message": "Coréens"
+    },
+    "game-options.civilization.italians": {
+      "message": "Italiens"
+    },
+    "game-options.civilization.hindustanis": {
+      "message": "Hindoustanis"
+    },
+    "game-options.civilization.incas": {
+      "message": "Incas"
+    },
+    "game-options.civilization.magyars": {
+      "message": "Magyars"
+    },
+    "game-options.civilization.slavs": {
+      "message": "Slaves"
+    },
+    "game-options.civilization.portuguese": {
+      "message": "Portugais"
+    },
+    "game-options.civilization.ethiopians": {
+      "message": "Éthiopiens"
+    },
+    "game-options.civilization.malians": {
+      "message": "Maliens"
+    },
+    "game-options.civilization.berbers": {
+      "message": "Berbères"
+    },
+    "game-options.civilization.khmer": {
+      "message": "Khmers"
+    },
+    "game-options.civilization.malay": {
+      "message": "Malais"
+    },
+    "game-options.civilization.burmese": {
+      "message": "Birmans"
+    },
+    "game-options.civilization.vietnamese": {
+      "message": "Vietnamiens"
+    },
+    "game-options.civilization.bulgarians": {
+      "message": "Bulgares"
+    },
+    "game-options.civilization.tatars": {
+      "message": "Tatars"
+    },
+    "game-options.civilization.cumans": {
+      "message": "Coumans"
+    },
+    "game-options.civilization.lithuanians": {
+      "message": "Lituaniens"
+    },
+    "game-options.civilization.burgundians": {
+      "message": "Bourguignons"
+    },
+    "game-options.civilization.sicilians": {
+      "message": "Siciliens"
+    },
+    "game-options.civilization.poles": {
+      "message": "Polonais"
+    },
+    "game-options.civilization.bohemians": {
+      "message": "Bohémiens"
+    },
+    "game-options.civilization.dravidians": {
+      "message": "Dravidiens"
+    },
+    "game-options.civilization.bengalis": {
+      "message": "Bengalis"
+    },
+    "game-options.civilization.gurjaras": {
+      "message": "Gurjaras"
+    },
+    "game-options.civilization.romans": {
+      "message": "Romains"
+    },
+    "game-options.civilization.armenians": {
+      "message": "Arméniens"
+    },
+    "game-options.civilization.georgians": {
+      "message": "Géorgiens"
+    },
+    "game-options.civilization.achaemenids": {
+      "message": "Achéménides"
+    },
+    "game-options.civilization.athenians": {
+      "message": "Athéniens"
+    },
+    "game-options.civilization.spartans": {
+      "message": "Spartiates"
+    },
+    "game-options.civilization.shu": {
+      "message": "Shu"
+    },
+    "game-options.civilization.wu": {
+      "message": "Wu"
+    },
+    "game-options.civilization.wei": {
+      "message": "Wei"
+    },
+    "game-options.civilization.jurchens": {
+      "message": "Jürchen"
+    },
+    "game-options.civilization.khitans": {
+      "message": "Khitan"
+    },
+    "game-options.civilization.macedonians": {
+      "message": "Macédoniens"
+    },
+    "game-options.civilization.thracians": {
+      "message": "Thraces"
+    },
+    "game-options.civilization.puru": {
+      "message": "Purus"
+    },
+    "game-options.civilization.muisca": {
+      "message": "Muisca"
+    },
+    "game-options.civilization.mapuche": {
+      "message": "Mapuche"
+    },
+    "game-options.civilization.tupi": {
+      "message": "Tupi"
+    },
+    "game-options.civilization.saxons": {
+      "message": "Saxons"
+    },
+    "game-options.civilization.varangians": {
+      "message": "Varègues"
+    },
+    "game-options.civilization.danes": {
+      "message": "Danois"
+    },
+    "game-options.civilization.unknown": {
+      "message": "Civilisation {id}"
+    },
+    "live-test.progress.preview": {
+      "message": "Aperçu"
+    },
+    "live-test.progress.preview.detail": {
+      "message": "Génération de l’aperçu (étape {step} sur {total})"
+    },
+    "live-test.progress.connecting": {
+      "message": "Connexion"
+    },
+    "live-test.progress.connecting.detail": {
+      "message": "Connexion à AoE2Control (étape {step} sur {total})"
+    },
+    "live-test.progress.checking": {
+      "message": "Contrôle"
+    },
+    "live-test.progress.ending": {
+      "message": "Arrêt"
+    },
+    "live-test.progress.copying": {
+      "message": "Copie"
+    },
+    "live-test.progress.selecting": {
+      "message": "Sélection"
+    },
+    "live-test.progress.starting": {
+      "message": "Démarrage"
+    },
+    "live-test.progress.verifying": {
+      "message": "Vérification"
+    },
+    "live-test.progress.verifying.detail": {
+      "message": "Vérification de la partie (étape {step} sur {total})"
+    },
+    "live-test.progress.waiting": {
+      "message": "Attente"
+    },
+    "live-test.progress.verified": {
+      "message": "Vérifiée"
+    },
+    "live-test.progress.verified.detail": {
+      "message": "Partie vérifiée"
+    },
+    "live-test.progress.checking-control.detail": {
+      "message": "Contrôle d’AoE2Control (étape {step} sur {total})"
+    },
+    "live-test.progress.checking-game.detail": {
+      "message": "Contrôle du jeu (étape {step} sur {total})"
+    },
+    "live-test.progress.ending-match.detail": {
+      "message": "Arrêt de la partie en cours (étape {step} sur {total})"
+    },
+    "live-test.progress.copying-map.detail": {
+      "message": "Copie de la carte dans le jeu (étape {step} sur {total})"
+    },
+    "live-test.progress.selecting-map.detail": {
+      "message": "Sélection de la carte dans le jeu (étape {step} sur {total})"
+    },
+    "live-test.progress.starting-match.detail": {
+      "message": "Démarrage de la partie (étape {step} sur {total})"
+    },
+    "live-test.progress.engine-unloading.detail": {
+      "message": "En attente du déchargement de l’instance précédente d’AoE2Control (étape {step} sur {total})"
+    },
+    "live-test.progress.engine-starting.detail": {
+      "message": "En attente du démarrage d’AoE2Control dans le jeu (étape {step} sur {total})"
+    },
+    "live-test.progress.label": {
+      "message": "Test en jeu"
+    },
+    "live-test.replace-match.title": {
+      "message": "Remplacer la partie en cours ?"
+    },
+    "live-test.replace-match.description": {
+      "message": "AoE2RMSIDE mettra fin à la partie solo et lancera cette version de l’aperçu. Il ne vous le demandera plus jusqu’à ce que vous retiriez AoE2Control."
+    },
+    "live-test.replace-match.confirm": {
+      "message": "Terminer et remplacer la partie"
+    },
+    "live-test.seed.select-valid-control": {
+      "message": "Sélectionnez d’abord un exécutable AoE2Control valide."
+    },
+    "live-test.seed.configure-control": {
+      "message": "Configurez AoE2Control pour lire la graine de la partie en cours."
+    },
+    "live-test.seed.connecting": {
+      "message": "AoE2Control se connecte. Réessayez une fois la connexion établie."
+    },
+    "live-test.seed.readback-unavailable": {
+      "message": "La lecture de la partie est indisponible. Reconnectez AoE2Control et réessayez."
+    },
+    "live-test.seed.replay": {
+      "message": "Les graines des parties enregistrées ne peuvent pas être importées."
+    },
+    "live-test.seed.multiplayer": {
+      "message": "Les graines des parties multijoueurs ne peuvent pas être importées."
+    },
+    "live-test.seed.state-changing": {
+      "message": "L’état de la partie change ou est inconnu. Patientez un instant et réessayez."
+    },
+    "live-test.seed.no-match": {
+      "message": "Lancez d’abord une partie solo compatible sur carte aléatoire."
+    },
+    "live-test.seed.setup-unreadable": {
+      "message": "Les paramètres de la partie active sont illisibles. Reconnectez AoE2Control et réessayez."
+    },
+    "live-test.seed.not-random-map": {
+      "message": "La partie active n’est pas une partie compatible en mode Carte aléatoire."
+    },
+    "live-test.seed.seed-unreadable": {
+      "message": "La graine de la partie active est illisible. Reconnectez AoE2Control et réessayez."
+    },
+    "live-test.seed.busy": {
+      "message": "Une opération AoE2Control est déjà en cours."
+    },
+    "live-test.seed.not-returned": {
+      "message": "AoE2Control n’a pas renvoyé la graine de la partie."
+    },
+    "live-test.control.missing": {
+      "message": "L’exécutable sélectionné a été déplacé ou supprimé."
+    },
+    "live-test.control.changed": {
+      "message": "L’exécutable sélectionné a changé. Sélectionnez-le à nouveau pour approuver le nouveau fichier."
+    },
+    "live-test.control.invalid": {
+      "message": "Le fichier sélectionné n’est pas un exécutable public AoE2Control valide."
+    },
+    "workspace.format.save-skipped": {
+      "message": "Formatage à l’enregistrement ignoré pour {name}"
+    },
+    "workspace.format.save-cancelled": {
+      "message": "Enregistrement annulé pour {name}"
+    },
+    "workspace.format.read-only": {
+      "message": "{name} est en lecture seule et n’a pas été formaté"
+    },
+    "workspace.format.unchanged": {
+      "message": "{name} est déjà formaté"
+    },
+    "workspace.format.not-formatted": {
+      "message": "{name} n’a pas été formaté"
+    },
+    "workspace.format.reason.timeout": {
+      "message": "L’outil de formatage n’a pas terminé à temps."
+    },
+    "workspace.format.reason.not-proven": {
+      "message": "L’équivalence stricte n’a pas été démontrée."
+    },
+    "workspace.format.reason.stale": {
+      "message": "Le texte a changé pendant le formatage."
+    },
+    "workspace.files.deleted-outside": {
+      "message": "{name} a été supprimé en dehors d’AoE2RMSIDE"
+    },
+    "workspace.files.deleted-outside.cause": {
+      "message": "Son texte reste ouvert dans l’éditeur."
+    },
+    "workspace.files.reloaded": {
+      "message": "{name} rechargé après sa modification sur le disque"
+    },
+    "workspace.recovery.restored": {
+      "message": "{count, plural, one {{count} onglet non enregistré récupéré} many {{count} onglets non enregistrés récupérés} other {{count} onglets non enregistrés récupérés}} de la session précédente"
+    },
+    "workspace.recovery.restored.cause": {
+      "message": "Les fichiers source n’ont pas été écrasés."
+    },
+    "workspace.failed.save": {
+      "message": "Le fichier n’a pas pu être enregistré"
+    },
+    "workspace.failed.open-file": {
+      "message": "Le fichier n’a pas pu être ouvert"
+    },
+    "workspace.failed.open-folder": {
+      "message": "Le dossier n’a pas pu être ouvert"
+    },
+    "workspace.failed.open-recent": {
+      "message": "L’élément récent n’a pas pu être ouvert"
+    },
+    "workspace.failed.open-requested": {
+      "message": "Les éléments demandés n’ont pas pu être ouverts"
+    },
+    "workspace.failed.open-dropped": {
+      "message": "Les éléments déposés n’ont pas pu être ouverts"
+    },
+    "workspace.failed.open-map-item-source": {
+      "message": "Le script à l’origine de cet élément de carte n’a pas pu être ouvert"
+    },
+    "workspace.failed.create": {
+      "message": "L’élément n’a pas pu être créé"
+    },
+    "workspace.failed.rename": {
+      "message": "L’élément n’a pas pu être renommé"
+    },
+    "workspace.failed.delete": {
+      "message": "L’élément n’a pas pu être supprimé"
+    },
+    "workspace.failed.restore-session": {
+      "message": "La session précédente n’a pas pu être restaurée"
+    },
+    "workspace.failed.back-up": {
+      "message": "Le travail non enregistré n’a pas pu être sauvegardé"
+    },
+    "file-actions.included-files.discovery-limit": {
+      "message": "La recherche des fichiers inclus a dépassé la limite pour {scope} ({budget}) : {used, number, integer} pour une limite de {maximum, number, integer}."
+    },
+    "file-actions.included-files.discovery-reduce": {
+      "message": "Utilisez un dossier de fichiers inclus plus petit ou réduisez le nombre de fichiers inclus nécessaires."
+    },
+    "file-actions.included-files.changed": {
+      "message": "Les sources ont changé pendant la vérification des fichiers inclus. Relancez l’exécution."
+    },
+    "file-actions.included-files.budget.paths": {
+      "message": "chemins d’inclusion"
+    },
+    "file-actions.included-files.budget.metadata": {
+      "message": "métadonnées des noms, en octets"
+    },
+    "file-actions.included-files.budget.directory-visits": {
+      "message": "entrées de dossier"
+    },
+    "file-actions.included-files.budget.depth": {
+      "message": "profondeur des dossiers"
+    },
+    "file-actions.map-test-sources.limit.maps": {
+      "message": "Le test de cartes dépasse la limite de {limit, number, integer} cartes. Testez moins de cartes à la fois."
+    },
+    "file-actions.map-test-sources.limit.records": {
+      "message": "Le test de cartes dépasse la limite de {limit, number, integer} entrées de fichiers source. Testez moins de cartes à la fois."
+    },
+    "file-actions.map-test-sources.limit.bytes": {
+      "message": "Le test de cartes dépasse la limite de {limit, number, integer} MiB de données source. Testez moins de cartes à la fois."
+    },
+    "file-actions.map-test-sources.limit.metadata": {
+      "message": "Le test de cartes dépasse la limite de {limit, number, integer} MiB de métadonnées source. Testez moins de cartes à la fois."
+    },
+    "editor-assistance.limited.headline": {
+      "message": "L’assistance de l’éditeur est limitée"
+    },
+    "editor-assistance.limited.sources": {
+      "message": "Certaines vérifications de l’éditeur n’ont pas pu utiliser les fichiers source actuels."
+    },
+    "editor-assistance.limited.diagnostic-queue": {
+      "message": "Certains diagnostics de l’éditeur ont été ignorés car la file d’attente des mises à jour est pleine."
+    },
+    "editor-assistance.limited.retry": {
+      "message": "Consultez Détails pour connaître les sources concernées, puis réessayez."
+    },
+    "editor-assistance.limited.capacity": {
+      "message": "Utilisez un dossier source plus petit ou fermez des onglets de fichiers source, puis réessayez."
+    },
+    "file-actions.map-test-sources.failed": {
+      "message": "Impossible de préparer les sources du test de cartes"
+    },
+    "file-actions.included-files.required-limit.file": {
+      "message": "{scope} dépasse la limite de {limit, number, integer} MiB par fichier."
+    },
+    "file-actions.included-files.required-limit.bytes": {
+      "message": "La taille totale des fichiers source nécessaires dépasse la limite de {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.records": {
+      "message": "Le nombre de fichiers source nécessaires dépasse la limite ({limit, number, integer})."
+    },
+    "file-actions.included-files.required-limit.metadata": {
+      "message": "Les informations sur les sources nécessaires dépassent la limite de métadonnées de {limit, number, integer} MiB."
+    },
+    "file-actions.included-files.required-limit.reduce": {
+      "message": "Réduisez la quantité de données source nécessaires, puis relancez l’exécution."
+    },
+    "release-check.newer.headline": {
+      "message": "AoE2RMSIDE {version} est disponible"
+    },
+    "release-check.newer.cause": {
+      "message": "Vous utilisez {current}."
+    },
+    "release-check.newer.action": {
+      "message": "Ouvrir la page des versions"
+    }
+  }
+}

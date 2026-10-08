@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/constant-kinds/v1",
+  "title": "Shipped constant kinds of one behavior profile",
+  "description": "Editor help only: one kind per built-in constant name, derived offline from the section headings of that game version's definition file, shipped beside the frozen profile files and bound by profileId; no comment text, value, or excerpt of the file; outside every behavior, palette, and generation identity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "compatibility", "profileId", "derivationContract", "entries"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "compatibility": {
+      "$ref": "#/definitions/compatibility"
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "derivationContract": {
+      "const": "aoe2de-definition-heading-kinds-v1"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/definitions/constantKindsEntry"
+      }
+    }
+  },
+  "definitions": {
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": {
+          "const": 1
+        },
+        "maximumMajor": {
+          "const": 1
+        }
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "productVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]+)*$"
+    },
+    "constantKind": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "kind"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,127}$"
+        },
+        "kind": {
+          "enum": [
+            "object",
+            "object-class",
+            "terrain",
+            "cliff-type",
+            "map-type",
+            "color-correction",
+            "water-definition",
+            "civilization",
+            "assign-type",
+            "effect",
+            "effect-type",
+            "modify-tech",
+            "player-data",
+            "attribute",
+            "resource",
+            "other"
+          ]
+        }
+      }
+    },
+    "constantKindsEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tableId", "productVersion", "source", "provenance", "names"],
+      "properties": {
+        "tableId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,95}$"
+        },
+        "productVersion": {
+          "$ref": "#/definitions/productVersion"
+        },
+        "source": {
+          "const": "definition-file-headings"
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "tool",
+            "installationBuild",
+            "inputFile",
+            "inputSha256",
+            "definitionsSha256",
+            "derivedOn"
+          ],
+          "properties": {
+            "tool": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "installationBuild": {
+              "$ref": "#/definitions/productVersion"
+            },
+            "inputFile": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*$",
+              "maxLength": 256
+            },
+            "inputSha256": {
+              "$ref": "#/definitions/sha256"
+            },
+            "definitionsSha256": {
+              "$ref": "#/definitions/sha256"
+            },
+            "derivedOn": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$"
+            }
+          }
+        },
+        "names": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100000,
+          "items": {
+            "$ref": "#/definitions/constantKind"
+          }
+        }
+      }
+    }
+  }
+}
