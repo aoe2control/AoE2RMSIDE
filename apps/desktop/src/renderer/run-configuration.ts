@@ -938,7 +938,10 @@ export function languageServerPreviewContext(
     width: configuration.width,
     height: configuration.height,
     mapSize: configuration.mapSize,
-    players: previewPlayers(configuration),
+    players: previewPlayers(configuration).map((player, index) => ({
+      ...player,
+      color: configuration.playerColors[index] ?? player.slot - 1,
+    })),
     gameMode: configuration.modeContext,
     startingResources: configuration.startingResources,
     startingAge: configuration.startingAge,

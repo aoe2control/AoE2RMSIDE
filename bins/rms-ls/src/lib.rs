@@ -1938,17 +1938,7 @@ impl Server {
         let entry = current(entry_uri)
             .cloned()
             .ok_or_else(|| RequestError::invalid("document is not open"))?;
-        let sources = self
-            .documents
-            .keys()
-            .filter_map(|uri| Some((uri, current(uri)?)))
-            .map(|(uri, source)| {
-                VirtualSource::new(uri.clone(), source.clone())
-                    .map_err(|error| RequestError::invalid(error.to_string()))
-            })
-            .collect::<RequestResult<Vec<_>>>()?;
-        let resolver = VirtualSourceResolver::new(sources, ResolverRoots::default(), false)
-            .map_err(|error| RequestError::invalid(error.to_string()))?;
+        let resolver = self.open_document_resolver(current)?;
         let entry_bytes: Arc<[u8]> = Arc::from(entry.bytes());
         parse_strict(entry_uri, entry, &resolver, strict_options)
             .map(SemanticProgram::from_parsed)
@@ -2041,27 +2031,19 @@ impl Server {
                     strict_semantic_unavailable(error, |id| catalog_source_bytes(&catalog, id))
                 });
         }
-        let mut sources = Vec::with_capacity(self.documents.len());
-        let mut entry = None;
-        for (uri, document) in &self.documents {
-            let source = if uri == entry_uri {
+        let current = |uri: &str| {
+            let document = self.documents.get(uri)?;
+            Some(
                 override_source
-                    .clone()
-                    .unwrap_or_else(|| document.source.clone())
-            } else {
-                document.source.clone()
-            };
-            if uri == entry_uri {
-                entry = Some(source.clone());
-            }
-            sources.push(
-                VirtualSource::new(uri.clone(), source)
-                    .map_err(|error| RequestError::invalid(error.to_string()))?,
-            );
-        }
-        let entry = entry.ok_or_else(|| RequestError::invalid("document is not open"))?;
-        let resolver = VirtualSourceResolver::new(sources, ResolverRoots::default(), false)
-            .map_err(|error| RequestError::invalid(error.to_string()))?;
+                    .as_ref()
+                    .filter(|_| uri == entry_uri)
+                    .unwrap_or(&document.source),
+            )
+        };
+        let entry = current(entry_uri)
+            .cloned()
+            .ok_or_else(|| RequestError::invalid("document is not open"))?;
+        let resolver = self.open_document_resolver(current)?;
         let entry_bytes: Arc<[u8]> = Arc::from(entry.bytes());
         parse_strict(entry_uri, entry, &resolver, strict_options)
             .map(SemanticProgram::from_parsed)
@@ -2076,6 +2058,52 @@ impl Server {
                     }
                 })
             })
+    }
+
+    fn open_document_resolver<'a>(
+        &'a self,
+        current: impl Fn(&str) -> Option<&'a SourceText>,
+    ) -> RequestResult<VirtualSourceResolver> {
+        let mut sources = self
+            .documents
+            .keys()
+            .filter_map(|uri| Some((uri, current(uri)?)))
+            .map(|(uri, source)| {
+                VirtualSource::new(uri.clone(), source.clone())
+                    .map_err(|error| RequestError::invalid(error.to_string()))
+            })
+            .collect::<RequestResult<Vec<_>>>()?;
+        let mut xs_resolver = None;
+        let mut placed = BTreeSet::new();
+        for (uri, document) in &self.documents {
+            for include in include_syntax(document)
+                .into_iter()
+                .filter(|include| include.external_xs)
+            {
+                let (Ok(path), Some((folder, _))) = (
+                    IncludePath::new(include.path.as_str()),
+                    uri.rsplit_once('/'),
+                ) else {
+                    continue;
+                };
+                let place = format!("{folder}/{}", path.as_str());
+                if !placed.insert(place.to_ascii_lowercase()) {
+                    continue;
+                }
+                let Some(file) = xs_resolver
+                    .get_or_insert_with(|| xs::WorkspaceResolver::new(&self.xs))
+                    .resolve_path(uri, &include.path)
+                else {
+                    continue;
+                };
+                sources.push(
+                    VirtualSource::external_xs(place, file.source.clone())
+                        .map_err(|error| RequestError::invalid(error.to_string()))?,
+                );
+            }
+        }
+        VirtualSourceResolver::new(sources, ResolverRoots::default(), false)
+            .map_err(|error| RequestError::invalid(error.to_string()))
     }
 
     fn decision_range_in(
@@ -2692,9 +2720,17 @@ fn preview_context_from_json(value: &Value) -> RequestResult<PreviewContext> {
         .ok_or_else(|| RequestError::invalid("preview context players must be an array"))?
         .iter()
         .map(|player| {
+            let slot = u8::try_from(unsigned_field(player, "slot")?)
+                .map_err(|_| RequestError::invalid("preview player slot is out of range"))?;
+            let color = match player.get("color") {
+                None | Some(Value::Null) => slot.saturating_sub(1),
+                Some(_) => u8::try_from(unsigned_field(player, "color")?)
+                    .ok()
+                    .filter(|color| usize::from(*color) < rms_engine::MAXIMUM_PLAYERS)
+                    .ok_or_else(|| RequestError::invalid("preview player color is out of range"))?,
+            };
             Ok(PlayerConfiguration {
-                slot: u8::try_from(unsigned_field(player, "slot")?)
-                    .map_err(|_| RequestError::invalid("preview player slot is out of range"))?,
+                slot,
                 team: u8::try_from(unsigned_field(player, "team")?)
                     .map_err(|_| RequestError::invalid("preview player team is out of range"))?,
                 civilization_id: CivilizationId(
@@ -2702,7 +2738,7 @@ fn preview_context_from_json(value: &Value) -> RequestResult<PreviewContext> {
                         RequestError::invalid("preview player civilization is out of range")
                     })?,
                 ),
-                color: 0,
+                color,
             })
         })
         .collect::<RequestResult<Vec<_>>>()?;

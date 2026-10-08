@@ -1596,7 +1596,7 @@ export interface LanguageServerPreviewContext {
   width: number;
   height: number;
   mapSize: string;
-  players: PreviewPlayerConfiguration[];
+  players: Array<PreviewPlayerConfiguration & { color: number }>;
   gameMode: string;
   startingResources: string;
   startingAge: string;
