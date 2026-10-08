@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Mřížka políček"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Malé stromy"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "náhled mapy shora v barvách minimapy"
     },

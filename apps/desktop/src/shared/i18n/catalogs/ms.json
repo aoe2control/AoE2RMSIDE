@@ -3491,6 +3491,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Grid petak"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Pokok kecil"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "pratonton peta dari atas dengan warna peta mini"
     },

@@ -3491,6 +3491,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "타일 격자"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "작은 나무"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "미니맵 색상으로 위에서 본 맵 미리 보기"
     },

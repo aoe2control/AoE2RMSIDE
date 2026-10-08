@@ -38,7 +38,7 @@ import {
   Texture,
   type ContainerChild,
 } from 'pixi.js';
-import { Grid3x3, Keyboard, MousePointer2, Scan, TestTube2 } from 'lucide-react';
+import { Grid3x3, Keyboard, MousePointer2, Scan, TestTube2, TreePine } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { t as translate } from '../shared/i18n/translator';
@@ -70,11 +70,13 @@ import {
   destroyGameArtLayers,
   handOverGameArtPicture,
   setGameArtKindVisibility,
+  setGameArtTreeScale,
   syncGameArtLayers,
   writeGameArtDataset,
   type GameArtPresentationState,
 } from './game-art-layers';
 import { GameArtConversionProgress } from './game-art-progress';
+import { treeSpriteScale } from './game-art-small-trees';
 import type { GameArtSpriteLayer } from './game-art-sprites';
 import { teamColorResolver } from './game-art-team-colors';
 import type { GameArtTerrainPicture } from './game-art-layers';
@@ -121,6 +123,14 @@ import {
   TileGridLayer,
   type TileGridColor,
 } from './preview-tile-grid';
+import {
+  attachPreviewRenderScheduler,
+  detachPreviewRenderScheduler,
+  framePixelHash,
+  PreviewRenderScheduler,
+  requestPreviewRender,
+} from './preview-render-scheduler';
+import { mapLayerKeptForCamera, markerCullMargin, type BuiltMapLayer } from './preview-scene-reuse';
 import { useAppPanelContext } from './app-context';
 import { rovingKeyTarget } from './keyboard-navigation';
 import type { PreviewExecutionController } from './preview-execution';
@@ -382,6 +392,12 @@ const tileGridButton = {
   key: 'tileGrid',
   labelId: 'preview-panel.tool.tile-grid',
   renderIcon: () => <Grid3x3 aria-hidden="true" size={14} />,
+} as const;
+
+const smallTreesButton = {
+  key: 'smallTrees',
+  labelId: 'preview-panel.tool.small-trees',
+  renderIcon: () => <TreePine aria-hidden="true" size={14} />,
 } as const;
 
 function perspectiveProjection(perspective: PreviewPerspective): PreviewProjection {
@@ -690,6 +706,8 @@ export function PreviewPanel() {
   const { t, translator } = useI18n();
   const host = useRef<HTMLDivElement>(null);
   const application = useRef<Application | null>(null);
+  const renderScheduler = useRef<PreviewRenderScheduler | null>(null);
+  const builtMapLayer = useRef<(BuiltMapLayer & { key: PreviewCamera }) | null>(null);
   const gesture = useRef<PreviewPointerGesture | null>(null);
   const selectionOutline = useRef<Graphics | null>(null);
   const sourceHighlightOutline = useRef<Graphics | null>(null);
@@ -774,6 +792,8 @@ export function PreviewPanel() {
     setPreviewLook,
     previewTileGrid,
     setPreviewTileGrid,
+    previewSmallTrees,
+    setPreviewSmallTrees,
     gpuMapRendering,
     previewMapOrigin,
     mapTestPreviewShown,
@@ -1316,9 +1336,11 @@ export function PreviewPanel() {
     setPixiReady(false);
     const initialWidth = Math.max(1, container.clientWidth);
     const initialHeight = Math.max(1, container.clientHeight);
+    let scheduler: PreviewRenderScheduler | null = null;
     void pixi
       .init({
         antialias: false,
+        autoStart: false,
         autoDensity: true,
         backgroundAlpha: 0,
         height: initialHeight,
@@ -1348,9 +1370,21 @@ export function PreviewPanel() {
           setGpuUnavailable('context-lost'),
         );
         application.current = pixi;
+        scheduler = new PreviewRenderScheduler(() => pixi.render(), {
+          verify: () => container.dataset.previewFrameCheck === 'on',
+          frameHash: () => previewFrameHash(pixi),
+          onFrame: (current) => {
+            container.dataset.previewRenders = String(current.statistics.renders);
+            container.dataset.previewFrameChecks = String(current.statistics.checks);
+            container.dataset.previewStaleFrames = String(current.statistics.staleFrames);
+          },
+        });
+        attachPreviewRenderScheduler(pixi.stage, scheduler);
+        renderScheduler.current = scheduler;
         const width = Math.max(1, container.clientWidth);
         const height = Math.max(1, container.clientHeight);
         pixi.renderer.resize(width, height);
+        scheduler.request();
         requestedSize = { width, height };
         setViewport((current) => ({
           width,
@@ -1370,6 +1404,7 @@ export function PreviewPanel() {
         (pixi.renderer.screen.width !== width || pixi.renderer.screen.height !== height)
       ) {
         pixi.renderer.resize(width, height);
+        scheduler?.request();
       }
       const previous = requestedSize ?? viewportRef.current;
       if (previous.width === width && previous.height === height) return;
@@ -1387,7 +1422,7 @@ export function PreviewPanel() {
         return;
       }
       flushSync(update);
-      if (initialized && !disposed) pixi.render();
+      if (initialized && !disposed) scheduler?.renderNow();
     };
     let frozenSize: { width: number; height: number } | null = null;
     const showFrozenCanvas = () => {
@@ -1444,6 +1479,11 @@ export function PreviewPanel() {
       stopContextWatch?.();
       setPixiReady(false);
       if (application.current === pixi) application.current = null;
+      if (scheduler) {
+        scheduler.destroy();
+        detachPreviewRenderScheduler(pixi.stage);
+        if (renderScheduler.current === scheduler) renderScheduler.current = null;
+      }
       candidateLayer.current?.destroy();
       candidateLayer.current = null;
       const terrainCache = terrainChunkCache.current;
@@ -1455,6 +1495,9 @@ export function PreviewPanel() {
     };
   }, [viewAvailable]);
 
+  const sceneCamera = mapLayerKeptForCamera(builtMapLayer.current, camera, viewport, viewScene)
+    ? builtMapLayer.current!.key
+    : camera;
   useEffect(() => {
     const pixi = application.current;
     const container = host.current;
@@ -1512,11 +1555,13 @@ export function PreviewPanel() {
       elevation: { backgroundColor: heightOverlayColor, elevationMode },
       teamColor: gameArtTeamColor,
       renderer: layerRenderer,
+      maximumTextureSize: maximumTextureSize(pixi),
       onGpuUnavailable: (reason) => setGpuUnavailable((current) => current ?? reason),
       host: container,
       onPresented: () => {
         setGameArtPresentedKey(presentationCache.gameArtTerrain?.view.key ?? null);
         if (renderedMapLayer.current) renderedMapLayer.current.visible = true;
+        renderScheduler.current?.request();
       },
     });
     setGameArtPresentedKey(
@@ -1526,10 +1571,11 @@ export function PreviewPanel() {
       objects: objectVisibility.objects,
       cliffs: overlays.cliffs,
     });
+    setGameArtTreeScale(terrainCache, treeSpriteScale(previewSmallTrees));
     syncTileGrid(terrainCache, previewTileGrid, tileGridColor(container), container);
     transformTerrainLayer(terrainCache.container, camera, scene, viewport);
     updateTerrainChunkVisibility(terrainCache, [camera], viewport, container);
-    const mapLayer = new Container();
+    const mapLayer = new Container({ isRenderGroup: true });
     pixi.stage.addChild(mapLayer);
     mapLayer.visible = terrainCache.gameArtPresentation.outgoing === null;
     renderedMapLayer.current = mapLayer;
@@ -1549,6 +1595,7 @@ export function PreviewPanel() {
       viewport,
       container,
     );
+    connectionProbeHosts.set(mapLayer, container);
     drawCliffs(
       mapLayer,
       scene,
@@ -1579,6 +1626,7 @@ export function PreviewPanel() {
         ? terrainCache.gameArtSprites?.layer.presentedObjects
         : undefined,
       markerObjectColors,
+      markerCullMargin(viewport),
     );
     container.dataset.drawnObjectCount = String(drawnObjects.objects);
     container.dataset.drawnHelperCount = String(drawnObjects.helpers);
@@ -1696,7 +1744,7 @@ export function PreviewPanel() {
       sourceHighlightTiles.current,
       legendHoverTileIndices.current,
     );
-    latencyProbe.sceneBuild('end', pixi.ticker);
+    latencyProbe.sceneBuild('end', renderScheduler.current ?? undefined);
     const interaction = new Graphics()
       .rect(0, 0, viewport.width, viewport.height)
       .fill({ color: 0, alpha: 0.001 });
@@ -1710,6 +1758,7 @@ export function PreviewPanel() {
       interaction.cursor = cursor;
       if (!gesture.current) canvas.style.cursor = cursor;
       paintConnectionHover();
+      requestPreviewRender(connectionHoverGraphics);
     };
     const hoverConnectionAt = (point: { x: number; y: number } | null) => {
       connectionHoverPoint = point ? { x: point.x, y: point.y } : null;
@@ -1893,7 +1942,13 @@ export function PreviewPanel() {
         } else {
           displayedCamera.current = finishedGesture.camera;
           setCamera(finishedGesture.camera);
-          drawSelectionOutline(selectionOutline.current, scene, camera, viewport, displaySelection);
+          drawSelectionOutline(
+            selectionOutline.current,
+            scene,
+            displayedCamera.current,
+            viewport,
+            displaySelection,
+          );
         }
         setSelectionPreview(null);
       } else if (commitSelection) {
@@ -1983,6 +2038,14 @@ export function PreviewPanel() {
     container.dataset.outlineCameraZoom = camera.zoom.toFixed(4);
     sceneBuilds.current += 1;
     container.dataset.sceneBuilds = String(sceneBuilds.current);
+    builtMapLayer.current = {
+      camera,
+      key: sceneCamera,
+      viewport,
+      scene,
+      culled: drawnObjects.culled,
+    };
+    renderScheduler.current?.request();
     const drawnViewport = viewport;
     const transformFrozenCanvas = (width: number, height: number) => {
       if (previewViewportIsCollapsed(drawnViewport)) return null;
@@ -2036,7 +2099,7 @@ export function PreviewPanel() {
       window.removeEventListener('pointercancel', cancelNativePointer, true);
     };
   }, [
-    camera,
+    sceneCamera,
     candidateCoversScene,
     commitCameraTransition,
     displaySelection,
@@ -2056,6 +2119,7 @@ export function PreviewPanel() {
     connectionRoutes,
     shownConnectionMode,
     pixiReady,
+    previewSmallTrees,
     previewTileGrid,
     resolvedTheme,
     viewScene,
@@ -2065,6 +2129,15 @@ export function PreviewPanel() {
     markerObjectColors,
     viewport,
   ]);
+  useEffect(() => {
+    if (sceneCamera === camera || !viewScene) return;
+    if (cameraAnimation.current || gesture.current) return;
+    applyDisplayedCamera(camera);
+    const terrainCache = terrainChunkCache.current;
+    if (terrainCache) {
+      updateTerrainChunkVisibility(terrainCache, [camera], viewport, host.current);
+    }
+  }, [applyDisplayedCamera, camera, sceneCamera, viewScene, viewport]);
   const bindBoundaryOutline = useCallback((element: SVGPolygonElement | null) => {
     mapBoundary.current.outline = element;
     if (element) {
@@ -2537,6 +2610,9 @@ export function PreviewPanel() {
       );
     }
   }, [announce, committedMapHash]);
+  useEffect(() => {
+    renderScheduler.current?.request();
+  });
   const narrowPreview = viewScene !== null && pixiReady && viewport.width < narrowPreviewWidth;
   const blurOutdatedMap =
     (generationActivity !== null &&
@@ -2728,6 +2804,15 @@ export function PreviewPanel() {
                 mode={elevationMode}
                 onCycle={() => setElevationMode(nextElevationDisplayMode(elevationMode))}
               />
+              {shownLook === 'game-textures' && previewPerspective === 'diamond' ? (
+                <PreviewOverlayButton
+                  active={previewSmallTrees}
+                  className="preview-small-trees-button"
+                  label={t(smallTreesButton.labelId)}
+                  onToggle={() => setPreviewSmallTrees(!previewSmallTrees)}
+                  renderIcon={smallTreesButton.renderIcon}
+                />
+              ) : null}
               <span aria-hidden="true" className="preview-keyboard-focus-cue">
                 <Keyboard aria-hidden="true" />
                 <span>{t('preview-panel.toolbar.keyboard-cue')}</span>
@@ -3336,13 +3421,47 @@ function drawConnectionOverlay(
   }
   container.dataset.connectionDrawn = String(drawn);
   container.dataset.connectionDrawnFailed = String(failed);
+  connectionProbePoints.set(stage, probes);
+  writeConnectionProbes(container, stage);
+}
+
+const connectionProbePoints = new WeakMap<
+  Container,
+  { drawn?: { x: number; y: number }; failed?: { x: number; y: number } }
+>();
+const connectionProbeHosts = new WeakMap<Container, HTMLElement>();
+
+function writeConnectionProbes(container: HTMLElement, layer: Container): void {
+  const probes = connectionProbePoints.get(layer) ?? {};
   for (const [key, point] of [
     ['connectionProbe', probes.drawn],
     ['connectionFailedProbe', probes.failed],
   ] as const) {
-    if (point) container.dataset[key] = `${point.x.toFixed(2)},${point.y.toFixed(2)}`;
-    else delete container.dataset[key];
+    if (!point) {
+      delete container.dataset[key];
+      continue;
+    }
+    const x = layer.position.x + point.x * layer.scale.x;
+    const y = layer.position.y + point.y * layer.scale.y;
+    container.dataset[key] = `${x.toFixed(2)},${y.toFixed(2)}`;
   }
+}
+
+function maximumTextureSize(pixi: Application): number | undefined {
+  const gl = (pixi.renderer as { gl?: WebGLRenderingContext }).gl;
+  if (!gl) return undefined;
+  const size = Number(gl.getParameter(gl.MAX_TEXTURE_SIZE));
+  return Number.isFinite(size) && size > 0 ? size : undefined;
+}
+
+function previewFrameHash(pixi: Application): number | null {
+  const gl = (pixi.renderer as { gl?: WebGLRenderingContext }).gl;
+  if (!gl) return null;
+  const width = gl.drawingBufferWidth;
+  const height = gl.drawingBufferHeight;
+  const pixels = new Uint8Array(width * height * 4);
+  gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+  return framePixelHash(pixels);
 }
 
 interface CliffStyle {
@@ -3423,8 +3542,9 @@ function drawObjects(
   maximumObjects = Number.POSITIVE_INFINITY,
   spriteObjects: ReadonlySet<number> = new Set(),
   lookObjectColors?: ReadonlyMap<number, number>,
-): { helpers: number; objects: number; radiusRange: string } {
-  const drawn = { helpers: 0, objects: 0, radiusRange: '' };
+  cullMargin: { x: number; y: number } = { x: 0, y: 0 },
+): { helpers: number; objects: number; radiusRange: string; culled: boolean } {
+  const drawn = { helpers: 0, objects: 0, radiusRange: '', culled: false };
   if (!visibility.objects) return drawn;
   const layer = new OrderedMarkerLayer(stage);
   const scale = previewScale(scene.width, scene.height, camera, viewport);
@@ -3445,11 +3565,12 @@ function drawObjects(
       previewMarkerScreenRadius.maximum +
       scale * Math.max(1, object.footprintWidth, object.footprintHeight);
     if (
-      center.x < -reach ||
-      center.y < -reach ||
-      center.x > viewport.width + reach ||
-      center.y > viewport.height + reach
+      center.x < -reach - cullMargin.x ||
+      center.y < -reach - cullMargin.y ||
+      center.x > viewport.width + reach + cullMargin.x ||
+      center.y > viewport.height + reach + cullMargin.y
     ) {
+      drawn.culled = true;
       continue;
     }
     const offset = colocatedCompositionOffset(colocatedOrdinal, scale);
@@ -3474,11 +3595,12 @@ function drawObjects(
     ).map((coordinate, index) => coordinate + (index % 2 === 0 ? offset.x : offset.y));
     const footprintBounds = polygonBounds(footprint);
     if (
-      footprintBounds.right < 0 ||
-      footprintBounds.left > viewport.width ||
-      footprintBounds.bottom < 0 ||
-      footprintBounds.top > viewport.height
+      footprintBounds.right < -cullMargin.x ||
+      footprintBounds.left > viewport.width + cullMargin.x ||
+      footprintBounds.bottom < -cullMargin.y ||
+      footprintBounds.top > viewport.height + cullMargin.y
     ) {
+      drawn.culled = true;
       continue;
     }
     const materialKey =
@@ -3531,6 +3653,7 @@ function drawSelectionOutline(
 ): void {
   if (!graphics) return;
   graphics.clear();
+  requestPreviewRender(graphics);
   if (!selection) return;
   const polygon = mapRectangleScreenPolygon(
     { x: selection.minimumX, y: selection.minimumY },
@@ -3552,6 +3675,7 @@ function drawLegendHover(
 ): void {
   if (!graphics) return;
   graphics.clear();
+  requestPreviewRender(graphics);
   const indices = [...tileIndices];
   if (indices.length === 0) return;
   for (const tileIndex of indices) {
@@ -3782,7 +3906,7 @@ function createTerrainChunkCache(
   terrainColorSources: TerrainColorSources,
   lookTerrainColors: ReadonlyMap<number, number> | undefined,
 ): TerrainChunkCache {
-  const container = new Container({ label: 'cached-terrain-chunks' });
+  const container = new Container({ label: 'cached-terrain-chunks', isRenderGroup: true });
   container.eventMode = 'none';
   return {
     backend,
@@ -3910,6 +4034,7 @@ function updateTerrainChunkVisibility(
     );
   }
   cache.gameArtSprites?.layer.update(visibleChunks);
+  requestPreviewRender(cache.container);
   if (host) writeGameArtDataset(cache, host);
   if (!host) return;
   host.dataset.cachedTerrainChunks = String(cache.chunks.size);
@@ -4011,6 +4136,7 @@ function transformTerrainLayer(
   layer.scale.set(transform.scaleX, transform.scaleY);
   layer.position.set(transform.x, transform.y);
   tileGridLayers.get(layer)?.update(scene, camera, viewport);
+  requestPreviewRender(layer);
 }
 
 const tileGridLayers = new WeakMap<Container, TileGridLayer>();
@@ -4135,6 +4261,9 @@ function transformMapLayer(
   );
   layer.scale.set(transform.scale);
   layer.position.set(transform.x, transform.y);
+  requestPreviewRender(layer);
+  const host = connectionProbeHosts.get(layer);
+  if (host) writeConnectionProbes(host, layer);
 }
 
 function samePreviewCamera(left: PreviewCamera, right: PreviewCamera): boolean {

@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Grade de blocos"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Árvores pequenas"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "prévia do mapa visto de cima com as cores do minimapa"
     },

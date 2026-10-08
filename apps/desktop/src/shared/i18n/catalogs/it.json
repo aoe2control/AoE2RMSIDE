@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Griglia delle caselle"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Alberi piccoli"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "anteprima della mappa dall’alto con i colori della minimappa"
     },

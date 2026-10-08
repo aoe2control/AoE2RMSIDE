@@ -11,13 +11,23 @@ import {
 } from 'pixi.js';
 import type { CliffPieceRecord, GameArtSpriteFacing, GameArtSpriteSet } from '../shared/game-art';
 import { spriteDrawOrder, spriteFacing } from './game-art-blend';
-import type { GameArtAssetStore } from './game-art-resources';
+import { gameArtMaximumSpriteBytes, type GameArtAssetStore } from './game-art-resources';
+import {
+  buildSpriteAtlas,
+  type SpriteAtlas,
+  type SpriteAtlasCanvasFactory,
+  type SpriteAtlasEntry,
+  type SpriteAtlasFallbackReason,
+} from './game-art-sprite-atlas';
+import { requestPreviewRender } from './preview-render-scheduler';
 import {
   teamColorGlsl,
   teamColorKey,
   teamColorPixels,
   type TeamColor,
 } from './game-art-team-colors';
+import { spritePartPlacement } from './game-art-small-trees';
+import { hasWallFrames, isGateObject, wallFacingIndex, wallFramesFor } from './game-art-walls';
 import { isDecorationPreviewObject } from './preview-materials';
 import { previewChunkSize, type TopDownObject } from './top-down-preview';
 
@@ -40,6 +50,7 @@ export interface SpriteInstance {
   owner: number;
   parts: SpritePart[];
   decoration?: boolean;
+  tree?: boolean;
 }
 
 export interface CliffSpriteInstance {
@@ -60,6 +71,10 @@ export interface SpritePlan {
 
 export const cliffCivilizationId = 0;
 
+export interface SpritePlanOptions {
+  treeObjectIds?: ReadonlySet<number>;
+}
+
 export function planSprites(
   objects: readonly TopDownObject[],
   drawn: (object: TopDownObject) => boolean,
@@ -67,7 +82,9 @@ export function planSprites(
   seed: number,
   civilizationFor: (owner: number) => number,
   cliffPieces: readonly CliffPieceRecord[] = [],
+  options: SpritePlanOptions = {},
 ): SpritePlan {
+  const wallFrames = wallFramesFor(objects, drawn);
   const objectArt = new Map(
     set.objects.map((entry) => [`${entry.civilizationId}:${entry.objectId}`, entry]),
   );
@@ -98,10 +115,22 @@ export function planSprites(
     const parts: SpritePart[] = [];
     const addParts = (objectId: number, mapOffsetX: number, mapOffsetY: number, depth: number) => {
       const art = objectArt.get(`${civilization}:${objectId}`);
+      const wallFrame = depth === 0 ? wallFrames.get(object.index) : undefined;
+      const joined =
+        wallFrame !== undefined && hasWallFrames(graphics.get(art?.parts[0]?.graphic ?? -1));
       for (const part of art?.parts ?? []) {
         const graphic = graphics.get(part.graphic);
         if (!graphic) continue;
-        const facing = spriteFacing(seed, object.index, objectId, graphic.facings.length);
+        let facing: number;
+        if (joined) {
+          const index = wallFacingIndex(graphic, wallFrame!);
+          if (index === null) continue;
+          facing = index;
+        } else {
+          facing = isGateObject(objectId)
+            ? 0
+            : spriteFacing(seed, object.index, objectId, graphic.facings.length);
+        }
         parts.push({
           graphic: part.graphic,
           facing,
@@ -130,6 +159,9 @@ export function planSprites(
       owner: object.owner,
       parts,
       ...(decoration ? { decoration } : {}),
+      ...(object.appearance === 'tree' || options.treeObjectIds?.has(object.objectId)
+        ? { tree: true }
+        : {}),
     });
   }
   for (const [pieceIndex, piece] of cliffPieces.entries()) {
@@ -220,13 +252,13 @@ export function budgetedSpriteFacings(
   return chosen;
 }
 
-function teamColorOverlay(
+function teamColorImage(
   main: CanvasImageSource,
   mask: CanvasImageSource,
   width: number,
   height: number,
   team: TeamColor,
-): OffscreenCanvas {
+): ImageData {
   const canvas = new OffscreenCanvas(width, height);
   const context = canvas.getContext('2d', { willReadFrequently: true })!;
   context.drawImage(main, 0, 0, width, height);
@@ -235,7 +267,18 @@ function teamColorOverlay(
   context.drawImage(mask, 0, 0, width, height);
   const strength = context.getImageData(0, 0, width, height);
   color.data.set(teamColorPixels(color.data, strength.data, team));
-  context.putImageData(color, 0, 0);
+  return color;
+}
+
+function teamColorOverlay(
+  main: CanvasImageSource,
+  mask: CanvasImageSource,
+  width: number,
+  height: number,
+  team: TeamColor,
+): OffscreenCanvas {
+  const canvas = new OffscreenCanvas(width, height);
+  canvas.getContext('2d')!.putImageData(teamColorImage(main, mask, width, height, team), 0, 0);
   return canvas;
 }
 
@@ -289,6 +332,10 @@ export interface GameArtSpriteStatistics {
   instances: number;
   createdSprites: number;
   overlayBytes: number;
+  atlasPages: number;
+  atlasBytes: number;
+  atlasFallback: SpriteAtlasFallbackReason | 'disabled' | null;
+  visibilityWrites: number;
   glyphObjects: number;
   invisibleObjects: number;
   cliffSprites: number;
@@ -328,11 +375,40 @@ export function spriteChunkKeys(
   return keys;
 }
 
+export interface GameArtSpriteLayerOptions {
+  maximumTextureSize?: number;
+  createAtlasCanvas?: SpriteAtlasCanvasFactory;
+  atlas?: boolean;
+}
+
+function tintedCopies(
+  plan: SpritePlan,
+  hasMask: (key: string) => boolean,
+  teamColor: (owner: number) => TeamColor | null,
+): Map<string, { key: string; team: TeamColor }> {
+  const copies = new Map<string, { key: string; team: TeamColor }>();
+  const add = (parts: readonly SpritePart[], owner: number) => {
+    const team = teamColor(owner);
+    if (!team) return;
+    for (const part of parts) {
+      const key = `${part.graphic}:${part.facing}`;
+      if (!hasMask(key)) continue;
+      const overlayKey = `${key}|${teamColorKey(team)}`;
+      if (!copies.has(overlayKey)) copies.set(overlayKey, { key, team });
+    }
+  };
+  for (const instance of plan.instances) add(instance.parts, instance.owner);
+  for (const cliff of plan.cliffs) add(cliff.parts, 0);
+  return copies;
+}
+
 export class GameArtSpriteLayer {
   readonly container = new Container({
     label: 'game-textures-objects',
     sortableChildren: true,
+    isRenderGroup: true,
   });
+  private atlas: SpriteAtlas | null = null;
   private readonly textures = new Map<
     string,
     {
@@ -352,6 +428,14 @@ export class GameArtSpriteLayer {
   private readonly drawnCliffs = new Set<number>();
   private visibleKeys = new Set<string>();
   private kinds: SpriteKindVisibility = { objects: true, cliffs: true };
+  private treeScale = 1;
+  private readonly treeSprites: {
+    sprite: Container;
+    anchorX: number;
+    anchorY: number;
+    offsetX: number;
+    offsetY: number;
+  }[] = [];
   private readonly layers: Map<number, number>;
   readonly statistics: GameArtSpriteStatistics;
 
@@ -361,11 +445,18 @@ export class GameArtSpriteLayer {
     store: GameArtAssetStore,
     private readonly teamColor: (owner: number) => TeamColor | null,
     readonly gpu = false,
+    options: GameArtSpriteLayerOptions = {},
   ) {
     this.container.eventMode = 'none';
     this.container.zIndex = 2;
     const graphics = new Map(set.graphics.map((graphic) => [graphic.id, graphic]));
     this.layers = new Map(set.graphics.map((graphic) => [graphic.id, graphic.layer]));
+    const loaded: {
+      key: string;
+      image: CanvasImageSource;
+      mask: CanvasImageSource | null;
+      facing: GameArtSpriteFacing;
+    }[] = [];
     for (const [graphicId, facings] of plan.chosen) {
       const graphic = graphics.get(graphicId);
       if (!graphic) continue;
@@ -375,15 +466,69 @@ export class GameArtSpriteLayer {
         const main = store.get(facing.image);
         if (!main) continue;
         const mask = facing.playerMask ? store.get(facing.playerMask) : undefined;
-        this.textures.set(`${graphicId}:${index}`, {
-          main: new Texture({
-            source: new ImageSource({ resource: main.image as ImageBitmap, scaleMode: 'linear' }),
-          }),
+        loaded.push({
+          key: `${graphicId}:${index}`,
           image: main.image,
           mask: mask?.image ?? null,
           facing,
         });
       }
+    }
+    let overlayBytes = 0;
+    let atlasFallback: GameArtSpriteStatistics['atlasFallback'] = 'disabled';
+    if (options.atlas !== false) {
+      const masked = new Map(loaded.map((entry) => [entry.key, entry]));
+      const copies = tintedCopies(plan, (key) => Boolean(masked.get(key)?.mask), teamColor);
+      const entries: SpriteAtlasEntry[] = loaded.map((entry) => ({
+        key: entry.key,
+        width: entry.facing.width,
+        height: entry.facing.height,
+        draw: (context, x, y) =>
+          context.drawImage(entry.image, x, y, entry.facing.width, entry.facing.height),
+      }));
+      for (const [overlayKey, copy] of copies) {
+        const entry = masked.get(copy.key)!;
+        const { width, height } = entry.facing;
+        entries.push({
+          key: overlayKey,
+          width,
+          height,
+          draw: (context, x, y) =>
+            context.putImageData(
+              teamColorImage(entry.image, entry.mask!, width, height, copy.team),
+              x,
+              y,
+            ),
+        });
+        overlayBytes += width * height * 4;
+      }
+      const built = buildSpriteAtlas(entries, {
+        maximumBytes: gameArtMaximumSpriteBytes,
+        ...(options.maximumTextureSize ? { maximumTextureSize: options.maximumTextureSize } : {}),
+        ...(options.createAtlasCanvas ? { createCanvas: options.createAtlasCanvas } : {}),
+      });
+      if ('atlas' in built) {
+        this.atlas = built.atlas;
+        atlasFallback = null;
+        for (const overlayKey of copies.keys()) {
+          this.overlays.set(overlayKey, built.atlas.texture(overlayKey)!);
+        }
+      } else {
+        atlasFallback = built.fallback;
+        overlayBytes = 0;
+      }
+    }
+    for (const entry of loaded) {
+      this.textures.set(entry.key, {
+        main:
+          this.atlas?.texture(entry.key) ??
+          new Texture({
+            source: new ImageSource({ resource: entry.image as ImageBitmap, scaleMode: 'linear' }),
+          }),
+        image: entry.image,
+        mask: entry.mask,
+        facing: entry.facing,
+      });
     }
     const file = (entry: ChunkEntry) => {
       const key = spriteChunkKey(entry.instance.x, entry.instance.y);
@@ -406,7 +551,11 @@ export class GameArtSpriteLayer {
     this.statistics = {
       instances: plan.instances.length,
       createdSprites: 0,
-      overlayBytes: 0,
+      overlayBytes,
+      atlasPages: this.atlas?.pageCount ?? 0,
+      atlasBytes: this.atlas?.bytes ?? 0,
+      atlasFallback,
+      visibilityWrites: 0,
       glyphObjects:
         plan.glyphObjects.size +
         plan.instances.filter(
@@ -435,37 +584,101 @@ export class GameArtSpriteLayer {
   }
 
   setKindVisibility(kinds: SpriteKindVisibility): void {
+    if (kinds.objects === this.kinds.objects && kinds.cliffs === this.kinds.cliffs) return;
     this.kinds = { ...kinds };
     this.applyVisibility();
+    requestPreviewRender(this.container);
+  }
+
+  get atlasActive(): boolean {
+    return this.atlas !== null;
+  }
+
+  get textureSourceCount(): number {
+    const sources = new Set<unknown>();
+    for (const entry of this.textures.values()) sources.add(entry.main.source);
+    for (const overlay of this.overlays.values()) {
+      if (overlay instanceof Texture) sources.add(overlay.source);
+    }
+    return sources.size;
+  }
+
+  get treeSpriteScale(): number {
+    return this.treeScale;
+  }
+
+  get treeSpriteCount(): number {
+    return this.treeSprites.length;
+  }
+
+  setTreeScale(factor: number): void {
+    if (factor === this.treeScale) return;
+    this.treeScale = factor;
+    for (const entry of this.treeSprites) {
+      const placement = spritePartPlacement(
+        entry.anchorX,
+        entry.anchorY,
+        entry.offsetX,
+        entry.offsetY,
+        spriteUnitsPerPixelX,
+        spriteUnitsPerPixelY,
+        factor,
+      );
+      entry.sprite.position.set(placement.x, placement.y);
+      entry.sprite.scale.set(placement.scaleX, placement.scaleY);
+    }
+    requestPreviewRender(this.container);
   }
 
   private applyVisibility(): void {
-    for (const [key, sprites] of this.built) {
-      const visible = this.visibleKeys.has(key);
-      for (const { sprite, kind } of sprites) {
-        sprite.visible = visible && (kind === 'cliff' ? this.kinds.cliffs : this.kinds.objects);
+    for (const [key, sprites] of this.built) this.showChunk(sprites, this.visibleKeys.has(key));
+  }
+
+  private showChunk(
+    sprites: readonly { sprite: Container; kind: ChunkEntry['kind'] }[],
+    visible: boolean,
+  ): void {
+    for (const { sprite, kind } of sprites) {
+      sprite.visible = visible && (kind === 'cliff' ? this.kinds.cliffs : this.kinds.objects);
+    }
+    this.statistics.visibilityWrites += sprites.length;
+  }
+
+  private buildChunk(key: string): { sprite: Container; kind: ChunkEntry['kind'] }[] {
+    const sprites: { sprite: Container; kind: ChunkEntry['kind'] }[] = [];
+    for (const entry of this.byChunk.get(key) ?? []) {
+      const layer = entry.kind === 'cliff' ? cliffSortLayer : undefined;
+      const owner = entry.kind === 'object' ? entry.instance.owner : 0;
+      const tree = entry.kind === 'object' && entry.instance.tree === true;
+      for (const sprite of this.spritesFor(entry.instance, owner, layer, tree)) {
+        sprites.push({ sprite, kind: entry.kind });
       }
     }
+    this.built.set(key, sprites);
+    if (sprites.length > 0) this.container.addChild(...sprites.map(({ sprite }) => sprite));
+    this.statistics.createdSprites += sprites.length;
+    return sprites;
   }
 
   update(visibleChunks: Iterable<{ minimumX: number; minimumY: number }>): void {
     const visibleChunkKeys = spriteChunkKeys(visibleChunks);
+    let changed = false;
     for (const key of visibleChunkKeys) {
-      if (this.built.has(key)) continue;
-      const sprites: { sprite: Container; kind: ChunkEntry['kind'] }[] = [];
-      for (const entry of this.byChunk.get(key) ?? []) {
-        const layer = entry.kind === 'cliff' ? cliffSortLayer : undefined;
-        const owner = entry.kind === 'object' ? entry.instance.owner : 0;
-        for (const sprite of this.spritesFor(entry.instance, owner, layer)) {
-          sprites.push({ sprite, kind: entry.kind });
-        }
-      }
-      this.built.set(key, sprites);
-      if (sprites.length > 0) this.container.addChild(...sprites.map(({ sprite }) => sprite));
-      this.statistics.createdSprites += sprites.length;
+      if (this.visibleKeys.has(key)) continue;
+      const sprites = this.built.get(key) ?? this.buildChunk(key);
+      if (sprites.length === 0) continue;
+      this.showChunk(sprites, true);
+      changed = true;
+    }
+    for (const key of this.visibleKeys) {
+      if (visibleChunkKeys.has(key)) continue;
+      const sprites = this.built.get(key);
+      if (!sprites || sprites.length === 0) continue;
+      this.showChunk(sprites, false);
+      changed = true;
     }
     this.visibleKeys = visibleChunkKeys;
-    this.applyVisibility();
+    if (changed) requestPreviewRender(this.container);
   }
 
   private overlay(key: string, team: TeamColor): Texture | Shader | null {
@@ -475,7 +688,7 @@ export class GameArtSpriteLayer {
     const existing = this.overlays.get(overlayKey);
     if (existing) return existing;
     let overlay: Texture | Shader;
-    if (this.gpu) {
+    if (this.gpu && !this.atlas) {
       let maskSource = this.maskSources.get(key);
       if (!maskSource) {
         maskSource = new ImageSource({
@@ -529,9 +742,11 @@ export class GameArtSpriteLayer {
     instance: { x: number; y: number; parts: readonly SpritePart[] },
     owner: number,
     sortLayer: number | undefined,
+    tree = false,
   ): Container[] {
     const sprites: Container[] = [];
     const team = this.teamColor(owner);
+    const factor = tree ? this.treeScale : 1;
     for (const [partIndex, part] of instance.parts.entries()) {
       const key = `${part.graphic}:${part.facing}`;
       const entry = this.textures.get(key);
@@ -542,8 +757,18 @@ export class GameArtSpriteLayer {
       const anchorY = y - x;
       const layer = sortLayer ?? this.layers.get(part.graphic) ?? 20;
       const order = spriteDrawOrder(layer, x, y) + partIndex;
-      const positionX = anchorX + part.offsetX * spriteUnitsPerPixelX;
-      const positionY = anchorY + part.offsetY * spriteUnitsPerPixelY;
+      const placement = spritePartPlacement(
+        anchorX,
+        anchorY,
+        part.offsetX,
+        part.offsetY,
+        spriteUnitsPerPixelX,
+        spriteUnitsPerPixelY,
+        factor,
+      );
+      const positionX = placement.x;
+      const positionY = placement.y;
+      const partSprites: Container[] = [];
       const sprite = new Sprite({ texture: entry.main });
       sprite.eventMode = 'none';
       sprite.anchor.set(
@@ -551,9 +776,10 @@ export class GameArtSpriteLayer {
         entry.facing.anchorY / entry.facing.height,
       );
       sprite.position.set(positionX, positionY);
-      sprite.scale.set(spriteUnitsPerPixelX, spriteUnitsPerPixelY);
+      sprite.scale.set(placement.scaleX, placement.scaleY);
       sprite.zIndex = order;
       sprites.push(sprite);
+      partSprites.push(sprite);
       const overlay = team ? this.overlay(key, team) : null;
       if (overlay instanceof Texture) {
         const coloured = new Sprite({ texture: overlay });
@@ -563,6 +789,7 @@ export class GameArtSpriteLayer {
         coloured.scale.copyFrom(sprite.scale);
         coloured.zIndex = order;
         sprites.push(coloured);
+        partSprites.push(coloured);
       } else if (overlay) {
         const mesh = new Mesh({
           geometry: this.overlayGeometry(key, entry.facing),
@@ -570,9 +797,21 @@ export class GameArtSpriteLayer {
         });
         mesh.eventMode = 'none';
         mesh.position.set(positionX, positionY);
-        mesh.scale.set(spriteUnitsPerPixelX, spriteUnitsPerPixelY);
+        mesh.scale.set(placement.scaleX, placement.scaleY);
         mesh.zIndex = order;
         sprites.push(mesh);
+        partSprites.push(mesh);
+      }
+      if (tree) {
+        for (const shown of partSprites) {
+          this.treeSprites.push({
+            sprite: shown,
+            anchorX,
+            anchorY,
+            offsetX: part.offsetX,
+            offsetY: part.offsetY,
+          });
+        }
       }
     }
     return sprites;
@@ -580,14 +819,19 @@ export class GameArtSpriteLayer {
 
   destroy(): void {
     this.container.destroy({ children: true });
+    const atlas = this.atlas;
+    this.atlas = null;
     for (const entry of this.textures.values()) {
+      if (atlas) continue;
       entry.main.source.unload();
       entry.main.destroy(false);
     }
     for (const overlay of this.overlays.values()) {
+      if (atlas && overlay instanceof Texture && atlas.owns(overlay)) continue;
       if (overlay instanceof Texture) overlay.destroy(true);
       else overlay.destroy(false);
     }
+    atlas?.destroy();
     for (const geometry of this.overlayGeometries.values()) geometry.destroy(true);
     for (const source of this.maskSources.values()) source.destroy();
     this.overlays.clear();
@@ -595,5 +839,6 @@ export class GameArtSpriteLayer {
     this.maskSources.clear();
     this.textures.clear();
     this.built.clear();
+    this.treeSprites.length = 0;
   }
 }

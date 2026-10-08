@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Feldraster"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Kleine Bäume"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "Kartenvorschau in Draufsicht mit Minikartenfarben"
     },

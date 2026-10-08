@@ -8,19 +8,6 @@ AoE2RMSIDE is a free, open-source Windows app for making random maps for Age
 of Empires II: Definitive Edition. You write the map script, and AoE2RMSIDE
 shows you the map it creates.
 
-- **Write scripts with help.** The editor colors your script, points out
-  mistakes while you type, suggests commands, and explains them when you
-  point at them.
-- **See your map as you work.** The preview draws the map your script
-  creates for the seed and lobby settings you choose. Select part of the map
-  to see what is there and jump to the lines of your script that placed it.
-- **Test your map on many seeds.** Write small map tests, for example "every
-  player has gold nearby", and run them on many seeds at once to find rare
-  problems before your players do.
-- **Put your map into the game.** Deploy your script as a local mod with a
-  map icon, and, with the separate AoE2Control app, start a test match in the
-  game right away.
-
 You do not need the game installed to write and preview scripts. Link your
 game folder to open the game's own maps and to deploy your maps.
 

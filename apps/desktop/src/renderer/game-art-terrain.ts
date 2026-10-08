@@ -8,6 +8,7 @@ import {
   type TerrainPair,
 } from './game-art-blend';
 import { gameArtTextureRepeatTiles } from '../shared/game-art';
+import { requestPreviewRender } from './preview-render-scheduler';
 import type { VisibleChunk } from './top-down-preview';
 
 export interface GameArtTerrainSource extends BlendTerrain {
@@ -416,6 +417,7 @@ export class GameArtTerrainLayer {
     this.statistics.pendingChunks = this.queue.length;
     this.presentWhenComplete();
     this.schedule();
+    requestPreviewRender(this.container);
   }
 
   private schedule(): void {
@@ -436,7 +438,10 @@ export class GameArtTerrainLayer {
     }
     this.statistics.pendingChunks = this.queue.length;
     this.presentWhenComplete();
-    if (changed) this.onChange();
+    if (changed) {
+      this.onChange();
+      requestPreviewRender(this.container);
+    }
     this.schedule();
   }
 

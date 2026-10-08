@@ -1841,6 +1841,7 @@ export interface DesktopSession {
   previewPerspective: PreviewPerspective;
   previewLook: PreviewLook;
   previewTileGrid: boolean;
+  previewSmallTrees: boolean;
   gameTexturesFirstLinkApplied: boolean;
   gameTexturesFirstLinkInstallations: string[];
   mapIconRelief: boolean;

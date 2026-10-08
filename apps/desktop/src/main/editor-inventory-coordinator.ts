@@ -9,6 +9,7 @@ const maximumWireBytes = 64 * 1024 * 1024;
 const maximumChunkBytes = 4 * 1024 * 1024;
 const maximumRequestBytes = 4 * 1024 * 1024;
 const maximumRetainedRequestBytes = 16 * 1024 * 1024;
+const maximumContextAttempts = 4;
 
 export class EditorRequestCapacityError extends Error {
   constructor(
@@ -244,6 +245,36 @@ export class EditorInventoryCoordinator {
       return result;
     } finally {
       this.release(captured);
+    }
+  }
+
+  async requestCurrent(
+    method: LanguageServerRequestMethod,
+    params: unknown,
+    captured = this.capture(params),
+  ): Promise<unknown> {
+    const processEpoch = this.dependencies.native.languageProcessEpoch();
+    const { uri, version } = captured;
+    for (let attempt = 1; ; attempt += 1) {
+      try {
+        return await this.request(method, params, captured);
+      } catch (error) {
+        if (
+          (error as { code?: unknown } | null)?.code !== -32801 ||
+          attempt >= maximumContextAttempts ||
+          this.disposed ||
+          processEpoch !== this.dependencies.native.languageProcessEpoch() ||
+          (uri !== undefined &&
+            (version === undefined ||
+              this.dependencies.native.languageDocument(uri)?.version !== version))
+        )
+          throw error;
+        try {
+          captured = this.capture(params);
+        } catch {
+          throw error;
+        }
+      }
     }
   }
 

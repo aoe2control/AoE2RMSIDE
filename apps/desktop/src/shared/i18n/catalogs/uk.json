@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Сітка клітинок"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Маленькі дерева"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "перегляд мапи згори в кольорах мінімапи"
     },

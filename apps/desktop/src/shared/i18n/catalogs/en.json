@@ -10218,6 +10218,12 @@
       "control": "toggle",
       "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar: shows or hides a grid of the map tiles."
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Small trees",
+      "screen": "preview/toolbar",
+      "control": "toggle",
+      "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar, shown only while the map uses the art of the user's own linked game: draws trees at about half size so the tile under each tree stays visible, as a popular game mod does."
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "top-down map preview in minimap colors",
       "screen": "preview/map",

@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Grille des cases"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Petits arbres"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "aperçu de carte vu de dessus avec les couleurs de la mini-carte"
     },

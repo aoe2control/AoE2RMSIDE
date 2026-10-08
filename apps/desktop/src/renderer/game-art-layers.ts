@@ -3,6 +3,7 @@ import { gameArtChunkBudget, gameArtSpriteBudget } from './game-art-resources';
 import { GameArtCliffBandLayer } from './game-art-cliffs';
 import { GameArtGpuTerrainLayer } from './game-art-gpu-terrain';
 import { GameArtSpriteLayer } from './game-art-sprites';
+import { requestPreviewRender } from './preview-render-scheduler';
 import type { TeamColor } from './game-art-team-colors';
 import { GameArtTerrainLayer } from './game-art-terrain';
 import type { GpuMapUnavailableReason, MapRenderer } from './gpu-map-rendering';
@@ -43,6 +44,7 @@ export interface GameArtPresentationState {
   minimapShown: boolean;
   minimapHidden: boolean;
   kinds: { objects: boolean; cliffs: boolean };
+  treeScale: number;
 }
 
 export function createGameArtPresentationState(): GameArtPresentationState {
@@ -51,6 +53,7 @@ export function createGameArtPresentationState(): GameArtPresentationState {
     minimapShown: false,
     minimapHidden: false,
     kinds: { objects: true, cliffs: true },
+    treeScale: 1,
   };
 }
 
@@ -63,6 +66,7 @@ export interface GameArtLayerInputs {
   elevation: { backgroundColor: number; elevationMode: ElevationDisplayMode };
   teamColor(owner: number): TeamColor | null;
   renderer?: MapRenderer;
+  maximumTextureSize?: number;
   onGpuUnavailable?(reason: GpuMapUnavailableReason): void;
   host: HTMLElement;
   onPresented(): void;
@@ -104,6 +108,7 @@ function applyKindVisibility(cache: GameArtLayerCache): void {
   if (sprites) {
     sprites.container.visible = presented;
     sprites.setKindVisibility(kinds);
+    sprites.setTreeScale(cache.gameArtPresentation.treeScale);
   }
   const bands = cache.gameArtCliffs?.layer;
   if (bands) bands.container.visible = presented && kinds.cliffs;
@@ -115,6 +120,11 @@ export function setGameArtKindVisibility(
 ): void {
   cache.gameArtPresentation.kinds = { ...kinds };
   applyKindVisibility(cache);
+}
+
+export function setGameArtTreeScale(cache: GameArtLayerCache, factor: number): void {
+  cache.gameArtPresentation.treeScale = factor;
+  cache.gameArtSprites?.layer.setTreeScale(factor);
 }
 
 export function applyMinimapChunkVisibility(cache: GameArtLayerCache, expected: boolean): void {
@@ -173,6 +183,7 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
       view.store,
       inputs.teamColor,
       renderer === 'gpu',
+      inputs.maximumTextureSize ? { maximumTextureSize: inputs.maximumTextureSize } : {},
     );
     cache.gameArtSprites = { view, layer };
     cache.container.addChild(layer.container);
@@ -193,7 +204,10 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
         elevationMode: inputs.elevation.elevationMode,
         elevationRange: range,
       });
-    const onChange = () => writeGameArtDataset(cache, inputs.host);
+    const onChange = () => {
+      writeGameArtDataset(cache, inputs.host);
+      requestPreviewRender(cache.container);
+    };
     let layer: GameArtTerrainPicture | null = null;
     const onPresented = () => {
       if (!layer || cache.gameArtTerrain?.layer !== layer) return;
@@ -201,6 +215,7 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
       applyKindVisibility(cache);
       applyMinimapChunkVisibility(cache, true);
       writeGameArtDataset(cache, inputs.host);
+      requestPreviewRender(cache.container);
       inputs.onPresented();
     };
     if (renderer === 'gpu') {
@@ -270,9 +285,13 @@ export function writeGameArtDataset(cache: GameArtLayerCache, host: HTMLElement)
   const terrain = cache.gameArtTerrain?.layer;
   const sprites = cache.gameArtSprites?.layer;
   const storeBytes = terrain || sprites ? (cache.gameArtStore?.bytes ?? 0) : 0;
-  const overlayBytes = sprites?.statistics.overlayBytes ?? 0;
+  const spriteBytes = sprites
+    ? sprites.atlasActive
+      ? sprites.statistics.atlasBytes
+      : sprites.statistics.overlayBytes
+    : 0;
   host.dataset.gameArtTextureBytes = String(
-    storeBytes + overlayBytes + (terrain?.statistics.textureBytes ?? 0),
+    storeBytes + spriteBytes + (terrain?.statistics.textureBytes ?? 0),
   );
   host.dataset.gameArtOutgoing = String(cache.gameArtPresentation.outgoing !== null);
   if (terrain) host.dataset.gameArtRenderer = terrain.renderer;
@@ -303,13 +322,27 @@ export function writeGameArtDataset(cache: GameArtLayerCache, host: HTMLElement)
     delete host.dataset.gameArtInvisibleObjects;
     delete host.dataset.gameArtCliffSprites;
     delete host.dataset.gameArtCliffLines;
+    delete host.dataset.gameArtTreeSprites;
+    delete host.dataset.gameArtTreeScale;
+    delete host.dataset.gameArtSpriteAtlas;
+    delete host.dataset.gameArtSpriteAtlasPages;
+    delete host.dataset.gameArtSpriteAtlasBytes;
+    delete host.dataset.gameArtSpriteTextureSources;
+    delete host.dataset.gameArtSpriteVisibilityWrites;
   } else {
+    host.dataset.gameArtSpriteAtlas = sprites.statistics.atlasFallback ?? 'on';
+    host.dataset.gameArtSpriteAtlasPages = String(sprites.statistics.atlasPages);
+    host.dataset.gameArtSpriteAtlasBytes = String(sprites.statistics.atlasBytes);
+    host.dataset.gameArtSpriteTextureSources = String(sprites.textureSourceCount);
+    host.dataset.gameArtSpriteVisibilityWrites = String(sprites.statistics.visibilityWrites);
     host.dataset.gameArtSprites = String(sprites.statistics.createdSprites);
     host.dataset.gameArtSpriteObjects = String(sprites.drawnObjects.size);
     host.dataset.gameArtGlyphObjects = String(sprites.statistics.glyphObjects);
     host.dataset.gameArtInvisibleObjects = String(sprites.statistics.invisibleObjects);
     host.dataset.gameArtCliffSprites = String(sprites.statistics.cliffSprites);
     host.dataset.gameArtCliffLines = String(sprites.statistics.cliffLines);
+    host.dataset.gameArtTreeSprites = String(sprites.treeSpriteCount);
+    host.dataset.gameArtTreeScale = String(sprites.treeSpriteScale);
   }
   const bands = cache.gameArtCliffs?.layer;
   if (bands) host.dataset.gameArtCliffBands = String(bands.pieceCount);

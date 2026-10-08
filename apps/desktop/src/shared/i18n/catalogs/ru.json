@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Сетка клеток"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Маленькие деревья"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "предпросмотр карты сверху в цветах мини-карты"
     },

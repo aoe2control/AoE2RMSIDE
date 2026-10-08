@@ -216,6 +216,7 @@ export function App() {
   const [previewPerspective, setPreviewPerspective] = useState<PreviewPerspective>('top-down');
   const [previewLook, setPreviewLook] = useState<PreviewLook>('minimap');
   const [previewTileGrid, setPreviewTileGrid] = useState(false);
+  const [previewSmallTrees, setPreviewSmallTrees] = useState(false);
   const [gameTexturesNoticeOpen, setGameTexturesNoticeOpen] = useState(false);
   const closeGameTexturesNotice = useCallback(() => setGameTexturesNoticeOpen(false), []);
   useEffect(
@@ -598,6 +599,8 @@ export function App() {
       setPreviewLook,
       previewTileGrid,
       setPreviewTileGrid,
+      previewSmallTrees,
+      setPreviewSmallTrees,
       gameTexturesNoticeOpen,
       closeGameTexturesNotice,
       previewExpanded,
@@ -616,6 +619,7 @@ export function App() {
       previewPerspective,
       previewLook,
       previewTileGrid,
+      previewSmallTrees,
       gameTexturesNoticeOpen,
       closeGameTexturesNotice,
       expandPreview,
@@ -737,6 +741,7 @@ export function App() {
     setPreviewPerspective(session.previewPerspective);
     setPreviewLook(session.previewLook);
     setPreviewTileGrid(session.previewTileGrid);
+    setPreviewSmallTrees(session.previewSmallTrees);
     setExplorerExpanded(session.layout.explorerExpanded);
     setExplorerWidth(session.layout.explorerWidth);
     setPreviewExpanded(session.layout.previewExpanded);
@@ -795,6 +800,7 @@ export function App() {
         previewPerspective,
         previewLook,
         previewTileGrid,
+        previewSmallTrees,
         layout: {
           explorerExpanded,
           explorerWidth,
@@ -836,6 +842,7 @@ export function App() {
     previewPerspective,
     previewLook,
     previewTileGrid,
+    previewSmallTrees,
     previewExpanded,
     previewWidth,
     profilerOpen,

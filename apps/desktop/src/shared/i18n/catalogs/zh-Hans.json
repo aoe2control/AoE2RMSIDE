@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "地块网格"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "小树"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "使用小地图配色的俯视地图预览"
     },

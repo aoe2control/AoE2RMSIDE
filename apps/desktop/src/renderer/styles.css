@@ -2970,6 +2970,11 @@ img {
   margin-right: 5px;
 }
 
+.preview-small-trees-button,
+.dark .preview-small-trees-button {
+  margin-left: 5px;
+}
+
 .preview-keyboard-focus-cue {
   align-items: center;
   background: color-mix(in oklch, var(--preview-overlay-halo-color) 62%, transparent);

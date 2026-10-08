@@ -3491,6 +3491,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "地圖格線"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "小樹"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "使用小地圖配色的俯視地圖預覽"
     },

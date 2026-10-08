@@ -63,6 +63,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   previewPerspective: 'top-down',
   previewLook: 'minimap',
   previewTileGrid: false,
+  previewSmallTrees: false,
   gameTexturesFirstLinkApplied: false,
   gameTexturesFirstLinkInstallations: [],
   mapIconRelief: defaultMapIconRenderInput.relief,
@@ -303,6 +304,7 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     previewPerspective: 'top-down',
     previewLook: 'minimap',
     previewTileGrid: false,
+    previewSmallTrees: false,
     gameTexturesFirstLinkApplied: false,
     gameTexturesFirstLinkInstallations: [],
     mapIconRelief: defaultMapIconRenderInput.relief,
@@ -403,6 +405,10 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.previewTileGrid === undefined
         ? false
         : validateBoolean(value.previewTileGrid, 'preview tile grid preference'),
+    previewSmallTrees:
+      value.previewSmallTrees === undefined
+        ? false
+        : validateBoolean(value.previewSmallTrees, 'preview small trees preference'),
     gameTexturesFirstLinkApplied:
       value.gameTexturesFirstLinkApplied === undefined
         ? false

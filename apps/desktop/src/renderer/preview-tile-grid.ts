@@ -1,4 +1,5 @@
 import { Container, Graphics } from 'pixi.js';
+import { requestPreviewRender } from './preview-render-scheduler';
 import {
   previewProjectionVerticalScale,
   previewScale,
@@ -92,6 +93,7 @@ export class TileGridLayer {
   setColor(color: TileGridColor): void {
     this.color = color;
     this.graphics.tint = color.color;
+    requestPreviewRender(this.container);
   }
 
   update(
@@ -103,6 +105,7 @@ export class TileGridLayer {
     this.opacity = strength * this.color.alpha;
     this.container.alpha = this.opacity;
     this.container.renderable = this.opacity > 0;
+    requestPreviewRender(this.container);
   }
 
   destroy(): void {

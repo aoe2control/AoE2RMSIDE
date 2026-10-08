@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Vakraster"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Kleine bomen"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "kaartvoorbeeld van bovenaf in minikaartkleuren"
     },

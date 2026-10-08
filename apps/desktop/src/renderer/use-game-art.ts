@@ -417,6 +417,7 @@ export function useGameArt(options: {
           map.presentationSeed ?? 0,
           civilizationFor,
           scene.cliffPieces ?? [],
+          { treeObjectIds: gameArtTreeObjectIds(map) },
         );
         plan.chosen = budgetedSpriteFacings(
           plan,
@@ -509,6 +510,16 @@ export function useGameArt(options: {
     store,
     playerColors: index?.playerColors ?? null,
   };
+}
+
+export function gameArtTreeObjectIds(
+  map: Pick<PreviewGenerationResult, 'mapIconArtObjects'>,
+): ReadonlySet<number> {
+  return new Set(
+    (map.mapIconArtObjects ?? [])
+      .filter((entry) => entry.kind === 'tree')
+      .map((entry) => entry.objectId),
+  );
 }
 
 const namedGlyphTypes = 4;

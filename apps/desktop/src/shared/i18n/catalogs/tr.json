@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Kare ızgarası"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Küçük ağaçlar"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "küçük harita renklerinde üstten harita önizlemesi"
     },

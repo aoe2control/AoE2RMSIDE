@@ -3491,6 +3491,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "タイルのグリッド"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "小さな木"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "ミニマップ色で真上から見たマップのプレビュー"
     },

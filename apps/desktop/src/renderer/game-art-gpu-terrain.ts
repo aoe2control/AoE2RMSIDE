@@ -24,6 +24,7 @@ import {
   type TerrainTileOverlay,
 } from './game-art-terrain';
 import { gameArtTextureRepeatTiles } from '../shared/game-art';
+import { requestPreviewRender } from './preview-render-scheduler';
 import type { VisibleChunk } from './top-down-preview';
 
 export type GpuTerrainDraw =
@@ -719,6 +720,7 @@ export class GameArtGpuTerrainLayer {
     this.container.visible = true;
     this.onPresented();
     this.onChange();
+    requestPreviewRender(this.container);
   }
 
   flush(): void {

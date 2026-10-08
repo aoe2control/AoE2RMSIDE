@@ -3491,6 +3491,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "टाइल ग्रिड"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "छोटे पेड़"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "मिनिमैप रंगों में ऊपर से मानचित्र का पूर्वावलोकन"
     },

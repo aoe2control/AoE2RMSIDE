@@ -15,6 +15,7 @@ import {
   type ElevationDisplayMode,
   type ElevationRange,
 } from './preview-terrain-mesh';
+import { requestPreviewRender } from './preview-render-scheduler';
 import { buildTerrainTexels } from './preview-terrain-texture';
 import {
   previewCliffStrokeWidth,
@@ -72,6 +73,7 @@ export class PreviewCandidateLayer {
     const grid = this.store.chunkGrid();
     if (!grid) {
       this.clear();
+      requestPreviewRender(this.container);
       return;
     }
     const keys = Array.from({ length: grid.columns * grid.rows }, (_, index) => index);
@@ -84,6 +86,7 @@ export class PreviewCandidateLayer {
     const grid = this.store.chunkGrid();
     const terrain = this.store.terrainIds();
     const elevations = this.store.elevations();
+    requestPreviewRender(this.container);
     if (!view || !grid || !terrain || !elevations) {
       this.clear();
       return;
@@ -168,6 +171,7 @@ export class PreviewCandidateLayer {
   refreshVectors(presentation: CandidatePresentation): void {
     for (const key of this.chunks.keys()) this.drawVectors(key, presentation);
     this.vectorComponent = presentation.markerComponent;
+    requestPreviewRender(this.container);
   }
 
   private drawVectors(key: number, presentation: CandidatePresentation): void {
@@ -246,6 +250,7 @@ export class PreviewCandidateLayer {
       viewport.width / 2 - (camera.centerX + camera.centerY) * component,
       viewport.height / 2 - (camera.centerY - camera.centerX) * verticalComponent,
     );
+    requestPreviewRender(this.container);
   }
 
   destroy(): void {

@@ -2806,7 +2806,7 @@ function registerIpc(
             /\.(?:rms|rms2|inc|def)$/iu.test(editorRequest.uri);
           return await (local
             ? editorInventoryCoordinator.localRequest(method, params, editorRequest)
-            : editorInventoryCoordinator.request(method, params, editorRequest));
+            : editorInventoryCoordinator.requestCurrent(method, params, editorRequest));
         }
         return await nativeSupervisor.requestLanguageServer(method, params);
       } catch (error) {

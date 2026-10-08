@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Siatka pól"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Małe drzewa"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "podgląd mapy z góry w kolorach minimapy"
     },

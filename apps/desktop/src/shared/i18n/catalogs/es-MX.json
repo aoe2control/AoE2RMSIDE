@@ -3483,6 +3483,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Cuadrícula de casillas"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Árboles pequeños"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "vista previa cenital del mapa con colores del minimapa"
     },

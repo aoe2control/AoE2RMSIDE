@@ -3491,6 +3491,9 @@
     "preview-panel.tool.tile-grid": {
       "message": "Lưới ô"
     },
+    "preview-panel.tool.small-trees": {
+      "message": "Cây nhỏ"
+    },
     "preview-panel.canvas.top-down.minimap": {
       "message": "bản xem trước nhìn từ trên xuống bằng màu bản đồ nhỏ"
     },

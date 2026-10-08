@@ -61,6 +61,8 @@ export interface AppPanelContextValue {
   setPreviewLook(look: PreviewLook): void;
   previewTileGrid: boolean;
   setPreviewTileGrid(enabled: boolean): void;
+  previewSmallTrees: boolean;
+  setPreviewSmallTrees(enabled: boolean): void;
   gameTexturesNoticeOpen: boolean;
   closeGameTexturesNotice(): void;
   previewExpanded: boolean;
