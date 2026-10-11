@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Zewnętrzne serwery językowe"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} dla {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Używaj zewnętrznego serwera językowego"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Uzupełniaj luki wbudowaną wiedzą"
+    },
     "app-menu.view.language": {
       "message": "Język…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Zapisz obraz…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Generowanie ikony mapy"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Ikona mapy: oczekiwanie na podgląd wdrożenia"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Ikona mapy: wygenerowana na podstawie bieżącego podglądu"
     },
     "map-icon.status.generated-replacing": {
       "message": "Ikona mapy: wygenerowano {file}, zastępując oryginał tylko we wdrażanej kopii"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Rzeźba terenu"
     },
-    "map-icon.relief.hide": {
-      "message": "Ukryj rzeźbę terenu"
+    "map-icon.relief.off": {
+      "message": "Wysokość wyłączona"
     },
-    "map-icon.relief.show": {
-      "message": "Pokaż rzeźbę terenu"
+    "map-icon.relief.raised": {
+      "message": "Wysokość 3D"
     },
     "map-icon.terrain-smoothing": {
       "message": "Wygładź przejścia między terenami"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Bez znaczników startu"
     },
+    "map-icon.minimap-objects": {
+      "message": "Obiekty minimapy"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Pokazuje obiekty jako małe kwadraty, jak na minimapie w trybie obserwatora."
+    },
     "map-icon.spawn-size": {
       "message": "Rozmiar znaczników startu"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Rozmiar znaczników startu (% szerokości mapy)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Rozmiar znaczników centrum miasta"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Zmniejsz znaczniki centrum miasta"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Zwiększ znaczniki centrum miasta"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value}% domyślnego rozmiaru"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Rozmiar znaczników centrum miasta (% domyślnego rozmiaru)"
     },
     "map-icon.art.trees.show": {
       "message": "Pokaż drzewa"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Obiekty i obrys centrum miasta"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Obiekty minimapy"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Pokazuje obiekty jako małe kwadraty, jak na minimapie w trybie obserwatora."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Obiekty wyłączone"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Krawędzie klifów"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Rzeźba terenu"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "Wysokość 3D"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Mapa wysokości"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Otwórz stronę z wydaniami"
+    },
+    "external-language-server.started.headline": {
+      "message": "Dla plików {language} używany jest {server}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "Wersja {version} nie była testowana z AoE2RMSIDE; jej znane problemy są nadal obchodzone"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} nie nadaje się na serwer językowy"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} przestał działać"
+    },
+    "external-language-server.reason.start": {
+      "message": "Nie udało się uruchomić programu"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Program nie odpowiedział na początkowe uzgadnianie tak jak serwer językowy"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "Odpowiedź programu na uzgadnianie nie obejmuje aktualizacji dokumentów lub używa formatu pozycji, którego AoE2RMSIDE nie oferuje"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Program nieoczekiwanie zakończył działanie"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Program przestał odpowiadać na żądania na czas"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Program wysłał komunikat, który nie zawiera prawidłowych danych serwera językowego"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE uruchomi serwer ponownie za {seconds} sekundę (próba {attempt} z {limit}); do tego czasu używana jest wbudowana analiza} few {AoE2RMSIDE uruchomi serwer ponownie za {seconds} sekundy (próba {attempt} z {limit}); do tego czasu używana jest wbudowana analiza} many {AoE2RMSIDE uruchomi serwer ponownie za {seconds} sekund (próba {attempt} z {limit}); do tego czasu używana jest wbudowana analiza} other {AoE2RMSIDE uruchomi serwer ponownie za {seconds} sekundy (próba {attempt} z {limit}); do tego czasu używana jest wbudowana analiza}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Dla plików {language} używana jest wbudowana analiza, dopóki serwer nie zostanie ponownie włączony w menu Widok > Zewnętrzne serwery językowe"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Dla plików {language} używana jest wbudowana analiza"
     }
   }
 }

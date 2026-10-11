@@ -59,3 +59,15 @@ export function relatedLocationsFromLsp(
   }
   return locations;
 }
+
+export const maximumMarkerSourceLength = 64;
+
+export function markerSource(diagnostic: { source?: unknown }, fallback: string): string {
+  const source = diagnostic.source;
+  if (typeof source !== 'string') return fallback;
+  const trimmed = source.replace(/[\u0000-\u001f\u007f]/gu, ' ').trim();
+  if (!trimmed || trimmed === 'rms-ls' || trimmed === 'rms-test') return fallback;
+  return trimmed.length > maximumMarkerSourceLength
+    ? `${trimmed.slice(0, maximumMarkerSourceLength - 1)}…`
+    : trimmed;
+}

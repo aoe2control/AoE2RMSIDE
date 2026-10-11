@@ -2,6 +2,7 @@ import { failedConnectionSearch, type ConnectionRouteSet } from '../shared/conne
 import { t } from '../shared/i18n/translator';
 import {
   mapToScreen,
+  previewLevelPixels,
   previewProjectionVerticalScale,
   previewScale,
   screenToMap,
@@ -116,14 +117,16 @@ interface ScreenBasis {
   xy: number;
   yx: number;
   yy: number;
+  level: number;
+  heightAt: ((x: number, y: number) => number) | null;
 }
 
 function screenBasis(
-  width: number,
-  height: number,
+  geometry: Pick<ConnectionOverlayGeometry, 'width' | 'height' | 'heightAt'>,
   camera: PreviewCamera,
   viewport: PreviewViewport,
 ): ScreenBasis {
+  const { width, height } = geometry;
   const origin = mapToScreen({ x: 0, y: 0 }, width, height, camera, viewport);
   const unitX = mapToScreen({ x: 1, y: 0 }, width, height, camera, viewport);
   const unitY = mapToScreen({ x: 0, y: 1 }, width, height, camera, viewport);
@@ -134,15 +137,18 @@ function screenBasis(
     xy: unitX.y - origin.y,
     yx: unitY.x - origin.x,
     yy: unitY.y - origin.y,
+    level: geometry.heightAt ? previewLevelPixels(width, height, camera, viewport) : 0,
+    heightAt: geometry.heightAt ?? null,
   };
 }
 
 function tileCenter(basis: ScreenBasis, x: number, y: number): ScreenPoint {
   const mapX = x + 0.5;
   const mapY = y + 0.5;
+  const lift = basis.heightAt ? basis.heightAt(mapX, mapY) * basis.level : 0;
   return {
     x: basis.originX + mapX * basis.xx + mapY * basis.yx,
-    y: basis.originY + mapX * basis.xy + mapY * basis.yy,
+    y: basis.originY + mapX * basis.xy + mapY * basis.yy - lift,
   };
 }
 
@@ -165,6 +171,8 @@ export interface ConnectionOverlayGeometry {
   connections: readonly Pick<TopDownConnection, 'start' | 'end'>[];
   connectionOperation(index: number): number | null;
   routes: ConnectionRouteSet | null;
+  heightAt?: (x: number, y: number) => number;
+  maximumHeight?: number;
 }
 
 export function forEachConnectionOverlayElement(
@@ -174,7 +182,7 @@ export function forEachConnectionOverlayElement(
   viewport: PreviewViewport,
   visit: (target: ConnectionOverlayTarget, points: ScreenPoint[]) => void,
 ): void {
-  const basis = screenBasis(geometry.width, geometry.height, camera, viewport);
+  const basis = screenBasis(geometry, camera, viewport);
   if (mode === 'lines') {
     geometry.connections.forEach((connection, connectionIndex) => {
       visit(
@@ -220,7 +228,7 @@ export function connectionTargetPoints(
   camera: PreviewCamera,
   viewport: PreviewViewport,
 ): ScreenPoint[] {
-  const basis = screenBasis(geometry.width, geometry.height, camera, viewport);
+  const basis = screenBasis(geometry, camera, viewport);
   if (target.kind === 'line') {
     const connection = geometry.connections[target.connectionIndex];
     if (mode !== 'lines' || !connection) return [];
@@ -271,10 +279,13 @@ export function hitTestConnectionOverlay(
   bounds: Uint16Array | null = null,
   tolerance: number = connectionOverlayStroke.hitTolerance,
 ): ConnectionOverlayTarget | null {
-  const basis = screenBasis(geometry.width, geometry.height, camera, viewport);
+  const basis = screenBasis(geometry, camera, viewport);
   const toleranceSquared = tolerance * tolerance;
   const scale = previewScale(geometry.width, geometry.height, camera, viewport);
-  const reach = tolerance / Math.max(1e-6, scale * previewProjectionVerticalScale(viewport)) + 1;
+  const reach =
+    tolerance / Math.max(1e-6, scale * previewProjectionVerticalScale(viewport)) +
+    1 +
+    (geometry.heightAt ? Math.max(0, geometry.maximumHeight ?? 0) : 0);
   const mapPoint = screenToMap(point, geometry.width, geometry.height, camera, viewport);
   let best: ConnectionOverlayTarget | null = null;
   let bestDistance = Number.POSITIVE_INFINITY;

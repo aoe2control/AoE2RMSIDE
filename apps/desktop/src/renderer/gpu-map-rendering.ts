@@ -1,9 +1,14 @@
 import {
+  gpuRaisedTerrainBlendFragment,
+  gpuRaisedTerrainBlendVertex,
+  gpuRaisedTerrainPlainFragment,
+  gpuRaisedTerrainPlainVertex,
   gpuTerrainBlendFragment,
   gpuTerrainBlendVertex,
   gpuTerrainPlainFragment,
   gpuTerrainPlainVertex,
 } from './game-art-gpu-terrain';
+import { raisedColorShaders, raisedOverlayShaders } from './preview-raised-terrain';
 import { playerColorSpriteFragment, playerColorSpriteVertex } from './game-art-sprites';
 
 export type MapRenderer = 'gpu' | 'cpu';
@@ -67,8 +72,25 @@ export function webglHasMajorPerformanceCaveat(): boolean {
 export const gpuMapRenderingPrograms: readonly { vertex: string; fragment: string }[] = [
   { vertex: gpuTerrainPlainVertex, fragment: gpuTerrainPlainFragment },
   { vertex: gpuTerrainBlendVertex, fragment: gpuTerrainBlendFragment },
+  { vertex: gpuRaisedTerrainPlainVertex, fragment: gpuRaisedTerrainPlainFragment },
+  { vertex: gpuRaisedTerrainBlendVertex, fragment: gpuRaisedTerrainBlendFragment },
   { vertex: playerColorSpriteVertex, fragment: playerColorSpriteFragment },
 ];
+
+export const raisedTerrainPrograms: readonly { vertex: string; fragment: string }[] = [
+  raisedColorShaders,
+  raisedOverlayShaders,
+];
+
+export function probeRaisedTerrain(renderer: {
+  gl?: unknown;
+  context?: { webGLVersion?: number };
+}): GpuMapUnavailableReason | null {
+  const gl = renderer.gl as ProbeContext | undefined;
+  if (!gl || renderer.context?.webGLVersion !== 2) return 'webgl2-missing';
+  if (gl.isContextLost()) return 'context-lost';
+  return compileGpuMapPrograms(gl, raisedTerrainPrograms) ? null : 'shader-unsupported';
+}
 
 export type ProbeContext = Pick<
   WebGL2RenderingContext,
@@ -119,8 +141,11 @@ export function lazyGpuMapProbe<TRenderer extends object>(
   };
 }
 
-export function compileGpuMapPrograms(gl: ProbeContext): boolean {
-  for (const program of gpuMapRenderingPrograms) {
+export function compileGpuMapPrograms(
+  gl: ProbeContext,
+  programs: readonly { vertex: string; fragment: string }[] = gpuMapRenderingPrograms,
+): boolean {
+  for (const program of programs) {
     const vertex = gl.createShader(gl.VERTEX_SHADER);
     const fragment = gl.createShader(gl.FRAGMENT_SHADER);
     const linked = gl.createProgram();

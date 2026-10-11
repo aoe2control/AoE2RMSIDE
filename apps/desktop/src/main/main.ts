@@ -229,6 +229,11 @@ import {
 } from './control-live-authorization';
 import { readDevelopmentOverrides, type DevelopmentOverrides } from './development-overrides';
 import {
+  createExternalLanguageServers,
+  externalLanguageMenuItems,
+} from './external-language-integration';
+import type { ExternalLanguageServers } from './external-language-servers';
+import {
   checkForNewerRelease,
   FileReleaseCheckCacheStore,
   fixtureReleaseTransport,
@@ -272,6 +277,7 @@ if (productIdentity.userDataName && !app.commandLine.hasSwitch('user-data-dir'))
 let mainWindow: BrowserWindow | undefined;
 let supervisor: NativeSupervisor | undefined;
 let languageDiagnosticAdmission: LanguageDiagnosticAdmission | undefined;
+let externalLanguageServers: ExternalLanguageServers | undefined;
 let scheduleEditorInventoryRefresh = () => {};
 let disposeEditorInventory = () => {};
 let shuttingDown = false;
@@ -529,6 +535,23 @@ async function createApplication(): Promise<void> {
     publishWorkspaceExternalChange,
     publishWorkspaceDiagnostic,
   );
+  const { externalRmsServerPath, externalXsServerPath } = developmentOverrides();
+  externalLanguageServers = createExternalLanguageServers({
+    userDataPath,
+    workspaceRoot: () => workspaceServiceInstance?.workspaceRoot() ?? null,
+    overrides: {
+      ...(externalRmsServerPath ? { rms: externalRmsServerPath } : {}),
+      ...(externalXsServerPath ? { xs: externalXsServerPath } : {}),
+    },
+    underTestHarness: underTestHarness(),
+    clientVersion: productIdentity.version,
+    publishOutput: publishWorkspaceDiagnostic,
+    publishDiagnostics: (params) =>
+      sendLanguageServerEvent('textDocument/publishDiagnostics', params),
+    onAvailabilityChanged: () => {
+      if (!shuttingDown) refreshApplicationMenu();
+    },
+  });
   recoveryStoreInstance = new RecoveryStore(userDataPath);
   const installationSelectionStore = new InstallationSelectionStore(userDataPath);
   const controlLauncherPreference = new ControlLauncherPreferenceStore(userDataPath);
@@ -720,6 +743,7 @@ async function createApplication(): Promise<void> {
   latencyProbe.startup('renderer-loaded');
   await nativesStarted;
   latencyProbe.startup('natives-ready');
+  void externalLanguageServers?.start().catch((error: unknown) => console.error(error));
 }
 
 function createApplicationMenu(): Menu {
@@ -1053,6 +1077,13 @@ function createApplicationMenu(): Menu {
             },
           })),
         },
+        ...(externalLanguageServers
+          ? externalLanguageMenuItems(externalLanguageServers, {
+              blocked: () => modalSurfaceOpen,
+              refresh: refreshApplicationMenu,
+              onError: console.error,
+            })
+          : []),
         { type: 'separator' },
         ...(languageMenuItemVisible(localeService?.state().languages.length ?? 1)
           ? [
@@ -2438,7 +2469,7 @@ function registerIpc(
       gameTexturesFirstLinkInstallations: current.gameTexturesFirstLinkInstallations,
       rmsLintRules: current.rmsLintRules,
       languagePreference: current.languagePreference,
-      mapIconRelief: current.mapIconRelief,
+      mapIconReliefMode: current.mapIconReliefMode,
       mapIconTerrainSmoothing: current.mapIconTerrainSmoothing,
       mapIconSpawnMarkerStyle: current.mapIconSpawnMarkerStyle,
       mapIconSpawnMarkerSizePercent: current.mapIconSpawnMarkerSizePercent,
@@ -2452,6 +2483,7 @@ function registerIpc(
       mapIconResourceDensityLevel: current.mapIconResourceDensityLevel,
       mapIconResourceSize: current.mapIconResourceSize,
       mapIconResourceSpawnOverlap: current.mapIconResourceSpawnOverlap,
+      mapIconMinimapObjects: current.mapIconMinimapObjects,
     });
   });
   ipcMain.handle(ipcChannels.disableRmsLintRule, async (event, code: unknown) => {
@@ -2794,7 +2826,13 @@ function registerIpc(
       }
       latencyProbe.step(probeId, 'catalog');
       latencyProbe.languageContext(probeId);
-      try {
+      let builtInAsked = false;
+      let captureReleased = false;
+      const builtIn = (): Promise<unknown> => {
+        builtInAsked = true;
+        if (editorRequest && editorInventoryCoordinator && captureReleased) {
+          return editorInventoryCoordinator.requestCurrent(method, params);
+        }
         if (editorRequest && editorInventoryCoordinator) {
           const local =
             [
@@ -2804,15 +2842,25 @@ function registerIpc(
             ].includes(method) &&
             !!editorRequest.uri &&
             /\.(?:rms|rms2|inc|def)$/iu.test(editorRequest.uri);
-          return await (local
+          return local
             ? editorInventoryCoordinator.localRequest(method, params, editorRequest)
-            : editorInventoryCoordinator.requestCurrent(method, params, editorRequest));
+            : editorInventoryCoordinator.requestCurrent(method, params, editorRequest);
         }
-        return await nativeSupervisor.requestLanguageServer(method, params);
+        return nativeSupervisor.requestLanguageServer(method, params);
+      };
+      try {
+        return await (externalLanguageServers
+          ? externalLanguageServers.request(method, params, builtIn, () => {
+              if (!editorRequest || builtInAsked) return;
+              captureReleased = true;
+              editorInventoryCoordinator?.release(editorRequest);
+            })
+          : builtIn());
       } catch (error) {
         if ((error as { code?: unknown } | null)?.code === -32801) return null;
         throw error;
       } finally {
+        if (!builtInAsked && editorRequest) editorInventoryCoordinator?.release(editorRequest);
         latencyProbe.languageContext(undefined);
         latencyProbe.step(probeId, 'language-server');
         latencyProbe.closeRequest(probeId, 'committed');
@@ -2841,11 +2889,19 @@ function registerIpc(
       }
       if (method === 'textDocument/didChange' && uri) {
         nativeSupervisor.mirrorLanguageServerNotification(method, params);
+        externalLanguageServers?.didChange(params);
         await scheduleLanguageDocumentSync(uri);
         scheduleEditorInventoryRefresh();
       } else {
         if (method === 'textDocument/didClose' && uri) cancelLanguageDocumentSync(uri);
-        nativeSupervisor.notifyLanguageServer(method, params);
+        try {
+          nativeSupervisor.notifyLanguageServer(method, params);
+        } catch (error) {
+          if (method === 'textDocument/didClose') externalLanguageServers?.didClose(params);
+          throw error;
+        }
+        if (method === 'textDocument/didOpen') externalLanguageServers?.didOpen(params);
+        else if (method === 'textDocument/didClose') externalLanguageServers?.didClose(params);
       }
       if (!uri) return;
       if (method === 'textDocument/didOpen' || method === 'textDocument/didClose') {
@@ -3595,7 +3651,7 @@ function registerIpc(
     return {
       perspective: session.mapIconPerspective,
       look: session.mapIconLook,
-      relief: session.mapIconRelief,
+      relief: session.mapIconReliefMode,
       terrainSmoothing: session.mapIconTerrainSmoothing,
       spawnMarkers: session.mapIconSpawnMarkerStyle,
       spawnMarkerSizePercent: session.mapIconSpawnMarkerSizePercent,
@@ -3607,6 +3663,7 @@ function registerIpc(
       resourceDensity: session.mapIconResourceDensityLevel,
       resourceSize: session.mapIconResourceSize,
       resourceSpawnOverlap: session.mapIconResourceSpawnOverlap,
+      minimapObjects: session.mapIconMinimapObjects,
     };
   });
   ipcMain.handle(ipcChannels.mapIconRenderInputSet, async (event, input: unknown) => {
@@ -4372,6 +4429,15 @@ function publishExecutionState(state: ReturnType<ExecutionLease['state']>): void
 }
 
 function publishLanguageServerNotification(method: string, params: unknown): void {
+  sendLanguageServerEvent(
+    method,
+    method === 'textDocument/publishDiagnostics' && externalLanguageServers
+      ? externalLanguageServers.acceptBuiltInDiagnostics(params)
+      : params,
+  );
+}
+
+function sendLanguageServerEvent(method: string, params: unknown): void {
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send(ipcChannels.languageServerEvent, {
       method,
@@ -4538,8 +4604,14 @@ app.on('before-quit', (event) => {
         .catch((error: unknown) =>
           logShutdown('detaching AoE2Control failed while quitting', error),
         )
-        .then(() => activeSupervisor.stopAll()),
-    killChildren: () => activeSupervisor.killAll(),
+        .then(() =>
+          Promise.allSettled([activeSupervisor.stopAll(), externalLanguageServers?.stop()]),
+        )
+        .then(() => undefined),
+    killChildren: () => {
+      externalLanguageServers?.kill();
+      activeSupervisor.killAll();
+    },
     exit: () => app.exit(0),
     log: logShutdown,
   });

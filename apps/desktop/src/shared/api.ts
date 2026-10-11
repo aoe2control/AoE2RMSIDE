@@ -145,17 +145,47 @@ export type ApplicationMenuName = 'file' | 'edit' | 'view' | 'help';
 export type { ExternalLinkTarget } from './external-links';
 
 export const mapIconRenderContract = {
-  version: 10,
+  version: 13,
   size: 512,
   identityDomain: 'rmside-map-icon-render',
 } as const;
 
 export type MapIconRenderContract = typeof mapIconRenderContract;
 
+export const mapIconSaveSizes = Object.freeze([256, 512, 1024, 1536] as const);
+
+export type MapIconSaveSize = (typeof mapIconSaveSizes)[number];
+
+export function isMapIconSaveSize(value: unknown): value is MapIconSaveSize {
+  return mapIconSaveSizes.includes(value as MapIconSaveSize);
+}
+
+export function mapIconPixelBytes(size: number): number {
+  return size * size * 4;
+}
+
+export type MapIconRelief = 'off' | 'terrain' | 'raised';
+
+export const mapIconReliefs: readonly MapIconRelief[] = Object.freeze(['off', 'terrain', 'raised']);
+
+export function isMapIconRelief(value: unknown): value is MapIconRelief {
+  return mapIconReliefs.includes(value as MapIconRelief);
+}
+
+export function migrateMapIconReliefV12(relief: boolean): MapIconRelief {
+  return relief ? 'terrain' : 'off';
+}
+
+export function effectiveMapIconRelief(
+  input: Pick<MapIconRenderInput, 'perspective' | 'relief'>,
+): MapIconRelief {
+  return input.relief === 'raised' && input.perspective !== 'diamond' ? 'terrain' : input.relief;
+}
+
 export interface MapIconRenderInput {
   perspective: MapIconPerspective;
   look: MapIconRenderLook;
-  relief: boolean;
+  relief: MapIconRelief;
   terrainSmoothing: boolean;
   spawnMarkers: MapIconSpawnMarkerStyle;
   spawnMarkerSizePercent: number;
@@ -167,6 +197,7 @@ export interface MapIconRenderInput {
   resourceDensity: number;
   resourceSize: number;
   resourceSpawnOverlap: boolean;
+  minimapObjects: boolean;
 }
 
 export type MapIconSpawnMarkerStyle = 'hidden' | 'player-squares' | 'nomad-feet';
@@ -260,7 +291,7 @@ export const mapIconSpawnMarkerSizePercent = Object.freeze({
 export const defaultMapIconRenderInput: Readonly<MapIconRenderInput> = Object.freeze({
   perspective: 'top-down',
   look: 'texture-colors',
-  relief: true,
+  relief: 'raised',
   terrainSmoothing: true,
   spawnMarkers: 'player-squares',
   spawnMarkerSizePercent: mapIconSpawnMarkerSizePercent.default,
@@ -272,6 +303,7 @@ export const defaultMapIconRenderInput: Readonly<MapIconRenderInput> = Object.fr
   resourceDensity: mapIconArtDensity.default,
   resourceSize: mapIconArtSize.default,
   resourceSpawnOverlap: false,
+  minimapObjects: false,
 });
 
 export const mapIconRenderInputKeys: readonly (keyof MapIconRenderInput)[] = Object.freeze([
@@ -289,6 +321,7 @@ export const mapIconRenderInputKeys: readonly (keyof MapIconRenderInput)[] = Obj
   'resourceDensity',
   'resourceSize',
   'resourceSpawnOverlap',
+  'minimapObjects',
 ]);
 
 export function isMapIconSpawnMarkerSizePercent(value: unknown): value is number {
@@ -318,7 +351,7 @@ export function validateMapIconRenderInput(value: unknown): Readonly<MapIconRend
   if (!mapIconRenderLooks.includes(record.look as MapIconRenderLook)) {
     throw new Error('map icon look is invalid');
   }
-  if (typeof record.relief !== 'boolean') throw new Error('map icon relief choice is invalid');
+  if (!isMapIconRelief(record.relief)) throw new Error('map icon relief choice is invalid');
   if (typeof record.terrainSmoothing !== 'boolean') {
     throw new Error('map icon terrain smoothing choice is invalid');
   }
@@ -328,7 +361,13 @@ export function validateMapIconRenderInput(value: unknown): Readonly<MapIconRend
   if (!isMapIconSpawnMarkerSizePercent(record.spawnMarkerSizePercent)) {
     throw new Error('map icon spawn marker size is invalid');
   }
-  for (const key of ['trees', 'treeSpawnOverlap', 'resources', 'resourceSpawnOverlap'] as const) {
+  for (const key of [
+    'trees',
+    'treeSpawnOverlap',
+    'resources',
+    'resourceSpawnOverlap',
+    'minimapObjects',
+  ] as const) {
     if (typeof record[key] !== 'boolean') throw new Error(`map icon ${key} choice is invalid`);
   }
   for (const key of ['treeDensity', 'resourceDensity'] as const) {
@@ -352,6 +391,7 @@ export function validateMapIconRenderInput(value: unknown): Readonly<MapIconRend
     resourceDensity: record.resourceDensity as number,
     resourceSize: record.resourceSize as number,
     resourceSpawnOverlap: record.resourceSpawnOverlap as boolean,
+    minimapObjects: record.minimapObjects as boolean,
   });
 }
 
@@ -359,6 +399,7 @@ export function mapIconIdentityPrefix(
   sourceSemanticHash: string,
   input: MapIconRenderInput,
   gameTexturesSource?: string,
+  size: MapIconSaveSize = mapIconRenderContract.size,
 ): string {
   if (
     input.look === 'game-textures'
@@ -368,8 +409,9 @@ export function mapIconIdentityPrefix(
   ) {
     throw new Error('map icon game textures source is invalid');
   }
-  const { identityDomain, size, version } = mapIconRenderContract;
-  const relief = input.relief ? 'relief' : 'flat';
+  if (!isMapIconSaveSize(size)) throw new Error('map icon size is invalid');
+  const { identityDomain, version } = mapIconRenderContract;
+  const relief = `relief-${effectiveMapIconRelief(input)}`;
   const smoothing = input.terrainSmoothing ? 'smooth-terrain' : 'sharp-terrain';
   const markers =
     input.spawnMarkers === 'hidden' ? 'no-spawn-markers' : `spawn-markers-${input.spawnMarkers}`;
@@ -381,7 +423,8 @@ export function mapIconIdentityPrefix(
       : `look-${input.look}`;
   const trees = `${input.trees ? 'trees' : 'no-trees'}-density-${input.treeDensity}-size-${input.treeSize}-${input.treeSpawnOverlap ? 'overlap' : 'clear'}`;
   const resources = `${input.resources ? 'resources' : 'no-resources'}-density-${input.resourceDensity}-size-${input.resourceSize}-${input.resourceSpawnOverlap ? 'overlap' : 'clear'}`;
-  return `${identityDomain}\0v${version}\0${size}x${size}\0${perspective}\0${look}\0${relief}\0${smoothing}\0${markers}\0${markerSize}\0${trees}\0${resources}\0${sourceSemanticHash}\0`;
+  const objects = input.minimapObjects ? 'minimap-objects' : 'no-minimap-objects';
+  return `${identityDomain}\0v${version}\0${size}x${size}\0${perspective}\0${look}\0${relief}\0${smoothing}\0${markers}\0${markerSize}\0${trees}\0${resources}\0${objects}\0${sourceSemanticHash}\0`;
 }
 
 export { externalLinkUrls } from './external-links';
@@ -1117,7 +1160,7 @@ export interface ManualDeploymentMapIconRender {
   contractVersion: MapIconRenderContract['version'];
   perspective: MapIconPerspective;
   look: MapIconRenderLook;
-  relief: boolean;
+  relief: MapIconRelief;
   terrainSmoothing: boolean;
   spawnMarkers: MapIconSpawnMarkerStyle;
   spawnMarkerSizePercent: number;
@@ -1129,6 +1172,7 @@ export interface ManualDeploymentMapIconRender {
   resourceDensity: number;
   resourceSize: number;
   resourceSpawnOverlap: boolean;
+  minimapObjects: boolean;
   sourceSemanticHash: string;
   gameTexturesSource?: string;
   identity: string;
@@ -1192,6 +1236,7 @@ export interface GeneratedMapIconSaveRequest {
   sourceCatalogHash: string;
   sourceGraphHash: string;
   externalAssetHash: string;
+  size: MapIconSaveSize;
   render: ManualDeploymentMapIconRender;
 }
 
@@ -1844,7 +1889,7 @@ export interface DesktopSession {
   previewSmallTrees: boolean;
   gameTexturesFirstLinkApplied: boolean;
   gameTexturesFirstLinkInstallations: string[];
-  mapIconRelief: boolean;
+  mapIconReliefMode: MapIconRelief;
   mapIconTerrainSmoothing: boolean;
   mapIconSpawnMarkerStyle: MapIconSpawnMarkerStyle;
   mapIconSpawnMarkerSizePercent: number;
@@ -1858,6 +1903,7 @@ export interface DesktopSession {
   mapIconResourceDensityLevel: number;
   mapIconResourceSize: number;
   mapIconResourceSpawnOverlap: boolean;
+  mapIconMinimapObjects: boolean;
   window: {
     bounds: WindowBounds | null;
     maximized: boolean;

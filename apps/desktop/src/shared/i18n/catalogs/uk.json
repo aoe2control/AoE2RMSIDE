@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Зовнішні мовні сервери"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} для {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Використовувати зовнішній мовний сервер"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Доповнювати вбудованими знаннями"
+    },
     "app-menu.view.language": {
       "message": "Мова…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Зберегти зображення…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} пікс."
+    },
     "map-icon.frame.generating": {
       "message": "Створення піктограми мапи"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Піктограма мапи: очікування перегляду розгортання"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Піктограма мапи: створено з поточного перегляду"
     },
     "map-icon.status.generated-replacing": {
       "message": "Піктограма мапи: створено {file}, замінено оригінал лише в цій розгорнутій копії"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Рельєф місцевості"
     },
-    "map-icon.relief.hide": {
-      "message": "Приховати рельєф місцевості"
+    "map-icon.relief.off": {
+      "message": "Без висот"
     },
-    "map-icon.relief.show": {
-      "message": "Показати рельєф місцевості"
+    "map-icon.relief.raised": {
+      "message": "Висоти в 3D"
     },
     "map-icon.terrain-smoothing": {
       "message": "Згладжувати переходи між типами місцевості"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Без позначок старту"
     },
+    "map-icon.minimap-objects": {
+      "message": "Об’єкти мінімапи"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Показує об’єкти маленькими квадратами, як на мінімапі в режимі глядача."
+    },
     "map-icon.spawn-size": {
       "message": "Розмір позначок старту"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Розмір позначок старту (% ширини мапи)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Розмір позначок міського центру"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Зменшити розмір позначок міського центру"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Збільшити розмір позначок міського центру"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value} % стандартного розміру"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Розмір позначок міського центру (% стандартного розміру)"
     },
     "map-icon.art.trees.show": {
       "message": "Показати дерева"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Об’єкти й контур міського центру"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Об’єкти мінімапи"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Показує об’єкти маленькими квадратами, як на мінімапі в режимі глядача."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Без об’єктів"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Краї урвищ"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Рельєф місцевості"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "Висоти в 3D"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Мапа висот"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Відкрити сторінку випусків"
+    },
+    "external-language-server.started.headline": {
+      "message": "{server} використовується для файлів {language}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "Версію {version} не перевірено з AoE2RMSIDE; її відомі проблеми й надалі обходяться"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} не може слугувати мовним сервером"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} перестав працювати"
+    },
+    "external-language-server.reason.start": {
+      "message": "Не вдалося запустити програму"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Програма не відповіла на початкове рукостискання як мовний сервер"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "У відповіді програми на рукостискання немає оновлень документів або використано формат позицій, якого AoE2RMSIDE не пропонує"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Програма несподівано завершила роботу"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Програма перестала вчасно відповідати на запити"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Програма надіслала повідомлення, яке не є коректними даними мовного сервера"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE перезапустить сервер через {seconds} секунду (спроба {attempt} з {limit}); тим часом використовується вбудований аналіз} few {AoE2RMSIDE перезапустить сервер через {seconds} секунди (спроба {attempt} з {limit}); тим часом використовується вбудований аналіз} many {AoE2RMSIDE перезапустить сервер через {seconds} секунд (спроба {attempt} з {limit}); тим часом використовується вбудований аналіз} other {AoE2RMSIDE перезапустить сервер через {seconds} секунди (спроба {attempt} з {limit}); тим часом використовується вбудований аналіз}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Для файлів {language} використовується вбудований аналіз, доки сервер не буде знову ввімкнено в меню «Вигляд» > «Зовнішні мовні сервери»"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Для файлів {language} використовується вбудований аналіз"
     }
   }
 }

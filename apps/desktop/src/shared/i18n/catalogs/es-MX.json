@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Servidores de lenguaje externos"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} para {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Usar servidor de lenguaje externo"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Completar con conocimiento integrado"
+    },
     "app-menu.view.language": {
       "message": "Idioma…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Guardar imagen…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Generando el ícono del mapa"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Ícono del mapa: esperando la vista previa de la instalación"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Ícono del mapa: generado a partir de la vista previa actual"
     },
     "map-icon.status.generated-replacing": {
       "message": "Ícono del mapa: se ha generado {file}, que reemplaza al original solo en esta copia instalada"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Relieve del terreno"
     },
-    "map-icon.relief.hide": {
-      "message": "Ocultar el relieve del terreno"
+    "map-icon.relief.off": {
+      "message": "Elevación oculta"
     },
-    "map-icon.relief.show": {
-      "message": "Mostrar el relieve del terreno"
+    "map-icon.relief.raised": {
+      "message": "Elevación 3D"
     },
     "map-icon.terrain-smoothing": {
       "message": "Suavizar las transiciones de terreno"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Sin marcadores de inicio"
     },
+    "map-icon.minimap-objects": {
+      "message": "Objetos del minimapa"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Muestra los objetos como pequeños cuadrados, como el minimapa del modo espectador."
+    },
     "map-icon.spawn-size": {
       "message": "Tamaño de los marcadores de inicio"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Tamaño de los marcadores de inicio (% del ancho del mapa)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Tamaño de las marcas del centro urbano"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Reducir el tamaño de las marcas del centro urbano"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Aumentar el tamaño de las marcas del centro urbano"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value} % del tamaño predeterminado"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Tamaño de las marcas del centro urbano (% del tamaño predeterminado)"
     },
     "map-icon.art.trees.show": {
       "message": "Mostrar árboles"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Objetos y superficie del centro urbano"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Objetos del minimapa"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Muestra los objetos como pequeños cuadrados, como el minimapa del modo espectador."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Objetos ocultos"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Bordes de acantilados"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Relieve del terreno"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "Elevación 3D"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Mapa de alturas"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Abrir la página de versiones"
+    },
+    "external-language-server.started.headline": {
+      "message": "Se usa {server} para los archivos {language}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "La versión {version} no se ha probado con AoE2RMSIDE; sus problemas conocidos se siguen sorteando"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} no es un servidor de lenguaje utilizable"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} ha dejado de funcionar"
+    },
+    "external-language-server.reason.start": {
+      "message": "No se ha podido iniciar el programa"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "El programa no ha respondido al protocolo de enlace inicial como un servidor de lenguaje"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "La respuesta del programa al protocolo de enlace no incluye actualizaciones de documentos o usa un formato de posición que AoE2RMSIDE no ofrece"
+    },
+    "external-language-server.reason.exit": {
+      "message": "El programa se cerró de forma inesperada"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "El programa ha dejado de responder a tiempo a las solicitudes"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "El programa ha enviado un mensaje que no contiene datos válidos de servidor de lenguaje"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE lo volverá a iniciar en {seconds} segundo (intento {attempt} de {limit}); mientras tanto se usa el análisis integrado} many {AoE2RMSIDE lo volverá a iniciar en {seconds} segundos (intento {attempt} de {limit}); mientras tanto se usa el análisis integrado} other {AoE2RMSIDE lo volverá a iniciar en {seconds} segundos (intento {attempt} de {limit}); mientras tanto se usa el análisis integrado}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Se usa el análisis integrado para los archivos {language} hasta que se vuelva a activar el servidor en Ver > Servidores de lenguaje externos"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Se usa el análisis integrado para los archivos {language}"
     }
   }
 }

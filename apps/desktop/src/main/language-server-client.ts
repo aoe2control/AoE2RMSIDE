@@ -1,5 +1,5 @@
 import { type ChildProcessWithoutNullStreams, spawn } from 'node:child_process';
-import type { NativeProcessName, NativeProcessStatus } from '../shared/api';
+import type { NativeProcessName, NativeProcessState } from '../shared/api';
 import { DesktopError } from '../shared/desktop-error';
 import { guardChildStreams, isClosedPipeError } from './child-streams';
 import * as latencyProbe from './latency-probe';
@@ -16,6 +16,21 @@ export const defaultLanguageServerRequestBudget: LanguageServerRequestBudget = O
   idleMilliseconds: 10_000,
   maximumMilliseconds: 60_000,
 });
+
+export interface LanguageServerClientOptions {
+  maximumMessageBytes?: number;
+  initializeParams?: Record<string, unknown>;
+  onServerRequest?: (method: string, params: unknown) => unknown;
+  onStderr?: (chunk: string) => void;
+  cancelOnTimeout?: boolean;
+  omitVoidParams?: boolean;
+}
+
+export interface LanguageServerClientStatus<Name extends string> {
+  name: Name;
+  state: NativeProcessState;
+  detail?: string;
+}
 
 interface PendingRequest {
   method: string;
@@ -36,24 +51,53 @@ interface JsonRpcMessage {
 
 const maximumPendingRequests = 128;
 
-export class LanguageServerClient {
+export class LanguageServerClient<Name extends string = NativeProcessName> {
   private child: ChildProcessWithoutNullStreams | undefined;
   private pending = new Map<number, PendingRequest>();
   private nextRequestId = 1;
   private outputBuffer = Buffer.alloc(0);
   private stopping = false;
+  private initializeAnswer: unknown;
+  private closedChild: Promise<void> = Promise.resolve();
+  private readonly maximumMessageBytes: number;
 
   constructor(
     private readonly executablePath: string,
-    private readonly onStatus: (status: NativeProcessStatus) => void,
+    private readonly onStatus: (status: LanguageServerClientStatus<Name>) => void,
     private readonly onNotification: (method: string, params: unknown) => void,
-    private readonly processName: NativeProcessName = 'rms-ls',
+    private readonly processName: NoInfer<Name> = 'rms-ls' as Name,
     private readonly arguments_: readonly string[] = [],
     private readonly budget: LanguageServerRequestBudget = defaultLanguageServerRequestBudget,
-  ) {}
+    private readonly options: LanguageServerClientOptions = {},
+  ) {
+    this.maximumMessageBytes = options.maximumMessageBytes ?? maximumMessageBytes;
+  }
 
-  async start(): Promise<void> {
-    if (this.child) return;
+  get initializeResult(): unknown {
+    return this.initializeAnswer;
+  }
+
+  get unreadOutput(): string {
+    return this.outputBuffer
+      .subarray(0, 512)
+      .toString('utf8')
+      .replace(/[\u0000-\u001f\u007f]/gu, ' ')
+      .trim();
+  }
+
+  closed(milliseconds: number): Promise<void> {
+    return Promise.race([
+      this.closedChild,
+      new Promise<void>((resolve) => setTimeout(resolve, milliseconds)),
+    ]);
+  }
+
+  get running(): boolean {
+    return this.child !== undefined;
+  }
+
+  async start(): Promise<unknown> {
+    if (this.child) return this.initializeAnswer;
     this.stopping = false;
     this.outputBuffer = Buffer.alloc(0);
     this.onStatus({ name: this.processName, state: 'starting' });
@@ -62,13 +106,20 @@ export class LanguageServerClient {
       windowsHide: true,
     });
     this.child = child;
+    this.closedChild = new Promise((resolve) => child.once('close', () => resolve()));
     child.stdout.on('data', (chunk: Buffer) => {
       for (const id of this.pending.keys()) this.armTimeout(id);
       this.acceptOutput(chunk);
     });
     child.stderr.setEncoding('utf8');
     child.stderr.on('data', (chunk: string) => {
-      const detail = latencyProbe.nativeDiagnostics(this.processName, chunk).trim();
+      if (this.options.onStderr) {
+        this.options.onStderr(chunk);
+        return;
+      }
+      const detail = latencyProbe
+        .nativeDiagnostics(this.processName as unknown as NativeProcessName, chunk)
+        .trim();
       if (detail && !this.stopping) {
         this.onStatus({ name: this.processName, state: 'running', detail });
       }
@@ -97,16 +148,20 @@ export class LanguageServerClient {
       child.once('spawn', resolve);
       child.once('error', reject);
     });
-    await this.request('initialize', {
-      processId: process.pid,
-      clientInfo: { name: 'AoE2RMSIDE', version: '0.0.0' },
-      capabilities: {
-        general: { positionEncodings: ['utf-16'] },
-        textDocument: { synchronization: { didSave: false } },
+    this.initializeAnswer = await this.request(
+      'initialize',
+      this.options.initializeParams ?? {
+        processId: process.pid,
+        clientInfo: { name: 'AoE2RMSIDE', version: '0.0.0' },
+        capabilities: {
+          general: { positionEncodings: ['utf-16'] },
+          textDocument: { synchronization: { didSave: false } },
+        },
       },
-    });
+    );
     this.notify('initialized', {});
     this.onStatus({ name: this.processName, state: 'running' });
+    return this.initializeAnswer;
   }
 
   request(method: string, params: unknown): Promise<unknown> {
@@ -127,7 +182,17 @@ export class LanguageServerClient {
       });
       this.armTimeout(id);
       latencyProbe.languageExchange(id, method, 'sent');
-      child.stdin.write(lspFrame({ jsonrpc: '2.0', id, method, params }), (error) => {
+      let frame: Buffer;
+      try {
+        frame = this.frame(this.message({ jsonrpc: '2.0', id, method }, method, params));
+      } catch (error) {
+        const pending = this.pending.get(id);
+        if (pending) clearTimeout(pending.timer);
+        this.pending.delete(id);
+        reject(error);
+        return;
+      }
+      child.stdin.write(frame, (error) => {
         if (!error) return;
         const pending = this.pending.get(id);
         if (!pending) return;
@@ -141,7 +206,26 @@ export class LanguageServerClient {
   notify(method: string, params: unknown): void {
     const child = this.child;
     if (!child || child.stdin.destroyed) throw this.notRunning();
-    child.stdin.write(lspFrame({ jsonrpc: '2.0', method, params }));
+    child.stdin.write(this.frame(this.message({ jsonrpc: '2.0', method }, method, params)));
+  }
+
+  private message(
+    base: Record<string, unknown>,
+    method: string,
+    params: unknown,
+  ): Record<string, unknown> {
+    if (
+      this.options.omitVoidParams &&
+      (method === 'shutdown' || method === 'exit') &&
+      (params === null || params === undefined)
+    ) {
+      return base;
+    }
+    return { ...base, params };
+  }
+
+  private frame(message: unknown): Buffer {
+    return lspFrame(message, this.maximumMessageBytes, this.processName);
   }
 
   kill(): void {
@@ -175,6 +259,11 @@ export class LanguageServerClient {
       () => {
         if (this.pending.get(id) !== pending) return;
         this.pending.delete(id);
+        if (this.options.cancelOnTimeout && this.child && !this.child.stdin.destroyed) {
+          try {
+            this.notify('$/cancelRequest', { id });
+          } catch {}
+        }
         pending.reject(
           new DesktopError(
             'native.timeout',
@@ -194,19 +283,19 @@ export class LanguageServerClient {
         const headerEnd = this.outputBuffer.indexOf('\r\n\r\n');
         if (headerEnd < 0) {
           if (this.outputBuffer.length > maximumHeaderBytes) {
-            throw new Error('rms-ls response header exceeds bounded length');
+            throw new Error(`${this.processName} response header exceeds bounded length`);
           }
           return;
         }
         if (headerEnd > maximumHeaderBytes) {
-          throw new Error('rms-ls response header exceeds bounded length');
+          throw new Error(`${this.processName} response header exceeds bounded length`);
         }
         const header = this.outputBuffer.subarray(0, headerEnd).toString('ascii');
         const match = /(?:^|\r\n)Content-Length:\s*(\d+)\s*(?:\r\n|$)/i.exec(header);
-        if (!match) throw new Error('rms-ls response is missing Content-Length');
+        if (!match) throw new Error(`${this.processName} response is missing Content-Length`);
         const length = Number(match[1]);
-        if (!Number.isSafeInteger(length) || length < 0 || length > maximumMessageBytes) {
-          throw new Error('rms-ls response length is invalid');
+        if (!Number.isSafeInteger(length) || length < 0 || length > this.maximumMessageBytes) {
+          throw new Error(`${this.processName} response length is invalid`);
         }
         const bodyStart = headerEnd + 4;
         const frameEnd = bodyStart + length;
@@ -221,8 +310,11 @@ export class LanguageServerClient {
   }
 
   private acceptMessage(message: JsonRpcMessage): void {
-    if (typeof message.method === 'string' && message.id === undefined) {
-      this.onNotification(message.method, message.params);
+    if (!message || typeof message !== 'object') return;
+    if (typeof message.method === 'string') {
+      if (message.id === undefined) this.onNotification(message.method, message.params);
+      else if (typeof message.id === 'number' || typeof message.id === 'string')
+        this.answerServerRequest(message.id, message.method, message.params);
       return;
     }
     if (typeof message.id !== 'number') return;
@@ -236,6 +328,37 @@ export class LanguageServerClient {
     } else {
       pending.resolve(message.result);
     }
+  }
+
+  private answerServerRequest(id: number | string, method: string, params: unknown): void {
+    const child = this.child;
+    const reply = (message: Record<string, unknown>) => {
+      if (this.child !== child || !child || child.stdin.destroyed) return;
+      try {
+        child.stdin.write(this.frame({ jsonrpc: '2.0', id, ...message }));
+      } catch {}
+    };
+    let answer: unknown;
+    try {
+      answer = this.options.onServerRequest?.(method, params);
+    } catch (error) {
+      reply({
+        error: { code: -32603, message: error instanceof Error ? error.message : 'failed' },
+      });
+      return;
+    }
+    void Promise.resolve(answer).then(
+      (result) =>
+        reply(
+          result === undefined
+            ? { error: { code: -32601, message: `${method} is not supported` } }
+            : { result },
+        ),
+      (error: unknown) =>
+        reply({
+          error: { code: -32603, message: error instanceof Error ? error.message : 'failed' },
+        }),
+    );
   }
 
   private notRunning(): DesktopError {
@@ -268,10 +391,10 @@ function isJsonRpcError(value: unknown): value is { code: number; message: strin
   );
 }
 
-function lspFrame(message: unknown): Buffer {
+function lspFrame(message: unknown, limit: number, processName: string): Buffer {
   const body = Buffer.from(JSON.stringify(message));
-  if (body.byteLength > maximumMessageBytes) {
-    throw new Error('rms-ls request exceeds the bounded message length');
+  if (body.byteLength > limit) {
+    throw new Error(`${processName} request exceeds the bounded message length`);
   }
   return Buffer.concat([Buffer.from(`Content-Length: ${body.byteLength}\r\n\r\n`), body]);
 }

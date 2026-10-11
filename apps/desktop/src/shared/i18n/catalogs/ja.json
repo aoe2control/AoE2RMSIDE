@@ -146,6 +146,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title}（{code}）"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "外部言語サーバー"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{language} 用の {server}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "外部言語サーバーを使用"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "不足分を組み込みの知識で補う"
+    },
     "app-menu.view.language": {
       "message": "言語…"
     },
@@ -2564,6 +2576,9 @@
     "map-icon.save-image.tooltip": {
       "message": "画像を保存…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "マップアイコンを生成中"
     },
@@ -2602,6 +2617,9 @@
     },
     "map-icon.status.waiting": {
       "message": "マップアイコン：配置内容のプレビューを待機中"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "マップアイコン：現在のプレビューから生成しました"
     },
     "map-icon.status.generated-replacing": {
       "message": "マップアイコン：{file} を生成しました。今回配置する内容でのみ、元のアイコンを置き換えます"
@@ -2672,11 +2690,11 @@
     "map-icon.relief": {
       "message": "地形の起伏"
     },
-    "map-icon.relief.hide": {
-      "message": "地形の起伏を非表示"
+    "map-icon.relief.off": {
+      "message": "標高表示なし"
     },
-    "map-icon.relief.show": {
-      "message": "地形の起伏を表示"
+    "map-icon.relief.raised": {
+      "message": "3D 標高表示"
     },
     "map-icon.terrain-smoothing": {
       "message": "地形の境界を滑らかにする"
@@ -2702,6 +2720,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "開始位置マーカーなし"
     },
+    "map-icon.minimap-objects": {
+      "message": "ミニマップ風オブジェクト"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "オブジェクトを、観戦用ミニマップのように小さな四角で表示します。"
+    },
     "map-icon.spawn-size": {
       "message": "開始位置マーカーのサイズ"
     },
@@ -2719,6 +2743,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "開始位置マーカーのサイズ（マップの幅に対する %）"
+    },
+    "map-icon.town-center-size": {
+      "message": "町の中心マーカーのサイズ"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "町の中心マーカーを小さくする"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "町の中心マーカーを大きくする"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "既定のサイズの {value}%"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "町の中心マーカーのサイズ（既定のサイズに対する %）"
     },
     "map-icon.art.trees.show": {
       "message": "木を表示"
@@ -3437,6 +3479,15 @@
     "preview-panel.tool.objects": {
       "message": "オブジェクトと町の中心の占有範囲"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "ミニマップ風オブジェクト"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "オブジェクトを、観戦用ミニマップのように小さな四角で表示します。"
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "オブジェクト表示なし"
+    },
     "preview-panel.tool.cliffs": {
       "message": "崖の縁"
     },
@@ -3466,6 +3517,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "地形の起伏"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D 標高表示"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "高さマップ"
@@ -4624,6 +4678,45 @@
     },
     "release-check.newer.action": {
       "message": "リリースページを開く"
+    },
+    "external-language-server.started.headline": {
+      "message": "{language} ファイルに {server} を使用しています"
+    },
+    "external-language-server.untested.cause": {
+      "message": "バージョン {version} は AoE2RMSIDE で未検証ですが、既知の問題は引き続き回避されます"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} は使用できる言語サーバーではありません"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} が動作しなくなりました"
+    },
+    "external-language-server.reason.start": {
+      "message": "プログラムを起動できませんでした"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "プログラムが言語サーバーとして最初のハンドシェイクに応答しませんでした"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "プログラムのハンドシェイク応答にドキュメント更新が含まれていないか、AoE2RMSIDE が提供しない位置形式が使われています"
+    },
+    "external-language-server.reason.exit": {
+      "message": "プログラムが予期せず終了しました"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "プログラムが要求に時間内に応答しなくなりました"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "プログラムが言語サーバーのデータとして無効なメッセージを送信しました"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, other {AoE2RMSIDE は {seconds} 秒後にサーバーを再起動します（{limit} 回中 {attempt} 回目）。その間は組み込みの解析を使用します}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "「表示 > 外部言語サーバー」でサーバーを再びオンにするまで、{language} ファイルには組み込みの解析を使用します"
+    },
+    "external-language-server.action.not-used": {
+      "message": "{language} ファイルには組み込みの解析を使用します"
     }
   }
 }

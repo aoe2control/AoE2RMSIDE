@@ -21,12 +21,18 @@ import {
   type ManualDeploymentMapIconRequest,
   type ManualDeploymentOwnedTarget,
   type ManualDeploymentPreview,
+  type MapIconSaveSize,
 } from '../shared/api';
 import {
   validateGeneratedMapIconSaveRequest,
   validateManualDeploymentMapIconRequest,
 } from '../shared/map-icon-deployment';
-import { decodeMapIconPng, encodeMapIconPng, maximumMapIconPngBytes } from './map-icon-png';
+import {
+  decodeMapIconPng,
+  encodeMapIconPng,
+  maximumMapIconPngBytes,
+  maximumMapIconPngBytesFor,
+} from './map-icon-png';
 import type {
   AuthorizedDeploymentGraph,
   MainSourceCatalogEntry,
@@ -527,7 +533,7 @@ export class ManagedDeploymentService {
         documentUri: valid.documentUri,
         documentRevision: valid.documentRevision,
       });
-      const policy = this.generatedMapIcon(valid.render, graph);
+      const policy = this.generatedMapIcon(valid.render, graph, valid.size);
       if (policy.kind !== 'generated') throw new Error('generated map icon is unavailable');
       const entry = graph.catalog.sources.find((source) => source.sourceId === graph.documentUri);
       const entryName = entry?.normalizedPath.replaceAll('\\', '/').split('/').pop() ?? '';
@@ -861,6 +867,7 @@ export class ManagedDeploymentService {
   private generatedMapIcon(
     render: ManualDeploymentMapIconRender | undefined,
     graph: AuthorizedDeploymentGraph,
+    size: MapIconSaveSize = mapIconRenderContract.size,
   ): MapIconPolicy {
     if (!render || render.contractVersion !== mapIconRenderContract.version) {
       throw new Error('generated map icon render contract is unsupported');
@@ -880,6 +887,7 @@ export class ManagedDeploymentService {
       resourceDensity: render.resourceDensity,
       resourceSize: render.resourceSize,
       resourceSpawnOverlap: render.resourceSpawnOverlap,
+      minimapObjects: render.minimapObjects,
     });
     if (
       input.look === 'game-textures' &&
@@ -903,7 +911,7 @@ export class ManagedDeploymentService {
     }
     const identity = createHash('sha256')
       .update(
-        mapIconIdentityPrefix(render.sourceSemanticHash, input, render.gameTexturesSource),
+        mapIconIdentityPrefix(render.sourceSemanticHash, input, render.gameTexturesSource, size),
         'utf8',
       )
       .update(render.pixels)
@@ -916,14 +924,10 @@ export class ManagedDeploymentService {
     }
     let bytes: Uint8Array;
     try {
-      bytes = encodeMapIconPng(
-        render.pixels,
-        mapIconRenderContract.size,
-        mapIconRenderContract.size,
-      );
-      const decoded = decodeMapIconPng(bytes);
+      bytes = encodeMapIconPng(render.pixels, size, size, true);
+      const decoded = decodeMapIconPng(bytes, size);
       if (
-        bytes.byteLength > maximumMapIconPngBytes ||
+        bytes.byteLength > maximumMapIconPngBytesFor(size) ||
         !Buffer.from(decoded.buffer, decoded.byteOffset, decoded.byteLength).equals(
           Buffer.from(render.pixels.buffer, render.pixels.byteOffset, render.pixels.byteLength),
         )
@@ -935,7 +939,7 @@ export class ManagedDeploymentService {
         `generated map icon PNG is invalid: ${error instanceof Error ? error.message : 'unknown error'}`,
       );
     }
-    this.encodedMapIcon = { identity, bytes };
+    if (size === mapIconRenderContract.size) this.encodedMapIcon = { identity, bytes };
     return { kind: 'generated', bytes, identity };
   }
 

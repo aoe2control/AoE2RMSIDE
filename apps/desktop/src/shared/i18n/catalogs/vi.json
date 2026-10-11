@@ -146,6 +146,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Máy chủ ngôn ngữ bên ngoài"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} cho {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Dùng máy chủ ngôn ngữ bên ngoài"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Bổ sung phần thiếu bằng kiến thức có sẵn"
+    },
     "app-menu.view.language": {
       "message": "Ngôn ngữ…"
     },
@@ -2564,6 +2576,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Lưu ảnh…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Đang tạo biểu tượng bản đồ"
     },
@@ -2602,6 +2617,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Biểu tượng bản đồ: đang đợi bản xem trước triển khai"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Biểu tượng bản đồ: đã tạo từ bản xem trước hiện tại"
     },
     "map-icon.status.generated-replacing": {
       "message": "Biểu tượng bản đồ: đã tạo {file}, chỉ thay thế ảnh gốc trong bản triển khai này"
@@ -2672,11 +2690,11 @@
     "map-icon.relief": {
       "message": "Đổ bóng địa hình"
     },
-    "map-icon.relief.hide": {
-      "message": "Ẩn đổ bóng địa hình"
+    "map-icon.relief.off": {
+      "message": "Tắt hiển thị độ cao"
     },
-    "map-icon.relief.show": {
-      "message": "Hiện đổ bóng địa hình"
+    "map-icon.relief.raised": {
+      "message": "Độ cao 3D"
     },
     "map-icon.terrain-smoothing": {
       "message": "Làm mượt ranh giới địa hình"
@@ -2702,6 +2720,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Không đánh dấu điểm xuất phát"
     },
+    "map-icon.minimap-objects": {
+      "message": "Đối tượng kiểu bản đồ nhỏ"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Hiển thị đối tượng dưới dạng ô vuông nhỏ, giống bản đồ nhỏ ở chế độ khán giả."
+    },
     "map-icon.spawn-size": {
       "message": "Cỡ dấu điểm xuất phát"
     },
@@ -2719,6 +2743,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Cỡ dấu điểm xuất phát (% chiều rộng bản đồ)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Cỡ dấu Nhà chính"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Giảm cỡ dấu Nhà chính"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Tăng cỡ dấu Nhà chính"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value}% cỡ mặc định"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Cỡ dấu Nhà chính (% cỡ mặc định)"
     },
     "map-icon.art.trees.show": {
       "message": "Hiện cây"
@@ -3437,6 +3479,15 @@
     "preview-panel.tool.objects": {
       "message": "Đối tượng và diện tích chiếm chỗ của Nhà chính"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Đối tượng kiểu bản đồ nhỏ"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Hiển thị đối tượng dưới dạng ô vuông nhỏ, giống bản đồ nhỏ ở chế độ khán giả."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Tắt hiển thị đối tượng"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Rìa vách đá"
     },
@@ -3466,6 +3517,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Đổ bóng địa hình"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "Độ cao 3D"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Bản đồ độ cao"
@@ -4624,6 +4678,45 @@
     },
     "release-check.newer.action": {
       "message": "Mở trang phát hành"
+    },
+    "external-language-server.started.headline": {
+      "message": "Đang dùng {server} cho tệp {language}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "Phiên bản {version} chưa được thử nghiệm với AoE2RMSIDE; các vấn đề đã biết vẫn được khắc phục tạm thời"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} không phải là máy chủ ngôn ngữ dùng được"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} đã ngừng hoạt động"
+    },
+    "external-language-server.reason.start": {
+      "message": "Không khởi động được chương trình"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Chương trình không phản hồi bước bắt tay mở đầu như một máy chủ ngôn ngữ"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "Phản hồi bắt tay của chương trình thiếu cập nhật tài liệu hoặc dùng định dạng vị trí mà AoE2RMSIDE không cung cấp"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Chương trình đã dừng bất ngờ"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Chương trình không còn phản hồi yêu cầu kịp thời"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Chương trình đã gửi một thông điệp không phải dữ liệu máy chủ ngôn ngữ hợp lệ"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, other {AoE2RMSIDE sẽ khởi động lại máy chủ sau {seconds} giây (lần thử {attempt}/{limit}); trong lúc đó dùng phân tích có sẵn}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Tệp {language} dùng phân tích có sẵn cho đến khi máy chủ được bật lại trong Xem > Máy chủ ngôn ngữ bên ngoài"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Tệp {language} dùng phân tích có sẵn"
     }
   }
 }

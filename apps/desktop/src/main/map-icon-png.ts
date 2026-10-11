@@ -1,9 +1,13 @@
 import { constants, deflateSync, inflateSync } from 'node:zlib';
-import { mapIconRenderContract } from '../shared/api';
+import { isMapIconSaveSize, mapIconRenderContract, type MapIconSaveSize } from '../shared/api';
 
 export const mapIconPngSize = mapIconRenderContract.size;
 export const maximumMapIconPngBytes = 2 * 1024 * 1024;
 export const mapIconPngRawBytes = mapIconPngSize * (1 + mapIconPngSize * 4);
+
+export function maximumMapIconPngBytesFor(size: MapIconSaveSize): number {
+  return Math.ceil((maximumMapIconPngBytes * size * size) / (mapIconPngSize * mapIconPngSize));
+}
 
 const pngSignature = Uint8Array.of(0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a);
 const ihdrLength = 13;
@@ -53,8 +57,8 @@ export interface MapIconPngHeader {
 }
 
 export interface MapIconPngValidation {
-  width: typeof mapIconRenderContract.size;
-  height: typeof mapIconRenderContract.size;
+  width: MapIconSaveSize;
+  height: MapIconSaveSize;
   byteLength: number;
   idatChunkCount: number;
   idatByteLength: number;
@@ -84,8 +88,9 @@ export function encodeMapIconPng(
   rgba: Uint8Array | Uint8ClampedArray,
   width: number,
   height: number,
+  allowSaveSizes = false,
 ): Uint8Array {
-  if (width !== mapIconPngSize || height !== mapIconPngSize) {
+  if (width !== height || (allowSaveSizes ? !isMapIconSaveSize(width) : width !== mapIconPngSize)) {
     throw new MapIconPngError(
       'dimensions',
       `map icon must be ${mapIconPngSize} x ${mapIconPngSize} pixels`,
@@ -115,7 +120,7 @@ export function encodeMapIconPng(
   header[11] = 0;
   header[12] = 0;
   const total = pngSignature.byteLength + (12 + ihdrLength) + (12 + compressed.byteLength) + 12;
-  if (total > maximumMapIconPngBytes) {
+  if (total > maximumMapIconPngBytesFor(width as MapIconSaveSize)) {
     throw new MapIconPngError('too-large', 'encoded map icon exceeds the byte limit');
   }
   const output = new Uint8Array(total);
@@ -127,8 +132,11 @@ export function encodeMapIconPng(
   return output;
 }
 
-export function readMapIconPngHeader(bytes: Uint8Array): MapIconPngHeader {
-  assertBytes(bytes);
+export function readMapIconPngHeader(
+  bytes: Uint8Array,
+  size: MapIconSaveSize = mapIconPngSize,
+): MapIconPngHeader {
+  assertBytes(bytes, size);
   assertSignature(bytes);
   if (bytes.byteLength < pngSignature.byteLength + 12 + ihdrLength) {
     throw new MapIconPngError('truncated', 'map icon PNG is truncated before IHDR ends');
@@ -151,13 +159,13 @@ export function readMapIconPngHeader(bytes: Uint8Array): MapIconPngHeader {
   };
 }
 
-export function validateMapIconPng(bytes: Uint8Array): MapIconPngValidation {
-  const header = readMapIconPngHeader(bytes);
-  if (header.width !== mapIconPngSize || header.height !== mapIconPngSize) {
-    throw new MapIconPngError(
-      'dimensions',
-      `map icon PNG must be ${mapIconPngSize} x ${mapIconPngSize} pixels`,
-    );
+export function validateMapIconPng(
+  bytes: Uint8Array,
+  size: MapIconSaveSize = mapIconPngSize,
+): MapIconPngValidation {
+  const header = readMapIconPngHeader(bytes, size);
+  if (header.width !== size || header.height !== size) {
+    throw new MapIconPngError('dimensions', `map icon PNG must be ${size} x ${size} pixels`);
   }
   if (
     header.bitDepth !== bitDepth ||
@@ -201,8 +209,8 @@ export function validateMapIconPng(bytes: Uint8Array): MapIconPngValidation {
         throw new MapIconPngError('trailing-data', 'map icon PNG has data after IEND');
       }
       return {
-        width: mapIconPngSize,
-        height: mapIconPngSize,
+        width: size,
+        height: size,
         byteLength: bytes.byteLength,
         idatChunkCount,
         idatByteLength,
@@ -216,8 +224,12 @@ export function validateMapIconPng(bytes: Uint8Array): MapIconPngValidation {
   }
 }
 
-export function decodeMapIconPng(bytes: Uint8Array): Uint8Array {
-  validateMapIconPng(bytes);
+export function decodeMapIconPng(
+  bytes: Uint8Array,
+  size: MapIconSaveSize = mapIconPngSize,
+): Uint8Array {
+  validateMapIconPng(bytes, size);
+  const rawBytes = size * (1 + size * 4);
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const parts: Uint8Array[] = [];
   let offset = pngSignature.byteLength + 12 + ihdrLength;
@@ -230,16 +242,16 @@ export function decodeMapIconPng(bytes: Uint8Array): Uint8Array {
   }
   let raw: Uint8Array;
   try {
-    raw = inflateSync(Buffer.concat(parts), { maxOutputLength: mapIconPngRawBytes + 1 });
+    raw = inflateSync(Buffer.concat(parts), { maxOutputLength: rawBytes + 1 });
   } catch {
     throw new MapIconPngError('pixel-data', 'map icon PNG pixel data does not inflate');
   }
-  if (raw.byteLength !== mapIconPngRawBytes) {
+  if (raw.byteLength !== rawBytes) {
     throw new MapIconPngError('pixel-data', 'map icon PNG pixel data has an invalid length');
   }
-  const rowBytes = mapIconPngSize * 4;
-  const rgba = new Uint8Array(mapIconPngSize * rowBytes);
-  for (let row = 0; row < mapIconPngSize; row += 1) {
+  const rowBytes = size * 4;
+  const rgba = new Uint8Array(size * rowBytes);
+  for (let row = 0; row < size; row += 1) {
     const source = row * (1 + rowBytes);
     if (raw[source] !== 0) {
       throw new MapIconPngError('pixel-data', 'map icon PNG scanlines must use filter type 0');
@@ -261,11 +273,11 @@ function writeChunk(output: Uint8Array, offset: number, type: string, data: Uint
   return offset + 12 + data.byteLength;
 }
 
-function assertBytes(bytes: Uint8Array): void {
+function assertBytes(bytes: Uint8Array, size: MapIconSaveSize): void {
   if (!(bytes instanceof Uint8Array)) {
     throw new MapIconPngError('invalid-input', 'map icon PNG must be a byte array');
   }
-  if (bytes.byteLength > maximumMapIconPngBytes) {
+  if (bytes.byteLength > maximumMapIconPngBytesFor(size)) {
     throw new MapIconPngError('too-large', 'map icon PNG exceeds the byte limit');
   }
 }

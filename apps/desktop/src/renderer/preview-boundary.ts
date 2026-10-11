@@ -15,6 +15,7 @@ export type BoundaryFrameSide = 'left' | 'top' | 'right' | 'bottom';
 export interface VisibleMapBoundary {
   points: BoundaryPoint[];
   edges: Array<BoundaryFrameSide | null>;
+  hidden: boolean[];
   center: BoundaryPoint | null;
   area: number;
 }
@@ -22,6 +23,7 @@ export interface VisibleMapBoundary {
 const emptyBoundary: VisibleMapBoundary = Object.freeze({
   points: [],
   edges: [],
+  hidden: [],
   center: null,
   area: 0,
 }) as VisibleMapBoundary;
@@ -32,19 +34,23 @@ const minimumArea = 0.5;
 export function visibleMapBoundary(
   polygon: readonly number[],
   frame: BoundaryFrame,
+  hidden: ArrayLike<number> | null = null,
 ): VisibleMapBoundary {
   if (
     polygon.length < 6 ||
     polygon.length % 2 !== 0 ||
     !polygon.every(Number.isFinite) ||
     !(frame.right > frame.left) ||
-    !(frame.bottom > frame.top)
+    !(frame.bottom > frame.top) ||
+    (hidden !== null && hidden.length !== polygon.length / 2)
   ) {
     return emptyBoundary;
   }
   let points: BoundaryPoint[] = [];
+  let leaving: boolean[] = [];
   for (let index = 0; index < polygon.length; index += 2) {
     points.push({ x: polygon[index]!, y: polygon[index + 1]! });
+    leaving.push(hidden !== null && hidden[index / 2] !== 0);
   }
   const planes: Array<{
     inside(point: BoundaryPoint): boolean;
@@ -70,21 +76,29 @@ export function visibleMapBoundary(
   for (const plane of planes) {
     if (points.length === 0) break;
     const clipped: BoundaryPoint[] = [];
+    const clippedLeaving: boolean[] = [];
     for (let index = 0; index < points.length; index += 1) {
       const current = points[index]!;
-      const previous = points[(index + points.length - 1) % points.length]!;
+      const previousIndex = (index + points.length - 1) % points.length;
+      const previous = points[previousIndex]!;
       const currentInside = plane.inside(current);
       const previousInside = plane.inside(previous);
       if (currentInside) {
-        if (!previousInside) clipped.push(plane.intersect(previous, current));
+        if (!previousInside) {
+          clipped.push(plane.intersect(previous, current));
+          clippedLeaving.push(leaving[previousIndex]!);
+        }
         clipped.push(current);
+        clippedLeaving.push(leaving[index]!);
       } else if (previousInside) {
         clipped.push(plane.intersect(previous, current));
+        clippedLeaving.push(false);
       }
     }
     points = clipped;
+    leaving = clippedLeaving;
   }
-  points = simplify(points);
+  ({ points, leaving } = simplify(points, leaving));
   if (points.length < 3) return emptyBoundary;
   let doubleArea = 0;
   let centroidX = 0;
@@ -105,42 +119,85 @@ export function visibleMapBoundary(
   return {
     points,
     edges,
+    hidden: edges.map((edge, index) => edge === null && leaving[index]!),
     center: { x: centroidX / (3 * doubleArea), y: centroidY / (3 * doubleArea) },
     area,
   };
 }
 
+export function boundaryOutlinePath(
+  polygon: readonly number[],
+  hidden: ArrayLike<number> | null = null,
+): string {
+  const count = polygon.length / 2;
+  if (count < 3 || !Number.isInteger(count)) return '';
+  const format = (index: number) =>
+    `${polygon[index * 2]!.toFixed(2)},${polygon[index * 2 + 1]!.toFixed(2)}`;
+  const isHidden = (edge: number) => hidden !== null && hidden[edge] !== 0;
+  let start = -1;
+  for (let edge = 0; edge < count; edge += 1) {
+    if (isHidden(edge)) {
+      start = edge;
+      break;
+    }
+  }
+  if (start < 0) {
+    const parts: string[] = [];
+    for (let index = 0; index < count; index += 1) {
+      parts.push(`${index === 0 ? 'M' : 'L'}${format(index)}`);
+    }
+    return `${parts.join(' ')} Z`;
+  }
+  const parts: string[] = [];
+  let open = false;
+  for (let offset = 1; offset <= count; offset += 1) {
+    const edge = (start + offset) % count;
+    if (isHidden(edge)) {
+      open = false;
+      continue;
+    }
+    if (!open) parts.push(`M${format(edge)}`);
+    parts.push(`L${format((edge + 1) % count)}`);
+    open = true;
+  }
+  return parts.join(' ');
+}
+
 export function boundarySubpaths(boundary: VisibleMapBoundary): { border: string; frame: string } {
   const count = boundary.points.length;
   if (count === 0) return { border: '', frame: '' };
-  const onFrame = boundary.edges.map((edge) => edge !== null);
+  const kinds = boundary.edges.map((edge, index) =>
+    edge !== null ? 'frame' : boundary.hidden[index] ? 'hidden' : 'border',
+  );
   const format = (point: BoundaryPoint) => `${point.x.toFixed(2)},${point.y.toFixed(2)}`;
   const closed = (points: BoundaryPoint[]) =>
     `${points.map((point, index) => `${index === 0 ? 'M' : 'L'}${format(point)}`).join(' ')} Z`;
-  if (onFrame.every((value) => !value)) return { border: closed(boundary.points), frame: '' };
-  if (onFrame.every(Boolean)) return { border: '', frame: closed(boundary.points) };
-  const start = onFrame.findIndex((value, index) => value !== onFrame[(index + count - 1) % count]);
-  const runs: { frame: boolean; points: BoundaryPoint[] }[] = [];
+  if (kinds.every((kind) => kind === 'border')) {
+    return { border: closed(boundary.points), frame: '' };
+  }
+  if (kinds.every((kind) => kind === 'frame'))
+    return { border: '', frame: closed(boundary.points) };
+  const start = Math.max(
+    0,
+    kinds.findIndex((kind, index) => kind !== kinds[(index + count - 1) % count]),
+  );
+  const runs: { kind: string; points: BoundaryPoint[] }[] = [];
   for (let offset = 0; offset < count; offset += 1) {
     const index = (start + offset) % count;
     const from = boundary.points[index]!;
     const to = boundary.points[(index + 1) % count]!;
     const last = runs.at(-1);
-    if (last && last.frame === onFrame[index]) last.points.push(to);
-    else runs.push({ frame: onFrame[index]!, points: [from, to] });
+    if (last && last.kind === kinds[index]) last.points.push(to);
+    else runs.push({ kind: kinds[index]!, points: [from, to] });
   }
   const open = (points: BoundaryPoint[]) =>
     points.map((point, index) => `${index === 0 ? 'M' : 'L'}${format(point)}`).join(' ');
-  return {
-    border: runs
-      .filter((run) => !run.frame)
+  const joined = (kind: string) =>
+    runs
+      .filter((run) => run.kind === kind)
       .map((run) => open(run.points))
-      .join(' '),
-    frame: runs
-      .filter((run) => run.frame)
-      .map((run) => open(run.points))
-      .join(' '),
-  };
+      .join(' ');
+  return { border: joined('border'), frame: joined('frame') };
 }
 
 export function boundaryFrameSides(boundary: VisibleMapBoundary): BoundaryFrameSide[] {
@@ -167,32 +224,50 @@ function atY(from: BoundaryPoint, to: BoundaryPoint, y: number): BoundaryPoint {
   return { x: from.x + (to.x - from.x) * t, y };
 }
 
-function simplify(points: BoundaryPoint[]): BoundaryPoint[] {
-  let result = points.filter((point, index) => {
+function simplify(
+  points: BoundaryPoint[],
+  leaving: boolean[],
+): { points: BoundaryPoint[]; leaving: boolean[] } {
+  const unique: number[] = [];
+  for (let index = 0; index < points.length; index += 1) {
     const next = points[(index + 1) % points.length]!;
-    return points.length === 1 || !samePoint(point, next);
-  });
-  let changed = true;
-  while (changed && result.length >= 3) {
-    changed = false;
-    for (let index = 0; index < result.length; index += 1) {
-      const previous = result[(index + result.length - 1) % result.length]!;
-      const current = result[index]!;
-      const next = result[(index + 1) % result.length]!;
-      const cross =
-        (current.x - previous.x) * (next.y - current.y) -
-        (current.y - previous.y) * (next.x - current.x);
-      const scale =
-        Math.hypot(current.x - previous.x, current.y - previous.y) *
-        Math.hypot(next.x - current.x, next.y - current.y);
-      if (Math.abs(cross) <= scale * 1e-9) {
-        result = result.filter((_, candidate) => candidate !== index);
-        changed = true;
-        break;
-      }
+    if (points.length === 1 || !samePoint(points[index]!, next)) unique.push(index);
+  }
+  const kept: number[] = [];
+  const straight = (previous: number, current: number, next: number) =>
+    leaving[previous] === leaving[current] &&
+    collinear(points[previous]!, points[current]!, points[next]!);
+  for (const index of unique) {
+    kept.push(index);
+    while (kept.length >= 3 && straight(kept.at(-3)!, kept.at(-2)!, kept.at(-1)!)) {
+      kept.splice(kept.length - 2, 1);
     }
   }
-  return result;
+  let changed = true;
+  while (changed && kept.length >= 3) {
+    changed = false;
+    if (straight(kept.at(-2)!, kept.at(-1)!, kept[0]!)) {
+      kept.pop();
+      changed = true;
+    } else if (straight(kept.at(-1)!, kept[0]!, kept[1]!)) {
+      kept.shift();
+      changed = true;
+    }
+  }
+  return {
+    points: kept.map((index) => points[index]!),
+    leaving: kept.map((index) => leaving[index]!),
+  };
+}
+
+function collinear(previous: BoundaryPoint, current: BoundaryPoint, next: BoundaryPoint): boolean {
+  const cross =
+    (current.x - previous.x) * (next.y - current.y) -
+    (current.y - previous.y) * (next.x - current.x);
+  const scale =
+    Math.hypot(current.x - previous.x, current.y - previous.y) *
+    Math.hypot(next.x - current.x, next.y - current.y);
+  return Math.abs(cross) <= scale * 1e-9;
 }
 
 function samePoint(left: BoundaryPoint, right: BoundaryPoint): boolean {

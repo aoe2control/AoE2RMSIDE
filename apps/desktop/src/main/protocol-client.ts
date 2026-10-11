@@ -93,6 +93,7 @@ import type {
   TexturePaletteDescriptor,
 } from '../shared/api';
 import { encodeFrame, FrameDecoder } from './framing';
+import { GenerationEventCollector } from './generation-event-collector';
 import * as latencyProbe from './latency-probe';
 import type { MainWithin } from './latency-probe';
 import type { LocalContentImportResult, LocalContentSource } from './local-content-service';
@@ -141,10 +142,12 @@ import type {
   MainSourceCatalogRole,
 } from './source-catalog-service';
 
+type GenerationEventListener = (event: PreviewGenerationEvent, encodedBytes: number) => void;
+
 interface PendingRequest {
   expectedCase: string;
   lastGenerationSequence?: number;
-  onGenerationEvent?: (event: PreviewGenerationEvent) => void;
+  onGenerationEvent?: GenerationEventListener;
   onExecutionProgress?: (event: ExecutionProgressEvent) => void;
   onPreviewCandidate?: (candidate: PreviewCandidate) => void;
   onGameArtProgress?: (progress: GameArtNativeProgress) => void;
@@ -458,7 +461,8 @@ export class RmsdClient {
     }
     const source = Buffer.from(catalogEntry.source);
     const setup = decodeRendererSetupContext(input.modeContext, input.players.length);
-    const generationEvents: PreviewGenerationEvent[] = [];
+    const generationEvents = new GenerationEventCollector();
+    let overflowCancellationSent = false;
     const request = createEnvelope(requestId, {
       case: 'generationRequest',
       value: create(GenerationRequestSchema, {
@@ -513,23 +517,36 @@ export class RmsdClient {
       }),
     });
     latencyProbe.step(requestId, 'request-build');
-    const response = await this.sendAndWait(
-      request,
-      'generationResponse',
-      (event) => {
-        generationEvents.push(event);
-        onGenerationEvent?.(event);
-      },
-      onExecutionProgress,
-      onPreviewCandidate,
-    );
+    let response: Envelope;
+    try {
+      response = await this.sendAndWait(
+        request,
+        'generationResponse',
+        (event, encodedBytes) => {
+          if (generationEvents.accept(event, encodedBytes)) {
+            onGenerationEvent?.(event);
+            return;
+          }
+          if (!overflowCancellationSent) {
+            overflowCancellationSent = true;
+            this.cancelGeneration(requestId).catch(() => undefined);
+          }
+        },
+        onExecutionProgress,
+        onPreviewCandidate,
+      );
+    } catch (error) {
+      if (generationEvents.overflowed) throw generationEvents.overflowError();
+      throw error;
+    }
+    if (generationEvents.overflowed) throw generationEvents.overflowError();
     if (response.payload.case !== 'generationResponse')
       throw new Error('invalid generation response');
     const result = toPreviewResult(
       response.payload.value,
       input,
       sourceCatalog,
-      generationEvents,
+      generationEvents.events,
       setup.colors,
     );
     latencyProbe.step(requestId, 'response-convert');
@@ -588,7 +605,7 @@ export class RmsdClient {
   private sendAndWait(
     message: Envelope,
     expectedCase: string,
-    onGenerationEvent?: (event: PreviewGenerationEvent) => void,
+    onGenerationEvent?: GenerationEventListener,
     onExecutionProgress?: (event: ExecutionProgressEvent) => void,
     onPreviewCandidate?: (candidate: PreviewCandidate) => void,
     onGameArtProgress?: (progress: GameArtNativeProgress) => void,
@@ -683,7 +700,7 @@ export class RmsdClient {
             throw new Error('rmsd generation event sequence is not strictly ordered');
           }
           pending.lastGenerationSequence = event.sequence;
-          pending.onGenerationEvent?.(event);
+          pending.onGenerationEvent?.(event, frame.byteLength);
           continue;
         }
         this.pending.delete(message.requestId);

@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Externe Sprachserver"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} für {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Externen Sprachserver verwenden"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Lücken mit integriertem Wissen füllen"
+    },
     "app-menu.view.language": {
       "message": "Sprache…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Bild speichern…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Kartensymbol wird erzeugt"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Kartensymbol: Warten auf die Bereitstellungsvorschau"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Kartensymbol: aus der aktuellen Vorschau erzeugt"
     },
     "map-icon.status.generated-replacing": {
       "message": "Kartensymbol: {file} erzeugt; ersetzt das Original nur in dieser bereitgestellten Kopie"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Geländerelief"
     },
-    "map-icon.relief.hide": {
-      "message": "Geländerelief ausblenden"
+    "map-icon.relief.off": {
+      "message": "Höhendarstellung aus"
     },
-    "map-icon.relief.show": {
-      "message": "Geländerelief anzeigen"
+    "map-icon.relief.raised": {
+      "message": "3D-Höhendarstellung"
     },
     "map-icon.terrain-smoothing": {
       "message": "Geländeübergänge glätten"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Keine Startmarkierungen"
     },
+    "map-icon.minimap-objects": {
+      "message": "Minikartenobjekte"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Zeigt Objekte als kleine Quadrate, wie die Minikarte im Zuschauermodus."
+    },
     "map-icon.spawn-size": {
       "message": "Größe der Startmarkierungen"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Größe der Startmarkierungen (% der Kartenbreite)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Größe der Dorfzentrum-Markierungen"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Dorfzentrum-Markierungen verkleinern"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Dorfzentrum-Markierungen vergrößern"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value} % der Standardgröße"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Größe der Dorfzentrum-Markierungen (% der Standardgröße)"
     },
     "map-icon.art.trees.show": {
       "message": "Bäume anzeigen"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Objekte und Grundfläche des Dorfzentrums"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Minikartenobjekte"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Zeigt Objekte als kleine Quadrate, wie die Minikarte im Zuschauermodus."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Objekte aus"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Klippenkanten"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Geländerelief"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D-Höhendarstellung"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Höhenkarte"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Release-Seite öffnen"
+    },
+    "external-language-server.started.headline": {
+      "message": "{server} wird für {language}-Dateien verwendet"
+    },
+    "external-language-server.untested.cause": {
+      "message": "Version {version} wurde nicht mit AoE2RMSIDE getestet; ihre bekannten Probleme werden weiterhin umgangen"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} ist kein nutzbarer Sprachserver"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} funktioniert nicht mehr"
+    },
+    "external-language-server.reason.start": {
+      "message": "Das Programm konnte nicht gestartet werden"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Das Programm hat auf den einleitenden Handshake nicht wie ein Sprachserver geantwortet"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "Die Handshake-Antwort des Programms enthält keine Dokumentaktualisierungen oder verwendet ein Positionsformat, das AoE2RMSIDE nicht anbietet"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Das Programm wurde unerwartet beendet"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Das Programm hat Anfragen nicht mehr rechtzeitig beantwortet"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Das Programm hat eine Nachricht gesendet, die keine gültigen Sprachserverdaten enthält"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE startet den Server in {seconds} Sekunde erneut (Versuch {attempt} von {limit}); bis dahin wird die integrierte Analyse verwendet} other {AoE2RMSIDE startet den Server in {seconds} Sekunden erneut (Versuch {attempt} von {limit}); bis dahin wird die integrierte Analyse verwendet}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Für {language}-Dateien wird die integrierte Analyse verwendet, bis der Server unter Ansicht > Externe Sprachserver wieder eingeschaltet wird"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Für {language}-Dateien wird die integrierte Analyse verwendet"
     }
   }
 }

@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title}（{code}）"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "外部语言服务器"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "用于 {language} 的 {server}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "使用外部语言服务器"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "用内置知识填补空缺"
+    },
     "app-menu.view.language": {
       "message": "语言…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "保存图像…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} 像素"
+    },
     "map-icon.frame.generating": {
       "message": "正在生成地图图标"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "地图图标：正在等待部署预览"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "地图图标：已根据当前预览生成"
     },
     "map-icon.status.generated-replacing": {
       "message": "地图图标：已生成 {file}，仅替换此次部署快照中的原始图标"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "地形起伏"
     },
-    "map-icon.relief.hide": {
-      "message": "隐藏地形起伏"
+    "map-icon.relief.off": {
+      "message": "不显示高程"
     },
-    "map-icon.relief.show": {
-      "message": "显示地形起伏"
+    "map-icon.relief.raised": {
+      "message": "3D 高程"
     },
     "map-icon.terrain-smoothing": {
       "message": "平滑地形过渡"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "不显示出生点标记"
     },
+    "map-icon.minimap-objects": {
+      "message": "小地图式对象"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "将对象显示为小方块，类似观战时的小地图。"
+    },
     "map-icon.spawn-size": {
       "message": "出生点标记大小"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "出生点标记大小（占地图宽度的百分比）"
+    },
+    "map-icon.town-center-size": {
+      "message": "城镇中心标记大小"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "缩小城镇中心标记"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "放大城镇中心标记"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "默认大小的 {value}%"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "城镇中心标记大小（占默认大小的百分比）"
     },
     "map-icon.art.trees.show": {
       "message": "显示树木"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "对象和城镇中心占地范围"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "小地图式对象"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "将对象显示为小方块，类似观战时的小地图。"
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "不显示对象"
+    },
     "preview-panel.tool.cliffs": {
       "message": "悬崖边缘"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "地形起伏"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D 高程"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "高度图"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "打开发布页面"
+    },
+    "external-language-server.started.headline": {
+      "message": "{language} 文件正在使用 {server}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "版本 {version} 未经 AoE2RMSIDE 测试；其已知问题仍会被规避"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} 不是可用的语言服务器"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} 已停止工作"
+    },
+    "external-language-server.reason.start": {
+      "message": "无法启动该程序"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "该程序未以语言服务器的方式响应初始握手"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "该程序的握手响应缺少文档更新，或使用了 AoE2RMSIDE 不提供的位置格式"
+    },
+    "external-language-server.reason.exit": {
+      "message": "该程序意外结束"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "该程序不再及时响应请求"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "该程序发送了无效的语言服务器数据"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, other {AoE2RMSIDE 将在 {seconds} 秒后重新启动它（第 {attempt} 次，共 {limit} 次）；在此期间使用内置分析}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "在“视图 > 外部语言服务器”中重新打开该服务器之前，{language} 文件将使用内置分析"
+    },
+    "external-language-server.action.not-used": {
+      "message": "{language} 文件将使用内置分析"
     }
   },
   "listPatterns": {

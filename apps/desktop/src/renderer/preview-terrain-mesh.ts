@@ -4,9 +4,45 @@ import type {
   TerrainMinimapColor,
 } from '../shared/api';
 import { terrainMaterial } from './preview-materials';
+import {
+  litColor,
+  raisedLightStrength,
+  raisedShapeLight,
+  terrainShapeCodeAt,
+} from './preview-elevation';
 import type { VisibleChunk } from './top-down-preview';
 
-export type ElevationDisplayMode = 'off' | 'terrain' | 'height-map';
+export type ElevationDisplayMode = 'off' | 'terrain' | 'raised' | 'height-map';
+
+export function flatElevationMode(mode: ElevationDisplayMode): ElevationDisplayMode {
+  return mode === 'raised' ? 'terrain' : mode;
+}
+
+export const elevationDisplayModes: readonly ElevationDisplayMode[] = Object.freeze([
+  'off',
+  'terrain',
+  'raised',
+  'height-map',
+]);
+
+export function shownElevationDisplayMode(
+  mode: ElevationDisplayMode,
+  diamond: boolean,
+): ElevationDisplayMode {
+  return mode === 'raised' && !diamond ? 'terrain' : mode;
+}
+
+export function nextElevationDisplayMode(
+  mode: ElevationDisplayMode,
+  diamond: boolean,
+): ElevationDisplayMode {
+  const modes = elevationDisplayModes;
+  let index = modes.indexOf(shownElevationDisplayMode(mode, diamond));
+  do {
+    index = (index + 1) % modes.length;
+  } while (modes[index] === 'raised' && !diamond);
+  return modes[index]!;
+}
 
 export interface TerrainMeshScene {
   width: number;
@@ -194,7 +230,22 @@ function terrainTilePresentations(
         ];
   }
 
-  return [{ ...base, color: shadeTerrainColor(baseColor, terrainReliefShadeLevel(scene, x, y)) }];
+  return [{ ...base, color: litColor(baseColor, terrainReliefLight(scene, x, y)) }];
+}
+
+const terrainReliefShapeLights = Float32Array.from({ length: 17 }, (_, shape) =>
+  raisedShapeLight(shape, raisedLightStrength.colorLooks),
+);
+
+export function terrainReliefLight(scene: TerrainMeshScene, x: number, y: number): number {
+  if (x < 0 || y < 0 || x >= scene.width || y >= scene.height) return 1;
+  return terrainReliefShapeLight(
+    terrainShapeCodeAt(scene.elevations, scene.width, scene.height, x, y),
+  );
+}
+
+export function terrainReliefShapeLight(shape: number): number {
+  return terrainReliefShapeLights[shape] ?? 1;
 }
 
 export function terrainElevationOverlay(
@@ -226,6 +277,30 @@ export function terrainReliefShadeLevel(scene: TerrainMeshScene, x: number, y: n
   return Math.round(clamp(lightFacingSlope, -3, 3));
 }
 
+export const heightMapObjectLightMinimum = 0.5;
+
+export function heightMapObjectLight(elevation: number, range: ElevationRange): number {
+  const alpha = heightOverlayAlpha(elevation, range);
+  return 1 - ((1 - heightMapObjectLightMinimum) * alpha) / 0.8;
+}
+
+export function heightMapObjectLightAt(
+  scene: { width: number; height: number; elevations: ArrayLike<number> },
+  x: number,
+  y: number,
+  range: ElevationRange,
+): number {
+  if (scene.width <= 0 || scene.height <= 0) return 1;
+  const tileX = Math.min(scene.width - 1, Math.max(0, Math.floor(x)));
+  const tileY = Math.min(scene.height - 1, Math.max(0, Math.floor(y)));
+  return heightMapObjectLight(scene.elevations[tileY * scene.width + tileX] ?? 0, range);
+}
+
+export function lightTint(light: number): number {
+  const level = Math.round(clamp(light, 0, 1) * 255);
+  return (level << 16) | (level << 8) | level;
+}
+
 export function heightOverlayAlpha(elevation: number, range: ElevationRange): number {
   const span = range.maximum - range.minimum;
   if (span <= 0) return 0.8;
@@ -245,20 +320,6 @@ function layerOrder(layer: TerrainChunkGeometry['layer']): number {
 function elevationAt(scene: TerrainMeshScene, x: number, y: number, fallback: number): number {
   if (x < 0 || y < 0 || x >= scene.width || y >= scene.height) return fallback;
   return scene.elevations[y * scene.width + x] ?? fallback;
-}
-
-export function shadeTerrainColor(color: number, shadeLevel: number): number {
-  if (shadeLevel === 0) return color;
-  const target = shadeLevel > 0 ? 0xffffff : 0x000000;
-  const amount = Math.min(0.2, Math.abs(shadeLevel) * 0.065);
-  const red = mixChannel((color >> 16) & 0xff, (target >> 16) & 0xff, amount);
-  const green = mixChannel((color >> 8) & 0xff, (target >> 8) & 0xff, amount);
-  const blue = mixChannel(color & 0xff, target & 0xff, amount);
-  return (red << 16) | (green << 8) | blue;
-}
-
-function mixChannel(source: number, target: number, amount: number): number {
-  return Math.round(source + (target - source) * amount);
 }
 
 function clamp(value: number, minimum: number, maximum: number): number {

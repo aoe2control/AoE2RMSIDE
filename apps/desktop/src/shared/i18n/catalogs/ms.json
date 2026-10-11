@@ -146,6 +146,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Pelayan Bahasa Luaran"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} untuk {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Gunakan Pelayan Bahasa Luaran"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Isi Jurang dengan Ilmu Terbina Dalam"
+    },
     "app-menu.view.language": {
       "message": "Bahasa…"
     },
@@ -2564,6 +2576,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Simpan imej…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Menjana ikon peta"
     },
@@ -2602,6 +2617,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Ikon peta: menunggu pratonton pemasangan mod"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Ikon peta: dijana daripada pratonton semasa"
     },
     "map-icon.status.generated-replacing": {
       "message": "Ikon peta: {file} dijana, menggantikan ikon asal hanya dalam salinan mod yang dipasang ini"
@@ -2672,11 +2690,11 @@
     "map-icon.relief": {
       "message": "Relief rupa bumi"
     },
-    "map-icon.relief.hide": {
-      "message": "Sembunyikan relief rupa bumi"
+    "map-icon.relief.off": {
+      "message": "Ketinggian dimatikan"
     },
-    "map-icon.relief.show": {
-      "message": "Tunjukkan relief rupa bumi"
+    "map-icon.relief.raised": {
+      "message": "Ketinggian 3D"
     },
     "map-icon.terrain-smoothing": {
       "message": "Licinkan peralihan rupa bumi"
@@ -2702,6 +2720,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Tiada penanda permulaan"
     },
+    "map-icon.minimap-objects": {
+      "message": "Objek peta mini"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Memaparkan objek sebagai segi empat kecil, seperti peta mini mod penonton."
+    },
     "map-icon.spawn-size": {
       "message": "Saiz penanda permulaan"
     },
@@ -2719,6 +2743,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Saiz penanda permulaan (% daripada lebar peta)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Saiz penanda Pusat Bandar"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Kecilkan penanda Pusat Bandar"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Besarkan penanda Pusat Bandar"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value}% daripada saiz lalai"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Saiz penanda Pusat Bandar (% daripada saiz lalai)"
     },
     "map-icon.art.trees.show": {
       "message": "Tunjukkan pokok"
@@ -3437,6 +3479,15 @@
     "preview-panel.tool.objects": {
       "message": "Objek dan tapak Pusat Bandar"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Objek peta mini"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Memaparkan objek sebagai segi empat kecil, seperti peta mini mod penonton."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Objek dimatikan"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Pinggir tebing"
     },
@@ -3466,6 +3517,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Relief rupa bumi"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "Ketinggian 3D"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Peta ketinggian"
@@ -4624,6 +4678,45 @@
     },
     "release-check.newer.action": {
       "message": "Buka halaman keluaran"
+    },
+    "external-language-server.started.headline": {
+      "message": "Menggunakan {server} untuk fail {language}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "Versi {version} belum diuji dengan AoE2RMSIDE; masalahnya yang diketahui masih dielakkan"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} bukan pelayan bahasa yang boleh digunakan"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} berhenti berfungsi"
+    },
+    "external-language-server.reason.start": {
+      "message": "Program tidak dapat dimulakan"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Program tidak menjawab jabat tangan pembukaan sebagai pelayan bahasa"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "Jawapan jabat tangan program tiada kemas kini dokumen atau menggunakan format kedudukan yang tidak ditawarkan oleh AoE2RMSIDE"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Program tamat tanpa diduga"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Program berhenti menjawab permintaan dalam masa"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Program menghantar mesej yang bukan data pelayan bahasa yang sah"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, other {AoE2RMSIDE akan memulakan semula pelayan dalam {seconds} saat (cubaan {attempt} daripada {limit}); sementara itu analisis terbina dalam digunakan}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Analisis terbina dalam digunakan untuk fail {language} sehingga pelayan dihidupkan semula dalam Paparan > Pelayan Bahasa Luaran"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Analisis terbina dalam digunakan untuk fail {language}"
     }
   }
 }

@@ -41,6 +41,8 @@ export interface CandidateApplyResult {
   accepted: boolean;
   changedChunks: number[];
   reset: boolean;
+  terrainChunks?: number[];
+  elevationChanged?: boolean;
 }
 
 export type PreviewCandidateListener = (
@@ -210,10 +212,14 @@ export class PreviewCandidateStore {
             cliffs: new Map(),
           }
         : { ...current, view: viewOf(candidate) };
+    const fresh = reset || !current;
     const changedChunks: number[] = [];
+    const terrainChunks: number[] = [];
+    let elevationChanged = fresh;
     for (const chunk of candidate.chunks) {
       const key = chunk.chunkY * columns + chunk.chunkX;
       changedChunks.push(key);
+      let terrainChanged = fresh;
       const bounds = previewCandidateChunkBounds(
         candidate.width,
         candidate.height,
@@ -227,18 +233,43 @@ export class PreviewCandidateStore {
       );
       let tile = 0;
       for (let y = bounds.minimumY; y <= bounds.maximumY; y += 1) {
+        const row = y * candidate.width;
+        if (fresh) {
+          for (let x = bounds.minimumX; x <= bounds.maximumX; x += 1) {
+            data.terrainIds[row + x] = terrain.getUint16(tile * 2, true);
+            data.elevations[row + x] = (chunk.elevations[tile]! << 24) >> 24;
+            tile += 1;
+          }
+          continue;
+        }
         for (let x = bounds.minimumX; x <= bounds.maximumX; x += 1) {
-          const index = y * candidate.width + x;
-          data.terrainIds[index] = terrain.getUint16(tile * 2, true);
-          data.elevations[index] = (chunk.elevations[tile]! << 24) >> 24;
+          const index = row + x;
+          const terrainId = terrain.getUint16(tile * 2, true);
+          const elevation = (chunk.elevations[tile]! << 24) >> 24;
+          if (data.terrainIds[index] !== terrainId) {
+            data.terrainIds[index] = terrainId;
+            terrainChanged = true;
+          }
+          if (data.elevations[index] !== elevation) {
+            data.elevations[index] = elevation;
+            terrainChanged = true;
+            elevationChanged = true;
+          }
           tile += 1;
         }
       }
+      if (terrainChanged) terrainChunks.push(key);
       data.objects.set(key, decodeObjects(chunk.objects));
       data.cliffs.set(key, decodeCliffs(chunk.cliffEdges));
     }
     this.data = data;
-    const result = { accepted: true, changedChunks, reset: reset || !current };
+    const result: CandidateApplyResult = {
+      accepted: true,
+      changedChunks,
+      reset: fresh,
+      terrainChunks,
+      elevationChanged,
+    };
     const remaining = this.holdRemaining();
     if (remaining > 0 && !this.published) {
       this.held = this.held
@@ -246,6 +277,13 @@ export class PreviewCandidateStore {
             accepted: true,
             changedChunks: [...new Set([...this.held.changedChunks, ...changedChunks])],
             reset: this.held.reset || result.reset,
+            terrainChunks: [
+              ...new Set([
+                ...(this.held.terrainChunks ?? this.held.changedChunks),
+                ...terrainChunks,
+              ]),
+            ],
+            elevationChanged: (this.held.elevationChanged ?? true) || elevationChanged,
           }
         : result;
       this.holdTimer ??= this.timing.setTimer(() => {

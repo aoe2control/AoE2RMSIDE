@@ -146,6 +146,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "외부 언어 서버"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{language}용 {server}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "외부 언어 서버 사용"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "부족한 부분을 기본 제공 지식으로 보완"
+    },
     "app-menu.view.language": {
       "message": "언어…"
     },
@@ -2564,6 +2576,9 @@
     "map-icon.save-image.tooltip": {
       "message": "이미지 저장…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "맵 아이콘 생성 중"
     },
@@ -2602,6 +2617,9 @@
     },
     "map-icon.status.waiting": {
       "message": "맵 아이콘: 배포 미리 보기 대기 중"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "맵 아이콘: 현재 미리 보기에서 생성됨"
     },
     "map-icon.status.generated-replacing": {
       "message": "맵 아이콘: {file} 생성 완료, 이번 배포본에서만 원본을 교체합니다"
@@ -2672,11 +2690,11 @@
     "map-icon.relief": {
       "message": "지형 기복"
     },
-    "map-icon.relief.hide": {
-      "message": "지형 기복 숨기기"
+    "map-icon.relief.off": {
+      "message": "고도 표시 끔"
     },
-    "map-icon.relief.show": {
-      "message": "지형 기복 표시"
+    "map-icon.relief.raised": {
+      "message": "3D 고도 표시"
     },
     "map-icon.terrain-smoothing": {
       "message": "지형 경계 부드럽게"
@@ -2702,6 +2720,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "시작 위치 표시 없음"
     },
+    "map-icon.minimap-objects": {
+      "message": "미니맵 오브젝트"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "관전 미니맵처럼 오브젝트를 작은 사각형으로 표시합니다."
+    },
     "map-icon.spawn-size": {
       "message": "시작 위치 표시 크기"
     },
@@ -2719,6 +2743,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "시작 위치 표시 크기(맵 너비 대비 %)"
+    },
+    "map-icon.town-center-size": {
+      "message": "마을 회관 표시 크기"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "마을 회관 표시 크기 줄이기"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "마을 회관 표시 크기 늘리기"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "기본 크기의 {value}%"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "마을 회관 표시 크기(기본 크기 대비 %)"
     },
     "map-icon.art.trees.show": {
       "message": "나무 표시"
@@ -3437,6 +3479,15 @@
     "preview-panel.tool.objects": {
       "message": "오브젝트 및 마을 회관 점유 영역"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "미니맵 오브젝트"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "관전 미니맵처럼 오브젝트를 작은 사각형으로 표시합니다."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "오브젝트 표시 끔"
+    },
     "preview-panel.tool.cliffs": {
       "message": "절벽 가장자리"
     },
@@ -3466,6 +3517,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "지형 기복"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D 고도 표시"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "높이 맵"
@@ -4624,6 +4678,45 @@
     },
     "release-check.newer.action": {
       "message": "릴리스 페이지 열기"
+    },
+    "external-language-server.started.headline": {
+      "message": "{language} 파일에 {server}을(를) 사용합니다"
+    },
+    "external-language-server.untested.cause": {
+      "message": "버전 {version}은(는) AoE2RMSIDE에서 테스트되지 않았지만 알려진 문제는 계속 우회합니다"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program}은(는) 사용할 수 있는 언어 서버가 아닙니다"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server}이(가) 작동을 멈췄습니다"
+    },
+    "external-language-server.reason.start": {
+      "message": "프로그램을 시작할 수 없습니다"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "프로그램이 언어 서버로서 초기 핸드셰이크에 응답하지 않았습니다"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "프로그램의 핸드셰이크 응답에 문서 업데이트가 없거나 AoE2RMSIDE가 제공하지 않는 위치 형식을 사용합니다"
+    },
+    "external-language-server.reason.exit": {
+      "message": "프로그램이 예기치 않게 종료되었습니다"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "프로그램이 요청에 제시간에 응답하지 않게 되었습니다"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "프로그램이 올바른 언어 서버 데이터가 아닌 메시지를 보냈습니다"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, other {AoE2RMSIDE가 {seconds}초 후에 서버를 다시 시작합니다({limit}회 중 {attempt}번째 시도). 그동안 기본 제공 분석을 사용합니다}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "보기 > 외부 언어 서버에서 서버를 다시 켤 때까지 {language} 파일에는 기본 제공 분석을 사용합니다"
+    },
+    "external-language-server.action.not-used": {
+      "message": "{language} 파일에는 기본 제공 분석을 사용합니다"
     }
   }
 }

@@ -320,8 +320,14 @@ export function scaleMapIconSprite(
   cell: MapIconSpriteCell,
   scale: number,
   anchor: { x: number; y: number },
+  maximumScale: number = mapIconSpriteMaximumScale,
 ): MapIconSprite {
-  if (!(scale > 0) || scale > mapIconSpriteMaximumScale || !Number.isFinite(scale)) {
+  if (
+    !(scale > 0) ||
+    scale > maximumScale ||
+    maximumScale > mapIconSpriteMaximumScale * 3 ||
+    !Number.isFinite(scale)
+  ) {
     throw new Error('map icon sprite scale is invalid');
   }
   if (cell.width === 0 || cell.height === 0) {
@@ -441,10 +447,18 @@ export const mapIconArtCellPixels = Object.freeze({
   resources: Object.freeze({ perTile: 7, minimum: 22, maximum: 44 }),
 });
 
-export function mapIconArtMetrics(projection: { component: number }): MapIconArtMetrics {
+export function mapIconArtMetrics(projection: {
+  component: number;
+  pixelScale?: number;
+}): MapIconArtMetrics {
+  const pixelScale = projection.pixelScale ?? 1;
   const pixelsPerTile = 2 * projection.component;
+  const deployedPixelsPerTile = pixelsPerTile / pixelScale;
   const size = (bounds: { perTile: number; minimum: number; maximum: number }) =>
-    Math.min(bounds.maximum, Math.max(bounds.minimum, Math.round(bounds.perTile * pixelsPerTile)));
+    Math.min(
+      bounds.maximum,
+      Math.max(bounds.minimum, Math.round(bounds.perTile * deployedPixelsPerTile)),
+    ) * pixelScale;
   return {
     pixelsPerTile,
     treeCellPixels: size(mapIconArtCellPixels.trees),

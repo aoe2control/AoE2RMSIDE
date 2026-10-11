@@ -1,9 +1,9 @@
 import type { PreviewGenerationResult } from '../shared/api';
 import { terrainMaterial } from './preview-materials';
+import { litColor, terrainShapeCodeAt } from './preview-elevation';
 import {
   heightOverlayAlpha,
-  shadeTerrainColor,
-  terrainReliefShadeLevel,
+  terrainReliefShapeLight,
   type TerrainChunkPresentation,
   type TerrainMeshScene,
 } from './preview-terrain-mesh';
@@ -42,27 +42,39 @@ export function buildTerrainTexels(
     }
     return color;
   };
-  const shadedColors = new Map<number, number>();
   const range = presentation.elevationRange;
+  const relief =
+    presentation.elevationMode === 'terrain' || presentation.elevationMode === 'raised';
+  const litColors = new Map<number, Int32Array>();
+  const reliefColor = (terrainId: number, shape: number): number => {
+    let colors = litColors.get(terrainId);
+    if (colors === undefined) {
+      colors = new Int32Array(17).fill(-1);
+      litColors.set(terrainId, colors);
+    }
+    let color = colors[shape]!;
+    if (color < 0) {
+      color = litColor(baseColor(terrainId), terrainReliefShapeLight(shape));
+      colors[shape] = color;
+    }
+    return color;
+  };
+  const { elevations, height } = scene;
   const background = presentation.backgroundColor;
   for (let y = bounds.minimumY; y <= bounds.maximumY; y += 1) {
     for (let x = bounds.minimumX; x <= bounds.maximumX; x += 1) {
       const index = y * width + x;
       const terrainId = terrainIds[index];
       if (terrainId === undefined) continue;
-      let color = baseColor(terrainId);
-      if (presentation.elevationMode === 'terrain') {
-        const level = terrainReliefShadeLevel(scene, x, y);
-        const key = color * 8 + level + 3;
-        let shaded = shadedColors.get(key);
-        if (shaded === undefined) {
-          shaded = shadeTerrainColor(color, level);
-          shadedColors.set(key, shaded);
+      let color: number;
+      if (relief) {
+        color = reliefColor(terrainId, terrainShapeCodeAt(elevations, width, height, x, y));
+      } else {
+        color = baseColor(terrainId);
+        if (presentation.elevationMode === 'height-map') {
+          const alpha = heightOverlayAlpha(elevations[index] ?? 0, range);
+          if (alpha > 0) color = blendedOverlayColor(color, background, alpha);
         }
-        color = shaded;
-      } else if (presentation.elevationMode === 'height-map') {
-        const alpha = heightOverlayAlpha(scene.elevations[index] ?? 0, range);
-        if (alpha > 0) color = blendedOverlayColor(color, background, alpha);
       }
       const offset = ((y - bounds.minimumY) * texelWidth + x - bounds.minimumX) * 4;
       texels[offset] = (color >> 16) & 0xff;

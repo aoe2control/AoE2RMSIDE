@@ -127,7 +127,11 @@ export function mapIconSpawnMarkerWidthPixels(
   return Math.max(4, Math.round(2 * (sizePercent / 100) * mapWidth * projection.component));
 }
 
-export function mapIconSpawnMarkerScale(cell: MapIconSpriteCell, widthPixels: number): number {
+export function mapIconSpawnMarkerScale(
+  cell: MapIconSpriteCell,
+  widthPixels: number,
+  maximumScale: number = mapIconSpriteMaximumScale,
+): number {
   if (cell.width === 0) return 1;
-  return Math.min(mapIconSpriteMaximumScale, widthPixels / cell.width);
+  return Math.min(maximumScale, widthPixels / cell.width);
 }

@@ -6,10 +6,12 @@ import {
   type GameArtTerrainIndex,
 } from '../shared/game-art';
 import {
+  effectiveMapIconRelief,
   mapIconGameTexturesSourcePattern,
   mapIconRenderContract,
   mapIconRenderInputKeys,
   type MapIconRenderInput,
+  type MapIconSaveSize,
   type MapIconRenderLook,
   type PreviewGenerationResult,
 } from '../shared/api';
@@ -19,13 +21,18 @@ import { GameArtAssetStore, loadTerrainSources } from './game-art-resources';
 import type { MapIconArtSheets } from './map-icon-art';
 import { loadMapIconArtSheets } from './map-icon-art-sheets';
 import {
+  forEachRaisedIconPixel,
+  litColor,
+  mapIconDrawnLayers,
   mapIconNeedsArt,
   mapIconProjection,
+  mapIconRaisedSurface,
   mapIconScreenPoint,
   renderMapIconArtLayer,
   type MapIconProjection,
 } from './map-icon-render';
-import { cliffMaterial, terrainMaterial } from './preview-materials';
+import { raisedLightStrength, raisedWallLight } from './preview-elevation';
+import { cliffMaterial, previewHelperObjectIds, terrainMaterial } from './preview-materials';
 import { terrainElevationOverlay } from './preview-terrain-mesh';
 import { decodeTopDownScene, type TopDownScene } from './top-down-preview';
 import { useGameArtPreparation, useGameArtStatus } from './use-game-art';
@@ -95,6 +102,7 @@ export interface MapIconGameTexturesState {
   render: MapIconGameTexturesRender | null;
   pending: boolean;
   failed: boolean;
+  renderAtSize(size: MapIconSaveSize): MapIconGameTexturesRender | null;
 }
 
 export function mapIconGameTexturesFailed(state: {
@@ -180,7 +188,7 @@ export function useMapIconGameTextures(options: {
     };
   }, [revision, wanted]);
 
-  const treesShown = input?.trees ?? false;
+  const treesShown = (input?.trees ?? false) || (input?.minimapObjects ?? false);
   const scene = useMemo(() => {
     if (!wanted || !result) return null;
     try {
@@ -195,6 +203,11 @@ export function useMapIconGameTextures(options: {
     render: MapIconGameTexturesRender;
   } | null>(null);
   const [failedKey, setFailedKey] = useState<string | null>(null);
+  const loadedRef = useRef<{
+    key: string;
+    sources: Parameters<typeof drawTerrainChunk>[2];
+    sheets: MapIconArtSheets | null;
+  } | null>(null);
   const requestKey =
     wanted && index && scene && result && input
       ? [
@@ -211,13 +224,14 @@ export function useMapIconGameTextures(options: {
       terrainMaterial(terrainId, result.backend, result.minimapPalette, result.terrainNames).color;
     const used = new Set<number>(scene.terrainIds);
     for (const layer of scene.layerIds) if (layer !== 0xffff) used.add(layer);
-    const art = mapIconNeedsArt(input)
+    const art = mapIconNeedsArt(mapIconDrawnLayers(input))
       ? loadMapIconArtSheets().catch(() => null)
       : Promise.resolve(null);
     void Promise.all([loadTerrainSources(store, index, used, minimapColor), art])
       .then(([sources, sheets]) => {
         if (!current) return;
         store.retain(new Set(sources.assetKeys));
+        loadedRef.current = { key: requestKey, sources, sheets };
         const pixels = rasterizeMapIconGameTextures(scene, result, input, sources, sheets);
         if (!current) return;
         if (!pixels || !index.source) {
@@ -240,6 +254,7 @@ export function useMapIconGameTextures(options: {
   useEffect(() => {
     if (wanted) return;
     setRendered(null);
+    loadedRef.current = null;
     store.retain(new Set());
   }, [store, wanted]);
 
@@ -261,19 +276,47 @@ export function useMapIconGameTextures(options: {
     bitmapReady: render !== null,
   });
   const failed = mapIconGameTexturesFailed({ wanted, status, indexFailed, requestFailed });
-  return { offered, render, pending, failed };
+  const renderAtSize = (size: MapIconSaveSize): MapIconGameTexturesRender | null => {
+    const loaded = loadedRef.current;
+    if (!render || !loaded || loaded.key !== requestKey || !scene || !result || !input) {
+      return null;
+    }
+    if (size === mapIconRenderContract.size) return render;
+    try {
+      const pixels = rasterizeMapIconGameTextures(
+        scene,
+        result,
+        input,
+        loaded.sources,
+        loaded.sheets,
+        size,
+      );
+      return pixels ? { pixels, source: render.source } : null;
+    } catch {
+      return null;
+    }
+  };
+  return { offered, render, pending, failed, renderAtSize };
 }
 
 export function rasterizeMapIconGameTextures(
   scene: TopDownScene,
-  result: Pick<PreviewGenerationResult, 'minimapPalette' | 'playerColorIds' | 'mapIconArtObjects'>,
+  result: Pick<
+    PreviewGenerationResult,
+    | 'minimapPalette'
+    | 'playerColorIds'
+    | 'mapIconArtObjects'
+    | 'objectNames'
+    | 'graphiclessObjectIds'
+  >,
   input: MapIconRenderInput,
   sources: Parameters<typeof drawTerrainChunk>[2],
   art: MapIconArtSheets | null = null,
+  size: MapIconSaveSize = mapIconRenderContract.size,
 ): Uint8ClampedArray | null {
-  const size = mapIconRenderContract.size;
   const r = mapIconGameTexturesPixelsPerTile(Math.max(scene.width, scene.height));
-  const relief = input.relief;
+  const raised = mapIconRaisedSurface(scene, input);
+  const relief = effectiveMapIconRelief(input) !== 'off' && !raised;
   const plan = planTerrainChunk(
     {
       width: scene.width,
@@ -299,18 +342,40 @@ export function rasterizeMapIconGameTextures(
   const context = icon.getContext('2d');
   if (!terrainContext || !context) return null;
   drawTerrainChunk(terrainContext, plan, sources, r);
-  const projection = mapIconProjection(scene.width, scene.height, input.perspective);
-  context.save();
-  context.imageSmoothingEnabled = true;
-  context.imageSmoothingQuality = 'high';
-  context.setTransform(...mapIconTextureTransform(projection, r));
-  context.drawImage(terrain, 0, 0);
-  context.restore();
+  const projection = mapIconProjection(scene.width, scene.height, input.perspective, size);
+  if (raised) {
+    const texels = terrainContext.getImageData(0, 0, terrain.width, terrain.height);
+    const image = context.createImageData(size, size);
+    const strength = raisedLightStrength.gameTextures;
+    forEachRaisedIconPixel(size, raised, projection, (px, py, hit) => {
+      const light = hit.wall
+        ? raisedWallLight(hit.wall, strength)
+        : raised.smoothLightAt(hit.x, hit.y, strength);
+      const color = litColor(sampleTexels(texels, hit.x * r - 0.5, hit.y * r - 0.5), light);
+      const offset = (py * size + px) * 4;
+      image.data[offset] = (color >> 16) & 0xff;
+      image.data[offset + 1] = (color >> 8) & 0xff;
+      image.data[offset + 2] = color & 0xff;
+      image.data[offset + 3] = 255;
+    });
+    context.putImageData(image, 0, 0);
+  } else {
+    context.save();
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.setTransform(...mapIconTextureTransform(projection, r));
+    context.drawImage(terrain, 0, 0);
+    context.restore();
+  }
   context.lineCap = 'butt';
-  context.lineWidth = 3;
+  context.lineWidth = (3 * size) / mapIconRenderContract.size;
   for (const cliff of scene.cliffs) {
     const start = mapIconScreenPoint(cliff.from, projection);
     const end = mapIconScreenPoint(cliff.to, projection);
+    if (raised) {
+      start.y -= raised.heightAt(cliff.from.x, cliff.from.y) * projection.verticalComponent;
+      end.y -= raised.heightAt(cliff.to.x, cliff.to.y) * projection.verticalComponent;
+    }
     context.strokeStyle = cssColor(
       cliffMaterial(cliff.cliffType, 'game-textures', result.minimapPalette).color,
     );
@@ -319,17 +384,22 @@ export function rasterizeMapIconGameTextures(
     context.lineTo(end.x, end.y);
     context.stroke();
   }
-  if (art && mapIconNeedsArt(input)) {
+  const drawn = mapIconDrawnLayers(input);
+  const sprites = art !== null && mapIconNeedsArt(drawn);
+  if (sprites || drawn.minimapObjects) {
     const layer = new OffscreenCanvas(size, size);
     const layerContext = layer.getContext('2d');
     if (layerContext) {
       const pixels = renderMapIconArtLayer(
         scene,
         {
-          ...input,
+          ...drawn,
           playerColorIds: result.playerColorIds,
           artObjects: result.mapIconArtObjects ?? [],
+          minimapPalette: result.minimapPalette,
+          helperObjectIds: previewHelperObjectIds(result, null),
           art,
+          raised,
         },
         projection,
       );
@@ -338,6 +408,27 @@ export function rasterizeMapIconGameTextures(
     }
   }
   return new Uint8ClampedArray(context.getImageData(0, 0, size, size).data);
+}
+
+function sampleTexels(texels: ImageData, u: number, v: number): number {
+  const { width, height, data } = texels;
+  const x = Math.min(width - 1, Math.max(0, u));
+  const y = Math.min(height - 1, Math.max(0, v));
+  const x0 = Math.floor(x);
+  const y0 = Math.floor(y);
+  const x1 = Math.min(width - 1, x0 + 1);
+  const y1 = Math.min(height - 1, y0 + 1);
+  const fx = x - x0;
+  const fy = y - y0;
+  let color = 0;
+  for (let channel = 0; channel < 3; channel += 1) {
+    const at = (cx: number, cy: number) => data[(cy * width + cx) * 4 + channel]!;
+    const value =
+      (at(x0, y0) * (1 - fx) + at(x1, y0) * fx) * (1 - fy) +
+      (at(x0, y1) * (1 - fx) + at(x1, y1) * fx) * fy;
+    color |= Math.round(value) << (16 - channel * 8);
+  }
+  return color;
 }
 
 function cssColor(rgb: number): string {

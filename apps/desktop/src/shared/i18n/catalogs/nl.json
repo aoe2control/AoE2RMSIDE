@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Externe taalservers"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} voor {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Externe taalserver gebruiken"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Hiaten aanvullen met ingebouwde kennis"
+    },
     "app-menu.view.language": {
       "message": "Taal…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Afbeelding opslaan…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Kaartpictogram genereren"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Kaartpictogram: wachten op het installatievoorbeeld"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Kaartpictogram: gegenereerd op basis van het huidige voorbeeld"
     },
     "map-icon.status.generated-replacing": {
       "message": "Kaartpictogram: {file} gegenereerd; vervangt het origineel alleen in deze geïnstalleerde kopie"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Terreinreliëf"
     },
-    "map-icon.relief.hide": {
-      "message": "Terreinreliëf verbergen"
+    "map-icon.relief.off": {
+      "message": "Hoogteweergave uit"
     },
-    "map-icon.relief.show": {
-      "message": "Terreinreliëf tonen"
+    "map-icon.relief.raised": {
+      "message": "3D-hoogteweergave"
     },
     "map-icon.terrain-smoothing": {
       "message": "Terreinovergangen verzachten"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Geen startmarkeringen"
     },
+    "map-icon.minimap-objects": {
+      "message": "Minikaartobjecten"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Toont objecten als kleine vierkantjes, zoals de minikaart in de toeschouwersmodus."
+    },
     "map-icon.spawn-size": {
       "message": "Grootte van startmarkeringen"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Grootte van startmarkeringen (% van de kaartbreedte)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Grootte van Town Center-markeringen"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Town Center-markeringen verkleinen"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Town Center-markeringen vergroten"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value}% van de standaardgrootte"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Grootte van Town Center-markeringen (% van de standaardgrootte)"
     },
     "map-icon.art.trees.show": {
       "message": "Bomen tonen"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Objecten en grondvlak van het Town Center"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Minikaartobjecten"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Toont objecten als kleine vierkantjes, zoals de minikaart in de toeschouwersmodus."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Objecten uit"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Klifranden"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Terreinreliëf"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D-hoogteweergave"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Hoogtekaart"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Releasepagina openen"
+    },
+    "external-language-server.started.headline": {
+      "message": "{server} wordt gebruikt voor {language}-bestanden"
+    },
+    "external-language-server.untested.cause": {
+      "message": "Versie {version} is niet getest met AoE2RMSIDE; de bekende problemen ervan worden nog steeds omzeild"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} is geen bruikbare taalserver"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} werkt niet meer"
+    },
+    "external-language-server.reason.start": {
+      "message": "Het programma kon niet worden gestart"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Het programma antwoordde niet als taalserver op de openingshandshake"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "Het handshake-antwoord van het programma mist documentupdates of gebruikt een positie-indeling die AoE2RMSIDE niet biedt"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Het programma is onverwacht gestopt"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Het programma beantwoordde verzoeken niet meer op tijd"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Het programma stuurde een bericht dat geen geldige taalservergegevens bevat"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE start de server over {seconds} seconde opnieuw (poging {attempt} van {limit}); intussen wordt de ingebouwde analyse gebruikt} other {AoE2RMSIDE start de server over {seconds} seconden opnieuw (poging {attempt} van {limit}); intussen wordt de ingebouwde analyse gebruikt}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Voor {language}-bestanden wordt de ingebouwde analyse gebruikt totdat de server weer wordt ingeschakeld via Beeld > Externe taalservers"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Voor {language}-bestanden wordt de ingebouwde analyse gebruikt"
     }
   }
 }

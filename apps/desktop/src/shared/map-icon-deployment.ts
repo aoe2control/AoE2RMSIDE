@@ -1,10 +1,13 @@
 import {
   isMapIconArtDensity,
   isMapIconArtSize,
+  isMapIconRelief,
+  isMapIconSaveSize,
   isMapIconSpawnMarkerSizePercent,
   isMapIconSpawnMarkerStyle,
   mapIconGameTexturesSourcePattern,
   mapIconPerspectives,
+  mapIconPixelBytes,
   mapIconRenderContract,
   mapIconRenderLooks,
   type MapIconPerspective,
@@ -12,6 +15,7 @@ import {
   type GeneratedMapIconSaveRequest,
   type ManualDeploymentMapIconMode,
   type ManualDeploymentMapIconRequest,
+  type MapIconSaveSize,
 } from './api';
 
 export const manualDeploymentMapIconModes: readonly ManualDeploymentMapIconMode[] = [
@@ -20,12 +24,13 @@ export const manualDeploymentMapIconModes: readonly ManualDeploymentMapIconMode[
   'generate',
 ];
 
-export const mapIconRenderPixelBytes = mapIconRenderContract.size * mapIconRenderContract.size * 4;
+export const mapIconRenderPixelBytes = mapIconPixelBytes(mapIconRenderContract.size);
 
 const lowercaseSha256Pattern = /^[0-9a-f]{64}$/u;
 
 export function validateManualDeploymentMapIconRequest(
   value: unknown,
+  size: MapIconSaveSize = mapIconRenderContract.size,
 ): ManualDeploymentMapIconRequest {
   if (!isPlainRecord(value)) throw new Error('map icon option is invalid');
   const keys = Object.keys(value);
@@ -62,6 +67,7 @@ export function validateManualDeploymentMapIconRequest(
         key !== 'resourceDensity' &&
         key !== 'resourceSize' &&
         key !== 'resourceSpawnOverlap' &&
+        key !== 'minimapObjects' &&
         key !== 'sourceSemanticHash' &&
         key !== 'gameTexturesSource' &&
         key !== 'identity' &&
@@ -87,7 +93,7 @@ export function validateManualDeploymentMapIconRequest(
   ) {
     throw new Error('generated map icon game textures source is invalid');
   }
-  if (typeof render.relief !== 'boolean') {
+  if (!isMapIconRelief(render.relief)) {
     throw new Error('generated map icon relief choice is invalid');
   }
   if (typeof render.terrainSmoothing !== 'boolean') {
@@ -99,7 +105,13 @@ export function validateManualDeploymentMapIconRequest(
   if (!isMapIconSpawnMarkerSizePercent(render.spawnMarkerSizePercent)) {
     throw new Error('generated map icon spawn marker size is invalid');
   }
-  for (const key of ['trees', 'treeSpawnOverlap', 'resources', 'resourceSpawnOverlap'] as const) {
+  for (const key of [
+    'trees',
+    'treeSpawnOverlap',
+    'resources',
+    'resourceSpawnOverlap',
+    'minimapObjects',
+  ] as const) {
     if (typeof render[key] !== 'boolean') {
       throw new Error(`generated map icon ${key} choice is invalid`);
     }
@@ -124,12 +136,13 @@ export function validateManualDeploymentMapIconRequest(
   }
   const pixels = render.pixels;
   const tag = Object.prototype.toString.call(pixels);
+  const pixelBytes = mapIconPixelBytes(size);
   if (
     (tag !== '[object Uint8ClampedArray]' && tag !== '[object Uint8Array]') ||
-    (pixels as Uint8Array).byteLength !== mapIconRenderPixelBytes ||
-    (pixels as Uint8Array).length !== mapIconRenderPixelBytes
+    (pixels as Uint8Array).byteLength !== pixelBytes ||
+    (pixels as Uint8Array).length !== pixelBytes
   ) {
-    throw new Error(`generated map icon pixels must be ${mapIconRenderPixelBytes} RGBA bytes`);
+    throw new Error(`generated map icon pixels must be ${pixelBytes} RGBA bytes`);
   }
   return Object.freeze({
     mode: 'generate',
@@ -149,6 +162,7 @@ export function validateManualDeploymentMapIconRequest(
       resourceDensity: render.resourceDensity as number,
       resourceSize: render.resourceSize as number,
       resourceSpawnOverlap: render.resourceSpawnOverlap as boolean,
+      minimapObjects: render.minimapObjects as boolean,
       sourceSemanticHash: render.sourceSemanticHash,
       ...(render.look === 'game-textures'
         ? { gameTexturesSource: render.gameTexturesSource as string }
@@ -164,6 +178,7 @@ const generatedSaveKeys = [
   'documentUri',
   'externalAssetHash',
   'render',
+  'size',
   'sourceCatalogHash',
   'sourceCatalogRevision',
   'sourceGraphHash',
@@ -187,10 +202,11 @@ export function validateGeneratedMapIconSaveRequest(value: unknown): GeneratedMa
   ) {
     throw new Error('map icon save identity is invalid');
   }
-  const { render } = validateManualDeploymentMapIconRequest({
-    mode: 'generate',
-    render: value.render,
-  });
+  if (!isMapIconSaveSize(value.size)) throw new Error('map icon save size is invalid');
+  const { render } = validateManualDeploymentMapIconRequest(
+    { mode: 'generate', render: value.render },
+    value.size,
+  );
   return Object.freeze({
     documentUri: value.documentUri,
     documentRevision: value.documentRevision as number,
@@ -198,6 +214,7 @@ export function validateGeneratedMapIconSaveRequest(value: unknown): GeneratedMa
     sourceCatalogHash: value.sourceCatalogHash as string,
     sourceGraphHash: value.sourceGraphHash as string,
     externalAssetHash: value.externalAssetHash as string,
+    size: value.size,
     render: render!,
   });
 }

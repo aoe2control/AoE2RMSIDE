@@ -379,6 +379,8 @@ export interface GameArtSpriteLayerOptions {
   maximumTextureSize?: number;
   createAtlasCanvas?: SpriteAtlasCanvasFactory;
   atlas?: boolean;
+  heightAt?: (x: number, y: number) => number;
+  objectTintAt?: (x: number, y: number) => number;
 }
 
 function tintedCopies(
@@ -437,6 +439,8 @@ export class GameArtSpriteLayer {
     offsetY: number;
   }[] = [];
   private readonly layers: Map<number, number>;
+  private readonly heightAt: ((x: number, y: number) => number) | null;
+  private readonly objectTintAt: ((x: number, y: number) => number) | null;
   readonly statistics: GameArtSpriteStatistics;
 
   constructor(
@@ -449,6 +453,8 @@ export class GameArtSpriteLayer {
   ) {
     this.container.eventMode = 'none';
     this.container.zIndex = 2;
+    this.heightAt = options.heightAt ?? null;
+    this.objectTintAt = options.objectTintAt ?? null;
     const graphics = new Map(set.graphics.map((graphic) => [graphic.id, graphic]));
     this.layers = new Map(set.graphics.map((graphic) => [graphic.id, graphic.layer]));
     const loaded: {
@@ -650,7 +656,11 @@ export class GameArtSpriteLayer {
       const layer = entry.kind === 'cliff' ? cliffSortLayer : undefined;
       const owner = entry.kind === 'object' ? entry.instance.owner : 0;
       const tree = entry.kind === 'object' && entry.instance.tree === true;
-      for (const sprite of this.spritesFor(entry.instance, owner, layer, tree)) {
+      const tint =
+        entry.kind === 'object' && this.objectTintAt
+          ? this.objectTintAt(entry.instance.x, entry.instance.y)
+          : null;
+      for (const sprite of this.spritesFor(entry.instance, owner, layer, tree, tint)) {
         sprites.push({ sprite, kind: entry.kind });
       }
     }
@@ -743,10 +753,12 @@ export class GameArtSpriteLayer {
     owner: number,
     sortLayer: number | undefined,
     tree = false,
+    tint: number | null = null,
   ): Container[] {
     const sprites: Container[] = [];
     const team = this.teamColor(owner);
     const factor = tree ? this.treeScale : 1;
+    const lift = this.heightAt ? this.heightAt(instance.x, instance.y) : 0;
     for (const [partIndex, part] of instance.parts.entries()) {
       const key = `${part.graphic}:${part.facing}`;
       const entry = this.textures.get(key);
@@ -754,7 +766,7 @@ export class GameArtSpriteLayer {
       const x = instance.x + part.mapOffsetX;
       const y = instance.y + part.mapOffsetY;
       const anchorX = x + y;
-      const anchorY = y - x;
+      const anchorY = y - x - lift;
       const layer = sortLayer ?? this.layers.get(part.graphic) ?? 20;
       const order = spriteDrawOrder(layer, x, y) + partIndex;
       const placement = spritePartPlacement(
@@ -778,6 +790,7 @@ export class GameArtSpriteLayer {
       sprite.position.set(positionX, positionY);
       sprite.scale.set(placement.scaleX, placement.scaleY);
       sprite.zIndex = order;
+      if (tint !== null) sprite.tint = tint;
       sprites.push(sprite);
       partSprites.push(sprite);
       const overlay = team ? this.overlay(key, team) : null;
@@ -788,6 +801,7 @@ export class GameArtSpriteLayer {
         coloured.position.copyFrom(sprite.position);
         coloured.scale.copyFrom(sprite.scale);
         coloured.zIndex = order;
+        if (tint !== null) coloured.tint = tint;
         sprites.push(coloured);
         partSprites.push(coloured);
       } else if (overlay) {
@@ -799,6 +813,7 @@ export class GameArtSpriteLayer {
         mesh.position.set(positionX, positionY);
         mesh.scale.set(placement.scaleX, placement.scaleY);
         mesh.zIndex = order;
+        if (tint !== null) mesh.tint = tint;
         sprites.push(mesh);
         partSprites.push(mesh);
       }

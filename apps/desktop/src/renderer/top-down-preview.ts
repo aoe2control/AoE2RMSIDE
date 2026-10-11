@@ -1,6 +1,7 @@
 import type { PreviewGenerationResult } from '../shared/api';
 import { decodeCliffPieceColumn, type CliffPieceRecord } from '../shared/game-art';
 import { decodeAppearanceObjectColumn } from '../shared/terrain-appearances';
+import type { ElevationSurface } from './preview-elevation';
 
 export const previewChunkSize = 32;
 export const minimumPreviewZoom = 0.95;
@@ -309,6 +310,63 @@ export function screenToMap(
   };
 }
 
+export function previewLevelPixels(
+  mapWidth: number,
+  mapHeight: number,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+): number {
+  return (
+    previewScale(mapWidth, mapHeight, camera, viewport) *
+    diamondBasisComponent *
+    previewProjectionVerticalScale(viewport)
+  );
+}
+
+export function raisedMapToScreen(
+  point: MapPoint,
+  height: number,
+  mapWidth: number,
+  mapHeight: number,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+): ScreenPoint {
+  const screen = mapToScreen(point, mapWidth, mapHeight, camera, viewport);
+  screen.y -= height * previewLevelPixels(mapWidth, mapHeight, camera, viewport);
+  return screen;
+}
+
+export function screenToLayerPoint(
+  point: ScreenPoint,
+  mapWidth: number,
+  mapHeight: number,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+): { s: number; t: number } {
+  const component = previewScale(mapWidth, mapHeight, camera, viewport) * diamondBasisComponent;
+  return {
+    s: (point.x - viewport.width / 2) / component + camera.centerX + camera.centerY,
+    t:
+      (point.y - viewport.height / 2) / (component * previewProjectionVerticalScale(viewport)) +
+      camera.centerY -
+      camera.centerX,
+  };
+}
+
+export function screenToVisibleMap(
+  point: ScreenPoint,
+  mapWidth: number,
+  mapHeight: number,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+  surface: ElevationSurface | null = null,
+): MapPoint | null {
+  if (!surface) return screenToMap(point, mapWidth, mapHeight, camera, viewport);
+  const { s, t } = screenToLayerPoint(point, mapWidth, mapHeight, camera, viewport);
+  const hit = surface.pickInto(s, t);
+  return hit ? { x: hit.x, y: hit.y } : null;
+}
+
 export interface PreviewScreenTransform {
   scale: number;
   x: number;
@@ -447,13 +505,17 @@ export function visibleTileRange(
   camera: PreviewCamera,
   viewport: PreviewViewport,
   overscanPixels = 0,
+  raised: { minimum: number; maximum: number } | null = null,
 ): VisibleTileRange {
   const overscan = Math.max(0, overscanPixels);
+  const level = raised ? previewLevelPixels(scene.width, scene.height, camera, viewport) : 0;
+  const above = overscan + Math.max(0, -(raised?.minimum ?? 0)) * level;
+  const below = overscan + Math.max(0, raised?.maximum ?? 0) * level;
   const corners = [
-    { x: -overscan, y: -overscan },
-    { x: viewport.width + overscan, y: -overscan },
-    { x: viewport.width + overscan, y: viewport.height + overscan },
-    { x: -overscan, y: viewport.height + overscan },
+    { x: -overscan, y: -above },
+    { x: viewport.width + overscan, y: -above },
+    { x: viewport.width + overscan, y: viewport.height + below },
+    { x: -overscan, y: viewport.height + below },
   ].map((point) => screenToMap(point, scene.width, scene.height, camera, viewport));
   const xs = corners.map((point) => point.x);
   const ys = corners.map((point) => point.y);
@@ -521,8 +583,17 @@ export function hitTestTopDownScene(
   camera: PreviewCamera,
   viewport: PreviewViewport,
   screenPoint: ScreenPoint,
+  surface: ElevationSurface | null = null,
 ): PreviewHit | null {
-  const point = screenToMap(screenPoint, scene.width, scene.height, camera, viewport);
+  const point = screenToVisibleMap(
+    screenPoint,
+    scene.width,
+    scene.height,
+    camera,
+    viewport,
+    surface,
+  );
+  if (!point) return null;
   if (point.x < 0 || point.x >= scene.width || point.y < 0 || point.y >= scene.height) return null;
   const x = Math.floor(point.x);
   const y = Math.floor(point.y);
@@ -534,8 +605,11 @@ export function clampedTileAtScreenPoint(
   camera: PreviewCamera,
   viewport: PreviewViewport,
   screenPoint: ScreenPoint,
+  surface: ElevationSurface | null = null,
 ): PreviewHit {
-  const point = screenToMap(screenPoint, scene.width, scene.height, camera, viewport);
+  const point =
+    screenToVisibleMap(screenPoint, scene.width, scene.height, camera, viewport, surface) ??
+    screenToMap(screenPoint, scene.width, scene.height, camera, viewport);
   const x = clamp(Math.floor(point.x), 0, scene.width - 1);
   const y = clamp(Math.floor(point.y), 0, scene.height - 1);
   return { kind: 'tile', index: y * scene.width + x, x, y };

@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Harici dil sunucuları"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{language} için {server}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Harici dil sunucusunu kullan"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Eksikleri yerleşik bilgiyle tamamla"
+    },
     "app-menu.view.language": {
       "message": "Dil…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Görseli kaydet…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Harita simgesi üretiliyor"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Harita simgesi: kurulum önizlemesi bekleniyor"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Harita simgesi: mevcut önizlemeden üretildi"
     },
     "map-icon.status.generated-replacing": {
       "message": "Harita simgesi: {file} üretildi; özgün simgenin yerine yalnızca bu kurulum kopyasında kullanılır"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Arazi kabartması"
     },
-    "map-icon.relief.hide": {
-      "message": "Arazi kabartmasını gizle"
+    "map-icon.relief.off": {
+      "message": "Yükseklik kapalı"
     },
-    "map-icon.relief.show": {
-      "message": "Arazi kabartmasını göster"
+    "map-icon.relief.raised": {
+      "message": "3D yükseklik"
     },
     "map-icon.terrain-smoothing": {
       "message": "Arazi geçişlerini yumuşat"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Başlangıç işaretleri yok"
     },
+    "map-icon.minimap-objects": {
+      "message": "Küçük harita nesneleri"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Nesneleri, izleyici modundaki küçük harita gibi küçük kareler olarak gösterir."
+    },
     "map-icon.spawn-size": {
       "message": "Başlangıç işareti boyutu"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Başlangıç işareti boyutu (harita genişliğinin yüzdesi)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Şehir Merkezi işareti boyutu"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Şehir Merkezi işareti boyutunu küçült"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Şehir Merkezi işareti boyutunu büyüt"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "%{value}"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "Varsayılan boyuta oranı: %{value}"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Şehir Merkezi işareti boyutu (varsayılan boyutun yüzdesi)"
     },
     "map-icon.art.trees.show": {
       "message": "Ağaçları göster"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Nesneler ve Şehir Merkezinin kapladığı alan"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Küçük harita nesneleri"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Nesneleri, izleyici modundaki küçük harita gibi küçük kareler olarak gösterir."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Nesneler kapalı"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Uçurum kenarları"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Arazi kabartması"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D yükseklik"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Yükseklik haritası"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Sürümler sayfasını aç"
+    },
+    "external-language-server.started.headline": {
+      "message": "{language} dosyaları için {server} kullanılıyor"
+    },
+    "external-language-server.untested.cause": {
+      "message": "{version} sürümü AoE2RMSIDE ile test edilmedi; bilinen sorunları için geçici çözümler yine uygulanıyor"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} kullanılabilir bir dil sunucusu değil"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} çalışmayı durdurdu"
+    },
+    "external-language-server.reason.start": {
+      "message": "Program başlatılamadı"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Program, açılış el sıkışmasına bir dil sunucusu gibi yanıt vermedi"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "Programın el sıkışma yanıtında belge güncellemeleri yok ya da AoE2RMSIDE’ın sunmadığı bir konum biçimi kullanılıyor"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Program beklenmedik şekilde kapandı"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Program isteklere zamanında yanıt vermeyi bıraktı"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Program, geçerli dil sunucusu verisi olmayan bir ileti gönderdi"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE sunucuyu {seconds} saniye sonra yeniden başlatacak (deneme {attempt}/{limit}); bu sırada yerleşik analiz kullanılıyor} other {AoE2RMSIDE sunucuyu {seconds} saniye sonra yeniden başlatacak (deneme {attempt}/{limit}); bu sırada yerleşik analiz kullanılıyor}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Sunucu Görünüm > Harici dil sunucuları menüsünden yeniden açılana kadar {language} dosyaları için yerleşik analiz kullanılır"
+    },
+    "external-language-server.action.not-used": {
+      "message": "{language} dosyaları için yerleşik analiz kullanılır"
     }
   }
 }

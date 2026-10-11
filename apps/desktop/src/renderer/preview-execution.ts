@@ -121,6 +121,12 @@ export function previewSeedControls(
   };
 }
 
+export function developmentFixtureRunnable(
+  execution: Pick<PreviewExecutionController, 'executionState'>,
+): boolean {
+  return execution.executionState.phase === 'idle';
+}
+
 export function isStaleExactPreviewError(message: string): boolean {
   return /stale or unavailable|do not match the current catalog|current successful preview revision|changed while generation was in flight|cannot authorize a mismatched deployment graph/u.test(
     message,

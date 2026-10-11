@@ -24,6 +24,7 @@ import {
   type RefObject,
 } from 'react';
 import {
+  BoxIcon,
   CheckIcon as AnimatedCheckIcon,
   DropletIcon,
   EyeOffIcon,
@@ -47,6 +48,7 @@ import {
   History,
   MapPinOff,
   Minus,
+  Monitor,
   PackagePlus,
   Plus,
   Trees,
@@ -100,6 +102,7 @@ import {
   mapIconArtDensity,
   mapIconArtSize,
   mapIconRenderContract,
+  mapIconSaveSizes,
   mapIconSpawnMarkerSizePercent,
   type InstallationReport,
   type ManagedDeploymentRequest,
@@ -108,7 +111,9 @@ import {
   type ManualDeploymentMapIconRequest,
   type ManualDeploymentModStatus,
   type ManualDeploymentPreview,
+  type MapIconRelief,
   type MapIconRenderInput,
+  type MapIconSaveSize,
   type MapIconSpawnMarkerStyle,
   type PreviewGenerationResult,
 } from '../shared/api';
@@ -139,15 +144,21 @@ import {
   mapIconFrameContent,
   mapIconFrameLabel,
   mapIconFrameState,
-  mapIconReliefActionLabel,
+  mapIconMinimapObjectsLabel,
+  mapIconMinimapObjectsNote,
   mapIconRandomSeedLabel,
   mapIconReliefLabel,
   mapIconRequestFor,
+  mapIconSaveRequestAtSize,
+  mapIconSaveSizeLabel,
   mapIconSaveTarget,
   mapIconShowsGenerating,
   mapIconSourceDescription,
-  mapIconSpawnMarkerSizeLabel,
+  mapIconSizeStepperTarget,
+  mapIconSizeStepperText,
+  type MapIconSizeStepperTarget,
   mapIconSpawnMarkersLabel,
+  nextMapIconRelief,
   nextMapIconSpawnMarkers,
   mapIconSwitchDisabledReason,
   mapIconTerrainSmoothingLabel,
@@ -155,6 +166,7 @@ import {
   previewMatchesMapIconRequest,
   renderDeploymentMapIcon,
   resolveMapIconOption,
+  shownMapIconRelief,
   stepMapIconSpawnMarkerSize,
   type DeploymentMapIcon,
 } from './managed-mod-map-icon';
@@ -517,6 +529,7 @@ export function ManagedModDeploymentPanel({
           const suggestion = suggestedModName(next.ownedTargets, retainedProfileId, source);
           setModNameField((field) => withSuggestedModName(field, suggestion));
         } else {
+          setOriginalIconAvailable((current) => current ?? false);
           const suggestion = suggestedModName([], '', source);
           setModNameField((field) => withSuggestedModName(field, suggestion));
         }
@@ -525,6 +538,7 @@ export function ManagedModDeploymentPanel({
         if (requestSequence === contextRequestSequence.current) {
           setContext(null);
           setContextLoaded(true);
+          setOriginalIconAvailable((current) => current ?? false);
           setContextError({ kind: 'deployment', raw: errorMessage(loadError) });
         }
       })
@@ -1043,7 +1057,9 @@ export function ManagedModDeploymentPanel({
           ? mapIconSourceDescription(currentPreview.mapIcon)
           : mapIconOption.checked && mapIconRender.status === 'rendering'
             ? t('map-icon.status.rendering')
-            : t('map-icon.status.waiting');
+            : installationRequired && mapIconOption.checked && mapIconRender.status === 'ready'
+              ? t('map-icon.status.generated-unlinked')
+              : t('map-icon.status.waiting');
   const generatedIconPixels =
     mapIconOption.checked && mapIcon?.mode === 'generate' ? (mapIcon.render?.pixels ?? null) : null;
   const iconRenderPending =
@@ -1137,13 +1153,36 @@ export function ManagedModDeploymentPanel({
     (iconSaveTarget?.kind === 'generated' && selectedSource
       ? `${selectedSource.name.replace(/\.[^.]*$/u, '')}.png`
       : undefined);
-  const saveMapIcon = async () => {
+  const savedIcon = mapIconRender.status === 'ready' ? mapIconRender.icon : null;
+  const renderIconAtSize = async (size: MapIconSaveSize) => {
+    if (!savedIcon || !effectiveIconInput || iconSaveTarget?.kind !== 'generated') {
+      throw new Error('the map icon is unavailable');
+    }
+    if (savedIcon.render !== iconSaveTarget.request.render) {
+      throw new Error('the map icon changed while it was being saved');
+    }
+    if (effectiveIconInput.look === 'game-textures') {
+      const textured = gameTextures.renderAtSize(size);
+      if (!textured) throw new Error('the game textures icon could not be drawn at this size');
+      return gameTexturesDeploymentMapIcon(savedIcon.result, effectiveIconInput, textured, size);
+    }
+    return renderDeploymentMapIcon(
+      savedIcon.result,
+      effectiveIconInput,
+      new AbortController().signal,
+      undefined,
+      size,
+    );
+  };
+  const saveMapIcon = async (size: MapIconSaveSize = mapIconRenderContract.size) => {
     if (!iconSaveTarget) return;
     setIconSaveBusy(true);
     try {
       const result =
         iconSaveTarget.kind === 'generated'
-          ? await window.rmside.saveGeneratedMapIcon(iconSaveTarget.request)
+          ? await window.rmside.saveGeneratedMapIcon(
+              await mapIconSaveRequestAtSize(iconSaveTarget.request, size, renderIconAtSize),
+            )
           : await window.rmside.saveManualDeploymentMapIcon(iconSaveTarget.token);
       if (result.status === 'saved') {
         appendOutput(
@@ -1166,12 +1205,52 @@ export function ManagedModDeploymentPanel({
     }
   };
 
+  const iconField = (
+    <div
+      className="managed-mod-icon-field"
+      data-standalone={installationRequired || undefined}
+      data-testid="managed-mod-map-icon-field"
+    >
+      <div className="managed-mod-icon-row">
+        <MapIconColumn
+          canSave={iconSaveTarget !== null}
+          checked={mapIconOption.checked}
+          description={mapIconDescription}
+          descriptionId={mapIconDescriptionId}
+          image={iconImage}
+          label={iconFrameLabel}
+          onOpen={openIconLightbox}
+          onSave={(size) => void saveMapIcon(size)}
+          onToggle={toggleMapIcon}
+          openRef={openLargerButton}
+          generating={iconFrameState === 'generating'}
+          saveBusy={iconSaveBusy}
+          saveLabel={saveImageLabel}
+          saveSizes={iconSaveTarget?.kind === 'generated'}
+          state={iconFrameState}
+          switchBusy={actionBusy}
+          switchReason={mapIconSwitchReason}
+          switchReasonId={mapIconSwitchReasonId}
+        />
+        <span
+          aria-live="polite"
+          className="sr-only"
+          data-testid="managed-mod-map-icon-source"
+          id={mapIconDescriptionId}
+        >
+          {mapIconDescription}
+        </span>
+      </div>
+    </div>
+  );
+
   return (
     <>
       <Dialog onOpenChange={onOpenChange} open={open}>
         <DialogContent
           className="managed-mod-dialog"
           data-compact={installationRequired || undefined}
+          data-lightbox-open={iconLightboxOpen || undefined}
         >
           <DialogClose
             aria-label={t('deploy-panel.close')}
@@ -1188,13 +1267,16 @@ export function ManagedModDeploymentPanel({
           </DialogHeader>
 
           {installationRequired ? (
-            <div className="managed-mod-prerequisite">
-              <span>{t('deploy-panel.select-game-folder')}</span>
-              <SelectGameFolderButton
-                disabled={actionBusy}
-                onClick={() => void selectGameFolder()}
-              />
-            </div>
+            <>
+              {selectedSource ? iconField : null}
+              <div className="managed-mod-prerequisite">
+                <span>{t('deploy-panel.select-game-folder')}</span>
+                <SelectGameFolderButton
+                  disabled={actionBusy}
+                  onClick={() => void selectGameFolder()}
+                />
+              </div>
+            </>
           ) : (
             <div className="managed-mod-body owned-scrollbars">
               <div className="managed-mod-overview">
@@ -1293,37 +1375,7 @@ export function ManagedModDeploymentPanel({
                     </div>
                   </div>
                 </div>
-                <div className="managed-mod-icon-field">
-                  <div className="managed-mod-icon-row">
-                    <MapIconColumn
-                      canSave={iconSaveTarget !== null}
-                      checked={mapIconOption.checked}
-                      description={mapIconDescription}
-                      descriptionId={mapIconDescriptionId}
-                      image={iconImage}
-                      label={iconFrameLabel}
-                      onOpen={openIconLightbox}
-                      onSave={() => void saveMapIcon()}
-                      onToggle={toggleMapIcon}
-                      openRef={openLargerButton}
-                      generating={iconFrameState === 'generating'}
-                      saveBusy={iconSaveBusy}
-                      saveLabel={saveImageLabel}
-                      state={iconFrameState}
-                      switchBusy={actionBusy}
-                      switchReason={mapIconSwitchReason}
-                      switchReasonId={mapIconSwitchReasonId}
-                    />
-                    <span
-                      aria-live="polite"
-                      className="sr-only"
-                      data-testid="managed-mod-map-icon-source"
-                      id={mapIconDescriptionId}
-                    >
-                      {mapIconDescription}
-                    </span>
-                  </div>
-                </div>
+                {iconField}
               </div>
               <div className="managed-mod-result" ref={resultHeight.shellRef}>
                 <div className="managed-mod-result-content" ref={resultHeight.contentRef}>
@@ -1413,7 +1465,11 @@ export function ManagedModDeploymentPanel({
           ) : null}
           <Dialog onOpenChange={setIconLightboxOpen} open={iconLightboxOpen}>
             <DialogPortal>
-              <DialogOverlay data-testid="managed-mod-map-icon-lightbox-backdrop" forceRender />
+              <DialogOverlay
+                className="managed-mod-icon-lightbox-backdrop"
+                data-testid="managed-mod-map-icon-lightbox-backdrop"
+                forceRender
+              />
             </DialogPortal>
             <DialogContent
               className="managed-mod-icon-lightbox"
@@ -1421,24 +1477,16 @@ export function ManagedModDeploymentPanel({
               finalFocus={openLargerButton}
             >
               <div className="managed-mod-icon-lightbox-actions">
-                <Tooltip>
-                  <TooltipTrigger
-                    render={
-                      <Button
-                        aria-label={t('map-icon.save-image')}
-                        data-testid="managed-mod-map-icon-lightbox-save"
-                        disabled={iconSaveBusy || !iconSaveTarget}
-                        onClick={() => void saveMapIcon()}
-                        size="icon-compact"
-                        type="button"
-                        variant="ghost"
-                      />
-                    }
-                  >
-                    <Download aria-hidden="true" />
-                  </TooltipTrigger>
-                  <TooltipContent>{saveImageLabel}</TooltipContent>
-                </Tooltip>
+                <MapIconSaveButton
+                  busy={iconSaveBusy}
+                  disabled={!iconSaveTarget}
+                  label={saveImageLabel}
+                  onSave={(size) => void saveMapIcon(size)}
+                  size="icon-compact"
+                  sizes={iconSaveTarget?.kind === 'generated'}
+                  testId="managed-mod-map-icon-lightbox-save"
+                  variant="ghost"
+                />
                 <DialogClose
                   aria-label={t('map-icon.lightbox.close')}
                   size="icon-compact"
@@ -1471,10 +1519,19 @@ export function ManagedModDeploymentPanel({
                     role="group"
                   >
                     <MapIconViewToolButtons {...mapIconViewTools} />
+                    <MapIconMinimapObjectsButton
+                      disabled={actionBusy}
+                      minimapObjects={mapIconInput.minimapObjects}
+                      onToggle={() =>
+                        changeMapIconInput({ minimapObjects: !mapIconInput.minimapObjects })
+                      }
+                    />
                     <MapIconReliefButton
                       disabled={actionBusy}
-                      onToggle={() => changeMapIconInput({ relief: !mapIconInput.relief })}
-                      relief={mapIconInput.relief}
+                      onCycle={() =>
+                        changeMapIconInput({ relief: nextMapIconRelief(mapIconInput) })
+                      }
+                      relief={shownMapIconRelief(mapIconInput)}
                     />
                   </div>
                 ) : null}
@@ -1538,15 +1595,16 @@ export function ManagedModDeploymentPanel({
                         spawnMarkers={mapIconInput.spawnMarkers}
                       />
                       <MapIconSpawnSizeStepper
-                        disabled={actionBusy || mapIconInput.spawnMarkers === 'hidden'}
+                        disabled={actionBusy}
                         onChange={(spawnMarkerSizePercent) =>
                           changeMapIconInput({ spawnMarkerSizePercent })
                         }
+                        target={mapIconSizeStepperTarget(mapIconInput)}
                         value={mapIconInput.spawnMarkerSizePercent}
                       />
                       {(['trees', 'resources'] as const).map((layer) => (
                         <MapIconArtLayerControl
-                          disabled={actionBusy}
+                          disabled={actionBusy || mapIconInput.minimapObjects}
                           input={mapIconInput}
                           key={layer}
                           layer={layer}
@@ -1801,6 +1859,7 @@ function MapIconColumn({
   openRef,
   saveBusy,
   saveLabel,
+  saveSizes,
   state,
   switchBusy,
   switchReason,
@@ -1814,10 +1873,11 @@ function MapIconColumn({
   image: MapIconImage | null;
   label: string;
   onOpen(): void;
-  onSave(): void;
+  onSave(size: MapIconSaveSize): void;
   onToggle(): void;
   openRef: RefObject<HTMLButtonElement | null>;
   saveBusy: boolean;
+  saveSizes: boolean;
   state: string;
   switchBusy: boolean;
   switchReason: string | null;
@@ -1825,10 +1885,6 @@ function MapIconColumn({
   saveLabel: string;
 }) {
   const { t } = useI18n();
-  const isolated = (action: () => void) => (event: MouseEvent) => {
-    event.stopPropagation();
-    action();
-  };
   return (
     <div
       className="managed-mod-icon-column"
@@ -1896,28 +1952,94 @@ function MapIconColumn({
         </Tooltip>
         {canSave ? (
           <div className="managed-mod-icon-actions managed-mod-icon-overlay">
-            <Tooltip>
-              <TooltipTrigger
-                render={
-                  <Button
-                    aria-label={t('map-icon.save-image')}
-                    data-testid="managed-mod-map-icon-save"
-                    disabled={saveBusy}
-                    onClick={isolated(onSave)}
-                    size="icon-sm"
-                    type="button"
-                    variant="secondary"
-                  />
-                }
-              >
-                <Download aria-hidden="true" />
-              </TooltipTrigger>
-              <TooltipContent>{saveLabel}</TooltipContent>
-            </Tooltip>
+            <MapIconSaveButton
+              busy={saveBusy}
+              disabled={false}
+              label={saveLabel}
+              onSave={onSave}
+              size="icon-sm"
+              sizes={saveSizes}
+              testId="managed-mod-map-icon-save"
+              variant="secondary"
+            />
           </div>
         ) : null}
       </div>
     </div>
+  );
+}
+
+function MapIconSaveButton({
+  busy,
+  disabled,
+  label,
+  onSave,
+  size,
+  sizes,
+  testId,
+  variant,
+}: {
+  busy: boolean;
+  disabled: boolean;
+  label: string;
+  onSave(size: MapIconSaveSize): void;
+  size: 'icon-sm' | 'icon-compact';
+  sizes: boolean;
+  testId: string;
+  variant: 'ghost' | 'secondary';
+}) {
+  const { t } = useI18n();
+  const button = (
+    <Button
+      aria-label={t('map-icon.save-image')}
+      data-testid={testId}
+      disabled={busy || disabled}
+      focusableWhenDisabled
+      onClick={(event: MouseEvent) => {
+        event.stopPropagation();
+        if (!sizes) onSave(mapIconRenderContract.size);
+      }}
+      size={size}
+      type="button"
+      variant={variant}
+    />
+  );
+  if (!sizes) {
+    return (
+      <Tooltip>
+        <TooltipTrigger render={button}>
+          <Download aria-hidden="true" />
+        </TooltipTrigger>
+        <TooltipContent>{label}</TooltipContent>
+      </Tooltip>
+    );
+  }
+  return (
+    <DropdownMenu modal={false}>
+      <Tooltip>
+        <TooltipTrigger render={<DropdownMenuTrigger render={button} />}>
+          <Download aria-hidden="true" />
+        </TooltipTrigger>
+        <TooltipContent>{label}</TooltipContent>
+      </Tooltip>
+      <DropdownMenuContent
+        align="end"
+        aria-label={t('map-icon.save-image')}
+        className="managed-mod-icon-save-menu"
+        data-testid={`${testId}-menu`}
+      >
+        {mapIconSaveSizes.map((saveSize) => (
+          <DropdownMenuItem
+            data-size={saveSize}
+            data-testid={`${testId}-${saveSize}`}
+            key={saveSize}
+            onClick={() => onSave(saveSize)}
+          >
+            {mapIconSaveSizeLabel(saveSize)}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -2016,40 +2138,43 @@ function MapIconViewToolButtons({
 
 function MapIconReliefButton({
   disabled,
-  onToggle,
+  onCycle,
   relief,
 }: {
   disabled: boolean;
-  onToggle(): void;
-  relief: boolean;
+  onCycle(): void;
+  relief: MapIconRelief;
 }) {
   useI18n();
   const { animationHandlers, iconRef } = useAnimatedIconHover();
+  const label = mapIconReliefLabel(relief);
   return (
     <Tooltip>
       <TooltipTrigger
         render={
           <Button
             {...animationHandlers}
-            aria-label={mapIconReliefLabel()}
-            aria-pressed={relief}
+            aria-label={label}
             className="managed-mod-icon-view-tool managed-mod-icon-relief"
+            data-relief={relief}
             data-testid="managed-mod-map-icon-relief"
             disabled={disabled}
-            onClick={onToggle}
+            onClick={onCycle}
             size="icon-compact"
             type="button"
             variant="secondary"
           />
         }
       >
-        {relief ? (
+        {relief === 'raised' ? (
+          <BoxIcon aria-hidden="true" ref={iconRef} size={14} />
+        ) : relief === 'terrain' ? (
           <SunDimIcon aria-hidden="true" ref={iconRef} size={14} />
         ) : (
           <EyeOffIcon aria-hidden="true" ref={iconRef} size={14} />
         )}
       </TooltipTrigger>
-      <TooltipContent>{mapIconReliefActionLabel(relief)}</TooltipContent>
+      <TooltipContent>{label}</TooltipContent>
     </Tooltip>
   );
 }
@@ -2121,6 +2246,49 @@ function MapIconSpawnMarkersButton({
         )}
       </TooltipTrigger>
       <TooltipContent>{mapIconSpawnMarkersLabel(spawnMarkers)}</TooltipContent>
+    </Tooltip>
+  );
+}
+
+function MapIconMinimapObjectsButton({
+  disabled,
+  minimapObjects,
+  onToggle,
+}: {
+  disabled: boolean;
+  minimapObjects: boolean;
+  onToggle(): void;
+}) {
+  useI18n();
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <Button
+            aria-description={mapIconMinimapObjectsNote()}
+            aria-label={mapIconMinimapObjectsLabel()}
+            aria-pressed={minimapObjects}
+            className="managed-mod-icon-view-tool"
+            data-testid="managed-mod-map-icon-minimap-objects"
+            disabled={disabled}
+            onClick={(event) => {
+              event.stopPropagation();
+              onToggle();
+            }}
+            size="icon-compact"
+            type="button"
+            variant="secondary"
+          />
+        }
+      >
+        <Monitor aria-hidden="true" size={14} />
+      </TooltipTrigger>
+      <TooltipContent className="managed-mod-icon-tooltip">
+        <span className="preview-map-tool-tooltip">
+          <span>{mapIconMinimapObjectsLabel()}</span>
+          <span className="preview-map-tool-tooltip-note">{mapIconMinimapObjectsNote()}</span>
+        </span>
+      </TooltipContent>
     </Tooltip>
   );
 }
@@ -2264,15 +2432,19 @@ function MapIconArtLayerControl({
 }
 
 function MapIconSpawnSizeStepper({
-  disabled,
+  disabled: busy,
   onChange,
+  target,
   value,
 }: {
   disabled: boolean;
   onChange(value: number): void;
+  target: MapIconSizeStepperTarget | null;
   value: number;
 }) {
-  const { t } = useI18n();
+  useI18n();
+  const disabled = busy || target === null;
+  const text = mapIconSizeStepperText(target, value);
   const { minimum, maximum } = mapIconSpawnMarkerSizePercent;
   const step = (action: Parameters<typeof stepMapIconSpawnMarkerSize>[1]) => {
     if (disabled) return;
@@ -2297,7 +2469,7 @@ function MapIconSpawnSizeStepper({
   return (
     <div className="managed-mod-icon-size">
       <Button
-        aria-label={t('map-icon.spawn-size.decrease')}
+        aria-label={text.decrease}
         disabled={disabled || value <= minimum}
         onClick={() => step('decrement')}
         size="icon"
@@ -2311,12 +2483,13 @@ function MapIconSpawnSizeStepper({
           render={
             <span
               aria-disabled={disabled || undefined}
-              aria-label={mapIconSpawnMarkerSizeLabel()}
+              aria-label={text.label}
               aria-valuemax={maximum}
               aria-valuemin={minimum}
               aria-valuenow={value}
-              aria-valuetext={t('map-icon.spawn-size.value-text', { value })}
+              aria-valuetext={text.valueText}
               className="managed-mod-icon-size-value"
+              data-target={target ?? undefined}
               data-testid="managed-mod-map-icon-spawn-size"
               onKeyDown={onKeyDown}
               role="spinbutton"
@@ -2324,12 +2497,12 @@ function MapIconSpawnSizeStepper({
             />
           }
         >
-          {t('map-icon.spawn-size.value', { value })}
+          {text.value}
         </TooltipTrigger>
-        <TooltipContent>{t('map-icon.spawn-size.tooltip')}</TooltipContent>
+        <TooltipContent>{text.tooltip}</TooltipContent>
       </Tooltip>
       <Button
-        aria-label={t('map-icon.spawn-size.increase')}
+        aria-label={text.increase}
         disabled={disabled || value >= maximum}
         onClick={() => step('increment')}
         size="icon"

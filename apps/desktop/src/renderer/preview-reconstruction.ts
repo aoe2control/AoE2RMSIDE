@@ -6,6 +6,7 @@ import type {
   PreviewObjectMutation,
   PreviewProvenanceOperation,
 } from '../shared/api';
+import { maximumGenerationEvents } from '../shared/generation-event-bounds';
 
 const maximumTiles = 512 * 512;
 const maximumObjects = 1_000_000;
@@ -137,7 +138,7 @@ export async function reconstructPreviewEvents(
   cursor = events.length - 1,
   verifyHashes = true,
 ): Promise<ReconstructedPreviewState> {
-  if (events.length < 1 || events.length > 8192) {
+  if (events.length < 1 || events.length > maximumGenerationEvents) {
     throw new Error('generation event collection is outside its bounds');
   }
   const candidate = createPreviewCandidate(events[0]!);
@@ -165,7 +166,7 @@ export function reconstructPreviewEventsAtCursor(
   events: PreviewGenerationEvent[],
   cursor: number,
 ): ReconstructedPreviewState {
-  if (events.length < 1 || events.length > 8192) {
+  if (events.length < 1 || events.length > maximumGenerationEvents) {
     throw new Error('generation event collection is outside its bounds');
   }
   const candidate = createPreviewCandidate(events[0]!);
@@ -254,7 +255,7 @@ export function reconstructedPreviewResult(
 
 export async function assertStreamMatchesResult(result: PreviewGenerationResult): Promise<void> {
   const events = result.generationEvents;
-  if (events.length < 2 || events.length > 8192) {
+  if (events.length < 2 || events.length > maximumGenerationEvents) {
     throw new Error('generation event collection is outside its bounds');
   }
   const first = events[0];

@@ -140,6 +140,7 @@ import {
 import type { OutputRunHeader, OutputRunResult } from './output-log';
 import { assertStreamMatchesResult } from './preview-reconstruction';
 import {
+  developmentFixtureRunnable,
   isPreviewScriptName,
   isPreviewSourceChangedError,
   runnableDocumentBlockingReason,
@@ -1069,7 +1070,7 @@ export function RunConfigurationPanel({
     () =>
       window.rmside.onLanguageServerEvent((event) => {
         if (event.method === 'rms/sourceCatalogInvalidated') {
-          liveCoordinator.current?.sourceInvalidated();
+          liveCoordinator.current?.sourceCatalogChanged();
           return;
         }
         if (event.method !== 'textDocument/publishDiagnostics') return;
@@ -1690,7 +1691,7 @@ export function RunConfigurationPanel({
 
   const runDevelopmentFixture = useCallback(
     (fixtureId: DevelopmentFixtureDescriptor['id']) => {
-      if (!effectiveConfiguration) return;
+      if (!effectiveConfiguration || !developmentFixtureRunnable({ executionState })) return;
       if (!isPreviewScriptName(executionDocument.name) || !executionDocument.content) {
         appendOutput(
           outputNote(
@@ -1710,6 +1711,7 @@ export function RunConfigurationPanel({
       effectiveConfiguration,
       executionDocument.content,
       executionDocument.name,
+      executionState,
       scheduleGeneration,
     ],
   );

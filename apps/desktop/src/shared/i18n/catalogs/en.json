@@ -325,6 +325,38 @@
         "title": "the lint rule’s title"
       }
     },
+    "app-menu.view.external-language-servers": {
+      "message": "External Language Servers",
+      "screen": "application-menu/view",
+      "control": "menu",
+      "maxLength": 40,
+      "meaning": "View submenu with the settings of the external language servers AoE2RMSIDE found. It appears only when a usable one was found."
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} for {language}",
+      "screen": "application-menu/view/external-language-servers",
+      "control": "menu-item",
+      "maxLength": 64,
+      "meaning": "Disabled heading above the two settings of one external language server: which program and which script language.",
+      "placeholders": {
+        "server": "the server's own name, for example XS Check; stays as written",
+        "language": "RMS or XS; stays as written"
+      }
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Use External Language Server",
+      "screen": "application-menu/view/external-language-servers",
+      "control": "toggle",
+      "maxLength": 40,
+      "meaning": "Check item: whether the external language server above checks the scripts of its language. On by default when it is found."
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Fill Gaps with Built-in Knowledge",
+      "screen": "application-menu/view/external-language-servers",
+      "control": "toggle",
+      "maxLength": 40,
+      "meaning": "Check item: whether AoE2RMSIDE's own findings, completions and hover text stay on for what the external language server does not cover. On by default."
+    },
     "app-menu.view.language": {
       "message": "Language…",
       "screen": "application-menu/view",
@@ -8037,6 +8069,16 @@
       "control": "tooltip",
       "meaning": "Tooltip of the icon-only button that saves the map icon as a PNG file; the ellipsis says a Save dialog follows."
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px",
+      "screen": "deploy-panel/map-icon",
+      "control": "menu-item",
+      "meaning": "Item of the menu that the save image button opens: saves the map icon as a PNG file of this many pixels; the game uses 512 by 512, and the other sizes draw the icon again at that size. px is the unit pixels.",
+      "placeholders": {
+        "width": "the image width in pixels, such as 1024",
+        "height": "the image height in pixels, such as 1024"
+      }
+    },
     "map-icon.frame.generating": {
       "message": "Generating map icon",
       "screen": "deploy-panel/map-icon",
@@ -8123,6 +8165,12 @@
       "screen": "deploy-panel/map-icon",
       "control": "tooltip",
       "meaning": "Tooltip and accessible description of the map icon frame while the list of the mod's files is computed."
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Map icon: generated from the current preview",
+      "screen": "deploy-panel/map-icon",
+      "control": "tooltip",
+      "meaning": "Tooltip and accessible description of the map icon frame when no game folder is linked: the icon was drawn from the generated map and can be opened larger and saved, but not deployed."
     },
     "map-icon.status.generated-replacing": {
       "message": "Map icon: generated {file}, replacing the original in this deployed snapshot only",
@@ -8281,20 +8329,20 @@
     "map-icon.relief": {
       "message": "Terrain relief",
       "screen": "deploy-panel/map-icon-lightbox",
-      "control": "accessible-name",
-      "meaning": "Accessible name of the toggle that shades the icon by terrain height; its pressed state says whether the shading shows."
+      "control": "button",
+      "meaning": "Accessible name and tooltip of the icon button that cycles how the icon draws hills; this state shades the flat terrain by its slopes."
     },
-    "map-icon.relief.hide": {
-      "message": "Hide terrain relief",
+    "map-icon.relief.off": {
+      "message": "Elevation off",
       "screen": "deploy-panel/map-icon-lightbox",
-      "control": "tooltip",
-      "meaning": "Tooltip of the terrain relief toggle while the shading shows: what clicking does."
+      "control": "button",
+      "meaning": "Accessible name and tooltip of the icon button that cycles how the icon draws hills; this state draws no elevation."
     },
-    "map-icon.relief.show": {
-      "message": "Show terrain relief",
+    "map-icon.relief.raised": {
+      "message": "3D elevation",
       "screen": "deploy-panel/map-icon-lightbox",
-      "control": "tooltip",
-      "meaning": "Tooltip of the terrain relief toggle while the shading is off: what clicking does."
+      "control": "button",
+      "meaning": "Accessible name and tooltip of the icon button that cycles how the icon draws hills; this state raises the terrain by its height in the diamond view, lit from one side."
     },
     "map-icon.terrain-smoothing": {
       "message": "Smooth terrain transitions",
@@ -8346,6 +8394,18 @@
       "control": "tooltip",
       "meaning": "Accessible name and tooltip of the spawn marker button while players' starts are not marked."
     },
+    "map-icon.minimap-objects": {
+      "message": "Minimap objects",
+      "screen": "deploy-panel/map-icon-lightbox",
+      "control": "toggle",
+      "meaning": "Accessible name and tooltip of an on/off button over the larger map icon's corner, between the look and relief buttons: draws every object as a small square in its class color, like the minimap of a spectator broadcast, instead of the tree and gold and stone pictures."
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Shows objects as small squares, like a spectator minimap.",
+      "screen": "deploy-panel/map-icon-lightbox",
+      "control": "tooltip",
+      "meaning": "Second tooltip line and accessible description of the Minimap objects button over the larger map icon's corner: what it shows."
+    },
     "map-icon.spawn-size": {
       "message": "Spawn marker size",
       "screen": "deploy-panel/map-icon-lightbox",
@@ -8388,6 +8448,49 @@
       "screen": "deploy-panel/map-icon-lightbox",
       "control": "tooltip",
       "meaning": "Tooltip of the spawn marker size: the number is a percentage of the map width."
+    },
+    "map-icon.town-center-size": {
+      "message": "Town center mark size",
+      "screen": "deploy-panel/map-icon-lightbox",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the number between the minus and plus buttons while it sets the size of the town center marks (shown with Minimap objects on and the spawn markers hidden) instead of the spawn markers."
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Decrease town center mark size",
+      "screen": "deploy-panel/map-icon-lightbox",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the minus button beside the town center mark size."
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Increase town center mark size",
+      "screen": "deploy-panel/map-icon-lightbox",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the plus button beside the town center mark size."
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%",
+      "screen": "deploy-panel/map-icon-lightbox",
+      "control": "label",
+      "maxLength": 6,
+      "placeholders": {
+        "value": "a whole number from 50 to 130"
+      },
+      "meaning": "The town center mark size shown between the minus and plus buttons, as a percentage of the mark’s default size. Use the language’s usual percent form."
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value}% of the default size",
+      "screen": "deploy-panel/map-icon-lightbox",
+      "control": "accessible-name",
+      "placeholders": {
+        "value": "a whole number from 50 to 130"
+      },
+      "meaning": "What assistive technology reads as the town center mark size’s value."
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Town center mark size (% of the default size)",
+      "screen": "deploy-panel/map-icon-lightbox",
+      "control": "tooltip",
+      "meaning": "Tooltip of the town center mark size: the number is a percentage of the mark’s default size."
     },
     "map-icon.art.trees.show": {
       "message": "Show trees",
@@ -10103,8 +10206,26 @@
     "preview-panel.tool.objects": {
       "message": "Objects and Town Center footprint",
       "screen": "preview/toolbar",
-      "control": "toggle",
-      "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar: shows or hides the objects on the map and the Town Center's footprint. Use the game's own name for the Town Center building."
+      "control": "button",
+      "meaning": "Accessible name and tooltip of the objects button in the map preview toolbar, which cycles how the objects on the map are drawn; this state shows them as markers, with the Town Center’s footprint. The next states are Minimap objects and Objects off. Use the game’s own name for the Town Center building."
+    },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Minimap objects",
+      "screen": "preview/toolbar",
+      "control": "button",
+      "meaning": "Accessible name and tooltip of the objects button in the map preview toolbar, which cycles how the objects on the map are drawn; this state shows every object as a small square in its class color and each Town Center as a castle mark, like the minimap of a spectator broadcast."
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Shows objects as small squares, like a spectator minimap.",
+      "screen": "preview/toolbar",
+      "control": "tooltip",
+      "meaning": "Second tooltip line and accessible description of the objects button while it shows Minimap objects: what that state shows."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Objects off",
+      "screen": "preview/toolbar",
+      "control": "button",
+      "meaning": "Accessible name and tooltip of the objects button in the map preview toolbar, which cycles how the objects on the map are drawn; this state draws no objects."
     },
     "preview-panel.tool.cliffs": {
       "message": "Cliff edges",
@@ -10169,6 +10290,12 @@
       "screen": "preview/toolbar",
       "control": "button",
       "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar that cycles how hills are drawn; this state shades the terrain by its height."
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D elevation",
+      "screen": "preview/toolbar",
+      "control": "button",
+      "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar that cycles how hills are drawn; this state raises the terrain by its height in the diamond view, lit from one side."
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Height map",
@@ -13169,6 +13296,108 @@
       "control": "message-action",
       "maxLength": 60,
       "meaning": "Link in the newer-release note: opens the AoE2RMSIDE releases page on GitHub in the browser, where the user downloads the new version. The app downloads and installs nothing itself."
+    },
+    "external-language-server.started.headline": {
+      "message": "Using {server} for {language} files",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note when an external language server starts working for one script language.",
+      "placeholders": {
+        "server": "the server's own name; stays as written",
+        "language": "RMS or XS; stays as written"
+      }
+    },
+    "external-language-server.untested.cause": {
+      "message": "Version {version} has not been tested with AoE2RMSIDE; its known problems are still worked around",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of the start note when the server reports a version AoE2RMSIDE was not tested with.",
+      "placeholders": {
+        "version": "the version text the server reports; stays as written"
+      }
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} is not a usable language server",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output warning when a program found by its name did not work as a language server and is not used.",
+      "placeholders": {
+        "program": "the program's full path; stays as written"
+      }
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} stopped working",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output message when a running external language server fails.",
+      "placeholders": {
+        "server": "the server's own name; stays as written"
+      }
+    },
+    "external-language-server.reason.start": {
+      "message": "The program could not be started",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Why an external language server failed: starting the program failed."
+    },
+    "external-language-server.reason.handshake": {
+      "message": "It did not answer the opening handshake as a language server",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Why a program is not used: it did not answer the first language server message in time or wrote something else."
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "Its handshake answer lacks document updates or uses a position format AoE2RMSIDE does not offer",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Why a program is not used: its handshake answer is missing what AoE2RMSIDE needs."
+    },
+    "external-language-server.reason.exit": {
+      "message": "The program ended unexpectedly",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Why an external language server failed: its process ended."
+    },
+    "external-language-server.reason.timeout": {
+      "message": "It stopped answering requests in time",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Why an external language server failed: several requests in a row got no answer in time."
+    },
+    "external-language-server.reason.protocol": {
+      "message": "It sent a message that is not valid language server data",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Why an external language server failed: a malformed or oversized message."
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE starts it again in {seconds} second (attempt {attempt} of {limit}); meanwhile the built-in analysis is used} other {AoE2RMSIDE starts it again in {seconds} seconds (attempt {attempt} of {limit}); meanwhile the built-in analysis is used}}",
+      "screen": "output",
+      "control": "message-action",
+      "meaning": "Action line after a failure while restarts remain.",
+      "placeholders": {
+        "seconds": "the wait before the restart, 1 to 16",
+        "attempt": "the number of this restart, 1 to 3",
+        "limit": "how many restarts are allowed, 3"
+      }
+    },
+    "external-language-server.action.built-in": {
+      "message": "The built-in analysis is used for {language} files until the server is turned on again in View > External Language Servers",
+      "screen": "output",
+      "control": "message-action",
+      "meaning": "Action line when no more restarts are made; names the menu where the user turns the server on again.",
+      "placeholders": {
+        "language": "RMS or XS; stays as written"
+      }
+    },
+    "external-language-server.action.not-used": {
+      "message": "The built-in analysis is used for {language} files",
+      "screen": "output",
+      "control": "message-action",
+      "meaning": "Action line when a found program is not used.",
+      "placeholders": {
+        "language": "RMS or XS; stays as written"
+      }
     }
   }
 }

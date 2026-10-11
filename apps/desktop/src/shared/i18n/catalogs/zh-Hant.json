@@ -146,6 +146,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title}（{code}）"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "外部語言伺服器"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "用於 {language} 的 {server}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "使用外部語言伺服器"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "以內建知識填補空缺"
+    },
     "app-menu.view.language": {
       "message": "語言…"
     },
@@ -2564,6 +2576,9 @@
     "map-icon.save-image.tooltip": {
       "message": "儲存影像…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} 像素"
+    },
     "map-icon.frame.generating": {
       "message": "正在產生地圖圖示"
     },
@@ -2602,6 +2617,9 @@
     },
     "map-icon.status.waiting": {
       "message": "地圖圖示：正在等待部署預覽"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "地圖圖示：已依目前的預覽產生"
     },
     "map-icon.status.generated-replacing": {
       "message": "地圖圖示：已產生 {file}，僅取代本次部署快照中的原始圖示"
@@ -2672,11 +2690,11 @@
     "map-icon.relief": {
       "message": "地形起伏"
     },
-    "map-icon.relief.hide": {
-      "message": "隱藏地形起伏"
+    "map-icon.relief.off": {
+      "message": "關閉高度顯示"
     },
-    "map-icon.relief.show": {
-      "message": "顯示地形起伏"
+    "map-icon.relief.raised": {
+      "message": "3D 高度顯示"
     },
     "map-icon.terrain-smoothing": {
       "message": "平滑地形交界"
@@ -2702,6 +2720,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "不顯示出生點標記"
     },
+    "map-icon.minimap-objects": {
+      "message": "小地圖式物件"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "將物件顯示為小方塊，類似觀戰時的小地圖。"
+    },
     "map-icon.spawn-size": {
       "message": "出生點標記大小"
     },
@@ -2719,6 +2743,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "出生點標記大小（占地圖寬度的百分比）"
+    },
+    "map-icon.town-center-size": {
+      "message": "城鎮中心標記大小"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "縮小城鎮中心標記"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "放大城鎮中心標記"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "預設大小的 {value}%"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "城鎮中心標記大小（占預設大小的百分比）"
     },
     "map-icon.art.trees.show": {
       "message": "顯示樹木"
@@ -3437,6 +3479,15 @@
     "preview-panel.tool.objects": {
       "message": "物件與城鎮中心占地範圍"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "小地圖式物件"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "將物件顯示為小方塊，類似觀戰時的小地圖。"
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "關閉物件顯示"
+    },
     "preview-panel.tool.cliffs": {
       "message": "懸崖邊緣"
     },
@@ -3466,6 +3517,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "地形起伏"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D 高度顯示"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "高度圖"
@@ -4624,6 +4678,45 @@
     },
     "release-check.newer.action": {
       "message": "開啟發行頁面"
+    },
+    "external-language-server.started.headline": {
+      "message": "{language} 檔案正在使用 {server}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "版本 {version} 未經 AoE2RMSIDE 測試；其已知問題仍會被規避"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} 不是可用的語言伺服器"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} 已停止運作"
+    },
+    "external-language-server.reason.start": {
+      "message": "無法啟動該程式"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "該程式未以語言伺服器的方式回應初始交握"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "該程式的交握回應缺少文件更新，或使用了 AoE2RMSIDE 不提供的位置格式"
+    },
+    "external-language-server.reason.exit": {
+      "message": "該程式意外結束"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "該程式不再及時回應請求"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "該程式傳送了無效的語言伺服器資料"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, other {AoE2RMSIDE 將在 {seconds} 秒後重新啟動它（第 {attempt} 次，共 {limit} 次）；在此期間使用內建分析}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "在「檢視 > 外部語言伺服器」中重新開啟該伺服器之前，{language} 檔案將使用內建分析"
+    },
+    "external-language-server.action.not-used": {
+      "message": "{language} 檔案將使用內建分析"
     }
   }
 }

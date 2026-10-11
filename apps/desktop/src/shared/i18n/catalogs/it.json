@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Server di linguaggio esterni"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} per {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Usa server di linguaggio esterno"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Completa con la conoscenza integrata"
+    },
     "app-menu.view.language": {
       "message": "Lingua…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Salva immagine…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Generazione dell’icona della mappa"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Icona della mappa: in attesa dell’anteprima dell’installazione"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Icona della mappa: generata dall’anteprima attuale"
     },
     "map-icon.status.generated-replacing": {
       "message": "Icona della mappa: generato {file}, che sostituisce l’originale solo in questa copia installata"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Rilievo del terreno"
     },
-    "map-icon.relief.hide": {
-      "message": "Nascondi il rilievo del terreno"
+    "map-icon.relief.off": {
+      "message": "Elevazione nascosta"
     },
-    "map-icon.relief.show": {
-      "message": "Mostra il rilievo del terreno"
+    "map-icon.relief.raised": {
+      "message": "Elevazione 3D"
     },
     "map-icon.terrain-smoothing": {
       "message": "Sfuma le transizioni tra terreni"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Nessun indicatore di partenza"
     },
+    "map-icon.minimap-objects": {
+      "message": "Oggetti della minimappa"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Mostra gli oggetti come piccoli quadrati, come la minimappa della modalità spettatore."
+    },
     "map-icon.spawn-size": {
       "message": "Dimensione degli indicatori di partenza"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Dimensione degli indicatori di partenza (% della larghezza della mappa)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Dimensione degli indicatori del centro città"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Riduci la dimensione degli indicatori del centro città"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Aumenta la dimensione degli indicatori del centro città"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value}% della dimensione predefinita"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Dimensione degli indicatori del centro città (% della dimensione predefinita)"
     },
     "map-icon.art.trees.show": {
       "message": "Mostra alberi"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Oggetti e ingombro del centro città"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Oggetti della minimappa"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Mostra gli oggetti come piccoli quadrati, come la minimappa della modalità spettatore."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Oggetti nascosti"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Bordi delle scogliere"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Rilievo del terreno"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "Elevazione 3D"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Mappa delle altezze"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Apri la pagina delle versioni"
+    },
+    "external-language-server.started.headline": {
+      "message": "{server} viene usato per i file {language}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "La versione {version} non è stata testata con AoE2RMSIDE; i suoi problemi noti vengono comunque aggirati"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} non è un server di linguaggio utilizzabile"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} ha smesso di funzionare"
+    },
+    "external-language-server.reason.start": {
+      "message": "Impossibile avviare il programma"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Il programma non ha risposto all’handshake iniziale come un server di linguaggio"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "La risposta del programma all’handshake non prevede aggiornamenti dei documenti o usa un formato di posizione che AoE2RMSIDE non offre"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Il programma si è chiuso inaspettatamente"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Il programma ha smesso di rispondere in tempo alle richieste"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Il programma ha inviato un messaggio che non contiene dati validi da server di linguaggio"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE lo riavvia tra {seconds} secondo (tentativo {attempt} di {limit}); nel frattempo viene usata l’analisi integrata} many {AoE2RMSIDE lo riavvia tra {seconds} secondi (tentativo {attempt} di {limit}); nel frattempo viene usata l’analisi integrata} other {AoE2RMSIDE lo riavvia tra {seconds} secondi (tentativo {attempt} di {limit}); nel frattempo viene usata l’analisi integrata}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Per i file {language} viene usata l’analisi integrata finché il server non viene riattivato in Visualizza > Server di linguaggio esterni"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Per i file {language} viene usata l’analisi integrata"
     }
   }
 }

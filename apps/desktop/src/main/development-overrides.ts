@@ -9,6 +9,8 @@ export interface DevelopmentOverrides {
   pseudoLocale?: string;
   developmentFixtures: boolean;
   releaseCheckFixture?: string;
+  externalRmsServerPath?: string;
+  externalXsServerPath?: string;
 }
 
 export const developmentOverrideVariables = [
@@ -22,6 +24,8 @@ export const developmentOverrideVariables = [
   'RMSIDE_PSEUDO_LOCALE',
   'RMSIDE_DEVELOPMENT_FIXTURES',
   'RMSIDE_RELEASE_CHECK_FIXTURE',
+  'RMSIDE_EXTERNAL_RMS_SERVER_PATH',
+  'RMSIDE_EXTERNAL_XS_SERVER_PATH',
 ] as const;
 
 export function readDevelopmentOverrides(
@@ -48,5 +52,7 @@ export function readDevelopmentOverrides(
   assign('windowDisplay', value('RMSIDE_WINDOW_DISPLAY'));
   assign('pseudoLocale', value('RMSIDE_PSEUDO_LOCALE'));
   assign('releaseCheckFixture', value('RMSIDE_RELEASE_CHECK_FIXTURE'));
+  assign('externalRmsServerPath', value('RMSIDE_EXTERNAL_RMS_SERVER_PATH'));
+  assign('externalXsServerPath', value('RMSIDE_EXTERNAL_XS_SERVER_PATH'));
   return overrides;
 }

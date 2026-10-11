@@ -25,6 +25,14 @@ SmartScreen may warn the first time you start them; choose **More info**, then
 
 To build it yourself, follow [BUILDING.md](BUILDING.md).
 
+## Works with external language servers
+
+AoE2RMSIDE has its own RMS and XS analysis. If you have a separate language
+server installed, such as [XS Check](https://github.com/Divy1211/xs-check)
+(it also comes with the XS extension for Visual Studio Code), AoE2RMSIDE finds
+it and uses its errors, completion and hover alongside its own. See
+[External language servers](https://aoe2control.github.io/aoe2rmside/writing-scripts/#external-language-servers).
+
 ## Learn more
 
 - [Documentation](https://aoe2control.github.io/aoe2rmside/): how to use

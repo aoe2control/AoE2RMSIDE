@@ -146,6 +146,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "बाहरी भाषा सर्वर"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{language} के लिए {server}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "बाहरी भाषा सर्वर का उपयोग करें"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "कमियाँ अंतर्निहित जानकारी से भरें"
+    },
     "app-menu.view.language": {
       "message": "भाषा…"
     },
@@ -2564,6 +2576,9 @@
     "map-icon.save-image.tooltip": {
       "message": "चित्र सहेजें…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "मानचित्र का आइकन बन रहा है"
     },
@@ -2602,6 +2617,9 @@
     },
     "map-icon.status.waiting": {
       "message": "मानचित्र का आइकन: तैनाती के पूर्वावलोकन की प्रतीक्षा है"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "मानचित्र का आइकन: मौजूदा पूर्वावलोकन से बनाया गया"
     },
     "map-icon.status.generated-replacing": {
       "message": "मानचित्र का आइकन: {file} बनाया गया, केवल इस तैनात स्नैपशॉट में मूल आइकन की जगह"
@@ -2672,11 +2690,11 @@
     "map-icon.relief": {
       "message": "भूभाग का उतार-चढ़ाव"
     },
-    "map-icon.relief.hide": {
-      "message": "भूभाग का उतार-चढ़ाव छिपाएँ"
+    "map-icon.relief.off": {
+      "message": "ऊँचाई बंद"
     },
-    "map-icon.relief.show": {
-      "message": "भूभाग का उतार-चढ़ाव दिखाएँ"
+    "map-icon.relief.raised": {
+      "message": "3D ऊँचाई"
     },
     "map-icon.terrain-smoothing": {
       "message": "भूभागों के बीच किनारे मुलायम करें"
@@ -2702,6 +2720,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "शुरुआती स्थानों के चिह्न नहीं"
     },
+    "map-icon.minimap-objects": {
+      "message": "मिनिमैप वस्तुएँ"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "वस्तुओं को छोटे वर्गों के रूप में दिखाता है, जैसे दर्शक मोड का मिनिमैप।"
+    },
     "map-icon.spawn-size": {
       "message": "शुरुआती स्थान के चिह्न का आकार"
     },
@@ -2719,6 +2743,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "शुरुआती स्थान के चिह्न का आकार (मानचित्र की चौड़ाई का %)"
+    },
+    "map-icon.town-center-size": {
+      "message": "नगर केंद्र के चिह्न का आकार"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "नगर केंद्र के चिह्न का आकार घटाएँ"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "नगर केंद्र के चिह्न का आकार बढ़ाएँ"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value}%"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "डिफ़ॉल्ट आकार का {value}%"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "नगर केंद्र के चिह्न का आकार (डिफ़ॉल्ट आकार का %)"
     },
     "map-icon.art.trees.show": {
       "message": "पेड़ दिखाएँ"
@@ -3437,6 +3479,15 @@
     "preview-panel.tool.objects": {
       "message": "वस्तुएँ और नगर केंद्र का क्षेत्र"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "मिनिमैप वस्तुएँ"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "वस्तुओं को छोटे वर्गों के रूप में दिखाता है, जैसे दर्शक मोड का मिनिमैप।"
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "वस्तुएँ बंद"
+    },
     "preview-panel.tool.cliffs": {
       "message": "चट्टान के किनारे"
     },
@@ -3466,6 +3517,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "भूभाग का उतार-चढ़ाव"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D ऊँचाई"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "ऊँचाई मानचित्र"
@@ -4624,6 +4678,45 @@
     },
     "release-check.newer.action": {
       "message": "रिलीज़ पेज खोलें"
+    },
+    "external-language-server.started.headline": {
+      "message": "{language} फ़ाइलों के लिए {server} का उपयोग हो रहा है"
+    },
+    "external-language-server.untested.cause": {
+      "message": "संस्करण {version} का AoE2RMSIDE के साथ परीक्षण नहीं हुआ है; इसकी ज्ञात समस्याओं से अब भी बचाव किया जाता है"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} उपयोग योग्य भाषा सर्वर नहीं है"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} ने काम करना बंद कर दिया"
+    },
+    "external-language-server.reason.start": {
+      "message": "प्रोग्राम शुरू नहीं हो सका"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "प्रोग्राम ने भाषा सर्वर की तरह शुरुआती हैंडशेक का जवाब नहीं दिया"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "प्रोग्राम के हैंडशेक जवाब में दस्तावेज़ अपडेट नहीं हैं या वह ऐसा स्थिति प्रारूप इस्तेमाल करता है जो AoE2RMSIDE नहीं देता"
+    },
+    "external-language-server.reason.exit": {
+      "message": "प्रोग्राम अप्रत्याशित रूप से बंद हो गया"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "प्रोग्राम ने अनुरोधों का समय पर जवाब देना बंद कर दिया"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "प्रोग्राम ने ऐसा संदेश भेजा जो मान्य भाषा सर्वर डेटा नहीं है"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE सर्वर को {seconds} सेकंड में फिर से शुरू करेगा ({limit} में से प्रयास {attempt}); तब तक अंतर्निहित विश्लेषण इस्तेमाल होता है} other {AoE2RMSIDE सर्वर को {seconds} सेकंड में फिर से शुरू करेगा ({limit} में से प्रयास {attempt}); तब तक अंतर्निहित विश्लेषण इस्तेमाल होता है}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "जब तक दृश्य > बाहरी भाषा सर्वर में सर्वर फिर से चालू नहीं किया जाता, तब तक {language} फ़ाइलों के लिए अंतर्निहित विश्लेषण इस्तेमाल होता है"
+    },
+    "external-language-server.action.not-used": {
+      "message": "{language} फ़ाइलों के लिए अंतर्निहित विश्लेषण इस्तेमाल होता है"
     }
   }
 }

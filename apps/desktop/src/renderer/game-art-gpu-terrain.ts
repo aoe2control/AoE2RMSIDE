@@ -24,18 +24,42 @@ import {
   type TerrainTileOverlay,
 } from './game-art-terrain';
 import { gameArtTextureRepeatTiles } from '../shared/game-art';
+import { raisedLightStrength, type ElevationSurface } from './preview-elevation';
+import {
+  EdgeMarks,
+  flatRunMesh,
+  markRaisedPieces,
+  markRuns,
+  markWalls,
+  quadIndices,
+  raisedLightCode,
+  raisedMesh,
+  raisedPieces,
+  raisedVertexWords,
+  tileRuns,
+  type RaisedPieces,
+  type TerrainMesh,
+} from './preview-raised-mesh';
+import {
+  raisedDepthBiasStep,
+  raisedFragmentCommon,
+  raisedLightSource,
+  raisedTerrainState,
+  raisedVertexCommon,
+  type RaisedTerrainUniforms,
+} from './preview-raised-terrain';
 import { requestPreviewRender } from './preview-render-scheduler';
 import type { VisibleChunk } from './top-down-preview';
 
 export type GpuTerrainDraw =
-  | { kind: 'solid'; color: number; quads: Int16Array }
-  | { kind: 'texture'; terrain: number; mask: number | null; quads: Int16Array }
+  | { kind: 'solid'; color: number; mesh: TerrainMesh }
+  | { kind: 'texture'; terrain: number; mask: number | null; mesh: TerrainMesh }
   | {
       kind: 'blend';
       terrain: number;
       mask: number | null;
       mode: number;
-      quads: Int16Array;
+      mesh: TerrainMesh;
     };
 
 export function planTerrainMap(
@@ -147,39 +171,9 @@ export function* planTerrainMapRows(
 
 export const plainVertexWords = 2;
 export const blendVertexWords = 8;
+export const raisedBlendVertexWords = 10;
 export const blendCellSlots = 8;
 export const noBlendCell = 255;
-
-function layerPoint(x: number, y: number): [number, number] {
-  return [x + y, y - x];
-}
-
-export function runQuads(tiles: readonly number[], width: number): Int16Array {
-  const runs: number[] = [];
-  for (let index = 0; index < tiles.length; index += 1) {
-    const tile = tiles[index]!;
-    const x = tile % width;
-    const y = (tile - x) / width;
-    const last = runs.length - 3;
-    if (last >= 0 && runs[last + 2] === y && runs[last + 1] === x) runs[last + 1] = x + 1;
-    else runs.push(x, x + 1, y);
-  }
-  const quads = new Int16Array((runs.length / 3) * 4 * plainVertexWords);
-  for (let run = 0, word = 0; run < runs.length; run += 3) {
-    const start = runs[run]!;
-    const end = runs[run + 1]!;
-    const y = runs[run + 2]!;
-    quads[word++] = start + y;
-    quads[word++] = y - start;
-    quads[word++] = end + y;
-    quads[word++] = y - end;
-    quads[word++] = end + y + 1;
-    quads[word++] = y + 1 - end;
-    quads[word++] = start + y + 1;
-    quads[word++] = y + 1 - start;
-  }
-  return quads;
-}
 
 export function blendCellCode(cell: number): number {
   const { row, column } = blendAtlasCell(cell);
@@ -190,21 +184,10 @@ export function blendQuads(
   quads: readonly { tile: number; cell: number }[],
   width: number,
 ): Int16Array {
-  const order: number[] = [];
-  const cellsByTile = new Map<number, number[]>();
-  for (const quad of quads) {
-    const cells = cellsByTile.get(quad.tile);
-    if (cells) cells.push(blendCellCode(quad.cell));
-    else {
-      cellsByTile.set(quad.tile, [blendCellCode(quad.cell)]);
-      order.push(quad.tile);
-    }
-  }
-  const data = new Int16Array(order.length * 4 * blendVertexWords);
+  const cellsByTile = groupCells(quads);
+  const data = new Int16Array(cellsByTile.size * 4 * blendVertexWords);
   const bytes = new Uint8Array(data.buffer);
-  for (const [index, tile] of order.entries()) {
-    const cells = cellsByTile.get(tile)!;
-    if (cells.length > blendCellSlots) throw new Error('too many transition quads on one tile');
+  for (const [index, [tile, cells]] of [...cellsByTile].entries()) {
     const x = tile % width;
     const y = (tile - x) / width;
     for (let corner = 0; corner < 4; corner += 1) {
@@ -224,6 +207,57 @@ export function blendQuads(
   return data;
 }
 
+function groupCells(quads: readonly { tile: number; cell: number }[]): Map<number, number[]> {
+  const cellsByTile = new Map<number, number[]>();
+  for (const quad of quads) {
+    const cells = cellsByTile.get(quad.tile);
+    if (cells) cells.push(blendCellCode(quad.cell));
+    else cellsByTile.set(quad.tile, [blendCellCode(quad.cell)]);
+  }
+  for (const cells of cellsByTile.values()) {
+    if (cells.length > blendCellSlots) throw new Error('too many transition quads on one tile');
+  }
+  return cellsByTile;
+}
+
+export function raisedBlendQuads(
+  quads: readonly { tile: number; cell: number }[],
+  surface: ElevationSurface,
+): Int16Array {
+  const width = surface.width;
+  const cellsByTile = groupCells(quads);
+  const data = new Int16Array(cellsByTile.size * 4 * raisedBlendVertexWords);
+  const bytes = new Uint8Array(data.buffer);
+  const flatCode = raisedLightCode(1);
+  let index = 0;
+  for (const [tile, cells] of cellsByTile) {
+    const x = tile % width;
+    const y = (tile - x) / width;
+    const order = surface.foldsTopBottom(tile) ? raisedTopBottomOrder : raisedLeftRightOrder;
+    for (let slot = 0; slot < 4; slot += 1) {
+      const corner = order[slot]!;
+      const cornerX = corner === 1 || corner === 2 ? 1 : 0;
+      const cornerY = corner >= 2 ? 1 : 0;
+      const word = (index * 4 + slot) * raisedBlendVertexWords;
+      data[word] = x + cornerX + y + cornerY;
+      data[word + 1] = y + cornerY - x - cornerX;
+      data[word + 2] = surface.corners[tile * 4 + corner]!;
+      data[word + 3] = flatCode;
+      const byte = word * 2;
+      bytes[byte + 8] = cornerX;
+      bytes[byte + 9] = cornerY;
+      for (let cell = 0; cell < blendCellSlots; cell += 1) {
+        bytes[byte + 12 + cell] = cells[cell] ?? noBlendCell;
+      }
+    }
+    index += 1;
+  }
+  return data;
+}
+
+const raisedLeftRightOrder = [0, 1, 2, 3] as const;
+const raisedTopBottomOrder = [1, 2, 3, 0] as const;
+
 export function blendVertex(
   data: Int16Array,
   vertex: number,
@@ -241,41 +275,73 @@ export function blendVertex(
 export function gpuTerrainDraws(
   plan: TerrainChunkPlan,
   sources: Pick<GameArtTerrainSources, 'terrains' | 'atlases'>,
+  surface: ElevationSurface | null = null,
 ): GpuTerrainDraw[] {
-  return [...gpuTerrainDrawSteps(plan, sources)];
+  return [...gpuTerrainDrawSteps(plan, sources, surface)];
+}
+
+function plainMeshes(
+  plan: TerrainChunkPlan,
+  lists: readonly { tiles: readonly number[]; walls: boolean }[],
+  surface: ElevationSurface | null,
+): (index: number) => TerrainMesh {
+  const marks = new EdgeMarks(plan.width, plan.height);
+  if (!surface) {
+    const runs = lists.map(({ tiles }) => tileRuns(tiles, plan.width));
+    for (const list of runs) markRuns(marks, list);
+    return (index) => flatRunMesh(runs[index]!, marks);
+  }
+  const pieces: RaisedPieces[] = lists.map(({ tiles, walls }) =>
+    raisedPieces(tiles, surface, walls),
+  );
+  for (const [index, list] of pieces.entries()) {
+    markRaisedPieces(marks, list, plan.width);
+    if (list.walls) markWalls(marks, lists[index]!.tiles, surface);
+  }
+  return (index) => raisedMesh(pieces[index]!, surface, marks, raisedLightStrength.gameTextures);
 }
 
 export function* gpuTerrainDrawSteps(
   plan: TerrainChunkPlan,
   sources: Pick<GameArtTerrainSources, 'terrains' | 'atlases'>,
+  surface: ElevationSurface | null = null,
 ): Generator<GpuTerrainDraw, void, void> {
+  type PlainDraw =
+    { kind: 'solid'; color: number } | { kind: 'texture'; terrain: number; mask: number | null };
+  const lists: { tiles: readonly number[]; walls: boolean; draw: PlainDraw }[] = [];
   for (const [color, tiles] of plan.fallback) {
-    yield { kind: 'solid', color, quads: runQuads(tiles, plan.width) };
+    lists.push({ tiles, walls: true, draw: { kind: 'solid', color } });
   }
   for (const [terrain, tiles] of plan.base) {
     if (!sources.terrains.get(terrain)?.texture) continue;
-    yield { kind: 'texture', terrain, mask: null, quads: runQuads(tiles, plan.width) };
+    lists.push({ tiles, walls: true, draw: { kind: 'texture', terrain, mask: null } });
   }
   for (const [layer, tiles] of plan.layers) {
     const source = sources.terrains.get(layer);
     if (!source?.texture || !source.overlayMask) continue;
-    yield {
-      kind: 'texture',
-      terrain: layer,
-      mask: layer,
-      quads: runQuads(tiles, plan.width),
-    };
+    lists.push({ tiles, walls: false, draw: { kind: 'texture', terrain: layer, mask: layer } });
+  }
+  const mesh = plainMeshes(plan, lists, surface);
+  for (const [index, list] of lists.entries()) {
+    yield { ...list.draw, mesh: mesh(index) };
   }
   for (const group of plan.blends) {
     const upper = sources.terrains.get(group.upper.terrain);
     if (!sources.atlases[group.mode] || !upper?.texture) continue;
-    const quads = blendQuads(group.quads, plan.width);
+    const vertices = surface
+      ? raisedBlendQuads(group.quads, surface)
+      : blendQuads(group.quads, plan.width);
+    const words = surface ? raisedBlendVertexWords : blendVertexWords;
+    const quads: TerrainMesh = {
+      vertices,
+      indices: quadIndices(vertices.length / (4 * words)),
+    };
     yield {
       kind: 'blend',
       terrain: group.upper.terrain,
       mask: null,
       mode: group.mode,
-      quads,
+      mesh: quads,
     };
     if (group.upper.layer !== noTerrainLayer) {
       const layered = sources.terrains.get(group.upper.layer);
@@ -285,7 +351,7 @@ export function* gpuTerrainDrawSteps(
           terrain: group.upper.layer,
           mask: group.upper.layer,
           mode: group.mode,
-          quads,
+          mesh: quads,
         };
       }
     }
@@ -319,13 +385,11 @@ export function mapShading(
 
 export function gpuTerrainDrawBytes(draws: readonly GpuTerrainDraw[]): number {
   let bytes = 0;
-  const counted = new Set<Int16Array>();
+  const counted = new Set<TerrainMesh>();
   for (const draw of draws) {
-    if (counted.has(draw.quads)) continue;
-    counted.add(draw.quads);
-    const words = draw.kind === 'blend' ? blendVertexWords : plainVertexWords;
-    const quadCount = draw.quads.length / (4 * words);
-    bytes += draw.quads.byteLength + quadCount * 6 * 4;
+    if (counted.has(draw.mesh)) continue;
+    counted.add(draw.mesh);
+    bytes += draw.mesh.vertices.byteLength + draw.mesh.indices.byteLength;
   }
   return bytes;
 }
@@ -467,8 +531,79 @@ void main() {${fragmentBody}
 }
 `;
 
+const raisedVertexHeader = `#version 300 es
+precision highp float;
+uniform mat3 uProjectionMatrix;
+uniform mat3 uWorldTransformMatrix;
+uniform mat3 uTransformMatrix;
+uniform float uDrawBias;
+out vec2 vMap;
+flat out float vCode;
+${raisedVertexCommon}
+`;
+
+const raisedVertexPosition = `
+  mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
+  vec2 local = vec2(aPosition.x, aPosition.y - aPosition.z);
+  gl_Position = vec4((mvp * vec3(local, 1.0)).xy, raisedDepthZ(aPosition.y + aPosition.z, uDrawBias), 1.0);
+  vMap = vec2(aPosition.x - aPosition.y, aPosition.x + aPosition.y) * 0.5;
+  vCode = aPosition.w;
+`;
+
+export const gpuRaisedTerrainPlainVertex = `${raisedVertexHeader}
+in vec4 aPosition;
+void main() {${raisedVertexPosition}}
+`;
+
+export const gpuRaisedTerrainBlendVertex = `${raisedVertexHeader}
+in vec4 aPosition;
+in vec4 aLocal;
+in vec4 aCells;
+in vec4 aMoreCells;
+out vec2 vLocal;
+flat out vec4 vCells;
+flat out vec4 vMoreCells;
+void main() {${raisedVertexPosition}
+  vLocal = aLocal.xy;
+  vCells = aCells;
+  vMoreCells = aMoreCells;
+}
+`;
+
+const raisedLit = `
+  float kind = raisedWallKind(vCode);
+  float light = kind > 0.5
+    ? raisedCodeLight(vCode)
+    : texture(uLight, (vMap + 0.5) / uLightSize).r * 2.0;
+  vec3 lit = raisedGridded(min(color.rgb * light, vec3(1.0)), vMap, kind);
+`;
+
+const raisedFragmentHeader = `flat in float vCode;
+uniform sampler2D uLight;
+uniform vec2 uLightSize;
+${raisedFragmentCommon}`;
+
+export const gpuRaisedTerrainPlainFragment = `${fragmentHeader}${raisedFragmentHeader}
+void main() {${fragmentBody}${raisedLit}
+  float alpha = color.a * uColor.a;
+  finalColor = vec4(lit * uColor.rgb * alpha, alpha);
+}
+`;
+
+export const gpuRaisedTerrainBlendFragment = gpuTerrainBlendFragment
+  .replace('in vec2 vLocal;', `${raisedFragmentHeader}\nin vec2 vLocal;`)
+  .replace(
+    `  float alpha = color.a * atlasAlpha() * uColor.a;
+  finalColor = vec4(color.rgb * uColor.rgb * alpha, alpha);`,
+    `${raisedLit}
+  float alpha = color.a * atlasAlpha() * uColor.a;
+  finalColor = vec4(lit * uColor.rgb * alpha, alpha);`,
+  );
+
 let plainProgram: GlProgram | null = null;
 let blendProgram: GlProgram | null = null;
+let raisedPlainProgram: GlProgram | null = null;
+let raisedBlendProgram: GlProgram | null = null;
 
 function programs(): { plain: GlProgram; blend: GlProgram } {
   plainProgram ??= GlProgram.from({
@@ -486,6 +621,22 @@ function programs(): { plain: GlProgram; blend: GlProgram } {
   return { plain: plainProgram, blend: blendProgram };
 }
 
+function raisedPrograms(): { plain: GlProgram; blend: GlProgram } {
+  raisedPlainProgram ??= GlProgram.from({
+    name: 'rmside-raised-terrain',
+    vertex: gpuRaisedTerrainPlainVertex,
+    fragment: gpuRaisedTerrainPlainFragment,
+    preferredFragmentPrecision: 'highp',
+  });
+  raisedBlendProgram ??= GlProgram.from({
+    name: 'rmside-raised-terrain-blend',
+    vertex: gpuRaisedTerrainBlendVertex,
+    fragment: gpuRaisedTerrainBlendFragment,
+    preferredFragmentPrecision: 'highp',
+  });
+  return { plain: raisedPlainProgram, blend: raisedBlendProgram };
+}
+
 export function gpuTextureSource(image: CanvasImageSource, repeat: boolean): TextureSource {
   const options = {
     autoGenerateMipmaps: true,
@@ -498,29 +649,39 @@ export function gpuTextureSource(image: CanvasImageSource, repeat: boolean): Tex
     : new CanvasSource({ resource: image as HTMLCanvasElement, ...options });
 }
 
-function quadIndices(quadCount: number): Uint32Array {
-  const indices = new Uint32Array(quadCount * 6);
-  for (let quad = 0; quad < quadCount; quad += 1) {
-    const vertex = quad * 4;
-    indices.set([vertex, vertex + 1, vertex + 2, vertex, vertex + 2, vertex + 3], quad * 6);
-  }
-  return indices;
-}
+type DrawLayout = 'plain' | 'blend' | 'raised-plain' | 'raised-blend';
 
-function drawGeometry(quads: Int16Array, words: number): Geometry {
-  const buffer = new Buffer({ data: quads, usage: BufferUsage.VERTEX });
-  const stride = words * 2;
+function drawGeometry(mesh: TerrainMesh, layout: DrawLayout): Geometry {
+  const buffer = new Buffer({ data: mesh.vertices, usage: BufferUsage.VERTEX });
+  const attributes = {
+    plain: () => ({
+      aPosition: { buffer, format: 'sint16x2', stride: plainVertexWords * 2, offset: 0 },
+    }),
+    blend: () => {
+      const stride = blendVertexWords * 2;
+      return {
+        aPosition: { buffer, format: 'sint16x2', stride, offset: 0 },
+        aLocal: { buffer, format: 'uint8x4', stride, offset: 4 },
+        aCells: { buffer, format: 'uint8x4', stride, offset: 8 },
+        aMoreCells: { buffer, format: 'uint8x4', stride, offset: 12 },
+      };
+    },
+    'raised-plain': () => ({
+      aPosition: { buffer, format: 'sint16x4', stride: raisedVertexWords * 2, offset: 0 },
+    }),
+    'raised-blend': () => {
+      const stride = raisedBlendVertexWords * 2;
+      return {
+        aPosition: { buffer, format: 'sint16x4', stride, offset: 0 },
+        aLocal: { buffer, format: 'uint8x4', stride, offset: 8 },
+        aCells: { buffer, format: 'uint8x4', stride, offset: 12 },
+        aMoreCells: { buffer, format: 'uint8x4', stride, offset: 16 },
+      };
+    },
+  }[layout]();
   return new Geometry({
-    attributes:
-      words === blendVertexWords
-        ? {
-            aPosition: { buffer, format: 'sint16x2', stride, offset: 0 },
-            aLocal: { buffer, format: 'uint8x4', stride, offset: 4 },
-            aCells: { buffer, format: 'uint8x4', stride, offset: 8 },
-            aMoreCells: { buffer, format: 'uint8x4', stride, offset: 12 },
-          }
-        : { aPosition: { buffer, format: 'sint16x2', stride, offset: 0 } },
-    indexBuffer: quadIndices(quads.length / (4 * words)),
+    attributes: attributes as NonNullable<ConstructorParameters<typeof Geometry>[0]>['attributes'],
+    indexBuffer: mesh.indices,
   });
 }
 
@@ -544,11 +705,15 @@ export class GameArtGpuTerrainLayer {
     totalRasterMilliseconds: 0,
   };
   drawCount = 0;
+  raisedQuads = 0;
+  raisedWallQuads = 0;
   private readonly planner: Generator<number, TerrainChunkPlan, void>;
   private draws: Generator<GpuTerrainDraw, void, void> | null = null;
-  private readonly geometryByQuads = new Map<Int16Array, Geometry>();
+  private readonly geometryByMesh = new Map<TerrainMesh, Geometry>();
   private frame: number | null = null;
   private readonly glPrograms: { plain: GlProgram; blend: GlProgram };
+  private readonly lightSource: TextureSource | null = null;
+  private drawIndex = 0;
 
   constructor(
     private readonly scene: GameArtTerrainScene,
@@ -556,16 +721,40 @@ export class GameArtGpuTerrainLayer {
     private readonly overlay: TerrainTileOverlay | null,
     private readonly onChange: () => void,
     private readonly onPresented: () => void = () => undefined,
+    private readonly raised: {
+      surface: ElevationSurface;
+      uniforms: RaisedTerrainUniforms;
+    } | null = null,
   ) {
     this.container.eventMode = 'none';
     this.container.visible = false;
-    this.glPrograms = programs();
+    this.glPrograms = raised ? raisedPrograms() : programs();
     this.planner = planTerrainMapRows(scene, terrainSources.terrains, (mode) =>
       Boolean(terrainSources.atlases[mode]),
     );
+    if (raised) {
+      this.lightSource = raisedLightSource(raised.surface, raisedLightStrength.gameTextures);
+      this.statistics.textureBytes += (scene.width + 1) * (scene.height + 1) * 4;
+    }
+  }
+
+  get raisedOverlayBias(): number {
+    return (this.drawIndex + 16) * raisedDepthBiasStep;
   }
 
   private terrainUniforms(kind: number, useMask: boolean, color: number) {
+    if (this.raised) {
+      this.drawIndex += 1;
+      return {
+        ...this.flatUniforms(kind, useMask, color),
+        uDrawBias: { value: this.drawIndex * raisedDepthBiasStep, type: 'f32' },
+        uLightSize: { value: [this.scene.width + 1, this.scene.height + 1], type: 'vec2<f32>' },
+      };
+    }
+    return this.flatUniforms(kind, useMask, color);
+  }
+
+  private flatUniforms(kind: number, useMask: boolean, color: number) {
     return {
       uKind: { value: kind, type: 'f32' },
       uUseMask: { value: useMask ? 1 : 0, type: 'f32' },
@@ -581,7 +770,9 @@ export class GameArtGpuTerrainLayer {
 
   private addMesh(geometry: Geometry, shader: Shader): void {
     this.shaders.push(shader);
-    const mesh = new Mesh({ geometry, shader });
+    const mesh = this.raised
+      ? new Mesh({ geometry, shader, state: raisedTerrainState(this.raised.surface.hasSteps) })
+      : new Mesh({ geometry, shader });
     mesh.eventMode = 'none';
     this.container.addChild(mesh);
   }
@@ -603,6 +794,9 @@ export class GameArtGpuTerrainLayer {
         ...(draw.kind === 'blend'
           ? { uAtlas: atlas ? this.source(atlas, false) : Texture.WHITE.source }
           : {}),
+        ...(this.raised && this.lightSource
+          ? { uLight: this.lightSource, raisedUniforms: this.raised.uniforms.group }
+          : {}),
         terrainUniforms: this.terrainUniforms(
           draw.kind === 'solid' ? gpuTerrainKinds.solid : gpuTerrainKinds.texture,
           Boolean(mask),
@@ -610,20 +804,30 @@ export class GameArtGpuTerrainLayer {
         ),
       },
     });
-    let geometry = this.geometryByQuads.get(draw.quads);
+    let geometry = this.geometryByMesh.get(draw.mesh);
     if (!geometry) {
-      geometry = drawGeometry(
-        draw.quads,
-        draw.kind === 'blend' ? blendVertexWords : plainVertexWords,
-      );
-      this.geometryByQuads.set(draw.quads, geometry);
+      const layout: DrawLayout = this.raised
+        ? draw.kind === 'blend'
+          ? 'raised-blend'
+          : 'raised-plain'
+        : draw.kind === 'blend'
+          ? 'blend'
+          : 'plain';
+      geometry = drawGeometry(draw.mesh, layout);
+      this.geometryByMesh.set(draw.mesh, geometry);
       this.geometries.push(geometry);
       this.statistics.textureBytes += gpuTerrainDrawBytes([draw]);
+      if (this.raised && draw.kind !== 'blend') {
+        const counted = draw.mesh as TerrainMesh & { quads?: number; wallQuads?: number };
+        this.raisedQuads += counted.quads ?? 0;
+        this.raisedWallQuads += counted.wallQuads ?? 0;
+      }
     }
     this.addMesh(geometry, shader);
   }
 
   private addShading(): void {
+    if (this.raised) return;
     const shading = this.overlay ? mapShading(this.scene, this.overlay) : null;
     if (!shading) return;
     this.shadingSource = new BufferImageSource({
@@ -638,12 +842,16 @@ export class GameArtGpuTerrainLayer {
     this.statistics.textureBytes += shading.pixels.byteLength;
     const { width, height } = this.scene;
     const corners = new Int16Array([
-      ...layerPoint(0, 0),
-      ...layerPoint(width, 0),
-      ...layerPoint(width, height),
-      ...layerPoint(0, height),
+      0,
+      0,
+      width,
+      -width,
+      width + height,
+      height - width,
+      height,
+      height,
     ]);
-    const geometry = drawGeometry(corners, plainVertexWords);
+    const geometry = drawGeometry({ vertices: corners, indices: quadIndices(1) }, 'plain');
     this.geometries.push(geometry);
     this.addMesh(
       geometry,
@@ -696,7 +904,13 @@ export class GameArtGpuTerrainLayer {
     while (!spent()) {
       if (!this.draws) {
         const step = this.planner.next();
-        if (step.done) this.draws = gpuTerrainDrawSteps(step.value, this.terrainSources);
+        if (step.done) {
+          this.draws = gpuTerrainDrawSteps(
+            step.value,
+            this.terrainSources,
+            this.raised?.surface ?? null,
+          );
+        }
         continue;
       }
       const draw = this.draws.next();
@@ -739,5 +953,6 @@ export class GameArtGpuTerrainLayer {
     this.sources.clear();
     this.shadingSource?.destroy();
     this.shadingSource = null;
+    this.lightSource?.destroy();
   }
 }

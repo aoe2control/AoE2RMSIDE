@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Externí jazykové servery"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} pro {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Používat externí jazykový server"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Doplňovat mezery vestavěnými znalostmi"
+    },
     "app-menu.view.language": {
       "message": "Jazyk…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Uložit obrázek…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Generování ikony mapy"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Ikona mapy: čekání na náhled nasazení"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Ikona mapy: vygenerována z aktuálního náhledu"
     },
     "map-icon.status.generated-replacing": {
       "message": "Ikona mapy: vygenerovaný soubor {file} nahradí původní ikonu pouze v této nasazené kopii"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Reliéf terénu"
     },
-    "map-icon.relief.hide": {
-      "message": "Skrýt reliéf terénu"
+    "map-icon.relief.off": {
+      "message": "Vyvýšení vypnuto"
     },
-    "map-icon.relief.show": {
-      "message": "Zobrazit reliéf terénu"
+    "map-icon.relief.raised": {
+      "message": "3D vyvýšení"
     },
     "map-icon.terrain-smoothing": {
       "message": "Vyhladit přechody terénu"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Bez značek startů"
     },
+    "map-icon.minimap-objects": {
+      "message": "Objekty minimapy"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Zobrazuje objekty jako malé čtverce, podobně jako minimapa v diváckém režimu."
+    },
     "map-icon.spawn-size": {
       "message": "Velikost značek startů"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Velikost značek startů (% šířky mapy)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Velikost značek městského centra"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Zmenšit značky městského centra"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Zvětšit značky městského centra"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value} % výchozí velikosti"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Velikost značek městského centra (% výchozí velikosti)"
     },
     "map-icon.art.trees.show": {
       "message": "Zobrazit stromy"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Objekty a půdorys městského centra"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Objekty minimapy"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Zobrazuje objekty jako malé čtverce, podobně jako minimapa v diváckém režimu."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Objekty vypnuty"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Hrany útesů"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Reliéf terénu"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "3D vyvýšení"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Výšková mapa"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Otevřít stránku s vydáními"
+    },
+    "external-language-server.started.headline": {
+      "message": "Pro soubory {language} se používá {server}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "Verze {version} nebyla s AoE2RMSIDE testována; její známé problémy se nadále obcházejí"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} není použitelný jazykový server"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} přestal fungovat"
+    },
+    "external-language-server.reason.start": {
+      "message": "Program se nepodařilo spustit"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Program neodpověděl na úvodní handshake jako jazykový server"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "Odpověď programu na handshake neobsahuje aktualizace dokumentů nebo používá formát pozic, který AoE2RMSIDE nenabízí"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Program se neočekávaně ukončil"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Program přestal včas odpovídat na požadavky"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Program odeslal zprávu, která neobsahuje platná data jazykového serveru"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE server znovu spustí za {seconds} sekundu (pokus {attempt} z {limit}); mezitím se používá vestavěná analýza} few {AoE2RMSIDE server znovu spustí za {seconds} sekundy (pokus {attempt} z {limit}); mezitím se používá vestavěná analýza} many {AoE2RMSIDE server znovu spustí za {seconds} sekundy (pokus {attempt} z {limit}); mezitím se používá vestavěná analýza} other {AoE2RMSIDE server znovu spustí za {seconds} sekund (pokus {attempt} z {limit}); mezitím se používá vestavěná analýza}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Pro soubory {language} se používá vestavěná analýza, dokud server znovu nezapnete v nabídce Zobrazení > Externí jazykové servery"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Pro soubory {language} se používá vestavěná analýza"
     }
   }
 }

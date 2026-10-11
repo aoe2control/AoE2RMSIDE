@@ -8,21 +8,35 @@ import type { TeamColor } from './game-art-team-colors';
 import { GameArtTerrainLayer } from './game-art-terrain';
 import type { GpuMapUnavailableReason, MapRenderer } from './gpu-map-rendering';
 import {
+  heightMapObjectLightAt,
+  lightTint,
   terrainElevationOverlay,
   type ElevationDisplayMode,
   type ElevationRange,
 } from './preview-terrain-mesh';
 import type { TopDownScene } from './top-down-preview';
+import type { ElevationSurface } from './preview-elevation';
+import type { RaisedTerrainUniforms } from './preview-raised-terrain';
 import type { GameArtCliffView, GameArtSpriteView, GameArtTerrainView } from './use-game-art';
 
 export type GameArtTerrainPicture = GameArtTerrainLayer | GameArtGpuTerrainLayer;
+
+export interface GameArtPictureRaised {
+  surface: ElevationSurface;
+  uniforms: RaisedTerrainUniforms;
+  overlayBias(): number;
+}
 
 export interface GameArtLayerCache {
   container: Container;
   chunks: ReadonlyMap<string, { container: Container }>;
   scene: TopDownScene;
   elevationRange: ElevationRange;
-  gameArtTerrain: { view: GameArtTerrainView; layer: GameArtTerrainPicture } | null;
+  gameArtTerrain: {
+    view: GameArtTerrainView;
+    layer: GameArtTerrainPicture;
+    raised?: GameArtPictureRaised | null;
+  } | null;
   gameArtSprites: { view: GameArtSpriteView; layer: GameArtSpriteLayer } | null;
   gameArtStore: { bytes: number } | null;
   gameArtCliffs: { view: GameArtCliffView; layer: GameArtCliffBandLayer } | null;
@@ -32,6 +46,7 @@ export interface GameArtLayerCache {
 interface OutgoingPicture {
   root: Container;
   layers: PictureLayer[];
+  raised: GameArtPictureRaised | null;
 }
 
 interface PictureLayer {
@@ -70,23 +85,36 @@ export interface GameArtLayerInputs {
   onGpuUnavailable?(reason: GpuMapUnavailableReason): void;
   host: HTMLElement;
   onPresented(): void;
+  raised?: { surface: ElevationSurface; uniforms: RaisedTerrainUniforms } | null;
 }
 
 const outgoingZIndex = 0.5;
 
-function moveToOutgoing(cache: GameArtLayerCache, layers: PictureLayer[]): void {
+function moveToOutgoing(
+  cache: GameArtLayerCache,
+  layers: PictureLayer[],
+  raised: GameArtPictureRaised | null,
+): void {
   const state = cache.gameArtPresentation;
   if (!state.outgoing) {
     const root = new Container({ label: 'game-textures-previous', sortableChildren: true });
     root.eventMode = 'none';
     root.zIndex = outgoingZIndex;
     cache.container.addChild(root);
-    state.outgoing = { root, layers: [] };
+    state.outgoing = { root, layers: [], raised };
   }
   for (const layer of layers) {
     state.outgoing.root.addChild(layer.container);
     state.outgoing.layers.push(layer);
   }
+  state.outgoing.raised = raised;
+}
+
+export function gameArtStandIn(
+  cache: GameArtLayerCache,
+): { raised: GameArtPictureRaised | null } | null {
+  const outgoing = cache.gameArtPresentation.outgoing;
+  return outgoing ? { raised: outgoing.raised } : null;
 }
 
 function destroyOutgoing(state: GameArtPresentationState): void {
@@ -127,6 +155,18 @@ export function setGameArtTreeScale(cache: GameArtLayerCache, factor: number): v
   cache.gameArtSprites?.layer.setTreeScale(factor);
 }
 
+export function gameArtMarkerSkips(cache: GameArtLayerCache): {
+  spriteObjects: ReadonlySet<number> | undefined;
+  awaitingPresentation: boolean;
+} {
+  const sprites = cache.gameArtSprites?.layer;
+  if (!sprites) return { spriteObjects: undefined, awaitingPresentation: false };
+  if (cache.gameArtPresentation.minimapHidden) {
+    return { spriteObjects: sprites.presentedObjects, awaitingPresentation: false };
+  }
+  return { spriteObjects: undefined, awaitingPresentation: true };
+}
+
 export function applyMinimapChunkVisibility(cache: GameArtLayerCache, expected: boolean): void {
   const state = cache.gameArtPresentation;
   const hidden =
@@ -147,7 +187,7 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
       const kept: PictureLayer[] = [current.layer];
       if (cache.gameArtSprites) kept.push(cache.gameArtSprites.layer);
       if (cache.gameArtCliffs) kept.push(cache.gameArtCliffs.layer);
-      moveToOutgoing(cache, kept);
+      moveToOutgoing(cache, kept, current.raised ?? null);
       cache.gameArtSprites = null;
       cache.gameArtCliffs = null;
     } else {
@@ -177,13 +217,23 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
   }
   if (!cache.gameArtSprites && inputs.sprites) {
     const view = inputs.sprites;
+    const raised = renderer === 'gpu' ? inputs.raised : null;
     const layer = new GameArtSpriteLayer(
       view.plan,
       view.set,
       view.store,
       inputs.teamColor,
       renderer === 'gpu',
-      inputs.maximumTextureSize ? { maximumTextureSize: inputs.maximumTextureSize } : {},
+      {
+        ...(inputs.maximumTextureSize ? { maximumTextureSize: inputs.maximumTextureSize } : {}),
+        ...(raised ? { heightAt: (x: number, y: number) => raised.surface.heightAt(x, y) } : {}),
+        ...(inputs.elevation.elevationMode === 'height-map'
+          ? {
+              objectTintAt: (x: number, y: number) =>
+                lightTint(heightMapObjectLightAt(cache.scene, x, y, cache.elevationRange)),
+            }
+          : {}),
+      },
     );
     cache.gameArtSprites = { view, layer };
     cache.container.addChild(layer.container);
@@ -209,6 +259,7 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
       requestPreviewRender(cache.container);
     };
     let layer: GameArtTerrainPicture | null = null;
+    let raised: GameArtPictureRaised | null = null;
     const onPresented = () => {
       if (!layer || cache.gameArtTerrain?.layer !== layer) return;
       destroyOutgoing(state);
@@ -220,13 +271,22 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
     };
     if (renderer === 'gpu') {
       try {
-        layer = new GameArtGpuTerrainLayer(
+        const gpu = new GameArtGpuTerrainLayer(
           terrainScene,
           view.sources,
           overlay,
           onChange,
           onPresented,
+          inputs.raised ?? null,
         );
+        layer = gpu;
+        if (inputs.raised) {
+          raised = {
+            surface: inputs.raised.surface,
+            uniforms: inputs.raised.uniforms,
+            overlayBias: () => gpu.raisedOverlayBias,
+          };
+        }
       } catch {
         layer = null;
         inputs.onGpuUnavailable?.('layer-failed');
@@ -241,7 +301,7 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
       onPresented,
     );
     layer.container.zIndex = 1;
-    cache.gameArtTerrain = { view, layer };
+    cache.gameArtTerrain = { view, layer, raised };
     cache.container.addChild(layer.container);
   }
   applyKindVisibility(cache);
@@ -254,6 +314,7 @@ export function handOverGameArtPicture(from: GameArtLayerCache, to: GameArtLayer
   const outgoing = from.gameArtPresentation.outgoing;
   const presented = from.gameArtTerrain?.layer.presented ?? false;
   if (!presented && !outgoing) return;
+  let raised: GameArtPictureRaised | null = outgoing?.raised ?? null;
   if (outgoing) {
     from.gameArtPresentation.outgoing = null;
     layers.push(...outgoing.layers);
@@ -261,6 +322,7 @@ export function handOverGameArtPicture(from: GameArtLayerCache, to: GameArtLayer
     outgoing.root.destroy();
   }
   if (presented && from.gameArtTerrain) {
+    raised = from.gameArtTerrain.raised ?? null;
     layers.push(from.gameArtTerrain.layer);
     if (from.gameArtSprites) layers.push(from.gameArtSprites.layer);
     if (from.gameArtCliffs) layers.push(from.gameArtCliffs.layer);
@@ -268,7 +330,7 @@ export function handOverGameArtPicture(from: GameArtLayerCache, to: GameArtLayer
     from.gameArtSprites = null;
     from.gameArtCliffs = null;
   }
-  moveToOutgoing(to, layers);
+  moveToOutgoing(to, layers, raised);
 }
 
 export function destroyGameArtLayers(cache: GameArtLayerCache): void {
@@ -305,10 +367,19 @@ export function writeGameArtDataset(cache: GameArtLayerCache, host: HTMLElement)
     delete host.dataset.gameArtRasterMilliseconds;
     delete host.dataset.gameArtPresented;
     delete host.dataset.gameArtDraws;
+    delete host.dataset.gameArtRaisedQuads;
+    delete host.dataset.gameArtRaisedWalls;
   } else {
     host.dataset.gameArtChunks = String(terrain.statistics.rasterizedChunks);
     if (terrain.renderer === 'gpu') host.dataset.gameArtDraws = String(terrain.drawCount);
     else delete host.dataset.gameArtDraws;
+    if (terrain.renderer === 'gpu' && terrain.raisedQuads + terrain.raisedWallQuads > 0) {
+      host.dataset.gameArtRaisedQuads = String(terrain.raisedQuads);
+      host.dataset.gameArtRaisedWalls = String(terrain.raisedWallQuads);
+    } else {
+      delete host.dataset.gameArtRaisedQuads;
+      delete host.dataset.gameArtRaisedWalls;
+    }
     host.dataset.gameArtPendingChunks = String(terrain.statistics.pendingChunks);
     host.dataset.gameArtFailedChunks = String(terrain.statistics.failedChunks);
     host.dataset.gameArtChunkBytes = String(terrain.statistics.textureBytes);

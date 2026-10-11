@@ -6,9 +6,11 @@ import {
   isMapIconArtDensity,
   isMapIconArtDensityV8,
   isMapIconArtSize,
+  isMapIconRelief,
   isMapIconSpawnMarkerSizePercent,
   isMapIconSpawnMarkerStyle,
   migrateMapIconArtDensityV8,
+  migrateMapIconReliefV12,
   migrateMapIconSpawnMarkersV9,
   mapIconPerspectives,
   mapIconRenderLooks,
@@ -17,6 +19,7 @@ import {
   type DesktopSessionTab,
   type InstalledSourceOriginFilter,
   type MapIconPerspective,
+  type MapIconRelief,
   type MapIconRenderInput,
   type MapIconRenderLook,
   type MapIconSpawnMarkerStyle,
@@ -66,7 +69,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   previewSmallTrees: false,
   gameTexturesFirstLinkApplied: false,
   gameTexturesFirstLinkInstallations: [],
-  mapIconRelief: defaultMapIconRenderInput.relief,
+  mapIconReliefMode: defaultMapIconRenderInput.relief,
   mapIconTerrainSmoothing: defaultMapIconRenderInput.terrainSmoothing,
   mapIconSpawnMarkerStyle: defaultMapIconRenderInput.spawnMarkers,
   mapIconSpawnMarkerSizePercent: defaultMapIconRenderInput.spawnMarkerSizePercent,
@@ -80,6 +83,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   mapIconResourceDensityLevel: defaultMapIconRenderInput.resourceDensity,
   mapIconResourceSize: defaultMapIconRenderInput.resourceSize,
   mapIconResourceSpawnOverlap: defaultMapIconRenderInput.resourceSpawnOverlap,
+  mapIconMinimapObjects: defaultMapIconRenderInput.minimapObjects,
   window: { bounds: null, maximized: false, display: null },
   layout: {
     explorerExpanded: true,
@@ -230,7 +234,7 @@ export class DesktopSessionStore {
   updateMapIconRenderInput(input: MapIconRenderInput): Promise<void> {
     return this.update((session) => ({
       ...session,
-      mapIconRelief: input.relief,
+      mapIconReliefMode: input.relief,
       mapIconTerrainSmoothing: input.terrainSmoothing,
       mapIconSpawnMarkerStyle: input.spawnMarkers,
       mapIconSpawnMarkerSizePercent: input.spawnMarkerSizePercent,
@@ -244,6 +248,7 @@ export class DesktopSessionStore {
       mapIconResourceDensityLevel: input.resourceDensity,
       mapIconResourceSize: input.resourceSize,
       mapIconResourceSpawnOverlap: input.resourceSpawnOverlap,
+      mapIconMinimapObjects: input.minimapObjects,
     }));
   }
 
@@ -307,7 +312,7 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     previewSmallTrees: false,
     gameTexturesFirstLinkApplied: false,
     gameTexturesFirstLinkInstallations: [],
-    mapIconRelief: defaultMapIconRenderInput.relief,
+    mapIconReliefMode: defaultMapIconRenderInput.relief,
     mapIconTerrainSmoothing: defaultMapIconRenderInput.terrainSmoothing,
     mapIconSpawnMarkerStyle: defaultMapIconRenderInput.spawnMarkers,
     mapIconSpawnMarkerSizePercent: defaultMapIconRenderInput.spawnMarkerSizePercent,
@@ -321,6 +326,7 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     mapIconResourceDensityLevel: defaultMapIconRenderInput.resourceDensity,
     mapIconResourceSize: defaultMapIconRenderInput.resourceSize,
     mapIconResourceSpawnOverlap: defaultMapIconRenderInput.resourceSpawnOverlap,
+    mapIconMinimapObjects: defaultMapIconRenderInput.minimapObjects,
     window: { bounds: null, maximized: false, display: null },
     layout: {
       explorerExpanded: true,
@@ -417,10 +423,7 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.gameTexturesFirstLinkInstallations === undefined
         ? []
         : validateInstallationIdentities(value.gameTexturesFirstLinkInstallations),
-    mapIconRelief:
-      value.mapIconRelief === undefined
-        ? defaultMapIconRenderInput.relief
-        : validateBoolean(value.mapIconRelief, 'map-icon relief preference'),
+    mapIconReliefMode: optionalMapIconRelief(value.mapIconReliefMode, value.mapIconRelief),
     mapIconTerrainSmoothing:
       value.mapIconTerrainSmoothing === undefined
         ? defaultMapIconRenderInput.terrainSmoothing
@@ -478,6 +481,11 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.mapIconResourceSpawnOverlap,
       defaultMapIconRenderInput.resourceSpawnOverlap,
       'gold and stone spawn overlap',
+    ),
+    mapIconMinimapObjects: optionalBoolean(
+      value.mapIconMinimapObjects,
+      defaultMapIconRenderInput.minimapObjects,
+      'minimap objects',
     ),
     window: {
       bounds: value.window.bounds === null ? null : validateWindowBounds(value.window.bounds),
@@ -754,6 +762,15 @@ function optionalSpawnMarkerStyle(value: unknown, legacy: unknown): MapIconSpawn
   }
   if (legacy === undefined) return defaultMapIconRenderInput.spawnMarkers;
   return migrateMapIconSpawnMarkersV9(validateBoolean(legacy, 'map-icon spawn marker preference'));
+}
+
+function optionalMapIconRelief(value: unknown, legacy: unknown): MapIconRelief {
+  if (value !== undefined) {
+    if (!isMapIconRelief(value)) throw new Error('map-icon relief preference is invalid');
+    return value;
+  }
+  if (legacy === undefined) return defaultMapIconRenderInput.relief;
+  return migrateMapIconReliefV12(validateBoolean(legacy, 'map-icon relief preference'));
 }
 
 function validateSpawnMarkerSizePercent(value: unknown): number {

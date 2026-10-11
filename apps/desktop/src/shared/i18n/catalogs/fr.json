@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Serveurs de langage externes"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} pour {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Utiliser le serveur de langage externe"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Compléter avec le savoir intégré"
+    },
     "app-menu.view.language": {
       "message": "Langue…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Enregistrer l’image…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} px"
+    },
     "map-icon.frame.generating": {
       "message": "Génération de l’icône de carte"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Icône de carte : en attente de l’aperçu du déploiement"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Icône de carte : générée à partir de l’aperçu actuel"
     },
     "map-icon.status.generated-replacing": {
       "message": "Icône de carte : {file} généré, remplace l’original uniquement dans cette copie déployée"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Relief du terrain"
     },
-    "map-icon.relief.hide": {
-      "message": "Masquer le relief du terrain"
+    "map-icon.relief.off": {
+      "message": "Élévation masquée"
     },
-    "map-icon.relief.show": {
-      "message": "Afficher le relief du terrain"
+    "map-icon.relief.raised": {
+      "message": "Élévation 3D"
     },
     "map-icon.terrain-smoothing": {
       "message": "Adoucir les transitions entre terrains"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Aucun repère de départ"
     },
+    "map-icon.minimap-objects": {
+      "message": "Objets de la mini-carte"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Affiche les objets sous forme de petits carrés, comme la mini-carte du mode spectateur."
+    },
     "map-icon.spawn-size": {
       "message": "Taille des repères de départ"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Taille des repères de départ (% de la largeur de la carte)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Taille des repères de forum"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Réduire la taille des repères de forum"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Augmenter la taille des repères de forum"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value} % de la taille par défaut"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Taille des repères de forum (% de la taille par défaut)"
     },
     "map-icon.art.trees.show": {
       "message": "Afficher les arbres"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Objets et emprise du forum"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Objets de la mini-carte"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Affiche les objets sous forme de petits carrés, comme la mini-carte du mode spectateur."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Objets masqués"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Bords des falaises"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Relief du terrain"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "Élévation 3D"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Carte des hauteurs"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Ouvrir la page des versions"
+    },
+    "external-language-server.started.headline": {
+      "message": "{server} est utilisé pour les fichiers {language}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "La version {version} n’a pas été testée avec AoE2RMSIDE ; ses problèmes connus sont toujours contournés"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} n’est pas un serveur de langage utilisable"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} a cessé de fonctionner"
+    },
+    "external-language-server.reason.start": {
+      "message": "Le programme n’a pas pu être démarré"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Le programme n’a pas répondu à la négociation initiale comme un serveur de langage"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "La réponse du programme à la négociation ne prévoit pas les mises à jour de documents ou utilise un format de position qu’AoE2RMSIDE ne propose pas"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Le programme s’est arrêté de manière inattendue"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Le programme a cessé de répondre à temps aux requêtes"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Le programme a envoyé un message qui ne contient pas de données valides de serveur de langage"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE le redémarre dans {seconds} seconde (tentative {attempt} sur {limit}) ; en attendant, l’analyse intégrée est utilisée} many {AoE2RMSIDE le redémarre dans {seconds} secondes (tentative {attempt} sur {limit}) ; en attendant, l’analyse intégrée est utilisée} other {AoE2RMSIDE le redémarre dans {seconds} secondes (tentative {attempt} sur {limit}) ; en attendant, l’analyse intégrée est utilisée}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "L’analyse intégrée est utilisée pour les fichiers {language} jusqu’à ce que le serveur soit réactivé dans Affichage > Serveurs de langage externes"
+    },
+    "external-language-server.action.not-used": {
+      "message": "L’analyse intégrée est utilisée pour les fichiers {language}"
     }
   }
 }

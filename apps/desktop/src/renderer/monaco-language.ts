@@ -34,7 +34,7 @@ import {
   type LspCompletionItem,
   type LspCompletionList,
 } from './completion-filter';
-import { relatedLocationsFromLsp } from './diagnostic-related';
+import { markerSource, relatedLocationsFromLsp } from './diagnostic-related';
 import {
   localContentNameAvailability,
   lspCompletionContext,
@@ -272,20 +272,16 @@ export function configureRmsLanguage(): void {
         ...toMonacoRange(diagnostic.range),
         severity: markerSeverity(diagnostic.severity),
         code: diagnostic.code === undefined ? undefined : String(diagnostic.code),
-        source: 'rms-ls',
+        source: markerSource(
+          diagnostic as { source?: unknown },
+          model.getLanguageId() === 'starlark' ? 'rms-test' : 'rms-ls',
+        ),
         message: diagnostic.message,
         ...(tags.length > 0 ? { tags } : {}),
         ...(related.length > 0 ? { relatedInformation: related } : {}),
       };
     });
-    monaco.editor.setModelMarkers(
-      model,
-      markerOwner(model.getLanguageId()),
-      markers.map((marker) => ({
-        ...marker,
-        source: model.getLanguageId() === 'starlark' ? 'rms-test' : 'rms-ls',
-      })),
-    );
+    monaco.editor.setModelMarkers(model, markerOwner(model.getLanguageId()), markers);
     if (model.getLanguageId() === 'xs') xsInlayHintsChanged.fire();
     languageAnswersChanged.fire();
   });

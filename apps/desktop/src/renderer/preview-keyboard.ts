@@ -1,6 +1,6 @@
 import {
-  mapToScreen,
   panPreviewCamera,
+  raisedMapToScreen,
   selectionTileCount,
   type MapPoint,
   type PreviewCamera,
@@ -137,9 +137,11 @@ export function cameraRevealingTile(
   mapHeight: number,
   viewport: PreviewViewport,
   margin = 32,
+  height = 0,
 ): PreviewCamera | null {
-  const point = mapToScreen(
+  const point = raisedMapToScreen(
     { x: tile.x + 0.5, y: tile.y + 0.5 },
+    height,
     mapWidth,
     mapHeight,
     camera,

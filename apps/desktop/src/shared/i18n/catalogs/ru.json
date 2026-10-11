@@ -138,6 +138,18 @@
     "app-menu.view.lint-rule": {
       "message": "{title} ({code})"
     },
+    "app-menu.view.external-language-servers": {
+      "message": "Внешние языковые серверы"
+    },
+    "app-menu.view.external-language-server.name": {
+      "message": "{server} для {language}"
+    },
+    "app-menu.view.external-language-server.use": {
+      "message": "Использовать внешний языковой сервер"
+    },
+    "app-menu.view.external-language-server.fill-gaps": {
+      "message": "Дополнять встроенными знаниями"
+    },
     "app-menu.view.language": {
       "message": "Язык…"
     },
@@ -2556,6 +2568,9 @@
     "map-icon.save-image.tooltip": {
       "message": "Сохранить изображение…"
     },
+    "map-icon.save-size": {
+      "message": "{width} × {height} пикс."
+    },
     "map-icon.frame.generating": {
       "message": "Создание значка карты"
     },
@@ -2594,6 +2609,9 @@
     },
     "map-icon.status.waiting": {
       "message": "Значок карты: ожидание предпросмотра развёртывания"
+    },
+    "map-icon.status.generated-unlinked": {
+      "message": "Значок карты: создан по текущему предпросмотру"
     },
     "map-icon.status.generated-replacing": {
       "message": "Значок карты: создан {file}; исходный значок заменяется только в этой развёртываемой копии"
@@ -2664,11 +2682,11 @@
     "map-icon.relief": {
       "message": "Рельеф местности"
     },
-    "map-icon.relief.hide": {
-      "message": "Скрыть рельеф местности"
+    "map-icon.relief.off": {
+      "message": "Без высот"
     },
-    "map-icon.relief.show": {
-      "message": "Показать рельеф местности"
+    "map-icon.relief.raised": {
+      "message": "Высоты в 3D"
     },
     "map-icon.terrain-smoothing": {
       "message": "Сглаживать переходы между типами местности"
@@ -2694,6 +2712,12 @@
     "map-icon.spawn-markers.hidden": {
       "message": "Без меток старта"
     },
+    "map-icon.minimap-objects": {
+      "message": "Объекты мини-карты"
+    },
+    "map-icon.minimap-objects.note": {
+      "message": "Показывает объекты маленькими квадратами, как на мини-карте в режиме наблюдателя."
+    },
     "map-icon.spawn-size": {
       "message": "Размер меток старта"
     },
@@ -2711,6 +2735,24 @@
     },
     "map-icon.spawn-size.tooltip": {
       "message": "Размер меток старта (% ширины карты)"
+    },
+    "map-icon.town-center-size": {
+      "message": "Размер меток городского совета"
+    },
+    "map-icon.town-center-size.decrease": {
+      "message": "Уменьшить метки городского совета"
+    },
+    "map-icon.town-center-size.increase": {
+      "message": "Увеличить метки городского совета"
+    },
+    "map-icon.town-center-size.value": {
+      "message": "{value} %"
+    },
+    "map-icon.town-center-size.value-text": {
+      "message": "{value} % стандартного размера"
+    },
+    "map-icon.town-center-size.tooltip": {
+      "message": "Размер меток городского совета (% стандартного размера)"
     },
     "map-icon.art.trees.show": {
       "message": "Показать деревья"
@@ -3429,6 +3471,15 @@
     "preview-panel.tool.objects": {
       "message": "Объекты и площадь, занимаемая городским советом"
     },
+    "preview-panel.tool.objects.minimap": {
+      "message": "Объекты мини-карты"
+    },
+    "preview-panel.tool.objects.minimap.note": {
+      "message": "Показывает объекты маленькими квадратами, как на мини-карте в режиме наблюдателя."
+    },
+    "preview-panel.tool.objects.off": {
+      "message": "Без объектов"
+    },
     "preview-panel.tool.cliffs": {
       "message": "Края обрывов"
     },
@@ -3458,6 +3509,9 @@
     },
     "preview-panel.tool.elevation.terrain": {
       "message": "Рельеф местности"
+    },
+    "preview-panel.tool.elevation.raised": {
+      "message": "Высоты в 3D"
     },
     "preview-panel.tool.elevation.height-map": {
       "message": "Карта высот"
@@ -4616,6 +4670,45 @@
     },
     "release-check.newer.action": {
       "message": "Открыть страницу выпусков"
+    },
+    "external-language-server.started.headline": {
+      "message": "{server} используется для файлов {language}"
+    },
+    "external-language-server.untested.cause": {
+      "message": "Версия {version} не проверялась с AoE2RMSIDE; её известные проблемы по-прежнему обходятся"
+    },
+    "external-language-server.rejected.headline": {
+      "message": "{program} не может служить языковым сервером"
+    },
+    "external-language-server.stopped.headline": {
+      "message": "{server} перестал работать"
+    },
+    "external-language-server.reason.start": {
+      "message": "Не удалось запустить программу"
+    },
+    "external-language-server.reason.handshake": {
+      "message": "Программа не ответила на начальное рукопожатие как языковой сервер"
+    },
+    "external-language-server.reason.capabilities": {
+      "message": "В ответе программы на рукопожатие нет обновлений документов или используется формат позиций, который AoE2RMSIDE не предлагает"
+    },
+    "external-language-server.reason.exit": {
+      "message": "Программа неожиданно завершила работу"
+    },
+    "external-language-server.reason.timeout": {
+      "message": "Программа перестала вовремя отвечать на запросы"
+    },
+    "external-language-server.reason.protocol": {
+      "message": "Программа отправила сообщение, которое не является допустимыми данными языкового сервера"
+    },
+    "external-language-server.action.restarting": {
+      "message": "{seconds, plural, one {AoE2RMSIDE перезапустит сервер через {seconds} секунду (попытка {attempt} из {limit}); пока используется встроенный анализ} few {AoE2RMSIDE перезапустит сервер через {seconds} секунды (попытка {attempt} из {limit}); пока используется встроенный анализ} many {AoE2RMSIDE перезапустит сервер через {seconds} секунд (попытка {attempt} из {limit}); пока используется встроенный анализ} other {AoE2RMSIDE перезапустит сервер через {seconds} секунды (попытка {attempt} из {limit}); пока используется встроенный анализ}}"
+    },
+    "external-language-server.action.built-in": {
+      "message": "Для файлов {language} используется встроенный анализ, пока сервер не будет снова включён в меню «Вид» > «Внешние языковые серверы»"
+    },
+    "external-language-server.action.not-used": {
+      "message": "Для файлов {language} используется встроенный анализ"
     }
   }
 }

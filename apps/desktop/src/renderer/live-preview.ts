@@ -124,6 +124,9 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
   private cancelledRequestId = 0;
   private lastCompleted: { key: string; result: TResult } | undefined;
   private lastJob: LivePreviewJob<TConfiguration> | undefined;
+  private inFlight:
+    { requestId: number; job: LivePreviewJob<TConfiguration>; started: boolean } | undefined;
+  private readonly restarted = new Set<number>();
   private readonly knownConfigurations = new Set<string>();
 
   constructor(
@@ -137,6 +140,7 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
   ): void {
     const requestId = ++this.epoch;
     this.lastJob = job;
+    this.inFlight = { requestId, job, started: false };
     latencyProbe.runScheduled(job);
     if (this.timer) clearTimeout(this.timer);
     this.timer = undefined;
@@ -157,6 +161,7 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
   }
 
   cancel(): void {
+    this.inFlight = undefined;
     this.cancelledRequestId = this.epoch;
     this.epoch += 1;
     if (this.timer) clearTimeout(this.timer);
@@ -173,6 +178,17 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
         requestId: this.epoch,
         documentRevision: this.lastJob.document.revision,
       });
+  }
+
+  sourceCatalogChanged(): void {
+    const inFlight = this.inFlight;
+    if (!inFlight || inFlight.requestId !== this.epoch) {
+      this.sourceInvalidated();
+      return;
+    }
+    if (!inFlight.started) return;
+    this.restarted.add(inFlight.requestId);
+    this.schedule(inFlight.job, { debounceMs: 0 });
   }
 
   seedCompleted(key: string, result: TResult): void {
@@ -195,6 +211,11 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
 
   cacheDiagnostics(): PreviewCacheDiagnostics | null {
     return this.cache?.diagnostics() ?? null;
+  }
+
+  private rejectStale(requestId: number, job: LivePreviewJob<TConfiguration>): void {
+    if (this.restarted.delete(requestId)) return;
+    this.adapter.reject(this.staleOutcome(requestId), job);
   }
 
   private staleOutcome(requestId: number): RunOutcome {
@@ -239,8 +260,21 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
   }
 
   private async execute(job: LivePreviewJob<TConfiguration>, requestId: number): Promise<void> {
+    if (this.inFlight?.requestId === requestId) this.inFlight.started = true;
+    try {
+      await this.executeRequest(job, requestId);
+    } finally {
+      if (this.inFlight?.requestId === requestId) this.inFlight = undefined;
+      this.restarted.delete(requestId);
+    }
+  }
+
+  private async executeRequest(
+    job: LivePreviewJob<TConfiguration>,
+    requestId: number,
+  ): Promise<void> {
     if (requestId !== this.epoch) {
-      this.adapter.reject(this.staleOutcome(requestId), job);
+      this.rejectStale(requestId, job);
       return;
     }
     latencyProbe.runMark(job, 'execute');
@@ -264,7 +298,7 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
     ) {
       generation = await this.startGeneration(job, pendingAnalysis, requestId);
       if (!generation) {
-        this.adapter.reject(this.staleOutcome(requestId), job);
+        this.rejectStale(requestId, job);
         return;
       }
     }
@@ -275,7 +309,7 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
     } catch (error) {
       this.abandon(generation);
       if (requestId !== this.epoch) {
-        this.adapter.reject(this.staleOutcome(requestId), job);
+        this.rejectStale(requestId, job);
         return;
       }
       if (this.lastCompleted && this.adapter.historical) {
@@ -296,7 +330,7 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
     }
     if (requestId !== this.epoch) {
       this.abandon(generation);
-      this.adapter.reject(this.staleOutcome(requestId), job);
+      this.rejectStale(requestId, job);
       return;
     }
     const key = livePreviewGenerationKey(
@@ -333,7 +367,7 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
 
     generation ??= await this.startGeneration(job, pendingAnalysis, requestId);
     if (!generation) {
-      this.adapter.reject(this.staleOutcome(requestId), job);
+      this.rejectStale(requestId, job);
       return;
     }
     const { controller, startedAt } = generation;
@@ -347,7 +381,7 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
       const result = await generation.result;
       await (generation.validation() ?? this.adapter.validateAnalysis?.(job, analysis));
       if (requestId !== this.epoch || controller.signal.aborted) {
-        this.adapter.reject(this.staleOutcome(requestId), job);
+        this.rejectStale(requestId, job);
         return;
       }
       const generationMs = Math.max(0, performance.now() - startedAt);
@@ -367,10 +401,11 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
         current: requestId === this.epoch,
         aborted: controller.signal.aborted,
       });
-      const outcome =
-        rejection === 'superseded'
-          ? this.staleOutcome(requestId)
-          : livePreviewRejectionOutcome(rejection, error);
+      if (rejection === 'superseded') {
+        this.rejectStale(requestId, job);
+        return;
+      }
+      const outcome = livePreviewRejectionOutcome(rejection, error);
       if (rejection === 'source-changed') {
         this.adapter.status({
           phase: 'editing',

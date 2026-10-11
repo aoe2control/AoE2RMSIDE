@@ -1,4 +1,5 @@
 import {
+  effectiveMapIconRelief,
   mapIconArtDensity,
   mapIconArtSize,
   mapIconRenderContract,
@@ -11,7 +12,9 @@ import {
   type ManualDeploymentMapIconPreview,
   type ManualDeploymentMapIconRender,
   type ManualDeploymentMapIconRequest,
+  type MapIconRelief,
   type MapIconRenderInput,
+  type MapIconSaveSize,
   type MapIconSpawnMarkerStyle,
   type PreviewGenerationResult,
 } from '../shared/api';
@@ -20,8 +23,10 @@ import type { MapIconArtSheets } from './map-icon-art';
 import { loadMapIconArtSheets } from './map-icon-art-sheets';
 import {
   MapIconRenderError,
+  mapIconDrawnLayers,
   mapIconNeedsArt,
   mapIconRenderIdentity,
+  mapIconTownCenterMarkScale,
   renderMapIcon,
 } from './map-icon-render';
 
@@ -59,12 +64,46 @@ export function sameMapIconRenderInput(left: MapIconRenderInput, right: MapIconR
   return mapIconRenderInputKeys.every((key) => left[key] === right[key]);
 }
 
-export function mapIconReliefLabel(): string {
-  return t('map-icon.relief');
+export function mapIconReliefLabel(relief: MapIconRelief): string {
+  switch (relief) {
+    case 'off':
+      return t('map-icon.relief.off');
+    case 'raised':
+      return t('map-icon.relief.raised');
+    default:
+      return t('map-icon.relief');
+  }
 }
 
-export function mapIconReliefActionLabel(relief: boolean): string {
-  return relief ? t('map-icon.relief.hide') : t('map-icon.relief.show');
+export function shownMapIconRelief(
+  input: Pick<MapIconRenderInput, 'perspective' | 'relief'>,
+): MapIconRelief {
+  return effectiveMapIconRelief(input);
+}
+
+export function nextMapIconRelief(
+  input: Pick<MapIconRenderInput, 'perspective' | 'relief'>,
+): MapIconRelief {
+  switch (shownMapIconRelief(input)) {
+    case 'off':
+      return 'terrain';
+    case 'terrain':
+      return input.perspective === 'diamond' ? 'raised' : 'off';
+    default:
+      return 'off';
+  }
+}
+
+export function mapIconSaveSizeLabel(size: MapIconSaveSize): string {
+  return t('map-icon.save-size', { width: String(size), height: String(size) });
+}
+
+export function mapIconMinimapObjectsLabel(): string {
+  return t('map-icon.minimap-objects');
+}
+
+export function mapIconMinimapObjectsNote(): string {
+  return t('map-icon.minimap-objects.note');
 }
 
 export function mapIconTerrainSmoothingLabel(): string {
@@ -95,6 +134,47 @@ export function nextMapIconSpawnMarkers(
 
 export function mapIconSpawnMarkerSizeLabel(): string {
   return t('map-icon.spawn-size');
+}
+
+export type MapIconSizeStepperTarget = 'spawn-markers' | 'town-center';
+
+export function mapIconSizeStepperTarget(
+  input: Pick<MapIconRenderInput, 'spawnMarkers' | 'minimapObjects'>,
+): MapIconSizeStepperTarget | null {
+  if (input.spawnMarkers !== 'hidden') return 'spawn-markers';
+  return input.minimapObjects ? 'town-center' : null;
+}
+
+export function mapIconSizeStepperText(
+  target: MapIconSizeStepperTarget | null,
+  value: number,
+): {
+  label: string;
+  decrease: string;
+  increase: string;
+  value: string;
+  valueText: string;
+  tooltip: string;
+} {
+  if (target === 'town-center') {
+    const percent = Math.round(mapIconTownCenterMarkScale(value) * 100);
+    return {
+      label: t('map-icon.town-center-size'),
+      decrease: t('map-icon.town-center-size.decrease'),
+      increase: t('map-icon.town-center-size.increase'),
+      value: t('map-icon.town-center-size.value', { value: percent }),
+      valueText: t('map-icon.town-center-size.value-text', { value: percent }),
+      tooltip: t('map-icon.town-center-size.tooltip'),
+    };
+  }
+  return {
+    label: mapIconSpawnMarkerSizeLabel(),
+    decrease: t('map-icon.spawn-size.decrease'),
+    increase: t('map-icon.spawn-size.increase'),
+    value: t('map-icon.spawn-size.value', { value }),
+    valueText: t('map-icon.spawn-size.value-text', { value }),
+    tooltip: t('map-icon.spawn-size.tooltip'),
+  };
 }
 
 export function mapIconArtLayerLabel(layer: MapIconArtLayer): string {
@@ -258,11 +338,12 @@ export async function renderDeploymentMapIcon(
   input: MapIconRenderInput,
   signal: AbortSignal,
   loadArt: () => Promise<MapIconArtSheets> = loadMapIconArtSheets,
+  size: MapIconSaveSize = mapIconRenderContract.size,
 ): Promise<DeploymentMapIcon> {
   await new Promise<void>((resolve) => setTimeout(resolve, 0));
   throwIfCancelled(signal);
   let art: MapIconArtSheets | null = null;
-  if (mapIconNeedsArt(input)) {
+  if (mapIconNeedsArt(mapIconDrawnLayers(input))) {
     try {
       art = await loadArt();
     } catch {
@@ -270,7 +351,7 @@ export async function renderDeploymentMapIcon(
     }
     throwIfCancelled(signal);
   }
-  const render = renderMapIcon(result, input, { signal, art });
+  const render = renderMapIcon(result, input, { signal, art, size });
   const identity = await mapIconRenderIdentity(render);
   throwIfCancelled(signal);
   return {
@@ -291,6 +372,7 @@ export async function renderDeploymentMapIcon(
       resourceDensity: render.resourceDensity,
       resourceSize: render.resourceSize,
       resourceSpawnOverlap: render.resourceSpawnOverlap,
+      minimapObjects: render.minimapObjects,
       sourceSemanticHash: render.sourceSemanticHash,
       identity,
       pixels: render.pixels,
@@ -302,6 +384,7 @@ export async function gameTexturesDeploymentMapIcon(
   result: PreviewGenerationResult,
   input: MapIconRenderInput,
   textured: { pixels: Uint8ClampedArray; source: string },
+  size: MapIconSaveSize = mapIconRenderContract.size,
 ): Promise<DeploymentMapIcon> {
   if (input.look !== 'game-textures') {
     throw new MapIconRenderError('invalid-input', 'map icon look is not game textures');
@@ -322,13 +405,27 @@ export async function gameTexturesDeploymentMapIcon(
     resourceDensity: input.resourceDensity,
     resourceSize: input.resourceSize,
     resourceSpawnOverlap: input.resourceSpawnOverlap,
+    minimapObjects: input.minimapObjects,
     sourceSemanticHash: result.semanticHash,
     gameTexturesSource: textured.source,
     identity: '',
     pixels: textured.pixels,
   };
-  render.identity = await mapIconRenderIdentity(render);
+  render.identity = await mapIconRenderIdentity({ ...render, size });
   return { result, render };
+}
+
+export async function mapIconSaveRequestAtSize(
+  request: GeneratedMapIconSaveRequest,
+  size: MapIconSaveSize,
+  render: (size: MapIconSaveSize) => Promise<DeploymentMapIcon>,
+): Promise<GeneratedMapIconSaveRequest> {
+  if (size === mapIconRenderContract.size) return { ...request, size };
+  const icon = await render(size);
+  if (icon.render.sourceSemanticHash !== request.render.sourceSemanticHash) {
+    throw new MapIconRenderError('invalid-map', 'map icon changed while it was being saved');
+  }
+  return { ...request, render: icon.render, size };
 }
 
 function throwIfCancelled(signal: AbortSignal): void {
@@ -379,6 +476,7 @@ export function mapIconSaveTarget(state: MapIconSaveState): MapIconSaveTarget | 
         sourceGraphHash: result.sourceGraphHash,
         externalAssetHash: result.externalAssetHash,
         render: state.render,
+        size: mapIconRenderContract.size,
       },
     };
   }

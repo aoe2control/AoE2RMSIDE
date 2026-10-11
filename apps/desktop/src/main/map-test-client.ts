@@ -87,6 +87,10 @@ export function describeMapTestChildExit(
   return desktopErrorMessage('native.exited', exit, { name: 'rms-test' });
 }
 
+export function describeMapTestChildStop(code: number | null, signal: string | null): string {
+  return `The map-test run was stopped: rms-test was ended (code ${String(code)}, signal ${String(signal)}).`;
+}
+
 export function mapTestRunDisplayStreams(
   progressWanted: boolean,
   progressSupported: boolean,
@@ -136,7 +140,11 @@ export class MapTestClient {
     child.once('error', (error) => this.fail(error));
     child.once('exit', (code, signal) => {
       if (this.child === child) this.child = undefined;
-      const error = new Error(describeMapTestChildExit(code, signal, this.stderrTail));
+      const error = new Error(
+        this.stopping
+          ? describeMapTestChildStop(code, signal)
+          : describeMapTestChildExit(code, signal, this.stderrTail),
+      );
       this.stderrTail = '';
       this.rejectPending(error);
       this.onStatus({
@@ -284,6 +292,7 @@ export class MapTestClient {
   async forceTerminate(): Promise<void> {
     const child = this.child;
     if (!child) return;
+    this.stopping = true;
     child.kill();
     await waitForExit(child, 500);
   }
