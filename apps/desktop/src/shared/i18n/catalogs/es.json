@@ -126,6 +126,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Renderizar mapas con la GPU"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Animar las transiciones del mapa"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Mostrar etapas de generación"
     },
@@ -185,6 +188,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Informar de un error"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Buscar nuevas versiones al iniciar"
     },
     "app-menu.help.about": {
       "message": "Acerca de {product}"
@@ -3576,9 +3582,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Capas de conexiones"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Flechas: seleccionar casillas"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4670,6 +4673,123 @@
     },
     "release-check.newer.action": {
       "message": "Abrir la página de versiones"
+    },
+    "app-update.button": {
+      "message": "Actualizar"
+    },
+    "app-update.button.tooltip": {
+      "message": "Actualizar a AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "Actualizar ahora"
+    },
+    "app-update.dialog.title": {
+      "message": "¿Actualizar a AoE2RMSIDE {version}?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE descarga desde GitHub el instalador de la versión {version} y lo compara con las sumas de comprobación publicadas junto con ella. Después se cierra, instala la actualización y se vuelve a abrir."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Si hay documentos con cambios sin guardar, primero se te preguntará por ellos."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Notas de la versión"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Actualizar"
+    },
+    "app-update.progress.label": {
+      "message": "Actualización"
+    },
+    "app-update.progress.downloading": {
+      "message": "Descargando"
+    },
+    "app-update.progress.verifying": {
+      "message": "Comprobando"
+    },
+    "app-update.progress.installing": {
+      "message": "Instalando"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Preparando la actualización a AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "Descargando AoE2RMSIDE {version}, {percent} % ({received} de {total} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Comprobando el instalador de AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "Cerrando AoE2RMSIDE para instalar {version}"
+    },
+    "app-update.cancel": {
+      "message": "Cancelar la actualización"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE no pudo actualizarse a {version}"
+    },
+    "app-update.failed.action": {
+      "message": "Pulsa Actualizar para volver a intentarlo."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "La descarga no se completó. Comprueba la conexión a internet."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub no respondió a tiempo."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub no proporcionó los archivos de la versión."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub envió la descarga a una dirección que la actualización no usa."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "Esta versión ya no figura como publicada en GitHub."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "La versión no ofrece el instalador o su lista de sumas de comprobación."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "El instalador supera el tamaño que puede descargar una actualización."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "El instalador descargado no tiene el tamaño que indica la versión."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "La lista de sumas de comprobación de la versión no incluye su instalador, así que el instalador no se ejecutó."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "El instalador descargado no coincide con la suma de comprobación publicada con la versión, así que no se ejecutó."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "No se pudo guardar el instalador en la carpeta temporal."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "El instalador no está firmado por el editor esperado, así que no se ejecutó."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "El instalador descargado desapareció o cambió antes de poder ejecutarse."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows no pudo iniciar el instalador."
+    },
+    "app-update.cancelled.headline": {
+      "message": "Se canceló la actualización a {version}"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE sigue abierto con tus documentos."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "La descarga se conserva hasta que AoE2RMSIDE se cierre: pulsa Actualizar para instalarla sin volver a descargarla."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE se actualizó a {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "La actualización a {version} no se completó"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} sigue instalado."
     },
     "external-language-server.started.headline": {
       "message": "Se usa {server} para los archivos {language}"

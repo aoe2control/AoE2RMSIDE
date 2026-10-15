@@ -267,7 +267,10 @@ export class InstalledSourceService {
     }
     const entryRelativePath = relative(source.root.ownershipRoot, source.path);
     const entryPath = safeJoin(cloneRoot, entryRelativePath);
-    const opened = await this.workspace.openPaths([cloneRoot, entryPath]);
+    const openFolder = this.workspace.workspaceRoot();
+    const opened = await this.workspace.openPaths(
+      openFolder && isInside(cloneRoot, openFolder) ? [entryPath] : [cloneRoot, entryPath],
+    );
     return {
       opened,
       entryPath,

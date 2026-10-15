@@ -134,6 +134,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Vẽ bản đồ bằng GPU"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Tạo hiệu ứng chuyển cảnh bản đồ"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Hiện các giai đoạn tạo trực tiếp"
     },
@@ -193,6 +196,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Báo lỗi"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Kiểm tra phiên bản mới khi khởi động"
     },
     "app-menu.help.about": {
       "message": "Giới thiệu {product}"
@@ -3584,9 +3590,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Các lớp kết nối"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Phím mũi tên chọn ô"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4678,6 +4681,123 @@
     },
     "release-check.newer.action": {
       "message": "Mở trang phát hành"
+    },
+    "app-update.button": {
+      "message": "Cập nhật"
+    },
+    "app-update.button.tooltip": {
+      "message": "Cập nhật lên AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "Cập nhật ngay"
+    },
+    "app-update.dialog.title": {
+      "message": "Cập nhật lên AoE2RMSIDE {version}?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE tải trình cài đặt của phiên bản {version} từ GitHub và đối chiếu với các tổng kiểm tra được công bố cùng bản phát hành. Sau đó ứng dụng sẽ đóng, cài đặt bản cập nhật và mở lại."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Nếu tài liệu có thay đổi chưa lưu, bạn sẽ được hỏi về chúng trước."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Ghi chú phát hành"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Cập nhật"
+    },
+    "app-update.progress.label": {
+      "message": "Cập nhật"
+    },
+    "app-update.progress.downloading": {
+      "message": "Đang tải"
+    },
+    "app-update.progress.verifying": {
+      "message": "Đang kiểm tra"
+    },
+    "app-update.progress.installing": {
+      "message": "Đang cài đặt"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Đang chuẩn bị cập nhật lên AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "Đang tải AoE2RMSIDE {version}, {percent}% ({received}/{total} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Đang kiểm tra trình cài đặt của AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "Đang đóng AoE2RMSIDE để cài đặt {version}"
+    },
+    "app-update.cancel": {
+      "message": "Hủy cập nhật"
+    },
+    "app-update.failed.headline": {
+      "message": "Không thể cập nhật AoE2RMSIDE lên {version}"
+    },
+    "app-update.failed.action": {
+      "message": "Chọn Cập nhật để thử lại."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "Quá trình tải chưa hoàn tất. Hãy kiểm tra kết nối internet."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub không phản hồi kịp thời."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub không cung cấp các tệp của bản phát hành."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub chuyển hướng bản tải xuống đến một địa chỉ mà bản cập nhật không dùng."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "Bản phát hành trên GitHub không còn được công bố dưới phiên bản này."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "Bản phát hành không có trình cài đặt hoặc danh sách tổng kiểm tra của nó."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Trình cài đặt lớn hơn mức mà bản cập nhật được phép tải."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "Trình cài đặt đã tải không có kích thước như bản phát hành ghi."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "Danh sách tổng kiểm tra của bản phát hành không có trình cài đặt, nên trình cài đặt chưa được chạy."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "Trình cài đặt đã tải không khớp với tổng kiểm tra được công bố cùng bản phát hành, nên chưa được chạy."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Không thể lưu trình cài đặt vào thư mục tạm."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Trình cài đặt không được ký bởi nhà phát hành dự kiến, nên chưa được chạy."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "Trình cài đặt đã tải bị mất hoặc bị thay đổi trước khi có thể chạy."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows không thể khởi động trình cài đặt."
+    },
+    "app-update.cancelled.headline": {
+      "message": "Đã hủy cập nhật lên {version}"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE vẫn mở cùng các tài liệu của bạn."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "Tệp đã tải được giữ lại cho đến khi AoE2RMSIDE đóng: chọn Cập nhật để cài đặt mà không cần tải lại."
+    },
+    "app-update.installed.headline": {
+      "message": "Đã cập nhật AoE2RMSIDE lên {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "Cập nhật lên {version} chưa hoàn tất"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} vẫn là bản đã cài."
     },
     "external-language-server.started.headline": {
       "message": "Đang dùng {server} cho tệp {language}"

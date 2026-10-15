@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
 import { isExternalLinkTarget } from '../shared/external-links';
+import { isUpdateVersion, validateUpdateState, type UpdateState } from '../shared/update';
 import {
   ipcChannels,
   isDeploymentProfileId,
@@ -56,6 +57,10 @@ import { definitionGroupIds, type DefinitionGroupId } from '../shared/definition
 import { isMapTestProgressCounts, isMapTestWorkerSetting } from '../shared/map-test-contract';
 import { isRmsLintCode } from '../shared/rms-lint-rules';
 import { validateOutputMessage, type OutputMessage } from '../shared/output-message';
+import {
+  validateWorkspaceTreeChange,
+  type WorkspaceTreeChange,
+} from '../shared/workspace-tree-change';
 import {
   isLanguagePreference,
   validateLocaleState,
@@ -1343,6 +1348,14 @@ const api: RmsideDesktopApi = Object.freeze({
     ipcRenderer.on(ipcChannels.workspaceExternalChange, handler);
     return () => ipcRenderer.removeListener(ipcChannels.workspaceExternalChange, handler);
   },
+  onWorkspaceTreeChange: (listener: (change: WorkspaceTreeChange) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, change: unknown) => {
+      const validated = validateWorkspaceTreeChange(change);
+      if (validated) listener(validated);
+    };
+    ipcRenderer.on(ipcChannels.workspaceTreeChange, handler);
+    return () => ipcRenderer.removeListener(ipcChannels.workspaceTreeChange, handler);
+  },
   onWorkspaceDiagnostic: (listener: (message: OutputMessage) => void) => {
     const handler = (_event: Electron.IpcRendererEvent, message: unknown) => {
       const validated = validateOutputMessage(message);
@@ -1355,6 +1368,31 @@ const api: RmsideDesktopApi = Object.freeze({
     ipcRenderer.invoke(ipcChannels.windowCloseResponse, assertBoolean(allow)),
   takeReleaseNotice: async () =>
     validateOutputMessage(await ipcRenderer.invoke(ipcChannels.releaseNoticeTake)),
+  getUpdateState: async () =>
+    validateUpdateState(await ipcRenderer.invoke(ipcChannels.updateState)),
+  onUpdateState: (listener: (state: UpdateState) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, state: unknown) => {
+      let validated: UpdateState;
+      try {
+        validated = validateUpdateState(state);
+      } catch {
+        return;
+      }
+      listener(validated);
+    };
+    ipcRenderer.on(ipcChannels.updateEvent, handler);
+    return () => ipcRenderer.removeListener(ipcChannels.updateEvent, handler);
+  },
+  startUpdate: async (version: string) => {
+    if (!isUpdateVersion(version)) throw new Error('invalid update version');
+    return (await ipcRenderer.invoke(ipcChannels.updateStart, version)) === true;
+  },
+  cancelUpdate: async () => {
+    await ipcRenderer.invoke(ipcChannels.updateCancel);
+  },
+  openUpdateReleaseNotes: async () => {
+    await ipcRenderer.invoke(ipcChannels.updateReleaseNotes);
+  },
 });
 
 contextBridge.exposeInMainWorld('rmside', api);

@@ -2,7 +2,7 @@
   "name": "@rmside/desktop",
   "private": true,
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Sandboxed AoE2RMSIDE desktop shell",
   "author": "AoE2RMSIDE contributors",
   "license": "Apache-2.0",

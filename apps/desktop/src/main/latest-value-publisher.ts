@@ -14,24 +14,31 @@ export class LatestValuePublisher<T> {
 
   offer(value: T): void {
     if (this.disposed) return;
-    this.pending = { value };
-    if (this.timer !== undefined) return;
-    this.timer = setTimeout(() => this.flush(), this.intervalMilliseconds);
+    if (this.timer !== undefined) {
+      this.pending = { value };
+      return;
+    }
+    this.emit(value);
   }
 
-  flush(): void {
-    if (this.disposed) return;
+  reset(): void {
     if (this.timer !== undefined) clearTimeout(this.timer);
     this.timer = undefined;
-    const pending = this.pending;
     this.pending = undefined;
-    if (pending) this.publish(pending.value);
   }
 
   dispose(): void {
-    if (this.timer !== undefined) clearTimeout(this.timer);
-    this.timer = undefined;
-    this.pending = undefined;
+    this.reset();
     this.disposed = true;
+  }
+
+  private emit(value: T): void {
+    this.timer = setTimeout(() => {
+      this.timer = undefined;
+      const pending = this.pending;
+      this.pending = undefined;
+      if (pending) this.emit(pending.value);
+    }, this.intervalMilliseconds);
+    this.publish(value);
   }
 }

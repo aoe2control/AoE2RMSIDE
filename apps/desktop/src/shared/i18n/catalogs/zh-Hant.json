@@ -134,6 +134,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "GPU 地圖繪製"
     },
+    "app-menu.view.map-transitions": {
+      "message": "地圖轉場動畫"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "即時顯示產生階段"
     },
@@ -193,6 +196,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "回報錯誤"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "啟動時檢查新版本"
     },
     "app-menu.help.about": {
       "message": "關於 {product}"
@@ -3584,9 +3590,6 @@
     "preview-panel.toolbar.connections": {
       "message": "連接圖層"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "方向鍵選取地圖格"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4678,6 +4681,123 @@
     },
     "release-check.newer.action": {
       "message": "開啟發行頁面"
+    },
+    "app-update.button": {
+      "message": "更新"
+    },
+    "app-update.button.tooltip": {
+      "message": "更新至 AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "立即更新"
+    },
+    "app-update.dialog.title": {
+      "message": "要更新至 AoE2RMSIDE {version} 嗎？"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE 會從 GitHub 下載 {version} 版的安裝程式，並與隨該發行版發布的總和檢查碼比對。接著會關閉、安裝更新，然後重新開啟。"
+    },
+    "app-update.dialog.unsaved": {
+      "message": "如果有文件含有尚未儲存的變更，會先詢問你如何處理。"
+    },
+    "app-update.dialog.release-notes": {
+      "message": "版本資訊"
+    },
+    "app-update.dialog.confirm": {
+      "message": "更新"
+    },
+    "app-update.progress.label": {
+      "message": "更新"
+    },
+    "app-update.progress.downloading": {
+      "message": "下載中"
+    },
+    "app-update.progress.verifying": {
+      "message": "檢查中"
+    },
+    "app-update.progress.installing": {
+      "message": "安裝中"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "正在準備更新至 AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "正在下載 AoE2RMSIDE {version}，{percent}%（{received}/{total} MB）"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "正在檢查 AoE2RMSIDE {version} 的安裝程式"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "正在關閉 AoE2RMSIDE 以安裝 {version}"
+    },
+    "app-update.cancel": {
+      "message": "取消更新"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE 無法更新至 {version}"
+    },
+    "app-update.failed.action": {
+      "message": "按一下更新即可重試。"
+    },
+    "app-update.failed.cause.offline": {
+      "message": "下載未完成。請檢查網路連線。"
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub 未及時回應。"
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub 未提供發行版的檔案。"
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub 將下載重新導向至更新不使用的位址。"
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "GitHub 上的發行版已不再以此版本發布。"
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "發行版未提供安裝程式或其總和檢查碼清單。"
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "安裝程式超過更新允許下載的大小。"
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "下載的安裝程式大小與發行版列出的大小不符。"
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "發行版的總和檢查碼清單未列出其安裝程式，因此未執行安裝程式。"
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "下載的安裝程式與隨發行版發布的總和檢查碼不符，因此未執行。"
+    },
+    "app-update.failed.cause.disk": {
+      "message": "無法將安裝程式儲存到暫存資料夾。"
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "安裝程式並非由預期的發行者簽署，因此未執行。"
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "下載的安裝程式在執行前已遭移除或變更。"
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows 無法啟動安裝程式。"
+    },
+    "app-update.cancelled.headline": {
+      "message": "已取消更新至 {version}"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE 會保持開啟，你的文件不受影響。"
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "下載的檔案會保留到 AoE2RMSIDE 關閉為止：按一下更新即可安裝，不需重新下載。"
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE 已更新至 {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "更新至 {version} 未完成"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} 仍為已安裝的版本。"
     },
     "external-language-server.started.headline": {
       "message": "{language} 檔案正在使用 {server}"

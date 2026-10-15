@@ -94,6 +94,8 @@
   --motion-duration-tab-close: 90ms;
   --motion-duration-tab-move: 160ms;
   --motion-duration-readout-resize: 200ms;
+  --motion-duration-map-highlight-in: 160ms;
+  --motion-duration-map-highlight-out: 120ms;
   --motion-duration-list-item: 140ms;
   --motion-duration-list-move: 160ms;
   --motion-duration-list-height: 180ms;
@@ -133,6 +135,8 @@
     --motion-duration-tab-close: 0ms;
     --motion-duration-tab-move: 0ms;
     --motion-duration-readout-resize: 0ms;
+    --motion-duration-map-highlight-in: 0ms;
+    --motion-duration-map-highlight-out: 0ms;
     --motion-duration-list-item: 0ms;
     --motion-duration-list-move: 0ms;
     --motion-duration-list-height: 0ms;
@@ -2107,6 +2111,20 @@ img {
   order: -2;
 }
 
+.update-button {
+  margin-left: 2px;
+}
+
+.update-progress-group {
+  align-items: center;
+  display: flex;
+  gap: 2px;
+}
+
+.game-art-conversion-progress.update-progress {
+  order: 0;
+}
+
 .preview-profiler-button,
 .dark .preview-profiler-button {
   background: transparent;
@@ -2982,61 +3000,6 @@ img {
 .preview-small-trees-button,
 .dark .preview-small-trees-button {
   margin-left: 5px;
-}
-
-.preview-keyboard-focus-cue {
-  align-items: center;
-  background: color-mix(in oklch, var(--preview-overlay-halo-color) 62%, transparent);
-  border-radius: var(--radius-md);
-  color: var(--preview-overlay-foreground);
-  display: none;
-  font-size: 11px;
-  gap: 5px;
-  height: auto;
-  max-width: calc(100% - 5px);
-  min-height: 26px;
-  min-width: 0;
-  margin-left: 5px;
-  padding-block: 3px;
-  padding-inline: 7px;
-  pointer-events: none;
-  text-shadow: var(--preview-overlay-halo);
-  white-space: normal;
-}
-
-.preview-keyboard-focus-cue > span {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-:root:not(.dark) .preview-keyboard-focus-cue {
-  font-weight: 600;
-}
-
-.preview-keyboard-focus-cue svg {
-  filter: drop-shadow(0 0 1px var(--preview-overlay-halo-color));
-  flex: 0 0 auto;
-  height: 14px;
-  width: 14px;
-}
-
-.preview-canvas[data-canvas-focus='keyboard'] .preview-keyboard-focus-cue {
-  display: flex;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .preview-keyboard-focus-cue {
-    transition:
-      opacity var(--motion-duration-surface) var(--motion-ease-out),
-      translate var(--motion-duration-surface) var(--motion-ease-out);
-  }
-
-  @starting-style {
-    .preview-canvas[data-canvas-focus='keyboard'] .preview-keyboard-focus-cue {
-      opacity: 0;
-      translate: calc(-1 * var(--motion-distance-surface)) 0;
-    }
-  }
 }
 
 .preview-elevation-mode-button:hover,

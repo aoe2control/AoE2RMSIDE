@@ -126,6 +126,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Kaarten met de GPU weergeven"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Kaartovergangen animeren"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Generatiestappen live tonen"
     },
@@ -185,6 +188,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Een fout melden"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Bij opstarten op nieuwe versies controleren"
     },
     "app-menu.help.about": {
       "message": "Over {product}"
@@ -3576,9 +3582,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Verbindingslagen"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Pijltoetsen selecteren vakken"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4670,6 +4673,123 @@
     },
     "release-check.newer.action": {
       "message": "Releasepagina openen"
+    },
+    "app-update.button": {
+      "message": "Bijwerken"
+    },
+    "app-update.button.tooltip": {
+      "message": "Bijwerken naar AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "Nu bijwerken"
+    },
+    "app-update.dialog.title": {
+      "message": "Bijwerken naar AoE2RMSIDE {version}?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE downloadt het installatieprogramma van versie {version} van GitHub en vergelijkt het met de controlesommen die bij de release zijn gepubliceerd. Daarna sluit het, installeert het de update en opent het opnieuw."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Als documenten niet-opgeslagen wijzigingen hebben, wordt je daar eerst naar gevraagd."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Releaseopmerkingen"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Bijwerken"
+    },
+    "app-update.progress.label": {
+      "message": "Update"
+    },
+    "app-update.progress.downloading": {
+      "message": "Downloaden"
+    },
+    "app-update.progress.verifying": {
+      "message": "Controleren"
+    },
+    "app-update.progress.installing": {
+      "message": "Installeren"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Update naar AoE2RMSIDE {version} voorbereiden"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "AoE2RMSIDE {version} downloaden, {percent}% ({received} van {total} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Installatieprogramma van AoE2RMSIDE {version} controleren"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "AoE2RMSIDE sluiten om {version} te installeren"
+    },
+    "app-update.cancel": {
+      "message": "Update annuleren"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE kon niet worden bijgewerkt naar {version}"
+    },
+    "app-update.failed.action": {
+      "message": "Klik op Bijwerken om het opnieuw te proberen."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "De download is niet voltooid. Controleer de internetverbinding."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub heeft niet op tijd geantwoord."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub heeft de bestanden van de release niet geleverd."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub stuurde de download naar een adres dat de update niet gebruikt."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "De release op GitHub is niet meer als deze versie gepubliceerd."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "De release biedt het installatieprogramma of de lijst met controlesommen niet aan."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Het installatieprogramma is groter dan een update mag downloaden."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "Het gedownloade installatieprogramma heeft niet de grootte die de release vermeldt."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "De lijst met controlesommen van de release noemt het installatieprogramma niet, dus het is niet uitgevoerd."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "Het gedownloade installatieprogramma komt niet overeen met de controlesom die bij de release is gepubliceerd, dus het is niet uitgevoerd."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Het installatieprogramma kon niet in de tijdelijke map worden opgeslagen."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Het installatieprogramma is niet ondertekend door de verwachte uitgever, dus het is niet uitgevoerd."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "Het gedownloade installatieprogramma was verdwenen of gewijzigd voordat het kon worden uitgevoerd."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows kon het installatieprogramma niet starten."
+    },
+    "app-update.cancelled.headline": {
+      "message": "De update naar {version} is geannuleerd"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE blijft open met je documenten."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "De download blijft bewaard tot AoE2RMSIDE sluit: klik op Bijwerken om hem te installeren zonder hem opnieuw te downloaden."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE is bijgewerkt naar {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "De update naar {version} is niet voltooid"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} is nog steeds geïnstalleerd."
     },
     "external-language-server.started.headline": {
       "message": "{server} wordt gebruikt voor {language}-bestanden"

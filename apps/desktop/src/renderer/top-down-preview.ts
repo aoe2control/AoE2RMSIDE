@@ -246,11 +246,26 @@ export function previewObjectMarkerScreenRadius(
   span: number,
   minimum: number = previewMarkerScreenRadius.minimum,
 ): number {
-  const { maximum } = previewMarkerScreenRadius;
-  if (!Number.isFinite(scale) || scale <= 0 || !Number.isFinite(span) || span <= 0) {
-    return minimum;
-  }
-  return clamp(scale * Math.SQRT1_2 * span * 0.5, minimum, maximum);
+  return clamp(
+    previewObjectMarkerRadiusBase(scale, span),
+    minimum,
+    previewMarkerScreenRadius.maximum,
+  );
+}
+
+export interface ZoomSizeLaw {
+  base: number;
+  minimum: number;
+  maximum: number;
+}
+
+export function zoomSizeLawSize(law: ZoomSizeLaw, factor: number): number {
+  return clamp(law.base * factor, law.minimum, law.maximum);
+}
+
+export function previewObjectMarkerRadiusBase(scale: number, span: number): number {
+  if (!Number.isFinite(scale) || scale <= 0 || !Number.isFinite(span) || span <= 0) return 0;
+  return scale * Math.SQRT1_2 * span * 0.5;
 }
 
 export function previewMarkerVerticalScale(viewport: Pick<PreviewViewport, 'projection'>): number {

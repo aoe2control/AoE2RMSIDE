@@ -10,6 +10,8 @@ import {
 } from '../shared/preview-candidate';
 import { LatestValuePublisher } from './latest-value-publisher';
 
+export const mapTestPreviewIntervalMilliseconds = 500;
+
 export interface PresentationSink<TFinal> {
   candidate(candidate: PreviewCandidate): boolean;
   final(value: TFinal): void;
@@ -55,7 +57,7 @@ export class PreviewPresentationArbiter<TFinal> {
 
   constructor(
     private readonly sink: PresentationSink<TFinal>,
-    finalIntervalMilliseconds = 33,
+    finalIntervalMilliseconds = mapTestPreviewIntervalMilliseconds,
   ) {
     this.finals = new LatestValuePublisher(
       (value) => this.sink.final(value),
@@ -150,8 +152,12 @@ export class PreviewPresentationArbiter<TFinal> {
     this.finals.offer(value);
   }
 
-  flushFinals(): void {
-    this.finals.flush();
+  beginFinals(): void {
+    this.finals.reset();
+  }
+
+  endFinals(): void {
+    this.finals.reset();
   }
 
   statistics(): PresentationArbiterStatistics {

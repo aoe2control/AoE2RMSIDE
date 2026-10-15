@@ -27,7 +27,11 @@ import type {
 } from '../shared/api';
 import { DesktopError, desktopErrorMessage } from '../shared/desktop-error';
 import { mapIconArtObjectDescriptors } from '../shared/map-icon-art-objects';
-import { isMapTestProgressCounts, mapTestWorkerRequest } from '../shared/map-test-contract';
+import {
+  isMapTestProgressCounts,
+  mapTestWorkerRequest,
+  maximumMapTestMaps,
+} from '../shared/map-test-contract';
 import { guardChildStreams, isClosedPipeError } from './child-streams';
 import { constantNamesFor } from './constant-names-provider';
 import { encodeFrame, FrameDecoder } from './framing';
@@ -47,6 +51,7 @@ interface PendingRequest {
   expectedCase: string;
   lastOutputOrdinal: number;
   lastPreviewOrdinal: number;
+  shownPreviewOrdinals?: Set<number>;
   lastProgress: { completed: number; requested: number };
   onEvent?: (event: MapTestEvent) => void;
   decodePreview?: (preview: MapTestPreview) => PreviewGenerationResult;
@@ -92,10 +97,15 @@ export function describeMapTestChildStop(code: number | null, signal: string | n
 }
 
 export function mapTestRunDisplayStreams(
-  progressWanted: boolean,
+  displayWanted: boolean,
   progressSupported: boolean,
-): { progressivePreview: false; sampleProgress: boolean } {
-  return { progressivePreview: false, sampleProgress: progressWanted && progressSupported };
+  completionOrderSupported: boolean,
+): { progressivePreview: false; sampleProgress: boolean; completionOrderPreview: boolean } {
+  return {
+    progressivePreview: false,
+    sampleProgress: displayWanted && progressSupported,
+    completionOrderPreview: displayWanted && completionOrderSupported,
+  };
 }
 
 export class MapTestClient {
@@ -106,6 +116,7 @@ export class MapTestClient {
   private sampleProgress = false;
   private automaticWorkers = false;
   private reportRequestRevision = false;
+  private completionOrderPreview = false;
   private stderrTail = '';
 
   constructor(
@@ -161,7 +172,7 @@ export class MapTestClient {
       createEnvelope(`map-test-handshake-${randomUUID()}`, {
         case: 'handshakeRequest',
         value: create(HandshakeRequestSchema, {
-          protocolVersion: create(ArtifactVersionSchema, { major: 2, minor: 17, patch: 0 }),
+          protocolVersion: create(ArtifactVersionSchema, { major: 2, minor: 20, patch: 0 }),
           supportedProtocol: create(CompatibilityRangeSchema, {
             minimumMajor: 2,
             maximumMajor: 2,
@@ -181,6 +192,7 @@ export class MapTestClient {
     this.sampleProgress = response.payload.value.capabilities.mapTestProgress;
     this.automaticWorkers = response.payload.value.capabilities.mapTestAutomaticWorkers;
     this.reportRequestRevision = response.payload.value.capabilities.mapTestReportRequestRevision;
+    this.completionOrderPreview = response.payload.value.capabilities.mapTestCompletionOrderPreview;
     this.onStatus({ name: 'rms-test', state: 'running' });
   }
 
@@ -195,6 +207,11 @@ export class MapTestClient {
     }
     const startedAt = Date.now();
     const setup = decodeRendererSetupContext(input.modeContext, input.players.length);
+    const displayStreams = mapTestRunDisplayStreams(
+      onEvent !== undefined,
+      this.sampleProgress,
+      this.completionOrderPreview,
+    );
     const response = await this.sendAndWait(
       createEnvelope(input.executionId, {
         case: 'mapTestRunRequest',
@@ -234,12 +251,13 @@ export class MapTestClient {
           contentPackHash: fromHex(input.contentPack.contentHash, 'content pack hash'),
           contentSourceFingerprint: input.contentPack.sourceFingerprint,
           ...(localContent ? { localContent: protocolLocalContentSource(localContent) } : {}),
-          ...mapTestRunDisplayStreams(onEvent !== undefined, this.sampleProgress),
+          ...displayStreams,
         }),
       }),
       'mapTestRunResponse',
       onEvent,
       (preview) => toPreviewResult(preview, input, sourceCatalogs, setup.colors),
+      displayStreams.completionOrderPreview,
     );
     if (response.payload.case !== 'mapTestRunResponse') {
       throw new Error('invalid map-test response');
@@ -307,6 +325,7 @@ export class MapTestClient {
     expectedCase: string,
     onEvent?: (event: MapTestEvent) => void,
     decodePreview?: (preview: MapTestPreview) => PreviewGenerationResult,
+    completionOrderPreview = false,
   ): Promise<Envelope> {
     const child = this.child;
     if (!child || child.stdin.destroyed) {
@@ -319,6 +338,7 @@ export class MapTestClient {
         expectedCase,
         lastOutputOrdinal: -1,
         lastPreviewOrdinal: -1,
+        ...(completionOrderPreview ? { shownPreviewOrdinals: new Set<number>() } : {}),
         lastProgress: { completed: 0, requested: 0 },
         onEvent,
         decodePreview,
@@ -388,12 +408,18 @@ export class MapTestClient {
           if (event.identity?.requestId !== message.requestId || !event.preview) {
             throw new Error('rms-test preview identity differs from its envelope');
           }
-          if (event.ordinal <= pending.lastPreviewOrdinal) {
+          const shown = pending.shownPreviewOrdinals;
+          if (shown) {
+            if (event.ordinal >= maximumMapTestMaps || shown.has(event.ordinal)) {
+              throw new Error('rms-test preview ordinal repeats or exceeds the run');
+            }
+          } else if (event.ordinal <= pending.lastPreviewOrdinal) {
             throw new Error('rms-test preview ordinal is not strictly ordered');
           }
           if (!pending.decodePreview) {
             throw new Error('rms-test published an unexpected preview event');
           }
+          shown?.add(event.ordinal);
           pending.lastPreviewOrdinal = event.ordinal;
           pending.onEvent?.({
             kind: 'preview',

@@ -10,6 +10,7 @@ import {
   previewScale,
   type PreviewCamera,
   type PreviewViewport,
+  type ZoomSizeLaw,
 } from './top-down-preview';
 
 export type PreviewObjectsMode = 'markers' | 'minimap' | 'off';
@@ -85,6 +86,28 @@ export function minimapSquareSizes(input: MinimapSquareSizeInput): MinimapSquare
       minimapSquareSizing.townCenter * unit,
       minimapSquareSizing.townCenterTileHeights * tileHeight,
     ),
+  };
+}
+
+export function minimapSquareSizeLaws(
+  input: MinimapSquareSizeInput,
+): Record<keyof MinimapSquareSizes, ZoomSizeLaw> {
+  const unit = input.unit ?? 1;
+  const base = Math.max(
+    minimapSquareSizing.minimumObject * unit,
+    minimapSquareSizing.tileWidths * 2 * input.baseComponent,
+  );
+  const tileHeight = 2 * input.component * input.verticalScale;
+  const minimum = input.verticalScale < 1 ? tileHeight : tileHeight / 2;
+  const tree = minimapSquareSizing.treeFraction;
+  return {
+    object: { base: minimum, minimum: base, maximum: Number.POSITIVE_INFINITY },
+    tree: { base: minimum * tree, minimum: base * tree, maximum: Number.POSITIVE_INFINITY },
+    townCenter: {
+      base: minimapSquareSizing.townCenterTileHeights * tileHeight,
+      minimum: minimapSquareSizing.townCenter * unit,
+      maximum: Number.POSITIVE_INFINITY,
+    },
   };
 }
 
@@ -228,15 +251,31 @@ export function previewMinimapSquareSizes(
   camera: PreviewCamera,
   viewport: PreviewViewport,
 ): MinimapSquareSizes {
+  return minimapSquareSizes(previewMinimapSquareSizeInput(mapWidth, mapHeight, camera, viewport));
+}
+
+export function previewMinimapSquareSizeLaws(
+  mapWidth: number,
+  mapHeight: number,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+): Record<keyof MinimapSquareSizes, ZoomSizeLaw> {
+  return minimapSquareSizeLaws(
+    previewMinimapSquareSizeInput(mapWidth, mapHeight, camera, viewport),
+  );
+}
+
+function previewMinimapSquareSizeInput(
+  mapWidth: number,
+  mapHeight: number,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+): MinimapSquareSizeInput {
   const component = previewScale(mapWidth, mapHeight, camera, viewport) * Math.SQRT1_2;
   const baseComponent =
     previewScale(mapWidth, mapHeight, { ...camera, zoom: minimumPreviewZoom }, viewport) *
     Math.SQRT1_2;
-  return minimapSquareSizes({
-    component,
-    baseComponent,
-    verticalScale: previewProjectionVerticalScale(viewport),
-  });
+  return { component, baseComponent, verticalScale: previewProjectionVerticalScale(viewport) };
 }
 
 export function minimapSquareSide(kind: MinimapSquareClass, sizes: MinimapSquareSizes): number {

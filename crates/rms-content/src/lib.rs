@@ -34,6 +34,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fs::{self, OpenOptions};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 use flate2::read::DeflateDecoder;
 use serde::{Deserialize, Serialize};
@@ -2783,9 +2784,86 @@ impl NeutralContentPack {
     }
 }
 
+#[derive(Clone, Debug)]
+pub struct VerifiedContentPack {
+    pack: HeldContentPack,
+    identity: ContentPackIdentity,
+    rms_implicit_definitions: BTreeMap<String, String>,
+}
+
+#[derive(Clone, Debug)]
+enum HeldContentPack {
+    Static(&'static NeutralContentPack),
+    Shared(Arc<NeutralContentPack>),
+}
+
+impl VerifiedContentPack {
+    pub fn from_static(pack: &'static NeutralContentPack) -> Result<Self, ContentError> {
+        Self::verify(HeldContentPack::Static(pack))
+    }
+
+    pub fn from_shared(pack: Arc<NeutralContentPack>) -> Result<Self, ContentError> {
+        Self::verify(HeldContentPack::Shared(pack))
+    }
+
+    fn verify(pack: HeldContentPack) -> Result<Self, ContentError> {
+        let content = match &pack {
+            HeldContentPack::Static(pack) => *pack,
+            HeldContentPack::Shared(pack) => pack.as_ref(),
+        };
+        let identity = content.identity()?;
+        let rms_implicit_definitions = content.rms_implicit_definitions()?;
+        Ok(Self {
+            pack,
+            identity,
+            rms_implicit_definitions,
+        })
+    }
+
+    pub fn pack(&self) -> &NeutralContentPack {
+        match &self.pack {
+            HeldContentPack::Static(pack) => pack,
+            HeldContentPack::Shared(pack) => pack,
+        }
+    }
+
+    pub fn holds(&self, pack: &NeutralContentPack) -> bool {
+        std::ptr::eq(self.pack(), pack)
+    }
+
+    pub fn identity(&self) -> &ContentPackIdentity {
+        &self.identity
+    }
+
+    pub fn rms_implicit_definitions(&self) -> &BTreeMap<String, String> {
+        &self.rms_implicit_definitions
+    }
+
+    pub fn compatible_view(
+        &self,
+        behavior_profile_id: &str,
+    ) -> Result<CompatibleContentView<'_>, ContentError> {
+        let pack = self.pack();
+        if pack
+            .compatible_behavior_profiles
+            .binary_search_by(|value| value.as_str().cmp(behavior_profile_id))
+            .is_err()
+        {
+            return Err(ContentError::IncompatibleProfile(
+                behavior_profile_id.to_owned(),
+            ));
+        }
+        Ok(CompatibleContentView {
+            pack,
+            identity: Some(&self.identity),
+        })
+    }
+}
+
 #[derive(Clone, Copy, Debug)]
 pub struct CompatibleContentView<'a> {
     pack: &'a NeutralContentPack,
+    identity: Option<&'a ContentPackIdentity>,
 }
 
 impl<'a> CompatibleContentView<'a> {
@@ -2803,11 +2881,17 @@ impl<'a> CompatibleContentView<'a> {
                 behavior_profile_id.to_owned(),
             ));
         }
-        Ok(Self { pack })
+        Ok(Self {
+            pack,
+            identity: None,
+        })
     }
 
     pub fn identity(&self) -> Result<ContentPackIdentity, ContentError> {
-        self.pack.identity()
+        match self.identity {
+            Some(identity) => Ok(identity.clone()),
+            None => self.pack.identity(),
+        }
     }
 
     pub fn rms_implicit_definition(&self, name: &str) -> Option<i32> {

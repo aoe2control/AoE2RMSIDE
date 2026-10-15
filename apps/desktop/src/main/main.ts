@@ -82,6 +82,7 @@ import {
   editionCapabilities,
   editionLanguageNotificationParams,
   externalLinkAllowed,
+  inAppUpdateOffered,
   nativeProcessAllowed,
   productIdentity,
   refusedIpcChannels,
@@ -118,6 +119,7 @@ import {
   type RmsLintWorkspaceRules,
 } from '../shared/rms-lint-rules';
 import { outputNote, type OutputMessage } from '../shared/output-message';
+import type { WorkspaceTreeChange } from '../shared/workspace-tree-change';
 import { isInstallationReadersBusy, isProtocolCancellation } from './protocol-client';
 import {
   cloneDefaultDesktopSession,
@@ -237,6 +239,7 @@ import {
   checkForNewerRelease,
   FileReleaseCheckCacheStore,
   fixtureReleaseTransport,
+  releaseRepository,
   StartupReleaseCheck,
   type ReleaseTransport,
 } from './release-check';
@@ -245,6 +248,20 @@ import {
   releaseCheckPartition,
   type NetClientRequest,
 } from './release-check-transport';
+import { spawn } from 'node:child_process';
+import { UpdateService, removeUpdateDownloads } from './update-service';
+import { netDownloadTransport, type NetDownloadRequest } from './update-transport';
+import { parseUpdateFixture, type UpdateFixture } from './update-fixture';
+import {
+  handOffOutcomeMessage,
+  handOffToInstaller,
+  HandOffRecordStore,
+  spawnInstallerLauncher,
+  unsignedReleasePublisherPolicy,
+  type InstallerHandOff,
+  type InstallerLauncher,
+} from './update-handoff';
+import { noUpdate, updateReleaseNotesUrl, type UpdateState } from '../shared/update';
 import { editionIpcRegistrar } from './edition-ipc';
 import {
   ShellOpenQueue,
@@ -291,6 +308,7 @@ let formatOnSavePreference = true;
 let indentConditionalsPreference = true;
 let liveGenerationStagesPreference = true;
 let gpuMapRenderingPreference = true;
+let mapTransitionsPreference = true;
 let inlayHintsPreference = true;
 let deletePermanentlyPreference = false;
 let rmsLintRuleSettings: RmsLintWorkspaceRules[] = [];
@@ -372,6 +390,10 @@ let sessionEndCloseStarted = false;
 const shellOpenQueue = new ShellOpenQueue();
 let installationKind: InstallationKind = 'development';
 let startupReleaseCheck = new StartupReleaseCheck(null);
+let checkForNewVersionsPreference = true;
+let updateService: UpdateService | undefined;
+let handOffRecords: HandOffRecordStore | undefined;
+let pendingHandOffNote: OutputMessage | null = null;
 let desktopSessionStore: DesktopSessionStore | undefined;
 let workspaceServiceInstance: WorkspaceService | undefined;
 let recoveryStoreInstance: RecoveryStore | undefined;
@@ -482,15 +504,117 @@ function createStartupReleaseCheck(userDataPath: string): StartupReleaseCheck {
     if (fixture === undefined) return new StartupReleaseCheck(null);
     transport = () => fixtureReleaseTransport(fixture);
   }
-  return new StartupReleaseCheck(async () => {
-    const chosen = transport();
-    if (!chosen) return { kind: 'quiet', reason: 'unavailable' };
-    return checkForNewerRelease({
-      currentVersion: productIdentity.version,
-      transport: chosen,
-      cache: new FileReleaseCheckCacheStore(userDataPath),
-    });
+  return new StartupReleaseCheck(
+    async () => {
+      const chosen = transport();
+      if (!chosen) return { kind: 'quiet', reason: 'unavailable' };
+      return checkForNewerRelease({
+        currentVersion: productIdentity.version,
+        transport: chosen,
+        cache: new FileReleaseCheckCacheStore(userDataPath),
+      });
+    },
+    {
+      enabled: () => checkForNewVersionsPreference,
+      onNewer: (outcome) => updateService?.offer(outcome.version),
+    },
+  );
+}
+
+function updateFixtureOverride(): UpdateFixture | null {
+  if (app.isPackaged) return null;
+  const text = developmentOverrides().updateFixture;
+  return text === undefined ? null : parseUpdateFixture(text);
+}
+
+function createUpdateService(userDataPath: string): {
+  service: UpdateService | undefined;
+  launcher: InstallerLauncher;
+} {
+  const fixture = updateFixtureOverride();
+  const offered = inAppUpdateOffered(
+    editionCapabilities,
+    fixture ? fixture.installation : installationKind,
+  );
+  const launcher: InstallerLauncher = fixture
+    ? {
+        launch: (path, args) =>
+          writeFile(
+            join(userDataPath, 'update-launch-fixture.json'),
+            JSON.stringify({ path, args }),
+          ),
+      }
+    : spawnInstallerLauncher(spawn);
+  if (!offered) return { service: undefined, launcher };
+  if (fixture) {
+    (
+      globalThis as typeof globalThis & { __rmsideUpdateFixtureRequests?: readonly string[] }
+    ).__rmsideUpdateFixtureRequests = fixture.requests;
+  }
+  const downloadDirectory = fixture
+    ? join(userDataPath, 'update-download')
+    : join(app.getPath('temp'), 'AoE2RMSIDE-update');
+  void removeUpdateDownloads(downloadDirectory);
+  const releaseSession = () => session.fromPartition(releaseCheckPartition);
+  const service = new UpdateService({
+    currentVersion: productIdentity.version,
+    offered: true,
+    releaseTransport: () =>
+      fixture
+        ? fixture.releaseTransport
+        : netReleaseTransport(
+            (options) => net.request(options) as unknown as NetClientRequest,
+            releaseSession(),
+          ),
+    downloadTransport: () =>
+      fixture
+        ? fixture.downloadTransport
+        : netDownloadTransport(
+            (options) => net.request(options) as unknown as NetDownloadRequest,
+            releaseSession(),
+          ),
+    downloadDirectory,
+    publisherPolicy: unsignedReleasePublisherPolicy,
+    publish: publishWorkspaceDiagnostic,
+    onState: publishUpdateState,
+    requestClose: () => {
+      if (mainWindow && !mainWindow.isDestroyed()) mainWindow.close();
+      else app.quit();
+    },
   });
+  return { service, launcher };
+}
+
+function publishUpdateState(state: UpdateState): void {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send(ipcChannels.updateEvent, state);
+  }
+}
+
+let installerLauncher: InstallerLauncher = spawnInstallerLauncher(spawn);
+
+async function finishQuit(): Promise<void> {
+  const handOff: InstallerHandOff | null = updateService?.takeHandOff() ?? null;
+  const bound = new Promise<void>((resolve) => setTimeout(resolve, 15_000));
+  const work = (async () => {
+    if (!handOff) {
+      await updateService?.dispose();
+      return;
+    }
+    try {
+      await handOffToInstaller({
+        handOff,
+        records: handOffRecords ?? { write: async () => undefined },
+        launcher: installerLauncher,
+        environment: process.env,
+      });
+    } catch (error) {
+      console.error('the update installer did not start', error);
+      app.relaunch();
+    }
+  })();
+  await Promise.race([work, bound]).catch(() => undefined);
+  app.exit(0);
 }
 
 function userProfileOptions(): { userProfileRoot?: string } {
@@ -535,6 +659,7 @@ async function createApplication(): Promise<void> {
     publishWorkspaceExternalChange,
     publishWorkspaceDiagnostic,
   );
+  workspaceServiceInstance.onTreeChange(publishWorkspaceTreeChange);
   const { externalRmsServerPath, externalXsServerPath } = developmentOverrides();
   externalLanguageServers = createExternalLanguageServers({
     userDataPath,
@@ -577,6 +702,7 @@ async function createApplication(): Promise<void> {
   indentConditionalsPreference = initialSession.indentConditionals;
   liveGenerationStagesPreference = initialSession.liveGenerationStages;
   gpuMapRenderingPreference = initialSession.gpuMapRendering;
+  mapTransitionsPreference = developmentOverrides().mapTransitions ?? initialSession.mapTransitions;
   inlayHintsPreference = initialSession.inlayHints;
   deletePermanentlyPreference = initialSession.deletePermanently;
   rmsLintRuleSettings = initialSession.rmsLintRules;
@@ -588,6 +714,15 @@ async function createApplication(): Promise<void> {
     readText: readSmallText,
     realpath,
   });
+  checkForNewVersionsPreference = initialSession.checkForNewVersions;
+  const update = createUpdateService(userDataPath);
+  updateService = update.service;
+  installerLauncher = update.launcher;
+  handOffRecords = updateService ? new HandOffRecordStore(userDataPath) : undefined;
+  const handOffRecord = await handOffRecords?.take();
+  pendingHandOffNote = handOffRecord
+    ? handOffOutcomeMessage(handOffRecord, productIdentity.version)
+    : null;
   resolvedTheme =
     initialSession.themePreference === 'system'
       ? nativeTheme.shouldUseDarkColors
@@ -722,6 +857,7 @@ async function createApplication(): Promise<void> {
       mainWindow?.webContents.isCrashed()
     ) {
       flushWindowStateSave();
+      if (!sessionEndCloseStarted) updateService?.windowClosing();
       return;
     }
     event.preventDefault();
@@ -1041,6 +1177,22 @@ function createApplicationMenu(): Menu {
               ...(stagesMenu.note
                 ? [{ id: stagesMenu.note.id, label: stagesMenu.note.label, enabled: false }]
                 : []),
+              {
+                id: 'view.map-transitions',
+                label: t('app-menu.view.map-transitions'),
+                type: 'checkbox',
+                checked: mapTransitionsPreference,
+                click: (item) => {
+                  const enabled =
+                    item.checked === mapTransitionsPreference
+                      ? !mapTransitionsPreference
+                      : item.checked;
+                  item.checked = enabled;
+                  mapTransitionsPreference = enabled;
+                  void desktopSessionStore?.updateMapTransitions(enabled);
+                  publishMenuAction({ type: 'set-map-transitions', enabled });
+                },
+              },
               { type: 'separator' },
             ] satisfies MenuItemConstructorOptions[])
           : []),
@@ -1112,28 +1264,60 @@ function createApplicationMenu(): Menu {
     {
       id: 'menu.help',
       label: t('app-menu.help.name'),
-      submenu: helpMenuItems(editionCapabilities, productIdentity.displayName).map(
-        (item): MenuItemConstructorOptions =>
+      submenu: helpMenuItems(editionCapabilities, productIdentity.displayName).flatMap(
+        (item): MenuItemConstructorOptions[] =>
           item.kind === 'link'
-            ? {
-                id: item.id,
-                label: item.label,
-                click: () => {
-                  if (!modalSurfaceOpen) void openExternalLink(item.target).catch(console.error);
+            ? [
+                {
+                  id: item.id,
+                  label: item.label,
+                  click: () => {
+                    if (!modalSurfaceOpen) void openExternalLink(item.target).catch(console.error);
+                  },
                 },
-              }
-            : {
-                id: item.id,
-                label: item.label,
-                click: () => {
-                  if (!mainWindow || modalSurfaceOpen) return;
-                  void showAboutDialog(mainWindow).catch(console.error);
+              ]
+            : [
+                ...newVersionsMenuItems(),
+                {
+                  id: item.id,
+                  label: item.label,
+                  click: () => {
+                    if (!mainWindow || modalSurfaceOpen) return;
+                    void showAboutDialog(mainWindow).catch(console.error);
+                  },
                 },
-              },
+              ],
       ),
     },
   ];
   return Menu.buildFromTemplate(template);
+}
+
+function newVersionsMenuItems(): MenuItemConstructorOptions[] {
+  if (!editionCapabilities.releaseCheck) return [];
+  return [
+    { type: 'separator' },
+    {
+      id: 'help.check-for-new-versions',
+      label: t('app-menu.help.check-for-new-versions'),
+      type: 'checkbox',
+      checked: checkForNewVersionsPreference,
+      click: (item) => {
+        if (modalSurfaceOpen) {
+          item.checked = checkForNewVersionsPreference;
+          return;
+        }
+        const enabled =
+          item.checked === checkForNewVersionsPreference
+            ? !checkForNewVersionsPreference
+            : item.checked;
+        item.checked = enabled;
+        checkForNewVersionsPreference = enabled;
+        void desktopSessionStore?.updateCheckForNewVersions(enabled);
+      },
+    },
+    { type: 'separator' },
+  ];
 }
 
 function dispatchMenuShortcut(input: Electron.Input): boolean {
@@ -1201,6 +1385,12 @@ function sourceGraphRefreshFailure(error: unknown): OutputMessage {
       fallbackHeadline: 'file-actions.included-files.refresh-failed',
     })
   );
+}
+
+function publishWorkspaceTreeChange(change: WorkspaceTreeChange): void {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send(ipcChannels.workspaceTreeChange, change);
+  }
 }
 
 function publishWorkspaceDiagnostic(message: OutputMessage): void {
@@ -2432,6 +2622,7 @@ function registerIpc(
         window: { bounds: null, maximized: false, display: null },
         dialogLocations: { ...cloneDefaultDesktopSession().dialogLocations },
         rmsLintRules: [],
+        mapTransitions: mapTransitionsPreference,
       },
     };
   });
@@ -2455,6 +2646,9 @@ function registerIpc(
     gpuMapRenderingPreference = authorized.gpuMapRendering;
     const gpuMenuItem = applicationMenu?.getMenuItemById('view.gpu-map-rendering');
     if (gpuMenuItem) gpuMenuItem.checked = gpuMapRenderingPreference;
+    mapTransitionsPreference = authorized.mapTransitions;
+    const transitionsMenuItem = applicationMenu?.getMenuItemById('view.map-transitions');
+    if (transitionsMenuItem) transitionsMenuItem.checked = mapTransitionsPreference;
     inlayHintsPreference = authorized.inlayHints;
     const inlayHintsMenuItem = applicationMenu?.getMenuItemById('view.inlay-hints');
     if (inlayHintsMenuItem) inlayHintsMenuItem.checked = inlayHintsPreference;
@@ -2469,6 +2663,7 @@ function registerIpc(
       gameTexturesFirstLinkInstallations: current.gameTexturesFirstLinkInstallations,
       rmsLintRules: current.rmsLintRules,
       languagePreference: current.languagePreference,
+      checkForNewVersions: current.checkForNewVersions,
       mapIconReliefMode: current.mapIconReliefMode,
       mapIconTerrainSmoothing: current.mapIconTerrainSmoothing,
       mapIconSpawnMarkerStyle: current.mapIconSpawnMarkerStyle,
@@ -2532,6 +2727,7 @@ function registerIpc(
       () => nativeSupervisor.cancelMapTest(request.executionId).then(() => undefined),
       () => nativeSupervisor.forceTerminateMapTest(),
       async () => {
+        presentationArbiter.beginFinals();
         event.sender.send(ipcChannels.mapTestEvent, {
           kind: 'started',
           executionId: request.executionId,
@@ -2548,13 +2744,13 @@ function registerIpc(
                   event.sender.send(ipcChannels.mapTestEvent, mapTestEvent);
                 }
               } else {
-                presentationArbiter.flushFinals();
+                presentationArbiter.endFinals();
                 event.sender.send(ipcChannels.mapTestEvent, mapTestEvent);
               }
             },
             localContentService.sourceFor(request.contentPack),
           );
-          presentationArbiter.flushFinals();
+          presentationArbiter.endFinals();
           const currentScript = nativeSupervisor.languageDocument(request.scriptUri);
           if (currentScript && currentScript.text !== request.scriptSource) {
             throw new Error('map-test script changed while execution was in flight');
@@ -2579,7 +2775,7 @@ function registerIpc(
           });
           return result;
         } finally {
-          presentationArbiter.flushFinals();
+          presentationArbiter.endFinals();
         }
       },
     );
@@ -3813,7 +4009,34 @@ function registerIpc(
   ipcMain.handle(ipcChannels.releaseNoticeTake, (event) => {
     assertTrustedSender(event.senderFrame?.url);
     assertMainWindowSender(event.sender);
+    if (pendingHandOffNote) {
+      publishWorkspaceDiagnostic(pendingHandOffNote);
+      pendingHandOffNote = null;
+    }
     return startupReleaseCheck.take();
+  });
+  ipcMain.handle(ipcChannels.updateState, (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return updateService?.state() ?? noUpdate;
+  });
+  ipcMain.handle(ipcChannels.updateStart, (event, version: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    if (typeof version !== 'string') throw new Error('update version is invalid');
+    return updateService?.start(version) ?? false;
+  });
+  ipcMain.handle(ipcChannels.updateCancel, (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    updateService?.cancel();
+  });
+  ipcMain.handle(ipcChannels.updateReleaseNotes, async (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    const state = updateService?.state() ?? noUpdate;
+    if (state.phase === 'none') throw new Error('no update is offered');
+    await shell.openExternal(updateReleaseNotesUrl(releaseRepository, state.version));
   });
   ipcMain.handle(ipcChannels.editorPaste, (event) => {
     assertTrustedSender(event.senderFrame?.url);
@@ -4200,7 +4423,10 @@ function registerIpc(
     assertMainWindowSender(event.sender);
     if (typeof allow !== 'boolean') throw new Error('window close response is invalid');
     windowCloseRequestPending = false;
-    if (!allow) return;
+    if (!allow) {
+      updateService?.closeDeclined();
+      return;
+    }
     windowCloseApproved = true;
     await persistCurrentWindowState();
     mainWindow?.close();
@@ -4612,7 +4838,7 @@ app.on('before-quit', (event) => {
       externalLanguageServers?.kill();
       activeSupervisor.killAll();
     },
-    exit: () => app.exit(0),
+    exit: () => void finishQuit(),
     log: logShutdown,
   });
 });

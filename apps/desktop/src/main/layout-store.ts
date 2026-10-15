@@ -58,9 +58,11 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   indentConditionals: true,
   liveGenerationStages: true,
   gpuMapRendering: true,
+  mapTransitions: true,
   inlayHints: true,
   inlayHintsVersion: inlayHintsSettingVersion,
   deletePermanently: false,
+  checkForNewVersions: true,
   languagePreference: 'system',
   rmsLintRules: [],
   previewPerspective: 'top-down',
@@ -181,12 +183,20 @@ export class DesktopSessionStore {
     return this.update((session) => ({ ...session, gpuMapRendering }));
   }
 
+  updateMapTransitions(mapTransitions: boolean): Promise<void> {
+    return this.update((session) => ({ ...session, mapTransitions }));
+  }
+
   updateInlayHints(inlayHints: boolean): Promise<void> {
     return this.update((session) => ({ ...session, inlayHints }));
   }
 
   updateDeletePermanently(deletePermanently: boolean): Promise<void> {
     return this.update((session) => ({ ...session, deletePermanently }));
+  }
+
+  updateCheckForNewVersions(checkForNewVersions: boolean): Promise<void> {
+    return this.update((session) => ({ ...session, checkForNewVersions }));
   }
 
   updateLanguagePreference(languagePreference: LanguagePreference): Promise<void> {
@@ -301,9 +311,11 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     indentConditionals: true,
     liveGenerationStages: true,
     gpuMapRendering: true,
+    mapTransitions: true,
     inlayHints: true,
     inlayHintsVersion: inlayHintsSettingVersion,
     deletePermanently: false,
+    checkForNewVersions: true,
     languagePreference: 'system',
     rmsLintRules: [],
     previewPerspective: 'top-down',
@@ -390,12 +402,20 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.gpuMapRendering === undefined
         ? true
         : validateBoolean(value.gpuMapRendering, 'GPU map rendering preference'),
+    mapTransitions:
+      value.mapTransitions === undefined
+        ? true
+        : validateBoolean(value.mapTransitions, 'map transitions preference'),
     inlayHints: migrateInlayHints(value.inlayHints, value.inlayHintsVersion),
     inlayHintsVersion: inlayHintsSettingVersion,
     deletePermanently:
       value.deletePermanently === undefined
         ? false
         : validateBoolean(value.deletePermanently, 'delete permanently preference'),
+    checkForNewVersions:
+      value.checkForNewVersions === undefined
+        ? true
+        : validateBoolean(value.checkForNewVersions, 'check for new versions preference'),
     languagePreference:
       value.languagePreference === undefined
         ? 'system'

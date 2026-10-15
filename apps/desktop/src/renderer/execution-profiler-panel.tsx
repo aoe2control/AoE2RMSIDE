@@ -27,6 +27,7 @@ import { layoutScrollHeight, ListMotion } from './list-motion';
 import { presenceProps, usePrefersReducedMotion, usePresence } from './motion';
 import { OverflowingLabel } from './overflow-label';
 import {
+  animatedProfilerRun,
   type ChartMotion,
   describeStepCounters,
   drawnSegmentFractions,
@@ -34,11 +35,12 @@ import {
   formatDuration,
   formatPercent,
   formatSeconds,
+  frameAlignedProfilerStore,
   groupLabel,
+  initialChartMotion,
   isCachedPreview,
   isScrolledToBottom,
   nextChartMotion,
-  nextDisplayedDurationUs,
   pendingRowKeyFor,
   pendingRowLabel,
   phaseElapsedText,
@@ -52,10 +54,11 @@ import {
   profilerPanelDescription,
   profilerRowName,
   profilerSegments,
+  profilerTimeFrame,
   profilerTimeText,
   profilerTooltip,
   type ProfilerRow,
-  provisionalDurationUs,
+  type ProfilerRun,
   rankedProfilerRows,
   stepLabel,
 } from './execution-profiler';
@@ -79,7 +82,8 @@ export function ExecutionProfiler({
   store: ExecutionProfilerStore;
 }) {
   useI18n();
-  const snapshot = useSyncExternalStore(store.subscribe, store.getSnapshot);
+  const shownStore = useMemo(() => frameAlignedProfilerStore(store), [store]);
+  const snapshot = useSyncExternalStore(shownStore.subscribe, shownStore.getSnapshot);
   const run = snapshot.run;
   const reducedMotion = usePrefersReducedMotion();
   const display = profilerDisplay(
@@ -93,28 +97,23 @@ export function ExecutionProfiler({
   const timeRef = useRef<HTMLSpanElement | null>(null);
   const focusAfterMove = useRef(false);
 
-  const displayedDuration = useRef<{ key: string; value: number | null } | null>(null);
+  const easedRun = useRef<ProfilerRun | null>(null);
+  easedRun.current = animatedProfilerRun(easedRun.current, snapshot);
+  const animatedRun = easedRun.current;
   useLayoutEffect(() => {
-    if (!run || (run.anchorMs === null && run.startedMs === null)) return undefined;
-    if (displayedDuration.current?.key !== run.key) {
-      displayedDuration.current = { key: run.key, value: null };
-    }
-    const shown = displayedDuration.current;
+    const run = animatedRun;
+    if (!run || run.anchorMs === null) return undefined;
     let frame = 0;
     const tick = () => {
-      const live = run.status === 'running';
-      shown.value = nextDisplayedDurationUs(
-        shown.value,
-        provisionalDurationUs(run, performance.now()),
-        live,
-      );
+      const now = performance.now();
+      const { durationUs: value, next } = profilerTimeFrame(run, now);
       const text = timeRef.current?.firstChild;
-      if (text instanceof Text && shown.value !== null) text.nodeValue = formatSeconds(shown.value);
-      if (live) frame = window.requestAnimationFrame(tick);
+      if (text instanceof Text && value !== null) text.nodeValue = formatSeconds(value);
+      if (next) frame = window.requestAnimationFrame(tick);
     };
     tick();
     return () => window.cancelAnimationFrame(frame);
-  }, [run]);
+  }, [animatedRun]);
 
   const bar = useExecutionProgressBar(profilerBarPhase(display.phase), reducedMotion);
 
@@ -270,6 +269,11 @@ function ExecutionProfilerPanel({
   const followBottom = useRef(true);
   const rows = useMemo(() => (summary ? rankedProfilerRows(summary) : []), [summary]);
   const highlightedGroup = hoveredGroup ?? focusedGroup;
+  const shownChartKey = useRef(chartKey);
+  const chartReplaced = shownChartKey.current !== chartKey;
+  useEffect(() => {
+    shownChartKey.current = chartKey;
+  }, [chartKey]);
   const followIfPinned = useCallback(() => {
     const element = scroller.current;
     if (element && followBottom.current) {
@@ -399,6 +403,7 @@ function ExecutionProfilerPanel({
         key={chartKey}
         live={phase === 'running'}
         reducedMotion={reducedMotion}
+        replacesShownChart={chartReplaced}
         summary={summary}
       />
     </div>
@@ -410,31 +415,65 @@ function ExecutionProfilerChart({
   highlightedGroup,
   live,
   reducedMotion,
+  replacesShownChart,
   summary,
 }: {
   highlightHandlers: HighlightHandlers;
   highlightedGroup: ExecutionGroupId | null;
   live: boolean;
   reducedMotion: boolean;
+  replacesShownChart: boolean;
   summary: ExecutionCostSummary | null;
 }) {
   const { t } = useI18n();
-  const segments = useMemo(() => (summary ? profilerSegments(summary) : []), [summary]);
+  const [shownSummary, setShownSummary] = useState(summary);
+  const [starting, setStarting] = useState(false);
+  if (!starting && shownSummary !== summary) {
+    setShownSummary(summary);
+    setStarting(true);
+  }
+  const segments = useMemo(
+    () => (shownSummary ? profilerSegments(shownSummary) : []),
+    [shownSummary],
+  );
   const widths = useMemo(
     () => drawnSegmentFractions(segments, highlightedGroup),
     [highlightedGroup, segments],
   );
-  const [armed, setArmed] = useState(false);
+  const [armed, setArmed] = useState(replacesShownChart);
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setArmed(true));
     return () => window.cancelAnimationFrame(frame);
   }, []);
-  const [motion, setMotion] = useState<ChartMotion>(live ? 'live' : 'rest');
+  const [motion, setMotion] = useState<ChartMotion>(() =>
+    initialChartMotion(live, replacesShownChart),
+  );
   const nextMotion = nextChartMotion(motion, live);
   if (nextMotion !== motion) setMotion(nextMotion);
   const chartRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (motion !== 'continuing') return undefined;
+    if (!starting) return undefined;
+    if (document.visibilityState === 'hidden') {
+      setStarting(false);
+      return undefined;
+    }
+    let active = true;
+    let frame: number | null = null;
+    const pending = (chartRef.current?.getAnimations({ subtree: true }) ?? []).filter(
+      (animation) =>
+        (animation as Partial<CSSTransition>).transitionProperty === 'width' &&
+        animation.startTime === null,
+    );
+    void Promise.allSettled(pending.map((animation) => animation.ready)).then(() => {
+      if (active) frame = window.requestAnimationFrame(() => setStarting(false));
+    });
+    return () => {
+      active = false;
+      if (frame !== null) window.cancelAnimationFrame(frame);
+    };
+  }, [shownSummary, starting]);
+  useEffect(() => {
+    if (motion !== 'continuing' || shownSummary !== summary) return undefined;
     let active = true;
     const frame = window.requestAnimationFrame(() => {
       const animations = chartRef.current?.getAnimations({ subtree: true }) ?? [];
@@ -446,7 +485,7 @@ function ExecutionProfilerChart({
       active = false;
       window.cancelAnimationFrame(frame);
     };
-  }, [motion]);
+  }, [motion, shownSummary, summary]);
   return (
     <div
       aria-label={t('profiler.chart.label')}

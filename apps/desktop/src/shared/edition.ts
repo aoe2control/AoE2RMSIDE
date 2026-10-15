@@ -303,7 +303,13 @@ const featureChannels: Record<
     'installedSourcesClone',
     'installedSourcesSelectProfile',
   ],
-  releaseCheck: ['releaseNoticeTake'],
+  releaseCheck: [
+    'releaseNoticeTake',
+    'updateState',
+    'updateStart',
+    'updateCancel',
+    'updateReleaseNotes',
+  ],
 };
 
 export function refusedIpcChannels(capabilities: EditionCapabilities): ReadonlySet<string> {
@@ -319,6 +325,13 @@ export function definitionFilesAvailable(
   capabilities: Pick<EditionCapabilities, 'newRmsScript' | 'sourceCatalog'>,
 ): boolean {
   return capabilities.newRmsScript && capabilities.sourceCatalog;
+}
+
+export function inAppUpdateOffered(
+  capabilities: Pick<EditionCapabilities, 'releaseCheck'>,
+  installation: 'development' | 'portable' | 'installed',
+): boolean {
+  return capabilities.releaseCheck && installation === 'installed';
 }
 
 export function externalLinkAllowed(

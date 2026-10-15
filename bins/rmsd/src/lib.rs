@@ -13,7 +13,7 @@ use rms_analysis::{
     analyze_semantics_single, product_strict_options, require_catalog_vocabulary,
 };
 use rms_content::{
-    CivilizationId, CompatibleContentView, ContentSourceKind, NeutralContentPack,
+    CivilizationId, ContentSourceKind, NeutralContentPack, VerifiedContentPack,
     packaged_support_bundles,
 };
 #[cfg(feature = "internal-fixtures")]
@@ -189,6 +189,7 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
                                     map_test_report_request_revision: false,
                                     connection_routes: true,
                                     control_pipe_exchange: true,
+                                    map_test_completion_order_preview: false,
                                 }),
                             }),
                         )],
@@ -1418,19 +1419,100 @@ fn product_content_packs(
 }
 
 enum ResolvedContent {
-    Product(Box<Cow<'static, NeutralContentPack>>),
-    Local(Arc<NeutralContentPack>),
+    Product(Arc<VerifiedContentPack>),
+    Local(Arc<VerifiedContentPack>),
+}
+
+impl ResolvedContent {
+    fn verified(&self) -> &VerifiedContentPack {
+        match self {
+            Self::Product(content) | Self::Local(content) => content,
+        }
+    }
 }
 
 impl std::ops::Deref for ResolvedContent {
     type Target = NeutralContentPack;
 
     fn deref(&self) -> &NeutralContentPack {
-        match self {
-            Self::Product(content) => content,
-            Self::Local(content) => content,
-        }
+        self.verified().pack()
     }
+}
+
+#[derive(Default)]
+struct VerifiedContentMemo {
+    product: Vec<Arc<VerifiedContentPack>>,
+    local: Vec<Arc<VerifiedContentPack>>,
+}
+
+const VERIFIED_LOCAL_PACKS: usize = 2;
+
+fn verified_content_memo() -> &'static Mutex<VerifiedContentMemo> {
+    static MEMO: OnceLock<Mutex<VerifiedContentMemo>> = OnceLock::new();
+    MEMO.get_or_init(Mutex::default)
+}
+
+fn verify_content(
+    verify: impl FnOnce() -> Result<VerifiedContentPack, rms_content::ContentError>,
+) -> Result<Arc<VerifiedContentPack>, ProtocolFailure> {
+    verify()
+        .map(Arc::new)
+        .map_err(|error| internal_failure(format!("content identity failed: {error}")))
+}
+
+fn verified_product_content(
+    pack: Cow<'static, NeutralContentPack>,
+) -> Result<Arc<VerifiedContentPack>, ProtocolFailure> {
+    let pack = match pack {
+        Cow::Borrowed(pack) => pack,
+        Cow::Owned(pack) => {
+            return verify_content(|| VerifiedContentPack::from_shared(Arc::new(pack)));
+        }
+    };
+    let mut memo = verified_content_memo()
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner);
+    if let Some(verified) = memo.product.iter().find(|verified| verified.holds(pack)) {
+        return Ok(Arc::clone(verified));
+    }
+    let verified = verify_content(|| VerifiedContentPack::from_static(pack))?;
+    memo.product.push(Arc::clone(&verified));
+    Ok(verified)
+}
+
+fn verified_local_content(
+    pack: Arc<NeutralContentPack>,
+) -> Result<Arc<VerifiedContentPack>, ProtocolFailure> {
+    let mut memo = verified_content_memo()
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner);
+    if let Some(index) = memo.local.iter().position(|verified| verified.holds(&pack)) {
+        let verified = memo.local.remove(index);
+        memo.local.push(Arc::clone(&verified));
+        return Ok(verified);
+    }
+    let verified = verify_content(|| VerifiedContentPack::from_shared(pack))?;
+    if memo.local.len() >= VERIFIED_LOCAL_PACKS {
+        memo.local.remove(0);
+    }
+    memo.local.push(Arc::clone(&verified));
+    Ok(verified)
+}
+
+fn frozen_profile_hash(profile: &'static BehaviorProfile) -> Result<[u8; 32], ProtocolFailure> {
+    static HASHES: OnceLock<Mutex<BTreeMap<String, [u8; 32]>>> = OnceLock::new();
+    let mut hashes = HASHES
+        .get_or_init(Mutex::default)
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner);
+    if let Some(hash) = hashes.get(&profile.profile_id) {
+        return Ok(*hash);
+    }
+    let hash = profile
+        .deterministic_hash()
+        .map_err(|error| internal_failure(format!("profile hash failed: {error}")))?;
+    hashes.insert(profile.profile_id.clone(), hash);
+    Ok(hash)
 }
 
 fn resolve_content_pack(
@@ -1558,33 +1640,29 @@ fn execute_generation(
     if document.uri.is_empty() || document.uri.len() > 4096 {
         return Err(malformed("generation document URI is invalid"));
     }
-    let profile_catalog = ProfileCatalog::frozen_current()
+    let profile_catalog = ProfileCatalog::frozen_shared()
         .map_err(|error| internal_failure(format!("profile catalog failed: {error}")))?;
     let profile = profile_catalog
         .get(&request.profile_id)
         .ok_or_else(|| unsupported(format!("unknown behavior profile {}", request.profile_id)))?;
-    let expected_profile_hash = profile
-        .deterministic_hash()
-        .map_err(|error| internal_failure(format!("profile hash failed: {error}")))?;
+    let expected_profile_hash = frozen_profile_hash(profile)?;
     let requested_profile_hash = fixed_hash(&request.behavior_profile_hash, "behavior profile")?;
     if requested_profile_hash != expected_profile_hash {
         return Err(stale("behavior profile hash does not match the catalog"));
     }
     let certification =
-        generation_certification(&profile_catalog, profile, &request.local_product_version)?;
+        generation_certification(profile_catalog, profile, &request.local_product_version)?;
 
     let content = match request.local_content.as_ref() {
-        Some(source) => {
-            ResolvedContent::Local(local_content::generation_local_content(&request, source)?)
-        }
-        None => ResolvedContent::Product(Box::new(resolve_content_pack(
+        Some(source) => ResolvedContent::Local(verified_local_content(
+            local_content::generation_local_content(&request, source)?,
+        )?),
+        None => ResolvedContent::Product(verified_product_content(resolve_content_pack(
             &request.content_pack_id,
             &profile.profile_id,
-        )?)),
+        )?)?),
     };
-    let content_identity = content
-        .identity()
-        .map_err(|error| internal_failure(format!("content identity failed: {error}")))?;
+    let content_identity = content.verified().identity().clone();
     if request.content_pack_id != content_identity.pack_id
         || request.content_pack_version != content_identity.pack_version
         || fixed_hash(&request.content_pack_hash, "content pack")? != content_identity.content_hash
@@ -1657,14 +1735,12 @@ fn execute_generation(
         .map_err(|error| malformed(format!("invalid document identity: {error}")))?;
     let source = SourceText::from_bytes(source_id, request.source.clone())
         .map_err(|error| malformed(format!("invalid source bytes: {error}")))?;
-    let vocabulary = content
-        .rms_implicit_definitions()
-        .map_err(|error| internal_failure(format!("content token environment failed: {error}")))?;
+    let vocabulary = content.verified().rms_implicit_definitions();
     if let Some(catalog) = &source_catalog {
-        require_catalog_vocabulary(catalog, &vocabulary).map_err(|error| stale(error.message))?;
+        require_catalog_vocabulary(catalog, vocabulary).map_err(|error| stale(error.message))?;
         require_catalog_standard_includes(catalog, &content)?;
     }
-    let mut parse_options = product_strict_options(profile, &vocabulary);
+    let mut parse_options = product_strict_options(profile, vocabulary);
     setup_context
         .configure_strict_parser(
             &mut parse_options,
@@ -1795,7 +1871,9 @@ fn execute_generation(
     internal_request
         .validate()
         .map_err(map_generation_failure)?;
-    let content_view = CompatibleContentView::new(&content, &profile.profile_id)
+    let content_view = content
+        .verified()
+        .compatible_view(&profile.profile_id)
         .map_err(|error| malformed(format!("content pack is incompatible: {error}")))?;
     let resolved = ResolvedGenerationInput {
         semantic_program: &semantic_program,

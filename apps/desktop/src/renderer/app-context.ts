@@ -55,6 +55,7 @@ export interface AppPanelContextValue {
   previewCandidates: PreviewCandidateStore;
   liveGenerationStages: boolean;
   gpuMapRendering: boolean;
+  mapTransitions: boolean;
   previewPerspective: PreviewPerspective;
   setPreviewPerspective(perspective: PreviewPerspective): void;
   previewLook: PreviewLook;

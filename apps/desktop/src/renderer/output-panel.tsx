@@ -25,6 +25,9 @@ import { useFollowBottom, type FollowState } from './follow-bottom';
 import { useI18n } from './i18n';
 import { OverflowingLabel } from './overflow-label';
 import type { SeverityFilter } from './severity-filter';
+import { UpdateNoteAction } from './update-control';
+
+const releaseAvailableCode = 'update.release-available';
 
 export const OutputPanel = memo(function OutputPanel({
   filter,
@@ -176,6 +179,7 @@ export function OutputMessageText({
               <OutputActionView action={message.action} translator={partTranslator('action')} />
             </span>
           ) : null}
+          {shown.code === releaseAvailableCode ? <UpdateNoteAction /> : null}
         </p>
       ) : null}
       {hasDetails ? (

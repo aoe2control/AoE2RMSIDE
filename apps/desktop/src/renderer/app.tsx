@@ -115,6 +115,12 @@ import { DefinitionFileDialog, type DefinitionFileRequest } from './definition-f
 import { useI18n } from './i18n';
 import type { MessageId } from '../shared/i18n/translator';
 import { WorkspaceSidebar } from './workspace-sidebar';
+import {
+  UpdateDialog,
+  UpdateHeaderControl,
+  UpdateProvider,
+  useUpdateController,
+} from './update-control';
 
 const bottomPanelNavigationHeight = 34;
 const explorerDefaultWidth = 248;
@@ -211,6 +217,7 @@ export function App() {
   const [indentConditionals, setIndentConditionals] = useState(true);
   const [liveGenerationStages, setLiveGenerationStages] = useState(true);
   const [gpuMapRendering, setGpuMapRendering] = useState(true);
+  const [mapTransitions, setMapTransitions] = useState(true);
   const [inlayHints, setInlayHints] = useState(true);
   const [deletePermanently, setDeletePermanently] = useState(false);
   const [previewPerspective, setPreviewPerspective] = useState<PreviewPerspective>('top-down');
@@ -593,6 +600,7 @@ export function App() {
       previewCandidates,
       liveGenerationStages,
       gpuMapRendering,
+      mapTransitions,
       previewPerspective,
       setPreviewPerspective,
       previewLook,
@@ -616,6 +624,7 @@ export function App() {
       previewCandidates,
       liveGenerationStages,
       gpuMapRendering,
+      mapTransitions,
       previewPerspective,
       previewLook,
       previewTileGrid,
@@ -736,6 +745,7 @@ export function App() {
     setIndentConditionals(session.indentConditionals);
     setLiveGenerationStages(session.liveGenerationStages);
     setGpuMapRendering(session.gpuMapRendering);
+    setMapTransitions(session.mapTransitions);
     setInlayHints(session.inlayHints);
     setDeletePermanently(session.deletePermanently);
     setPreviewPerspective(session.previewPerspective);
@@ -769,6 +779,8 @@ export function App() {
     );
   }, [appendOutput, sessionApplied]);
 
+  const update = useUpdateController(editionCapabilities.releaseCheck);
+
   const sessionAutosave = useMemo(
     () => createSessionAutosaveReporter(appendOutput),
     [appendOutput],
@@ -795,6 +807,7 @@ export function App() {
         indentConditionals,
         liveGenerationStages,
         gpuMapRendering,
+        mapTransitions,
         inlayHints,
         deletePermanently,
         previewPerspective,
@@ -837,6 +850,7 @@ export function App() {
     indentConditionals,
     liveGenerationStages,
     gpuMapRendering,
+    mapTransitions,
     inlayHints,
     deletePermanently,
     previewPerspective,
@@ -974,6 +988,8 @@ export function App() {
         setIndentConditionals(action.enabled);
       } else if (action.type === 'set-gpu-map-rendering') {
         setGpuMapRendering(action.enabled);
+      } else if (action.type === 'set-map-transitions') {
+        setMapTransitions(action.enabled);
       } else if (action.type === 'set-inlay-hints') {
         setInlayHints(action.enabled);
       } else if (action.type === 'set-delete-permanently') {
@@ -1753,6 +1769,7 @@ export function App() {
                   <EditorGameVersionSelect appendOutput={appendOutput} />
                 </div>
               )}
+              <UpdateHeaderControl controller={update.controller} />
             </div>
           </div>
           <TabsContent
@@ -1771,12 +1788,14 @@ export function App() {
             inert={bottomPanelPresence.closing || undefined}
             value="output"
           >
-            <OutputPanel
-              filter={outputSeverityFilter}
-              onNavigateOperation={openOutputOperation}
-              onToggleGroup={toggleOutputRun}
-              state={outputLog}
-            />
+            <UpdateProvider value={update.controller}>
+              <OutputPanel
+                filter={outputSeverityFilter}
+                onNavigateOperation={openOutputOperation}
+                onToggleGroup={toggleOutputRun}
+                state={outputLog}
+              />
+            </UpdateProvider>
           </TabsContent>
           <TabsContent
             className="bottom-content test-results-content"
@@ -1829,6 +1848,13 @@ export function App() {
             }}
             open={managedModDeploymentOpen}
             requestedSourceId={managedModDeploymentSourceId}
+          />
+        ) : null}
+        {editionCapabilities.releaseCheck ? (
+          <UpdateDialog
+            controller={update.controller}
+            onOpenChange={update.setDialogOpen}
+            open={update.dialogOpen}
           />
         ) : null}
       </main>

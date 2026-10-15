@@ -88,6 +88,7 @@ export const modalSafeMenuActions: ReadonlySet<ApplicationMenuAction['type']> = 
   'set-indent-conditionals',
   'set-live-generation-stages',
   'set-gpu-map-rendering',
+  'set-map-transitions',
   'set-inlay-hints',
   'set-delete-permanently',
 ]);

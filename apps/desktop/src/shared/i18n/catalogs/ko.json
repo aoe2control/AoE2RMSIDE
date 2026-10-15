@@ -134,6 +134,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "GPU 맵 렌더링"
     },
+    "app-menu.view.map-transitions": {
+      "message": "맵 전환 애니메이션"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "생성 단계 실시간 표시"
     },
@@ -193,6 +196,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "버그 신고"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "시작할 때 새 버전 확인"
     },
     "app-menu.help.about": {
       "message": "{product} 정보"
@@ -3584,9 +3590,6 @@
     "preview-panel.toolbar.connections": {
       "message": "연결 레이어"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "방향키로 타일 선택"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4678,6 +4681,123 @@
     },
     "release-check.newer.action": {
       "message": "릴리스 페이지 열기"
+    },
+    "app-update.button": {
+      "message": "업데이트"
+    },
+    "app-update.button.tooltip": {
+      "message": "AoE2RMSIDE {version}(으)로 업데이트"
+    },
+    "app-update.note-action": {
+      "message": "지금 업데이트"
+    },
+    "app-update.dialog.title": {
+      "message": "AoE2RMSIDE {version}(으)로 업데이트할까요?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE가 GitHub에서 {version} 버전의 설치 프로그램을 다운로드하고 릴리스와 함께 게시된 체크섬과 비교합니다. 그런 다음 앱을 닫고 업데이트를 설치한 뒤 다시 엽니다."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "저장하지 않은 변경 내용이 있는 문서가 있으면 먼저 이에 대해 묻습니다."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "릴리스 노트"
+    },
+    "app-update.dialog.confirm": {
+      "message": "업데이트"
+    },
+    "app-update.progress.label": {
+      "message": "업데이트"
+    },
+    "app-update.progress.downloading": {
+      "message": "다운로드 중"
+    },
+    "app-update.progress.verifying": {
+      "message": "확인 중"
+    },
+    "app-update.progress.installing": {
+      "message": "설치 중"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "AoE2RMSIDE {version} 업데이트 준비 중"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "AoE2RMSIDE {version} 다운로드 중, {percent}%({total}MB 중 {received}MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "AoE2RMSIDE {version} 설치 프로그램 확인 중"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "{version} 설치를 위해 AoE2RMSIDE를 닫는 중"
+    },
+    "app-update.cancel": {
+      "message": "업데이트 취소"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE를 {version}(으)로 업데이트하지 못했습니다"
+    },
+    "app-update.failed.action": {
+      "message": "다시 시도하려면 업데이트를 선택하세요."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "다운로드가 완료되지 않았습니다. 인터넷 연결을 확인하세요."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub가 제때 응답하지 않았습니다."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub가 릴리스 파일을 제공하지 않았습니다."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub가 업데이트에서 사용하지 않는 주소로 다운로드를 보냈습니다."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "GitHub의 릴리스가 더 이상 이 버전으로 게시되어 있지 않습니다."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "릴리스에 설치 프로그램 또는 체크섬 목록이 없습니다."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "설치 프로그램이 업데이트에서 다운로드할 수 있는 크기보다 큽니다."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "다운로드한 설치 프로그램의 크기가 릴리스에 명시된 크기와 다릅니다."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "릴리스의 체크섬 목록에 설치 프로그램이 없어 설치 프로그램을 실행하지 않았습니다."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "다운로드한 설치 프로그램이 릴리스와 함께 게시된 체크섬과 일치하지 않아 실행하지 않았습니다."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "설치 프로그램을 임시 폴더에 저장할 수 없습니다."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "설치 프로그램이 예상한 게시자의 서명을 갖고 있지 않아 실행하지 않았습니다."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "다운로드한 설치 프로그램이 실행 전에 사라졌거나 변경되었습니다."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows에서 설치 프로그램을 시작하지 못했습니다."
+    },
+    "app-update.cancelled.headline": {
+      "message": "{version}(으)로의 업데이트가 취소되었습니다"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE가 문서와 함께 열린 상태로 유지됩니다."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "다운로드한 파일은 AoE2RMSIDE를 닫을 때까지 보관됩니다. 업데이트를 선택하면 다시 다운로드하지 않고 설치합니다."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE가 {version}(으)로 업데이트되었습니다"
+    },
+    "app-update.incomplete.headline": {
+      "message": "{version}(으)로의 업데이트가 완료되지 않았습니다"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current}이(가) 계속 설치되어 있습니다."
     },
     "external-language-server.started.headline": {
       "message": "{language} 파일에 {server}을(를) 사용합니다"

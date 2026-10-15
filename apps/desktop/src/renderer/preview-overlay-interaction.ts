@@ -351,37 +351,9 @@ export function usePreviewLegendWidth(
 
 export function previewLegendMaxHeight(
   previewHeight: number,
-  layout: { narrow: boolean; readoutStacked: boolean; keyboardCueRise: number },
+  layout: { narrow: boolean; readoutStacked: boolean },
 ): number {
   const top = (layout.narrow ? 56 : 22) + 22 + 6 + (layout.readoutStacked ? 20 : 0);
-  const bottom = Math.max(22 + 26 + 20, layout.keyboardCueRise + 6);
+  const bottom = 22 + 26 + 20;
   return Math.max(26, previewHeight - top - bottom);
-}
-
-export function useKeyboardCueRise(): [(toolbar: HTMLElement | null) => void, number] {
-  const [toolbar, setToolbar] = useState<HTMLElement | null>(null);
-  const [rise, setRise] = useState(0);
-  useEffect(() => {
-    if (!toolbar) {
-      setRise(0);
-      return undefined;
-    }
-    const update = () => {
-      const cue = toolbar.querySelector<HTMLElement>('.preview-keyboard-focus-cue');
-      const host = toolbar.parentElement;
-      const next =
-        cue && host && cue.getClientRects().length > 0
-          ? Math.max(
-              0,
-              Math.ceil(host.getBoundingClientRect().bottom - cue.getBoundingClientRect().top),
-            )
-          : 0;
-      setRise((current) => (current === next ? current : next));
-    };
-    update();
-    const resizeObserver = new ResizeObserver(update);
-    resizeObserver.observe(toolbar);
-    return () => resizeObserver.disconnect();
-  }, [toolbar]);
-  return [setToolbar, rise];
 }

@@ -134,6 +134,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "GPU でマップを描画"
     },
+    "app-menu.view.map-transitions": {
+      "message": "マップの切り替えをアニメーション表示"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "生成途中のマップを表示"
     },
@@ -193,6 +196,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "不具合を報告"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "起動時に新しいバージョンを確認"
     },
     "app-menu.help.about": {
       "message": "{product} について"
@@ -3584,9 +3590,6 @@
     "preview-panel.toolbar.connections": {
       "message": "接続レイヤー"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "矢印キーでタイルを選択"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4678,6 +4681,123 @@
     },
     "release-check.newer.action": {
       "message": "リリースページを開く"
+    },
+    "app-update.button": {
+      "message": "更新"
+    },
+    "app-update.button.tooltip": {
+      "message": "AoE2RMSIDE {version} に更新"
+    },
+    "app-update.note-action": {
+      "message": "今すぐ更新"
+    },
+    "app-update.dialog.title": {
+      "message": "AoE2RMSIDE {version} に更新しますか？"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE は GitHub からバージョン {version} のインストーラーをダウンロードし、リリースと一緒に公開されているチェックサムと照合します。その後、AoE2RMSIDE を閉じて更新をインストールし、再び起動します。"
+    },
+    "app-update.dialog.unsaved": {
+      "message": "保存していない変更があるドキュメントがある場合は、先にその確認が表示されます。"
+    },
+    "app-update.dialog.release-notes": {
+      "message": "リリースノート"
+    },
+    "app-update.dialog.confirm": {
+      "message": "更新"
+    },
+    "app-update.progress.label": {
+      "message": "更新"
+    },
+    "app-update.progress.downloading": {
+      "message": "ダウンロード中"
+    },
+    "app-update.progress.verifying": {
+      "message": "確認中"
+    },
+    "app-update.progress.installing": {
+      "message": "インストール中"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "AoE2RMSIDE {version} への更新を準備中"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "AoE2RMSIDE {version} をダウンロード中、{percent}%（{total} MB 中 {received} MB）"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "AoE2RMSIDE {version} のインストーラーを確認中"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "{version} をインストールするため AoE2RMSIDE を閉じています"
+    },
+    "app-update.cancel": {
+      "message": "更新をキャンセル"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE を {version} に更新できませんでした"
+    },
+    "app-update.failed.action": {
+      "message": "もう一度試すには「更新」を選んでください。"
+    },
+    "app-update.failed.cause.offline": {
+      "message": "ダウンロードが完了しませんでした。インターネット接続を確認してください。"
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub から時間内に応答がありませんでした。"
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub からリリースのファイルを取得できませんでした。"
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub がダウンロードを、更新で使用しないアドレスに転送しました。"
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "GitHub 上のリリースが、このバージョンとして公開されなくなりました。"
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "リリースにインストーラーまたはチェックサムの一覧がありません。"
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "インストーラーが、更新でダウンロードできるサイズを超えています。"
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "ダウンロードしたインストーラーのサイズが、リリースに記載されたサイズと異なります。"
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "リリースのチェックサム一覧にインストーラーが記載されていないため、インストーラーを実行しませんでした。"
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "ダウンロードしたインストーラーがリリースと一緒に公開されたチェックサムと一致しないため、実行しませんでした。"
+    },
+    "app-update.failed.cause.disk": {
+      "message": "インストーラーを一時フォルダーに保存できませんでした。"
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "インストーラーが想定された発行元によって署名されていないため、実行しませんでした。"
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "ダウンロードしたインストーラーが、実行前に削除または変更されました。"
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows がインストーラーを起動できませんでした。"
+    },
+    "app-update.cancelled.headline": {
+      "message": "{version} への更新をキャンセルしました"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE はドキュメントを開いたままです。"
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "ダウンロードしたファイルは AoE2RMSIDE を閉じるまで保持されます。「更新」を選ぶと、再ダウンロードせずにインストールできます。"
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE を {version} に更新しました"
+    },
+    "app-update.incomplete.headline": {
+      "message": "{version} への更新が完了しませんでした"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} がインストールされたままです。"
     },
     "external-language-server.started.headline": {
       "message": "{language} ファイルに {server} を使用しています"

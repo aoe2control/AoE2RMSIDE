@@ -40,7 +40,7 @@ import {
   Texture,
   type ContainerChild,
 } from 'pixi.js';
-import { Grid3x3, Keyboard, MousePointer2, Scan, TestTube2, TreePine } from 'lucide-react';
+import { Grid3x3, MousePointer2, Scan, TestTube2, TreePine } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { t as translate } from '../shared/i18n/translator';
@@ -156,7 +156,7 @@ import {
 } from './preview-boundary';
 import { documentTransitionEnvironment, watchSizeTransitions } from './layout-transition';
 import { ListMotion } from './list-motion';
-import { presenceProps, useHeld, usePresence } from './motion';
+import { prefersReducedMotion, presenceProps, useHeld, usePresence } from './motion';
 import { OverflowingLabel } from './overflow-label';
 import { SearchField } from './search-field';
 import {
@@ -164,12 +164,25 @@ import {
   previewLegendMaxHeight,
   rectContainsPoint,
   useCanvasKeyboardFocus,
-  useKeyboardCueRise,
   useOverlayPointerHover,
   usePreviewLegendWidth,
   useReadoutLabelGlide,
 } from './preview-overlay-interaction';
 import { PreviewCandidateLayer, type CandidatePresentation } from './preview-candidate-layer';
+import {
+  morphPicture,
+  PreviewMapTransitions,
+  type MorphTerrainData,
+  type RetiredTerrain,
+} from './preview-map-transitions';
+import {
+  fitTransitionToScene,
+  nextLiveStageHold,
+  planLiveStageMorph,
+  releasesLiveStageHold,
+  type LiveStageHold,
+  type TransitionPicture,
+} from './preview-transitions';
 import {
   previewLegendContent,
   ProvisionalLegendCounts,
@@ -180,7 +193,6 @@ import {
 import * as latencyProbe from './latency-probe';
 import { previewCandidateStageLabel, type PreviewCandidateView } from './preview-candidate-store';
 import {
-  cameraRevealingTile,
   describePreviewSelection,
   keyboardCursorFor,
   moveKeyboardSelection,
@@ -201,13 +213,8 @@ import {
   mapScreenBounds,
   mapToScreen,
   panPreviewCamera,
-  previewAppearanceMarkerMinimumRadius,
   previewCliffStrokeWidth,
-  previewMarkerScreenRadius,
   previewMarkerVerticalScale,
-  previewObjectFootprintSpan,
-  previewObjectMarkerScreenRadius,
-  previewObjectMarkerSpan,
   previewLevelPixels,
   previewScale,
   previewScreenTransform,
@@ -232,11 +239,8 @@ import {
   aggregateTileIndexLayers,
   cliffMaterial,
   connectionMaterial,
-  hasVisiblePreviewFootprint,
   isDrawnPreviewObject,
   legendHighlightKey,
-  markerShapePolygon,
-  objectMaterial,
   objectNameForId,
   operationTileIndices,
   partitionHelperLayers,
@@ -254,7 +258,6 @@ import {
 } from './preview-materials';
 import {
   flatElevationMode,
-  heightMapObjectLightAt,
   nextElevationDisplayMode,
   shownElevationDisplayMode,
   terrainElevationRange,
@@ -262,7 +265,15 @@ import {
   type ElevationRange,
 } from './preview-terrain-mesh';
 import { buildTerrainTexels } from './preview-terrain-texture';
-import { OrderedMarkerLayer } from './preview-marker-mesh';
+import { OrderedMarkerLayer, zoomMarkerMeshes } from './preview-marker-mesh';
+import {
+  bindPreviewOverlayFades,
+  overlayFadeOf,
+  usePreviewOverlayFades,
+  type OverlayFade,
+} from './preview-overlay-fade';
+import { applyPreviewResizeAnchor, previewResizeAnchor } from './preview-resize-anchor';
+import { drawObjects, objectHeightMapLight } from './preview-object-markers';
 import { chunkSpriteMatrix } from './game-art-terrain';
 import { litColor, raisedSurfaceFor, type ElevationSurface } from './preview-elevation';
 import {
@@ -275,6 +286,7 @@ import {
   minimapSquareSide,
   minimapSquareTownCenterBorderColor,
   nextPreviewObjectsMode,
+  previewMinimapSquareSizeLaws,
   previewMinimapSquareSizes,
   type MinimapSquareClass,
   type PreviewObjectsMode,
@@ -797,6 +809,7 @@ interface RaisedTerrainState {
   surface: ElevationSurface;
   uniforms: RaisedTerrainUniforms;
   layer: RaisedColorTerrainLayer | null;
+  texels: Uint8Array | null;
 }
 
 interface TerrainColorSources {
@@ -830,12 +843,19 @@ export function PreviewPanel() {
   const host = useRef<HTMLDivElement>(null);
   const application = useRef<Application | null>(null);
   const renderScheduler = useRef<PreviewRenderScheduler | null>(null);
+  const mapTransitions = useRef<PreviewMapTransitions | null>(null);
+  const shownTransitionPicture = useRef<TransitionPicture | null>(null);
+  const liveStageEndedAt = useRef<number | null>(null);
+  const liveStageHold = useRef<LiveStageHold>('none');
+  const [, setLiveStageHoldRevision] = useState(0);
+  const stageMorphTerrain = useRef<Container | null>(null);
   const builtMapLayer = useRef<(BuiltMapLayer & { key: PreviewCamera }) | null>(null);
   const gesture = useRef<PreviewPointerGesture | null>(null);
   const selectionOutline = useRef<Graphics | null>(null);
   const sourceHighlightOutline = useRef<Graphics | null>(null);
   const legendHoverOutline = useRef<Graphics | null>(null);
   const legendHoverTileIndices = useRef<number[]>([]);
+  const overlayFades = usePreviewOverlayFades(renderScheduler, host);
   const shownPictureNow = useRef<() => ShownPicture>(() => ({ source: 'none', raised: null }));
   const shownRaisedSurface = useRef<() => ElevationSurface | null>(() => null);
   const followedSurface = useRef<ElevationSurface | null | undefined>(undefined);
@@ -881,14 +901,14 @@ export function PreviewPanel() {
   const cameraAnimationFrame = useRef<number | null>(null);
   const wheelCommitTimer = useRef<number | null>(null);
   const previousMapDimensions = useRef<string | null>(null);
+  const outgoingSizeCamera = useRef<PreviewCamera | null>(null);
   const keyboardInput = useRef<{
     fit(): void;
     pan(direction: { screenX: number; screenY: number }): void;
-    reveal(tile: { x: number; y: number }): void;
     scene: TopDownScene | null;
     selection: PreviewSelection | null;
     zoom(factor: number): void;
-  }>({ fit() {}, pan() {}, reveal() {}, scene: null, selection: null, zoom() {} });
+  }>({ fit() {}, pan() {}, scene: null, selection: null, zoom() {} });
   const keyboardCursor = useRef<{
     selection: PreviewSelection;
     state: PreviewKeyboardCursor;
@@ -936,7 +956,13 @@ export function PreviewPanel() {
     gpuMapRendering,
     previewMapOrigin,
     mapTestPreviewShown,
+    mapTransitions: mapTransitionsSetting,
   } = useAppPanelContext();
+  const mapTransitionsSettingRef = useRef(mapTransitionsSetting);
+  mapTransitionsSettingRef.current = mapTransitionsSetting;
+  useEffect(() => {
+    if (mapTransitions.current) mapTransitions.current.enabled = mapTransitionsSetting;
+  }, [mapTransitionsSetting]);
   const drawnLook = mapTestPreviewLook(previewLook, mapTestPreviewShown);
   const [gpuUnavailable, setGpuUnavailable] = useState<GpuMapUnavailableReason | null>(null);
   const mapRenderer = chooseMapRenderer(gpuMapRendering, gpuUnavailable);
@@ -986,7 +1012,6 @@ export function PreviewPanel() {
   useOverlayPointerHover(host);
   useReadoutLabelGlide(host);
   useCanvasKeyboardFocus(host);
-  const outdatedMapShown = generationActive && !candidateActive;
   const connectionMapFinal = map !== null && !generationActive;
   const connectionPaths = connectionPathsAvailability(connectionRoutes, connectionMapFinal);
   const shownConnectionMode = shownConnectionOverlayMode(overlays.connections, connectionPaths);
@@ -1004,11 +1029,6 @@ export function PreviewPanel() {
         : null,
     [candidateActive, candidateHeight, candidateWidth],
   );
-  const candidateCoversScene =
-    candidateScene !== null &&
-    (!scene || scene.width !== candidateScene.width || scene.height !== candidateScene.height);
-  const viewScene = candidateCoversScene ? candidateScene : scene;
-  const viewAvailable = viewScene !== null;
   const [localNames, setLocalNames] = useState<LocalPresentationNames | null>(null);
   const [installationRevision, setInstallationRevision] = useState(0);
   useEffect(() => {
@@ -1105,6 +1125,22 @@ export function PreviewPanel() {
     objectName: gameArtObjectName,
     appendOutput,
   });
+  liveStageHold.current = nextLiveStageHold(liveStageHold.current, {
+    candidateActive,
+    enabled: mapTransitionsSetting,
+    reducedMotion: prefersReducedMotion(),
+    colourMapShown: map !== null && scene !== null && !gameArt.expected,
+    stagesShown: !gameArt.expected || gameTexturesLiveStages(gameArt.expected, generationActivity),
+  });
+  const liveStageHeld = liveStageHold.current === 'holding';
+  const candidateShown = candidateActive && !liveStageHeld;
+  const outdatedMapShown = generationActive && !candidateShown;
+  const candidateCoversScene =
+    candidateScene !== null &&
+    !liveStageHeld &&
+    (!scene || scene.width !== candidateScene.width || scene.height !== candidateScene.height);
+  const viewScene = candidateCoversScene ? candidateScene : scene;
+  const viewAvailable = viewScene !== null;
   const gameArtTerrainView = candidateCoversScene ? null : gameArt.terrain;
   const gameArtSpriteView =
     candidateCoversScene || previewPerspective !== 'diamond' ? null : gameArt.sprites;
@@ -1221,7 +1257,7 @@ export function PreviewPanel() {
         : [],
     [generationActive, highlightedPreviewOperationIndices, map, objectVisibility, scene, selection],
   );
-  const displaySelection = candidateActive
+  const displaySelection = candidateShown
     ? selectionFitsCandidate(selection, candidateWidth, candidateHeight)
       ? selection
       : null
@@ -1427,26 +1463,7 @@ export function PreviewPanel() {
     },
     [viewScene, scheduleCameraTransition, viewport],
   );
-  const reveal = useCallback(
-    (tile: { x: number; y: number }) => {
-      if (!viewScene) return;
-      const surface = shownRaisedSurface.current();
-      const next = cameraRevealingTile(
-        pendingCamera.current ?? displayedCamera.current,
-        tile,
-        viewScene.width,
-        viewScene.height,
-        viewport,
-        undefined,
-        surface ? surface.heightAt(tile.x + 0.5, tile.y + 0.5) : 0,
-      );
-      if (!next) return;
-      cameraIsFitted.current = false;
-      scheduleCameraTransition(next);
-    },
-    [viewScene, scheduleCameraTransition, viewport],
-  );
-  keyboardInput.current = { fit, pan, reveal, scene: viewScene, selection, zoom };
+  keyboardInput.current = { fit, pan, scene: viewScene, selection, zoom };
 
   useEffect(() => {
     const dimensions = scene ? `${scene.width}x${scene.height}` : null;
@@ -1468,7 +1485,7 @@ export function PreviewPanel() {
     }
   }, [candidateActive, scene]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!viewScene) {
       previousMapDimensions.current = null;
       stashedCamera.current = null;
@@ -1514,6 +1531,8 @@ export function PreviewPanel() {
     }
     if (!candidateCoversScene) stashedCamera.current = null;
     displayedCamera.current = nextCamera;
+    outgoingSizeCamera.current =
+      dimensionsChanged && !samePreviewCamera(camera, nextCamera) ? camera : null;
     setCamera((current) => (samePreviewCamera(current, nextCamera) ? current : nextCamera));
     setHoveredCoordinate(null);
   }, [
@@ -1555,6 +1574,7 @@ export function PreviewPanel() {
     const initialWidth = Math.max(1, container.clientWidth);
     const initialHeight = Math.max(1, container.clientHeight);
     let scheduler: PreviewRenderScheduler | null = null;
+    let transitions: PreviewMapTransitions | null = null;
     void pixi
       .init({
         antialias: false,
@@ -1588,17 +1608,42 @@ export function PreviewPanel() {
           setGpuUnavailable('context-lost'),
         );
         application.current = pixi;
-        scheduler = new PreviewRenderScheduler(() => pixi.render(), {
-          verify: () => container.dataset.previewFrameCheck === 'on',
-          frameHash: () => previewFrameHash(pixi),
-          onFrame: (current) => {
-            container.dataset.previewRenders = String(current.statistics.renders);
-            container.dataset.previewFrameChecks = String(current.statistics.checks);
-            container.dataset.previewStaleFrames = String(current.statistics.staleFrames);
+        scheduler = new PreviewRenderScheduler(
+          () => {
+            const screen = pixi.renderer.screen;
+            applyPreviewResizeAnchor(
+              pixi.stage,
+              previewResizeAnchor(
+                builtMapLayer.current,
+                displayedCamera.current,
+                cameraIsFitted.current,
+                screen.width,
+                screen.height,
+              ),
+              container,
+            );
+            pixi.render();
           },
-        });
+          {
+            verify: () => container.dataset.previewFrameCheck === 'on',
+            frameHash: () => previewFrameHash(pixi),
+            onFrame: (current) => {
+              container.dataset.previewRenders = String(current.statistics.renders);
+              container.dataset.previewFrameChecks = String(current.statistics.checks);
+              container.dataset.previewStaleFrames = String(current.statistics.staleFrames);
+            },
+          },
+        );
         attachPreviewRenderScheduler(pixi.stage, scheduler);
         renderScheduler.current = scheduler;
+        transitions = new PreviewMapTransitions({
+          host: container,
+          application: () => application.current,
+          scheduler: () => renderScheduler.current,
+          mapLayer: () => renderedMapLayer.current,
+        });
+        transitions.enabled = mapTransitionsSettingRef.current;
+        mapTransitions.current = transitions;
         const width = Math.max(1, container.clientWidth);
         const height = Math.max(1, container.clientHeight);
         pixi.renderer.resize(width, height);
@@ -1622,7 +1667,8 @@ export function PreviewPanel() {
         (pixi.renderer.screen.width !== width || pixi.renderer.screen.height !== height)
       ) {
         pixi.renderer.resize(width, height);
-        scheduler?.request();
+        if (synchronous) scheduler?.request();
+        else scheduler?.renderNow();
       }
       const previous = requestedSize ?? viewportRef.current;
       if (previous.width === width && previous.height === height) return;
@@ -1696,6 +1742,11 @@ export function PreviewPanel() {
       resizeObserver.disconnect();
       stopContextWatch?.();
       setPixiReady(false);
+      if (transitions) {
+        transitions.destroy();
+        if (mapTransitions.current === transitions) mapTransitions.current = null;
+      }
+      shownTransitionPicture.current = null;
       if (application.current === pixi) application.current = null;
       if (scheduler) {
         scheduler.destroy();
@@ -1718,11 +1769,18 @@ export function PreviewPanel() {
   const sceneCamera = mapLayerKeptForCamera(builtMapLayer.current, camera, viewport, viewScene)
     ? builtMapLayer.current!.key
     : camera;
+  const stateCamera = camera;
+  useEffect(() => {
+    mapTransitions.current?.finish();
+  }, [viewport.width, viewport.height, viewport.projection]);
   useEffect(() => {
     const pixi = application.current;
     const container = host.current;
     const scene = viewScene;
     if (!pixiReady || !pixi || !container || !scene) return undefined;
+    const camera =
+      outgoingSizeCamera.current === stateCamera ? displayedCamera.current : stateCamera;
+    outgoingSizeCamera.current = null;
     const canvas = pixi.canvas;
     latencyProbe.sceneBuild('start');
     const heightOverlayColor = cssColorToNumber(
@@ -1745,7 +1803,43 @@ export function PreviewPanel() {
       !(gameArtExpected && layerRenderer === 'cpu') &&
       raisedProbe(pixi.renderer) === null;
     const terrainCacheKey = `${candidateCoversScene ? `candidate-view:${scene.width}x${scene.height}` : (map?.semanticHash ?? '')}:${map?.backend ?? 'synthetic'}:${map?.minimapPalette?.paletteHash ?? 'fallback'}:${terrainColorSources.identity}:${textureColorsShown ? `texture-colors:${textureColorsShown.key}` : 'minimap-colors'}:${overlays.connectionTerrain ? 'post-connections' : 'pre-connections'}:${elevationMode}:${heightOverlayColor}:${raisedView ? 'raised' : 'flat'}`;
+    const transitions = mapTransitions.current;
+    const transitionPicture: TransitionPicture = {
+      map: candidateCoversScene
+        ? `candidate-view:${scene.width}x${scene.height}`
+        : (map?.semanticHash ?? ''),
+      look: gameArtExpected ? 'game-textures' : textureColorsShown ? 'texture-colors' : 'minimap',
+      relief: raisedView ? 'raised' : elevationMode,
+      gameTextures: gameArtExpected,
+      view: projectionMode,
+      liveStageView: candidateCoversScene,
+    };
+    const previousTransitionPicture = shownTransitionPicture.current;
+    shownTransitionPicture.current = transitionPicture;
     let terrainCache = terrainChunkCache.current;
+    const replacingTerrain = !terrainCache || terrainCache.key !== terrainCacheKey;
+    const transition =
+      transitions && replacingTerrain
+        ? fitTransitionToScene(
+            transitions.plan(previousTransitionPicture, transitionPicture, {
+              liveStageShown: liveStageShown(shownPictureNow.current()),
+              afterLiveStage:
+                liveStageEndedAt.current !== null &&
+                liveStageEndedAt.current === renderScheduler.current?.statistics.renders,
+            }),
+            {
+              replacing: terrainCache !== null,
+              previousFlat: terrainCache?.terrainSource != null && !terrainCache.raised,
+              previousRaised: terrainCache?.raised?.layer != null,
+              nextRaised: raisedView && !gameArtExpected,
+            },
+          )
+        : null;
+    const crossFading = transition?.crossFade === true && transitions!.captureOutgoing();
+    if (transition?.kind) transitions!.finish();
+    else if (replacingTerrain) transitions?.finishTerrain();
+    let morphFrom: ReturnType<typeof morphPicture> = null;
+    let heightMorphFrom: { retired: RetiredTerrain; picture: MorphTerrainData } | null = null;
     if (!terrainCache || terrainCache.key !== terrainCacheKey) {
       const replaced = terrainCache;
       terrainCache = createTerrainChunkCache(
@@ -1762,7 +1856,43 @@ export function PreviewPanel() {
       );
       if (replaced) {
         if (gameArtExpected) handOverGameArtPicture(replaced, terrainCache);
-        destroyTerrainChunkCache(replaced);
+        const heightMorphPicture =
+          transition?.kind === 'morph' && transition.heights
+            ? committedMorphPicture(replaced)
+            : null;
+        if (transition?.kind === 'morph' && !transition.heights) {
+          morphFrom = morphPicture(
+            replaced.terrainSource,
+            replaced.scene.width,
+            replaced.scene.height,
+          );
+          if (morphFrom) replaced.terrainSource = null;
+        }
+        if (transition?.kind === 'flatten' && replaced.raised) {
+          const retired = replaced;
+          transitions!.flatten({
+            retired: retired.container,
+            uniforms: retired.raised!.uniforms,
+            incoming: terrainCache.container,
+            dispose: () => destroyTerrainChunkCache(retired),
+          });
+        } else if (heightMorphPicture) {
+          const retired = replaced;
+          heightMorphFrom = {
+            picture: heightMorphPicture,
+            retired: {
+              container: retired.container,
+              dispose: () => destroyTerrainChunkCache(retired),
+            },
+          };
+        } else if (
+          !transitions?.retire({
+            container: replaced.container,
+            dispose: () => destroyTerrainChunkCache(replaced),
+          })
+        ) {
+          destroyTerrainChunkCache(replaced);
+        }
       }
       terrainChunkCache.current = terrainCache;
     }
@@ -1775,7 +1905,9 @@ export function PreviewPanel() {
           (child) =>
             child !== terrainCache.container &&
             child !== liveCandidate?.container &&
-            child !== keptStage?.container,
+            child !== keptStage?.container &&
+            child !== heightMorphFrom?.retired.container &&
+            !transitions?.keeps(child),
         ),
     );
     pixi.stage.addChild(terrainCache.container);
@@ -1822,9 +1954,62 @@ export function PreviewPanel() {
       cliffs: overlays.cliffs,
     });
     setGameArtTreeScale(terrainCache, treeSpriteScale(previewSmallTrees));
-    syncTileGrid(terrainCache, previewTileGrid, tileGridColor(container), container);
+    syncTileGrid(
+      terrainCache,
+      previewTileGrid,
+      tileGridColor(container),
+      container,
+      overlayFades.tileGrid,
+    );
     transformTerrainLayer(terrainCache.container, camera, scene, viewport);
     updateTerrainChunkVisibility(terrainCache, [camera], viewport, container);
+    if (morphFrom) {
+      const morphTo = morphPicture(terrainCache.terrainSource, scene.width, scene.height);
+      if (morphTo) transitions!.morph(terrainCache.container, morphFrom, morphTo, true);
+      else morphFrom.source.destroy();
+    }
+    if (heightMorphFrom) {
+      const { retired, picture: previous } = heightMorphFrom;
+      const target = terrainCache;
+      const next = target.raised;
+      const incoming = next?.layer?.container;
+      const nextTexels = next?.texels;
+      if (next && incoming && nextTexels) {
+        transitions!.morphLater({
+          track: 'morph',
+          heights: true,
+          place: (mesh) => {
+            mesh.zIndex = 1.05;
+            target.container.sortableChildren = true;
+            target.container.addChild(mesh);
+          },
+          incoming,
+          incomingUniforms: next.uniforms,
+          objects: null,
+          objectsFadeIn: transition!.objectsFadeIn,
+          retired,
+          pictures: () => ({
+            previous,
+            next: {
+              texels: nextTexels,
+              width: target.scene.width,
+              height: target.scene.height,
+              surface: next.surface,
+            },
+          }),
+        });
+      } else {
+        retired.dispose();
+        if (next) transitions!.rise(next.uniforms, target.container, transition!.objectsFadeIn);
+      }
+    }
+    if (transition?.kind === 'rise' && terrainCache.raised) {
+      transitions!.rise(
+        terrainCache.raised.uniforms,
+        terrainCache.container,
+        transition.objectsFadeIn,
+      );
+    }
     const mapLayer = new Container({ isRenderGroup: true });
     pixi.stage.addChild(mapLayer);
     mapLayer.visible = terrainCache.gameArtPresentation.outgoing === null;
@@ -1991,16 +2176,31 @@ export function PreviewPanel() {
       liveCandidate.transform(camera, viewport, scene);
     }
     const shownNow = shownPictureNow.current();
-    coverCommittedLayers(terrainCache.container, mapLayer, liveStageShown(shownNow));
+    coverCommittedLayers(
+      coveredCommittedTerrain(terrainCache.container, stageMorphTerrain.current),
+      mapLayer,
+      liveStageShown(shownNow),
+    );
     container.dataset.shownPicture = shownNow.source;
     const nextSelectionOutline = new Graphics();
     const nextSourceHighlightOutline = new Graphics();
     const nextLegendHoverOutline = new Graphics();
+    const nextLegendLeavingOutline = new Graphics();
+    legendLeavingOverlays.set(nextLegendHoverOutline, nextLegendLeavingOutline);
     const outlineLayer = new Container();
-    outlineLayer.addChild(nextSelectionOutline, nextSourceHighlightOutline, nextLegendHoverOutline);
+    outlineLayer.addChild(
+      nextSelectionOutline,
+      nextSourceHighlightOutline,
+      nextLegendLeavingOutline,
+      nextLegendHoverOutline,
+    );
     selectionOutlineSurfaces.set(nextSelectionOutline, () => shownRaisedSurface.current());
     const raisedFills: ShownRaisedHighlight[] = [];
-    for (const graphics of [nextSourceHighlightOutline, nextLegendHoverOutline]) {
+    for (const graphics of [
+      nextSourceHighlightOutline,
+      nextLegendHoverOutline,
+      nextLegendLeavingOutline,
+    ]) {
       const highlight = new ShownRaisedHighlight(
         outlineLayer,
         graphics,
@@ -2013,6 +2213,12 @@ export function PreviewPanel() {
     selectionOutline.current = nextSelectionOutline;
     sourceHighlightOutline.current = nextSourceHighlightOutline;
     legendHoverOutline.current = nextLegendHoverOutline;
+    const releaseOverlayFades = bindPreviewOverlayFades(overlayFades, {
+      selection: nextSelectionOutline,
+      source: [nextSourceHighlightOutline, raisedFills[0] ?? null],
+      legend: [nextLegendHoverOutline, raisedFills[1] ?? null],
+      legendLeaving: [nextLegendLeavingOutline, raisedFills[2] ?? null],
+    });
     drawPreviewOutlines(
       nextSelectionOutline,
       nextSourceHighlightOutline,
@@ -2358,6 +2564,8 @@ export function PreviewPanel() {
     window.addEventListener('pointerup', releaseNativePointer, true);
     window.addEventListener('pointercancel', cancelNativePointer, true);
     pixi.stage.addChild(interaction);
+    if (crossFading) transitions!.crossFade();
+    transitions?.placeStageNodes(pixi.stage, terrainCache.container);
     setCameraDataset(container, scene, camera, viewport);
     container.dataset.outlineCameraZoom = camera.zoom.toFixed(4);
     sceneBuilds.current += 1;
@@ -2403,6 +2611,7 @@ export function PreviewPanel() {
     }
     return () => {
       interaction.removeAllListeners();
+      releaseOverlayFades();
       for (const fill of raisedFills) fill.destroy();
       if (connectionHoverFrame !== null) window.cancelAnimationFrame(connectionHoverFrame);
       clearConnectionHover.current = () => {};
@@ -2442,6 +2651,7 @@ export function PreviewPanel() {
     mapRenderer,
     objectVisibility,
     overlays,
+    overlayFades,
     connectionRouteHitBounds,
     connectionRoutes,
     shownConnectionMode,
@@ -2595,7 +2805,10 @@ export function PreviewPanel() {
   followShownPicture.current = () => {
     const shown = shownPictureNow.current();
     coverCommittedLayers(
-      terrainChunkCache.current?.container ?? null,
+      coveredCommittedTerrain(
+        terrainChunkCache.current?.container ?? null,
+        stageMorphTerrain.current,
+      ),
       renderedMapLayer.current,
       liveStageShown(shown),
     );
@@ -2664,7 +2877,7 @@ export function PreviewPanel() {
     const layer = new PreviewCandidateLayer(previewCandidates);
     candidateLayer.current = layer;
     liveStageRun.current = { layer, startMap: latestMap.current };
-    layer.container.visible = candidateLayerShownRef.current;
+    layer.container.visible = candidateLayerShownRef.current && liveStageHold.current !== 'holding';
     const outline = selectionOutline.current?.parent;
     const outlineIndex = outline ? pixi.stage.getChildIndex(outline) : -1;
     if (outlineIndex >= 0) pixi.stage.addChildAt(layer.container, outlineIndex);
@@ -2686,10 +2899,80 @@ export function PreviewPanel() {
           Number(container.dataset.candidateUpdates ?? 0) + 1,
         );
       }
+      releaseLiveStageHold();
       followShownPicture.current();
+    };
+    const releaseLiveStageHold = () => {
+      if (
+        !releasesLiveStageHold(
+          liveStageHold.current,
+          previewCandidates.view?.stage ?? null,
+          layer.raisedPending,
+        )
+      ) {
+        return;
+      }
+      liveStageHold.current = 'released';
+      layer.container.visible = candidateLayerShownRef.current;
+      requestPreviewRender(layer.container);
+      const transitions = mapTransitions.current;
+      const committed = terrainChunkCache.current;
+      const stageRaised = layer.raisedPicture;
+      const plan = transitions
+        ? planLiveStageMorph(shownTransitionPicture.current, stageRaised !== null, {
+            enabled: transitions.enabled,
+            reducedMotion: transitions.reducedMotionPreferred,
+          })
+        : null;
+      if (plan) transitions!.countSkip(plan);
+      const previous = committed ? committedMorphPicture(committed) : null;
+      if (plan?.kind === 'morph' && committed && previous && layer.container.visible) {
+        stageMorphTerrain.current = committed.container;
+        transitions!.morphLater({
+          track: 'stage-morph',
+          heights: plan.heights,
+          place: (mesh) => {
+            layer.container.addChildAt(mesh, layer.container.getChildIndex(layer.objectNode));
+          },
+          incoming: layer.terrainNode,
+          incomingUniforms: stageRaised?.uniforms ?? null,
+          objects: layer.objectNode,
+          objectsFadeIn: plan.objectsFadeIn,
+          retired: null,
+          keepsOldTerrain: true,
+          onOldTerrainReleased: () => {
+            stageMorphTerrain.current = null;
+            followShownPicture.current();
+            renderScheduler.current?.request();
+          },
+          pictures: () => {
+            const next = layer.stagePicture();
+            return next ? { previous, next } : null;
+          },
+        });
+      }
+      setLiveStageHoldRevision((revision) => revision + 1);
     };
     container.dataset.candidateUpdates = '0';
     layer.onSwap = () => record(layer.raisedLaterMilliseconds, false);
+    let stageFading = false;
+    layer.onPictureChange = (phase, change) => {
+      const transitions = mapTransitions.current;
+      if (!transitions || !layer.container.visible) return;
+      if (transitions.stageMorphRunning) {
+        if (phase === 'after') transitions.stageChanged();
+        return;
+      }
+      if (phase === 'before') {
+        stageFading = transitions.liveStageAllowed() && transitions.captureOutgoing();
+        return;
+      }
+      if (change.turningRaised && change.uniforms && transitions.allowed) {
+        transitions.rise(change.uniforms, layer.container, false);
+      }
+      if (stageFading) transitions.crossFade();
+      stageFading = false;
+    };
     layer.rebuildAll(candidatePresentation.current!);
     layer.transform(displayedCamera.current, viewportRef.current, {
       width: previewCandidates.view?.width ?? 1,
@@ -2706,6 +2989,12 @@ export function PreviewPanel() {
       unsubscribe();
       if (candidateLayer.current === layer) candidateLayer.current = null;
       layer.onSwap = null;
+      layer.onPictureChange = null;
+      liveStageEndedAt.current =
+        layer.container.visible && layer.chunkCount > 0
+          ? (renderScheduler.current?.statistics.renders ?? null)
+          : null;
+      mapTransitions.current?.finishStageMorph();
       const keep = keepLiveStageAtEnd.current && liveStageRun.current?.layer === layer;
       if (liveStageRun.current?.layer === layer) liveStageRun.current = null;
       if (keep) {
@@ -2737,11 +3026,12 @@ export function PreviewPanel() {
 
   useEffect(() => {
     const layer = candidateLayer.current;
-    if (!layer || layer.container.visible === candidateLayerShown) return;
-    layer.container.visible = candidateLayerShown;
+    const shown = candidateLayerShown && !liveStageHeld;
+    if (!layer || layer.container.visible === shown) return;
+    layer.container.visible = shown;
     requestPreviewRender(layer.container);
     followShownPicture.current();
-  }, [candidateActive, candidateLayerShown, pixiReady]);
+  }, [candidateActive, candidateLayerShown, liveStageHeld, pixiReady]);
 
   useEffect(() => {
     releaseKeptLiveStage.current();
@@ -2788,7 +3078,7 @@ export function PreviewPanel() {
       writeCandidateRaisedDataset(container, layer, viewScene, viewport, displayedCamera.current);
   }, [camera, candidateActive, liveStageKept, shownSurface, viewScene, viewport]);
 
-  const candidateSelection = candidateActive && displaySelection ? displaySelection : null;
+  const candidateSelection = candidateShown && displaySelection ? displaySelection : null;
   const [provisionalEntries, setProvisionalEntries] = useState<
     ReturnType<ProvisionalLegendCounts['entries']>
   >([]);
@@ -2884,7 +3174,6 @@ export function PreviewPanel() {
         selectionDimensions.current = dimensions;
         setSelectionPreview(null);
         setSelection(moved.selection);
-        input.reveal(moved.state.cursor);
         return;
       }
     }
@@ -2974,8 +3263,8 @@ export function PreviewPanel() {
   );
   const legendContent = previewLegendContent({
     generationActive,
-    candidateActive,
-    selection: candidateActive ? candidateSelection !== null : selection !== null,
+    candidateActive: candidateShown,
+    selection: candidateShown ? candidateSelection !== null : selection !== null,
     sourceHighlight: sourceHighlightLayers !== null,
   });
   const legendLayers =
@@ -2989,7 +3278,7 @@ export function PreviewPanel() {
   const hasLandConnections = scene
     ? hasLandConnection(scene) || (connectionRoutes?.totalAttempts ?? 0) > 0
     : false;
-  const readoutSelection = selectionPreview ?? (candidateActive ? displaySelection : selection);
+  const readoutSelection = selectionPreview ?? (candidateShown ? displaySelection : selection);
   const informationPresent = Boolean(legendLayers || readoutSelection || hoveredCoordinate);
   const information = usePresence(informationPresent);
   const informationWasMounted = useRef(false);
@@ -3023,7 +3312,6 @@ export function PreviewPanel() {
   const legendWidth = legendWidths?.panel ?? null;
   const readoutStacked =
     legendWidths !== null && previewReadoutStacked(legendWidths.readout, viewport.width);
-  const [bindMapToolbar, keyboardCueRise] = useKeyboardCueRise();
   useEffect(() => {
     informationWasMounted.current = information.mounted;
     legendWasMounted.current = legendPresence.mounted;
@@ -3143,6 +3431,7 @@ export function PreviewPanel() {
         className="preview-canvas"
         dir="ltr"
         data-candidate-active={candidateActive}
+        data-live-stage-hold={liveStageHold.current}
         data-candidate-look={candidateActive && candidateLayerShown ? candidateLook : ''}
         data-live-stage-kept={liveStageKept}
         data-candidate-palette-hash={candidateActive ? (candidatePalette?.paletteHash ?? '') : ''}
@@ -3225,7 +3514,6 @@ export function PreviewPanel() {
               aria-label={t('preview-panel.toolbar.label')}
               className="preview-map-toolbar"
               onKeyDown={onToolbarKeyDown}
-              ref={bindMapToolbar}
               role="toolbar"
             >
               <PreviewProjectionModeButton
@@ -3325,10 +3613,6 @@ export function PreviewPanel() {
                   renderIcon={smallTreesButton.renderIcon}
                 />
               ) : null}
-              <span aria-hidden="true" className="preview-keyboard-focus-cue">
-                <Keyboard aria-hidden="true" />
-                <span>{t('preview-panel.toolbar.keyboard-cue')}</span>
-              </span>
             </div>
             {map ? <DevelopmentFixtureMenu execution={previewExecution} mapActive /> : null}
             {information.mounted ? (
@@ -3391,7 +3675,6 @@ export function PreviewPanel() {
                     maxHeight={previewLegendMaxHeight(viewport.height, {
                       narrow: narrowPreview,
                       readoutStacked,
-                      keyboardCueRise,
                     })}
                     readOnly={shownLegendContent === 'provisional'}
                     onActivate={activateSelectionLayer}
@@ -4065,138 +4348,6 @@ function cliffPresentation(
   };
 }
 
-function drawObjects(
-  stage: Application['stage'],
-  scene: TopDownScene,
-  camera: PreviewCamera,
-  viewport: PreviewViewport,
-  visibility: PreviewObjectVisibility,
-  playerColorIds: readonly number[] = [],
-  minimapPalette: SelectedMinimapPalette | null = null,
-  maximumObjects = Number.POSITIVE_INFINITY,
-  spriteObjects: ReadonlySet<number> = new Set(),
-  lookObjectColors?: ReadonlyMap<number, number>,
-  cullMargin: { x: number; y: number } = { x: 0, y: 0 },
-  surface: ElevationSurface | null = null,
-  heightMap: ElevationRange | null = null,
-): { helpers: number; objects: number; radiusRange: string; culled: boolean } {
-  const drawn = { helpers: 0, objects: 0, radiusRange: '', culled: false };
-  if (!visibility.objects) return drawn;
-  const layer = new OrderedMarkerLayer(stage);
-  const scale = previewScale(scene.width, scene.height, camera, viewport);
-  const verticalScale = previewMarkerVerticalScale(viewport);
-  const levelPixels = surface ? previewLevelPixels(scene.width, scene.height, camera, viewport) : 0;
-  const colocatedOrdinals = new Map<number, number>();
-  const materials = new Map<number, PreviewMaterial>();
-  let minimumRadius = Number.POSITIVE_INFINITY;
-  let maximumRadius = 0;
-  for (const [objectIndex, object] of scene.objects.entries()) {
-    if (objectIndex >= maximumObjects) break;
-    if (!isDrawnPreviewObject(object, visibility)) continue;
-    if (spriteObjects.has(object.index)) continue;
-    const tileKey = Math.floor(object.y) * (scene.width + 1) + Math.floor(object.x);
-    const colocatedOrdinal = colocatedOrdinals.get(tileKey) ?? 0;
-    colocatedOrdinals.set(tileKey, colocatedOrdinal + 1);
-    const center = mapToScreen(object, scene.width, scene.height, camera, viewport);
-    const lift = surface ? surface.heightAt(object.x, object.y) * levelPixels : 0;
-    center.y -= lift;
-    const reach =
-      previewMarkerScreenRadius.maximum +
-      scale * Math.max(1, object.footprintWidth, object.footprintHeight);
-    if (
-      center.x < -reach - cullMargin.x ||
-      center.y < -reach - cullMargin.y ||
-      center.x > viewport.width + reach + cullMargin.x ||
-      center.y > viewport.height + reach + cullMargin.y
-    ) {
-      drawn.culled = true;
-      continue;
-    }
-    const offset = colocatedCompositionOffset(colocatedOrdinal, scale);
-    offset.y *= verticalScale;
-    center.x += offset.x;
-    center.y += offset.y;
-    const footprintWidth = previewObjectFootprintSpan(object.footprintWidth);
-    const footprintHeight = previewObjectFootprintSpan(object.footprintHeight);
-    const footprint = mapRectangleScreenPolygon(
-      {
-        x: object.x - footprintWidth / 2,
-        y: object.y - footprintHeight / 2,
-      },
-      {
-        x: object.x + footprintWidth / 2,
-        y: object.y + footprintHeight / 2,
-      },
-      scene.width,
-      scene.height,
-      camera,
-      viewport,
-    ).map((coordinate, index) => coordinate + (index % 2 === 0 ? offset.x : offset.y - lift));
-    const footprintBounds = polygonBounds(footprint);
-    if (
-      footprintBounds.right < -cullMargin.x ||
-      footprintBounds.left > viewport.width + cullMargin.x ||
-      footprintBounds.bottom < -cullMargin.y ||
-      footprintBounds.top > viewport.height + cullMargin.y
-    ) {
-      drawn.culled = true;
-      continue;
-    }
-    const materialKey =
-      (object.objectId * 256 + (object.owner & 0xff)) * 2 +
-      (object.presentationKind === 'wall' ? 1 : 0);
-    let material = materials.get(materialKey);
-    if (!material) {
-      material = objectMaterial(
-        object,
-        playerColorIds,
-        [],
-        minimapPalette,
-        undefined,
-        visibility.helperObjectIds,
-        lookObjectColors,
-      );
-      materials.set(materialKey, material);
-    }
-    if (heightMap) {
-      material = {
-        ...material,
-        color: litColor(material.color, objectHeightMapLight(scene, object, heightMap)),
-      };
-    }
-    const radius = previewObjectMarkerScreenRadius(
-      scale,
-      previewObjectMarkerSpan(object),
-      object.appearance ? previewAppearanceMarkerMinimumRadius : undefined,
-    );
-    minimumRadius = Math.min(minimumRadius, radius);
-    maximumRadius = Math.max(maximumRadius, radius);
-    if (material.helper) {
-      drawn.helpers += 1;
-      drawAtomicShape(layer.stroke, center.x, center.y, radius, material, 'outline', verticalScale);
-      continue;
-    }
-    drawn.objects += 1;
-    if (hasVisiblePreviewFootprint(object)) {
-      layer.stroke.poly(footprint).stroke({ color: material.color, width: 1, alpha: 1 });
-    }
-    fillAtomicShape(layer, center.x, center.y, radius, material, verticalScale);
-  }
-  layer.finish();
-  if (maximumRadius > 0) {
-    drawn.radiusRange = `${minimumRadius.toFixed(2)},${maximumRadius.toFixed(2)}`;
-  }
-  return drawn;
-}
-
-function objectHeightMapLight(
-  scene: Pick<TopDownScene, 'width' | 'height' | 'elevations'>,
-  object: { x: number; y: number },
-  range: ElevationRange,
-): number {
-  return heightMapObjectLightAt(scene, object.x, object.y, range);
-}
-
 function drawMinimapObjects(
   stage: Application['stage'],
   scene: TopDownScene,
@@ -4245,21 +4396,28 @@ function drawMinimapObjects(
     layers[minimapSquareDrawLayer(kind)]!.push({ kind, x: center.x, y: center.y, color });
   }
   const layer = new OrderedMarkerLayer(stage);
+  const laws = previewMinimapSquareSizeLaws(scene.width, scene.height, camera, viewport);
   for (const entries of layers) {
     for (const entry of entries) {
       drawn.objects += 1;
+      const law =
+        entry.kind === 'town-center'
+          ? laws.townCenter
+          : entry.kind === 'tree'
+            ? laws.tree
+            : laws.object;
+      layer.marks.anchor(entry.x, entry.y, entry.x, entry.y, law.base, law.minimum, law.maximum);
       if (entry.kind === 'town-center') {
         const castle = minimapSquareCastlePolygon(entry.x, entry.y, sizes.townCenter);
-        layer.fill.polygon(castle, entry.color);
-        layer.stroke.poly(castle).stroke({
+        layer.marks.polygon(castle, entry.color);
+        layer.marks.stroke(castle, true, {
           color: minimapSquareTownCenterBorderColor,
           width: 1.5,
           alpha: 1,
-          join: 'miter',
         });
         continue;
       }
-      layer.fill.polygon(
+      layer.marks.polygon(
         minimapSquarePolygon(entry.x, entry.y, minimapSquareSide(entry.kind, sizes)),
         entry.color,
       );
@@ -4274,6 +4432,8 @@ function drawMinimapObjects(
 }
 
 const raisedOverlays = new WeakMap<Graphics, ShownRaisedHighlight>();
+
+const legendLeavingOverlays = new WeakMap<Graphics, Graphics>();
 
 const minimumRaisedOverlayBias = 16 * raisedDepthBiasStep;
 
@@ -4324,11 +4484,15 @@ function drawSelectionOutline(
   scene: TopDownScene,
   camera: PreviewCamera,
   viewport: PreviewViewport,
-  selection: PreviewSelection | null,
+  shownSelection: PreviewSelection | null,
 ): void {
   if (!graphics) return;
   graphics.clear();
   requestPreviewRender(graphics);
+  const fade = overlayFadeOf<PreviewSelection>(graphics);
+  const selection = fade
+    ? fade.show(shownSelection, `${scene.width}x${scene.height}`)
+    : shownSelection;
   if (!selection) return;
   const surface = selectionOutlineSurfaces.get(graphics)?.() ?? null;
   if (surface && surface.width === scene.width && surface.height === scene.height) {
@@ -4382,9 +4546,26 @@ function drawLegendHover(
   tileIndices: Iterable<number>,
 ): void {
   if (!graphics) return;
+  drawHighlightFill(graphics, scene, camera, viewport, tileIndices);
+  const leaving = legendLeavingOverlays.get(graphics);
+  if (leaving) drawHighlightFill(leaving, scene, camera, viewport, []);
+}
+
+function drawHighlightFill(
+  graphics: Graphics,
+  scene: TopDownScene,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+  tileIndices: Iterable<number>,
+): void {
   graphics.clear();
   requestPreviewRender(graphics);
-  const indices = [...tileIndices];
+  let indices = [...tileIndices];
+  const fade = overlayFadeOf<number[]>(graphics);
+  if (fade) {
+    indices =
+      fade.show(indices.length > 0 ? indices : null, `${scene.width}x${scene.height}`) ?? [];
+  }
   const highlight = raisedOverlays.get(graphics);
   if (indices.length === 0) {
     highlight?.clear();
@@ -4498,82 +4679,6 @@ function drawPreviewOutlines(
   drawMapBoundaryOutline(boundary, scene, camera, viewport);
 }
 
-function drawAtomicShape(
-  graphics: Graphics,
-  x: number,
-  y: number,
-  radius: number,
-  material: PreviewMaterial,
-  style: 'fill' | 'outline' = 'fill',
-  verticalScale = 1,
-): void {
-  const paint = (shape: Graphics) =>
-    style === 'outline'
-      ? shape.stroke({ color: material.color, width: 1, alpha: 0.75 })
-      : shape.fill({ color: material.color });
-  if (material.shape === 'double-line') {
-    const wallGap = Math.min(2, Math.max(1, radius * 0.5)) * verticalScale;
-    graphics
-      .moveTo(x - radius, y - wallGap)
-      .lineTo(x + radius, y - wallGap)
-      .stroke({ color: material.color, width: style === 'outline' ? 1 : 2, alpha: 1 });
-    graphics
-      .moveTo(x - radius, y + wallGap)
-      .lineTo(x + radius, y + wallGap)
-      .stroke({ color: material.color, width: 1, alpha: 1 });
-    return;
-  }
-  const polygon = markerShapePolygon(material.shape, x, y, radius, verticalScale);
-  if (polygon.length === 0) {
-    paint(graphics.ellipse(x, y, radius, radius * verticalScale));
-    return;
-  }
-  paint(graphics.poly(polygon));
-}
-
-function fillAtomicShape(
-  layer: OrderedMarkerLayer,
-  x: number,
-  y: number,
-  radius: number,
-  material: PreviewMaterial,
-  verticalScale: number,
-): void {
-  if (material.shape === 'double-line') {
-    drawAtomicShape(layer.stroke, x, y, radius, material, 'fill', verticalScale);
-    return;
-  }
-  const polygon = markerShapePolygon(material.shape, x, y, radius, verticalScale);
-  if (polygon.length === 0) {
-    layer.fill.ellipse(x, y, radius, radius * verticalScale, material.color);
-    return;
-  }
-  layer.fill.polygon(polygon, material.color);
-}
-
-function colocatedCompositionOffset(ordinal: number, scale: number): { x: number; y: number } {
-  if (ordinal === 0) return { x: 0, y: 0 };
-  const angle = (ordinal - 1) * 2.399963229728653;
-  const distance = Math.min(Math.max(2, scale * 0.16), 8) * Math.ceil(ordinal / 6);
-  return { x: Math.cos(angle) * distance, y: Math.sin(angle) * distance };
-}
-
-function polygonBounds(points: number[]): {
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
-} {
-  const xs = points.filter((_, index) => index % 2 === 0);
-  const ys = points.filter((_, index) => index % 2 === 1);
-  return {
-    left: Math.min(...xs),
-    right: Math.max(...xs),
-    top: Math.min(...ys),
-    bottom: Math.max(...ys),
-  };
-}
-
 function LayerName({ label }: { label: PreviewLayerLabel }) {
   const text = [label.name, label.disambiguation, label.owner].filter(Boolean).join(' ');
   return (
@@ -4651,7 +4756,9 @@ function createTerrainChunkCache(
   const container = new Container({ label: 'cached-terrain-chunks', isRenderGroup: true });
   container.eventMode = 'none';
   return {
-    raised: surface ? { surface, uniforms: new RaisedTerrainUniforms(surface), layer: null } : null,
+    raised: surface
+      ? { surface, uniforms: new RaisedTerrainUniforms(surface), layer: null, texels: null }
+      : null,
     backend,
     chunks: new Map(),
     container,
@@ -4744,6 +4851,7 @@ function updateTerrainChunkVisibility(
       terrainNames: cache.terrainColorSources.terrainNames,
     });
     raised.layer = new RaisedColorTerrainLayer(raised.surface, texels, raised.uniforms);
+    raised.texels = texels;
     raised.layer.container.visible = !cache.gameArtPresentation.minimapHidden;
     cache.geometryBuilds += 1;
     cache.chunks.set(raisedChunkKey, {
@@ -4944,15 +5052,16 @@ function syncTileGrid(
   enabled: boolean,
   color: TileGridColor,
   host: HTMLElement,
+  fade: OverlayFade<true>,
 ): void {
-  if (!enabled) {
-    if (cache.tileGrid) {
-      tileGridLayers.delete(cache.container);
-      cache.tileGrid.destroy();
-      cache.tileGrid = null;
-    }
-    host.dataset.tileGrid = 'off';
-    delete host.dataset.tileGridLines;
+  host.dataset.tileGrid = enabled ? 'on' : 'off';
+  const target = {
+    setOpacity: (visibility: number) => cache.tileGrid?.setVisibility(visibility),
+    clear: () => removeTileGrid(cache, host),
+  };
+  if (fade.show(enabled ? true : null) === null) {
+    fade.attach(target);
+    removeTileGrid(cache, host);
     return;
   }
   if (!cache.tileGrid && cache.raised) {
@@ -4975,8 +5084,17 @@ function syncTileGrid(
   } else {
     cache.tileGrid.setColor(color);
   }
-  host.dataset.tileGrid = 'on';
   host.dataset.tileGridLines = String(cache.tileGrid.lineCount);
+  fade.attach(target);
+}
+
+function removeTileGrid(cache: TerrainChunkCache, host: HTMLElement): void {
+  if (cache.tileGrid) {
+    tileGridLayers.delete(cache.container);
+    cache.tileGrid.destroy();
+    cache.tileGrid = null;
+  }
+  delete host.dataset.tileGridLines;
 }
 
 function tileGridColor(element: HTMLElement): TileGridColor {
@@ -5029,6 +5147,25 @@ function coverCommittedLayers(
     layer.renderable = !covered;
     requestPreviewRender(layer);
   }
+}
+
+function coveredCommittedTerrain(
+  terrain: Container | null,
+  morphTerrain: Container | null,
+): Container | null {
+  return terrain && terrain === morphTerrain ? null : terrain;
+}
+
+function committedMorphPicture(cache: TerrainChunkCache): MorphTerrainData | null {
+  const { width, height } = cache.scene;
+  const raised = cache.raised;
+  if (raised) {
+    return raised.texels ? { texels: raised.texels, width, height, surface: raised.surface } : null;
+  }
+  const texels = cache.terrainSource?.resource;
+  return texels instanceof Uint8Array && texels.length === width * height * 4
+    ? { texels, width, height, surface: null }
+    : null;
 }
 
 function writeCandidateRaisedDataset(
@@ -5175,6 +5312,7 @@ function transformMapLayer(
   );
   layer.scale.set(transform.scale);
   layer.position.set(transform.x, transform.y);
+  zoomMarkerMeshes(layer, transform.scale);
   requestPreviewRender(layer);
   const host = connectionProbeHosts.get(layer);
   if (host) writeConnectionProbes(host, layer);

@@ -237,7 +237,7 @@ export function InstalledSourceBrowser({
     try {
       const result = await window.rmside.cloneInstalledSource(sourceId);
       if (!result) return;
-      workspace.acceptOpenResult(result.opened);
+      workspace.acceptOpenResult(result.opened, { reveal: true });
       appendOutput(
         outputNote('Files', 'files.cloned', {
           id: 'installed-maps.output.cloned',

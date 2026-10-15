@@ -26,6 +26,10 @@ const markerShapeOutlines: Partial<Record<AtomicShape, readonly number[]>> = {
   square: [-1, -1, 1, -1, 1, 1, -1, 1],
 };
 
+export function markerShapeOutline(shape: AtomicShape): readonly number[] | null {
+  return markerShapeOutlines[shape] ?? null;
+}
+
 export function markerShapePolygon(
   shape: AtomicShape,
   x: number,

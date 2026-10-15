@@ -521,9 +521,17 @@ pub struct SampleProgress {
 
 pub type ProgressCallback = Arc<dyn Fn(SampleProgress) + Send + Sync>;
 
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub enum PreviewOrder {
+    #[default]
+    Script,
+    Completion,
+}
+
 #[derive(Clone, Default)]
 pub struct RunObservers {
     pub preview: Option<PreviewCallback>,
+    pub preview_order: PreviewOrder,
     pub progressive: Option<ProgressivePreview>,
     pub progress: Option<ProgressCallback>,
 }
@@ -573,6 +581,7 @@ struct HostState {
     cancellation: Arc<AtomicCancellationToken>,
     started: Instant,
     preview_callback: Option<PreviewCallback>,
+    preview_order: PreviewOrder,
     progressive: Option<Arc<ProgressiveLease>>,
     progress: Option<ProgressReporter>,
     memory_limited: AtomicBool,
@@ -789,7 +798,7 @@ pub fn run_with_progressive_preview(
         RunObservers {
             preview: Some(preview_callback),
             progressive: Some(progressive),
-            progress: None,
+            ..RunObservers::default()
         },
     )
 }
@@ -903,8 +912,10 @@ fn run_inner(
         cancellation: cancellation.clone(),
         started: Instant::now(),
         preview_callback: observers.preview,
+        preview_order: observers.preview_order,
         progressive: observers
             .progressive
+            .filter(|_| observers.preview_order == PreviewOrder::Script)
             .map(|preview| Arc::new(ProgressiveLease::new(preview))),
         progress: observers.progress.map(ProgressReporter::new),
         memory_limited: AtomicBool::new(false),
@@ -1795,6 +1806,10 @@ fn generate_batch(
         .lock()
         .expect("map-test retained samples poisoned")
         .begin_batch(seeds.len() as u32);
+    let completed_preview = host
+        .preview_callback
+        .as_ref()
+        .filter(|_| preview && host.preview_order == PreviewOrder::Completion);
     let machine = run_machine(host);
     let planned = batch_workers(host, machine, seeds.len());
     host.max_workers.fetch_max(planned, Ordering::Relaxed);
@@ -1836,11 +1851,20 @@ fn generate_batch(
                                     counts.completed = counts.completed.saturating_add(1);
                                 });
                             }
+                            let shown = completed_preview
+                                .filter(|_| index < first_failure.load(Ordering::Relaxed))
+                                .map(|callback| {
+                                    let map = Arc::new(generated.map.clone());
+                                    (callback, preview_sample(&generated.record, map))
+                                });
                             let body = CompactMap::encode(generated.map);
                             host.retained
                                 .lock()
                                 .expect("map-test retained samples poisoned")
                                 .insert(sample.ordinal, generated.record, body);
+                            if let Some((callback, shown)) = shown {
+                                let _ = callback(sample.ordinal, shown);
+                            }
                             let peak = memory::thread_peak_bytes();
                             if peak > host.measured_peak.fetch_max(peak, Ordering::Relaxed) {
                                 allowed.fetch_min(
@@ -1888,7 +1912,10 @@ fn generate_batch(
         .lock()
         .expect("map-test state poisoned")
         .generated_maps += seeds.len();
-    if preview && let Some(callback) = &host.preview_callback {
+    if preview
+        && host.preview_order == PreviewOrder::Script
+        && let Some(callback) = &host.preview_callback
+    {
         publish_finals(host, first, seeds.len() as u32, callback)?;
     }
     Ok((first..first + seeds.len() as u32).collect())

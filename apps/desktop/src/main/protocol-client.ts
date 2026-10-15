@@ -156,7 +156,7 @@ interface PendingRequest {
   reject(error: Error): void;
 }
 
-const protocolVersion = { major: 2, minor: 19, patch: 0 } as const;
+const protocolVersion = { major: 2, minor: 20, patch: 0 } as const;
 
 export class ProtocolResponseError extends Error {
   constructor(

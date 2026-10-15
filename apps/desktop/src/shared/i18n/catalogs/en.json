@@ -293,6 +293,13 @@
       "maxLength": 40,
       "meaning": "Check item: draw the map preview with the graphics card."
     },
+    "app-menu.view.map-transitions": {
+      "message": "Animate Map Transitions",
+      "screen": "application-menu/view",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Check item, on by default: in the map preview, a newly generated map, a change of the look or of the relief, and the stages shown while a map generates move or fade smoothly into the next picture instead of replacing it at once."
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Show Live Generation Stages",
       "screen": "application-menu/view",
@@ -440,6 +447,13 @@
       "control": "menu-item",
       "maxLength": 40,
       "meaning": "Opens the issue tracker."
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Check for New Versions at Startup",
+      "screen": "application-menu/help",
+      "control": "menu-item",
+      "maxLength": 48,
+      "meaning": "Checkbox item, on by default: when on, AoE2RMSIDE asks GitHub once per start whether a newer release is published and says so in Output; when off, it makes no request at startup."
     },
     "app-menu.help.about": {
       "message": "About {product}",
@@ -10424,13 +10438,6 @@
       "control": "accessible-name",
       "meaning": "Accessible name of the group of toolbar buttons about connections (roads and paths between areas)."
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Arrow keys select tiles",
-      "screen": "preview/toolbar",
-      "control": "label",
-      "maxLength": 32,
-      "meaning": "Short hint shown after the toolbar while the map has keyboard focus."
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}",
       "screen": "preview/map",
@@ -13295,7 +13302,290 @@
       "screen": "output",
       "control": "message-action",
       "maxLength": 60,
-      "meaning": "Link in the newer-release note: opens the AoE2RMSIDE releases page on GitHub in the browser, where the user downloads the new version. The app downloads and installs nothing itself."
+      "meaning": "Link in the newer-release note: opens the AoE2RMSIDE releases page on GitHub in the browser, where the user can read about and download the new version. In the installed app the note also offers Update now, which installs it from within the app."
+    },
+    "app-update.button": {
+      "message": "Update",
+      "screen": "output/navbar",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Button at the right end of the Output bar, shown only when a newer AoE2RMSIDE release can be installed: opens the update confirmation."
+    },
+    "app-update.button.tooltip": {
+      "message": "Update to AoE2RMSIDE {version}",
+      "screen": "output/navbar",
+      "control": "tooltip",
+      "meaning": "Tooltip of the Update button in the Output bar. AoE2RMSIDE is the product name and stays as written.",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.note-action": {
+      "message": "Update now",
+      "screen": "output",
+      "control": "message-action",
+      "maxLength": 32,
+      "meaning": "Second action in the Output note about a newer release, after the releases page link: does the same as the Update button in the Output bar (opens the update confirmation)."
+    },
+    "app-update.dialog.title": {
+      "message": "Update to AoE2RMSIDE {version}?",
+      "screen": "confirmation-dialog/update",
+      "control": "dialog-title",
+      "meaning": "Title of the dialog that asks before downloading and installing a newer release. AoE2RMSIDE is the product name and stays as written.",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE downloads the installer of version {version} from GitHub and checks it against the checksums published with the release. Then it closes, installs the update, and opens again.",
+      "screen": "confirmation-dialog/update",
+      "control": "dialog-text",
+      "meaning": "Explains the update before it starts: the download, the checksum comparison (it only shows the file is the one the release lists, not who made it), and the automatic close, install, and restart. Keep it plain; do not call the download safe or verified.",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.dialog.unsaved": {
+      "message": "If documents have unsaved changes, you are asked about them first.",
+      "screen": "confirmation-dialog/update",
+      "control": "dialog-text",
+      "meaning": "Second paragraph of the update dialog: before closing for the update, AoE2RMSIDE asks about unsaved documents like when quitting."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Release notes",
+      "screen": "confirmation-dialog/update",
+      "control": "button",
+      "maxLength": 32,
+      "meaning": "Link-style button in the update dialog: opens this release's page on GitHub in the browser."
+    },
+    "app-update.dialog.confirm": {
+      "message": "Update",
+      "screen": "confirmation-dialog/update",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Primary button of the update dialog: starts the download and, once it is checked, closes AoE2RMSIDE to install it."
+    },
+    "app-update.progress.label": {
+      "message": "Update",
+      "screen": "output/navbar",
+      "control": "accessible-name",
+      "maxLength": 32,
+      "meaning": "Accessible name of the update's progress bar in the Output bar."
+    },
+    "app-update.progress.downloading": {
+      "message": "Downloading",
+      "screen": "output/navbar",
+      "control": "status",
+      "maxLength": 16,
+      "meaning": "One-word label before the update's progress bar in the Output bar while the installer downloads."
+    },
+    "app-update.progress.verifying": {
+      "message": "Checking",
+      "screen": "output/navbar",
+      "control": "status",
+      "maxLength": 16,
+      "meaning": "One-word label before the update's progress bar while the downloaded installer is compared with the release's checksum."
+    },
+    "app-update.progress.installing": {
+      "message": "Installing",
+      "screen": "output/navbar",
+      "control": "status",
+      "maxLength": 16,
+      "meaning": "One-word label before the full progress bar once the installer is ready and AoE2RMSIDE is about to close for it."
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Preparing the update to AoE2RMSIDE {version}",
+      "screen": "output/navbar",
+      "control": "tooltip",
+      "meaning": "Tooltip and value text of the update's progress bar before the download size is known (the release's file list is being read).",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "Downloading AoE2RMSIDE {version}, {percent}% ({received} of {total} MB)",
+      "screen": "output/navbar",
+      "control": "tooltip",
+      "meaning": "Tooltip and value text of the update's progress bar while the installer downloads. MB is megabytes.",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0",
+        "percent": "the whole percent downloaded, such as 42",
+        "received": "megabytes downloaded so far, such as 50.3",
+        "total": "the installer's size in megabytes, such as 117.7"
+      }
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Checking the installer of AoE2RMSIDE {version}",
+      "screen": "output/navbar",
+      "control": "tooltip",
+      "meaning": "Tooltip and value text of the update's progress bar while the download is compared with the release's checksum.",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.progress.detail.installing": {
+      "message": "Closing AoE2RMSIDE to install {version}",
+      "screen": "output/navbar",
+      "control": "tooltip",
+      "meaning": "Tooltip and value text of the update's full progress bar while AoE2RMSIDE asks about unsaved documents and closes to run the installer.",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.cancel": {
+      "message": "Cancel update",
+      "screen": "output/navbar",
+      "control": "button",
+      "maxLength": 32,
+      "meaning": "Icon-only button after the update's progress bar (its accessible name and tooltip): stops the download and removes the downloaded file."
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE could not update to {version}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output warning when the in-app update stopped before anything was installed; the installed version keeps running. AoE2RMSIDE is the product name and stays as written.",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.failed.action": {
+      "message": "Choose Update to try again.",
+      "screen": "output",
+      "control": "message-action",
+      "maxLength": 60,
+      "meaning": "Next step after a failed update: the Update button in the Output bar stays available."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "The download did not complete. Check the internet connection.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the network connection failed."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub did not answer in time.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: a request or the download stalled."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub did not provide the release's files.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: GitHub answered with an error or something unreadable."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub sent the download to an address the update does not use.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the download was redirected outside the allowed GitHub addresses, so the update stopped."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "The release on GitHub is no longer published as this version.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the release was withdrawn, turned into a draft or pre-release, or renamed."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "The release does not offer the installer or its checksum list.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the release lacks the setup program or the file of checksums."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "The installer is larger than an update may download.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the installer exceeds the size limit of the in-app update."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "The downloaded installer does not have the size the release lists.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the download ended with a different number of bytes than the release names; it was not run."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "The release's checksum list does not name its installer, so the installer was not run.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the checksum file has no line for the installer."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "The downloaded installer does not match the checksum published with the release, so it was not run.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the downloaded file differs from the one the release lists."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "The installer could not be saved in the temporary folder.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: writing the download to the disk failed (full disk, permissions)."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "The installer is not signed by the expected publisher, so it was not run.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of a failed update: the installer's digital signature does not name the expected publisher."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "The downloaded installer was gone or changed before it could run.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of an update that did not complete: the downloaded installer was removed or changed after it was checked."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows could not start the installer.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause of an update that did not complete: starting the downloaded installer failed."
+    },
+    "app-update.cancelled.headline": {
+      "message": "The update to {version} was cancelled",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note after the user cancelled the update; nothing was installed. An unfinished download was removed; a finished and checked one may be kept (see the note's action).",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE stays open with your documents.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line when the update was cancelled because the user chose Cancel at the unsaved-changes question."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "The download is kept until AoE2RMSIDE closes: choose Update to install it without downloading it again.",
+      "screen": "output",
+      "control": "message-action",
+      "meaning": "Action line of the cancelled-update note when the installer had already been downloaded and checked: AoE2RMSIDE keeps the file until it closes, and choosing the Update button again uses it instead of downloading it again. Update is the button's name."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE was updated to {version}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note at the first start after the in-app update installed a newer version. AoE2RMSIDE is the product name and stays as written.",
+      "placeholders": {
+        "version": "the version now running, such as 1.2.0"
+      }
+    },
+    "app-update.incomplete.headline": {
+      "message": "The update to {version} did not complete",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output warning at the next start when the installer of an update did not finish (it failed, was cancelled, or could not start).",
+      "placeholders": {
+        "version": "the newer release's version, such as 1.2.0"
+      }
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} is still installed.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of the incomplete-update warning: names the version that is still installed.",
+      "placeholders": {
+        "current": "the version the user runs, such as 1.1.0"
+      }
     },
     "external-language-server.started.headline": {
       "message": "Using {server} for {language} files",

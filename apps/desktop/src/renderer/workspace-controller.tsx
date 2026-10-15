@@ -34,6 +34,7 @@ import type {
 import { isMapTestScriptName } from '../shared/map-test-contract';
 import { editorTextAdoption } from './editor-model-sync';
 import { formatSourceDocument } from './monaco-language';
+import { explorerAncestorFolders } from './explorer-search-tree';
 import { explorerSelection, isCleanPreview, mergeNormalDocuments } from './open-documents';
 import { sameSourceIdentity } from './source-identity';
 import {
@@ -99,7 +100,7 @@ export interface WorkspaceController {
   openRecent(path: string): Promise<void>;
   openWorkspaceFile(path: string, keepOpen?: boolean): Promise<void>;
   openWorkspaceSource(sourceId: string, keepOpen?: boolean): Promise<EditorDocument | null>;
-  acceptOpenResult(result: WorkspaceOpenResult): void;
+  acceptOpenResult(result: WorkspaceOpenResult, options?: { reveal?: boolean }): void;
   openDroppedFiles(files: File[]): Promise<void>;
   createWorkspaceEntry(request: WorkspaceCreateRequest): Promise<WorkspaceMutationResult>;
   openGeneratedFile(path: string): Promise<void>;
@@ -572,24 +573,35 @@ export function useWorkspaceController(
     [appendOutput, replaceDocument, requestConfirmation],
   );
 
-  const acceptOpenResult = useCallback((result: WorkspaceOpenResult) => {
-    const incoming = result.documents.map((document) => documentFromWorkspace(document));
-    const next = mergeNormalDocuments(documentsRef.current, incoming);
-    documentsRef.current = next;
-    setDocuments(next);
-    const lastDocument = incoming.at(-1);
-    if (lastDocument) setActiveDocumentId(lastDocument.id);
-    if (result.folder) {
-      folderRef.current = result.folder;
-      setFolder(result.folder);
-      setExpandedPaths([]);
-      setSelectedPath(result.folder.path);
-    } else {
-      const revealed = explorerSelection(lastDocument?.path ?? null, folderRef.current);
-      if (revealed) setSelectedPath(revealed);
-    }
-    setMutationRevision((revision) => revision + 1);
-  }, []);
+  const acceptOpenResult = useCallback(
+    (result: WorkspaceOpenResult, options: { reveal?: boolean } = {}) => {
+      const incoming = result.documents.map((document) => documentFromWorkspace(document));
+      const next = mergeNormalDocuments(documentsRef.current, incoming);
+      documentsRef.current = next;
+      setDocuments(next);
+      const lastDocument = incoming.at(-1);
+      if (lastDocument) setActiveDocumentId(lastDocument.id);
+      if (result.folder) {
+        folderRef.current = result.folder;
+        setFolder(result.folder);
+        setExpandedPaths([]);
+        setSelectedPath(result.folder.path);
+      } else {
+        const currentFolder = folderRef.current;
+        const revealed = explorerSelection(lastDocument?.path ?? null, currentFolder);
+        if (revealed) setSelectedPath(revealed);
+        if (revealed && currentFolder && options.reveal) {
+          const above = explorerAncestorFolders(currentFolder.path, revealed);
+          setExpandedPaths((current) => [
+            ...current,
+            ...above.filter((path) => !current.some((entry) => pathKey(entry) === pathKey(path))),
+          ]);
+        }
+      }
+      setMutationRevision((revision) => revision + 1);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!sessionReady) return undefined;

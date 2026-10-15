@@ -23,6 +23,10 @@ on Windows 10 and 11 (64-bit). The downloads are not code-signed, so Windows
 SmartScreen may warn the first time you start them; choose **More info**, then
 **Run anyway**.
 
+The installed version updates itself: when a newer release is out, choose
+**Update** in the Output panel. To update the ZIP version, download the new
+ZIP from the releases page.
+
 To build it yourself, follow [BUILDING.md](BUILDING.md).
 
 ## Works with external language servers

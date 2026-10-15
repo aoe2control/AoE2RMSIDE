@@ -1,6 +1,5 @@
 import {
   panPreviewCamera,
-  raisedMapToScreen,
   selectionTileCount,
   type MapPoint,
   type PreviewCamera,
@@ -128,42 +127,6 @@ export function panCameraByKeyboard(
     mapHeight,
     viewport,
   );
-}
-
-export function cameraRevealingTile(
-  camera: PreviewCamera,
-  tile: MapPoint,
-  mapWidth: number,
-  mapHeight: number,
-  viewport: PreviewViewport,
-  margin = 32,
-  height = 0,
-): PreviewCamera | null {
-  const point = raisedMapToScreen(
-    { x: tile.x + 0.5, y: tile.y + 0.5 },
-    height,
-    mapWidth,
-    mapHeight,
-    camera,
-    viewport,
-  );
-  const insetX = Math.min(margin, viewport.width / 2);
-  const insetY = Math.min(margin, viewport.height / 2);
-  const targetX = Math.min(viewport.width - insetX, Math.max(insetX, point.x));
-  const targetY = Math.min(viewport.height - insetY, Math.max(insetY, point.y));
-  if (Math.abs(targetX - point.x) < 0.5 && Math.abs(targetY - point.y) < 0.5) return null;
-  const next = panPreviewCamera(
-    camera,
-    targetX - point.x,
-    targetY - point.y,
-    mapWidth,
-    mapHeight,
-    viewport,
-  );
-  const moved =
-    Math.abs(next.centerX - camera.centerX) > 1e-6 ||
-    Math.abs(next.centerY - camera.centerY) > 1e-6;
-  return moved ? next : null;
 }
 
 export function describePreviewSelection(

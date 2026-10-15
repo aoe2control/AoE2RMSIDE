@@ -63,11 +63,21 @@ export interface TileGridColor {
 
 export const fallbackTileGridColor: TileGridColor = { color: 0x060606, alpha: 0.4 };
 
+export function tileGridOpacity(
+  strength: number,
+  color: TileGridColor,
+  visibility: number,
+): number {
+  return strength * color.alpha * Math.min(1, Math.max(0, visibility));
+}
+
 export class TileGridLayer {
   readonly container = new Container({ label: 'tile-grid' });
   private readonly graphics = new Graphics();
   readonly lineCount: number;
   private color: TileGridColor;
+  private strength = 0;
+  private visibility = 1;
   opacity = 0;
 
   constructor(
@@ -101,14 +111,24 @@ export class TileGridLayer {
     camera: PreviewCamera,
     viewport: PreviewViewport,
   ): void {
-    const strength = tileGridStrength(tileEdgeScreenPixels(scene, camera, viewport));
-    this.opacity = strength * this.color.alpha;
-    this.container.alpha = this.opacity;
-    this.container.renderable = this.opacity > 0;
-    requestPreviewRender(this.container);
+    this.strength = tileGridStrength(tileEdgeScreenPixels(scene, camera, viewport));
+    this.apply();
+  }
+
+  setVisibility(visibility: number): void {
+    this.visibility = visibility;
+    this.apply();
   }
 
   destroy(): void {
     this.container.destroy({ children: true });
+  }
+
+  private apply(): void {
+    if (this.container.destroyed) return;
+    this.opacity = tileGridOpacity(this.strength, this.color, this.visibility);
+    this.container.alpha = this.opacity;
+    this.container.renderable = this.opacity > 0;
+    requestPreviewRender(this.container);
   }
 }

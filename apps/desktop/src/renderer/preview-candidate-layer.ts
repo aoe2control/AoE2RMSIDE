@@ -95,6 +95,11 @@ interface RaisedBatch {
   restarts: number;
 }
 
+export interface CandidatePictureChange {
+  turningRaised: boolean;
+  uniforms: RaisedTerrainUniforms | null;
+}
+
 export interface CandidateLayerTiming {
   sliceMilliseconds: number;
   now(): number;
@@ -135,6 +140,8 @@ export class PreviewCandidateLayer {
   raisedLaterMilliseconds = 0;
   drawnRaisedChunks = 0;
   onSwap: (() => void) | null = null;
+  onPictureChange: ((phase: 'before' | 'after', change: CandidatePictureChange) => void) | null =
+    null;
 
   constructor(
     private readonly store: PreviewCandidateStore,
@@ -168,6 +175,43 @@ export class PreviewCandidateLayer {
 
   get dimensions(): { width: number; height: number } {
     return this.drawnDimensions;
+  }
+
+  get terrainNode(): Container {
+    return this.terrainRoot;
+  }
+
+  get objectNode(): Container {
+    return this.vectorRoot;
+  }
+
+  stagePicture(): {
+    texels: Uint8Array;
+    width: number;
+    height: number;
+    surface: ElevationSurface | null;
+  } | null {
+    const view = this.store.view;
+    const terrain = this.store.terrainIds();
+    const elevations = this.store.elevations();
+    const presentation = this.presentation;
+    if (!view || !terrain || !elevations || !presentation || this.batch || this.held) return null;
+    const surface = this.picture?.surface ?? null;
+    const texels = buildTerrainTexels(
+      { width: view.width, height: view.height, elevations },
+      terrain,
+      'exact',
+      {
+        backgroundColor: presentation.heightOverlayColor,
+        elevationMode: surface ? 'off' : presentation.elevationMode,
+        elevationRange: surface ? { minimum: 0, maximum: 0 } : this.elevationRange,
+        localTerrainColors: presentation.localTerrainColors,
+        lookTerrainColors: presentation.lookTerrainColors,
+        minimapPalette: presentation.minimapPalette,
+        terrainNames: presentation.terrainNames,
+      },
+    );
+    return { texels, width: view.width, height: view.height, surface };
   }
 
   get frozen(): boolean {
@@ -233,6 +277,8 @@ export class PreviewCandidateLayer {
     terrain: Uint16Array,
     elevations: Int8Array,
   ): void {
+    const flatChange: CandidatePictureChange = { turningRaised: false, uniforms: null };
+    this.onPictureChange?.('before', flatChange);
     this.cancelBatch();
     const all = grid.columns * grid.rows;
     const reset = change.reset || this.picture !== null;
@@ -318,6 +364,7 @@ export class PreviewCandidateLayer {
     for (const key of keys) this.drawVectors(key, presentation);
     this.vectorComponent = presentation.markerComponent;
     this.rebuiltChunks = keys.size;
+    this.onPictureChange?.('after', flatChange);
   }
 
   private updateRaised(
@@ -459,6 +506,11 @@ export class PreviewCandidateLayer {
   }
 
   private swap(batch: RaisedBatch): void {
+    const pictureChange: CandidatePictureChange = {
+      turningRaised: this.picture === null,
+      uniforms: batch.picture.uniforms,
+    };
+    this.onPictureChange?.('before', pictureChange);
     this.batch = null;
     const presentation = this.presentation;
     if (batch.whole) this.clear();
@@ -479,6 +531,7 @@ export class PreviewCandidateLayer {
     this.raisedLaterMilliseconds = batch.laterSpent;
     this.raisedSlices = batch.slices;
     requestPreviewRender(this.container);
+    this.onPictureChange?.('after', pictureChange);
     if (!this.updating) this.onSwap?.();
   }
 

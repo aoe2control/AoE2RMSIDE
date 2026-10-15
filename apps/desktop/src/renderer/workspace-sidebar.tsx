@@ -61,6 +61,11 @@ import {
   visibleExplorerMatches,
   type ExplorerSearchTree,
 } from './explorer-search-tree';
+import {
+  DirectoryListingReader,
+  ExplorerRefreshRegistry,
+  mergeDirectoryEntries,
+} from './explorer-refresh';
 import { HoverMotionIcon } from './hover-motion-icon';
 import { ListMotion, type ListMotionElements } from './list-motion';
 import { useI18n } from './i18n';
@@ -110,6 +115,8 @@ const ExplorerSearchContext = createContext<ExplorerSearchState>({
   tabStopKey: null,
   toggle: () => {},
 });
+
+const ExplorerRefreshContext = createContext<ExplorerRefreshRegistry | null>(null);
 
 function isEmptyInlineDraft(draft: InlineDraft, value = draft.value): boolean {
   const trimmed = value.trim();
@@ -162,6 +169,10 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
   workspaceRef.current = workspace;
   const activeScrollRequest = useRef(false);
   const pendingReveal = useRef<{ key: string; until: number } | null>(null);
+  const [refreshRegistry] = useState(() => new ExplorerRefreshRegistry());
+  const [searchedTreeRevision, setSearchedTreeRevision] = useState(0);
+  const queryRef = useRef(query);
+  queryRef.current = query;
 
   const treeMotionElements = (): ListMotionElements | null => {
     const shell = explorerFrame.current;
@@ -336,6 +347,17 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
     };
   }, []);
 
+  useEffect(
+    () =>
+      window.rmside.onWorkspaceTreeChange((change) => {
+        const folder = workspaceRef.current.folder;
+        if (!folder) return;
+        refreshRegistry.refresh(folder.path, change);
+        if (queryRef.current.trim().length > 0) setSearchedTreeRevision((value) => value + 1);
+      }),
+    [refreshRegistry],
+  );
+
   const searchQuery = query.trim();
   const folderId = workspace.folder?.id ?? null;
   useEffect(() => {
@@ -374,7 +396,7 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
       window.clearTimeout(timer);
       void window.rmside.cancelWorkspaceSearch().catch(() => undefined);
     };
-  }, [searchQuery, folderId, workspace.mutationRevision]);
+  }, [searchQuery, folderId, workspace.mutationRevision, searchedTreeRevision]);
 
   useEffect(() => {
     setSearchIndicatorVisible(false);
@@ -685,26 +707,28 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
             >
               {workspace.folder && rootEntry ? (
                 <ExplorerSearchContext.Provider value={searchState}>
-                  <DirectoryChildren
-                    draft={draft}
-                    mutationRevision={workspace.mutationRevision}
-                    onCancelDraft={() => {
-                      createRequest.current += 1;
-                      setDraft(null);
-                    }}
-                    onCommitDraft={commitDraft}
-                    onCreate={beginCreate}
-                    onDelete={(entry) => void workspace.deleteWorkspaceEntry(entry)}
-                    onDraftValueChange={(value) =>
-                      setDraft((current) => (current ? { ...current, value, error: null } : null))
-                    }
-                    onRename={beginRename}
-                    onSelect={selectPath}
-                    parent={rootEntry}
-                    search={searchTree}
-                    transientEntry={transientEntry}
-                    workspace={workspace}
-                  />
+                  <ExplorerRefreshContext.Provider value={refreshRegistry}>
+                    <DirectoryChildren
+                      draft={draft}
+                      mutationRevision={workspace.mutationRevision}
+                      onCancelDraft={() => {
+                        createRequest.current += 1;
+                        setDraft(null);
+                      }}
+                      onCommitDraft={commitDraft}
+                      onCreate={beginCreate}
+                      onDelete={(entry) => void workspace.deleteWorkspaceEntry(entry)}
+                      onDraftValueChange={(value) =>
+                        setDraft((current) => (current ? { ...current, value, error: null } : null))
+                      }
+                      onRename={beginRename}
+                      onSelect={selectPath}
+                      parent={rootEntry}
+                      search={searchTree}
+                      transientEntry={transientEntry}
+                      workspace={workspace}
+                    />
+                  </ExplorerRefreshContext.Provider>
                   {searchTree && searchTree.shown.size === 0 && !searching ? (
                     <div className="explorer-empty-folder">
                       {t(
@@ -837,25 +861,46 @@ function DirectoryChildren({
   onCancelDraft,
 }: DirectoryChildrenProps) {
   const { t } = useI18n();
+  const refreshRegistry = useContext(ExplorerRefreshContext);
   const [entries, setEntries] = useState<WorkspaceDirectoryEntry[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const parentId = useRef(parent.id);
+  parentId.current = parent.id;
+  const loadedFolder = useRef<string | null>(null);
+  const [reader] = useState(
+    () =>
+      new DirectoryListingReader(
+        () => window.rmside.readDirectory(parentId.current),
+        (result, refresh) => {
+          if ('entries' in result) {
+            loadedFolder.current = parentId.current;
+            setEntries((current) =>
+              refresh && current ? mergeDirectoryEntries(current, result.entries) : result.entries,
+            );
+            setError(null);
+          } else if (!refresh || loadedFolder.current !== parentId.current) {
+            const reason = result.error;
+            setError(reason instanceof Error ? reason.message : String(reason));
+          }
+        },
+      ),
+  );
 
   useEffect(() => {
-    let cancelled = false;
-    setEntries(null);
-    setError(null);
-    void window.rmside
-      .readDirectory(parent.id)
-      .then((next) => {
-        if (!cancelled) setEntries(next);
-      })
-      .catch((reason: unknown) => {
-        if (!cancelled) setError(reason instanceof Error ? reason.message : String(reason));
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [mutationRevision, parent.id]);
+    const sameFolder = loadedFolder.current === parent.id;
+    if (!sameFolder) {
+      loadedFolder.current = null;
+      setEntries(null);
+      setError(null);
+    }
+    reader.restart(sameFolder);
+    return () => reader.dispose();
+  }, [mutationRevision, parent.id, reader]);
+
+  useEffect(
+    () => refreshRegistry?.register(parent.path, () => reader.refresh()),
+    [parent.path, reader, refreshRegistry],
+  );
 
   const shownHere = search?.children.get(pathKey(parent.path));
   if (!search || !shownHere) {

@@ -126,6 +126,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Vykreslovat mapu pomocí GPU"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Animovat přechody mapy"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Zobrazovat průběžné fáze generování"
     },
@@ -185,6 +188,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Nahlásit chybu"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Při spuštění hledat nové verze"
     },
     "app-menu.help.about": {
       "message": "O aplikaci {product}"
@@ -3576,9 +3582,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Vrstvy spojení"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Šipky vybírají políčka"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4670,6 +4673,123 @@
     },
     "release-check.newer.action": {
       "message": "Otevřít stránku s vydáními"
+    },
+    "app-update.button": {
+      "message": "Aktualizovat"
+    },
+    "app-update.button.tooltip": {
+      "message": "Aktualizovat na AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "Aktualizovat nyní"
+    },
+    "app-update.dialog.title": {
+      "message": "Aktualizovat na AoE2RMSIDE {version}?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE stáhne ze služby GitHub instalátor verze {version} a porovná ho s kontrolními součty zveřejněnými u vydání. Poté se zavře, nainstaluje aktualizaci a znovu se otevře."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Pokud dokumenty obsahují neuložené změny, nejprve se vás na ně zeptá."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Poznámky k vydání"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Aktualizovat"
+    },
+    "app-update.progress.label": {
+      "message": "Aktualizace"
+    },
+    "app-update.progress.downloading": {
+      "message": "Stahování"
+    },
+    "app-update.progress.verifying": {
+      "message": "Kontrola"
+    },
+    "app-update.progress.installing": {
+      "message": "Instalace"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Příprava aktualizace na AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "Stahování AoE2RMSIDE {version}, {percent} % ({received} z {total} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Kontrola instalátoru AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "Zavírání AoE2RMSIDE kvůli instalaci verze {version}"
+    },
+    "app-update.cancel": {
+      "message": "Zrušit aktualizaci"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE se nepodařilo aktualizovat na verzi {version}"
+    },
+    "app-update.failed.action": {
+      "message": "Stiskněte Aktualizovat a zkuste to znovu."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "Stahování se nedokončilo. Zkontrolujte připojení k internetu."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub neodpověděl včas."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub neposkytl soubory vydání."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub přesměroval stahování na adresu, kterou aktualizace nepoužívá."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "Vydání už není ve službě GitHub zveřejněno jako tato verze."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "Vydání nenabízí instalátor ani jeho seznam kontrolních součtů."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Instalátor je větší, než smí aktualizace stáhnout."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "Stažený instalátor nemá velikost uvedenou ve vydání."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "Seznam kontrolních součtů vydání neuvádí jeho instalátor, proto instalátor nebyl spuštěn."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "Stažený instalátor neodpovídá kontrolnímu součtu zveřejněnému u vydání, proto nebyl spuštěn."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Instalátor se nepodařilo uložit do dočasné složky."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Instalátor není podepsán očekávaným vydavatelem, proto nebyl spuštěn."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "Stažený instalátor zmizel nebo se změnil dřív, než mohl být spuštěn."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Systému Windows se nepodařilo spustit instalátor."
+    },
+    "app-update.cancelled.headline": {
+      "message": "Aktualizace na verzi {version} byla zrušena"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "Aplikace AoE2RMSIDE zůstává otevřená s vašimi dokumenty."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "Stažený soubor zůstane k dispozici, dokud se AoE2RMSIDE nezavře: tlačítkem Aktualizovat ho nainstalujete bez dalšího stahování."
+    },
+    "app-update.installed.headline": {
+      "message": "Aplikace AoE2RMSIDE byla aktualizována na verzi {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "Aktualizace na verzi {version} nebyla dokončena"
+    },
+    "app-update.incomplete.cause": {
+      "message": "Nainstalována zůstává verze AoE2RMSIDE {current}."
     },
     "external-language-server.started.headline": {
       "message": "Pro soubory {language} se používá {server}"

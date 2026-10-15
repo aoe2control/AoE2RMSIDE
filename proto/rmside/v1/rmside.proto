@@ -68,6 +68,7 @@ message Capabilities {
   bool map_test_report_request_revision = 16;
   bool connection_routes = 17;
   bool control_pipe_exchange = 18;
+  bool map_test_completion_order_preview = 19;
 }
 
 enum MapTestStatus {
@@ -103,6 +104,7 @@ message MapTestRunRequest {
   bool sample_progress = 22;
   bool automatic_workers = 23;
   bool report_request_revision = 24;
+  bool completion_order_preview = 25;
 }
 
 message MapTestOutputEvent {

@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { constants, watch, type FSWatcher, type Stats } from 'node:fs';
 import { access, lstat, mkdir, open, readdir, realpath, rename, rm, stat } from 'node:fs/promises';
-import { basename, dirname, extname, isAbsolute, join, relative, resolve } from 'node:path';
+import { basename, dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type {
   DesktopSession,
@@ -48,6 +48,12 @@ import { StandardResourcePolicy } from './standard-resource-policy';
 import { readFileBounded } from './bounded-file';
 import { DesktopError } from '../shared/desktop-error';
 import { isReservedWindowsDeviceName } from './windows-names';
+import type { WorkspaceTreeChange } from '../shared/workspace-tree-change';
+import {
+  explorerListingChanges,
+  TreeChangeCoalescer,
+  type TreeChangeBatch,
+} from './workspace-tree-watch';
 
 const maximumPathLength = 32_768;
 const maximumSourceBytes = 16 * 1024 * 1024;
@@ -58,6 +64,7 @@ const maximumDirectoryEntries = 4096;
 const maximumTraversalEntries = 40_000;
 const maximumTraversalDepth = 64;
 const maximumSearchResults = 512;
+const sourceTreeRewatchDelaysMs = [1_000, 2_000, 5_000, 10_000, 30_000];
 const relevantSourceExtensions = new Set(
   editionCapabilities.mapTests
     ? ['.rms', '.rms2', '.inc', '.def', '.rmstest', '.xs']
@@ -129,10 +136,14 @@ export class WorkspaceService {
   private readonly watchTimers = new Map<string, NodeJS.Timeout>();
   private readonly savingDocuments = new Set<string>();
   private readonly relevanceCache = new Map<string, boolean>();
+  private relevanceGeneration = 0;
   private readonly sourceTreeListeners = new Set<(path: string | null) => void>();
+  private readonly treeChangeListeners = new Set<(change: WorkspaceTreeChange) => void>();
   private readonly rootListeners = new Set<(root: string | null) => void>();
   private sourceTreeWatcher: FSWatcher | null = null;
   private sourceTreeTimer: NodeJS.Timeout | null = null;
+  private treeChangeCoalescer: TreeChangeCoalescer | null = null;
+  private sourceTreeRewatchTimer: NodeJS.Timeout | null = null;
   private activeWorkspaceRoot: string | null = null;
   private folderActivation: Promise<unknown> = Promise.resolve();
   private activeSearch: AbortController | null = null;
@@ -358,12 +369,10 @@ export class WorkspaceService {
     this.activeWorkspaceRoot = null;
     this.collisionScanRevision += 1;
     this.collisionWarningSignature = null;
-    this.sourceTreeWatcher?.close();
-    this.sourceTreeWatcher = null;
-    if (this.sourceTreeTimer) clearTimeout(this.sourceTreeTimer);
-    this.sourceTreeTimer = null;
+    this.stopWatchingSourceTree();
     this.entries.clear();
     this.relevanceCache.clear();
+    this.relevanceGeneration += 1;
     if (closedRoot) this.publishRootChange();
     if (closedRoot) {
       for (const [id, capability] of this.openedDocuments) {
@@ -384,6 +393,11 @@ export class WorkspaceService {
   onSourceTreeChange(listener: (path: string | null) => void): () => void {
     this.sourceTreeListeners.add(listener);
     return () => this.sourceTreeListeners.delete(listener);
+  }
+
+  onTreeChange(listener: (change: WorkspaceTreeChange) => void): () => void {
+    this.treeChangeListeners.add(listener);
+    return () => this.treeChangeListeners.delete(listener);
   }
 
   setInstalledProtectedRoots(
@@ -1486,24 +1500,24 @@ export class WorkspaceService {
     const key = pathKey(directory);
     const cached = this.relevanceCache.get(key);
     if (cached !== undefined) return cached;
+    const generation = this.relevanceGeneration;
+    const remember = (relevant: boolean) => {
+      if (this.relevanceGeneration === generation) this.relevanceCache.set(key, relevant);
+      return relevant;
+    };
     try {
       this.assertTraversal(context, depth);
       const entries = await this.readDirectoryEntries(directory, context);
       for (const entry of entries) {
         const path = join(directory, entry.name);
-        if (entry.isFile() && (await isRelevantSourceFile(path))) {
-          this.relevanceCache.set(key, true);
-          return true;
-        }
+        if (entry.isFile() && (await isRelevantSourceFile(path))) return remember(true);
         if (!entry.isDirectory() || entry.isSymbolicLink()) continue;
         const canonical = await this.containedCanonicalDirectory(path, context);
         if (canonical && (await this.directoryHasRelevantSource(canonical, context, depth + 1))) {
-          this.relevanceCache.set(key, true);
-          return true;
+          return remember(true);
         }
       }
-      this.relevanceCache.set(key, false);
-      return false;
+      return remember(false);
     } catch (error) {
       this.publishTraversalDiagnostic(context, error);
       return false;
@@ -1689,6 +1703,7 @@ export class WorkspaceService {
   }
 
   private invalidateRelevance(path: string): void {
+    this.relevanceGeneration += 1;
     if (!this.activeWorkspaceRoot) {
       this.relevanceCache.clear();
       return;
@@ -1741,31 +1756,101 @@ export class WorkspaceService {
     for (const [id, capability] of this.openedDocuments) this.watchDocument(id, capability.path);
   }
 
-  private watchSourceTree(root: string): void {
-    this.sourceTreeWatcher?.close();
-    this.sourceTreeWatcher = watch(
-      root,
-      { persistent: false, recursive: process.platform === 'win32' },
-      (_eventType, fileName) => {
-        const changedPath = fileName ? join(root, fileName.toString()) : null;
-        if (
-          changedPath &&
-          !sourceGraphExtensions.has(extname(changedPath).toLocaleLowerCase('en-US'))
-        ) {
-          return;
-        }
-        if (this.sourceTreeTimer) clearTimeout(this.sourceTreeTimer);
-        this.sourceTreeTimer = setTimeout(() => {
-          this.sourceTreeTimer = null;
-          this.invalidateRelevance(changedPath ?? root);
-          for (const listener of this.sourceTreeListeners) listener(changedPath);
-          void this.warnAboutStandardNameCollisions(root);
-        }, 100);
-      },
+  private watchSourceTree(root: string, attempt = 0): void {
+    this.stopWatchingSourceTree();
+    const coalescer = new TreeChangeCoalescer(
+      (batch) => void this.publishTreeChange(root, batch),
+      pathKey,
     );
-    this.sourceTreeWatcher.on('error', () => {
+    this.treeChangeCoalescer = coalescer;
+    let watcher: FSWatcher;
+    try {
+      watcher = watch(
+        root,
+        { persistent: false, recursive: process.platform === 'win32' },
+        (eventType, fileName) => {
+          const changedPath = fileName ? join(root, fileName.toString()) : null;
+          coalescer.add(changedPath, eventType);
+          if (
+            changedPath &&
+            !sourceGraphExtensions.has(extname(changedPath).toLocaleLowerCase('en-US'))
+          ) {
+            return;
+          }
+          if (this.sourceTreeTimer) clearTimeout(this.sourceTreeTimer);
+          this.sourceTreeTimer = setTimeout(() => {
+            this.sourceTreeTimer = null;
+            this.invalidateRelevance(changedPath ?? root);
+            for (const listener of this.sourceTreeListeners) listener(changedPath);
+            void this.warnAboutStandardNameCollisions(root);
+          }, 100);
+        },
+      );
+    } catch {
+      this.scheduleSourceTreeRewatch(root, attempt);
+      return;
+    }
+    this.sourceTreeWatcher = watcher;
+    if (attempt > 0) coalescer.addAll();
+    watcher.on('error', () => {
+      if (this.sourceTreeWatcher !== watcher) return;
+      watcher.close();
       this.sourceTreeWatcher = null;
+      coalescer.addAll();
+      this.scheduleSourceTreeRewatch(root, attempt);
     });
+  }
+
+  private scheduleSourceTreeRewatch(root: string, attempt: number): void {
+    const delay = sourceTreeRewatchDelaysMs[attempt];
+    if (delay === undefined) return;
+    if (this.sourceTreeRewatchTimer) clearTimeout(this.sourceTreeRewatchTimer);
+    this.sourceTreeRewatchTimer = setTimeout(() => {
+      this.sourceTreeRewatchTimer = null;
+      if (!this.activeWorkspaceRoot || pathKey(this.activeWorkspaceRoot) !== pathKey(root)) return;
+      this.watchSourceTree(root, attempt + 1);
+    }, delay);
+  }
+
+  private stopWatchingSourceTree(): void {
+    this.sourceTreeWatcher?.close();
+    this.sourceTreeWatcher = null;
+    if (this.sourceTreeTimer) clearTimeout(this.sourceTreeTimer);
+    this.sourceTreeTimer = null;
+    if (this.sourceTreeRewatchTimer) clearTimeout(this.sourceTreeRewatchTimer);
+    this.sourceTreeRewatchTimer = null;
+    this.treeChangeCoalescer?.dispose();
+    this.treeChangeCoalescer = null;
+  }
+
+  private async publishTreeChange(root: string, batch: TreeChangeBatch): Promise<void> {
+    const stillOpen = () =>
+      this.activeWorkspaceRoot !== null && pathKey(this.activeWorkspaceRoot) === pathKey(root);
+    if (!stillOpen()) return;
+    let change: WorkspaceTreeChange;
+    if (batch.all) {
+      this.relevanceGeneration += 1;
+      this.relevanceCache.clear();
+      change = { kind: 'all', root };
+    } else {
+      const paths = await explorerListingChanges(
+        batch.changes,
+        (extension) => relevantSourceExtensions.has(extension),
+        stat,
+      );
+      if (paths.length === 0 || !stillOpen()) return;
+      for (const path of paths) this.invalidateRelevanceAround(path);
+      change = { kind: 'paths', root, paths };
+    }
+    for (const listener of this.treeChangeListeners) listener(change);
+  }
+
+  private invalidateRelevanceAround(path: string): void {
+    this.invalidateRelevance(path);
+    const inside = `${pathKey(path)}${sep}`;
+    for (const key of this.relevanceCache.keys()) {
+      if (key.startsWith(inside)) this.relevanceCache.delete(key);
+    }
   }
 
   private scheduleExternalChangeCheck(documentId: string): void {

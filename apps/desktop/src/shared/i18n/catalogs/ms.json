@@ -134,6 +134,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Pemaparan Peta dengan GPU"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Animasikan Peralihan Peta"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Tunjukkan Peringkat Penjanaan Langsung"
     },
@@ -193,6 +196,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Laporkan Pepijat"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Semak Versi Baharu Semasa Permulaan"
     },
     "app-menu.help.about": {
       "message": "Perihal {product}"
@@ -3584,9 +3590,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Lapisan sambungan"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Kekunci Arrow memilih petak"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4678,6 +4681,123 @@
     },
     "release-check.newer.action": {
       "message": "Buka halaman keluaran"
+    },
+    "app-update.button": {
+      "message": "Kemas Kini"
+    },
+    "app-update.button.tooltip": {
+      "message": "Kemas kini kepada AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "Kemas Kini Sekarang"
+    },
+    "app-update.dialog.title": {
+      "message": "Kemas kini kepada AoE2RMSIDE {version}?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE memuat turun pemasang versi {version} daripada GitHub dan menyemaknya dengan hasil tambah semak yang diterbitkan bersama keluaran itu. Kemudian ia ditutup, memasang kemas kini dan dibuka semula."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Jika dokumen mempunyai perubahan yang belum disimpan, anda akan ditanya tentangnya dahulu."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Nota Keluaran"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Kemas Kini"
+    },
+    "app-update.progress.label": {
+      "message": "Kemas kini"
+    },
+    "app-update.progress.downloading": {
+      "message": "Memuat turun"
+    },
+    "app-update.progress.verifying": {
+      "message": "Menyemak"
+    },
+    "app-update.progress.installing": {
+      "message": "Memasang"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Menyediakan kemas kini kepada AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "Memuat turun AoE2RMSIDE {version}, {percent}% ({received} daripada {total} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Menyemak pemasang AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "Menutup AoE2RMSIDE untuk memasang {version}"
+    },
+    "app-update.cancel": {
+      "message": "Batalkan Kemas Kini"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE tidak dapat dikemas kini kepada {version}"
+    },
+    "app-update.failed.action": {
+      "message": "Tekan Kemas Kini untuk mencuba semula."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "Muat turun tidak selesai. Semak sambungan internet."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub tidak menjawab dalam masa yang ditetapkan."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub tidak menyediakan fail keluaran."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub menghantar muat turun ke alamat yang tidak digunakan oleh kemas kini."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "Keluaran di GitHub tidak lagi diterbitkan sebagai versi ini."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "Keluaran tidak menawarkan pemasang atau senarai hasil tambah semaknya."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Pemasang lebih besar daripada saiz yang boleh dimuat turun oleh kemas kini."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "Pemasang yang dimuat turun tidak mempunyai saiz yang dinyatakan oleh keluaran."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "Senarai hasil tambah semak keluaran tidak menyenaraikan pemasangnya, jadi pemasang tidak dijalankan."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "Pemasang yang dimuat turun tidak sepadan dengan hasil tambah semak yang diterbitkan bersama keluaran, jadi ia tidak dijalankan."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Pemasang tidak dapat disimpan dalam folder sementara."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Pemasang tidak ditandatangani oleh penerbit yang dijangka, jadi ia tidak dijalankan."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "Pemasang yang dimuat turun telah hilang atau berubah sebelum ia dapat dijalankan."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows tidak dapat memulakan pemasang."
+    },
+    "app-update.cancelled.headline": {
+      "message": "Kemas kini kepada {version} telah dibatalkan"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE kekal terbuka bersama dokumen anda."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "Muat turun disimpan sehingga AoE2RMSIDE ditutup: tekan Kemas Kini untuk memasangnya tanpa memuat turun semula."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE telah dikemas kini kepada {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "Kemas kini kepada {version} tidak selesai"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} masih dipasang."
     },
     "external-language-server.started.headline": {
       "message": "Menggunakan {server} untuk fail {language}"

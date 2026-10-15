@@ -126,6 +126,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Отрисовка карты на GPU"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Анимировать смену карты"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Показывать этапы создания карты"
     },
@@ -185,6 +188,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Сообщить об ошибке"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Проверять новые версии при запуске"
     },
     "app-menu.help.about": {
       "message": "О программе {product}"
@@ -3576,9 +3582,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Слои соединений"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Стрелки выбирают клетки"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4670,6 +4673,123 @@
     },
     "release-check.newer.action": {
       "message": "Открыть страницу выпусков"
+    },
+    "app-update.button": {
+      "message": "Обновить"
+    },
+    "app-update.button.tooltip": {
+      "message": "Обновить до AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "Обновить сейчас"
+    },
+    "app-update.dialog.title": {
+      "message": "Обновить до AoE2RMSIDE {version}?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE скачает с GitHub установщик версии {version} и сверит его с контрольными суммами, опубликованными вместе с выпуском. Затем приложение закроется, установит обновление и снова откроется."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Если в документах есть несохранённые изменения, сначала появится вопрос о них."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Заметки о выпуске"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Обновить"
+    },
+    "app-update.progress.label": {
+      "message": "Обновление"
+    },
+    "app-update.progress.downloading": {
+      "message": "Скачивание"
+    },
+    "app-update.progress.verifying": {
+      "message": "Проверка"
+    },
+    "app-update.progress.installing": {
+      "message": "Установка"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Подготовка обновления до AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "Скачивание AoE2RMSIDE {version}, {percent} % ({received} из {total} МБ)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Проверка установщика AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "Закрытие AoE2RMSIDE для установки версии {version}"
+    },
+    "app-update.cancel": {
+      "message": "Отменить обновление"
+    },
+    "app-update.failed.headline": {
+      "message": "Не удалось обновить AoE2RMSIDE до версии {version}"
+    },
+    "app-update.failed.action": {
+      "message": "Нажмите «Обновить», чтобы повторить попытку."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "Скачивание не завершилось. Проверьте подключение к интернету."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub не ответил вовремя."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub не предоставил файлы выпуска."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub перенаправил скачивание на адрес, который обновление не использует."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "Выпуск на GitHub больше не опубликован как эта версия."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "В выпуске нет установщика или списка контрольных сумм."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Установщик больше, чем разрешено скачивать при обновлении."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "Размер скачанного установщика не совпадает с размером, указанным в выпуске."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "В списке контрольных сумм выпуска нет его установщика, поэтому установщик не был запущен."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "Скачанный установщик не совпадает с контрольной суммой, опубликованной вместе с выпуском, поэтому он не был запущен."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Не удалось сохранить установщик во временной папке."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Установщик не подписан ожидаемым издателем, поэтому он не был запущен."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "Скачанный установщик исчез или изменился до запуска."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows не удалось запустить установщик."
+    },
+    "app-update.cancelled.headline": {
+      "message": "Обновление до версии {version} отменено"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE остаётся открытым вместе с вашими документами."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "Скачанный файл хранится до закрытия AoE2RMSIDE: нажмите «Обновить», чтобы установить его без повторного скачивания."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE обновлён до версии {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "Обновление до версии {version} не завершилось"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} по-прежнему установлен."
     },
     "external-language-server.started.headline": {
       "message": "{server} используется для файлов {language}"

@@ -126,6 +126,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Haritayı GPU ile çiz"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Harita geçişlerini animasyonla göster"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Üretim aşamalarını anlık göster"
     },
@@ -185,6 +188,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Hata bildir"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Başlangıçta yeni sürümleri kontrol et"
     },
     "app-menu.help.about": {
       "message": "{product} hakkında"
@@ -3576,9 +3582,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Bağlantı katmanları"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Ok tuşları kare seçer"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4670,6 +4673,123 @@
     },
     "release-check.newer.action": {
       "message": "Sürümler sayfasını aç"
+    },
+    "app-update.button": {
+      "message": "Güncelle"
+    },
+    "app-update.button.tooltip": {
+      "message": "AoE2RMSIDE {version} sürümüne güncelle"
+    },
+    "app-update.note-action": {
+      "message": "Şimdi güncelle"
+    },
+    "app-update.dialog.title": {
+      "message": "AoE2RMSIDE {version} sürümüne güncellensin mi?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE, {version} sürümünün yükleyicisini GitHub üzerinden indirir ve sürümle birlikte yayımlanan sağlama toplamlarıyla karşılaştırır. Ardından kapanır, güncellemeyi yükler ve yeniden açılır."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Belgelerde kaydedilmemiş değişiklikler varsa önce bunlar size sorulur."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Sürüm notları"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Güncelle"
+    },
+    "app-update.progress.label": {
+      "message": "Güncelleme"
+    },
+    "app-update.progress.downloading": {
+      "message": "İndiriliyor"
+    },
+    "app-update.progress.verifying": {
+      "message": "Denetleniyor"
+    },
+    "app-update.progress.installing": {
+      "message": "Kuruluyor"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "AoE2RMSIDE {version} güncellemesi hazırlanıyor"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "AoE2RMSIDE {version} indiriliyor, %{percent} ({received} / {total} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "AoE2RMSIDE {version} yükleyicisi denetleniyor"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "{version} sürümünü kurmak için AoE2RMSIDE kapatılıyor"
+    },
+    "app-update.cancel": {
+      "message": "Güncellemeyi iptal et"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE, {version} sürümüne güncellenemedi"
+    },
+    "app-update.failed.action": {
+      "message": "Yeniden denemek için Güncelle düğmesine basın."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "İndirme tamamlanmadı. İnternet bağlantısını kontrol edin."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub zamanında yanıt vermedi."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub sürümün dosyalarını sağlamadı."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub indirmeyi güncellemenin kullanmadığı bir adrese yönlendirdi."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "Bu sürüm GitHub üzerinde artık bu adla yayımlanmıyor."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "Sürüm, yükleyiciyi veya sağlama toplamı listesini sunmuyor."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Yükleyici, bir güncellemenin indirebileceği boyuttan büyük."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "İndirilen yükleyicinin boyutu sürümde belirtilen boyutla aynı değil."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "Sürümün sağlama toplamı listesinde yükleyici yer almıyor, bu yüzden yükleyici çalıştırılmadı."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "İndirilen yükleyici, sürümle birlikte yayımlanan sağlama toplamıyla eşleşmiyor, bu yüzden çalıştırılmadı."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Yükleyici geçici klasöre kaydedilemedi."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Yükleyici beklenen yayıncı tarafından imzalanmamış, bu yüzden çalıştırılmadı."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "İndirilen yükleyici, çalıştırılamadan önce kaldırılmış veya değiştirilmiş."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows yükleyiciyi başlatamadı."
+    },
+    "app-update.cancelled.headline": {
+      "message": "{version} sürümüne güncelleme iptal edildi"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE, belgelerinizle birlikte açık kalıyor."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "İndirilen dosya AoE2RMSIDE kapanana kadar saklanır: yeniden indirmeden yüklemek için Güncelle düğmesine basın."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE, {version} sürümüne güncellendi"
+    },
+    "app-update.incomplete.headline": {
+      "message": "{version} sürümüne güncelleme tamamlanmadı"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} hâlâ yüklü."
     },
     "external-language-server.started.headline": {
       "message": "{language} dosyaları için {server} kullanılıyor"

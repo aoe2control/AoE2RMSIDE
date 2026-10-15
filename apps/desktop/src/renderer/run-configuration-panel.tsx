@@ -827,7 +827,11 @@ export function RunConfigurationPanel({
               executionProfilerRef.current.end(clientRequestId);
               throw abortError();
             }
-            executionProfilerRef.current.complete(clientRequestId, result.executionCost ?? null);
+            executionProfilerRef.current.complete(
+              clientRequestId,
+              result.executionCost ?? null,
+              performance.now(),
+            );
             const current = {
               ...result,
               semanticProgramHash: analysis.semanticHash,

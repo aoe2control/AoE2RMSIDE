@@ -20,10 +20,14 @@ export const releaseCheckLimits = Object.freeze({
   maximumCacheBytes: 4 * 1024,
 });
 
+export const productClientHeader: Readonly<Record<string, string>> = Object.freeze({
+  'User-Agent': 'AoE2RMSIDE',
+});
+
 export function releaseCheckHeaders(etag: string | null): Readonly<Record<string, string>> {
   return Object.freeze({
     Accept: 'application/vnd.github+json',
-    'User-Agent': 'AoE2RMSIDE',
+    ...productClientHeader,
     'X-GitHub-Api-Version': '2022-11-28',
     ...(etag === null ? {} : { 'If-None-Match': etag }),
   });
@@ -245,17 +249,28 @@ export function releaseNoticeMessage(
   );
 }
 
+export interface StartupReleaseCheckOptions {
+  enabled?: () => boolean;
+  onNewer?: (outcome: ReleaseCheckOutcome & { kind: 'newer' }) => void;
+}
+
 export class StartupReleaseCheck {
   private taken = false;
 
-  constructor(private readonly run: (() => Promise<ReleaseCheckOutcome>) | null) {}
+  constructor(
+    private readonly run: (() => Promise<ReleaseCheckOutcome>) | null,
+    private readonly options: StartupReleaseCheckOptions = {},
+  ) {}
 
   async take(): Promise<OutputMessage | null> {
     if (this.taken || !this.run) return null;
     this.taken = true;
+    if (this.options.enabled && !this.options.enabled()) return null;
     try {
       const outcome = await this.run();
-      return outcome.kind === 'newer' ? releaseNoticeMessage(outcome) : null;
+      if (outcome.kind !== 'newer') return null;
+      this.options.onNewer?.(outcome);
+      return releaseNoticeMessage(outcome);
     } catch {
       return null;
     }

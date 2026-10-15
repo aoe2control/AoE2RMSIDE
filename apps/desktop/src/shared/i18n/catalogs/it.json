@@ -126,6 +126,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Rendering delle mappe con GPU"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Anima le transizioni della mappa"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Mostra fasi di generazione"
     },
@@ -185,6 +188,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Segnala un problema"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Cerca nuove versioni all’avvio"
     },
     "app-menu.help.about": {
       "message": "Informazioni su {product}"
@@ -3576,9 +3582,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Livelli dei collegamenti"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Frecce: seleziona caselle"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4670,6 +4673,123 @@
     },
     "release-check.newer.action": {
       "message": "Apri la pagina delle versioni"
+    },
+    "app-update.button": {
+      "message": "Aggiorna"
+    },
+    "app-update.button.tooltip": {
+      "message": "Aggiorna a AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "Aggiorna ora"
+    },
+    "app-update.dialog.title": {
+      "message": "Aggiornare a AoE2RMSIDE {version}?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE scarica da GitHub il programma di installazione della versione {version} e lo confronta con i checksum pubblicati insieme alla versione. Poi si chiude, installa l’aggiornamento e si riapre."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Se alcuni documenti hanno modifiche non salvate, ti verrà chiesto prima cosa farne."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Note di rilascio"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Aggiorna"
+    },
+    "app-update.progress.label": {
+      "message": "Aggiornamento"
+    },
+    "app-update.progress.downloading": {
+      "message": "Download"
+    },
+    "app-update.progress.verifying": {
+      "message": "Controllo"
+    },
+    "app-update.progress.installing": {
+      "message": "Installazione"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Preparazione dell’aggiornamento a AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "Download di AoE2RMSIDE {version}, {percent}% ({received} di {total} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Controllo del programma di installazione di AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "Chiusura di AoE2RMSIDE per installare {version}"
+    },
+    "app-update.cancel": {
+      "message": "Annulla aggiornamento"
+    },
+    "app-update.failed.headline": {
+      "message": "Impossibile aggiornare AoE2RMSIDE a {version}"
+    },
+    "app-update.failed.action": {
+      "message": "Premi Aggiorna per riprovare."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "Il download non è stato completato. Controlla la connessione a Internet."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub non ha risposto in tempo."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub non ha fornito i file della versione."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub ha reindirizzato il download a un indirizzo che l’aggiornamento non usa."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "La versione su GitHub non è più pubblicata con questo numero."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "La versione non offre il programma di installazione o il suo elenco di checksum."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Il programma di installazione supera la dimensione che un aggiornamento può scaricare."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "Il programma di installazione scaricato non ha la dimensione indicata dalla versione."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "L’elenco dei checksum della versione non include il suo programma di installazione, quindi non è stato eseguito."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "Il programma di installazione scaricato non corrisponde al checksum pubblicato con la versione, quindi non è stato eseguito."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Impossibile salvare il programma di installazione nella cartella temporanea."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Il programma di installazione non è firmato dall’editore previsto, quindi non è stato eseguito."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "Il programma di installazione scaricato è stato rimosso o modificato prima di poter essere eseguito."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows non è riuscito ad avviare il programma di installazione."
+    },
+    "app-update.cancelled.headline": {
+      "message": "L’aggiornamento a {version} è stato annullato"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE resta aperto con i tuoi documenti."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "Il download resta disponibile finché AoE2RMSIDE non si chiude: premi Aggiorna per installarlo senza scaricarlo di nuovo."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE è stato aggiornato a {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "L’aggiornamento a {version} non è stato completato"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} è ancora installato."
     },
     "external-language-server.started.headline": {
       "message": "{server} viene usato per i file {language}"

@@ -1265,7 +1265,7 @@ const mapTestHostDocumentation = new Map<string, string>([
   ],
   [
     'generate',
-    'rms.generate(target, seeds, preview = True) yields immutable samples in seed order. Each successful preview-enabled sample is shown transiently; the final successful sample is committed.',
+    'rms.generate(target, seeds, preview = True) yields immutable samples in seed order. While the test runs, the preview shows the latest finished map, at most twice a second; afterwards it keeps the last map the script generated with preview on. preview = False leaves the preview as it is.',
   ],
   [
     'expect',

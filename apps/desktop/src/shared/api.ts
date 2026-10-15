@@ -7,6 +7,8 @@ import type { ExecutionCostSummary, ExecutionProgressEvent } from './execution-c
 import type { PreviewCandidate, PreviewCandidateAcknowledgement } from './preview-candidate';
 import type { RmsLintWorkspaceRules } from './rms-lint-rules';
 import type { LanguagePreference, LocaleState } from './i18n/locale';
+import type { WorkspaceTreeChange } from './workspace-tree-change';
+import type { UpdateState } from './update';
 import type {
   DefinitionCandidates,
   DefinitionFileIdentities,
@@ -122,8 +124,14 @@ export const ipcChannels = {
   workspaceSaveAs: 'rmside:workspace:save-as',
   workspaceRecent: 'rmside:workspace:recent',
   workspaceExternalChange: 'rmside:workspace:external-change',
+  workspaceTreeChange: 'rmside:workspace:tree-change',
   workspaceDiagnostic: 'rmside:workspace:diagnostic',
   releaseNoticeTake: 'rmside:release-notice:take',
+  updateState: 'rmside:update:state',
+  updateStart: 'rmside:update:start',
+  updateCancel: 'rmside:update:cancel',
+  updateReleaseNotes: 'rmside:update:release-notes',
+  updateEvent: 'rmside:update:event',
   recoveryRead: 'rmside:recovery:read',
   recoveryWrite: 'rmside:recovery:write',
   recoveryClear: 'rmside:recovery:clear',
@@ -452,6 +460,7 @@ export type ApplicationMenuAction =
   | { type: 'set-indent-conditionals'; enabled: boolean }
   | { type: 'set-live-generation-stages'; enabled: boolean }
   | { type: 'set-gpu-map-rendering'; enabled: boolean }
+  | { type: 'set-map-transitions'; enabled: boolean }
   | { type: 'set-inlay-hints'; enabled: boolean }
   | { type: 'set-delete-permanently'; enabled: boolean }
   | { type: 'close-tab' }
@@ -1878,9 +1887,11 @@ export interface DesktopSession {
   indentConditionals: boolean;
   liveGenerationStages: boolean;
   gpuMapRendering: boolean;
+  mapTransitions: boolean;
   inlayHints: boolean;
   inlayHintsVersion: typeof inlayHintsSettingVersion;
   deletePermanently: boolean;
+  checkForNewVersions: boolean;
   languagePreference: LanguagePreference;
   rmsLintRules: RmsLintWorkspaceRules[];
   previewPerspective: PreviewPerspective;
@@ -2071,7 +2082,13 @@ export interface RmsideDesktopApi {
   clearRecovery(): Promise<void>;
   onWindowCloseRequested(listener: () => void): () => void;
   onWorkspaceExternalChange(listener: (change: WorkspaceExternalChange) => void): () => void;
+  onWorkspaceTreeChange(listener: (change: WorkspaceTreeChange) => void): () => void;
   onWorkspaceDiagnostic(listener: (message: OutputMessage) => void): () => void;
   respondToWindowClose(allow: boolean): Promise<void>;
   takeReleaseNotice(): Promise<OutputMessage | null>;
+  getUpdateState(): Promise<UpdateState>;
+  onUpdateState(listener: (state: UpdateState) => void): () => void;
+  startUpdate(version: string): Promise<boolean>;
+  cancelUpdate(): Promise<void>;
+  openUpdateReleaseNotes(): Promise<void>;
 }

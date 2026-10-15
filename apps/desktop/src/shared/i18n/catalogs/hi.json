@@ -134,6 +134,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "GPU से मानचित्र रेंडर करें"
     },
+    "app-menu.view.map-transitions": {
+      "message": "मानचित्र बदलते समय एनिमेशन दिखाएँ"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "निर्माण के चरण साथ-साथ दिखाएँ"
     },
@@ -193,6 +196,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "बग की रिपोर्ट करें"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "शुरू होने पर नए संस्करण जाँचें"
     },
     "app-menu.help.about": {
       "message": "{product} के बारे में"
@@ -3584,9 +3590,6 @@
     "preview-panel.toolbar.connections": {
       "message": "संपर्क की परतें"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Arrow कुंजियों से टाइल चुनें"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4678,6 +4681,123 @@
     },
     "release-check.newer.action": {
       "message": "रिलीज़ पेज खोलें"
+    },
+    "app-update.button": {
+      "message": "अपडेट करें"
+    },
+    "app-update.button.tooltip": {
+      "message": "AoE2RMSIDE {version} पर अपडेट करें"
+    },
+    "app-update.note-action": {
+      "message": "अभी अपडेट करें"
+    },
+    "app-update.dialog.title": {
+      "message": "AoE2RMSIDE {version} पर अपडेट करें?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE, GitHub से संस्करण {version} का इंस्टॉलर डाउनलोड करता है और उसे रिलीज़ के साथ प्रकाशित चेकसम से मिलाता है। फिर यह बंद होता है, अपडेट इंस्टॉल करता है और दोबारा खुलता है।"
+    },
+    "app-update.dialog.unsaved": {
+      "message": "अगर दस्तावेज़ों में बिना सहेजे बदलाव हैं, तो पहले आपसे उनके बारे में पूछा जाता है।"
+    },
+    "app-update.dialog.release-notes": {
+      "message": "रिलीज़ नोट्स"
+    },
+    "app-update.dialog.confirm": {
+      "message": "अपडेट करें"
+    },
+    "app-update.progress.label": {
+      "message": "अपडेट"
+    },
+    "app-update.progress.downloading": {
+      "message": "डाउनलोड जारी"
+    },
+    "app-update.progress.verifying": {
+      "message": "जाँच जारी"
+    },
+    "app-update.progress.installing": {
+      "message": "इंस्टॉल जारी"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "AoE2RMSIDE {version} पर अपडेट की तैयारी हो रही है"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "AoE2RMSIDE {version} डाउनलोड हो रहा है, {percent}% ({total} MB में से {received} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "AoE2RMSIDE {version} के इंस्टॉलर की जाँच हो रही है"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "{version} इंस्टॉल करने के लिए AoE2RMSIDE बंद हो रहा है"
+    },
+    "app-update.cancel": {
+      "message": "अपडेट रद्द करें"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE को {version} पर अपडेट नहीं किया जा सका"
+    },
+    "app-update.failed.action": {
+      "message": "फिर से कोशिश करने के लिए ‘अपडेट करें’ चुनें।"
+    },
+    "app-update.failed.cause.offline": {
+      "message": "डाउनलोड पूरा नहीं हुआ। इंटरनेट कनेक्शन जाँचें।"
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub ने समय पर जवाब नहीं दिया।"
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub ने रिलीज़ की फ़ाइलें नहीं दीं।"
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub ने डाउनलोड को ऐसे पते पर भेजा जिसका उपयोग अपडेट नहीं करता।"
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "GitHub पर यह रिलीज़ अब इस संस्करण के रूप में प्रकाशित नहीं है।"
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "रिलीज़ में इंस्टॉलर या उसकी चेकसम सूची नहीं है।"
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "इंस्टॉलर उस आकार से बड़ा है जितना अपडेट डाउनलोड कर सकता है।"
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "डाउनलोड किए गए इंस्टॉलर का आकार रिलीज़ में बताए गए आकार से अलग है।"
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "रिलीज़ की चेकसम सूची में उसका इंस्टॉलर नहीं है, इसलिए इंस्टॉलर नहीं चलाया गया।"
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "डाउनलोड किया गया इंस्टॉलर रिलीज़ के साथ प्रकाशित चेकसम से मेल नहीं खाता, इसलिए उसे नहीं चलाया गया।"
+    },
+    "app-update.failed.cause.disk": {
+      "message": "इंस्टॉलर को अस्थायी फ़ोल्डर में सहेजा नहीं जा सका।"
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "इंस्टॉलर पर अपेक्षित प्रकाशक के हस्ताक्षर नहीं हैं, इसलिए उसे नहीं चलाया गया।"
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "डाउनलोड किया गया इंस्टॉलर चलने से पहले हट गया या बदल गया।"
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows इंस्टॉलर शुरू नहीं कर सका।"
+    },
+    "app-update.cancelled.headline": {
+      "message": "{version} पर अपडेट रद्द किया गया"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE आपके दस्तावेज़ों के साथ खुला रहता है।"
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "डाउनलोड AoE2RMSIDE बंद होने तक रखा जाता है: इसे दोबारा डाउनलोड किए बिना इंस्टॉल करने के लिए ‘अपडेट करें’ चुनें।"
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE को {version} पर अपडेट किया गया"
+    },
+    "app-update.incomplete.headline": {
+      "message": "{version} पर अपडेट पूरा नहीं हुआ"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} अब भी इंस्टॉल है।"
     },
     "external-language-server.started.headline": {
       "message": "{language} फ़ाइलों के लिए {server} का उपयोग हो रहा है"

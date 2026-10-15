@@ -126,6 +126,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Karten mit der GPU darstellen"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Kartenübergänge animieren"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Erzeugungsschritte live anzeigen"
     },
@@ -185,6 +188,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Fehler melden"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Beim Start nach neuen Versionen suchen"
     },
     "app-menu.help.about": {
       "message": "Über {product}"
@@ -3576,9 +3582,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Verbindungsebenen"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Pfeiltasten wählen Felder aus"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4670,6 +4673,123 @@
     },
     "release-check.newer.action": {
       "message": "Release-Seite öffnen"
+    },
+    "app-update.button": {
+      "message": "Aktualisieren"
+    },
+    "app-update.button.tooltip": {
+      "message": "Auf AoE2RMSIDE {version} aktualisieren"
+    },
+    "app-update.note-action": {
+      "message": "Jetzt aktualisieren"
+    },
+    "app-update.dialog.title": {
+      "message": "Auf AoE2RMSIDE {version} aktualisieren?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE lädt das Installationsprogramm der Version {version} von GitHub herunter und vergleicht es mit den Prüfsummen, die mit dem Release veröffentlicht wurden. Danach schließt es sich, installiert das Update und öffnet sich wieder."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Wenn Dokumente ungespeicherte Änderungen haben, wirst du zuerst danach gefragt."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Versionshinweise"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Aktualisieren"
+    },
+    "app-update.progress.label": {
+      "message": "Update"
+    },
+    "app-update.progress.downloading": {
+      "message": "Herunterladen"
+    },
+    "app-update.progress.verifying": {
+      "message": "Prüfen"
+    },
+    "app-update.progress.installing": {
+      "message": "Installieren"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Update auf AoE2RMSIDE {version} wird vorbereitet"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "AoE2RMSIDE {version} wird heruntergeladen, {percent} % ({received} von {total} MB)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Installationsprogramm von AoE2RMSIDE {version} wird geprüft"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "AoE2RMSIDE wird geschlossen, um {version} zu installieren"
+    },
+    "app-update.cancel": {
+      "message": "Update abbrechen"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE konnte nicht auf {version} aktualisiert werden"
+    },
+    "app-update.failed.action": {
+      "message": "Wähle „Aktualisieren“, um es noch einmal zu versuchen."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "Der Download wurde nicht abgeschlossen. Prüfe die Internetverbindung."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub hat nicht rechtzeitig geantwortet."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub hat die Dateien des Releases nicht bereitgestellt."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub hat den Download an eine Adresse weitergeleitet, die das Update nicht verwendet."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "Das Release auf GitHub ist nicht mehr als diese Version veröffentlicht."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "Das Release bietet das Installationsprogramm oder seine Prüfsummenliste nicht an."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Das Installationsprogramm ist größer, als ein Update herunterladen darf."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "Das heruntergeladene Installationsprogramm hat nicht die Größe, die das Release angibt."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "Die Prüfsummenliste des Releases nennt sein Installationsprogramm nicht, daher wurde das Installationsprogramm nicht ausgeführt."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "Das heruntergeladene Installationsprogramm stimmt nicht mit der Prüfsumme überein, die mit dem Release veröffentlicht wurde, daher wurde es nicht ausgeführt."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Das Installationsprogramm konnte nicht im temporären Ordner gespeichert werden."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Das Installationsprogramm ist nicht vom erwarteten Herausgeber signiert, daher wurde es nicht ausgeführt."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "Das heruntergeladene Installationsprogramm war verschwunden oder verändert, bevor es ausgeführt werden konnte."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows konnte das Installationsprogramm nicht starten."
+    },
+    "app-update.cancelled.headline": {
+      "message": "Das Update auf {version} wurde abgebrochen"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE bleibt mit deinen Dokumenten geöffnet."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "Der Download bleibt erhalten, bis AoE2RMSIDE geschlossen wird: Wähle „Aktualisieren“, um ihn ohne erneuten Download zu installieren."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE wurde auf {version} aktualisiert"
+    },
+    "app-update.incomplete.headline": {
+      "message": "Das Update auf {version} wurde nicht abgeschlossen"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} ist weiterhin installiert."
     },
     "external-language-server.started.headline": {
       "message": "{server} wird für {language}-Dateien verwendet"

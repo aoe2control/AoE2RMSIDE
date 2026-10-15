@@ -9,7 +9,8 @@ export const mapTestStarterTemplate = `# Map-test scripts (Python-like .rmstest 
 #     target = rms.source()  # Uses the pinned RMS; or pass "maps/example.rms".
 #     seeds = rms.seeds(start = 1, count = 16)
 #
-#     for sample in rms.generate(target, seeds, preview = True):
+#     # The preview shows the maps as they finish; preview = False turns that off.
+#     for sample in rms.generate(target, seeds):
 #         gold = sample.map.objects(object_ids = ["GOLD"], owner = 0)
 #         sample.expect(
 #             len(gold) >= 8,

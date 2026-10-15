@@ -29,10 +29,10 @@ use rms_source::{
     SourceCatalogRole, SourceCatalogVersion, SourceId, StandardIncludeAccess,
 };
 use rms_test::{
-    CandidateSample, MAX_WORKERS, MachineResources, PreviewCallback, ProgressCallback,
-    ProgressivePreview, ReportSchema, RunConfiguration, RunDiagnostic, RunObservers, RunOutcome,
-    RunStatistics, RunStatus, SEMANTIC_API_MAJOR, SampleProgress, WorkerSetting, report_json, run,
-    run_observed_with_report_schema,
+    CandidateSample, MAX_WORKERS, MachineResources, PreviewCallback, PreviewOrder,
+    ProgressCallback, ProgressivePreview, ReportSchema, RunConfiguration, RunDiagnostic,
+    RunObservers, RunOutcome, RunStatistics, RunStatus, SEMANTIC_API_MAJOR, SampleProgress,
+    WorkerSetting, report_json, run, run_observed_with_report_schema,
 };
 use serde::Serialize;
 use starlark::analysis::AstModuleLint;
@@ -923,6 +923,7 @@ fn run_service<R: Read, W: Write + Send>(input: &mut R, output: &mut W) -> Resul
                                     map_test_report_request_revision: true,
                                     connection_routes: false,
                                     control_pipe_exchange: false,
+                                    map_test_completion_order_preview: true,
                                 }),
                             }),
                         ),
@@ -1056,6 +1057,7 @@ fn run_service<R: Read, W: Write + Send>(input: &mut R, output: &mut W) -> Resul
                                     cancellation,
                                     RunObservers {
                                         preview: Some(preview_callback),
+                                        preview_order: protocol_preview_order(&run_request),
                                         progressive,
                                         progress,
                                     },
@@ -1291,6 +1293,9 @@ fn protocol_configuration(request: &v1::MapTestRunRequest) -> Result<RunConfigur
     if request.semantic_api_major != SEMANTIC_API_MAJOR {
         bail!("unsupported map-test semantic API major");
     }
+    if request.completion_order_preview && request.progressive_preview {
+        bail!("completion-order map-test previews take no stage candidates");
+    }
     let profiles = ProfileCatalog::frozen_current()?;
     let profile = profiles
         .get(&request.profile_id)
@@ -1338,6 +1343,14 @@ fn protocol_configuration(request: &v1::MapTestRunRequest) -> Result<RunConfigur
         machine: None,
         retained_map_budget: None,
     })
+}
+
+fn protocol_preview_order(request: &v1::MapTestRunRequest) -> PreviewOrder {
+    if request.completion_order_preview {
+        PreviewOrder::Completion
+    } else {
+        PreviewOrder::Script
+    }
 }
 
 fn protocol_workers(request: &v1::MapTestRunRequest) -> Result<WorkerSetting> {

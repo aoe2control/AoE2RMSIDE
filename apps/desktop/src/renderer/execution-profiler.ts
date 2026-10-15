@@ -113,6 +113,7 @@ export interface ProfilerRun {
   steps: readonly ExecutionCostStep[];
   measuredTotalUs: number;
   anchorMs: number | null;
+  easeOffsetUs: number;
   status: 'running' | 'completed';
   final: ExecutionCostSummary | null;
 }
@@ -160,7 +161,10 @@ export class ExecutionProfilerStore {
     if (!run || run.requestId !== event.requestId || run.status !== 'running') return;
     if (event.kind === 'started') {
       if (run.plan !== null) return;
-      this.publish({ ...this.snapshot, run: { ...run, plan: event.plan, anchorMs: nowMs } });
+      this.publish({
+        ...this.snapshot,
+        run: { ...run, plan: event.plan, anchorMs: nowMs, easeOffsetUs: 0 },
+      });
       return;
     }
     if (
@@ -171,21 +175,26 @@ export class ExecutionProfilerStore {
     ) {
       return;
     }
-    this.publish({
-      ...this.snapshot,
-      run: {
-        ...run,
-        steps: [...run.steps, event.step],
-        measuredTotalUs: event.measuredTotalUs,
-        anchorMs: nowMs,
-      },
-    });
+    const next: ProfilerRun = {
+      ...run,
+      steps: [...run.steps, event.step],
+      measuredTotalUs: event.measuredTotalUs,
+    };
+    this.publish({ ...this.snapshot, run: reanchored(run, next, nowMs) });
   }
 
-  complete(requestId: string, summary: ExecutionCostSummary | null = null): void {
+  complete(
+    requestId: string,
+    summary: ExecutionCostSummary | null = null,
+    nowMs: number | null = null,
+  ): void {
     const run = this.snapshot.run;
     if (!run || run.requestId !== requestId || run.status !== 'running') return;
-    this.publish({ ...this.snapshot, run: { ...run, status: 'completed', final: summary } });
+    const next: ProfilerRun = { ...run, status: 'completed', final: summary };
+    this.publish({
+      ...this.snapshot,
+      run: nowMs === null || run.anchorMs === null ? next : reanchored(run, next, nowMs),
+    });
   }
 
   settle(result: PreviewGenerationResult | null): void {
@@ -216,6 +225,70 @@ export class ExecutionProfilerStore {
   }
 }
 
+export interface ProfilerFrames {
+  request(callback: () => void): number;
+  cancel(handle: number): void;
+  hidden(): boolean;
+}
+
+const displayFrames: ProfilerFrames = {
+  request: (callback) => requestAnimationFrame(callback),
+  cancel: (handle) => cancelAnimationFrame(handle),
+  hidden: () => document.visibilityState === 'hidden',
+};
+
+export function frameAlignedProfilerStore(
+  store: Pick<ExecutionProfilerStore, 'subscribe' | 'getSnapshot'>,
+  frames: ProfilerFrames = displayFrames,
+): Pick<ExecutionProfilerStore, 'subscribe' | 'getSnapshot'> {
+  let shown = store.getSnapshot();
+  let frame: number | null = null;
+  let unsubscribe: (() => void) | null = null;
+  const listeners = new Set<() => void>();
+  const take = () => {
+    frame = null;
+    if (shown === store.getSnapshot()) return;
+    shown = store.getSnapshot();
+    for (const listener of [...listeners]) listener();
+  };
+  const changed = () => {
+    if (frames.hidden() || !advancesLiveRun(shown, store.getSnapshot())) {
+      if (frame !== null) frames.cancel(frame);
+      take();
+    } else if (frame === null) frame = frames.request(take);
+  };
+  return {
+    subscribe(listener) {
+      listeners.add(listener);
+      if (!unsubscribe) {
+        shown = store.getSnapshot();
+        unsubscribe = store.subscribe(changed);
+      }
+      return () => {
+        listeners.delete(listener);
+        if (listeners.size > 0 || !unsubscribe) return;
+        unsubscribe();
+        unsubscribe = null;
+        if (frame !== null) frames.cancel(frame);
+        frame = null;
+      };
+    },
+    getSnapshot: () => shown,
+  };
+}
+
+function advancesLiveRun(from: ProfilerSnapshot, to: ProfilerSnapshot): boolean {
+  return (
+    from.run !== null &&
+    to.run !== null &&
+    from.run.key === to.run.key &&
+    from.run.status === 'running' &&
+    to.run.status === 'running' &&
+    from.committed === to.committed &&
+    from.continuedRunId === to.continuedRunId
+  );
+}
+
 function newRun(key: string, requestId: string | null, startedMs: number | null): ProfilerRun {
   return {
     key,
@@ -225,8 +298,19 @@ function newRun(key: string, requestId: string | null, startedMs: number | null)
     steps: [],
     measuredTotalUs: 0,
     anchorMs: null,
+    easeOffsetUs: 0,
     status: 'running',
     final: null,
+  };
+}
+
+function reanchored(previous: ProfilerRun, next: ProfilerRun, nowMs: number): ProfilerRun {
+  const shown = provisionalDurationUs(previous, nowMs);
+  const anchored = { ...next, anchorMs: nowMs, easeOffsetUs: 0 };
+  const target = provisionalDurationUs(anchored, nowMs);
+  return {
+    ...anchored,
+    easeOffsetUs: shown === null || target === null ? 0 : shown - target,
   };
 }
 
@@ -324,8 +408,7 @@ export function runPending(run: ProfilerRun): boolean {
 
 export function pendingPhaseStartMs(run: ProfilerRun): number | null {
   if (run.status !== 'running') return null;
-  if (run.steps.length > 0) return run.anchorMs;
-  return run.startedMs ?? run.anchorMs;
+  return run.anchorMs;
 }
 
 export function phaseElapsedText(startMs: number, nowMs: number): string {
@@ -374,19 +457,55 @@ export function profilerChartKey(snapshot: ProfilerSnapshot): string {
 
 export type ChartMotion = 'live' | 'continuing' | 'rest';
 
+export function initialChartMotion(live: boolean, replacesShownChart: boolean): ChartMotion {
+  if (live) return 'live';
+  return replacesShownChart ? 'continuing' : 'rest';
+}
+
 export function nextChartMotion(current: ChartMotion, live: boolean): ChartMotion {
   if (live) return 'live';
   return current === 'live' ? 'continuing' : current;
 }
 
+export const profilerEaseMs = 120;
+
 export function provisionalDurationUs(run: ProfilerRun, nowMs: number): number | null {
-  if (run.status === 'completed') {
-    return run.final?.totalUs ?? (run.anchorMs === null ? null : run.measuredTotalUs);
-  }
   if (run.anchorMs === null) {
-    return run.startedMs === null ? null : Math.max(0, nowMs - run.startedMs) * 1000;
+    return run.status === 'completed' ? (run.final?.totalUs ?? null) : null;
   }
-  return run.measuredTotalUs + Math.max(0, nowMs - run.anchorMs) * 1000;
+  const sinceMs = Math.max(0, nowMs - run.anchorMs);
+  const counting =
+    run.status === 'running' && run.plan !== null && run.steps.length < run.plan.length;
+  const engineUs =
+    run.status === 'completed' && run.final !== null
+      ? run.final.totalUs
+      : run.measuredTotalUs + (counting ? sinceMs * 1000 : 0);
+  const easeUs =
+    run.easeOffsetUs === 0 ? 0 : run.easeOffsetUs * Math.exp(-sinceMs / profilerEaseMs);
+  return Math.max(0, engineUs + easeUs);
+}
+
+export function animatedProfilerRun(
+  previous: ProfilerRun | null,
+  snapshot: ProfilerSnapshot,
+): ProfilerRun | null {
+  if (snapshot.run) return snapshot.run;
+  return previous !== null && previous.key === snapshot.continuedRunId ? previous : null;
+}
+
+export function profilerTimeFrame(
+  run: ProfilerRun,
+  nowMs: number,
+): { durationUs: number | null; next: boolean } {
+  const easing =
+    run.anchorMs !== null && run.easeOffsetUs !== 0 && nowMs - run.anchorMs < profilerEaseMs * 6;
+  if (run.status === 'completed' && !easing) {
+    return { durationUs: run.final?.totalUs ?? provisionalDurationUs(run, nowMs), next: false };
+  }
+  return {
+    durationUs: provisionalDurationUs(run, nowMs),
+    next: run.status === 'running' || easing,
+  };
 }
 
 export function liveSummary(run: ProfilerRun): ExecutionCostSummary | null {
@@ -409,15 +528,6 @@ export function liveSummary(run: ProfilerRun): ExecutionCostSummary | null {
     groups,
     context: 'isolated',
   };
-}
-
-export function nextDisplayedDurationUs(
-  displayedUs: number | null,
-  targetUs: number | null,
-  live: boolean,
-): number | null {
-  if (!live || targetUs === null || displayedUs === null) return targetUs ?? displayedUs;
-  return Math.max(displayedUs, targetUs);
 }
 
 export interface ProfilerRow {

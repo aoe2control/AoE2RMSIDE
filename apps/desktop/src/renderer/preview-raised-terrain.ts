@@ -27,6 +27,7 @@ import { requestPreviewRender } from './preview-render-scheduler';
 import {
   terrainLayerTransform,
   tileEdgeScreenPixels,
+  tileGridOpacity,
   tileGridStrength,
   type TileGridColor,
 } from './preview-tile-grid';
@@ -117,10 +118,25 @@ export class RaisedTerrainUniforms {
   get gridOpacity(): number {
     return (this.group.uniforms.uRaisedGrid as Float32Array)[3]!;
   }
+
+  setLift(lift: number): void {
+    const depth = this.group.uniforms.uRaisedDepth as Float32Array;
+    const flattened = 1 - Math.max(0, Math.min(1, lift));
+    if (depth[2] === flattened) return;
+    depth[2] = flattened;
+    this.group.update();
+  }
+
+  get lift(): number {
+    return 1 - (this.group.uniforms.uRaisedDepth as Float32Array)[2]!;
+  }
 }
 
 export class RaisedTileGrid {
   readonly lineCount: number;
+  private strength = 0;
+  private visibility = 1;
+  private destroyed = false;
   opacity = 0;
 
   constructor(
@@ -135,8 +151,7 @@ export class RaisedTileGrid {
 
   setColor(color: TileGridColor): void {
     this.color = color;
-    this.uniforms.setGrid(color.color, this.opacity);
-    requestPreviewRender(this.node);
+    this.apply();
   }
 
   update(
@@ -144,15 +159,26 @@ export class RaisedTileGrid {
     camera: PreviewCamera,
     viewport: PreviewViewport,
   ): void {
-    const strength = tileGridStrength(tileEdgeScreenPixels(scene, camera, viewport));
-    this.opacity = strength * this.color.alpha;
-    this.uniforms.setGrid(this.color.color, this.opacity);
-    requestPreviewRender(this.node);
+    this.strength = tileGridStrength(tileEdgeScreenPixels(scene, camera, viewport));
+    this.apply();
+  }
+
+  setVisibility(visibility: number): void {
+    this.visibility = visibility;
+    this.apply();
   }
 
   destroy(): void {
+    this.destroyed = true;
     this.opacity = 0;
     this.uniforms.setGrid(0, 0);
+    requestPreviewRender(this.node);
+  }
+
+  private apply(): void {
+    if (this.destroyed) return;
+    this.opacity = tileGridOpacity(this.strength, this.color, this.visibility);
+    this.uniforms.setGrid(this.color.color, this.opacity);
     requestPreviewRender(this.node);
   }
 }
@@ -170,11 +196,14 @@ flat out vec4 vColor;
 ${raisedVertexCommon}
 void main() {
   mat3 mvp = uProjectionMatrix * uWorldTransformMatrix * uTransformMatrix;
-  vec2 local = vec2(aPosition.x, aPosition.y - aPosition.z);
-  gl_Position = vec4((mvp * vec3(local, 1.0)).xy, raisedDepthZ(aPosition.y + aPosition.z, 0.0), 1.0);
+  // The map transitions' rise and flatten: 0 flat and unlit, 1 raised.
+  float lift = 1.0 - uRaisedDepth.z;
+  float height = aPosition.z * lift;
+  vec2 local = vec2(aPosition.x, aPosition.y - height);
+  gl_Position = vec4((mvp * vec3(local, 1.0)).xy, raisedDepthZ(aPosition.y + height, 0.0), 1.0);
   vMap = vec2(aPosition.x - aPosition.y, aPosition.x + aPosition.y) * 0.5;
   float kind = floor((aPosition.w + 0.5) / 4096.0);
-  float light = (aPosition.w - kind * 4096.0) / 1000.0;
+  float light = mix(1.0, (aPosition.w - kind * 4096.0) / 1000.0, lift);
   vColor = vec4(min(aColor.rgb / 255.0 * light, vec3(1.0)), kind);
 }
 `;
@@ -529,7 +558,7 @@ export class RaisedOverlayFill {
   constructor(
     uniforms: RaisedTerrainUniforms,
     color: number,
-    alpha: number,
+    private readonly alpha: number,
     private readonly depthTest: boolean,
     private readonly bias: () => number,
   ) {
@@ -609,6 +638,15 @@ export class RaisedOverlayFill {
     requestPreviewRender(this.container);
   }
 
+  setOpacity(opacity: number): void {
+    if (this.destroyed) return;
+    const uniforms = this.shader.resources.overlayUniforms as {
+      uniforms: { uOverlayColor: number[] };
+    };
+    uniforms.uniforms.uOverlayColor[3] = this.alpha * opacity;
+    requestPreviewRender(this.container);
+  }
+
   destroy(): void {
     if (this.destroyed) return;
     this.destroyed = true;
@@ -624,6 +662,7 @@ export class ShownRaisedHighlight {
   private fill: RaisedOverlayFill | null = null;
   private uniforms: RaisedTerrainUniforms | null = null;
   private picture: ShownRaisedPicture | null = null;
+  private opacity = 1;
 
   constructor(
     private readonly layer: Container,
@@ -654,6 +693,7 @@ export class ShownRaisedHighlight {
         picture.surface.hasSteps,
         () => this.picture?.overlayBias() ?? 0,
       );
+      this.fill.setOpacity(this.opacity);
       this.uniforms = picture.uniforms;
       if (!this.layer.destroyed && !this.graphics.destroyed) {
         this.layer.addChildAt(this.fill.container, this.layer.getChildIndex(this.graphics));
@@ -664,6 +704,11 @@ export class ShownRaisedHighlight {
 
   clear(): void {
     this.fill?.clear();
+  }
+
+  setOpacity(opacity: number): void {
+    this.opacity = opacity;
+    this.fill?.setOpacity(opacity);
   }
 
   destroy(): void {

@@ -126,6 +126,9 @@
     "app-menu.view.gpu-map-rendering": {
       "message": "Rendu des cartes par GPU"
     },
+    "app-menu.view.map-transitions": {
+      "message": "Animer les transitions de la carte"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Afficher les étapes de génération"
     },
@@ -185,6 +188,9 @@
     },
     "app-menu.help.report-bug": {
       "message": "Signaler un problème"
+    },
+    "app-menu.help.check-for-new-versions": {
+      "message": "Rechercher les nouvelles versions au démarrage"
     },
     "app-menu.help.about": {
       "message": "À propos de {product}"
@@ -3576,9 +3582,6 @@
     "preview-panel.toolbar.connections": {
       "message": "Couches des liaisons"
     },
-    "preview-panel.toolbar.keyboard-cue": {
-      "message": "Flèches : sélectionner des cases"
-    },
     "preview-panel.readout.cursor": {
       "message": "x {x}, y {y}"
     },
@@ -4670,6 +4673,123 @@
     },
     "release-check.newer.action": {
       "message": "Ouvrir la page des versions"
+    },
+    "app-update.button": {
+      "message": "Mettre à jour"
+    },
+    "app-update.button.tooltip": {
+      "message": "Mettre à jour vers AoE2RMSIDE {version}"
+    },
+    "app-update.note-action": {
+      "message": "Mettre à jour maintenant"
+    },
+    "app-update.dialog.title": {
+      "message": "Mettre à jour vers AoE2RMSIDE {version} ?"
+    },
+    "app-update.dialog.description": {
+      "message": "AoE2RMSIDE télécharge depuis GitHub le programme d’installation de la version {version} et le compare aux sommes de contrôle publiées avec celle-ci. Ensuite, il se ferme, installe la mise à jour et se rouvre."
+    },
+    "app-update.dialog.unsaved": {
+      "message": "Si des documents ont des modifications non enregistrées, vous êtes d’abord interrogé à leur sujet."
+    },
+    "app-update.dialog.release-notes": {
+      "message": "Notes de version"
+    },
+    "app-update.dialog.confirm": {
+      "message": "Mettre à jour"
+    },
+    "app-update.progress.label": {
+      "message": "Mise à jour"
+    },
+    "app-update.progress.downloading": {
+      "message": "Téléchargement"
+    },
+    "app-update.progress.verifying": {
+      "message": "Contrôle"
+    },
+    "app-update.progress.installing": {
+      "message": "Installation"
+    },
+    "app-update.progress.detail.preparing": {
+      "message": "Préparation de la mise à jour vers AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.downloading": {
+      "message": "Téléchargement d’AoE2RMSIDE {version}, {percent} % ({received} sur {total} Mo)"
+    },
+    "app-update.progress.detail.verifying": {
+      "message": "Contrôle du programme d’installation d’AoE2RMSIDE {version}"
+    },
+    "app-update.progress.detail.installing": {
+      "message": "Fermeture d’AoE2RMSIDE pour installer la version {version}"
+    },
+    "app-update.cancel": {
+      "message": "Annuler la mise à jour"
+    },
+    "app-update.failed.headline": {
+      "message": "AoE2RMSIDE n’a pas pu être mis à jour vers {version}"
+    },
+    "app-update.failed.action": {
+      "message": "Appuyez sur Mettre à jour pour réessayer."
+    },
+    "app-update.failed.cause.offline": {
+      "message": "Le téléchargement n’a pas abouti. Vérifiez la connexion Internet."
+    },
+    "app-update.failed.cause.timeout": {
+      "message": "GitHub n’a pas répondu à temps."
+    },
+    "app-update.failed.cause.unavailable": {
+      "message": "GitHub n’a pas fourni les fichiers de la version."
+    },
+    "app-update.failed.cause.redirect-refused": {
+      "message": "GitHub a redirigé le téléchargement vers une adresse que la mise à jour n’utilise pas."
+    },
+    "app-update.failed.cause.release-mismatch": {
+      "message": "La version n’est plus publiée sur GitHub sous ce numéro."
+    },
+    "app-update.failed.cause.asset-missing": {
+      "message": "La version ne propose pas le programme d’installation ou sa liste de sommes de contrôle."
+    },
+    "app-update.failed.cause.oversized": {
+      "message": "Le programme d’installation dépasse la taille qu’une mise à jour peut télécharger."
+    },
+    "app-update.failed.cause.size-mismatch": {
+      "message": "Le programme d’installation téléchargé n’a pas la taille indiquée par la version."
+    },
+    "app-update.failed.cause.checksum-missing": {
+      "message": "La liste des sommes de contrôle de la version ne mentionne pas son programme d’installation, qui n’a donc pas été exécuté."
+    },
+    "app-update.failed.cause.checksum-mismatch": {
+      "message": "Le programme d’installation téléchargé ne correspond pas à la somme de contrôle publiée avec la version, il n’a donc pas été exécuté."
+    },
+    "app-update.failed.cause.disk": {
+      "message": "Le programme d’installation n’a pas pu être enregistré dans le dossier temporaire."
+    },
+    "app-update.failed.cause.publisher-refused": {
+      "message": "Le programme d’installation n’est pas signé par l’éditeur attendu, il n’a donc pas été exécuté."
+    },
+    "app-update.failed.cause.installer-missing": {
+      "message": "Le programme d’installation téléchargé a disparu ou a été modifié avant de pouvoir s’exécuter."
+    },
+    "app-update.failed.cause.installer-start-failed": {
+      "message": "Windows n’a pas pu démarrer le programme d’installation."
+    },
+    "app-update.cancelled.headline": {
+      "message": "La mise à jour vers {version} a été annulée"
+    },
+    "app-update.cancelled.cause.kept-open": {
+      "message": "AoE2RMSIDE reste ouvert avec vos documents."
+    },
+    "app-update.cancelled.action.download-kept": {
+      "message": "Le téléchargement est conservé jusqu’à la fermeture d’AoE2RMSIDE : appuyez sur Mettre à jour pour l’installer sans le télécharger à nouveau."
+    },
+    "app-update.installed.headline": {
+      "message": "AoE2RMSIDE a été mis à jour vers {version}"
+    },
+    "app-update.incomplete.headline": {
+      "message": "La mise à jour vers {version} n’a pas abouti"
+    },
+    "app-update.incomplete.cause": {
+      "message": "AoE2RMSIDE {current} est toujours installé."
     },
     "external-language-server.started.headline": {
       "message": "{server} est utilisé pour les fichiers {language}"

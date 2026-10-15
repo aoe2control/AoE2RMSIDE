@@ -38,7 +38,9 @@ Examples of what is in scope:
   processes;
 - a way to make the application write into the game installation, or into a
   file in the user's game profile that the application did not create;
-- a way to start a live test in a multiplayer match.
+- a way to start a live test in a multiplayer match;
+- a way to make the in-app update run a file other than the installer of an
+  AoE2RMSIDE release published in this repository.
 
 Issues in the game itself, in AoE2Control, or in third-party dependencies
 should be reported to their own maintainers; tell us as well if AoE2RMSIDE is
@@ -55,8 +57,15 @@ affected.
 - The native executables accept only bounded, versioned messages and refuse
   unsupported versions instead of guessing.
 - The application has no telemetry and no automatic crash upload. Logs stay
-  on the user's computer unless the user chooses to share them. Its only
-  network request is one check at startup for a newer release of this
-  repository on GitHub, made by the main process; it sends no credentials,
-  paths, scripts, or machine identifiers, and it never downloads or installs
-  anything.
+  on the user's computer unless the user chooses to share them.
+- At startup the main process makes one request to GitHub to check for a
+  newer release of this repository. It sends no credentials, paths, scripts,
+  or machine identifiers. The check can be turned off under Help, **Check for
+  New Versions at Startup**.
+- Nothing is downloaded unless the user chooses **Update**, which only the
+  installed version offers. The application then downloads that release's
+  installer and checksum list from this repository's releases over HTTPS,
+  runs the installer only if it matches the published checksum, and deletes
+  the download if it does not. The checksum shows that the file arrived
+  intact; it does not prove who published it, because the downloads are not
+  code-signed.

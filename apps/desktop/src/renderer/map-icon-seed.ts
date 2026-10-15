@@ -195,6 +195,6 @@ export function settleMapIconProgress(
     return;
   }
   const summary = outcome.result.executionCost ?? null;
-  store.complete(requestId, summary);
+  store.complete(requestId, summary, performance.now());
   store.settle(outcome.result);
 }
