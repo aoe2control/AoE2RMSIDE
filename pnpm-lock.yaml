@@ -118,8 +118,8 @@ importers:
         specifier: 6.1.1
         version: 6.1.1(vite@8.2.2(@types/node@24.10.1)(jiti@2.7.0)(terser@5.50.0))
       electron:
-        specifier: 43.4.1
-        version: 43.4.1(supports-color@8.1.1)
+        specifier: 44.7.2
+        version: 44.7.2(supports-color@8.1.1)
       tailwindcss:
         specifier: 'catalog:'
         version: 4.3.3
@@ -1561,8 +1561,8 @@ packages:
   electron-to-chromium@1.5.411:
     resolution: {integrity: sha512-gglkxzokjHfawpGxq75XdBV2/l3BAPzrsMs70qgaZdTW5rpV1tC4MdgJVP9fN126bODA4ZJQkn1wryEzJyQXIg==}
 
-  electron@43.4.1:
-    resolution: {integrity: sha512-5b+EuiwkgG5iRcsEL34rimgRpkYp15SsfZOa0pC5kXs0Tb82TH4n95rpQzTZa7yRCbA7tm0WoEbuBL6NaAhAcA==}
+  electron@44.7.2:
+    resolution: {integrity: sha512-u3Pbz0Hi1sSSwBMz2v8LiagsfUG4QURPUe/qphM+g4THKP8o4BYdnuboyhlLO8HIC/KfV5rvltyacbP4jEq9yw==}
     engines: {node: '>= 22.12.0'}
     hasBin: true
 
@@ -5186,7 +5186,7 @@ snapshots:
 
   electron-to-chromium@1.5.411: {}
 
-  electron@43.4.1(supports-color@8.1.1):
+  electron@44.7.2(supports-color@8.1.1):
     dependencies:
       '@electron-internal/extract-zip': 1.0.5
       '@electron/get': 5.1.0(supports-color@8.1.1)

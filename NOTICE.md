@@ -26,6 +26,18 @@ registry with the pinned shadcn CLI and then adapted. shadcn/ui is Copyright
 (c) 2023 shadcn, under the MIT License, kept at
 `assets/third-party/shadcn-ui/LICENSE.txt`.
 
+The code editor's color schemes other than Default adapt published palettes,
+each under the MIT License: Solarized (Copyright (c) 2011 Ethan Schoonover,
+`altercation/solarized`), Catppuccin Latte and Mocha (Copyright (c) 2021
+Catppuccin, `catppuccin/catppuccin`), Gruvbox (Copyright (c) 2012 Pavel Pertsev,
+`morhetz/gruvbox`), Ayu Light and Dark (Copyright (c) 2016 Ike Ku,
+`ayu-theme/ayu-colors`), and One Light and One Dark (Copyright (c) 2014 GitHub
+Inc., the Atom `one-light-syntax` and `one-dark-syntax` packages). Some colors
+are lightened or darkened for contrast on the editor backgrounds. The palette
+data lives in `apps/desktop/src/renderer/editor-color-schemes.ts`, and the
+license text with each copyright notice is copied into the third-party notices
+of every package.
+
 The native daemon links `bcdec_rs` 0.2.0 (MIT), a Rust port of the `bcdec`
 block-compression library (`iOrange/bcdec`, MIT), to decode BC1, BC3, BC4, and
 BC7 blocks for the optional local Game textures look. It is pinned

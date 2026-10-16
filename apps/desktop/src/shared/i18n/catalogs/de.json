@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Ordner öffnen…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "In Dateien suchen…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Installierte Karten durchsuchen…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Alles auswählen"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Codeausschnitt einfügen…"
+    },
     "app-menu.edit.format-document": {
       "message": "Dokument formatieren"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Erzeugungsschritte live anzeigen"
     },
+    "app-menu.view.outline-row": {
+      "message": "Gliederungszeile anzeigen"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Parameterhinweise anzeigen"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Sprache…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Design…"
     },
     "app-menu.view.theme": {
       "message": "Design"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} Karte} other {{count} Karten}}"
+    },
+    "output.run.fact.players": {
+      "message": "Spieler"
+    },
+    "output.run.fact.maps": {
+      "message": "Karten"
+    },
+    "output.run.fact.duration": {
+      "message": "Dauer"
+    },
+    "output.run.fact.result": {
+      "message": "Ergebnis"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Kartentest"
     },
+    "settings.theme.app-theme": {
+      "message": "App-Design"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Editorfarben"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Standard"
+    },
+    "settings.theme.close-label": {
+      "message": "Designeinstellungen schließen"
+    },
     "settings.language.title": {
       "message": "Sprache"
-    },
-    "settings.language.description": {
-      "message": "Menüs, Dialoge und Meldungen verwenden diese Sprache. Skriptbefehle, Protokolle und Supportpakete bleiben auf Englisch."
     },
     "settings.language.label": {
       "message": "Oberflächensprache"
     },
     "settings.language.system": {
       "message": "Windows-Anzeigesprache ({language})"
-    },
-    "settings.language.close": {
-      "message": "Schließen"
     },
     "settings.language.close-label": {
       "message": "Spracheinstellungen schließen"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Dateien suchen"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "In Dateien suchen"
+    },
+    "explorer.search.contents": {
+      "message": "Dateiinhalte durchsuchen"
+    },
+    "explorer.search.match-case": {
+      "message": "Groß-/Kleinschreibung beachten"
+    },
+    "explorer.search.whole-word": {
+      "message": "Nur ganzes Wort suchen"
+    },
+    "explorer.search.scope": {
+      "message": "in {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Ganzen Ordner durchsuchen"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} Vorkommen} other {{count} Vorkommen}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Einige Dateien wurden bei dieser Suche ausgelassen, weil sie zu groß oder zu viele sind."
+    },
     "explorer.search.clear": {
       "message": "Dateisuche leeren"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Im Explorer öffnen"
+    },
+    "explorer.context.find-in-files": {
+      "message": "In Dateien suchen…"
     },
     "explorer.context.rename": {
       "message": "Umbenennen"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Bild speichern…"
     },
+    "map-icon.copy-image": {
+      "message": "Bild kopieren"
+    },
+    "map-icon.image-copied": {
+      "message": "Bild kopiert"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Das Kartensymbol konnte nicht gespeichert werden"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Das Kartensymbol konnte nicht kopiert werden"
     },
     "map-icon.lightbox.close": {
       "message": "Vorschau des Kartensymbols schließen"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "RMS-Quelltexteditor"
     },
+    "code-editor.outline.label": {
+      "message": "Gliederung"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, Zeile {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Zu Abschnitt wechseln"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Zu Block wechseln"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Zu Funktion wechseln"
+    },
     "code-editor.tabs.label": {
       "message": "Geöffnete Dateien"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Eingebundene Datei öffnen"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Codeausschnitt einfügen…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Codeausschnitt einfügen"
+    },
+    "code-editor.snippets.close": {
+      "message": "Schließen"
+    },
+    "code-editor.snippets.search": {
+      "message": "Codeausschnitte suchen"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Codeausschnitte suchen"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Suche leeren"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Alle anzeigen"
+    },
+    "code-editor.snippets.list": {
+      "message": "Codeausschnitte"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Einzufügender Text"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Codeausschnitte werden geladen…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Die Codeausschnitte konnten nicht geladen werden. Schließe diesen Dialog und versuche es erneut."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Kein Codeausschnitt passt an die Cursorposition. Aktiviere „Alle anzeigen“, um alle Codeausschnitte zu sehen."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Kein Codeausschnitt entspricht dieser Suche."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Einfügen"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Abbrechen"
+    },
     "code-editor.include.open": {
       "message": "{name} öffnen"
     },
@@ -3223,6 +3349,12 @@
       "message": "Kartensymbol speichern"
     },
     "native-dialog.map-icon.filter": {
+      "message": "PNG-Bild"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Kartenbild speichern"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "PNG-Bild"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Kleine Bäume"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Bild kopieren"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Bild speichern…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Kartenbild als {name} gespeichert"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Das Kartenbild konnte nicht gespeichert werden"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Das Kartenbild konnte nicht kopiert werden"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "Kartenvorschau in Draufsicht mit Minikartenfarben"

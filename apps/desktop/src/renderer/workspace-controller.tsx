@@ -35,7 +35,12 @@ import { isMapTestScriptName } from '../shared/map-test-contract';
 import { editorTextAdoption } from './editor-model-sync';
 import { formatSourceDocument } from './monaco-language';
 import { explorerAncestorFolders } from './explorer-search-tree';
-import { explorerSelection, isCleanPreview, mergeNormalDocuments } from './open-documents';
+import {
+  createWorkspaceFileOpener,
+  explorerSelection,
+  isCleanPreview,
+  mergeNormalDocuments,
+} from './open-documents';
 import { sameSourceIdentity } from './source-identity';
 import {
   createUntitledMapTestDocument,
@@ -98,7 +103,7 @@ export interface WorkspaceController {
   pickFiles(): Promise<void>;
   pickFolder(): Promise<void>;
   openRecent(path: string): Promise<void>;
-  openWorkspaceFile(path: string, keepOpen?: boolean): Promise<void>;
+  openWorkspaceFile(path: string, keepOpen?: boolean): Promise<EditorDocument | null>;
   openWorkspaceSource(sourceId: string, keepOpen?: boolean): Promise<EditorDocument | null>;
   acceptOpenResult(result: WorkspaceOpenResult, options?: { reveal?: boolean }): void;
   openDroppedFiles(files: File[]): Promise<void>;
@@ -715,47 +720,31 @@ export function useWorkspaceController(
     [acceptOpenResult, appendOutput],
   );
 
-  const openWorkspaceFile = useCallback(
-    async (path: string, keepOpen = false) => {
-      const existing = documentsRef.current.find(
-        (document) => document.path && pathKey(document.path) === pathKey(path),
-      );
-      if (existing) {
-        if (keepOpen && existing.preview) {
-          updateDocuments(setDocuments, documentsRef, (current) =>
-            current.map((document) =>
-              document.id === existing.id ? { ...document, preview: false } : document,
-            ),
-          );
-        }
-        setActiveDocumentId(existing.id);
-        setSelectedPath(path);
-        return;
-      }
-      try {
-        const incoming = documentFromWorkspace(await window.rmside.openWorkspaceFile(path), {
-          preview: !keepOpen,
-        });
-        const current = documentsRef.current;
-        const previewIndex = current.findIndex((document) => document.preview && !document.dirty);
-        const next = [...current];
-        if (previewIndex >= 0) next.splice(previewIndex, 1, incoming);
-        else next.push(incoming);
-        documentsRef.current = next;
-        setDocuments(next);
-        setActiveDocumentId(incoming.id);
-        setSelectedPath(incoming.path);
-      } catch (error) {
-        appendOutput(
-          presentMessage({
-            source: 'Files',
-            raw: errorMessage(error),
-            fallbackHeadline: 'workspace.failed.open-file',
-          }),
-        );
-      }
-    },
-    [appendOutput],
+  const appendOutputRef = useRef(appendOutput);
+  appendOutputRef.current = appendOutput;
+  const openWorkspaceFile = useMemo(
+    () =>
+      createWorkspaceFileOpener({
+        documents: () => documentsRef.current,
+        setDocuments: (next) => {
+          documentsRef.current = next;
+          setDocuments(next);
+        },
+        activate: (id, path) => {
+          setActiveDocumentId(id);
+          setSelectedPath(path);
+        },
+        read: async (path) => documentFromWorkspace(await window.rmside.openWorkspaceFile(path)),
+        failed: (error) =>
+          appendOutputRef.current(
+            presentMessage({
+              source: 'Files',
+              raw: errorMessage(error),
+              fallbackHeadline: 'workspace.failed.open-file',
+            }),
+          ),
+      }),
+    [],
   );
 
   const openWorkspaceSource = useCallback(

@@ -253,15 +253,35 @@ export class EditorInventoryCoordinator {
     params: unknown,
     captured = this.capture(params),
   ): Promise<unknown> {
+    return this.askInCurrentContext(params, captured, (current) =>
+      this.request(method, params, current),
+    );
+  }
+
+  async localRequest(
+    method: LanguageServerRequestMethod,
+    params: unknown,
+    captured: EditorRequestCapture,
+  ): Promise<unknown> {
+    return this.askInCurrentContext(params, captured, (current) =>
+      this.localAttempt(method, params, current),
+    );
+  }
+
+  private async askInCurrentContext(
+    params: unknown,
+    captured: EditorRequestCapture,
+    attempt: (current: EditorRequestCapture) => Promise<unknown>,
+  ): Promise<unknown> {
     const processEpoch = this.dependencies.native.languageProcessEpoch();
     const { uri, version } = captured;
-    for (let attempt = 1; ; attempt += 1) {
+    for (let attempts = 1; ; attempts += 1) {
       try {
-        return await this.request(method, params, captured);
+        return await attempt(captured);
       } catch (error) {
         if (
           (error as { code?: unknown } | null)?.code !== -32801 ||
-          attempt >= maximumContextAttempts ||
+          attempts >= maximumContextAttempts ||
           this.disposed ||
           processEpoch !== this.dependencies.native.languageProcessEpoch() ||
           (uri !== undefined &&
@@ -278,7 +298,7 @@ export class EditorInventoryCoordinator {
     }
   }
 
-  async localRequest(
+  private async localAttempt(
     method: LanguageServerRequestMethod,
     params: unknown,
     captured: EditorRequestCapture,

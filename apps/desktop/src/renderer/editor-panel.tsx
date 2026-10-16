@@ -1,5 +1,5 @@
 import { outputNote } from '../shared/output-message';
-import type { RootExecutionPhase } from '../shared/api';
+import type { ResolvedTheme, RootExecutionPhase } from '../shared/api';
 import { SourceStructureRequest } from './source-structure-request';
 import {
   useCallback,
@@ -7,20 +7,14 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-  type DragEvent as ReactDragEvent,
   type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
 } from 'react';
-import {
-  CheckIcon as AnimatedCheckIcon,
-  MapIcon,
-  PlayIcon,
-  XIcon,
-} from '@animateicons/react/lucide';
+import { MapIcon, PlayIcon, XIcon } from '@animateicons/react/lucide';
 import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  Copy,
   Cpu,
   Download,
   Dices,
@@ -70,12 +64,14 @@ import {
 } from '@/components/ui/toggle-button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { type AnimatedIconHandle, playIconAnimation, useAnimatedIconHover } from './animated-icon';
+import { CopyFeedbackIcon, useCopyFeedback } from './copy-button';
 import { rovingKeyTarget } from './keyboard-navigation';
 import { useI18n } from './i18n';
 import { t as translate } from '../shared/i18n/translator';
 import type { LiveControlAction } from './live-control-action';
 import { useAppPanelContext } from './app-context';
 import { wordBasedSuggestionsFor } from './completion-filter';
+import { starlarkCursorContext } from './starlark-call-context';
 import { EditorContextMenu, useEditorContextMenuSeam } from './editor-context-menu';
 import {
   overrideEditorMenuAction,
@@ -91,12 +87,22 @@ import {
   openIncludedFile,
   registerActiveRmsEditor,
   onLanguageAnswersChanged,
+  requestRmsSnippets,
   requestRmsSourceStructure,
+  requestXsOutlineSymbols,
   rmsConditionalIndentation,
   setIncludedFileOpener,
   setLanguageEditGuard,
 } from './monaco-language';
 import { cursorOnIncludeContextKey, joinConcurrentOpens } from './include-navigation';
+import {
+  insertSnippetActionId,
+  insertSnippetAvailable,
+  parseSnippetList,
+  subscribeInsertSnippetRequests,
+  type EditorSnippet,
+} from './insert-snippet';
+import { InsertSnippetDialog, type InsertSnippetDialogState } from './insert-snippet-dialog';
 import { sourceLanguageIdForName } from '../shared/xs-contract';
 import { bracketColorizationFor } from './rms-language';
 import { registerRmsEnter } from './rms-enter';
@@ -131,6 +137,28 @@ import {
 } from './source-highlight';
 import { pendingSelectionReveal } from './source-navigation';
 import {
+  emptyOutline,
+  mapTestOutline,
+  outlinePathAt,
+  outlineRowVisible,
+  rmsOutline,
+  sameOutlinePath,
+  xsOutline,
+  type DocumentOutline,
+  type OutlineEntry,
+  type XsOutlineSymbol,
+} from './editor-outline';
+import { EditorOutlineRow } from './editor-outline-row';
+import {
+  TabDrag,
+  tabAutoScrollStep,
+  tabDragSeparators,
+  tabDragStarted,
+  type TabDropPlacement,
+  type TabSlot,
+} from './editor-tab-drag';
+import { firstFindMatch, moveEditorFindToNextMatch, openEditorFind } from './monaco-find';
+import {
   isMapTestScriptName,
   mapTestWorkerDraft,
   mapTestWorkerMaximum,
@@ -146,93 +174,76 @@ import {
 } from '../shared/application-shortcuts';
 import { isModalSurfaceOpen } from './modal-surfaces';
 import { SelectGameFolderButton } from './select-game-folder-button';
+import {
+  bracketColorKeys,
+  codeTokenRules,
+  editorBackgrounds,
+  editorColorScheme as colorSchemeById,
+  editorColorSchemes,
+  editorThemeName,
+  mapTestTokenRules,
+} from './editor-color-schemes';
+import type { EditorColorSchemeId } from '../shared/editor-color-scheme';
 
-const monacoThemes = {
-  light: 'rmside-light',
-  dark: 'rmside-dark',
-} as const;
-const mapTestLightModernTheme = 'rmside-map-test-light-modern';
-const mapTestDarkModernTheme = 'rmside-map-test-dark-modern';
+function editorTheme(
+  theme: ResolvedTheme,
+  documentName: string,
+  scheme: EditorColorSchemeId,
+): string {
+  return editorThemeName(scheme, theme, isMapTestScriptName(documentName) ? 'map-test' : 'code');
+}
 
-const visualStudioSyntaxRules = {
-  light: [
-    { token: '', foreground: '000000' },
-    { token: 'comment', foreground: '008000' },
-    { token: 'keyword', foreground: '808080' },
-    { token: 'control', foreground: '8F08C4' },
-    { token: 'namespace', foreground: '2B91AF' },
-    { token: 'function', foreground: '74531F' },
-    { token: 'property', foreground: '000000' },
-    { token: 'number', foreground: '098658' },
-    { token: 'string', foreground: 'A31515' },
-    { token: 'variable', foreground: '1F377F' },
-    { token: 'operator', foreground: '000000' },
-    { token: 'keyword.python', foreground: '0000FF' },
-    { token: 'comment.python', foreground: '008000' },
-    { token: 'string.python', foreground: 'A31515' },
-    { token: 'number.python', foreground: '098658' },
-  ],
-  dark: [
-    { token: '', foreground: 'C8C8C8' },
-    { token: 'comment', foreground: '57A64A' },
-    { token: 'keyword', foreground: '9A9A9A' },
-    { token: 'control', foreground: 'D8A0DF' },
-    { token: 'namespace', foreground: '4EC9B0' },
-    { token: 'function', foreground: 'DCDCAA' },
-    { token: 'property', foreground: 'DADADA' },
-    { token: 'number', foreground: 'B5CEA8' },
-    { token: 'string', foreground: 'D69D85' },
-    { token: 'variable', foreground: '9CDCFE' },
-    { token: 'operator', foreground: 'B4B4B4' },
-    { token: 'keyword.python', foreground: '569CD6' },
-    { token: 'comment.python', foreground: '6A9955' },
-    { token: 'string.python', foreground: 'CE9178' },
-    { token: 'number.python', foreground: 'B5CEA8' },
-  ],
-} satisfies Record<keyof typeof monacoThemes, monaco.editor.ITokenThemeRule[]>;
+const appliedWordBasedSuggestions = new WeakMap<
+  monaco.editor.IStandaloneCodeEditor,
+  ReturnType<typeof wordBasedSuggestionsFor>
+>();
 
-const lightModernMapTestSyntaxRules: monaco.editor.ITokenThemeRule[] = [
-  { token: '', foreground: '000000' },
-  { token: 'function', foreground: '795E26' },
-  { token: 'property', foreground: '000000' },
-  { token: 'identifier.python', foreground: '001080' },
-  { token: 'type.identifier.python', foreground: '267F99' },
-  { token: 'tag.python', foreground: '795E26' },
-  { token: 'keyword.python', foreground: '0000FF' },
-  { token: 'comment.python', foreground: '008000' },
-  { token: 'string.python', foreground: 'A31515' },
-  { token: 'number.python', foreground: '098658' },
-  { token: 'delimiter.python', foreground: '000000' },
-  { token: 'operator.python', foreground: '000000' },
-  { token: 'invalid.python', foreground: 'CD3131' },
-];
-const darkModernMapTestSyntaxRules: monaco.editor.ITokenThemeRule[] = [
-  { token: '', foreground: 'CCCCCC' },
-  { token: 'function', foreground: 'DCDCAA' },
-  { token: 'property', foreground: 'DADADA' },
-  { token: 'identifier.python', foreground: '9CDCFE' },
-  { token: 'type.identifier.python', foreground: '4EC9B0' },
-  { token: 'tag.python', foreground: 'DCDCAA' },
-  { token: 'keyword.python', foreground: '569CD6' },
-  { token: 'comment.python', foreground: '6A9955' },
-  { token: 'string.python', foreground: 'CE9178' },
-  { token: 'number.python', foreground: 'B5CEA8' },
-  { token: 'delimiter.python', foreground: 'CCCCCC' },
-  { token: 'operator.python', foreground: 'D4D4D4' },
-  { token: 'invalid.python', foreground: 'F44747' },
-];
-
-function editorTheme(theme: keyof typeof monacoThemes, documentName: string): string {
-  if (!isMapTestScriptName(documentName)) return monacoThemes[theme];
-  return theme === 'dark' ? mapTestDarkModernTheme : mapTestLightModernTheme;
+function wordBasedSuggestionsAtCursor(
+  instance: monaco.editor.IStandaloneCodeEditor,
+  languageId: string,
+): ReturnType<typeof wordBasedSuggestionsFor> {
+  const model = instance.getModel();
+  const position = instance.getPosition();
+  if (languageId !== 'starlark' || !model || !position) return wordBasedSuggestionsFor(languageId);
+  return wordBasedSuggestionsFor(
+    languageId,
+    starlarkCursorContext(model.getValue(), model.getOffsetAt(position)).kind,
+  );
 }
 
 const editorDefaultFontSize = 14;
 const editorFontSizeNoticeDelayMilliseconds = 2_000;
-const editorTabDragMime = 'application/x-rmside-editor-tab';
 const editorTabMovementAnimationId = 'rmside-tab-movement';
 const editorTabOpenAnimationId = 'rmside-tab-open';
-const seedCopiedFeedbackMilliseconds = 1_000;
+
+function playEditorTabMovement(tab: HTMLElement, horizontalOffset: number): void {
+  for (const animation of tab.getAnimations()) {
+    if (animation.id === editorTabMovementAnimationId) animation.cancel();
+  }
+  const animation = tab.animate(
+    [
+      { opacity: 0.72, transform: `translateX(${horizontalOffset}px)` },
+      { opacity: 1, transform: 'translateX(0)' },
+    ],
+    {
+      duration: motionDuration('--motion-duration-tab-move', 160),
+      easing: motionEasing('--motion-ease-move', 'cubic-bezier(0.2, 0, 0, 1)'),
+    },
+  );
+  animation.id = editorTabMovementAnimationId;
+}
+
+interface EditorTabPress {
+  element: HTMLElement;
+  pointerId: number;
+  startX: number;
+  startY: number;
+  pointerX: number;
+  pointerY: number;
+  drag: TabDrag | null;
+  scrollFrame: number | null;
+  detach(): void;
+}
 
 function EditorTabCloseButton({
   active,
@@ -263,7 +274,6 @@ function EditorTabCloseButton({
       aria-label={t('code-editor.tab.close', { name })}
       className="editor-tab-close"
       data-appearance-visible={visible}
-      draggable={false}
       onClick={onClose}
       size="icon-xs"
       tabIndex={active ? 0 : -1}
@@ -302,7 +312,14 @@ function MapTestWorkersField({
   return (
     <div className="preview-run-workers-row">
       <Tooltip>
-        <TooltipTrigger render={<span className="preview-run-workers-label" tabIndex={-1} />}>
+        <TooltipTrigger
+          render={
+            <span
+              className="preview-run-workers-label"
+              onMouseDown={(event) => event.preventDefault()}
+            />
+          }
+        >
           <Cpu aria-hidden="true" />
           <span>{words.label}</span>
         </TooltipTrigger>
@@ -367,11 +384,9 @@ function PreviewSeedField({
   previewExecution: PreviewExecutionController | null;
 }) {
   const { t } = useI18n();
-  const checkIconRef = useRef<AnimatedIconHandle>(null);
-  const copiedTimer = useRef<number | null>(null);
-  const [copied, setCopied] = useState(false);
   const { copyable, editable: seedEditable } = previewSeedControls(previewExecution);
   const seed = previewExecution?.seed ?? 0;
+  const { checkRef, copied, run: runCopy } = useCopyFeedback(`${copyable}:${seed}`);
   const settingsLoaded = Boolean(previewExecution?.settingsLoaded);
   const [seedDraft, setSeedDraft] = useState(() => (settingsLoaded ? String(seed) : ''));
   const seedFieldFocused = useRef(false);
@@ -387,36 +402,11 @@ function PreviewSeedField({
     );
   }, [seed, seedEditable, settingsLoaded]);
 
-  useEffect(
-    () => () => {
-      if (copiedTimer.current !== null) window.clearTimeout(copiedTimer.current);
-    },
-    [],
-  );
-
-  useEffect(() => {
-    setCopied(false);
-  }, [copyable, seed]);
-
-  useLayoutEffect(() => {
-    if (copied) playIconAnimation(checkIconRef.current);
-  }, [copied]);
-
   const copySeed = async (event: ReactMouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
     if (!copyable) return;
-    try {
-      await navigator.clipboard.writeText(String(seed));
-    } catch {
-      return;
-    }
-    setCopied(true);
-    if (copiedTimer.current !== null) window.clearTimeout(copiedTimer.current);
-    copiedTimer.current = window.setTimeout(() => {
-      copiedTimer.current = null;
-      setCopied(false);
-    }, seedCopiedFeedbackMilliseconds);
+    await runCopy(() => navigator.clipboard.writeText(String(seed)));
   };
 
   return (
@@ -469,11 +459,7 @@ function PreviewSeedField({
             onClick={(event) => void copySeed(event)}
             type="button"
           >
-            {copied ? (
-              <AnimatedCheckIcon aria-hidden="true" ref={checkIconRef} size={14} />
-            ) : (
-              <Copy aria-hidden="true" size={14} />
-            )}
+            <CopyFeedbackIcon checkRef={checkRef} copied={copied} />
           </button>
         ) : null}
       </TooltipTrigger>
@@ -531,168 +517,97 @@ function EditorTabTitle({ name }: { name: string }) {
   return (
     <OverflowingLabel
       className="editor-tab-title"
+      hoverArea=".editor-tab"
+      hoverAreaExcept=".editor-tab-close"
       name={name}
       textClassName="editor-tab-title-text"
     />
   );
 }
 
-const bracketNestingColors = {
+const editorChromeColors: Record<ResolvedTheme, Record<string, string>> = {
   light: {
-    'editorBracketHighlight.foreground1': '#0431FA',
-    'editorBracketHighlight.foreground2': '#319331',
-    'editorBracketHighlight.foreground3': '#7B3814',
-    'editorBracketHighlight.unexpectedBracket.foreground': '#CC0B0B',
+    focusBorder: '#00000000',
+    'inputOption.activeBorder': '#00000000',
+    'editorOverviewRuler.border': '#00000000',
+    'editor.background': editorBackgrounds.light,
+    'editor.lineHighlightBackground': '#e8e8e8',
+    'editor.selectionBackground': '#cacaca',
+    'editor.inactiveSelectionBackground': '#d8d8d8',
+    'editorWidget.background': '#ededed',
+    'editorWidget.border': '#bdbdbd',
+    'editorSuggestWidget.background': '#ededed',
+    'editorSuggestWidget.border': '#bdbdbd',
+    'editorSuggestWidget.selectedBackground': '#e8e8e8',
+    'editorHoverWidget.background': '#ededed',
+    'editorHoverWidget.border': '#00000000',
+    'peekView.border': '#00000000',
+    'peekViewEditor.background': '#ebebeb',
+    'peekViewEditor.matchHighlightBorder': '#00000000',
+    'peekViewEditorGutter.background': '#ebebeb',
+    'peekViewEditorStickyScroll.background': '#ebebeb',
+    'peekViewEditorStickyScrollGutter.background': '#ebebeb',
+    'peekViewResult.background': '#ebebeb',
+    'peekViewResult.selectionBackground': '#d8d8d8',
+    'peekViewTitle.background': '#ebebeb',
+    'scrollbarSlider.background': '#73737333',
+    'scrollbarSlider.hoverBackground': '#73737355',
+    'scrollbarSlider.activeBackground': '#73737377',
   },
   dark: {
-    'editorBracketHighlight.foreground1': '#FFD700',
-    'editorBracketHighlight.foreground2': '#DA70D6',
-    'editorBracketHighlight.foreground3': '#179FFF',
-    'editorBracketHighlight.unexpectedBracket.foreground': '#FF1212CC',
+    focusBorder: '#00000000',
+    'inputOption.activeBorder': '#00000000',
+    'editorOverviewRuler.border': '#00000000',
+    'editor.background': editorBackgrounds.dark,
+    'editor.lineHighlightBackground': '#262626',
+    'editor.selectionBackground': '#525252',
+    'editor.inactiveSelectionBackground': '#404040',
+    'editorWidget.background': '#0a0a0a',
+    'editorWidget.border': '#404040',
+    'editorSuggestWidget.background': '#0a0a0a',
+    'editorSuggestWidget.border': '#404040',
+    'editorSuggestWidget.selectedBackground': '#404040',
+    'editorHoverWidget.background': '#0a0a0a',
+    'editorHoverWidget.border': '#00000000',
+    'peekView.border': '#00000000',
+    'peekViewEditor.background': '#0a0a0a',
+    'peekViewEditor.matchHighlightBorder': '#00000000',
+    'peekViewEditorGutter.background': '#0a0a0a',
+    'peekViewEditorStickyScroll.background': '#0a0a0a',
+    'peekViewEditorStickyScrollGutter.background': '#0a0a0a',
+    'peekViewResult.background': '#0a0a0a',
+    'peekViewResult.selectionBackground': '#262626',
+    'peekViewTitle.background': '#0a0a0a',
+    'scrollbarSlider.background': '#a3a3a333',
+    'scrollbarSlider.hoverBackground': '#a3a3a355',
+    'scrollbarSlider.activeBackground': '#a3a3a377',
   },
-} as const;
+};
 
 function defineRmsideThemes(): void {
-  monaco.editor.defineTheme(monacoThemes.light, {
-    base: 'vs',
-    inherit: true,
-    rules: visualStudioSyntaxRules.light,
-    colors: {
-      focusBorder: '#00000000',
-      'inputOption.activeBorder': '#00000000',
-      'editorOverviewRuler.border': '#00000000',
-      'editor.background': '#f1f1f1',
-      'editor.foreground': '#000000',
-      'editor.lineHighlightBackground': '#e8e8e8',
-      'editor.selectionBackground': '#cacaca',
-      'editor.inactiveSelectionBackground': '#d8d8d8',
-      ...bracketNestingColors.light,
-      'editorWidget.background': '#ededed',
-      'editorWidget.border': '#bdbdbd',
-      'editorSuggestWidget.background': '#ededed',
-      'editorSuggestWidget.border': '#bdbdbd',
-      'editorSuggestWidget.selectedBackground': '#e8e8e8',
-      'editorHoverWidget.background': '#ededed',
-      'editorHoverWidget.border': '#00000000',
-      'peekView.border': '#00000000',
-      'peekViewEditor.background': '#ebebeb',
-      'peekViewEditor.matchHighlightBorder': '#00000000',
-      'peekViewEditorGutter.background': '#ebebeb',
-      'peekViewEditorStickyScroll.background': '#ebebeb',
-      'peekViewEditorStickyScrollGutter.background': '#ebebeb',
-      'peekViewResult.background': '#ebebeb',
-      'peekViewResult.selectionBackground': '#d8d8d8',
-      'peekViewTitle.background': '#ebebeb',
-      'scrollbarSlider.background': '#73737333',
-      'scrollbarSlider.hoverBackground': '#73737355',
-      'scrollbarSlider.activeBackground': '#73737377',
-    },
-  });
-  monaco.editor.defineTheme(monacoThemes.dark, {
-    base: 'vs-dark',
-    inherit: true,
-    rules: visualStudioSyntaxRules.dark,
-    colors: {
-      focusBorder: '#00000000',
-      'inputOption.activeBorder': '#00000000',
-      'editorOverviewRuler.border': '#00000000',
-      'editor.background': '#171717',
-      'editor.foreground': '#c8c8c8',
-      'editor.lineHighlightBackground': '#262626',
-      'editor.selectionBackground': '#525252',
-      'editor.inactiveSelectionBackground': '#404040',
-      ...bracketNestingColors.dark,
-      'editorWidget.background': '#0a0a0a',
-      'editorWidget.border': '#404040',
-      'editorSuggestWidget.background': '#0a0a0a',
-      'editorSuggestWidget.border': '#404040',
-      'editorSuggestWidget.selectedBackground': '#404040',
-      'editorHoverWidget.background': '#0a0a0a',
-      'editorHoverWidget.border': '#00000000',
-      'peekView.border': '#00000000',
-      'peekViewEditor.background': '#0a0a0a',
-      'peekViewEditor.matchHighlightBorder': '#00000000',
-      'peekViewEditorGutter.background': '#0a0a0a',
-      'peekViewEditorStickyScroll.background': '#0a0a0a',
-      'peekViewEditorStickyScrollGutter.background': '#0a0a0a',
-      'peekViewResult.background': '#0a0a0a',
-      'peekViewResult.selectionBackground': '#262626',
-      'peekViewTitle.background': '#0a0a0a',
-      'scrollbarSlider.background': '#a3a3a333',
-      'scrollbarSlider.hoverBackground': '#a3a3a355',
-      'scrollbarSlider.activeBackground': '#a3a3a377',
-    },
-  });
-  monaco.editor.defineTheme(mapTestLightModernTheme, {
-    base: 'vs',
-    inherit: true,
-    rules: lightModernMapTestSyntaxRules,
-    colors: {
-      focusBorder: '#00000000',
-      'inputOption.activeBorder': '#00000000',
-      'editorOverviewRuler.border': '#00000000',
-      'editor.background': '#f1f1f1',
-      'editor.foreground': '#000000',
-      'editor.lineHighlightBackground': '#e8e8e8',
-      'editor.selectionBackground': '#cacaca',
-      'editor.inactiveSelectionBackground': '#d8d8d8',
-      ...bracketNestingColors.light,
-      'editorWidget.background': '#ededed',
-      'editorWidget.border': '#bdbdbd',
-      'editorSuggestWidget.background': '#ededed',
-      'editorSuggestWidget.border': '#bdbdbd',
-      'editorSuggestWidget.selectedBackground': '#e8e8e8',
-      'editorHoverWidget.background': '#ededed',
-      'editorHoverWidget.border': '#00000000',
-      'peekView.border': '#00000000',
-      'peekViewEditor.background': '#ebebeb',
-      'peekViewEditor.matchHighlightBorder': '#00000000',
-      'peekViewEditorGutter.background': '#ebebeb',
-      'peekViewEditorStickyScroll.background': '#ebebeb',
-      'peekViewEditorStickyScrollGutter.background': '#ebebeb',
-      'peekViewResult.background': '#ebebeb',
-      'peekViewResult.selectionBackground': '#d8d8d8',
-      'peekViewTitle.background': '#ebebeb',
-      'scrollbarSlider.background': '#73737333',
-      'scrollbarSlider.hoverBackground': '#73737355',
-      'scrollbarSlider.activeBackground': '#73737377',
-    },
-  });
-  monaco.editor.defineTheme(mapTestDarkModernTheme, {
-    base: 'vs-dark',
-    inherit: true,
-    rules: darkModernMapTestSyntaxRules,
-    colors: {
-      focusBorder: '#00000000',
-      'inputOption.activeBorder': '#00000000',
-      'editorOverviewRuler.border': '#00000000',
-      'editor.background': '#171717',
-      'editor.foreground': '#c8c8c8',
-      'editor.lineHighlightBackground': '#262626',
-      'editor.selectionBackground': '#525252',
-      'editor.inactiveSelectionBackground': '#404040',
-      ...bracketNestingColors.dark,
-      'editorWidget.background': '#0a0a0a',
-      'editorWidget.border': '#404040',
-      'editorSuggestWidget.background': '#0a0a0a',
-      'editorSuggestWidget.border': '#404040',
-      'editorSuggestWidget.selectedBackground': '#404040',
-      'editorHoverWidget.background': '#0a0a0a',
-      'editorHoverWidget.border': '#00000000',
-      'peekView.border': '#00000000',
-      'peekViewEditor.background': '#0a0a0a',
-      'peekViewEditor.matchHighlightBorder': '#00000000',
-      'peekViewEditorGutter.background': '#0a0a0a',
-      'peekViewEditorStickyScroll.background': '#0a0a0a',
-      'peekViewEditorStickyScrollGutter.background': '#0a0a0a',
-      'peekViewResult.background': '#0a0a0a',
-      'peekViewResult.selectionBackground': '#262626',
-      'peekViewTitle.background': '#0a0a0a',
-      'scrollbarSlider.background': '#a3a3a333',
-      'scrollbarSlider.hoverBackground': '#a3a3a355',
-      'scrollbarSlider.activeBackground': '#a3a3a377',
-    },
-  });
+  for (const scheme of editorColorSchemes) {
+    for (const theme of ['light', 'dark'] as const) {
+      const half = scheme[theme];
+      const colors = {
+        ...editorChromeColors[theme],
+        'editor.foreground': half.foreground,
+        ...bracketColorKeys(half),
+      };
+      const base = theme === 'dark' ? 'vs-dark' : 'vs';
+      monaco.editor.defineTheme(editorThemeName(scheme.id, theme, 'code'), {
+        base,
+        inherit: true,
+        rules: codeTokenRules(half),
+        colors,
+      });
+      monaco.editor.defineTheme(editorThemeName(scheme.id, theme, 'map-test'), {
+        base,
+        inherit: true,
+        rules: mapTestTokenRules(half),
+        colors,
+      });
+    }
+  }
 }
 
 function commentLinkAtPosition(
@@ -726,9 +641,12 @@ function singleCommentLinkInRenderedLine(target: EventTarget | null): string | n
 }
 
 const sourceStructureRetryDelays = [100, 250, 500, 1_000, 2_000] as const;
+const outlineCursorDelayMilliseconds = 60;
+const outlineContentDelayMilliseconds = 300;
 
 export function EditorPanel({
   inlayHints,
+  outlineRow,
   executionFailureNotice,
   executionFailureSequence,
   onDismissExecutionFailureNotice,
@@ -738,6 +656,7 @@ export function EditorPanel({
   onTogglePreview,
 }: {
   inlayHints: boolean;
+  outlineRow: boolean;
   executionFailureNotice: ExecutionFailureNoticeContent | null;
   executionFailureSequence: number;
   onDismissExecutionFailureNotice(): void;
@@ -762,6 +681,8 @@ export function EditorPanel({
   const commandHintAlignmentFrame = useRef<number | null>(null);
   const findHintAlignmentFrame = useRef<number | null>(null);
   const draggedTabId = useRef<string | null>(null);
+  const tabPress = useRef<EditorTabPress | null>(null);
+  const tabClickSuppressed = useRef(false);
   const tabCloseTimers = useRef(new Map<string, number>());
   const tabHoverSuppressionAnchor = useRef<{ x: number; y: number } | null>(null);
   const tabReorderPositions = useRef(new Map<string, DOMRect>());
@@ -771,9 +692,19 @@ export function EditorPanel({
     version: number;
     lines: SourceByteRange[];
     scopes: SourceLineScopes | null;
+    blocks: SourceBlockStructure | null;
     structure: SourceStructureRequest<SourceBlockStructure>;
   } | null>(null);
   const updateSourceHighlight = useRef<() => void>(() => undefined);
+  const outlineRowShown = useRef(outlineRow);
+  outlineRowShown.current = outlineRow;
+  const rebuildOutline = useRef<() => void>(() => undefined);
+  const [outlineView, setOutlineView] = useState<{
+    outline: DocumentOutline;
+    path: readonly OutlineEntry[];
+    visible: boolean;
+  }>({ outline: emptyOutline, path: [], visible: false });
+  const outlineRowPresent = outlineRow && outlineView.visible;
   const [tabScrollState, setTabScrollState] = useState({ left: false, right: false });
   const [draggingTabId, setDraggingTabId] = useState<string | null>(null);
   const [closingTabIds, setClosingTabIds] = useState<Set<string>>(new Set());
@@ -793,6 +724,7 @@ export function EditorPanel({
     pinnedPreviewSource,
     previewExecution,
     resolvedTheme,
+    editorColorScheme,
     selection,
     setEditorPointerInside,
     setPinnedPreviewSource,
@@ -996,16 +928,213 @@ export function EditorPanel({
     setTabHoverSuppressed(true);
   }, []);
 
-  const blockTabDropInEditor = useCallback(
-    (event: ReactDragEvent<HTMLDivElement>) => {
-      if (!event.dataTransfer.types.includes(editorTabDragMime)) return;
-      event.preventDefault();
-      event.stopPropagation();
-      event.dataTransfer.dropEffect = 'none';
-      if (event.type === 'drop') finishTabDrag(event.clientX, event.clientY);
-    },
-    [finishTabDrag],
+  const editorTabElements = useCallback(
+    () => [...(tabList.current?.querySelectorAll<HTMLElement>('.editor-tab') ?? [])],
+    [],
   );
+
+  const drawTabDrag = useCallback(() => {
+    const drag = tabPress.current?.drag;
+    const list = tabList.current;
+    const press = tabPress.current;
+    if (!drag || !list || !press) return;
+    const frame = drag.move(press.pointerX, list.scrollLeft);
+    const tabs = new Map(editorTabElements().map((tab) => [tab.dataset.documentId, tab]));
+    const activeIds = new Set(
+      [...tabs.values()].flatMap((tab) =>
+        tab.dataset.active === 'true' && tab.dataset.documentId ? [tab.dataset.documentId] : [],
+      ),
+    );
+    const separators = tabDragSeparators(
+      drag.slots,
+      drag.draggedIndex,
+      frame.targetIndex,
+      activeIds,
+    );
+    drag.slots.forEach((slot, index) => {
+      const tab = tabs.get(slot.id);
+      if (!tab) return;
+      const shift = frame.shifts[index] ?? 0;
+      tab.style.transform = Math.abs(shift) < 0.01 ? '' : `translateX(${shift}px)`;
+      if (separators[index]) tab.dataset.dragSeparator = 'true';
+      else delete tab.dataset.dragSeparator;
+    });
+  }, [editorTabElements]);
+
+  const runTabAutoScroll = useCallback(() => {
+    const press = tabPress.current;
+    const list = tabList.current;
+    if (!press?.drag || !list || press.scrollFrame !== null) return;
+    const step = () => {
+      press.scrollFrame = null;
+      if (tabPress.current !== press) return;
+      const bounds = list.getBoundingClientRect();
+      const delta = tabAutoScrollStep(press.pointerX, bounds.left, bounds.right);
+      if (delta === 0) return;
+      const before = list.scrollLeft;
+      list.scrollLeft = before + delta;
+      if (list.scrollLeft === before) return;
+      drawTabDrag();
+      press.scrollFrame = window.requestAnimationFrame(step);
+    };
+    press.scrollFrame = window.requestAnimationFrame(step);
+  }, [drawTabDrag]);
+
+  const beginTabDrag = useCallback(
+    (press: EditorTabPress): boolean => {
+      const list = tabList.current;
+      const id = press.element.dataset.documentId;
+      if (!list || !id) return false;
+      const tabs = editorTabElements();
+      if (tabs.some((tab) => tab.dataset.closing)) return false;
+      for (const tab of tabs) {
+        for (const animation of tab.getAnimations()) {
+          if (
+            animation.id === editorTabMovementAnimationId ||
+            animation.id === editorTabOpenAnimationId
+          ) {
+            animation.finish();
+          }
+        }
+      }
+      const contentLeft = list.getBoundingClientRect().left - list.scrollLeft;
+      const slots: TabSlot[] = tabs.flatMap((tab) => {
+        const documentId = tab.dataset.documentId;
+        if (!documentId) return [];
+        const bounds = tab.getBoundingClientRect();
+        return [{ id: documentId, left: bounds.left - contentLeft, width: bounds.width }];
+      });
+      const draggedIndex = slots.findIndex((slot) => slot.id === id);
+      if (draggedIndex < 0) return false;
+      press.drag = new TabDrag(slots, draggedIndex, press.startX, list.scrollLeft);
+      draggedTabId.current = id;
+      tabHoverSuppressionAnchor.current = null;
+      list.dataset.tabDragging = 'true';
+      press.element.dataset.dragging = 'true';
+      try {
+        press.element.setPointerCapture(press.pointerId);
+      } catch {}
+      setDraggingTabId(id);
+      setTabHoverSuppressed(true);
+      return true;
+    },
+    [editorTabElements],
+  );
+
+  const endTabPress = useCallback(
+    (outcome: 'commit' | 'cancel' | 'abort') => {
+      const press = tabPress.current;
+      if (!press) return;
+      tabPress.current = null;
+      press.detach();
+      if (press.scrollFrame !== null) window.cancelAnimationFrame(press.scrollFrame);
+      const drag = press.drag;
+      if (!drag) return;
+      if (press.element.hasPointerCapture(press.pointerId)) {
+        press.element.releasePointerCapture(press.pointerId);
+      }
+      let placement: TabDropPlacement | null = null;
+      if (outcome === 'commit') placement = drag.release();
+      else drag.cancel();
+      tabClickSuppressed.current = true;
+      const tabs = editorTabElements();
+      const drawn = new Map<string, DOMRect>();
+      for (const tab of tabs) {
+        const id = tab.dataset.documentId;
+        if (id) drawn.set(id, tab.getBoundingClientRect());
+      }
+      delete tabList.current?.dataset.tabDragging;
+      delete press.element.dataset.dragging;
+      for (const tab of tabs) {
+        tab.style.transform = '';
+        delete tab.dataset.dragSeparator;
+      }
+      finishTabDrag(press.pointerX, press.pointerY);
+      if (outcome === 'abort') return;
+      if (placement) {
+        tabReorderPositions.current = drawn;
+        workspaceRef.current.reorderDocument(
+          placement.sourceId,
+          placement.targetId,
+          placement.placement,
+        );
+        return;
+      }
+      if (prefersReducedMotion()) return;
+      for (const tab of tabs) {
+        const before = drawn.get(tab.dataset.documentId ?? '');
+        if (!before) continue;
+        const offset = before.left - tab.getBoundingClientRect().left;
+        if (Math.abs(offset) >= 0.5) playEditorTabMovement(tab, offset);
+      }
+    },
+    [editorTabElements, finishTabDrag],
+  );
+
+  const pressEditorTab = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      tabClickSuppressed.current = false;
+      if (event.button !== 0 || !event.isPrimary || tabPress.current) return;
+      const element = event.currentTarget;
+      if (element.dataset.closing) return;
+      if (event.target instanceof Element && event.target.closest('.editor-tab-close')) return;
+      const press: EditorTabPress = {
+        element,
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        pointerX: event.clientX,
+        pointerY: event.clientY,
+        drag: null,
+        scrollFrame: null,
+        detach: () => undefined,
+      };
+      const move = (moveEvent: PointerEvent) => {
+        if (moveEvent.pointerId !== press.pointerId || tabPress.current !== press) return;
+        press.pointerX = moveEvent.clientX;
+        press.pointerY = moveEvent.clientY;
+        if (!press.drag) {
+          if (!tabDragStarted(press.pointerX - press.startX, press.pointerY - press.startY)) return;
+          if (!beginTabDrag(press)) return;
+        }
+        moveEvent.preventDefault();
+        drawTabDrag();
+        runTabAutoScroll();
+      };
+      const release = (upEvent: PointerEvent) => {
+        if (upEvent.pointerId !== press.pointerId) return;
+        press.pointerX = upEvent.clientX;
+        press.pointerY = upEvent.clientY;
+        endTabPress('commit');
+      };
+      const cancel = (cancelEvent: PointerEvent) => {
+        if (cancelEvent.pointerId === press.pointerId) endTabPress('cancel');
+      };
+      const escape = (keyEvent: KeyboardEvent) => {
+        if (keyEvent.key !== 'Escape' || !press.drag) return;
+        keyEvent.preventDefault();
+        keyEvent.stopImmediatePropagation();
+        endTabPress('cancel');
+      };
+      const blur = () => endTabPress('cancel');
+      window.addEventListener('pointermove', move, true);
+      window.addEventListener('pointerup', release, true);
+      window.addEventListener('pointercancel', cancel, true);
+      window.addEventListener('keydown', escape, true);
+      window.addEventListener('blur', blur);
+      press.detach = () => {
+        window.removeEventListener('pointermove', move, true);
+        window.removeEventListener('pointerup', release, true);
+        window.removeEventListener('pointercancel', cancel, true);
+        window.removeEventListener('keydown', escape, true);
+        window.removeEventListener('blur', blur);
+      };
+      tabPress.current = press;
+    },
+    [beginTabDrag, drawTabDrag, endTabPress, runTabAutoScroll],
+  );
+
+  useEffect(() => () => endTabPress('abort'), [endTabPress]);
 
   const openCommentLink = useCallback((event: ReactMouseEvent<HTMLDivElement>) => {
     if (!event.ctrlKey || event.button !== 0) return;
@@ -1157,6 +1286,14 @@ export function EditorPanel({
   );
 
   useLayoutEffect(() => {
+    endTabPress('abort');
+  }, [documentOrder, endTabPress]);
+
+  useLayoutEffect(() => {
+    drawTabDrag();
+  }, [workspace.activeDocumentId, drawTabDrag]);
+
+  useLayoutEffect(() => {
     const previousPositions = tabReorderPositions.current;
     const tabs = [...(tabList.current?.querySelectorAll<HTMLElement>('.editor-tab') ?? [])];
     const currentPositions = new Map<string, DOMRect>();
@@ -1193,20 +1330,7 @@ export function EditorPanel({
       if (!current) continue;
       const horizontalOffset = previous.left - current.left;
       if (Math.abs(horizontalOffset) < 0.5) continue;
-      for (const animation of tab.getAnimations()) {
-        if (animation.id === editorTabMovementAnimationId) animation.cancel();
-      }
-      const animation = tab.animate(
-        [
-          { opacity: 0.72, transform: `translateX(${horizontalOffset}px)` },
-          { opacity: 1, transform: 'translateX(0)' },
-        ],
-        {
-          duration: motionDuration('--motion-duration-tab-move', 160),
-          easing: motionEasing('--motion-ease-move', 'cubic-bezier(0.2, 0, 0, 1)'),
-        },
-      );
-      animation.id = editorTabMovementAnimationId;
+      playEditorTabMovement(tab, horizontalOffset);
     }
     tabReorderPositions.current = currentPositions;
     updateTabScrollState();
@@ -1233,7 +1357,7 @@ export function EditorPanel({
       insertSpaces: true,
       padding: { top: 16 },
       'semanticHighlighting.enabled': true,
-      theme: editorTheme(resolvedTheme, workspace.activeDocument.name),
+      theme: editorTheme(resolvedTheme, workspace.activeDocument.name, editorColorScheme),
       tabSize: 4,
       useShadowDOM: false,
     });
@@ -1298,6 +1422,12 @@ export function EditorPanel({
     });
     instance.onDidChangeCursorPosition(() => {
       persistViewState();
+      if (instance.getModel()?.getLanguageId() !== 'starlark') return;
+      const words = wordBasedSuggestionsAtCursor(instance, 'starlark');
+      if (appliedWordBasedSuggestions.get(instance) !== words) {
+        appliedWordBasedSuggestions.set(instance, words);
+        instance.updateOptions({ wordBasedSuggestions: words });
+      }
     });
     const refreshSourceHighlight = () => {
       const model = instance.getModel();
@@ -1317,6 +1447,7 @@ export function EditorPanel({
           version,
           lines: lineByteRanges(model.getValue()),
           scopes: null,
+          blocks: null,
           structure: new SourceStructureRequest<SourceBlockStructure>({
             request: () => requestRmsSourceStructure(model),
             current: () =>
@@ -1325,7 +1456,11 @@ export function EditorPanel({
               model.getVersionId() === entry.version,
             apply: (structure) => {
               entry.scopes = sourceLineScopes(structure, model.getLineCount());
-              if (instance.getModel() === model) refreshSourceHighlight();
+              entry.blocks = structure;
+              if (instance.getModel() === model) {
+                refreshSourceHighlight();
+                rebuildOutline.current();
+              }
             },
             delays: sourceStructureRetryDelays,
             setTimer: (callback, milliseconds) => window.setTimeout(callback, milliseconds),
@@ -1352,7 +1487,120 @@ export function EditorPanel({
     const languageAnswersSubscription = onLanguageAnswersChanged(() => {
       const current = sourceHighlightModel.current;
       if (current && current.scopes === null) current.structure.poke();
+      xsOutlineRequest?.request.poke();
     });
+    const outlineSources = new WeakMap<
+      monaco.editor.ITextModel,
+      { version: number; outline: DocumentOutline }
+    >();
+    let xsOutlineRequest: {
+      model: monaco.editor.ITextModel;
+      version: number;
+      request: SourceStructureRequest<XsOutlineSymbol[]>;
+    } | null = null;
+    let outlineCursorTimer: number | null = null;
+    let outlineContentTimer: number | null = null;
+    const publishOutline = () => {
+      const model = instance.getModel();
+      const source =
+        model && outlineRowShown.current ? outlineSources.get(model)?.outline : undefined;
+      const pending =
+        source === undefined &&
+        model !== null &&
+        outlineRowShown.current &&
+        (model.getLanguageId() === 'rms' || model.getLanguageId() === 'xs');
+      const outline = source ?? emptyOutline;
+      const position = instance.getPosition();
+      const path = position ? outlinePathAt(outline, position.lineNumber - 1) : [];
+      setOutlineView((current) => {
+        const visible = outlineRowVisible(pending ? null : outline, current.visible);
+        return current.outline === outline &&
+          current.visible === visible &&
+          sameOutlinePath(current.path, path)
+          ? current
+          : { outline, path, visible };
+      });
+    };
+    const requestXsOutline = (model: monaco.editor.ITextModel, version: number) => {
+      if (xsOutlineRequest?.model === model && xsOutlineRequest.version === version) {
+        xsOutlineRequest.request.poke();
+        return;
+      }
+      xsOutlineRequest?.request.stop();
+      const entry: NonNullable<typeof xsOutlineRequest> = {
+        model,
+        version,
+        request: new SourceStructureRequest<XsOutlineSymbol[]>({
+          request: () => requestXsOutlineSymbols(model),
+          current: () =>
+            xsOutlineRequest === entry &&
+            outlineRowShown.current &&
+            !model.isDisposed() &&
+            model.getVersionId() === version,
+          apply: (symbols) => {
+            outlineSources.set(model, { version, outline: xsOutline(symbols) });
+            if (instance.getModel() === model) publishOutline();
+          },
+          delays: sourceStructureRetryDelays,
+          setTimer: (callback, milliseconds) => window.setTimeout(callback, milliseconds),
+          clearTimer: (timer) => window.clearTimeout(timer as number),
+        }),
+      };
+      xsOutlineRequest = entry;
+      entry.request.start();
+    };
+    const updateOutlineSource = () => {
+      const model = instance.getModel();
+      if (!model || !outlineRowShown.current) return;
+      const version = model.getVersionId();
+      if (outlineSources.get(model)?.version === version) return;
+      const languageId = model.getLanguageId();
+      if (languageId === 'rms') {
+        const highlight = sourceHighlightModel.current;
+        if (highlight?.model === model && highlight.version === version && highlight.blocks) {
+          outlineSources.set(model, {
+            version,
+            outline: rmsOutline(highlight.blocks, model.getLineCount(), (line) =>
+              model.getLineContent(line + 1),
+            ),
+          });
+        }
+      } else if (languageId === 'starlark') {
+        outlineSources.set(model, { version, outline: mapTestOutline(model.getLinesContent()) });
+      } else if (languageId === 'xs') {
+        requestXsOutline(model, version);
+      }
+    };
+    rebuildOutline.current = () => {
+      if (outlineContentTimer !== null) window.clearTimeout(outlineContentTimer);
+      outlineContentTimer = null;
+      updateOutlineSource();
+      publishOutline();
+    };
+    const outlineSubscriptions = [
+      instance.onDidChangeCursorPosition(() => {
+        if (!outlineRowShown.current) return;
+        if (outlineCursorTimer !== null) window.clearTimeout(outlineCursorTimer);
+        outlineCursorTimer = window.setTimeout(() => {
+          outlineCursorTimer = null;
+          publishOutline();
+        }, outlineCursorDelayMilliseconds);
+      }),
+      instance.onDidChangeModelContent(() => {
+        if (!outlineRowShown.current) return;
+        if (outlineContentTimer !== null) window.clearTimeout(outlineContentTimer);
+        outlineContentTimer = window.setTimeout(
+          () => rebuildOutline.current(),
+          outlineContentDelayMilliseconds,
+        );
+      }),
+      instance.onDidChangeModel(() => rebuildOutline.current()),
+      instance.onDidChangeModelLanguage(() => {
+        const model = instance.getModel();
+        if (model) outlineSources.delete(model);
+        rebuildOutline.current();
+      }),
+    ];
     instance.onDidScrollChange(persistViewState);
     const openSourceLocationOnce = joinConcurrentOpens(
       (uri: string, line: number, character: number) =>
@@ -1448,6 +1696,12 @@ export function EditorPanel({
         fontSizeNoticeTimer.current = null;
       }
       updateSourceHighlight.current = () => undefined;
+      rebuildOutline.current = () => undefined;
+      for (const subscription of outlineSubscriptions) subscription.dispose();
+      if (outlineCursorTimer !== null) window.clearTimeout(outlineCursorTimer);
+      if (outlineContentTimer !== null) window.clearTimeout(outlineContentTimer);
+      xsOutlineRequest?.request.stop();
+      xsOutlineRequest = null;
       languageAnswersSubscription.dispose();
       sourceHighlightModel.current?.structure.stop();
       sourceHighlightModel.current = null;
@@ -1563,8 +1817,12 @@ export function EditorPanel({
     }
     const editorLanguageId = sourceLanguageIdForName(workspace.activeDocument.name);
     const bracketPairs = editorLanguageId !== 'xs';
+    const words = editor.current
+      ? wordBasedSuggestionsAtCursor(editor.current, editorLanguageId)
+      : wordBasedSuggestionsFor(editorLanguageId);
+    if (editor.current) appliedWordBasedSuggestions.set(editor.current, words);
     editor.current?.updateOptions({
-      wordBasedSuggestions: wordBasedSuggestionsFor(editorLanguageId),
+      wordBasedSuggestions: words,
       bracketPairColorization: {
         enabled: bracketPairs,
         independentColorPoolPerBracketType: false,
@@ -1575,6 +1833,49 @@ export function EditorPanel({
       readOnlyMessage: { value: t('code-editor.read-only-message') },
     });
   }, [t, workspace.activeDocument, workspace.activeDocumentId, workspace.documents]);
+
+  const [snippetDialog, setSnippetDialog] = useState<InsertSnippetDialogState>({
+    id: 0,
+    open: false,
+    status: 'loading',
+    snippets: [],
+  });
+  const snippetTarget = useRef<{
+    model: monaco.editor.ITextModel;
+    selection: monaco.Selection;
+  } | null>(null);
+  const snippetChoice = useRef<EditorSnippet | null>(null);
+  const snippetDialogSequence = useRef(0);
+  const openInsertSnippet = useCallback(() => {
+    const instance = editor.current;
+    const model = instance?.getModel();
+    const selection = instance?.getSelection();
+    if (!instance || !model || !selection) return;
+    if (
+      !insertSnippetAvailable(model.getLanguageId(), workspaceRef.current.activeDocument.readOnly)
+    )
+      return;
+    const id = ++snippetDialogSequence.current;
+    snippetTarget.current = { model, selection };
+    snippetChoice.current = null;
+    setSnippetDialog({ id, open: true, status: 'loading', snippets: [] });
+    requestRmsSnippets(model, selection.getStartPosition())
+      .then((answer) => {
+        const snippets = parseSnippetList(answer);
+        setSnippetDialog((current) =>
+          current.id === id ? { ...current, status: 'ready', snippets } : current,
+        );
+      })
+      .catch(() => {
+        setSnippetDialog((current) =>
+          current.id === id ? { ...current, status: 'failed' } : current,
+        );
+      });
+  }, []);
+  const closeSnippetDialog = useCallback((choice: EditorSnippet | null) => {
+    snippetChoice.current = choice;
+    setSnippetDialog((current) => (current.open ? { ...current, open: false } : current));
+  }, []);
 
   useEffect(() => {
     const instance = editor.current;
@@ -1597,18 +1898,87 @@ export function EditorPanel({
         }
       },
     });
-    return () => openIncludeAction.dispose();
-  }, [t]);
+    const insertSnippetAction = instance.addAction({
+      id: insertSnippetActionId,
+      label: t('code-editor.context-menu.insert-snippet'),
+      precondition: "editorLangId == 'rms' && !editorReadonly",
+      contextMenuGroupId: '1_modification',
+      contextMenuOrder: 1.4,
+      run: () => openInsertSnippet(),
+    });
+    return () => {
+      openIncludeAction.dispose();
+      insertSnippetAction.dispose();
+    };
+  }, [openInsertSnippet, t]);
+
+  const snippetsAvailable = insertSnippetAvailable(
+    sourceLanguageIdForName(workspace.activeDocument.name),
+    workspace.activeDocument.readOnly,
+  );
+  useEffect(() => {
+    void window.rmside.syncInsertSnippetAvailable(snippetsAvailable).catch(() => undefined);
+  }, [snippetsAvailable]);
+  useEffect(() => subscribeInsertSnippetRequests(openInsertSnippet), [openInsertSnippet]);
 
   useEffect(() => {
-    monaco.editor.setTheme(editorTheme(resolvedTheme, workspace.activeDocument.name));
-  }, [resolvedTheme, workspace.activeDocument.name]);
+    if (snippetDialog.open || snippetDialog.id === 0) return;
+    const instance = editor.current;
+    const target = snippetTarget.current;
+    const choice = snippetChoice.current;
+    snippetTarget.current = null;
+    snippetChoice.current = null;
+    if (!instance) return;
+    instance.focus();
+    if (choice && target && !target.model.isDisposed() && instance.getModel() === target.model) {
+      insertEditorSnippet(instance, target.selection, choice.insertText);
+    }
+  }, [snippetDialog.id, snippetDialog.open]);
+
+  useEffect(() => {
+    monaco.editor.setTheme(
+      editorTheme(resolvedTheme, workspace.activeDocument.name, editorColorScheme),
+    );
+  }, [editorColorScheme, resolvedTheme, workspace.activeDocument.name]);
 
   useEffect(() => {
     editor.current?.updateOptions({
       inlayHints: { enabled: inlayHints ? 'on' : 'offUnlessPressed', padding: true },
     });
   }, [inlayHints]);
+
+  useEffect(() => {
+    rebuildOutline.current();
+  }, [outlineRow]);
+
+  const revealOutlineEntry = useCallback((entry: OutlineEntry) => {
+    const instance = editor.current;
+    const model = instance?.getModel();
+    if (!instance || !model) return;
+    const lineNumber = Math.min(Math.max(1, entry.line + 1), model.getLineCount());
+    const position = {
+      lineNumber,
+      column: Math.min(Math.max(1, entry.character + 1), model.getLineMaxColumn(lineNumber)),
+    };
+    instance.setPosition(position, 'outline-row');
+    instance.revealPositionInCenter(position);
+    instance.focus();
+  }, []);
+  const focusEditorAfterOutline = useCallback(() => editor.current?.focus(), []);
+
+  const outlineRowLaidOut = useRef(outlineRowPresent);
+  useLayoutEffect(() => {
+    if (outlineRowLaidOut.current === outlineRowPresent) return;
+    outlineRowLaidOut.current = outlineRowPresent;
+    const instance = editor.current;
+    const position = instance?.getPosition();
+    if (!instance || !position) return;
+    const caretInView = instance
+      .getVisibleRanges()
+      .some((range) => range.containsPosition(position));
+    instance.layout();
+    if (caretInView) instance.revealPosition(position, monaco.editor.ScrollType.Immediate);
+  }, [outlineRowPresent]);
 
   useEffect(() => {
     updateSourceHighlight.current();
@@ -1628,6 +1998,40 @@ export function EditorPanel({
     );
     if (!instance || !model || !pending) return;
     revealedSelection.current = pending;
+    if (pending.find) {
+      if (pending.findNext) {
+        const find = pending.find;
+        instance.focus();
+        void moveEditorFindToNextMatch(instance, find).then((moved) => {
+          if (instance.getModel() !== model) return;
+          if (!moved) {
+            const next = model.findNextMatch(
+              find.query,
+              instance.getSelection()?.getEndPosition() ?? { lineNumber: 1, column: 1 },
+              false,
+              find.matchCase,
+              find.wholeWord ? instance.getOption(monaco.editor.EditorOption.wordSeparators) : null,
+              false,
+            );
+            if (next) instance.setSelection(next.range);
+          }
+          const selected = instance.getSelection();
+          if (selected) instance.revealRangeInCenter(selected);
+        });
+        return;
+      }
+      const range =
+        firstFindMatch(
+          model,
+          pending.find,
+          instance.getOption(monaco.editor.EditorOption.wordSeparators),
+        ) ?? new monaco.Range(1, 1, 1, 1);
+      instance.setSelection(range);
+      instance.revealRangeInCenter(range);
+      instance.focus();
+      void openEditorFind(instance, pending.find);
+      return;
+    }
     const start = model.getPositionAt(pending.utf16StartOffset);
     const end = model.getPositionAt(pending.utf16EndOffset);
     instance.setSelection(
@@ -1642,6 +2046,7 @@ export function EditorPanel({
       className="panel editor-panel"
       aria-label={t('code-editor.panel.label')}
       data-execution-failure-sequence={executionFailureSequence}
+      data-outline-row={outlineRowPresent || undefined}
       onPointerEnter={() => setEditorPointerInside(true)}
       onPointerLeave={() => setEditorPointerInside(false)}
     >
@@ -1652,17 +2057,7 @@ export function EditorPanel({
               aria-label={t('code-editor.tabs.label')}
               className="editor-tabs"
               data-suppress-hover={tabHoverSuppressed || undefined}
-              onDragOver={(event) => {
-                if (!event.dataTransfer.types.includes(editorTabDragMime)) return;
-                event.preventDefault();
-                event.dataTransfer.dropEffect = 'move';
-              }}
-              onDrop={(event) => {
-                if (!event.dataTransfer.types.includes(editorTabDragMime)) return;
-                event.preventDefault();
-                event.stopPropagation();
-                finishTabDrag(event.clientX, event.clientY);
-              }}
+              data-tab-dragging={draggingTabId ? 'true' : undefined}
               onPointerLeave={() => {
                 if (draggedTabId.current) return;
                 tabHoverSuppressionAnchor.current = null;
@@ -1675,7 +2070,10 @@ export function EditorPanel({
                 tabHoverSuppressionAnchor.current = null;
                 setTabHoverSuppressed(false);
               }}
-              onScroll={updateTabScrollState}
+              onScroll={() => {
+                updateTabScrollState();
+                drawTabDrag();
+              }}
               ref={tabList}
               role="tablist"
             >
@@ -1688,44 +2086,15 @@ export function EditorPanel({
                   data-dragging={draggingTabId === document.id || undefined}
                   data-closing={closingTabIds.has(document.id) || undefined}
                   data-preview={document.preview}
-                  draggable={!closingTabIds.has(document.id)}
                   key={document.id}
-                  onContextMenu={() => workspace.setActiveDocument(document.id)}
-                  onDragEnd={(event) => finishTabDrag(event.clientX, event.clientY)}
-                  onDragOver={(event) => {
-                    const sourceId = draggedTabId.current;
-                    if (!sourceId || sourceId === document.id) return;
-                    event.preventDefault();
-                    event.dataTransfer.dropEffect = 'move';
-                    const bounds = event.currentTarget.getBoundingClientRect();
-                    const placement =
-                      event.clientX < bounds.left + bounds.width / 2 ? 'before' : 'after';
-                    const sourceIndex = workspace.documents.findIndex(
-                      (entry) => entry.id === sourceId,
-                    );
-                    const targetIndex = workspace.documents.findIndex(
-                      (entry) => entry.id === document.id,
-                    );
-                    const alreadyPlaced =
-                      (placement === 'before' && sourceIndex === targetIndex - 1) ||
-                      (placement === 'after' && sourceIndex === targetIndex + 1);
-                    if (alreadyPlaced) return;
-                    captureTabPositions();
-                    workspace.reorderDocument(sourceId, document.id, placement);
-                  }}
-                  onDragStart={(event) => {
-                    draggedTabId.current = document.id;
-                    tabHoverSuppressionAnchor.current = null;
-                    setDraggingTabId(document.id);
-                    setTabHoverSuppressed(true);
-                    event.dataTransfer.effectAllowed = 'move';
-                    event.dataTransfer.setData(editorTabDragMime, document.id);
-                  }}
-                  onDrop={(event) => {
+                  onClickCapture={(event) => {
+                    if (!tabClickSuppressed.current || event.detail === 0) return;
+                    tabClickSuppressed.current = false;
                     event.preventDefault();
                     event.stopPropagation();
-                    finishTabDrag(event.clientX, event.clientY);
                   }}
+                  onContextMenu={() => workspace.setActiveDocument(document.id)}
+                  onPointerDown={pressEditorTab}
                   onPointerEnter={() => setHoveredTabId(document.id)}
                   onPointerLeave={() =>
                     setHoveredTabId((current) => (current === document.id ? null : current))
@@ -2271,14 +2640,15 @@ export function EditorPanel({
           </>
         ) : null}
       </div>
-      <div
-        className="monaco-host"
-        onDragOverCapture={blockTabDropInEditor}
-        onMouseDownCapture={openCommentLink}
-        onDropCapture={blockTabDropInEditor}
-      >
+      <div className="monaco-host" onMouseDownCapture={openCommentLink}>
         <div className="monaco-editor-mount" dir="ltr" ref={container} />
         <EditorContextMenu />
+        <InsertSnippetDialog
+          colors={colorSchemeById(editorColorScheme)[resolvedTheme]}
+          onClose={() => closeSnippetDialog(null)}
+          onInsert={(snippet) => closeSnippetDialog(snippet)}
+          state={snippetDialog}
+        />
         {editorNoticePresence.mounted &&
         shownEditorNotice === 'execution-failure' &&
         shownExecutionFailure ? (
@@ -2349,6 +2719,14 @@ export function EditorPanel({
           })}
         </output>
       </div>
+      {outlineRowPresent ? (
+        <EditorOutlineRow
+          focusEditor={focusEditorAfterOutline}
+          onChoose={revealOutlineEntry}
+          outline={outlineView.outline}
+          path={outlineView.path}
+        />
+      ) : null}
       <output hidden data-testid="source-reveal">
         {selection
           ? `${selection.uri} — ${selection.marker}`
@@ -2360,4 +2738,27 @@ export function EditorPanel({
       </output>
     </section>
   );
+}
+
+function insertEditorSnippet(
+  instance: monaco.editor.IStandaloneCodeEditor,
+  selection: monaco.Selection,
+  text: string,
+): void {
+  const model = instance.getModel();
+  if (!model) return;
+  const range = model.validateRange(selection);
+  instance.setSelection(
+    new monaco.Selection(
+      range.startLineNumber,
+      range.startColumn,
+      range.endLineNumber,
+      range.endColumn,
+    ),
+  );
+  const controller = instance.getContribution('snippetController2') as unknown as {
+    insert(template: string, options?: { undoStopBefore?: boolean; undoStopAfter?: boolean }): void;
+  } | null;
+  controller?.insert(text, { undoStopBefore: true, undoStopAfter: true });
+  instance.revealPositionInCenterIfOutsideViewport(range.getStartPosition());
 }

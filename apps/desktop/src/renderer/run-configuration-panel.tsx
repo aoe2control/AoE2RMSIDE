@@ -2732,6 +2732,7 @@ function PreviewPresetControls({
             alignOffset={-32}
             className="preview-preset-menu"
             side="bottom"
+            surface="popup"
           >
             <CompactSelect
               ariaLabel={t('run-menu.map-size')}
@@ -2766,6 +2767,7 @@ function PreviewPresetControls({
                 <DropdownMenuContent
                   align="start"
                   className="preview-player-menu"
+                  surface="popup"
                   collisionAvoidance={{ side: 'shift', align: 'shift', fallbackAxisSide: 'none' }}
                   side="left"
                   sideOffset={6}
@@ -3010,7 +3012,12 @@ function PreviewPresetControls({
         >
           <MenuIcon aria-hidden="true" ref={presetMenuIcon.iconRef} size={14} />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="preview-preset-list-menu" side="bottom">
+        <DropdownMenuContent
+          align="end"
+          className="preview-preset-list-menu"
+          side="bottom"
+          surface="popup"
+        >
           {presets.map((preset) => {
             const active = preset.name === activePresetName;
             const editing = preset.name === editingPresetName;
@@ -3179,6 +3186,7 @@ function LobbyOptionsMenu({
         className="preview-lobby-options-menu"
         side="left"
         sideOffset={6}
+        surface="popup"
       >
         <DropdownMenuGroup>
           <DropdownMenuLabel>{t('run-menu.lobby.modifiers')}</DropdownMenuLabel>
@@ -3388,6 +3396,7 @@ function CompactSelect({
         alignItemWithTrigger={false}
         className={`preview-preset-option-menu ${contentClassName ?? ''}`}
         collisionPadding={{ top: 44, right: 4, bottom: 4, left: 4 }}
+        surface="popup"
       >
         {options.map((option) => (
           <SelectItem disabled={option.disabled} key={option.value} value={option.value}>

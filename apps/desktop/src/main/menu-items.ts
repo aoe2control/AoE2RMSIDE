@@ -1,31 +1,15 @@
-import type { ThemePreference } from '../shared/api';
 import type { EditionCapabilities } from '../shared/edition';
 import type { ExternalLinkTarget } from '../shared/external-links';
 import { mapTestPreviewNotes } from '../shared/message-catalog';
-import { t, type MessageId } from '../shared/i18n/translator';
+import { t } from '../shared/i18n/translator';
 
-export const themeLabels: Readonly<Record<ThemePreference, MessageId>> = Object.freeze({
-  system: 'app-menu.view.theme.system',
-  light: 'app-menu.view.theme.light',
-  dark: 'app-menu.view.theme.dark',
-});
-
-export interface ThemeMenuItem {
-  id: `view.theme.${ThemePreference}`;
+export interface ThemePanelMenuItem {
+  id: 'view.theme';
   label: string;
-  type: 'radio';
-  checked: boolean;
-  theme: ThemePreference;
 }
 
-export function themeMenuItems(current: ThemePreference): ThemeMenuItem[] {
-  return (['system', 'light', 'dark'] as const).map((theme) => ({
-    id: `view.theme.${theme}`,
-    label: t(themeLabels[theme]),
-    type: 'radio',
-    checked: theme === current,
-    theme,
-  }));
+export function themePanelMenuItem(): ThemePanelMenuItem {
+  return { id: 'view.theme', label: t('app-menu.view.theme-panel') };
 }
 
 export type HelpMenuItem =

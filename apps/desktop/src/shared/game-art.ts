@@ -35,6 +35,10 @@ export function flatPreviewLook(
   return shownLook === 'game-textures' && !gameTexturesExpected ? 'texture-colors' : shownLook;
 }
 
+export function previewColourLayerLook(shownLook: PreviewLook): 'minimap' | 'texture-colors' {
+  return shownLook === 'minimap' ? 'minimap' : 'texture-colors';
+}
+
 export type GameArtPhase = 'catalog' | 'terrain' | 'blends' | 'masks' | 'sprites';
 
 export type GameArtStatus =

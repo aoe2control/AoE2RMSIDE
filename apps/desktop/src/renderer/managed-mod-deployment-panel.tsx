@@ -25,7 +25,6 @@ import {
 } from 'react';
 import {
   BoxIcon,
-  CheckIcon as AnimatedCheckIcon,
   DropletIcon,
   EyeOffIcon,
   FolderOpenIcon,
@@ -38,10 +37,8 @@ import {
 import {
   Blend,
   ChevronUp,
-  Copy,
   Diamond,
   Dices,
-  Download,
   Footprints,
   Gem,
   Grid2x2,
@@ -51,6 +48,7 @@ import {
   Monitor,
   PackagePlus,
   Plus,
+  Save,
   Trees,
   Undo2,
   X,
@@ -117,7 +115,8 @@ import {
   type MapIconSpawnMarkerStyle,
   type PreviewGenerationResult,
 } from '../shared/api';
-import { type AnimatedIconHandle, playIconAnimation, useAnimatedIconHover } from './animated-icon';
+import { useAnimatedIconHover } from './animated-icon';
+import { CopyButton, CopyFeedbackIcon, useCopyFeedback } from './copy-button';
 import { useAppPanelContext } from './app-context';
 import { RunningIndicator } from './running-indicator';
 import { SelectGameFolderButton } from './select-game-folder-button';
@@ -1205,6 +1204,33 @@ export function ManagedModDeploymentPanel({
     }
   };
 
+  const copyMapIcon = async () => {
+    if (!iconSaveTarget) throw new Error('the map icon is unavailable');
+    const size = mapIconRenderContract.size;
+    await window.rmside.copyImageToClipboard(
+      iconSaveTarget.kind === 'generated'
+        ? {
+            kind: 'pixels',
+            width: size,
+            height: size,
+            pixels: iconSaveTarget.request.render.pixels,
+          }
+        : { kind: 'map-icon', token: iconSaveTarget.token },
+    );
+  };
+  const mapIconCopyFailed = (copyError: unknown) =>
+    appendOutput(
+      presentMessage({
+        source: 'Deploy',
+        raw: errorMessage(copyError),
+        fallbackHeadline: 'map-icon.output.copy-failed',
+      }),
+    );
+  const iconCopyKey =
+    iconSaveTarget?.kind === 'generated'
+      ? iconSaveTarget.request.render.identity
+      : (iconSaveTarget?.token ?? null);
+
   const iconField = (
     <div
       className="managed-mod-icon-field"
@@ -1215,10 +1241,13 @@ export function ManagedModDeploymentPanel({
         <MapIconColumn
           canSave={iconSaveTarget !== null}
           checked={mapIconOption.checked}
+          copyKey={iconCopyKey}
           description={mapIconDescription}
           descriptionId={mapIconDescriptionId}
           image={iconImage}
           label={iconFrameLabel}
+          onCopy={copyMapIcon}
+          onCopyFailure={mapIconCopyFailed}
           onOpen={openIconLightbox}
           onSave={(size) => void saveMapIcon(size)}
           onToggle={toggleMapIcon}
@@ -1477,6 +1506,17 @@ export function ManagedModDeploymentPanel({
               finalFocus={openLargerButton}
             >
               <div className="managed-mod-icon-lightbox-actions">
+                <CopyButton
+                  copiedLabel={t('map-icon.image-copied')}
+                  disabled={!iconSaveTarget}
+                  label={t('map-icon.copy-image')}
+                  onCopy={copyMapIcon}
+                  onFailure={mapIconCopyFailed}
+                  resetKey={iconCopyKey}
+                  size="icon-compact"
+                  testId="managed-mod-map-icon-lightbox-copy"
+                  variant="ghost"
+                />
                 <MapIconSaveButton
                   busy={iconSaveBusy}
                   disabled={!iconSaveTarget}
@@ -1766,12 +1806,10 @@ function CopyPathField({
   placeholder?: string;
   value: string | null;
 }) {
-  const [copied, setCopied] = useState(false);
+  const { checkRef, copied, run: runCopy } = useCopyFeedback(value);
   const [alignment, setAlignment] = useState<CopyPathAlignment>('start');
   const field = useRef<HTMLSpanElement>(null);
   const text = useRef<HTMLSpanElement>(null);
-  const copiedTimer = useRef<number | null>(null);
-  const copiedCheck = useRef<AnimatedIconHandle>(null);
   useLayoutEffect(() => {
     const fieldElement = field.current;
     const textElement = text.current;
@@ -1792,29 +1830,9 @@ function CopyPathField({
       observer.disconnect();
     };
   }, [placeholder, value]);
-  useEffect(
-    () => () => {
-      if (copiedTimer.current !== null) window.clearTimeout(copiedTimer.current);
-    },
-    [],
-  );
-  useEffect(() => setCopied(false), [value]);
-  useLayoutEffect(() => {
-    if (copied) playIconAnimation(copiedCheck.current);
-  }, [copied]);
   const copy = async () => {
     if (value === null) return;
-    try {
-      await navigator.clipboard.writeText(value);
-    } catch {
-      return;
-    }
-    setCopied(true);
-    if (copiedTimer.current !== null) window.clearTimeout(copiedTimer.current);
-    copiedTimer.current = window.setTimeout(() => {
-      copiedTimer.current = null;
-      setCopied(false);
-    }, 1_600);
+    await runCopy(() => navigator.clipboard.writeText(value));
   };
   return (
     <div
@@ -1834,11 +1852,7 @@ function CopyPathField({
           onClick={() => void copy()}
           type="button"
         >
-          {copied ? (
-            <AnimatedCheckIcon aria-hidden="true" ref={copiedCheck} size={14} />
-          ) : (
-            <Copy aria-hidden="true" />
-          )}
+          <CopyFeedbackIcon checkRef={checkRef} copied={copied} />
         </button>
       ) : null}
     </div>
@@ -1848,11 +1862,14 @@ function CopyPathField({
 function MapIconColumn({
   canSave,
   checked,
+  copyKey,
   description,
   descriptionId,
   generating,
   image,
   label,
+  onCopy,
+  onCopyFailure,
   onOpen,
   onSave,
   onToggle,
@@ -1867,11 +1884,14 @@ function MapIconColumn({
 }: {
   canSave: boolean;
   checked: boolean;
+  copyKey: string | null;
   description: string;
   descriptionId: string;
   generating: boolean;
   image: MapIconImage | null;
   label: string;
+  onCopy(): Promise<void>;
+  onCopyFailure(error: unknown): void;
   onOpen(): void;
   onSave(size: MapIconSaveSize): void;
   onToggle(): void;
@@ -1911,7 +1931,9 @@ function MapIconColumn({
           {t('map-icon.generate')}
           <ToggleButtonCheck checked={checked} />
         </TooltipTrigger>
-        <TooltipContent className="managed-mod-icon-tooltip">{switchReason}</TooltipContent>
+        <TooltipContent className="managed-mod-icon-tooltip managed-mod-icon-widget-tooltip">
+          {switchReason}
+        </TooltipContent>
       </Tooltip>
       {switchReason ? (
         <span className="sr-only" id={switchReasonId}>
@@ -1946,12 +1968,26 @@ function MapIconColumn({
               {generating ? <MapIconProgress size={22} /> : null}
             </span>
           </TooltipTrigger>
-          <TooltipContent className="managed-mod-icon-tooltip" side="bottom">
+          <TooltipContent
+            className="managed-mod-icon-tooltip managed-mod-icon-widget-tooltip"
+            side="bottom"
+          >
             {description}
           </TooltipContent>
         </Tooltip>
         {canSave ? (
           <div className="managed-mod-icon-actions managed-mod-icon-overlay">
+            <CopyButton
+              copiedLabel={t('map-icon.image-copied')}
+              label={t('map-icon.copy-image')}
+              onCopy={onCopy}
+              onFailure={onCopyFailure}
+              resetKey={copyKey}
+              size="icon-sm"
+              testId="managed-mod-map-icon-copy"
+              tooltipClassName="managed-mod-icon-widget-tooltip"
+              variant="secondary"
+            />
             <MapIconSaveButton
               busy={saveBusy}
               disabled={false}
@@ -1960,6 +1996,7 @@ function MapIconColumn({
               size="icon-sm"
               sizes={saveSizes}
               testId="managed-mod-map-icon-save"
+              tooltipClassName="managed-mod-icon-widget-tooltip"
               variant="secondary"
             />
           </div>
@@ -1977,6 +2014,7 @@ function MapIconSaveButton({
   size,
   sizes,
   testId,
+  tooltipClassName,
   variant,
 }: {
   busy: boolean;
@@ -1986,6 +2024,7 @@ function MapIconSaveButton({
   size: 'icon-sm' | 'icon-compact';
   sizes: boolean;
   testId: string;
+  tooltipClassName?: string;
   variant: 'ghost' | 'secondary';
 }) {
   const { t } = useI18n();
@@ -2008,9 +2047,9 @@ function MapIconSaveButton({
     return (
       <Tooltip>
         <TooltipTrigger render={button}>
-          <Download aria-hidden="true" />
+          <Save aria-hidden="true" />
         </TooltipTrigger>
-        <TooltipContent>{label}</TooltipContent>
+        <TooltipContent className={tooltipClassName}>{label}</TooltipContent>
       </Tooltip>
     );
   }
@@ -2018,9 +2057,9 @@ function MapIconSaveButton({
     <DropdownMenu modal={false}>
       <Tooltip>
         <TooltipTrigger render={<DropdownMenuTrigger render={button} />}>
-          <Download aria-hidden="true" />
+          <Save aria-hidden="true" />
         </TooltipTrigger>
-        <TooltipContent>{label}</TooltipContent>
+        <TooltipContent className={tooltipClassName}>{label}</TooltipContent>
       </Tooltip>
       <DropdownMenuContent
         align="end"

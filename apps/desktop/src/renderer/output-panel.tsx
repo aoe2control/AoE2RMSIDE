@@ -1,5 +1,12 @@
-import { memo, useId, useState, type MouseEvent as ReactMouseEvent } from 'react';
-import { ArrowDown, ChevronRight } from 'lucide-react';
+import { Fragment, memo, useId, useState, type ReactNode } from 'react';
+import {
+  ArrowDown,
+  ChevronRight,
+  CircleCheck,
+  CircleMinus,
+  CircleX,
+  type LucideIcon,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   externalLinkUrls,
@@ -8,23 +15,31 @@ import {
 } from '../shared/api';
 import { englishTranslator } from '../shared/i18n/translator';
 import { outputPartWording, rewordOutputMessage } from '../shared/message-catalog';
-import { outputSourceLabel, sentence, type OutputMessage } from '../shared/output-message';
+import {
+  outputSourceLabel,
+  sentence,
+  type OutputMessage,
+  type OutputSeverity,
+} from '../shared/output-message';
 import {
   filterOutputEntries,
   formatOutputTime,
   outputGroupOpen,
   outputMessageCount,
   outputRunConstructNote,
-  outputRunHeaderPrefix,
+  outputRunFacts,
   outputRunResultLabel,
   type OutputGroup,
   type OutputLogState,
   type OutputRow,
+  type OutputRunHeader,
+  type OutputRunResult,
 } from './output-log';
 import { useFollowBottom, type FollowState } from './follow-bottom';
 import { useI18n } from './i18n';
-import { OverflowingLabel } from './overflow-label';
+import { preventMultiClickSelection, usePlainClick } from './plain-click';
 import type { SeverityFilter } from './severity-filter';
+import { severityIcons } from './severity-filter-toggles';
 import { UpdateNoteAction } from './update-control';
 
 const releaseAvailableCode = 'update.release-available';
@@ -45,7 +60,7 @@ export const OutputPanel = memo(function OutputPanel({
   const entries = filterOutputEntries(state, filter);
   const follow = useFollowBottom(count, entries);
   return (
-    <div className="bottom-list-shell">
+    <div className="bottom-list-shell" onMouseDown={preventMultiClickSelection}>
       <div
         aria-label={t('output.log.label', { count })}
         aria-live="polite"
@@ -99,24 +114,116 @@ export function JumpToLatest({ follow }: { follow: { state: FollowState; jumpToL
 
 function OutputTime({ time }: { time: number }) {
   return (
-    <time className="output-time" dateTime={new Date(time).toISOString()}>
+    <time className="output-time output-row-end" dateTime={new Date(time).toISOString()}>
       {formatOutputTime(time)}
     </time>
   );
 }
 
-export function OutputSource({ name }: { name: string }) {
+export function OutputSeverityIcon({
+  severity,
+  source,
+}: {
+  severity: OutputSeverity;
+  source: string;
+}) {
+  const Icon = severityIcons[severity];
   return (
-    <OverflowingLabel
-      className="output-source"
-      focusable
-      name={name}
-      textClassName="output-source-text"
-    />
+    <span className="output-severity" data-severity={severity} title={source}>
+      <Icon aria-hidden="true" />
+      <span className="output-source sr-only">{source}</span>
+    </span>
   );
 }
 
-const OutputRowView = memo(function OutputRowView({ row }: { row: OutputRow }) {
+export function OutputGroupHeader({
+  end,
+  expandable = true,
+  icon,
+  onToggle,
+  open,
+  rowsId,
+  title,
+  titleId,
+  toggleLabel,
+  tooltip,
+}: {
+  end?: ReactNode;
+  expandable?: boolean;
+  icon: ReactNode;
+  onToggle(): void;
+  open: boolean;
+  rowsId: string;
+  title: ReactNode;
+  titleId: string;
+  toggleLabel: string;
+  tooltip?: string;
+}) {
+  const click = usePlainClick(() => {
+    if (expandable) onToggle();
+  });
+  return (
+    <div
+      className="output-row output-group-header"
+      data-expandable={expandable ? 'true' : 'false'}
+      onClick={click.onClick}
+      onMouseDown={click.onMouseDown}
+      title={tooltip}
+    >
+      <span className="output-group-toggle-cell">
+        {expandable ? (
+          <Button
+            aria-controls={rowsId}
+            aria-expanded={open}
+            aria-label={toggleLabel}
+            className="output-group-toggle"
+            onClick={onToggle}
+            size="icon-xs"
+            variant="ghost"
+          >
+            <ChevronRight aria-hidden="true" className="output-chevron" />
+          </Button>
+        ) : null}
+      </span>
+      {icon}
+      <div className="output-text">
+        <p className="output-headline output-group-title">
+          <span id={titleId}>{title}</span>
+        </p>
+      </div>
+      {end}
+    </div>
+  );
+}
+
+const runStatusIcons: Readonly<Record<OutputRunResult, LucideIcon>> = {
+  exact: CircleCheck,
+  synthetic: CircleCheck,
+  unchanged: CircleCheck,
+  passed: CircleCheck,
+  failed: CircleX,
+  'test-failed': CircleX,
+  stopped: CircleMinus,
+};
+
+function OutputRunStatusIcon({ header }: { header: OutputRunHeader }) {
+  const Icon = runStatusIcons[header.result];
+  const source = outputSourceLabel(header.kind === 'map-test' ? 'Map test' : 'Run');
+  return (
+    <span className="output-severity output-run-status" data-result={header.result} title={source}>
+      <Icon aria-hidden="true" />
+      <span className="output-source sr-only">{source}</span>
+    </span>
+  );
+}
+
+const OutputRowView = memo(function OutputRowView({
+  child = false,
+  row,
+}: {
+  child?: boolean;
+  row: OutputRow;
+}) {
   useI18n();
   const { message } = row;
   return (
@@ -127,9 +234,9 @@ const OutputRowView = memo(function OutputRowView({ row }: { row: OutputRow }) {
       data-severity={message.severity}
       data-source={message.source}
     >
-      <OutputTime time={row.time} />
-      <OutputSource name={outputSourceLabel(message.source)} />
+      <OutputSeverityIcon severity={message.severity} source={outputSourceLabel(message.source)} />
       <OutputMessageText message={message} repeat={row.repeat} />
+      {child ? null : <OutputTime time={row.time} />}
     </div>
   );
 });
@@ -289,20 +396,13 @@ const OutputGroupView = memo(function OutputGroupView({
   const rowsId = useId();
   const { header } = group;
   const constructs = header.constructs;
-  const resultLabel = outputRunResultLabel(header);
-  const constructNote = outputRunConstructNote(header);
   const expandable = group.rows.length > 0 || group.droppedRows > 0 || Boolean(constructs);
-  const toggleFromHeader = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (!expandable) return;
-    if ((event.target as HTMLElement).closest('button')) return;
-    if (window.getSelection()?.toString()) return;
-    onToggle();
-  };
+  const shownOpen = open && expandable;
   return (
     <div
       aria-labelledby={titleId}
-      className="output-group"
-      data-open={open && expandable ? 'true' : 'false'}
+      className="output-group output-run-group"
+      data-open={shownOpen ? 'true' : 'false'}
       data-output-run={group.id}
       data-run-kind={header.kind}
       data-run-map-hash={header.mapHash}
@@ -311,52 +411,36 @@ const OutputGroupView = memo(function OutputGroupView({
       data-run-size={header.size}
       role="group"
     >
-      <div
-        className="output-row output-group-header"
-        data-expandable={expandable ? 'true' : 'false'}
-        onClick={toggleFromHeader}
-      >
-        <OutputTime time={group.time} />
-        <OutputSource name={outputSourceLabel(header.kind === 'map-test' ? 'Map test' : 'Run')} />
-        <div className="output-text">
-          <p className="output-headline output-group-title">
-            {expandable ? (
-              <Button
-                aria-controls={rowsId}
-                aria-expanded={open}
-                aria-label={open ? t('output.run.hide') : t('output.run.show')}
-                className="output-group-toggle"
-                onClick={onToggle}
-                size="icon-xs"
-                variant="ghost"
-              >
-                <ChevronRight aria-hidden="true" className="output-chevron" />
-              </Button>
-            ) : (
-              <span aria-hidden="true" className="output-group-toggle-spacer" />
+      <OutputGroupHeader
+        end={<OutputTime time={group.time} />}
+        expandable={expandable}
+        icon={<OutputRunStatusIcon header={header} />}
+        onToggle={onToggle}
+        open={open}
+        rowsId={rowsId}
+        title={
+          <>
+            <span className="output-group-name">{header.script}</span>
+            {shownOpen ? null : (
+              <>
+                {outputRunFacts(header).map((fact) => (
+                  <Fragment key={fact.id}>
+                    {' · '}
+                    {fact.inline}
+                  </Fragment>
+                ))}
+                {' · '}
+                <OutputRunResultWords header={header} />
+              </>
             )}
-            <span id={titleId}>
-              {outputRunHeaderPrefix(header)}
-              {resultLabel === null ? null : (
-                <>
-                  {' · '}
-                  <span className="output-run-result" data-result={header.result}>
-                    {resultLabel}
-                  </span>
-                </>
-              )}
-              {constructNote ? (
-                <>
-                  {' · '}
-                  <span className="output-run-constructs">{constructNote}</span>
-                </>
-              ) : null}
-            </span>
-          </p>
-        </div>
-      </div>
+          </>
+        }
+        titleId={titleId}
+        toggleLabel={open ? t('output.run.hide') : t('output.run.show')}
+      />
       {expandable ? (
         <div className="output-group-rows" hidden={!open} id={rowsId}>
+          {shownOpen ? <OutputRunFactTable header={header} /> : null}
           {constructs ? (
             <OutputRunConstructList constructs={constructs} onNavigate={onNavigateOperation} />
           ) : null}
@@ -366,13 +450,47 @@ const OutputGroupView = memo(function OutputGroupView({
             </p>
           ) : null}
           {group.rows.map((row) => (
-            <OutputRowView key={row.id} row={row} />
+            <OutputRowView child key={row.id} row={row} />
           ))}
         </div>
       ) : null}
     </div>
   );
 });
+
+function OutputRunResultWords({ header }: { header: OutputRunHeader }) {
+  const resultLabel = outputRunResultLabel(header);
+  const constructNote = outputRunConstructNote(header);
+  return (
+    <>
+      {resultLabel === null ? null : (
+        <span className="output-run-result" data-result={header.result}>
+          {resultLabel}
+        </span>
+      )}
+      {resultLabel !== null && constructNote ? ' · ' : null}
+      {constructNote ? <span className="output-run-constructs">{constructNote}</span> : null}
+    </>
+  );
+}
+
+function OutputRunFactTable({ header }: { header: OutputRunHeader }) {
+  const { t } = useI18n();
+  return (
+    <dl className="output-run-facts">
+      {outputRunFacts(header).map((fact) => (
+        <Fragment key={fact.id}>
+          <dt data-fact={fact.id}>{fact.label}</dt>
+          <dd data-fact={fact.id}>{fact.value}</dd>
+        </Fragment>
+      ))}
+      <dt data-fact="result">{t('output.run.fact.result')}</dt>
+      <dd data-fact="result">
+        <OutputRunResultWords header={header} />
+      </dd>
+    </dl>
+  );
+}
 
 function OutputRunConstructList({
   constructs,
@@ -384,8 +502,6 @@ function OutputRunConstructList({
   const { t } = useI18n();
   return (
     <div className="output-run-construct-row">
-      <span aria-hidden="true" className="output-time" />
-      <OutputSource name={outputSourceLabel('Run')} />
       <div className="output-text">
         <p className="output-headline">{t('output.constructs.heading')}</p>
         <ul aria-label={t('output.constructs.label')} className="output-run-constructs-list">

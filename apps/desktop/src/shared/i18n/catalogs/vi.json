@@ -47,6 +47,9 @@
     "app-menu.file.open-folder": {
       "message": "Mở thư mục…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Tìm trong tệp…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Duyệt bản đồ đã cài…"
     },
@@ -116,6 +119,9 @@
     "app-menu.edit.select-all": {
       "message": "Chọn tất cả"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Chèn đoạn mã…"
+    },
     "app-menu.edit.format-document": {
       "message": "Định dạng tài liệu"
     },
@@ -140,6 +146,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Hiện các giai đoạn tạo trực tiếp"
     },
+    "app-menu.view.outline-row": {
+      "message": "Hiện thanh dàn ý"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Hiện gợi ý trong dòng"
     },
@@ -163,6 +172,9 @@
     },
     "app-menu.view.language": {
       "message": "Ngôn ngữ…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Giao diện…"
     },
     "app-menu.view.theme": {
       "message": "Giao diện"
@@ -403,6 +415,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, other {{count} bản đồ}}"
+    },
+    "output.run.fact.players": {
+      "message": "Người chơi"
+    },
+    "output.run.fact.maps": {
+      "message": "Bản đồ"
+    },
+    "output.run.fact.duration": {
+      "message": "Thời lượng"
+    },
+    "output.run.fact.result": {
+      "message": "Kết quả"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -923,20 +947,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Kiểm thử bản đồ"
     },
+    "settings.theme.app-theme": {
+      "message": "Giao diện ứng dụng"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Màu trình soạn thảo"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Mặc định"
+    },
+    "settings.theme.close-label": {
+      "message": "Đóng thiết lập giao diện"
+    },
     "settings.language.title": {
       "message": "Ngôn ngữ"
-    },
-    "settings.language.description": {
-      "message": "Menu, hộp thoại và thông báo dùng ngôn ngữ này. Lệnh kịch bản, nhật ký và gói hỗ trợ vẫn dùng tiếng Anh."
     },
     "settings.language.label": {
       "message": "Ngôn ngữ giao diện"
     },
     "settings.language.system": {
       "message": "Ngôn ngữ hiển thị Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Đóng"
     },
     "settings.language.close-label": {
       "message": "Đóng thiết lập ngôn ngữ"
@@ -2093,6 +2123,30 @@
     "explorer.search.placeholder": {
       "message": "Tìm tệp"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Tìm trong tệp"
+    },
+    "explorer.search.contents": {
+      "message": "Tìm trong nội dung tệp"
+    },
+    "explorer.search.match-case": {
+      "message": "Khớp chữ hoa/thường"
+    },
+    "explorer.search.whole-word": {
+      "message": "Khớp nguyên từ"
+    },
+    "explorer.search.scope": {
+      "message": "trong {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Tìm trong toàn bộ thư mục"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, other {{count} lần xuất hiện}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Một số tệp đã bị bỏ qua trong lần tìm này vì quá lớn hoặc quá nhiều."
+    },
     "explorer.search.clear": {
       "message": "Xóa nội dung tìm tệp"
     },
@@ -2134,6 +2188,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Mở trong File Explorer"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Tìm trong tệp…"
     },
     "explorer.context.rename": {
       "message": "Đổi tên"
@@ -2582,6 +2639,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Lưu ảnh…"
     },
+    "map-icon.copy-image": {
+      "message": "Sao chép ảnh"
+    },
+    "map-icon.image-copied": {
+      "message": "Đã sao chép ảnh"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2662,6 +2725,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Không lưu được biểu tượng bản đồ"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Không sao chép được biểu tượng bản đồ"
     },
     "map-icon.lightbox.close": {
       "message": "Đóng xem trước biểu tượng bản đồ"
@@ -2933,6 +2999,21 @@
     "code-editor.panel.label": {
       "message": "Trình soạn thảo mã nguồn RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Dàn ý"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, dòng {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Đến phần"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Đến khối"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Đến hàm"
+    },
     "code-editor.tabs.label": {
       "message": "Các tệp đang mở"
     },
@@ -3116,6 +3197,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Mở tệp include"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Chèn đoạn mã…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Chèn đoạn mã"
+    },
+    "code-editor.snippets.close": {
+      "message": "Đóng"
+    },
+    "code-editor.snippets.search": {
+      "message": "Tìm đoạn mã"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Tìm đoạn mã"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Xóa nội dung tìm"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Hiện tất cả"
+    },
+    "code-editor.snippets.list": {
+      "message": "Đoạn mã"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Văn bản sẽ chèn"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Đang tải đoạn mã…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Không tải được đoạn mã. Hãy đóng hộp thoại này và thử lại."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Không có đoạn mã nào phù hợp với vị trí con trỏ. Hãy bật Hiện tất cả để xem mọi đoạn mã."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Không có đoạn mã nào khớp với tìm kiếm này."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Chèn"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Hủy"
+    },
     "code-editor.include.open": {
       "message": "Mở {name}"
     },
@@ -3231,6 +3357,12 @@
       "message": "Lưu biểu tượng bản đồ"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Ảnh PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Lưu ảnh bản đồ"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Ảnh PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3553,6 +3685,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Cây nhỏ"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Sao chép ảnh"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Lưu ảnh…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Đã lưu ảnh bản đồ thành {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Không lưu được ảnh bản đồ"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Không sao chép được ảnh bản đồ"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "bản xem trước nhìn từ trên xuống bằng màu bản đồ nhỏ"

@@ -104,7 +104,8 @@ AoE2RMSIDE never bundles, ships, uploads, or redistributes game art. The
 **Minimap colors** and **Texture colors** looks of the preview and the map
 icon are drawn from numbers only: minimap colors and one averaged color per
 terrain or object. Graphics from your own game installation are only read
-locally and never leave your computer.
+locally, and the application never uploads or sends them anywhere; only a
+picture you copy or save yourself can contain them.
 
 The project's own artwork (the application icon and the map icon sprites) is
 original and has a provenance record in

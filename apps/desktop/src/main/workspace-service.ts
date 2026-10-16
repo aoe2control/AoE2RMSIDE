@@ -21,6 +21,8 @@ import type {
   WorkspaceRenameRequest,
   WorkspaceSaveAsRequest,
   WorkspaceSaveRequest,
+  WorkspaceContentSearchRequest,
+  WorkspaceContentSearchResult,
   WorkspaceSaveResult,
   WorkspaceSearchResult,
   WorkspaceSourceKind,
@@ -33,6 +35,12 @@ import {
 import { mapTestStarterTemplate } from '../shared/map-test-contract';
 import { isXsScriptName, xsStarterTemplate } from '../shared/xs-contract';
 import { workspaceSearchMatch } from '../shared/workspace-search';
+import {
+  countWorkspaceContentOccurrences,
+  validateWorkspaceContentSearchRequest,
+  workspaceContentPattern,
+  workspaceContentSearchBounds,
+} from '../shared/workspace-content-search';
 import { editionCapabilities } from '../shared/edition';
 import { presentMessage } from '../shared/message-catalog';
 import { outputNote, type OutputMessage, type OutputText } from '../shared/output-message';
@@ -123,6 +131,15 @@ interface TraversalContext {
   signal?: AbortSignal;
   entries: number;
   diagnosticPublished: boolean;
+}
+
+interface ContentSearchState {
+  pattern: RegExp;
+  unsaved: ReadonlyMap<string, string | null>;
+  filesRead: number;
+  bytesRead: number;
+  truncated: boolean;
+  stopped: boolean;
 }
 
 export class WorkspaceService {
@@ -258,6 +275,9 @@ export class WorkspaceService {
       try {
         assertSupportedSourcePath(tab.path);
         const canonicalPath = await canonicalExistingPath(tab.path);
+        if (normalTabs.some((restored) => pathKey(restored.path) === pathKey(canonicalPath))) {
+          continue;
+        }
         if (!(await isRelevantSourceFile(canonicalPath))) throw new Error('unsupported source');
         const document = await this.readGrantedFile(canonicalPath);
         documents.push(document);
@@ -580,8 +600,10 @@ export class WorkspaceService {
       const capability = [...this.openedDocuments.values()].find(
         (entry) => pathKey(entry.path) === pathKey(tab.path),
       );
-      if (capability) normalTabs.push({ ...tab, path: capability.path });
-      else skippedTabs += 1;
+      if (!capability) skippedTabs += 1;
+      else if (!normalTabs.some((saved) => pathKey(saved.path) === pathKey(capability.path))) {
+        normalTabs.push({ ...tab, path: capability.path });
+      }
     }
     if (skippedTabs > 0) {
       onSkipped(
@@ -638,6 +660,65 @@ export class WorkspaceService {
       if (controller.signal.aborted) throw error;
       this.publishTraversalDiagnostic(context, error);
       return [];
+    } finally {
+      if (this.activeSearch === controller) this.activeSearch = null;
+    }
+  }
+
+  async searchWorkspaceContents(value: unknown): Promise<WorkspaceContentSearchResult> {
+    const request: WorkspaceContentSearchRequest = validateWorkspaceContentSearchRequest(value);
+    if (!this.activeWorkspaceRoot) throw new Error('no workspace folder is open');
+    this.activeSearch?.abort();
+    const controller = new AbortController();
+    this.activeSearch = controller;
+    const context: TraversalContext = {
+      signal: controller.signal,
+      entries: 0,
+      diagnosticPublished: false,
+    };
+    const root = this.activeWorkspaceRoot;
+    const search: ContentSearchState = {
+      pattern: workspaceContentPattern(request.query, request),
+      unsaved: new Map(
+        request.unsavedDocuments.map((document) => [pathKey(document.path), document.content]),
+      ),
+      filesRead: 0,
+      bytesRead: 0,
+      truncated: false,
+      stopped: false,
+    };
+    try {
+      const scope = request.scopeId
+        ? await this.resolveFolderCapability(request.scopeId)
+        : { path: root, writable: this.entries.get(entryId(root, 'folder'))?.writable ?? false };
+      this.assertTraversal(context, 0);
+      const scopeRelative = relative(root, scope.path);
+      const depth = scopeRelative === '' ? 0 : scopeRelative.split(sep).length;
+      let results = await this.searchDirectoryContents(
+        root,
+        scope.path,
+        scope.writable,
+        search,
+        context,
+        depth,
+      );
+      for (
+        let folder = scope.path;
+        results.length > 0 && pathKey(folder) !== pathKey(root);
+        folder = dirname(folder)
+      ) {
+        const writable =
+          folder === scope.path
+            ? scope.writable
+            : (this.entries.get(entryId(folder, 'folder'))?.writable ?? false);
+        const granted = {
+          ...this.grantEntry(folder, 'folder', writable, false),
+          hasChildren: true,
+        };
+        const relativePath = relative(root, folder).replaceAll('\\', '/');
+        results = [{ ...granted, relativePath, matched: false }, ...results];
+      }
+      return { results, truncated: search.truncated };
     } finally {
       if (this.activeSearch === controller) this.activeSearch = null;
     }
@@ -1490,6 +1571,114 @@ export class WorkspaceService {
     return shown
       .sort((left, right) => compareDirectoryEntries(left.entry, right.entry))
       .flatMap((item) => item.results);
+  }
+
+  private async searchDirectoryContents(
+    root: string,
+    directory: string,
+    writable: boolean,
+    search: ContentSearchState,
+    context: TraversalContext,
+    depth: number,
+  ): Promise<WorkspaceSearchResult[]> {
+    if (search.stopped) return [];
+    let entries: Awaited<ReturnType<WorkspaceService['readDirectoryEntries']>>;
+    try {
+      this.assertTraversal(context, depth);
+      entries = await this.readDirectoryEntries(directory, context);
+    } catch (error) {
+      if (context.signal?.aborted) throw error;
+      search.truncated = true;
+      if (error instanceof DesktopError && error.code === 'files.traversal-limit') {
+        search.stopped = true;
+      } else this.publishTraversalDiagnostic(context, error);
+      return [];
+    }
+    const shown: Array<{ entry: WorkspaceDirectoryEntry; results: WorkspaceSearchResult[] }> = [];
+    const ordered = [...entries].sort(
+      (left, right) => Number(right.isDirectory()) - Number(left.isDirectory()),
+    );
+    for (const entry of ordered) {
+      if (context.signal?.aborted) throw new Error('workspace search was cancelled');
+      if (search.stopped) break;
+      const path = join(directory, entry.name);
+      if (entry.isFile()) {
+        if (!isSupportedSourcePath(path)) continue;
+        const occurrences = await this.contentOccurrences(path, search);
+        if (context.signal?.aborted) throw new Error('workspace search was cancelled');
+        if (occurrences === 0) continue;
+        const granted = this.grantEntry(
+          path,
+          'file',
+          writable && (await this.isWritable(path)),
+          false,
+        );
+        const relativePath = relative(root, path).replaceAll('\\', '/');
+        shown.push({
+          entry: granted,
+          results: [{ ...granted, relativePath, matched: true, occurrences }],
+        });
+        continue;
+      }
+      if (!entry.isDirectory() || entry.isSymbolicLink()) continue;
+      const canonical = await this.containedCanonicalDirectory(path, context);
+      if (!canonical) continue;
+      const folderWritable = writable && (await this.isWritable(canonical));
+      const contents = await this.searchDirectoryContents(
+        root,
+        canonical,
+        folderWritable,
+        search,
+        context,
+        depth + 1,
+      );
+      if (contents.length === 0) continue;
+      const granted = {
+        ...this.grantEntry(canonical, 'folder', folderWritable, false),
+        hasChildren: true,
+      };
+      const relativePath = relative(root, canonical).replaceAll('\\', '/');
+      shown.push({
+        entry: granted,
+        results: [{ ...granted, relativePath, matched: false }, ...contents],
+      });
+    }
+    return shown
+      .sort((left, right) => compareDirectoryEntries(left.entry, right.entry))
+      .flatMap((item) => item.results);
+  }
+
+  private async contentOccurrences(path: string, search: ContentSearchState): Promise<number> {
+    const key = pathKey(path);
+    if (search.unsaved.has(key)) {
+      const content = search.unsaved.get(key) ?? null;
+      if (content === null) {
+        search.truncated = true;
+        return 0;
+      }
+      if (!(await isRelevantSourceFile(path))) return 0;
+      return countWorkspaceContentOccurrences(content, search.pattern);
+    }
+    const metadata = await stat(path).catch(() => null);
+    if (!metadata?.isFile()) return 0;
+    if (metadata.size > (isMapTestPath(path) ? maximumMapTestSourceBytes : maximumSourceBytes)) {
+      return 0;
+    }
+    if (
+      metadata.size > workspaceContentSearchBounds.maximumFileBytes ||
+      search.filesRead >= workspaceContentSearchBounds.maximumFiles ||
+      search.bytesRead + metadata.size > workspaceContentSearchBounds.maximumTotalBytes
+    ) {
+      search.truncated = true;
+      return 0;
+    }
+    search.filesRead += 1;
+    search.bytesRead += metadata.size;
+    const bytes = await readFileBounded(path, workspaceContentSearchBounds.maximumFileBytes).catch(
+      () => null,
+    );
+    if (!bytes || bytes.includes(0)) return 0;
+    return countWorkspaceContentOccurrences(decodeSearchText(bytes), search.pattern);
   }
 
   private async directoryHasRelevantSource(
@@ -2438,6 +2627,14 @@ function decodeMapTestBytes(bytes: Uint8Array): {
         ? 'lf'
         : 'none';
   return { content, encoding: hasBom ? 'utf8-bom' : 'utf8', newlineStyle };
+}
+
+function decodeSearchText(bytes: Uint8Array): string {
+  try {
+    return decodeSourceBytes(bytes).content;
+  } catch {
+    return new TextDecoder('utf-8').decode(bytes);
+  }
 }
 
 async function isRelevantSourceFile(targetPath: string): Promise<boolean> {

@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Map openen…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "In bestanden zoeken…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Geïnstalleerde kaarten bekijken…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Alles selecteren"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Fragment invoegen…"
+    },
     "app-menu.edit.format-document": {
       "message": "Document opmaken"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Generatiestappen live tonen"
     },
+    "app-menu.view.outline-row": {
+      "message": "Overzichtsbalk tonen"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Parameterhints tonen"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Taal…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Thema…"
     },
     "app-menu.view.theme": {
       "message": "Thema"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} kaart} other {{count} kaarten}}"
+    },
+    "output.run.fact.players": {
+      "message": "Spelers"
+    },
+    "output.run.fact.maps": {
+      "message": "Kaarten"
+    },
+    "output.run.fact.duration": {
+      "message": "Duur"
+    },
+    "output.run.fact.result": {
+      "message": "Resultaat"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Kaarttest"
     },
+    "settings.theme.app-theme": {
+      "message": "App-thema"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Editorkleuren"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Standaard"
+    },
+    "settings.theme.close-label": {
+      "message": "Thema-instellingen sluiten"
+    },
     "settings.language.title": {
       "message": "Taal"
-    },
-    "settings.language.description": {
-      "message": "Menu's, dialoogvensters en berichten gebruiken deze taal. Scriptopdrachten, logboeken en ondersteuningsbundels blijven in het Engels."
     },
     "settings.language.label": {
       "message": "Interfacetaal"
     },
     "settings.language.system": {
       "message": "Windows-weergavetaal ({language})"
-    },
-    "settings.language.close": {
-      "message": "Sluiten"
     },
     "settings.language.close-label": {
       "message": "Taalinstellingen sluiten"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Bestanden zoeken"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Tekst zoeken"
+    },
+    "explorer.search.contents": {
+      "message": "Bestandsinhoud doorzoeken"
+    },
+    "explorer.search.match-case": {
+      "message": "Hoofdlettergevoelig"
+    },
+    "explorer.search.whole-word": {
+      "message": "Heel woord"
+    },
+    "explorer.search.scope": {
+      "message": "in {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Hele map doorzoeken"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} treffer} other {{count} treffers}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Sommige bestanden zijn niet doorzocht, omdat ze te groot of te talrijk zijn."
+    },
     "explorer.search.clear": {
       "message": "Zoekopdracht wissen"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Openen in Verkenner"
+    },
+    "explorer.context.find-in-files": {
+      "message": "In bestanden zoeken…"
     },
     "explorer.context.rename": {
       "message": "Naam wijzigen"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Afbeelding opslaan…"
     },
+    "map-icon.copy-image": {
+      "message": "Afbeelding kopiëren"
+    },
+    "map-icon.image-copied": {
+      "message": "Afbeelding gekopieerd"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Het kaartpictogram kon niet worden opgeslagen"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Het kaartpictogram kon niet worden gekopieerd"
     },
     "map-icon.lightbox.close": {
       "message": "Voorbeeld van het kaartpictogram sluiten"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "RMS-broneditor"
     },
+    "code-editor.outline.label": {
+      "message": "Overzicht"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, regel {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Naar sectie gaan"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Naar blok gaan"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Naar functie gaan"
+    },
     "code-editor.tabs.label": {
       "message": "Geopende bestanden"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Ingevoegd bestand openen"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Fragment invoegen…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Fragment invoegen"
+    },
+    "code-editor.snippets.close": {
+      "message": "Sluiten"
+    },
+    "code-editor.snippets.search": {
+      "message": "Fragmenten zoeken"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Fragmenten zoeken"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Zoekopdracht wissen"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Alles tonen"
+    },
+    "code-editor.snippets.list": {
+      "message": "Fragmenten"
+    },
+    "code-editor.snippets.preview": {
+      "message": "In te voegen tekst"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Fragmenten laden…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "De fragmenten konden niet worden geladen. Sluit dit venster en probeer het opnieuw."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Geen fragment past op de plek van de cursor. Zet Alles tonen aan om alle fragmenten te zien."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Geen fragmenten voldoen aan deze zoekopdracht."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Invoegen"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Annuleren"
+    },
     "code-editor.include.open": {
       "message": "{name} openen"
     },
@@ -3223,6 +3349,12 @@
       "message": "Kaartpictogram opslaan"
     },
     "native-dialog.map-icon.filter": {
+      "message": "PNG-afbeelding"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Kaartafbeelding opslaan"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "PNG-afbeelding"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Kleine bomen"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Afbeelding kopiëren"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Afbeelding opslaan…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Kaartafbeelding opgeslagen als {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "De kaartafbeelding kon niet worden opgeslagen"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "De kaartafbeelding kon niet worden gekopieerd"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "kaartvoorbeeld van bovenaf in minikaartkleuren"

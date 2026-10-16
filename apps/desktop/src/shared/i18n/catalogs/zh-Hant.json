@@ -47,6 +47,9 @@
     "app-menu.file.open-folder": {
       "message": "開啟資料夾…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "在檔案中尋找…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "瀏覽已安裝的地圖…"
     },
@@ -116,6 +119,9 @@
     "app-menu.edit.select-all": {
       "message": "全選"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "插入程式碼片段…"
+    },
     "app-menu.edit.format-document": {
       "message": "格式化文件"
     },
@@ -140,6 +146,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "即時顯示產生階段"
     },
+    "app-menu.view.outline-row": {
+      "message": "顯示大綱列"
+    },
     "app-menu.view.inlay-hints": {
       "message": "顯示行內提示"
     },
@@ -163,6 +172,9 @@
     },
     "app-menu.view.language": {
       "message": "語言…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "佈景主題…"
     },
     "app-menu.view.theme": {
       "message": "佈景主題"
@@ -403,6 +415,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, other {{count} 張地圖}}"
+    },
+    "output.run.fact.players": {
+      "message": "玩家"
+    },
+    "output.run.fact.maps": {
+      "message": "地圖"
+    },
+    "output.run.fact.duration": {
+      "message": "耗時"
+    },
+    "output.run.fact.result": {
+      "message": "結果"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} 毫秒"
@@ -923,20 +947,26 @@
     "run-menu.map-test-progress.label": {
       "message": "地圖測試"
     },
+    "settings.theme.app-theme": {
+      "message": "應用程式佈景主題"
+    },
+    "settings.theme.editor-colors": {
+      "message": "編輯器配色"
+    },
+    "settings.theme.scheme.default": {
+      "message": "預設"
+    },
+    "settings.theme.close-label": {
+      "message": "關閉佈景主題設定"
+    },
     "settings.language.title": {
       "message": "語言"
-    },
-    "settings.language.description": {
-      "message": "選單、對話方塊與訊息會使用此語言。指令碼指令、記錄與支援套件仍使用英文。"
     },
     "settings.language.label": {
       "message": "介面語言"
     },
     "settings.language.system": {
       "message": "Windows 顯示語言（{language}）"
-    },
-    "settings.language.close": {
-      "message": "關閉"
     },
     "settings.language.close-label": {
       "message": "關閉語言設定"
@@ -2093,6 +2123,30 @@
     "explorer.search.placeholder": {
       "message": "搜尋檔案"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "在檔案中尋找"
+    },
+    "explorer.search.contents": {
+      "message": "搜尋檔案內容"
+    },
+    "explorer.search.match-case": {
+      "message": "大小寫須相符"
+    },
+    "explorer.search.whole-word": {
+      "message": "全字拼寫須相符"
+    },
+    "explorer.search.scope": {
+      "message": "在 {name} 中"
+    },
+    "explorer.search.scope.remove": {
+      "message": "搜尋整個資料夾"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, other {{count} 個相符項目}}"
+    },
+    "explorer.search.truncated": {
+      "message": "部分檔案過大或數量過多，未納入此次搜尋。"
+    },
     "explorer.search.clear": {
       "message": "清除檔案搜尋"
     },
@@ -2134,6 +2188,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "在 Windows 檔案總管開啟"
+    },
+    "explorer.context.find-in-files": {
+      "message": "在檔案中尋找…"
     },
     "explorer.context.rename": {
       "message": "重新命名"
@@ -2582,6 +2639,12 @@
     "map-icon.save-image.tooltip": {
       "message": "儲存影像…"
     },
+    "map-icon.copy-image": {
+      "message": "複製影像"
+    },
+    "map-icon.image-copied": {
+      "message": "已複製影像"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} 像素"
     },
@@ -2662,6 +2725,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "無法儲存地圖圖示"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "無法複製地圖圖示"
     },
     "map-icon.lightbox.close": {
       "message": "關閉地圖圖示預覽"
@@ -2933,6 +2999,21 @@
     "code-editor.panel.label": {
       "message": "RMS 原始碼編輯器"
     },
+    "code-editor.outline.label": {
+      "message": "大綱"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}，第 {line} 行"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "前往區段"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "前往區塊"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "前往函式"
+    },
     "code-editor.tabs.label": {
       "message": "已開啟的檔案"
     },
@@ -3116,6 +3197,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "開啟引入檔"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "插入程式碼片段…"
+    },
+    "code-editor.snippets.title": {
+      "message": "插入程式碼片段"
+    },
+    "code-editor.snippets.close": {
+      "message": "關閉"
+    },
+    "code-editor.snippets.search": {
+      "message": "搜尋程式碼片段"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "搜尋程式碼片段"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "清除搜尋"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "顯示全部"
+    },
+    "code-editor.snippets.list": {
+      "message": "程式碼片段"
+    },
+    "code-editor.snippets.preview": {
+      "message": "將插入的文字"
+    },
+    "code-editor.snippets.loading": {
+      "message": "正在載入程式碼片段…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "無法載入程式碼片段。請關閉此對話方塊後再試一次。"
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "沒有適合游標位置的程式碼片段。開啟「顯示全部」即可查看所有程式碼片段。"
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "沒有符合搜尋條件的程式碼片段。"
+    },
+    "code-editor.snippets.insert": {
+      "message": "插入"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "取消"
+    },
     "code-editor.include.open": {
       "message": "開啟 {name}"
     },
@@ -3231,6 +3357,12 @@
       "message": "儲存地圖圖示"
     },
     "native-dialog.map-icon.filter": {
+      "message": "PNG 影像"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "儲存地圖影像"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "PNG 影像"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3553,6 +3685,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "小樹"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "複製影像"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "儲存影像…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "已將地圖影像儲存為 {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "無法儲存地圖影像"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "無法複製地圖影像"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "使用小地圖配色的俯視地圖預覽"

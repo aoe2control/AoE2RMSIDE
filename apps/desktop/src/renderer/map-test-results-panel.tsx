@@ -1,12 +1,5 @@
-import {
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-  type MouseEvent as ReactMouseEvent,
-} from 'react';
-import { ChevronRight, Upload } from 'lucide-react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { outputSourceLabel } from '../shared/output-message';
@@ -23,7 +16,8 @@ import {
   type MapTestResultsOrigin,
 } from './map-test-results-model';
 import { useMapTestProgress, type MapTestProgressStore } from './map-test-progress';
-import { OutputMessageText } from './output-panel';
+import { OutputGroupHeader, OutputMessageText, OutputSeverityIcon } from './output-panel';
+import { preventMultiClickSelection, usePlainClick } from './plain-click';
 
 export function MapTestResultsPanel({
   results,
@@ -77,7 +71,7 @@ export function MapTestResultsPanel({
   const showMore = (key: string) =>
     setPages((current) => new Map(current).set(key, (current.get(key) ?? 1) + 1));
   return (
-    <div className="bottom-list-shell test-results-shell">
+    <div className="bottom-list-shell test-results-shell" onMouseDown={preventMultiClickSelection}>
       <div className="test-results-toolbar">
         <p className="test-results-summary" role="status">
           <span className="output-run-result" data-result={summary.status}>
@@ -122,8 +116,10 @@ export function MapTestResultsPanel({
             data-code={notice.code}
             data-severity={notice.severity}
           >
-            <span className="output-time" />
-            <span className="output-source">{outputSourceLabel(notice.source)}</span>
+            <OutputSeverityIcon
+              severity={notice.severity}
+              source={outputSourceLabel(notice.source)}
+            />
             <OutputMessageText message={notice} repeat={1} />
           </div>
         ) : null}
@@ -173,11 +169,6 @@ function CheckGroupView({
   const rowsId = useId();
   const shown = group.entries.slice(0, pages * mapTestRowsPerPage);
   const hidden = group.entries.length - shown.length;
-  const toggleFromHeader = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).closest('button')) return;
-    if (window.getSelection()?.toString()) return;
-    onToggle();
-  };
   return (
     <div
       aria-labelledby={titleId}
@@ -186,50 +177,42 @@ function CheckGroupView({
       data-open={open ? 'true' : 'false'}
       role="group"
     >
-      <div
-        className="output-row output-group-header"
-        data-expandable="true"
-        onClick={toggleFromHeader}
-        title={group.location}
-      >
-        <Button
-          aria-label={t('test-results.results.go-to-check', { location: group.location })}
-          className="output-time problems-position"
-          onClick={onGoToCheck}
-          size="xs"
-          title={t('test-results.results.go-to-check', { location: group.location })}
-          variant="ghost"
-        >
-          {group.position}
-        </Button>
-        <span className="output-source">{t('test-results.results.check-source')}</span>
-        <div className="output-text">
-          <p className="output-headline output-group-title">
-            <Button
-              aria-controls={rowsId}
-              aria-expanded={open}
-              aria-label={
-                open
-                  ? t('test-results.results.hide-check-findings', { line: group.line })
-                  : t('test-results.results.show-check-findings', { line: group.line })
-              }
-              className="output-group-toggle"
-              onClick={onToggle}
-              size="icon-xs"
-              variant="ghost"
-            >
-              <ChevronRight aria-hidden="true" className="output-chevron" />
-            </Button>
-            <span id={titleId}>
-              {group.headline}
-              {' · '}
-              <span className="problems-group-counts">
-                {findingCountsText(group.findings, group.seeds)}
-              </span>
+      <OutputGroupHeader
+        end={
+          <Button
+            aria-label={t('test-results.results.go-to-check', { location: group.location })}
+            className="output-row-end problems-position"
+            onClick={onGoToCheck}
+            size="xs"
+            title={t('test-results.results.go-to-check', { location: group.location })}
+            variant="ghost"
+          >
+            {group.position}
+          </Button>
+        }
+        icon={
+          <OutputSeverityIcon severity="error" source={t('test-results.results.check-source')} />
+        }
+        onToggle={onToggle}
+        open={open}
+        rowsId={rowsId}
+        title={
+          <>
+            <span className="output-group-name">{group.headline}</span>
+            {' · '}
+            <span className="output-group-counts">
+              {findingCountsText(group.findings, group.seeds)}
             </span>
-          </p>
-        </div>
-      </div>
+          </>
+        }
+        titleId={titleId}
+        toggleLabel={
+          open
+            ? t('test-results.results.hide-check-findings', { line: group.line })
+            : t('test-results.results.show-check-findings', { line: group.line })
+        }
+        tooltip={group.location}
+      />
       <div
         aria-label={t('test-results.results.check-findings', { line: group.line })}
         className="output-group-rows"
@@ -277,11 +260,7 @@ function FindingRowView({
 }) {
   const { t } = useI18n();
   const replay = () => onReplay(entry.findingId);
-  const replayFromRow = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).closest('button')) return;
-    if (window.getSelection()?.toString()) return;
-    replay();
-  };
+  const click = usePlainClick(replay);
   const label = t('test-results.results.show-seed', { seed: entry.seed, map: entry.mapName });
   return (
     <div
@@ -290,23 +269,32 @@ function FindingRowView({
       data-repeats-check={repeatsCheck ? 'true' : undefined}
       data-seed={entry.seed}
       data-severity={entry.message.severity}
-      onClick={replayFromRow}
+      onClick={click.onClick}
+      onMouseDown={click.onMouseDown}
       role="listitem"
     >
-      <Button
-        aria-label={label}
-        className="output-time problems-position test-results-seed"
-        onClick={replay}
-        size="xs"
-        title={label}
-        variant="ghost"
-      >
-        {t('test-results.results.seed', { seed: entry.seed })}
-      </Button>
-      <span className="output-source" title={entry.mapPath}>
-        {mapShown ? t('test-results.results.finding-source') : entry.mapName}
-      </span>
+      <OutputSeverityIcon
+        severity={entry.message.severity}
+        source={t('test-results.results.finding-source')}
+      />
       <OutputMessageText message={entry.message} repeat={entry.count} />
+      <span className="output-row-end test-results-finding-end">
+        {mapShown ? null : (
+          <span className="test-results-map" title={entry.mapPath}>
+            {entry.mapName}
+          </span>
+        )}
+        <Button
+          aria-label={label}
+          className="problems-position test-results-seed"
+          onClick={replay}
+          size="xs"
+          title={label}
+          variant="ghost"
+        >
+          {t('test-results.results.seed', { seed: entry.seed })}
+        </Button>
+      </span>
     </div>
   );
 }

@@ -27,6 +27,7 @@
     "src/renderer/components/ui/dropdown-menu.tsx",
     "src/renderer/components/ui/empty.tsx",
     "src/renderer/components/ui/input.tsx",
+    "src/renderer/components/ui/menubar.tsx",
     "src/renderer/components/ui/select.tsx",
     "src/renderer/components/ui/tabs.tsx",
     "src/renderer/components/ui/tooltip.tsx"

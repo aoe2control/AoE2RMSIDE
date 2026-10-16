@@ -966,6 +966,19 @@ impl Server {
             .unwrap_or_default()
     }
 
+    pub(crate) fn rms_snippets(&self, params: &Value) -> RequestResult<Value> {
+        let (uri, position) = request_position(params)?;
+        let document = self.document(uri)?;
+        let offset = byte_offset(&document.source, position)?;
+        let tokens = &document.analysis.cst.tokens;
+        let block = match caret_position(&document.source, tokens, offset).0 {
+            CaretContext::Statement { block, .. } => Some(block),
+            CaretContext::Inside | CaretContext::Operand { .. } => None,
+        };
+        let section = crate::section_at(document, offset);
+        Ok(crate::rms_docs::snippet_list(block.as_ref(), &section))
+    }
+
     pub(crate) fn rms_completion(&self, params: &Value) -> RequestResult<Value> {
         let (uri, position) = request_position(params)?;
         let document = self.document(uri)?;

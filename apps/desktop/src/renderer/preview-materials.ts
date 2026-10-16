@@ -157,6 +157,17 @@ export interface AggregatedSelectionLayer {
   renderOrder: number;
 }
 
+const layerTileIndices = new WeakMap<AggregatedSelectionLayer, readonly number[]>();
+
+export function aggregatedLayerTileIndices(layer: AggregatedSelectionLayer): readonly number[] {
+  let indices = layerTileIndices.get(layer);
+  if (!indices) {
+    indices = [...new Set(layer.instances.map((instance) => instance.tileIndex))];
+    layerTileIndices.set(layer, indices);
+  }
+  return indices;
+}
+
 export function partitionHelperLayers(layers: readonly AggregatedSelectionLayer[]): {
   helperCount: number;
   helperLayers: AggregatedSelectionLayer[];

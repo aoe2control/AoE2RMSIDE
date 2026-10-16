@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Klasör aç…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Dosyalarda bul…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Kurulu haritalara göz at…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Tümünü seç"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Kod parçacığı ekle…"
+    },
     "app-menu.edit.format-document": {
       "message": "Belgeyi biçimlendir"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Üretim aşamalarını anlık göster"
     },
+    "app-menu.view.outline-row": {
+      "message": "Ana hat satırını göster"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Satır içi ipuçlarını göster"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Dil…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Tema…"
     },
     "app-menu.view.theme": {
       "message": "Tema"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} harita} other {{count} harita}}"
+    },
+    "output.run.fact.players": {
+      "message": "Oyuncular"
+    },
+    "output.run.fact.maps": {
+      "message": "Haritalar"
+    },
+    "output.run.fact.duration": {
+      "message": "Süre"
+    },
+    "output.run.fact.result": {
+      "message": "Sonuç"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Harita testi"
     },
+    "settings.theme.app-theme": {
+      "message": "Uygulama teması"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Editör renkleri"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Varsayılan"
+    },
+    "settings.theme.close-label": {
+      "message": "Tema ayarlarını kapat"
+    },
     "settings.language.title": {
       "message": "Dil"
-    },
-    "settings.language.description": {
-      "message": "Menüler, iletişim kutuları ve iletiler bu dili kullanır. Betik komutları, günlükler ve destek paketleri İngilizce kalır."
     },
     "settings.language.label": {
       "message": "Arayüz dili"
     },
     "settings.language.system": {
       "message": "Windows görüntüleme dili ({language})"
-    },
-    "settings.language.close": {
-      "message": "Kapat"
     },
     "settings.language.close-label": {
       "message": "Dil ayarlarını kapat"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Dosya ara"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Dosyalarda bul"
+    },
+    "explorer.search.contents": {
+      "message": "Dosya içeriklerinde ara"
+    },
+    "explorer.search.match-case": {
+      "message": "Büyük/küçük harf eşleştir"
+    },
+    "explorer.search.whole-word": {
+      "message": "Sözcüğün tamamını eşleştir"
+    },
+    "explorer.search.scope": {
+      "message": "{name} klasöründe"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Tüm klasörde ara"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} eşleşme} other {{count} eşleşme}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Bazı dosyalar çok büyük veya çok fazla olduğu için bu aramanın dışında bırakıldı."
+    },
     "explorer.search.clear": {
       "message": "Dosya aramasını temizle"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Dosya Gezgini’nde aç"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Dosyalarda bul…"
     },
     "explorer.context.rename": {
       "message": "Yeniden adlandır"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Görseli kaydet…"
     },
+    "map-icon.copy-image": {
+      "message": "Görseli kopyala"
+    },
+    "map-icon.image-copied": {
+      "message": "Görsel kopyalandı"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Harita simgesi kaydedilemedi"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Harita simgesi kopyalanamadı"
     },
     "map-icon.lightbox.close": {
       "message": "Harita simgesi önizlemesini kapat"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "RMS kaynak editörü"
     },
+    "code-editor.outline.label": {
+      "message": "Ana hat"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, satır {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Bölüme git"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Bloğa git"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "İşleve git"
+    },
     "code-editor.tabs.label": {
       "message": "Açık dosyalar"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Dahil edilen dosyayı aç"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Kod parçacığı ekle…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Kod parçacığı ekle"
+    },
+    "code-editor.snippets.close": {
+      "message": "Kapat"
+    },
+    "code-editor.snippets.search": {
+      "message": "Kod parçacığı ara"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Kod parçacığı ara"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Aramayı temizle"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Tümünü göster"
+    },
+    "code-editor.snippets.list": {
+      "message": "Kod parçacıkları"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Eklenecek metin"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Kod parçacıkları yükleniyor…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Kod parçacıkları yüklenemedi. Bu pencereyi kapatıp yeniden deneyin."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "İmlecin bulunduğu yere uyan kod parçacığı yok. Tüm kod parçacıklarını görmek için Tümünü göster seçeneğini açın."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Bu aramayla eşleşen kod parçacığı yok."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Ekle"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "İptal"
+    },
     "code-editor.include.open": {
       "message": "{name} dosyasını aç"
     },
@@ -3223,6 +3349,12 @@
       "message": "Harita simgesini kaydet"
     },
     "native-dialog.map-icon.filter": {
+      "message": "PNG görseli"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Harita görselini kaydet"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "PNG görseli"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Küçük ağaçlar"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Görseli kopyala"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Görseli kaydet…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Harita görseli {name} olarak kaydedildi"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Harita görseli kaydedilemedi"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Harita görseli kopyalanamadı"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "küçük harita renklerinde üstten harita önizlemesi"

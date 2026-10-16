@@ -26,7 +26,7 @@ const severityLabels: Record<
   },
 };
 
-const severityIcons = { error: CircleX, warning: TriangleAlert, info: Info } as const;
+export const severityIcons = { error: CircleX, warning: TriangleAlert, info: Info } as const;
 
 export function SeverityFilterToggles({
   counts,

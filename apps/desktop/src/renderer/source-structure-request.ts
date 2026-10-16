@@ -59,10 +59,10 @@ export class SourceStructureRequest<TStructure> {
       return;
     }
     const delay = this.options.delays[this.attempt];
-    this.attempt += 1;
     if (delay === undefined) return;
     this.timer = this.options.setTimer(() => {
       this.timer = null;
+      this.attempt += 1;
       this.poke();
     }, delay);
   }

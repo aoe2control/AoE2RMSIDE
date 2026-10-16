@@ -47,6 +47,9 @@
     "app-menu.file.open-folder": {
       "message": "फ़ोल्डर खोलें…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "फ़ाइलों में खोजें…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "इंस्टॉल किए गए मानचित्र देखें…"
     },
@@ -116,6 +119,9 @@
     "app-menu.edit.select-all": {
       "message": "सभी चुनें"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "स्निपेट डालें…"
+    },
     "app-menu.edit.format-document": {
       "message": "दस्तावेज़ फ़ॉर्मैट करें"
     },
@@ -140,6 +146,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "निर्माण के चरण साथ-साथ दिखाएँ"
     },
+    "app-menu.view.outline-row": {
+      "message": "रूपरेखा पंक्ति दिखाएँ"
+    },
     "app-menu.view.inlay-hints": {
       "message": "इनले संकेत दिखाएँ"
     },
@@ -163,6 +172,9 @@
     },
     "app-menu.view.language": {
       "message": "भाषा…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "थीम…"
     },
     "app-menu.view.theme": {
       "message": "थीम"
@@ -403,6 +415,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} मानचित्र} other {{count} मानचित्र}}"
+    },
+    "output.run.fact.players": {
+      "message": "खिलाड़ी"
+    },
+    "output.run.fact.maps": {
+      "message": "मानचित्र"
+    },
+    "output.run.fact.duration": {
+      "message": "अवधि"
+    },
+    "output.run.fact.result": {
+      "message": "नतीजा"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -923,20 +947,26 @@
     "run-menu.map-test-progress.label": {
       "message": "मानचित्र परीक्षण"
     },
+    "settings.theme.app-theme": {
+      "message": "ऐप की थीम"
+    },
+    "settings.theme.editor-colors": {
+      "message": "संपादक के रंग"
+    },
+    "settings.theme.scheme.default": {
+      "message": "डिफ़ॉल्ट"
+    },
+    "settings.theme.close-label": {
+      "message": "थीम की सेटिंग्स बंद करें"
+    },
     "settings.language.title": {
       "message": "भाषा"
-    },
-    "settings.language.description": {
-      "message": "मेनू, संवाद और संदेश इस भाषा में दिखते हैं। स्क्रिप्ट कमांड, लॉग और सहायता बंडल अंग्रेज़ी में रहते हैं।"
     },
     "settings.language.label": {
       "message": "इंटरफ़ेस की भाषा"
     },
     "settings.language.system": {
       "message": "Windows की प्रदर्शन भाषा ({language})"
-    },
-    "settings.language.close": {
-      "message": "बंद करें"
     },
     "settings.language.close-label": {
       "message": "भाषा की सेटिंग्स बंद करें"
@@ -2093,6 +2123,30 @@
     "explorer.search.placeholder": {
       "message": "फ़ाइलें खोजें"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "फ़ाइलों में खोजें"
+    },
+    "explorer.search.contents": {
+      "message": "फ़ाइलों की सामग्री में खोजें"
+    },
+    "explorer.search.match-case": {
+      "message": "बड़े-छोटे अक्षर मिलाएँ"
+    },
+    "explorer.search.whole-word": {
+      "message": "पूरा शब्द"
+    },
+    "explorer.search.scope": {
+      "message": "{name} में"
+    },
+    "explorer.search.scope.remove": {
+      "message": "पूरे फ़ोल्डर में खोजें"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} बार मिला} other {{count} बार मिला}}"
+    },
+    "explorer.search.truncated": {
+      "message": "कुछ फ़ाइलें इस खोज में शामिल नहीं की गईं, क्योंकि वे बहुत बड़ी हैं या बहुत अधिक हैं।"
+    },
     "explorer.search.clear": {
       "message": "फ़ाइल की खोज साफ़ करें"
     },
@@ -2134,6 +2188,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "एक्सप्लोरर में खोलें"
+    },
+    "explorer.context.find-in-files": {
+      "message": "फ़ाइलों में खोजें…"
     },
     "explorer.context.rename": {
       "message": "नाम बदलें"
@@ -2582,6 +2639,12 @@
     "map-icon.save-image.tooltip": {
       "message": "चित्र सहेजें…"
     },
+    "map-icon.copy-image": {
+      "message": "चित्र कॉपी करें"
+    },
+    "map-icon.image-copied": {
+      "message": "चित्र कॉपी हुआ"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2662,6 +2725,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "मानचित्र का आइकन सहेजा नहीं जा सका"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "मानचित्र का आइकन कॉपी नहीं किया जा सका"
     },
     "map-icon.lightbox.close": {
       "message": "मानचित्र के आइकन का पूर्वावलोकन बंद करें"
@@ -2933,6 +2999,21 @@
     "code-editor.panel.label": {
       "message": "RMS स्रोत संपादक"
     },
+    "code-editor.outline.label": {
+      "message": "रूपरेखा"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, पंक्ति {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "अनुभाग पर जाएँ"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "ब्लॉक पर जाएँ"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "फ़ंक्शन पर जाएँ"
+    },
     "code-editor.tabs.label": {
       "message": "खुली फ़ाइलें"
     },
@@ -3116,6 +3197,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "शामिल फ़ाइल खोलें"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "स्निपेट डालें…"
+    },
+    "code-editor.snippets.title": {
+      "message": "स्निपेट डालें"
+    },
+    "code-editor.snippets.close": {
+      "message": "बंद करें"
+    },
+    "code-editor.snippets.search": {
+      "message": "स्निपेट खोजें"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "स्निपेट खोजें"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "खोज साफ़ करें"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "सभी दिखाएँ"
+    },
+    "code-editor.snippets.list": {
+      "message": "स्निपेट"
+    },
+    "code-editor.snippets.preview": {
+      "message": "डाला जाने वाला पाठ"
+    },
+    "code-editor.snippets.loading": {
+      "message": "स्निपेट लोड हो रहे हैं…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "स्निपेट लोड नहीं किए जा सके। यह संवाद बंद करें और फिर से कोशिश करें।"
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "कर्सर की जगह के लिए कोई स्निपेट उपयुक्त नहीं है। सभी स्निपेट देखने के लिए ‘सभी दिखाएँ’ चालू करें।"
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "कोई स्निपेट इस खोज से मेल नहीं खाता।"
+    },
+    "code-editor.snippets.insert": {
+      "message": "डालें"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "रद्द करें"
+    },
     "code-editor.include.open": {
       "message": "{name} खोलें"
     },
@@ -3231,6 +3357,12 @@
       "message": "मानचित्र का आइकन सहेजें"
     },
     "native-dialog.map-icon.filter": {
+      "message": "PNG चित्र"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "मानचित्र का चित्र सहेजें"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "PNG चित्र"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3553,6 +3685,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "छोटे पेड़"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "चित्र कॉपी करें"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "चित्र सहेजें…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "मानचित्र का चित्र {name} के रूप में सहेजा गया"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "मानचित्र का चित्र सहेजा नहीं जा सका"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "मानचित्र का चित्र कॉपी नहीं किया जा सका"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "मिनिमैप रंगों में ऊपर से मानचित्र का पूर्वावलोकन"

@@ -1,5 +1,15 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
+import {
+  isApplicationMenuKey,
+  validateApplicationMenuModel,
+} from '../shared/application-menu-model';
 import { isExternalLinkTarget } from '../shared/external-links';
+import {
+  validateClipboardImageRequest,
+  validatePreviewImageSaveRequest,
+  type ClipboardImageRequest,
+  type PreviewImageSaveRequest,
+} from '../shared/image-export';
 import { isUpdateVersion, validateUpdateState, type UpdateState } from '../shared/update';
 import {
   ipcChannels,
@@ -9,8 +19,7 @@ import {
   validateMapIconRenderInput,
   type MapIconRenderInput,
   type ApplicationMenuAction,
-  type ApplicationMenuName,
-  type ApplicationMenuTriggerBounds,
+  type ApplicationMenuModel,
   type ControlConnectPurpose,
   type ControlLiveSynchronizationRequest,
   type ControlLiveWorkflowEvent,
@@ -44,6 +53,7 @@ import {
   type GeneratedMapIconSaveRequest,
   type ThemePreference,
   type WorkspaceExternalChange,
+  type WorkspaceContentSearchRequest,
   type WorkspaceCreateRequest,
   type DefinitionFileGenerateRequest,
   type DefinitionFilePrepareRequest,
@@ -61,6 +71,7 @@ import {
   validateWorkspaceTreeChange,
   type WorkspaceTreeChange,
 } from '../shared/workspace-tree-change';
+import { validateWorkspaceContentSearchRequest } from '../shared/workspace-content-search';
 import {
   isLanguagePreference,
   validateLocaleState,
@@ -107,44 +118,9 @@ function assertNativeName(value: NativeProcessName): NativeProcessName {
   return value;
 }
 
-function assertApplicationMenuName(value: ApplicationMenuName): ApplicationMenuName {
-  if (value !== 'file' && value !== 'edit' && value !== 'view' && value !== 'help') {
-    throw new Error('invalid application menu name');
-  }
-  return value;
-}
-
 function assertExternalLinkTarget(value: ExternalLinkTarget): ExternalLinkTarget {
   if (!isExternalLinkTarget(value)) throw new Error('invalid external link target');
   return value;
-}
-
-function assertMenuCoordinate(value: number): number {
-  if (!Number.isFinite(value) || value < 0 || value > 16_384) {
-    throw new Error('invalid application menu coordinate');
-  }
-  return Math.round(value);
-}
-
-function assertApplicationMenuBounds(
-  value: ApplicationMenuTriggerBounds[],
-): ApplicationMenuTriggerBounds[] {
-  if (!Array.isArray(value) || value.length !== 4) {
-    throw new Error('application menu bounds must contain four entries');
-  }
-  const names = new Set<ApplicationMenuName>();
-  const bounds = value.map((entry) => {
-    const name = assertApplicationMenuName(entry?.name);
-    if (names.has(name)) throw new Error('application menu bounds contain duplicate names');
-    names.add(name);
-    const x = assertMenuCoordinate(entry.x);
-    const y = assertMenuCoordinate(entry.y);
-    const width = assertMenuCoordinate(entry.width);
-    const height = assertMenuCoordinate(entry.height);
-    if (width < 1 || height < 1) throw new Error('application menu bounds must be non-empty');
-    return Object.freeze({ name, x, y, width, height });
-  });
-  return Object.freeze(bounds) as unknown as ApplicationMenuTriggerBounds[];
 }
 
 function assertThemePreference(value: ThemePreference): ThemePreference {
@@ -178,6 +154,7 @@ const languageServerRequestMethods = new Set<LanguageServerRequestMethod>([
   'textDocument/inlayHint',
   'completionItem/resolve',
   'rms/semanticIdentity',
+  'rms/snippets',
   'rms/validateSourceCatalogIdentity',
 ]);
 
@@ -1133,6 +1110,10 @@ const api: RmsideDesktopApi = Object.freeze({
       ipcChannels.mapIconGeneratedSave,
       validateGeneratedMapIconSaveRequest(request),
     ),
+  copyImageToClipboard: (request: ClipboardImageRequest) =>
+    ipcRenderer.invoke(ipcChannels.clipboardWriteImage, validateClipboardImageRequest(request)),
+  savePreviewImage: (request: PreviewImageSaveRequest) =>
+    ipcRenderer.invoke(ipcChannels.previewImageSave, validatePreviewImageSaveRequest(request)),
   getMapIconRenderInput: async () => ({
     ...validateMapIconRenderInput(await ipcRenderer.invoke(ipcChannels.mapIconRenderInputGet)),
   }),
@@ -1221,13 +1202,25 @@ const api: RmsideDesktopApi = Object.freeze({
     ipcRenderer.on(ipcChannels.languageServerEvent, handler);
     return () => ipcRenderer.removeListener(ipcChannels.languageServerEvent, handler);
   },
-  openApplicationMenu: (name: ApplicationMenuName, x: number, y: number) =>
-    ipcRenderer.invoke(
-      ipcChannels.openApplicationMenu,
-      assertApplicationMenuName(name),
-      assertMenuCoordinate(x),
-      assertMenuCoordinate(y),
-    ),
+  getApplicationMenuModel: async (): Promise<ApplicationMenuModel> => {
+    const model = validateApplicationMenuModel(
+      await ipcRenderer.invoke(ipcChannels.applicationMenuModel),
+    );
+    if (!model) throw new Error('application menu model is invalid');
+    return model;
+  },
+  onApplicationMenuModelChange: (listener: (model: ApplicationMenuModel) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, value: unknown) => {
+      const model = validateApplicationMenuModel(value);
+      if (model) listener(model);
+    };
+    ipcRenderer.on(ipcChannels.applicationMenuModelChanged, handler);
+    return () => ipcRenderer.removeListener(ipcChannels.applicationMenuModelChanged, handler);
+  },
+  activateApplicationMenuItem: (key: string) => {
+    if (!isApplicationMenuKey(key)) throw new Error('application menu item key is invalid');
+    return ipcRenderer.invoke(ipcChannels.activateApplicationMenuItem, key);
+  },
   openExternalLink: (target: ExternalLinkTarget) =>
     ipcRenderer.invoke(ipcChannels.openExternalLink, assertExternalLinkTarget(target)),
   pasteIntoEditor: () => ipcRenderer.invoke(ipcChannels.editorPaste),
@@ -1236,14 +1229,14 @@ const api: RmsideDesktopApi = Object.freeze({
       ipcChannels.openDocumentLink,
       assertBoundedString(url, 'document link', 2048),
     ),
-  syncApplicationMenuBounds: (bounds: ApplicationMenuTriggerBounds[]) =>
-    ipcRenderer.invoke(ipcChannels.syncApplicationMenuBounds, assertApplicationMenuBounds(bounds)),
   syncMapTestResultsVisibility: (visible: boolean) =>
     ipcRenderer.invoke(ipcChannels.syncMapTestResultsVisibility, assertBoolean(visible)),
   syncMapTestPreviewShown: (shown: boolean) =>
     ipcRenderer.invoke(ipcChannels.syncMapTestPreviewShown, assertBoolean(shown)),
   syncModalSurfaceOpen: (open: boolean) =>
     ipcRenderer.invoke(ipcChannels.syncModalSurfaceOpen, assertBoolean(open)),
+  syncInsertSnippetAvailable: (available: boolean) =>
+    ipcRenderer.invoke(ipcChannels.syncInsertSnippetAvailable, assertBoolean(available)),
   syncNativeTheme: (preference: ThemePreference, resolved: ResolvedTheme) =>
     ipcRenderer.invoke(
       ipcChannels.syncNativeTheme,
@@ -1311,6 +1304,11 @@ const api: RmsideDesktopApi = Object.freeze({
       assertBoundedString(query, 'workspace search query', 256),
     ),
   cancelWorkspaceSearch: () => ipcRenderer.invoke(ipcChannels.workspaceCancelSearch),
+  searchWorkspaceContents: (request: WorkspaceContentSearchRequest) =>
+    ipcRenderer.invoke(
+      ipcChannels.workspaceSearchContents,
+      validateWorkspaceContentSearchRequest(request),
+    ),
   closeWorkspace: () => ipcRenderer.invoke(ipcChannels.workspaceClose),
   createWorkspaceEntry: (request: WorkspaceCreateRequest) =>
     ipcRenderer.invoke(ipcChannels.workspaceCreate, assertCreateRequest(request)),

@@ -47,6 +47,9 @@
     "app-menu.file.open-folder": {
       "message": "フォルダーを開く…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "ファイル内を検索…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "インストール済みマップを参照…"
     },
@@ -116,6 +119,9 @@
     "app-menu.edit.select-all": {
       "message": "すべて選択"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "スニペットを挿入…"
+    },
     "app-menu.edit.format-document": {
       "message": "ドキュメントを整形"
     },
@@ -140,6 +146,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "生成途中のマップを表示"
     },
+    "app-menu.view.outline-row": {
+      "message": "アウトライン行を表示"
+    },
     "app-menu.view.inlay-hints": {
       "message": "インレイヒントを表示"
     },
@@ -163,6 +172,9 @@
     },
     "app-menu.view.language": {
       "message": "言語…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "テーマ…"
     },
     "app-menu.view.theme": {
       "message": "テーマ"
@@ -403,6 +415,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, other {マップ {count} 個}}"
+    },
+    "output.run.fact.players": {
+      "message": "プレイヤー"
+    },
+    "output.run.fact.maps": {
+      "message": "マップ"
+    },
+    "output.run.fact.duration": {
+      "message": "所要時間"
+    },
+    "output.run.fact.result": {
+      "message": "結果"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ミリ秒"
@@ -923,20 +947,26 @@
     "run-menu.map-test-progress.label": {
       "message": "マップテスト"
     },
+    "settings.theme.app-theme": {
+      "message": "アプリのテーマ"
+    },
+    "settings.theme.editor-colors": {
+      "message": "エディターの配色"
+    },
+    "settings.theme.scheme.default": {
+      "message": "既定"
+    },
+    "settings.theme.close-label": {
+      "message": "テーマ設定を閉じる"
+    },
     "settings.language.title": {
       "message": "言語"
-    },
-    "settings.language.description": {
-      "message": "メニュー、ダイアログ、メッセージにこの言語を使用します。スクリプトのコマンド、ログ、サポート用データは英語のままです。"
     },
     "settings.language.label": {
       "message": "表示言語"
     },
     "settings.language.system": {
       "message": "Windows の表示言語（{language}）"
-    },
-    "settings.language.close": {
-      "message": "閉じる"
     },
     "settings.language.close-label": {
       "message": "言語設定を閉じる"
@@ -2093,6 +2123,30 @@
     "explorer.search.placeholder": {
       "message": "ファイルを検索"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "ファイル内を検索"
+    },
+    "explorer.search.contents": {
+      "message": "ファイルの内容を検索"
+    },
+    "explorer.search.match-case": {
+      "message": "大文字と小文字を区別する"
+    },
+    "explorer.search.whole-word": {
+      "message": "単語単位で検索する"
+    },
+    "explorer.search.scope": {
+      "message": "{name} 内"
+    },
+    "explorer.search.scope.remove": {
+      "message": "フォルダー全体を検索"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, other {{count} 件の一致}}"
+    },
+    "explorer.search.truncated": {
+      "message": "大きすぎるか数が多すぎるため、この検索から除外されたファイルがあります。"
+    },
     "explorer.search.clear": {
       "message": "ファイルの検索を消去"
     },
@@ -2134,6 +2188,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "エクスプローラーで開く"
+    },
+    "explorer.context.find-in-files": {
+      "message": "ファイル内を検索…"
     },
     "explorer.context.rename": {
       "message": "名前を変更"
@@ -2582,6 +2639,12 @@
     "map-icon.save-image.tooltip": {
       "message": "画像を保存…"
     },
+    "map-icon.copy-image": {
+      "message": "画像をコピー"
+    },
+    "map-icon.image-copied": {
+      "message": "画像をコピーしました"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2662,6 +2725,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "マップアイコンを保存できませんでした"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "マップアイコンをコピーできませんでした"
     },
     "map-icon.lightbox.close": {
       "message": "マップアイコンのプレビューを閉じる"
@@ -2933,6 +2999,21 @@
     "code-editor.panel.label": {
       "message": "RMS ソースエディター"
     },
+    "code-editor.outline.label": {
+      "message": "アウトライン"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}、{line} 行目"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "セクションへ移動"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "ブロックへ移動"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "関数へ移動"
+    },
     "code-editor.tabs.label": {
       "message": "開いているファイル"
     },
@@ -3116,6 +3197,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "インクルード先のファイルを開く"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "スニペットを挿入…"
+    },
+    "code-editor.snippets.title": {
+      "message": "スニペットを挿入"
+    },
+    "code-editor.snippets.close": {
+      "message": "閉じる"
+    },
+    "code-editor.snippets.search": {
+      "message": "スニペットを検索"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "スニペットを検索"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "検索を消去"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "すべて表示"
+    },
+    "code-editor.snippets.list": {
+      "message": "スニペット"
+    },
+    "code-editor.snippets.preview": {
+      "message": "挿入されるテキスト"
+    },
+    "code-editor.snippets.loading": {
+      "message": "スニペットを読み込み中…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "スニペットを読み込めませんでした。このダイアログを閉じて、もう一度お試しください。"
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "カーソル位置に合うスニペットはありません。すべてのスニペットを見るには「すべて表示」をオンにしてください。"
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "検索に一致するスニペットはありません。"
+    },
+    "code-editor.snippets.insert": {
+      "message": "挿入"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "キャンセル"
+    },
     "code-editor.include.open": {
       "message": "{name} を開く"
     },
@@ -3231,6 +3357,12 @@
       "message": "マップアイコンを保存"
     },
     "native-dialog.map-icon.filter": {
+      "message": "PNG 画像"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "マップ画像を保存"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "PNG 画像"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3553,6 +3685,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "小さな木"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "画像をコピー"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "画像を保存…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "マップ画像を {name} として保存しました"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "マップ画像を保存できませんでした"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "マップ画像をコピーできませんでした"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "ミニマップ色で真上から見たマップのプレビュー"

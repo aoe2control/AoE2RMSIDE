@@ -46,6 +46,34 @@ export const licenseOverrides = Object.freeze({
   }),
 });
 
+export const adaptedColorPalettes = Object.freeze([
+  Object.freeze({
+    name: 'Solarized',
+    source: 'https://github.com/altercation/solarized',
+    copyright: ['Copyright (c) 2011 Ethan Schoonover'],
+  }),
+  Object.freeze({
+    name: 'Catppuccin (Latte, Mocha)',
+    source: 'https://github.com/catppuccin/catppuccin',
+    copyright: ['Copyright (c) 2021 Catppuccin'],
+  }),
+  Object.freeze({
+    name: 'Gruvbox',
+    source: 'https://github.com/morhetz/gruvbox',
+    copyright: ['Copyright (c) 2012 Pavel Pertsev'],
+  }),
+  Object.freeze({
+    name: 'Ayu (Light, Dark)',
+    source: 'https://github.com/ayu-theme/ayu-colors',
+    copyright: ['Copyright (c) 2016 Ike Ku'],
+  }),
+  Object.freeze({
+    name: 'One Light and One Dark (Atom one-light-syntax, one-dark-syntax)',
+    source: 'https://github.com/atom/atom/tree/master/packages',
+    copyright: ['Copyright (c) 2014 GitHub Inc.'],
+  }),
+]);
+
 export function licenseAlternatives(expression) {
   if (typeof expression !== 'string' || expression.trim() === '') {
     throw new Error('no license is declared');
@@ -433,6 +461,25 @@ export function noticesDocument({ natives, rust, npm, rustStandardLibrary }) {
   }
   const heading = 'Application (bundled JavaScript, styles, and fonts)';
   lines.push(heading, '-'.repeat(heading.length), '', ...listing(npm));
+  const paletteHeading = 'Code editor color schemes (adapted color palettes)';
+  lines.push(paletteHeading, '-'.repeat(paletteHeading.length), '');
+  for (const palette of adaptedColorPalettes) {
+    const text = filledLicenseText('MIT', palette.copyright);
+    if (text === undefined) {
+      failures.push(`${palette.name}: no standard MIT text`);
+      continue;
+    }
+    const entry = reference({ title: 'MIT', text });
+    entry.users.push(`${palette.name} color palette`);
+    lines.push(
+      `${palette.name} color palette`,
+      '  License: MIT',
+      `  Source: ${palette.source}`,
+      '  Note: Colors adapted for contrast and mapped onto the token roles of the code editor.',
+      `  License texts: [${entry.number}]`,
+      '',
+    );
+  }
   if (failures.length > 0) {
     throw new Error(
       `third-party license review failed:\n- ${failures.join('\n- ')}\nAdd a reviewed license text in tools/third-party-notices.mjs or replace the dependency.`,

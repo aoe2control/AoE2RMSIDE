@@ -1,5 +1,6 @@
 import { outputNote } from '../shared/output-message';
 import {
+  memo,
   useCallback,
   useEffect,
   useId,
@@ -8,7 +9,9 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type Dispatch,
   type KeyboardEvent as ReactKeyboardEvent,
+  type SetStateAction,
   type ReactNode,
   type Ref,
 } from 'react';
@@ -40,8 +43,9 @@ import {
   Texture,
   type ContainerChild,
 } from 'pixi.js';
-import { Grid3x3, MousePointer2, Scan, TestTube2, TreePine } from 'lucide-react';
+import { Copy, Grid3x3, MousePointer2, Save, Scan, TestTube2, TreePine } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ContextMenu, ContextMenuContent, ContextMenuItem } from '@/components/ui/context-menu';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { t as translate } from '../shared/i18n/translator';
 import appIconUrl from '../../../../assets/original/branding/aoe2rmside-icon-512.png';
@@ -55,6 +59,7 @@ import type {
 import {
   flatPreviewLook,
   nextPreviewLook,
+  previewColourLayerLook,
   shownPreviewLook,
   type PreviewLook,
   type PreviewPerspective,
@@ -65,14 +70,25 @@ import {
   type TextureLookColors,
 } from '../shared/texture-palette';
 import { type AnimatedIconHandle, useAnimatedIconHover } from './animated-icon';
+import { previewImageFileName } from '../shared/image-export';
+import { previewToolTooltipRoot, previewToolTooltipTrigger } from './preview-tool-tooltip';
+import {
+  capturePreviewImage,
+  moveRightPress,
+  rightClickOpensMenu,
+  type RightPress,
+} from './preview-image';
 import { createPortal, flushSync } from 'react-dom';
 import { type GameArtCliffBandLayer, cliffLegs } from './game-art-cliffs';
 import {
   createGameArtPresentationState,
   destroyGameArtLayers,
+  framedGameArtTerrain,
+  gameArtPictureKey,
   gameArtStandIn,
   gameArtMarkerSkips,
   handOverGameArtPicture,
+  keepsGameArtPicture,
   setGameArtKindVisibility,
   setGameArtTreeScale,
   syncGameArtLayers,
@@ -116,6 +132,8 @@ import {
 } from './preview-connection-routes';
 import { gameArtPreviewMap, mapTestPreviewLook } from './map-test-preview';
 import { RunningIndicator } from './running-indicator';
+import { previewTerrainCacheKeys } from './preview-terrain-cache-key';
+import { useDelayedFlag } from './use-delayed-flag';
 import { useI18n } from './i18n';
 import {
   useGameArt,
@@ -150,6 +168,11 @@ import {
   boundarySubpaths,
   type BoundaryMotion,
   cssDurationMilliseconds,
+  boundaryEdgePixelsPerTile,
+  boundaryEntranceMargin,
+  cssNumber,
+  cssPixels,
+  expandBoundaryLoop,
   insetBoundaryFrame,
   nextBoundaryMotion,
   visibleMapBoundary,
@@ -235,6 +258,7 @@ import {
   type VisibleChunk,
 } from './top-down-preview';
 import {
+  aggregatedLayerTileIndices,
   aggregateSelectionLayers,
   aggregateTileIndexLayers,
   cliffMaterial,
@@ -272,6 +296,7 @@ import {
   usePreviewOverlayFades,
   type OverlayFade,
 } from './preview-overlay-fade';
+import { highlightTileRuns } from './preview-highlight-runs';
 import { applyPreviewResizeAnchor, previewResizeAnchor } from './preview-resize-anchor';
 import { drawObjects, objectHeightMapLight } from './preview-object-markers';
 import { chunkSpriteMatrix } from './game-art-terrain';
@@ -309,6 +334,7 @@ import {
   gameTexturesLiveStages,
   generationBlurShown,
   keepLastLiveStage,
+  lookPendingDelayMilliseconds,
   liveStageLook,
   shownPicture,
   type ShownPicture,
@@ -528,8 +554,9 @@ function PreviewOverlayButton({
 }) {
   const { animationHandlers, iconRef } = useAnimatedIconHover();
   return (
-    <Tooltip>
+    <Tooltip {...previewToolTooltipRoot}>
       <TooltipTrigger
+        {...previewToolTooltipTrigger}
         render={
           <Button
             {...animationHandlers}
@@ -561,8 +588,9 @@ function PreviewElevationModeButton({
   const current = elevationModeButtons.find(({ key }) => key === mode)!;
   const label = t(current.labelId);
   return (
-    <Tooltip>
+    <Tooltip {...previewToolTooltipRoot}>
       <TooltipTrigger
+        {...previewToolTooltipTrigger}
         render={
           <Button
             {...animationHandlers}
@@ -595,8 +623,9 @@ function PreviewObjectsModeButton({
   const label = t(current.labelId);
   const note = mode === 'minimap' ? t('preview-panel.tool.objects.minimap.note') : null;
   return (
-    <Tooltip>
+    <Tooltip {...previewToolTooltipRoot}>
       <TooltipTrigger
+        {...previewToolTooltipTrigger}
         render={
           <Button
             {...animationHandlers}
@@ -637,8 +666,9 @@ function PreviewConnectionOverlayButton({
   const noteId = useId();
   return (
     <>
-      <Tooltip>
+      <Tooltip {...previewToolTooltipRoot}>
         <TooltipTrigger
+          {...previewToolTooltipTrigger}
           render={
             <Button
               {...animationHandlers}
@@ -689,8 +719,9 @@ function PreviewLookButton({
   const locked = lockedReason !== null && !pending;
   return (
     <>
-      <Tooltip>
+      <Tooltip {...previewToolTooltipRoot}>
         <TooltipTrigger
+          {...previewToolTooltipTrigger}
           render={
             <Button
               {...(locked ? {} : animationHandlers)}
@@ -702,7 +733,7 @@ function PreviewLookButton({
               data-locked={locked || undefined}
               data-pending={pending || undefined}
               disabled={pending || locked}
-              focusableWhenDisabled={locked}
+              focusableWhenDisabled={pending || locked}
               onClick={onCycle}
               size="icon-compact"
               variant="secondary"
@@ -740,8 +771,9 @@ function PreviewProjectionModeButton({
   const current = projectionModeButtons.find(({ key }) => key === mode)!;
   const label = t(current.labelId);
   return (
-    <Tooltip>
+    <Tooltip {...previewToolTooltipRoot}>
       <TooltipTrigger
+        {...previewToolTooltipTrigger}
         render={
           <Button
             {...animationHandlers}
@@ -786,6 +818,7 @@ interface TerrainChunkCache {
   geometryBuilds: number;
   heightOverlayColor: number;
   key: string;
+  sceneKey: string;
   minimapPalette: SelectedMinimapPalette | null;
   scene: TopDownScene;
   terrainColorSources: TerrainColorSources;
@@ -854,7 +887,14 @@ export function PreviewPanel() {
   const selectionOutline = useRef<Graphics | null>(null);
   const sourceHighlightOutline = useRef<Graphics | null>(null);
   const legendHoverOutline = useRef<Graphics | null>(null);
-  const legendHoverTileIndices = useRef<number[]>([]);
+  const legendHoverTileIndices = useRef<readonly number[]>([]);
+  const captureLayers = useRef<{
+    outline: Container;
+    selection: Graphics;
+    others: readonly Container[];
+  } | null>(null);
+  const rightPress = useRef<RightPress | null>(null);
+  const openImageMenu = useRef<(point: { x: number; y: number }) => void>(() => {});
   const overlayFades = usePreviewOverlayFades(renderScheduler, host);
   const shownPictureNow = useRef<() => ShownPicture>(() => ({ source: 'none', raised: null }));
   const shownRaisedSurface = useRef<() => ElevationSurface | null>(() => null);
@@ -875,10 +915,12 @@ export function PreviewPanel() {
     outline: null,
     strokeWidth: 4,
     shown: false,
+    marginFraction: 0,
     surface: () => null,
   });
   const selectionDimensions = useRef<string | null>(null);
   const terrainChunkCache = useRef<TerrainChunkCache | null>(null);
+  const keptTerrainCache = useRef<TerrainChunkCache | null>(null);
   const candidateLayer = useRef<PreviewCandidateLayer | null>(null);
   const stashedCamera = useRef<{
     dimensions: string;
@@ -1193,15 +1235,23 @@ export function PreviewPanel() {
       gameArtPresentedKey !== gameArtTerrainView.key);
   const shownLook = shownPreviewLook(drawnLook, gameArt.offered);
   const flatLook = flatPreviewLook(shownLook, gameArt.expected);
-  const textureColorsShown: TextureLookColors | null =
-    flatLook === 'texture-colors' && !candidateCoversScene && map?.texturePalette
+  const colourLayerColors: TextureLookColors | null =
+    previewColourLayerLook(shownLook) === 'texture-colors' &&
+    !candidateCoversScene &&
+    map?.texturePalette
       ? textureLookColors(map.texturePalette)
       : null;
+  const textureColorsShown: TextureLookColors | null =
+    flatLook === 'texture-colors' ? colourLayerColors : null;
+  const gameTexturesShown = gameArt.active && !gameArtPending;
+  const shownColourColors: TextureLookColors | null =
+    textureColorsShown ?? (gameArtExpected && !gameTexturesShown ? colourLayerColors : null);
   const lookPending = gameArtPending;
+  const lookPendingShown = useDelayedFlag(lookPending, lookPendingDelayMilliseconds);
   const minimapObjectsShown = overlays.objects === 'minimap';
-  const cliffLook: PreviewLook = gameArt.active
+  const cliffLook: PreviewLook = gameTexturesShown
     ? 'game-textures'
-    : textureColorsShown
+    : shownColourColors
       ? 'texture-colors'
       : 'minimap';
   const markerObjectColors = candidateCoversScene
@@ -1228,11 +1278,11 @@ export function PreviewPanel() {
         ? {
             ...presentedMap,
             look: cliffLook,
-            ...(textureColorsShown
+            ...(shownColourColors
               ? {
                   lookColors: minimapObjectsLegendColors
-                    ? { ...textureColorsShown, gaiaObjects: minimapObjectsLegendColors }
-                    : textureColorsShown,
+                    ? { ...shownColourColors, gaiaObjects: minimapObjectsLegendColors }
+                    : shownColourColors,
                 }
               : legendObjectColors
                 ? {
@@ -1245,7 +1295,7 @@ export function PreviewPanel() {
                 : {}),
           }
         : presentedMap,
-    [cliffLook, legendObjectColors, minimapObjectsLegendColors, presentedMap, textureColorsShown],
+    [cliffLook, legendObjectColors, minimapObjectsLegendColors, presentedMap, shownColourColors],
   );
   const sourceHighlightTileIndices = useMemo(
     () =>
@@ -1286,21 +1336,14 @@ export function PreviewPanel() {
     if (canvas) {
       canvas.setAttribute(
         'aria-label',
-        previewCanvasLabel(
-          projectionPerspective(projectionMode),
-          gameArt.active && !gameArtPending
-            ? 'game-textures'
-            : textureColorsShown
-              ? 'texture-colors'
-              : 'minimap',
-        ),
+        previewCanvasLabel(projectionPerspective(projectionMode), cliffLook),
       );
       canvas.setAttribute(
         'aria-roledescription',
         translate('preview-panel.canvas.role-description'),
       );
     }
-  }, [gameArt.active, gameArtPending, projectionMode, pixiReady, textureColorsShown, translator]);
+  }, [cliffLook, projectionMode, pixiReady, translator]);
 
   const stopCameraAnimation = useCallback(() => {
     if (cameraAnimationFrame.current !== null) {
@@ -1575,6 +1618,7 @@ export function PreviewPanel() {
     const initialHeight = Math.max(1, container.clientHeight);
     let scheduler: PreviewRenderScheduler | null = null;
     let transitions: PreviewMapTransitions | null = null;
+    let blankTerrainFrames = 0;
     void pixi
       .init({
         antialias: false,
@@ -1631,6 +1675,16 @@ export function PreviewPanel() {
               container.dataset.previewRenders = String(current.statistics.renders);
               container.dataset.previewFrameChecks = String(current.statistics.checks);
               container.dataset.previewStaleFrames = String(current.statistics.staleFrames);
+              const framedCache = terrainChunkCache.current;
+              const framed = framedCache ? framedGameArtTerrain(framedCache) : 'none';
+              container.dataset.framedTerrain = framed;
+              container.dataset.framedBlur = String(
+                container.querySelector('[data-testid="preview-generation-blur"]') !== null,
+              );
+              if (framed === 'none' && framedCache && framedCache.scene.terrainIds.length > 0) {
+                blankTerrainFrames += 1;
+                container.dataset.blankTerrainFrames = String(blankTerrainFrames);
+              }
             },
           },
         );
@@ -1762,6 +1816,10 @@ export function PreviewPanel() {
         destroyTerrainChunkCache(terrainCache);
         terrainChunkCache.current = null;
       }
+      if (keptTerrainCache.current) {
+        destroyTerrainChunkCache(keptTerrainCache.current);
+        keptTerrainCache.current = null;
+      }
       if (initialized) pixi.destroy(true, { children: true });
     };
   }, [viewAvailable]);
@@ -1802,7 +1860,19 @@ export function PreviewPanel() {
       scene.elevations.length === scene.width * scene.height &&
       !(gameArtExpected && layerRenderer === 'cpu') &&
       raisedProbe(pixi.renderer) === null;
-    const terrainCacheKey = `${candidateCoversScene ? `candidate-view:${scene.width}x${scene.height}` : (map?.semanticHash ?? '')}:${map?.backend ?? 'synthetic'}:${map?.minimapPalette?.paletteHash ?? 'fallback'}:${terrainColorSources.identity}:${textureColorsShown ? `texture-colors:${textureColorsShown.key}` : 'minimap-colors'}:${overlays.connectionTerrain ? 'post-connections' : 'pre-connections'}:${elevationMode}:${heightOverlayColor}:${raisedView ? 'raised' : 'flat'}`;
+    const { key: terrainCacheKey, sceneKey: terrainSceneKey } = previewTerrainCacheKeys({
+      map: candidateCoversScene
+        ? `candidate-view:${scene.width}x${scene.height}`
+        : (map?.semanticHash ?? ''),
+      backend: map?.backend ?? 'synthetic',
+      minimapPalette: map?.minimapPalette?.paletteHash ?? 'fallback',
+      terrainColors: terrainColorSources.identity,
+      colourLayer: colourLayerColors ? { textureColors: colourLayerColors.key } : 'minimap-colors',
+      connections: overlays.connectionTerrain,
+      elevationMode,
+      heightOverlayColor,
+      raised: raisedView,
+    });
     const transitions = mapTransitions.current;
     const transitionPicture: TransitionPicture = {
       map: candidateCoversScene
@@ -1842,20 +1912,32 @@ export function PreviewPanel() {
     let heightMorphFrom: { retired: RetiredTerrain; picture: MorphTerrainData } | null = null;
     if (!terrainCache || terrainCache.key !== terrainCacheKey) {
       const replaced = terrainCache;
-      terrainCache = createTerrainChunkCache(
-        terrainCacheKey,
-        scene,
-        overlays.connectionTerrain ? scene.terrainIds : scene.preConnectionTerrainIds,
-        map?.backend ?? 'synthetic',
-        elevationMode,
-        heightOverlayColor,
-        map?.minimapPalette ?? null,
-        terrainColorSources,
-        textureColorsShown?.terrains,
-        raisedView ? raisedSurfaceFor(scene) : null,
-      );
+      const kept = keptTerrainCache.current;
+      if (kept && kept.key === terrainCacheKey) {
+        keptTerrainCache.current = null;
+        terrainCache = kept;
+      } else {
+        terrainCache = createTerrainChunkCache(
+          terrainCacheKey,
+          terrainSceneKey,
+          scene,
+          overlays.connectionTerrain ? scene.terrainIds : scene.preConnectionTerrainIds,
+          map?.backend ?? 'synthetic',
+          elevationMode,
+          heightOverlayColor,
+          map?.minimapPalette ?? null,
+          terrainColorSources,
+          colourLayerColors?.terrains,
+          raisedView ? raisedSurfaceFor(scene) : null,
+        );
+      }
       if (replaced) {
         if (gameArtExpected) handOverGameArtPicture(replaced, terrainCache);
+      }
+      if (replaced && keepsGameArtPicture(replaced, terrainCache, gameArt.keptKey)) {
+        if (keptTerrainCache.current) destroyTerrainChunkCache(keptTerrainCache.current);
+        keptTerrainCache.current = replaced;
+      } else if (replaced) {
         const heightMorphPicture =
           transition?.kind === 'morph' && transition.heights
             ? committedMorphPicture(replaced)
@@ -1896,6 +1978,15 @@ export function PreviewPanel() {
       }
       terrainChunkCache.current = terrainCache;
     }
+    const keptCache = keptTerrainCache.current;
+    if (
+      keptCache &&
+      (keptCache.sceneKey !== terrainCache.sceneKey ||
+        gameArtPictureKey(keptCache) !== gameArt.keptKey)
+    ) {
+      destroyTerrainChunkCache(keptCache);
+      keptTerrainCache.current = null;
+    }
     const liveCandidate = candidateLayer.current;
     const keptStage = keptLiveStage.current;
     destroyStageChildren(
@@ -1904,6 +1995,7 @@ export function PreviewPanel() {
         .filter(
           (child) =>
             child !== terrainCache.container &&
+            child !== keptTerrainCache.current?.container &&
             child !== liveCandidate?.container &&
             child !== keptStage?.container &&
             child !== heightMorphFrom?.retired.container &&
@@ -1930,24 +2022,37 @@ export function PreviewPanel() {
       onGpuUnavailable: (reason) => setGpuUnavailable((current) => current ?? reason),
       host: container,
       raised: raised ? { surface: raised.surface, uniforms: raised.uniforms } : null,
+      keep: gameArt.keptKey,
       onPresented: () => {
-        setGameArtPresentedKey(presentationCache.gameArtTerrain?.view.key ?? null);
-        if (renderedMapLayer.current) {
-          if (mapLayerAwaitsSprites.current) {
-            renderedMapLayer.current.visible = false;
-            mapLayerAwaitsSprites.current = false;
-            setGameArtMarkerRedraws((count) => count + 1);
-          } else renderedMapLayer.current.visible = true;
-        }
-        const released = releaseKeptLiveStage.current();
-        const followed = followShownPicture.current();
-        if ((released || followed) && !sceneBuilding.current) {
-          renderScheduler.current?.renderNow();
-        } else renderScheduler.current?.request();
+        queueMicrotask(() => {
+          if (terrainChunkCache.current !== presentationCache || !renderScheduler.current) return;
+          const awaiting = mapLayerAwaitsSprites.current;
+          const layerBefore = renderedMapLayer.current;
+          flushSync(() => {
+            setGameArtPresentedKey(presentationCache.gameArtTerrain?.view.key ?? null);
+            if (awaiting) setGameArtMarkerRedraws((count) => count + 1);
+          });
+          const layer = renderedMapLayer.current;
+          if (layer) {
+            if (layer === layerBefore && mapLayerAwaitsSprites.current) {
+              layer.visible = false;
+              mapLayerAwaitsSprites.current = false;
+              setGameArtMarkerRedraws((count) => count + 1);
+            } else layer.visible = true;
+          }
+          const released = releaseKeptLiveStage.current();
+          const followed = followShownPicture.current();
+          if (released || followed) renderScheduler.current?.renderNow();
+          else renderScheduler.current?.request();
+        });
       },
     });
     setGameArtPresentedKey(
-      terrainCache.gameArtTerrain?.layer.presented ? terrainCache.gameArtTerrain.view.key : null,
+      gameArtPictureKey(terrainCache) ??
+        (keptTerrainCache.current ? gameArtPictureKey(keptTerrainCache.current) : null),
+    );
+    container.dataset.gameArtKept = String(
+      terrainCache.gameArtPresentation.parked !== null || keptTerrainCache.current !== null,
     );
     setGameArtKindVisibility(terrainCache, {
       objects: minimapObjectsShown ? false : objectVisibility.objects,
@@ -2041,7 +2146,7 @@ export function PreviewPanel() {
       {
         look: cliffLook,
         minimapPalette: map?.minimapPalette ?? null,
-        textureCliffColors: textureColorsShown?.cliffs,
+        textureCliffColors: shownColourColors?.cliffs,
       },
       cliffPresentation(
         scene,
@@ -2185,11 +2290,14 @@ export function PreviewPanel() {
     const nextSelectionOutline = new Graphics();
     const nextSourceHighlightOutline = new Graphics();
     const nextLegendHoverOutline = new Graphics();
+    const nextSourceLeavingOutline = new Graphics();
     const nextLegendLeavingOutline = new Graphics();
-    legendLeavingOverlays.set(nextLegendHoverOutline, nextLegendLeavingOutline);
+    leavingHighlightOverlays.set(nextSourceHighlightOutline, nextSourceLeavingOutline);
+    leavingHighlightOverlays.set(nextLegendHoverOutline, nextLegendLeavingOutline);
     const outlineLayer = new Container();
     outlineLayer.addChild(
       nextSelectionOutline,
+      nextSourceLeavingOutline,
       nextSourceHighlightOutline,
       nextLegendLeavingOutline,
       nextLegendHoverOutline,
@@ -2200,6 +2308,7 @@ export function PreviewPanel() {
       nextSourceHighlightOutline,
       nextLegendHoverOutline,
       nextLegendLeavingOutline,
+      nextSourceLeavingOutline,
     ]) {
       const highlight = new ShownRaisedHighlight(
         outlineLayer,
@@ -2216,6 +2325,7 @@ export function PreviewPanel() {
     const releaseOverlayFades = bindPreviewOverlayFades(overlayFades, {
       selection: nextSelectionOutline,
       source: [nextSourceHighlightOutline, raisedFills[0] ?? null],
+      sourceLeaving: [nextSourceLeavingOutline, raisedFills[3] ?? null],
       legend: [nextLegendHoverOutline, raisedFills[1] ?? null],
       legendLeaving: [nextLegendLeavingOutline, raisedFills[2] ?? null],
     });
@@ -2257,6 +2367,12 @@ export function PreviewPanel() {
     interaction.eventMode = 'static';
     interaction.cursor = connectionHover.current ? 'pointer' : 'crosshair';
     interaction.hitArea = new Rectangle(0, 0, viewport.width, viewport.height);
+    const sceneCaptureLayers = {
+      outline: outlineLayer,
+      selection: nextSelectionOutline,
+      others: [connectionHoverGraphics, interaction],
+    };
+    captureLayers.current = sceneCaptureLayers;
     const setConnectionHover = (target: ConnectionOverlayTarget | null) => {
       if (sameConnectionOverlayTarget(target, connectionHover.current)) return;
       connectionHover.current = target;
@@ -2372,6 +2488,8 @@ export function PreviewPanel() {
       container.dataset.outlineCameraZoom = currentGesture.camera.zoom.toFixed(4);
     };
     interaction.on('pointerdown', (event: FederatedPointerEvent) => {
+      rightPress.current =
+        event.button === 2 ? { x: event.clientX, y: event.clientY, travelled: 0 } : null;
       if (event.button !== 0 && event.button !== 2) return;
       event.preventDefault();
       canvas.focus();
@@ -2540,6 +2658,9 @@ export function PreviewPanel() {
     };
     const cancelNativePointer = (event: PointerEvent) => finishPointer(event.pointerId, false);
     const moveNativePointer = (event: PointerEvent) => {
+      if (rightPress.current) {
+        rightPress.current = moveRightPress(rightPress.current, event.clientX, event.clientY);
+      }
       if (!gesture.current || gesture.current.pointerId !== event.pointerId) return;
       const bounds = canvas.getBoundingClientRect();
       updatePointer(
@@ -2554,7 +2675,14 @@ export function PreviewPanel() {
       if (!gesture.current) setHoveredCoordinate(null);
       hoverConnectionAt(null);
     });
-    const suppressContextMenu = (event: MouseEvent) => event.preventDefault();
+    const suppressContextMenu = (event: MouseEvent) => {
+      event.preventDefault();
+      const press = rightPress.current;
+      rightPress.current = null;
+      if (rightClickOpensMenu(press, event.clientX, event.clientY)) {
+        openImageMenu.current({ x: event.clientX, y: event.clientY });
+      }
+    };
     canvas.addEventListener('contextmenu', suppressContextMenu);
     canvas.addEventListener('lostpointercapture', cancelNativePointer);
     canvas.addEventListener('pointercancel', cancelNativePointer);
@@ -2611,6 +2739,7 @@ export function PreviewPanel() {
     }
     return () => {
       interaction.removeAllListeners();
+      if (captureLayers.current === sceneCaptureLayers) captureLayers.current = null;
       releaseOverlayFades();
       for (const fill of raisedFills) fill.destroy();
       if (connectionHoverFrame !== null) window.cancelAnimationFrame(connectionHoverFrame);
@@ -2641,6 +2770,7 @@ export function PreviewPanel() {
     raisedChosen,
     gameArtCliffBandView,
     gameArtExpected,
+    gameArt.keptKey,
     gameArtMarkerRedraws,
     gameArtPresentedKey,
     gameArtSpriteView,
@@ -2663,6 +2793,9 @@ export function PreviewPanel() {
     selection,
     terrainColorSources,
     textureColorsShown,
+    colourLayerColors,
+    shownColourColors,
+    cliffLook,
     markerObjectColors,
     minimapObjectsShown,
     viewport,
@@ -2698,6 +2831,27 @@ export function PreviewPanel() {
     if (!viewScene) return;
     drawMapBoundaryOutline(mapBoundary.current, viewScene, displayedCamera.current, viewport);
   }, [boundaryShown, camera, candidateActive, shownSurface, gameArtExpected, viewScene, viewport]);
+  const drawBoundaryFrame = useRef<() => void>(() => undefined);
+  drawBoundaryFrame.current = () => {
+    if (!viewScene) return;
+    drawMapBoundaryOutline(
+      mapBoundary.current,
+      viewScene,
+      displayedCamera.current,
+      viewportRef.current,
+    );
+  };
+  useEffect(() => {
+    if (boundaryMotion === 'rest') return undefined;
+    let frame = 0;
+    const step = () => {
+      drawBoundaryFrame.current();
+      const elements = mapBoundary.current;
+      frame = elements.shown && elements.marginFraction > 0 ? requestAnimationFrame(step) : 0;
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [boundaryMotion]);
 
   useEffect(() => {
     if (!viewScene) return;
@@ -3179,6 +3333,100 @@ export function PreviewPanel() {
     }
   }, []);
 
+  const imageAvailable = viewScene !== null && pixiReady;
+  const imageFileName = previewImageFileName(map?.documentUri);
+  const captureMapImage = () => {
+    const pixi = application.current;
+    if (!pixi || !viewScene) throw new Error('the map preview shows no map');
+    const surface = shownRaisedSurface.current();
+    const layers = captureLayers.current;
+    const selectionFade = overlayFades.selection.state;
+    const selection =
+      layers && (selectionFade === 'in' || selectionFade === 'shown') ? layers.selection : null;
+    const image = capturePreviewImage({
+      application: pixi,
+      scene: viewScene,
+      camera: displayedCamera.current,
+      viewport: viewportRef.current,
+      lift: surface ? { minimum: surface.minimum, maximum: surface.maximum } : null,
+      transient: layers
+        ? [...layers.outline.children.filter((layer) => layer !== selection), ...layers.others]
+        : [],
+      selection,
+    });
+    if (!image) throw new Error('no part of the map is in view');
+    return image;
+  };
+  const copyMapImage = async () => {
+    const image = captureMapImage();
+    await window.rmside.copyImageToClipboard({ kind: 'pixels', ...image });
+  };
+  const mapImageCopyFailed = (copyError: unknown) =>
+    appendOutput(
+      presentMessage({
+        source: 'Preview',
+        raw: copyError instanceof Error ? copyError.message : String(copyError),
+        fallbackHeadline: 'preview-panel.output.image-copy-failed',
+      }),
+    );
+  const savingMapImage = useRef(false);
+  const saveMapImage = async () => {
+    if (savingMapImage.current) return;
+    savingMapImage.current = true;
+    try {
+      const result = await window.rmside.savePreviewImage({
+        ...captureMapImage(),
+        fileName: imageFileName,
+      });
+      if (result.status === 'saved') {
+        appendOutput(
+          outputNote('Preview', 'preview.image-saved', {
+            id: 'preview-panel.output.image-saved',
+            args: { name: result.fileName },
+          }),
+        );
+      }
+    } catch (saveError) {
+      appendOutput(
+        presentMessage({
+          source: 'Preview',
+          raw: saveError instanceof Error ? saveError.message : String(saveError),
+          fallbackHeadline: 'preview-panel.output.image-save-failed',
+        }),
+      );
+    } finally {
+      savingMapImage.current = false;
+    }
+  };
+  const [imageMenu, setImageMenu] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [imageMenuOpen, setImageMenuOpen] = useState(false);
+  const imageMenuFocusReturn = useRef<HTMLElement | null>(null);
+  openImageMenu.current = (point) => {
+    if (!imageAvailable) return;
+    imageMenuFocusReturn.current = application.current?.canvas ?? null;
+    setImageMenu(point);
+    setImageMenuOpen(true);
+  };
+  const imageMenuAnchor = useMemo(
+    () => ({
+      getBoundingClientRect: () =>
+        DOMRect.fromRect({ x: imageMenu.x, y: imageMenu.y, width: 0, height: 0 }),
+    }),
+    [imageMenu],
+  );
+  useLayoutEffect(() => {
+    if (!imageMenuOpen) return undefined;
+    const dismiss = (event: Event) => {
+      if (event.target instanceof Element && event.target.closest('.preview-image-menu')) return;
+      setImageMenuOpen(false);
+    };
+    document.addEventListener('pointerdown', dismiss, { capture: true });
+    return () => document.removeEventListener('pointerdown', dismiss, { capture: true });
+  }, [imageMenuOpen]);
+  useEffect(() => {
+    if (!imageAvailable) setImageMenuOpen(false);
+  }, [imageAvailable]);
+
   const onToolbarKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
     if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
@@ -3333,9 +3581,7 @@ export function PreviewPanel() {
   );
   const hoverSelectionLayer = useCallback(
     (layer: AggregatedSelectionLayer | null) => {
-      const indices = layer
-        ? [...new Set(layer.instances.map((instance) => instance.tileIndex))]
-        : [];
+      const indices = layer ? aggregatedLayerTileIndices(layer) : [];
       legendHoverTileIndices.current = indices;
       if (viewScene) {
         drawLegendHover(
@@ -3347,7 +3593,12 @@ export function PreviewPanel() {
         );
       }
       const container = host.current;
-      if (container) container.dataset.legendHoverCount = String(indices.length);
+      if (container) {
+        container.dataset.legendHoverCount = String(indices.length);
+        container.dataset.legendHoverRuns = viewScene
+          ? String(highlightTileRuns(indices, viewScene.width).length / 3)
+          : '0';
+      }
     },
     [viewScene, viewport],
   );
@@ -3399,7 +3650,7 @@ export function PreviewPanel() {
     gameTexturesExpected: gameArtExpected,
     liveInGameTextures: gameArtLiveStages,
     candidateActive,
-    lookPending,
+    lookPending: lookPendingShown,
     lastStageKept: liveStageKept || keepingLiveStage,
   });
   return (
@@ -3462,6 +3713,7 @@ export function PreviewPanel() {
         data-map-renderer={mapRenderer}
         data-game-art-active={gameArt.active}
         data-game-art-pending={gameArtPending}
+        data-game-art-builds={gameArt.builds}
         data-texture-colors-active={textureColorsShown !== null}
         data-minimap-palette-hash={map?.minimapPalette?.paletteHash ?? ''}
         data-minimap-palette-selection={map?.minimapPalette?.selection ?? 'fallback'}
@@ -3527,7 +3779,7 @@ export function PreviewPanel() {
               <PreviewLookButton
                 look={shownLook}
                 lockedReason={mapTestPreviewShown ? mapTestPreviewNotes.look : null}
-                pending={lookPending}
+                pending={lookPendingShown}
                 onCycle={() => {
                   const next = nextPreviewLook(shownLook, gameArt.offered);
                   setPreviewLook(next);
@@ -3614,6 +3866,30 @@ export function PreviewPanel() {
                 />
               ) : null}
             </div>
+            <ContextMenu onOpenChange={setImageMenuOpen} open={imageMenuOpen}>
+              <ContextMenuContent
+                anchor={imageMenuAnchor}
+                className="preview-image-menu"
+                data-testid="preview-image-menu"
+                finalFocus={imageMenuFocusReturn}
+                surface="popup"
+              >
+                <ContextMenuItem
+                  data-testid="preview-image-menu-copy"
+                  onClick={() => {
+                    void copyMapImage().catch(mapImageCopyFailed);
+                  }}
+                >
+                  <Copy aria-hidden="true" /> {t('preview-panel.image-menu.copy')}
+                </ContextMenuItem>
+                <ContextMenuItem
+                  data-testid="preview-image-menu-save"
+                  onClick={() => void saveMapImage()}
+                >
+                  <Save aria-hidden="true" /> {t('preview-panel.image-menu.save')}
+                </ContextMenuItem>
+              </ContextMenuContent>
+            </ContextMenu>
             {map ? <DevelopmentFixtureMenu execution={previewExecution} mapActive /> : null}
             {information.mounted ? (
               <div
@@ -3811,12 +4087,24 @@ function SelectionLayerLegend({
   surfaceRef(element: HTMLElement | null): void;
 }) {
   const { t } = useI18n();
-  const { helperCount, helperLayers, mainLayers } = partitionHelperLayers(layers);
-  const allListedLayers = showHelpers ? [...mainLayers, ...helperLayers] : mainLayers;
-  const labels = previewLegendLabels(allListedLayers);
-  const listedLayers = filter.trim()
-    ? allListedLayers.filter((layer) => previewLegendFilterMatches(labels.get(layer.key)!, filter))
-    : allListedLayers;
+  const { helperCount, helperLayers, mainLayers } = useMemo(
+    () => partitionHelperLayers(layers),
+    [layers],
+  );
+  const allListedLayers = useMemo(
+    () => (showHelpers ? [...mainLayers, ...helperLayers] : mainLayers),
+    [helperLayers, mainLayers, showHelpers],
+  );
+  const labels = useMemo(() => previewLegendLabels(allListedLayers), [allListedLayers]);
+  const listedLayers = useMemo(
+    () =>
+      filter.trim()
+        ? allListedLayers.filter((layer) =>
+            previewLegendFilterMatches(labels.get(layer.key)!, filter),
+          )
+        : allListedLayers,
+    [allListedLayers, filter, labels],
+  );
   const [pointerLayerKey, setPointerLayerKey] = useState<string | null>(null);
   const [focusedLayerKey, setFocusedLayerKey] = useState<string | null>(null);
   const [listedContent, setListedContent] = useState(content);
@@ -3859,9 +4147,10 @@ function SelectionLayerLegend({
       current.top === next.top && current.bottom === next.bottom ? current : next,
     );
   }, []);
-  const contentIdentity = `${showHelpers}|${listedLayers
-    .map((layer) => `${layer.key}:${layer.count}`)
-    .join('|')}`;
+  const contentIdentity = useMemo(
+    () => `${showHelpers}|${listedLayers.map((layer) => `${layer.key}:${layer.count}`).join('|')}`,
+    [listedLayers, showHelpers],
+  );
   const motionContent = useRef(content);
   useLayoutEffect(() => {
     const shell = scrollShell.current;
@@ -3969,56 +4258,17 @@ function SelectionLayerLegend({
           ref={rows}
           tabIndex={0}
         >
-          {listedLayers.map((layer) => {
-            const activation = !readOnly && resolveAggregatedLayerActivationForAvailability(layer);
-            const label = labels.get(layer.key)!;
-            return (
-              <Tooltip disableHoverablePopup key={layer.key}>
-                <TooltipTrigger
-                  delay={0}
-                  render={
-                    <button
-                      aria-label={
-                        readOnly
-                          ? t('preview-panel.legend.row.provisional', {
-                              name: label.description,
-                              count: layer.count,
-                            })
-                          : t('preview-panel.legend.row.open-source', {
-                              name: label.description,
-                              count: layer.count,
-                            })
-                      }
-                      className="preview-layer-row"
-                      data-helper={layer.material.helper ? 'true' : undefined}
-                      data-kind={layer.kind}
-                      data-layer-key={layer.key}
-                      aria-disabled={activation ? undefined : true}
-                      onBlur={() =>
-                        setFocusedLayerKey((current) => (current === layer.key ? null : current))
-                      }
-                      onClick={() => {
-                        if (activation) onActivate(layer);
-                      }}
-                      onFocus={() => setFocusedLayerKey(layer.key)}
-                      onPointerEnter={() => setPointerLayerKey(layer.key)}
-                      onPointerLeave={() =>
-                        setPointerLayerKey((current) => (current === layer.key ? null : current))
-                      }
-                      type="button"
-                    />
-                  }
-                >
-                  <LayerIcon material={layer.material} />
-                  <LayerName label={label} />
-                  <span className="preview-layer-count">{layer.count}</span>
-                </TooltipTrigger>
-                <TooltipContent className="preview-layer-tooltip" side="right">
-                  <LayerTooltip label={label} />
-                </TooltipContent>
-              </Tooltip>
-            );
-          })}
+          {listedLayers.map((layer) => (
+            <SelectionLayerRow
+              key={layer.key}
+              label={labels.get(layer.key)!}
+              layer={layer}
+              onActivate={onActivate}
+              readOnly={readOnly}
+              setFocusedLayerKey={setFocusedLayerKey}
+              setPointerLayerKey={setPointerLayerKey}
+            />
+          ))}
         </div>
         <div aria-hidden="true" className="preview-legend-ghosts" inert ref={ghosts} />
       </div>
@@ -4044,6 +4294,72 @@ function SelectionLayerLegend({
     </div>
   );
 }
+
+const SelectionLayerRow = memo(function SelectionLayerRow({
+  label,
+  layer,
+  onActivate,
+  readOnly,
+  setFocusedLayerKey,
+  setPointerLayerKey,
+}: {
+  label: PreviewLayerLabel;
+  layer: AggregatedSelectionLayer;
+  onActivate(layer: AggregatedSelectionLayer): void;
+  readOnly: boolean;
+  setFocusedLayerKey: Dispatch<SetStateAction<string | null>>;
+  setPointerLayerKey: Dispatch<SetStateAction<string | null>>;
+}) {
+  const { t } = useI18n();
+  const activation = useMemo(
+    () => !readOnly && resolveAggregatedLayerActivationForAvailability(layer),
+    [layer, readOnly],
+  );
+  return (
+    <Tooltip disableHoverablePopup>
+      <TooltipTrigger
+        delay={0}
+        render={
+          <button
+            aria-label={
+              readOnly
+                ? t('preview-panel.legend.row.provisional', {
+                    name: label.description,
+                    count: layer.count,
+                  })
+                : t('preview-panel.legend.row.open-source', {
+                    name: label.description,
+                    count: layer.count,
+                  })
+            }
+            className="preview-layer-row"
+            data-helper={layer.material.helper ? 'true' : undefined}
+            data-kind={layer.kind}
+            data-layer-key={layer.key}
+            aria-disabled={activation ? undefined : true}
+            onBlur={() => setFocusedLayerKey((current) => (current === layer.key ? null : current))}
+            onClick={() => {
+              if (activation) onActivate(layer);
+            }}
+            onFocus={() => setFocusedLayerKey(layer.key)}
+            onPointerEnter={() => setPointerLayerKey(layer.key)}
+            onPointerLeave={() =>
+              setPointerLayerKey((current) => (current === layer.key ? null : current))
+            }
+            type="button"
+          />
+        }
+      >
+        <LayerIcon material={layer.material} />
+        <LayerName label={label} />
+        <span className="preview-layer-count">{layer.count}</span>
+      </TooltipTrigger>
+      <TooltipContent className="preview-layer-tooltip" side="right">
+        <LayerTooltip label={label} />
+      </TooltipContent>
+    </Tooltip>
+  );
+});
 
 function resolveAggregatedLayerActivationForAvailability(layer: AggregatedSelectionLayer): boolean {
   return layer.instances.some((instance) => instance.operationIndex !== null);
@@ -4433,7 +4749,7 @@ function drawMinimapObjects(
 
 const raisedOverlays = new WeakMap<Graphics, ShownRaisedHighlight>();
 
-const legendLeavingOverlays = new WeakMap<Graphics, Graphics>();
+const leavingHighlightOverlays = new WeakMap<Graphics, Graphics>();
 
 const minimumRaisedOverlayBias = 16 * raisedDepthBiasStep;
 
@@ -4543,11 +4859,11 @@ function drawLegendHover(
   scene: TopDownScene,
   camera: PreviewCamera,
   viewport: PreviewViewport,
-  tileIndices: Iterable<number>,
+  tileIndices: readonly number[],
 ): void {
   if (!graphics) return;
   drawHighlightFill(graphics, scene, camera, viewport, tileIndices);
-  const leaving = legendLeavingOverlays.get(graphics);
+  const leaving = leavingHighlightOverlays.get(graphics);
   if (leaving) drawHighlightFill(leaving, scene, camera, viewport, []);
 }
 
@@ -4556,12 +4872,12 @@ function drawHighlightFill(
   scene: TopDownScene,
   camera: PreviewCamera,
   viewport: PreviewViewport,
-  tileIndices: Iterable<number>,
+  tileIndices: readonly number[],
 ): void {
   graphics.clear();
   requestPreviewRender(graphics);
-  let indices = [...tileIndices];
-  const fade = overlayFadeOf<number[]>(graphics);
+  let indices = tileIndices;
+  const fade = overlayFadeOf<readonly number[]>(graphics);
   if (fade) {
     indices =
       fade.show(indices.length > 0 ? indices : null, `${scene.width}x${scene.height}`) ?? [];
@@ -4585,13 +4901,13 @@ function drawHighlightFill(
     fill.set(geometry.positions, geometry.depths, geometry.indices);
     return;
   }
-  for (const tileIndex of indices) {
-    const x = tileIndex % scene.width;
-    const y = Math.floor(tileIndex / scene.width);
+  const runs = highlightTileRuns(indices, scene.width);
+  for (let run = 0; run < runs.length; run += 3) {
+    const y = runs[run]!;
     graphics.poly(
       mapRectangleScreenPolygon(
-        { x, y },
-        { x: x + 1, y: y + 1 },
+        { x: runs[run + 1]!, y },
+        { x: runs[run + 2]!, y: y + 1 },
         scene.width,
         scene.height,
         camera,
@@ -4609,6 +4925,7 @@ interface MapBoundaryElements {
   frame: SVGPathElement | null;
   strokeWidth: number;
   shown: boolean;
+  marginFraction: number;
   surface: () => ElevationSurface | null;
 }
 
@@ -4623,16 +4940,10 @@ function drawMapBoundaryOutline(
   const surface = elements.surface();
   let points: number[];
   let hidden: Uint8Array | null = null;
+  let loop: ReturnType<typeof raisedBoundaryLoop> | null = null;
   if (surface && surface.width === scene.width && surface.height === scene.height) {
-    const loop = raisedBoundaryLoop(surface);
-    const transform = terrainLayerTransform(scene, camera, viewport);
-    points = new Array<number>((loop.points.length / 3) * 2);
-    for (let from = 0, to = 0; from < loop.points.length; from += 3, to += 2) {
-      const x = loop.points[from]!;
-      const y = loop.points[from + 1]!;
-      points[to] = transform.x + (x + y) * transform.scaleX;
-      points[to + 1] = transform.y + (y - x - loop.points[from + 2]!) * transform.scaleY;
-    }
+    loop = raisedBoundaryLoop(surface);
+    points = projectRaisedBoundaryLoop(loop.points, terrainLayerTransform(scene, camera, viewport));
     hidden = loop.hidden;
   } else {
     points = mapRectangleScreenPolygon(
@@ -4647,8 +4958,41 @@ function drawMapBoundaryOutline(
   outline.setAttribute('d', boundaryOutlinePath(points, hidden));
   const { arc, border, frame } = elements;
   if (!arc || !border || !frame) return;
+  const style = getComputedStyle(arc);
+  const fraction = Math.min(
+    1,
+    Math.max(0, cssNumber(style.getPropertyValue('--preview-boundary-margin'), 0)),
+  );
+  elements.marginFraction = fraction;
+  let arcPoints = points;
+  if (fraction > 0) {
+    const transform = terrainLayerTransform(scene, camera, viewport);
+    const perTile = boundaryEdgePixelsPerTile(transform.scaleX, transform.scaleY);
+    const margin = boundaryEntranceMargin(
+      cssPixels(style.getPropertyValue('--motion-distance-edge')),
+      fraction,
+      (perTile * Math.min(scene.width, scene.height)) / 2,
+    );
+    const tiles = perTile > 0 ? margin / perTile : 0;
+    if (tiles > 0) {
+      arcPoints =
+        loop !== null
+          ? projectRaisedBoundaryLoop(
+              expandBoundaryLoop(loop.points, scene.width, scene.height, tiles),
+              transform,
+            )
+          : mapRectangleScreenPolygon(
+              { x: -tiles, y: -tiles },
+              { x: scene.width + tiles, y: scene.height + tiles },
+              scene.width,
+              scene.height,
+              camera,
+              viewport,
+            );
+    }
+  }
   const visible = visibleMapBoundary(
-    points,
+    arcPoints,
     insetBoundaryFrame(viewport.width, viewport.height, elements.strokeWidth),
     hidden,
   );
@@ -4661,6 +5005,20 @@ function drawMapBoundaryOutline(
   arc.dataset.frameSides = boundaryFrameSides(visible).join(' ');
 }
 
+function projectRaisedBoundaryLoop(
+  loopPoints: readonly number[],
+  transform: { scaleX: number; scaleY: number; x: number; y: number },
+): number[] {
+  const points = new Array<number>((loopPoints.length / 3) * 2);
+  for (let from = 0, to = 0; from < loopPoints.length; from += 3, to += 2) {
+    const x = loopPoints[from]!;
+    const y = loopPoints[from + 1]!;
+    points[to] = transform.x + (x + y) * transform.scaleX;
+    points[to + 1] = transform.y + (y - x - loopPoints[from + 2]!) * transform.scaleY;
+  }
+  return points;
+}
+
 function drawPreviewOutlines(
   selectionGraphics: Graphics | null,
   sourceGraphics: Graphics | null,
@@ -4670,8 +5028,8 @@ function drawPreviewOutlines(
   camera: PreviewCamera,
   viewport: PreviewViewport,
   selection: PreviewSelection | null,
-  sourceHighlightTileIndices: Iterable<number>,
-  legendHoverTileIndices: Iterable<number>,
+  sourceHighlightTileIndices: readonly number[],
+  legendHoverTileIndices: readonly number[],
 ): void {
   drawSelectionOutline(selectionGraphics, scene, camera, viewport, selection);
   drawLegendHover(sourceGraphics, scene, camera, viewport, sourceHighlightTileIndices);
@@ -4743,6 +5101,7 @@ function LayerIcon({ material }: { material: PreviewMaterial }) {
 
 function createTerrainChunkCache(
   key: string,
+  sceneKey: string,
   scene: TopDownScene,
   terrainIds: readonly number[],
   backend: PreviewBackend,
@@ -4767,6 +5126,7 @@ function createTerrainChunkCache(
     geometryBuilds: 0,
     heightOverlayColor,
     key,
+    sceneKey,
     minimapPalette,
     scene,
     terrainColorSources,

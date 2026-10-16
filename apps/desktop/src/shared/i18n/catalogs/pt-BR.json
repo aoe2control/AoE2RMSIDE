@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Abrir pasta…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Pesquisar nos arquivos…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Explorar mapas instalados…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Selecionar tudo"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Inserir trecho de código…"
+    },
     "app-menu.edit.format-document": {
       "message": "Formatar documento"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Mostrar etapas de geração"
     },
+    "app-menu.view.outline-row": {
+      "message": "Mostrar barra de estrutura"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Mostrar dicas no código"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Idioma…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Tema…"
     },
     "app-menu.view.theme": {
       "message": "Tema"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, =0 {{count} mapas} one {{count} mapa} many {{count} mapas} other {{count} mapas}}"
+    },
+    "output.run.fact.players": {
+      "message": "Jogadores"
+    },
+    "output.run.fact.maps": {
+      "message": "Mapas"
+    },
+    "output.run.fact.duration": {
+      "message": "Duração"
+    },
+    "output.run.fact.result": {
+      "message": "Resultado"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Teste de mapas"
     },
+    "settings.theme.app-theme": {
+      "message": "Tema do aplicativo"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Cores do editor"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Padrão"
+    },
+    "settings.theme.close-label": {
+      "message": "Fechar configurações de tema"
+    },
     "settings.language.title": {
       "message": "Idioma"
-    },
-    "settings.language.description": {
-      "message": "Menus, caixas de diálogo e mensagens usam este idioma. Comandos dos scripts, logs e pacotes de suporte permanecem em inglês."
     },
     "settings.language.label": {
       "message": "Idioma da interface"
     },
     "settings.language.system": {
       "message": "Idioma de exibição do Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Fechar"
     },
     "settings.language.close-label": {
       "message": "Fechar configurações de idioma"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Pesquisar arquivos"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Pesquisar texto"
+    },
+    "explorer.search.contents": {
+      "message": "Pesquisar no conteúdo dos arquivos"
+    },
+    "explorer.search.match-case": {
+      "message": "Diferenciar maiúsculas de minúsculas"
+    },
+    "explorer.search.whole-word": {
+      "message": "Palavra inteira"
+    },
+    "explorer.search.scope": {
+      "message": "em {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Pesquisar na pasta inteira"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, =0 {{count} ocorrências} one {{count} ocorrência} many {{count} ocorrências} other {{count} ocorrências}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Alguns arquivos ficaram de fora desta pesquisa porque são grandes demais ou numerosos demais."
+    },
     "explorer.search.clear": {
       "message": "Limpar a pesquisa de arquivos"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Abrir no Explorador"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Pesquisar nos arquivos…"
     },
     "explorer.context.rename": {
       "message": "Renomear"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Salvar imagem…"
     },
+    "map-icon.copy-image": {
+      "message": "Copiar imagem"
+    },
+    "map-icon.image-copied": {
+      "message": "Imagem copiada"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Não foi possível salvar o ícone do mapa"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Não foi possível copiar o ícone do mapa"
     },
     "map-icon.lightbox.close": {
       "message": "Fechar a prévia do ícone do mapa"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "Editor de código RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Estrutura"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, linha {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Ir para uma seção"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Ir para um bloco"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Ir para uma função"
+    },
     "code-editor.tabs.label": {
       "message": "Arquivos abertos"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Abrir arquivo incluído"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Inserir trecho de código…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Inserir trecho de código"
+    },
+    "code-editor.snippets.close": {
+      "message": "Fechar"
+    },
+    "code-editor.snippets.search": {
+      "message": "Pesquisar trechos"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Pesquisar trechos"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Limpar pesquisa"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Mostrar todos"
+    },
+    "code-editor.snippets.list": {
+      "message": "Trechos de código"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Texto a inserir"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Carregando trechos de código…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Não foi possível carregar os trechos de código. Feche esta caixa de diálogo e tente novamente."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Nenhum trecho de código se encaixa onde está o cursor. Ative Mostrar todos para ver todos os trechos."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Nenhum trecho de código corresponde à pesquisa."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Inserir"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Cancelar"
+    },
     "code-editor.include.open": {
       "message": "Abrir {name}"
     },
@@ -3223,6 +3349,12 @@
       "message": "Salvar ícone do mapa"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Imagem PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Salvar imagem do mapa"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Imagem PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Árvores pequenas"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Copiar imagem"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Salvar imagem…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Imagem do mapa salva como {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Não foi possível salvar a imagem do mapa"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Não foi possível copiar a imagem do mapa"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "prévia do mapa visto de cima com as cores do minimapa"

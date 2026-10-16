@@ -12,6 +12,7 @@ import {
 } from 'react';
 import { FolderIcon } from '@animateicons/react/lucide';
 import {
+  CaseSensitive,
   ChevronDown,
   ChevronRight,
   File,
@@ -22,7 +23,11 @@ import {
   FolderPlus,
   FolderSearch,
   Pencil,
+  TextSearch,
   Trash2,
+  WholeWord,
+  X,
+  type LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -40,19 +45,29 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Empty, EmptyDescription, EmptyHeader } from '@/components/ui/empty';
 import { Input } from '@/components/ui/input';
+import { IconToggleButton } from '@/components/ui/toggle-button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import type {
   WorkspaceDirectoryEntry,
   WorkspaceEntryKind,
   WorkspaceSearchResult,
+  WorkspaceUnsavedText,
 } from '../shared/api';
 import { definitionFilesAvailable, editionCapabilities } from '../shared/edition';
 import type { MessageId } from '../shared/i18n/translator';
 import { inlineErrorText, userFacingErrorText } from '../shared/message-catalog';
 import type { WorkspaceSearchNameRange } from '../shared/workspace-search';
+import {
+  formatWorkspaceContentCount,
+  workspaceUnsavedTexts,
+} from '../shared/workspace-content-search';
 import { useAnimatedIconHover } from './animated-icon';
+import type { EditorFindRequest } from './app-context';
+import type { ContentMatchGesture } from './monaco-find';
 import {
   buildExplorerSearchTree,
+  ExplorerPendingReveal,
+  explorerActiveMatch,
   explorerAncestorFolders,
   explorerFolderExpanded,
   explorerPathKey,
@@ -66,6 +81,7 @@ import {
   ExplorerRefreshRegistry,
   mergeDirectoryEntries,
 } from './explorer-refresh';
+import { sameUnsavedTexts } from './explorer-content-search';
 import { HoverMotionIcon } from './hover-motion-icon';
 import { ListMotion, type ListMotionElements } from './list-motion';
 import { useI18n } from './i18n';
@@ -78,6 +94,8 @@ interface WorkspaceSidebarProps {
   expanded: boolean;
   workspace: WorkspaceController;
   onGenerateDefinitionFile(folderId: string): void;
+  findInFilesRequest: number;
+  onOpenContentMatch(path: string, gesture: ContentMatchGesture, find: EditorFindRequest): void;
 }
 
 interface InlineDraft {
@@ -98,19 +116,30 @@ interface SearchView {
   folderId: string;
   query: string;
   results: WorkspaceSearchResult[];
+  contents: ContentSearchView | null;
 }
+
+interface ContentSearchView {
+  matchCase: boolean;
+  wholeWord: boolean;
+  truncated: boolean;
+}
+
+const noUnsavedTexts: WorkspaceUnsavedText[] = [];
 
 interface ExplorerSearchState {
   overrides: ReadonlyMap<string, boolean>;
   activeKey: string | null;
   tabStopKey: string | null;
   toggle(entry: WorkspaceDirectoryEntry, expanded: boolean): void;
+  openContentMatch: ((path: string, gesture: ContentMatchGesture) => void) | null;
 }
 
 const noSearchOverrides: ReadonlyMap<string, boolean> = new Map();
 
 const ExplorerSearchContext = createContext<ExplorerSearchState>({
   activeKey: null,
+  openContentMatch: null,
   overrides: noSearchOverrides,
   tabStopKey: null,
   toggle: () => {},
@@ -130,12 +159,23 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
   expanded,
   workspace,
   onGenerateDefinitionFile,
+  findInFilesRequest,
+  onOpenContentMatch,
 }: WorkspaceSidebarProps) {
   const { t } = useI18n();
   const [query, setQuery] = useState('');
+  const [contentMode, setContentMode] = useState(false);
+  const [matchCase, setMatchCase] = useState(false);
+  const [wholeWord, setWholeWord] = useState(false);
+  const [searchScope, setSearchScope] = useState<WorkspaceDirectoryEntry | null>(null);
+  const searchInput = useRef<HTMLInputElement>(null);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const searchExpanded = searchFocused && expanded && Boolean(workspace.folder);
+  const onOpenContentMatchRef = useRef(onOpenContentMatch);
+  onOpenContentMatchRef.current = onOpenContentMatch;
   const [searchView, setSearchView] = useState<SearchView | null>(null);
   const [searchOverrides, setSearchOverrides] = useState(noSearchOverrides);
-  const [activeMatchKey, setActiveMatchKey] = useState<string | null>(null);
+  const [keyboardMatch, setKeyboardMatch] = useState<string | null>(null);
   const [searching, setSearching] = useState(false);
   const [searchIndicatorVisible, setSearchIndicatorVisible] = useState(false);
   const [draft, setDraft] = useState<InlineDraft | null>(null);
@@ -168,7 +208,20 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
   const workspaceRef = useRef(workspace);
   workspaceRef.current = workspace;
   const activeScrollRequest = useRef(false);
-  const pendingReveal = useRef<{ key: string; until: number } | null>(null);
+  const [pendingReveal] = useState(
+    () =>
+      new ExplorerPendingReveal<HTMLElement>({
+        findRow: (key) => {
+          const viewport = explorerContent.current;
+          return viewport ? findExplorerRow(viewport, key) : null;
+        },
+        loading: () => Boolean(explorerContent.current?.querySelector('[data-listing-loading]')),
+        reveal: (row) => {
+          const viewport = explorerContent.current;
+          if (viewport) revealWithin(viewport, row);
+        },
+      }),
+  );
   const [refreshRegistry] = useState(() => new ExplorerRefreshRegistry());
   const [searchedTreeRevision, setSearchedTreeRevision] = useState(0);
   const queryRef = useRef(query);
@@ -191,6 +244,7 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
     folderId: string,
     nextQuery: string,
     results: WorkspaceSearchResult[],
+    contents: ContentSearchView | null,
   ) => {
     const previous = searchViewRef.current;
     if (previous && previous.folderId !== folderId) {
@@ -204,9 +258,9 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
       };
       pendingTreeScroll.current = { scrollTop: 0, revealKey: null };
     }
-    setSearchView({ folderId, query: nextQuery, results });
+    setSearchView({ folderId, query: nextQuery, results, contents });
     setSearchOverrides(noSearchOverrides);
-    setActiveMatchKey(null);
+    setKeyboardMatch(null);
   };
 
   const clearSearchView = () => {
@@ -232,7 +286,7 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
     };
     setSearchView(null);
     setSearchOverrides(noSearchOverrides);
-    setActiveMatchKey(null);
+    setKeyboardMatch(null);
   };
 
   useEffect(() => {
@@ -322,30 +376,19 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
   useEffect(() => {
     const viewport = explorerContent.current;
     if (!viewport) return undefined;
-    const observer = new MutationObserver(() => {
-      const pending = pendingReveal.current;
-      if (!pending) return;
-      if (performance.now() > pending.until) {
-        pendingReveal.current = null;
-        return;
-      }
-      const row = findExplorerRow(viewport, pending.key);
-      if (!row) return;
-      pendingReveal.current = null;
-      revealWithin(viewport, row);
-    });
-    const giveUp = () => {
-      pendingReveal.current = null;
-    };
+    const observer = new MutationObserver(() => pendingReveal.treeChanged());
+    const giveUp = () => pendingReveal.cancel();
     observer.observe(viewport, { childList: true, subtree: true });
     viewport.addEventListener('wheel', giveUp, { passive: true });
     viewport.addEventListener('pointerdown', giveUp, { passive: true });
+    viewport.addEventListener('keydown', giveUp);
     return () => {
       observer.disconnect();
       viewport.removeEventListener('wheel', giveUp);
       viewport.removeEventListener('pointerdown', giveUp);
+      viewport.removeEventListener('keydown', giveUp);
     };
-  }, []);
+  }, [pendingReveal]);
 
   useEffect(
     () =>
@@ -360,6 +403,20 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
 
   const searchQuery = query.trim();
   const folderId = workspace.folder?.id ?? null;
+  const unsavedTextsRef = useRef<WorkspaceUnsavedText[]>(noUnsavedTexts);
+  const unsavedTexts = useMemo(() => {
+    if (!contentMode || searchQuery.length === 0) return noUnsavedTexts;
+    const next = workspaceUnsavedTexts(workspace.documents);
+    if (sameUnsavedTexts(unsavedTextsRef.current, next)) return unsavedTextsRef.current;
+    unsavedTextsRef.current = next;
+    return next;
+  }, [contentMode, searchQuery.length, workspace.documents]);
+  const searchMatchCase = contentMode && matchCase;
+  const searchWholeWord = contentMode && wholeWord;
+  const searchScopeId = contentMode ? (searchScope?.id ?? null) : null;
+  useEffect(() => {
+    setSearchScope(null);
+  }, [folderId]);
   useEffect(() => {
     if (!folderId || searchQuery.length === 0) {
       void window.rmside.cancelWorkspaceSearch().catch(() => undefined);
@@ -372,20 +429,40 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
         searchStart.current = null;
         setSearchView(null);
         setSearchOverrides(noSearchOverrides);
-        setActiveMatchKey(null);
+        setKeyboardMatch(null);
       }
       return undefined;
     }
     let cancelled = false;
     setSearching(true);
     const timer = window.setTimeout(() => {
-      void window.rmside
-        .searchWorkspace(searchQuery)
+      const options = { matchCase: searchMatchCase, wholeWord: searchWholeWord };
+      const search = contentMode
+        ? window.rmside
+            .searchWorkspaceContents({
+              query: searchQuery,
+              ...options,
+              ...(searchScopeId ? { scopeId: searchScopeId } : {}),
+              unsavedDocuments: unsavedTexts,
+            })
+            .then(({ results, truncated }) => ({ results, contents: { ...options, truncated } }))
+        : window.rmside.searchWorkspace(searchQuery).then((results) => ({
+            results,
+            contents: null,
+          }));
+      void search
         .then((next) => {
-          if (!cancelled) showSearchResults(folderId, searchQuery, next);
+          if (!cancelled) showSearchResults(folderId, searchQuery, next.results, next.contents);
         })
         .catch(() => {
-          if (!cancelled) showSearchResults(folderId, searchQuery, []);
+          if (cancelled) return;
+          if (searchScopeId) setSearchScope(null);
+          showSearchResults(
+            folderId,
+            searchQuery,
+            [],
+            contentMode ? { ...options, truncated: false } : null,
+          );
         })
         .finally(() => {
           if (!cancelled) setSearching(false);
@@ -396,7 +473,37 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
       window.clearTimeout(timer);
       void window.rmside.cancelWorkspaceSearch().catch(() => undefined);
     };
-  }, [searchQuery, folderId, workspace.mutationRevision, searchedTreeRevision]);
+  }, [
+    searchQuery,
+    folderId,
+    workspace.mutationRevision,
+    searchedTreeRevision,
+    contentMode,
+    searchMatchCase,
+    searchWholeWord,
+    searchScopeId,
+    unsavedTexts,
+  ]);
+
+  const beginFindInFiles = (scope: WorkspaceDirectoryEntry | null) => {
+    const root = workspaceRef.current.folder;
+    setContentMode(true);
+    setSearchScope(scope && root && pathKey(scope.path) !== pathKey(root.path) ? scope : null);
+    window.requestAnimationFrame(() => {
+      searchInput.current?.focus();
+      searchInput.current?.select();
+    });
+  };
+  const findInFilesHandled = useRef(findInFilesRequest);
+  useEffect(() => {
+    if (findInFilesRequest === findInFilesHandled.current) return;
+    findInFilesHandled.current = findInFilesRequest;
+    beginFindInFiles(null);
+  }, [findInFilesRequest]);
+  const toggleContentMode = () => {
+    if (contentMode) setSearchScope(null);
+    setContentMode(!contentMode);
+  };
 
   useEffect(() => {
     setSearchIndicatorVisible(false);
@@ -504,6 +611,7 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
 
   const selectPath = (path: string) => {
     if (transientEntry && pathKey(path) !== pathKey(transientEntry.path)) setTransientEntry(null);
+    setKeyboardMatch(null);
     workspace.setSelectedPath(path);
   };
 
@@ -521,10 +629,25 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
         : [],
     [searchOverrides, searchTree, workspace.folder],
   );
-  const activeMatch =
-    visibleMatches.find((entry) => pathKey(entry.path) === activeMatchKey) ?? visibleMatches[0];
-  const activeKey = activeMatch ? pathKey(activeMatch.path) : null;
   const selectedKey = pathKey(workspace.selectedPath ?? '');
+  const [keyboardMatchSelection, setKeyboardMatchSelection] = useState(selectedKey);
+  if (keyboardMatchSelection !== selectedKey) {
+    setKeyboardMatchSelection(selectedKey);
+    setKeyboardMatch(null);
+  }
+  const activeMatch = explorerActiveMatch(visibleMatches, keyboardMatch, selectedKey);
+  const activeKey = activeMatch ? pathKey(activeMatch.path) : null;
+  const contentView = useMemo<EditorFindRequest | null>(
+    () =>
+      searchTree && searchView?.contents
+        ? {
+            query: searchView.query,
+            matchCase: searchView.contents.matchCase,
+            wholeWord: searchView.contents.wholeWord,
+          }
+        : null,
+    [searchTree, searchView],
+  );
   const searchState = useMemo<ExplorerSearchState>(
     () => ({
       activeKey: searchTree ? activeKey : null,
@@ -538,8 +661,11 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
         recordTree();
         setSearchOverrides((current) => new Map(current).set(pathKey(entry.path), expanded));
       },
+      openContentMatch: contentView
+        ? (path, gesture) => onOpenContentMatchRef.current(path, gesture, contentView)
+        : null,
     }),
-    [activeKey, searchOverrides, searchTree, selectedKey, workspace.folder?.path],
+    [activeKey, contentView, searchOverrides, searchTree, selectedKey, workspace.folder?.path],
   );
 
   useLayoutEffect(() => {
@@ -547,18 +673,15 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
     const scroll = pendingTreeScroll.current;
     pendingTreeScroll.current = null;
     if (viewport && scroll) {
+      pendingReveal.cancel();
       viewport.scrollTop = scroll.scrollTop;
-      const row = scroll.revealKey ? findExplorerRow(viewport, scroll.revealKey) : null;
-      if (row) revealWithin(viewport, row);
-      else if (scroll.revealKey) {
-        pendingReveal.current = { key: scroll.revealKey, until: performance.now() + 2_000 };
-      }
+      if (scroll.revealKey) pendingReveal.request(scroll.revealKey);
     }
     if (!treeMotionPending.current) return;
     treeMotionPending.current = false;
     const elements = treeMotionElements();
     if (elements) treeMotion.update(elements);
-  }, [searchOverrides, searchTree, treeMotion]);
+  }, [pendingReveal, searchOverrides, searchTree, treeMotion]);
 
   useLayoutEffect(() => {
     if (!activeScrollRequest.current) return;
@@ -582,14 +705,15 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
       const next = visibleMatches[(index + delta + visibleMatches.length) % visibleMatches.length];
       if (!next) return;
       activeScrollRequest.current = true;
-      setActiveMatchKey(pathKey(next.path));
+      setKeyboardMatch(pathKey(next.path));
       return;
     }
     if (event.key === 'Enter' && searchTree && activeMatch) {
       event.preventDefault();
       selectPath(activeMatch.path);
       if (activeMatch.kind === 'file') {
-        void workspace.openWorkspaceFile(activeMatch.path);
+        if (searchState.openContentMatch) searchState.openContentMatch(activeMatch.path, 'click');
+        else void workspace.openWorkspaceFile(activeMatch.path);
         return;
       }
       const key = pathKey(activeMatch.path);
@@ -618,50 +742,119 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
         }
       }}
     >
-      <div className="explorer-toolbar">
+      <div className="explorer-toolbar" data-search-expanded={searchExpanded || undefined}>
         <SearchField
+          actions={
+            <>
+              {contentMode ? (
+                <>
+                  <SearchOptionToggle
+                    disabled={!workspace.folder}
+                    icon={CaseSensitive}
+                    label={t('explorer.search.match-case')}
+                    onToggle={() => setMatchCase((current) => !current)}
+                    pressed={matchCase}
+                  />
+                  <SearchOptionToggle
+                    disabled={!workspace.folder}
+                    icon={WholeWord}
+                    label={t('explorer.search.whole-word')}
+                    onToggle={() => setWholeWord((current) => !current)}
+                    pressed={wholeWord}
+                  />
+                </>
+              ) : null}
+              <SearchOptionToggle
+                disabled={!workspace.folder}
+                icon={TextSearch}
+                label={t('explorer.search.contents')}
+                onToggle={toggleContentMode}
+                pressed={contentMode}
+              />
+            </>
+          }
           className="explorer-search"
           clearLabel={t('explorer.search.clear')}
           disabled={!workspace.folder}
+          inputRef={searchInput}
           label={t('explorer.search.label')}
           maxLength={256}
+          onFocusWithinChange={setSearchFocused}
           onKeyDown={handleSearchKey}
           onValueChange={setQuery}
-          placeholder={t('explorer.search.placeholder')}
+          placeholder={t(
+            contentMode ? 'explorer.search.placeholder.contents' : 'explorer.search.placeholder',
+          )}
+          selectOnFocusClick
           value={query}
         />
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                {...openFileIcon.animationHandlers}
-                aria-label={t('explorer.open-file.label')}
-                onClick={() => void workspace.pickFiles()}
-                size="icon-compact"
-                variant="ghost"
+        <div className="explorer-toolbar-actions" inert={searchExpanded ? true : undefined}>
+          <Tooltip disabled={searchExpanded}>
+            <TooltipTrigger
+              render={
+                <Button
+                  {...openFileIcon.animationHandlers}
+                  aria-label={t('explorer.open-file.label')}
+                  onClick={() => void workspace.pickFiles()}
+                  size="icon-compact"
+                  variant="ghost"
+                />
+              }
+            >
+              <HoverMotionIcon
+                aria-hidden="true"
+                icon={File}
+                ref={openFileIcon.iconRef}
+                size={14}
               />
-            }
-          >
-            <HoverMotionIcon aria-hidden="true" icon={File} ref={openFileIcon.iconRef} size={14} />
-          </TooltipTrigger>
-          <TooltipContent>{t('explorer.open-file.tooltip')}</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                {...openFolderIcon.animationHandlers}
-                aria-label={t('explorer.open-folder.label')}
-                onClick={() => void workspace.pickFolder()}
-                size="icon-compact"
-                variant="ghost"
-              />
-            }
-          >
-            <FolderIcon aria-hidden="true" ref={openFolderIcon.iconRef} size={14} />
-          </TooltipTrigger>
-          <TooltipContent>{t('explorer.open-folder.tooltip')}</TooltipContent>
-        </Tooltip>
+            </TooltipTrigger>
+            <TooltipContent>{t('explorer.open-file.tooltip')}</TooltipContent>
+          </Tooltip>
+          <Tooltip disabled={searchExpanded}>
+            <TooltipTrigger
+              render={
+                <Button
+                  {...openFolderIcon.animationHandlers}
+                  aria-label={t('explorer.open-folder.label')}
+                  onClick={() => void workspace.pickFolder()}
+                  size="icon-compact"
+                  variant="ghost"
+                />
+              }
+            >
+              <FolderIcon aria-hidden="true" ref={openFolderIcon.iconRef} size={14} />
+            </TooltipTrigger>
+            <TooltipContent>{t('explorer.open-folder.tooltip')}</TooltipContent>
+          </Tooltip>
+        </div>
+        {contentMode && searchScope ? (
+          <div className="explorer-search-scope">
+            <OverflowingLabel
+              className="explorer-search-scope-label"
+              name={t('explorer.search.scope', { name: searchScope.name })}
+              textClassName="explorer-search-scope-text"
+            />
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <Button
+                    aria-label={t('explorer.search.scope.remove')}
+                    className="explorer-search-scope-remove"
+                    onClick={() => {
+                      setSearchScope(null);
+                      searchInput.current?.focus({ preventScroll: true });
+                    }}
+                    size="icon-xs"
+                    variant="ghost"
+                  />
+                }
+              >
+                <X aria-hidden="true" />
+              </TooltipTrigger>
+              <TooltipContent>{t('explorer.search.scope.remove')}</TooltipContent>
+            </Tooltip>
+          </div>
+        ) : null}
       </div>
 
       <div
@@ -684,8 +877,10 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
                 entry={rootEntry}
                 expanded
                 isRoot
+                count={searchTree?.counts.get(pathKey(rootEntry.path))}
                 onCreate={beginCreate}
                 onDelete={() => {}}
+                onFindInFiles={beginFindInFiles}
                 onRename={() => {}}
                 onSelect={() => selectPath(rootEntry.path)}
                 selected={pathKey(workspace.selectedPath ?? '') === pathKey(rootEntry.path)}
@@ -718,6 +913,7 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
                       onCommitDraft={commitDraft}
                       onCreate={beginCreate}
                       onDelete={(entry) => void workspace.deleteWorkspaceEntry(entry)}
+                      onFindInFiles={beginFindInFiles}
                       onDraftValueChange={(value) =>
                         setDraft((current) => (current ? { ...current, value, error: null } : null))
                       }
@@ -736,6 +932,11 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
                           ? 'explorer.search.no-results.rms'
                           : 'explorer.search.no-results',
                       )}
+                    </div>
+                  ) : null}
+                  {searchTree && searchView?.contents?.truncated ? (
+                    <div className="explorer-search-note" role="note">
+                      {t('explorer.search.truncated')}
                     </div>
                   ) : null}
                 </ExplorerSearchContext.Provider>
@@ -796,6 +997,50 @@ function ExplorerEntryLabel({
   );
 }
 
+function ExplorerEntryCount({ count }: { count: number | undefined }) {
+  if (count === undefined) return null;
+  return (
+    <span aria-hidden="true" className="explorer-entry-count" data-count={count}>
+      {formatWorkspaceContentCount(count)}
+    </span>
+  );
+}
+
+function SearchOptionToggle({
+  disabled,
+  icon: Icon,
+  label,
+  onToggle,
+  pressed,
+}: {
+  disabled: boolean;
+  icon: LucideIcon;
+  label: string;
+  onToggle(): void;
+  pressed: boolean;
+}) {
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <IconToggleButton
+            aria-label={label}
+            className="search-field-option"
+            disabled={disabled}
+            onClick={onToggle}
+            onMouseDown={(event) => event.preventDefault()}
+            pressed={pressed}
+            size="icon-xs"
+          />
+        }
+      >
+        <Icon aria-hidden="true" />
+      </TooltipTrigger>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
+  );
+}
+
 function findExplorerRow(viewport: HTMLElement, key: string): HTMLElement | null {
   for (const row of viewport.querySelectorAll<HTMLElement>('.explorer-row[data-row-key]')) {
     if (row.dataset.rowKey === key && row.offsetParent !== null) return row;
@@ -814,7 +1059,7 @@ function revealWithin(viewport: HTMLElement, row: HTMLElement): void {
 
 function ExplorerIndexPlaceholder({ label }: { label: string }) {
   return (
-    <div aria-label={label} className="explorer-search-skeleton" role="status">
+    <div aria-label={label} className="explorer-search-skeleton" data-listing-loading role="status">
       {Array.from({ length: 4 }, (_, index) => (
         <div className="explorer-search-skeleton-row" key={index}>
           <span aria-hidden="true" className="explorer-search-skeleton-icon animate-pulse" />
@@ -837,6 +1082,7 @@ interface DirectoryChildrenProps {
   onCreate(parent: WorkspaceDirectoryEntry, kind: WorkspaceEntryKind, action?: CreateAction): void;
   onRename(entry: WorkspaceDirectoryEntry): void;
   onDelete(entry: WorkspaceDirectoryEntry): void;
+  onFindInFiles(entry: WorkspaceDirectoryEntry): void;
   onDraftValueChange(value: string): void;
   onSelect(path: string): void;
   onCommitDraft(): Promise<void>;
@@ -855,6 +1101,7 @@ function DirectoryChildren({
   onCreate,
   onRename,
   onDelete,
+  onFindInFiles,
   onDraftValueChange,
   onSelect,
   onCommitDraft,
@@ -862,6 +1109,7 @@ function DirectoryChildren({
 }: DirectoryChildrenProps) {
   const { t } = useI18n();
   const refreshRegistry = useContext(ExplorerRefreshContext);
+  const searchState = useContext(ExplorerSearchContext);
   const [entries, setEntries] = useState<WorkspaceDirectoryEntry[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const parentId = useRef(parent.id);
@@ -963,6 +1211,7 @@ function DirectoryChildren({
               onCreate,
               onDelete,
               onDraftValueChange,
+              onFindInFiles,
               onRename,
               onSelect,
               parent,
@@ -975,15 +1224,18 @@ function DirectoryChildren({
           />
         ) : (
           <FileRow
+            count={search?.counts.get(key)}
             depth={depth}
             entry={entry}
             hidden={filteredOut}
             key={entry.id}
             match={search?.matches.get(key)}
             onDelete={onDelete}
-            onOpen={(keepOpen) => {
+            onOpen={(gesture) => {
               onSelect(entry.path);
-              void workspace.openWorkspaceFile(entry.path, keepOpen);
+              if (searchState.openContentMatch && search?.counts.has(key)) {
+                searchState.openContentMatch(entry.path, gesture);
+              } else void workspace.openWorkspaceFile(entry.path, gesture === 'pin');
             }}
             onRename={onRename}
             selected={
@@ -998,7 +1250,17 @@ function DirectoryChildren({
 }
 
 function DirectoryFolder(props: DirectoryChildrenProps & { entry: WorkspaceDirectoryEntry }) {
-  const { entry, workspace, depth = 0, search, onCreate, onRename, onDelete, onSelect } = props;
+  const {
+    entry,
+    workspace,
+    depth = 0,
+    search,
+    onCreate,
+    onRename,
+    onDelete,
+    onFindInFiles,
+    onSelect,
+  } = props;
   const searchState = useContext(ExplorerSearchContext);
   const key = pathKey(entry.path);
   const userExpanded = workspace.expandedPaths.some((path) => pathKey(path) === key);
@@ -1007,12 +1269,14 @@ function DirectoryFolder(props: DirectoryChildrenProps & { entry: WorkspaceDirec
   return (
     <div className="explorer-directory" hidden={(search !== null && !shownInSearch) || undefined}>
       <FolderRow
+        count={search?.counts.get(key)}
         depth={depth}
         entry={entry}
         expanded={expanded}
         match={search?.matches.get(key)}
         onCreate={onCreate}
         onDelete={onDelete}
+        onFindInFiles={onFindInFiles}
         onRename={onRename}
         onSelect={() => {
           onSelect(entry.path);
@@ -1044,10 +1308,12 @@ function FolderRow({
   searchBusy = false,
   tabStop,
   match,
+  count,
   style,
   onCreate,
   onRename,
   onDelete,
+  onFindInFiles,
   onSelect,
 }: {
   entry: WorkspaceDirectoryEntry;
@@ -1058,10 +1324,12 @@ function FolderRow({
   searchBusy?: boolean;
   tabStop?: boolean | undefined;
   match?: WorkspaceSearchNameRange | undefined;
+  count?: number | undefined;
   style?: CSSProperties;
   onCreate(parent: WorkspaceDirectoryEntry, kind: WorkspaceEntryKind, action?: CreateAction): void;
   onRename(entry: WorkspaceDirectoryEntry): void;
   onDelete(entry: WorkspaceDirectoryEntry): void;
+  onFindInFiles(entry: WorkspaceDirectoryEntry): void;
   onSelect(): void;
 }) {
   const { t } = useI18n();
@@ -1084,6 +1352,9 @@ function FolderRow({
         <TooltipTrigger
           render={
             <Button
+              aria-description={
+                count === undefined ? undefined : t('explorer.search.occurrences', { count })
+              }
               aria-expanded={expanded}
               aria-level={isRoot ? 1 : depth + 2}
               aria-selected={selected}
@@ -1099,6 +1370,7 @@ function FolderRow({
         >
           {isRoot ? <FolderOpen /> : expanded ? <ChevronDown /> : <ChevronRight />}
           <ExplorerEntryLabel match={match}>{entry.name}</ExplorerEntryLabel>
+          <ExplorerEntryCount count={count} />
         </TooltipTrigger>
         <TooltipContent align="start" className="explorer-path-tooltip" side="right">
           {entry.path}
@@ -1126,6 +1398,9 @@ function FolderRow({
       <ContextMenuContent className="explorer-context-menu">
         <ContextMenuItem onClick={() => void window.rmside.openWorkspaceFolderInExplorer(entry.id)}>
           <FolderSearch /> {t('explorer.context.open-in-explorer')}
+        </ContextMenuItem>
+        <ContextMenuItem onClick={() => onFindInFiles(entry)}>
+          <TextSearch /> {t('explorer.context.find-in-files')}
         </ContextMenuItem>
         {entry.writable ? (
           <>
@@ -1175,6 +1450,7 @@ function FileRow({
   depth,
   hidden = false,
   match,
+  count,
   onOpen,
   onRename,
   onDelete,
@@ -1184,7 +1460,8 @@ function FileRow({
   depth: number;
   hidden?: boolean;
   match?: WorkspaceSearchNameRange | undefined;
-  onOpen(keepOpen: boolean): void;
+  count?: number | undefined;
+  onOpen(gesture: ContentMatchGesture): void;
   onRename(entry: WorkspaceDirectoryEntry): void;
   onDelete(entry: WorkspaceDirectoryEntry): void;
 }) {
@@ -1193,6 +1470,8 @@ function FileRow({
   const [contextOpen, setContextOpen] = useState(false);
   const key = pathKey(entry.path);
   const isTabStop = searchState.tabStopKey === null ? selected : searchState.tabStopKey === key;
+  const selectedFill =
+    selected && (searchState.activeKey === null || searchState.activeKey === key);
   const row = (
     <div
       className="explorer-row"
@@ -1201,18 +1480,21 @@ function FileRow({
       data-kind="file"
       data-match={match ? true : undefined}
       data-row-key={key}
-      data-selected={selected}
+      data-selected={selectedFill}
       hidden={hidden || undefined}
     >
       <Tooltip>
         <TooltipTrigger
           render={
             <Button
+              aria-description={
+                count === undefined ? undefined : t('explorer.search.occurrences', { count })
+              }
               aria-level={depth + 2}
               aria-selected={selected}
               className="explorer-entry"
-              onClick={() => onOpen(false)}
-              onDoubleClick={() => onOpen(true)}
+              onClick={(event) => onOpen(event.detail === 2 ? 'second-click' : 'click')}
+              onDoubleClick={() => onOpen('pin')}
               role="treeitem"
               style={{ paddingLeft: `${12 + depth * 14}px` }}
               tabIndex={isTabStop ? 0 : -1}
@@ -1222,6 +1504,7 @@ function FileRow({
         >
           <FileCode2 />
           <ExplorerEntryLabel match={match}>{entry.name}</ExplorerEntryLabel>
+          <ExplorerEntryCount count={count} />
         </TooltipTrigger>
         <TooltipContent align="start" className="explorer-path-tooltip" side="right">
           {entry.path}

@@ -32,6 +32,11 @@ import {
 } from '../shared/api';
 import { parseWindowDisplayFingerprint } from './window-placement';
 import {
+  defaultEditorColorScheme,
+  isEditorColorSchemeId,
+  type EditorColorSchemeId,
+} from '../shared/editor-color-scheme';
+import {
   isPreviewLook,
   isPreviewPerspective,
   type PreviewLook,
@@ -54,6 +59,7 @@ export const maximumGameTexturesFirstLinkInstallations = 16;
 export const defaultDesktopSession = Object.freeze<DesktopSession>({
   version: 1,
   themePreference: 'system',
+  editorColorScheme: defaultEditorColorScheme,
   formatOnSave: true,
   indentConditionals: true,
   liveGenerationStages: true,
@@ -61,6 +67,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   mapTransitions: true,
   inlayHints: true,
   inlayHintsVersion: inlayHintsSettingVersion,
+  outlineRow: true,
   deletePermanently: false,
   checkForNewVersions: true,
   languagePreference: 'system',
@@ -111,6 +118,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
     folder: null,
     installedSourceClone: null,
     mapIconSave: null,
+    previewImageSave: null,
     sourceSave: null,
     definitionSave: null,
     mapTestReportImport: null,
@@ -189,6 +197,10 @@ export class DesktopSessionStore {
 
   updateInlayHints(inlayHints: boolean): Promise<void> {
     return this.update((session) => ({ ...session, inlayHints }));
+  }
+
+  updateOutlineRow(outlineRow: boolean): Promise<void> {
+    return this.update((session) => ({ ...session, outlineRow }));
   }
 
   updateDeletePermanently(deletePermanently: boolean): Promise<void> {
@@ -307,6 +319,7 @@ export function cloneDefaultDesktopSession(): DesktopSession {
   return {
     version: 1,
     themePreference: 'system',
+    editorColorScheme: defaultEditorColorScheme,
     formatOnSave: true,
     indentConditionals: true,
     liveGenerationStages: true,
@@ -314,6 +327,7 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     mapTransitions: true,
     inlayHints: true,
     inlayHintsVersion: inlayHintsSettingVersion,
+    outlineRow: true,
     deletePermanently: false,
     checkForNewVersions: true,
     languagePreference: 'system',
@@ -386,6 +400,7 @@ export function validateDesktopSession(value: unknown): DesktopSession {
   return {
     version: 1,
     themePreference: validateTheme(value.themePreference),
+    editorColorScheme: validateEditorColorScheme(value.editorColorScheme),
     formatOnSave:
       value.formatOnSave === undefined
         ? true
@@ -408,6 +423,10 @@ export function validateDesktopSession(value: unknown): DesktopSession {
         : validateBoolean(value.mapTransitions, 'map transitions preference'),
     inlayHints: migrateInlayHints(value.inlayHints, value.inlayHintsVersion),
     inlayHintsVersion: inlayHintsSettingVersion,
+    outlineRow:
+      value.outlineRow === undefined
+        ? true
+        : validateBoolean(value.outlineRow, 'outline row preference'),
     deletePermanently:
       value.deletePermanently === undefined
         ? false
@@ -569,6 +588,7 @@ export function validateDesktopSession(value: unknown): DesktopSession {
         value.dialogLocations.mapIconSave === undefined
           ? null
           : validateNullablePath(value.dialogLocations.mapIconSave),
+      previewImageSave: validateNullablePath(value.dialogLocations.previewImageSave ?? null),
       sourceSave: validateNullablePath(value.dialogLocations.sourceSave ?? null),
       definitionSave: validateNullablePath(value.dialogLocations.definitionSave ?? null),
       mapTestReportImport: validateNullablePath(value.dialogLocations.mapTestReportImport ?? null),
@@ -650,6 +670,14 @@ function validateTheme(value: unknown): ThemePreference {
     throw new Error('theme preference is invalid');
   }
   return value;
+}
+
+function validateEditorColorScheme(value: unknown): EditorColorSchemeId {
+  if (value === undefined) return defaultEditorColorScheme;
+  if (typeof value !== 'string' || value.length > 64) {
+    throw new Error('editor color scheme is invalid');
+  }
+  return isEditorColorSchemeId(value) ? value : defaultEditorColorScheme;
 }
 
 function validateLanguagePreference(value: unknown): LanguagePreference {
@@ -839,6 +867,7 @@ function remapDesktopSessionPaths(
       folder: remap(session.dialogLocations.folder),
       installedSourceClone: remap(session.dialogLocations.installedSourceClone),
       mapIconSave: remap(session.dialogLocations.mapIconSave),
+      previewImageSave: remap(session.dialogLocations.previewImageSave),
       sourceSave: remap(session.dialogLocations.sourceSave),
       definitionSave: remap(session.dialogLocations.definitionSave),
       mapTestReportImport: remap(session.dialogLocations.mapTestReportImport),

@@ -1,11 +1,16 @@
-import { useId, useState, type MouseEvent as ReactMouseEvent } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { useId, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import type { MessageId } from '../shared/i18n/translator';
 import type { OutputSeverity } from '../shared/output-message';
 import { useFollowBottom } from './follow-bottom';
 import { useI18n } from './i18n';
-import { JumpToLatest, OutputMessageText, OutputSource } from './output-panel';
+import {
+  JumpToLatest,
+  OutputGroupHeader,
+  OutputMessageText,
+  OutputSeverityIcon,
+} from './output-panel';
+import { preventMultiClickSelection, usePlainClick } from './plain-click';
 import {
   filterProblemGroups,
   type ProblemEntry,
@@ -33,6 +38,10 @@ function countsText(group: ProblemFileGroup, t: ReturnType<typeof useI18n>['t'])
     .join(' · ');
 }
 
+function worstSeverity(group: ProblemFileGroup): OutputSeverity {
+  return group.counts.error > 0 ? 'error' : group.counts.warning > 0 ? 'warning' : 'info';
+}
+
 export function ProblemsPanel({
   filter,
   groups,
@@ -56,7 +65,7 @@ export function ProblemsPanel({
       return next;
     });
   return (
-    <div className="bottom-list-shell">
+    <div className="bottom-list-shell" onMouseDown={preventMultiClickSelection}>
       <div
         aria-label={t('problems-panel.log.label', { count: rows })}
         className="output-log problems-log owned-scrollbars"
@@ -103,11 +112,6 @@ function ProblemGroupView({
   const { t } = useI18n();
   const titleId = useId();
   const rowsId = useId();
-  const toggleFromHeader = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).closest('button')) return;
-    if (window.getSelection()?.toString()) return;
-    onToggle();
-  };
   return (
     <div
       aria-labelledby={titleId}
@@ -117,41 +121,33 @@ function ProblemGroupView({
       data-protected={group.protected ? 'true' : 'false'}
       role="group"
     >
-      <div
-        className="output-row output-group-header"
-        data-expandable="true"
-        onClick={toggleFromHeader}
-        title={group.path}
-      >
-        <span className="output-time problems-position" />
-        <span className="output-source">
-          {group.protected ? t('problems-panel.group.game-file') : t('problems-panel.group.file')}
-        </span>
-        <div className="output-text">
-          <p className="output-headline output-group-title">
-            <Button
-              aria-controls={rowsId}
-              aria-expanded={open}
-              aria-label={
-                open
-                  ? t('problems-panel.group.hide', { file: group.name })
-                  : t('problems-panel.group.show', { file: group.name })
-              }
-              className="output-group-toggle"
-              onClick={onToggle}
-              size="icon-xs"
-              variant="ghost"
-            >
-              <ChevronRight aria-hidden="true" className="output-chevron" />
-            </Button>
-            <span id={titleId}>
-              {group.name}
-              {' · '}
-              <span className="problems-group-counts">{countsText(total, t)}</span>
-            </span>
-          </p>
-        </div>
-      </div>
+      <OutputGroupHeader
+        icon={
+          <OutputSeverityIcon
+            severity={worstSeverity(total)}
+            source={
+              group.protected ? t('problems-panel.group.game-file') : t('problems-panel.group.file')
+            }
+          />
+        }
+        onToggle={onToggle}
+        open={open}
+        rowsId={rowsId}
+        title={
+          <>
+            <span className="output-group-name">{group.name}</span>
+            {' · '}
+            <span className="output-group-counts">{countsText(total, t)}</span>
+          </>
+        }
+        titleId={titleId}
+        toggleLabel={
+          open
+            ? t('problems-panel.group.hide', { file: group.name })
+            : t('problems-panel.group.show', { file: group.name })
+        }
+        tooltip={group.path}
+      />
       <div
         aria-label={t('problems-panel.group.label', { file: group.name })}
         className="output-group-rows"
@@ -176,23 +172,21 @@ function ProblemRowView({
 }) {
   const { t } = useI18n();
   const go = () => onNavigate(entry.target, entry.location);
-  const goFromRow = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if ((event.target as HTMLElement).closest('button, .output-source[data-overflowing="true"]'))
-      return;
-    if (window.getSelection()?.toString()) return;
-    go();
-  };
+  const click = usePlainClick(go);
   return (
     <div
       className="output-row problems-row"
       data-code={entry.message.code}
       data-severity={entry.severity}
-      onClick={goFromRow}
+      onClick={click.onClick}
+      onMouseDown={click.onMouseDown}
       role="listitem"
     >
+      <OutputSeverityIcon severity={entry.severity} source={t(severityWords[entry.severity])} />
+      <OutputMessageText message={entry.message} noteDetails repeat={entry.count} />
       <Button
         aria-label={t('problems-panel.row.go-to', { location: entry.location })}
-        className="output-time problems-position"
+        className="output-row-end problems-position"
         onClick={go}
         size="xs"
         title={t('problems-panel.row.go-to', { location: entry.location })}
@@ -200,8 +194,6 @@ function ProblemRowView({
       >
         {entry.position}
       </Button>
-      <OutputSource name={t(severityWords[entry.severity])} />
-      <OutputMessageText message={entry.message} noteDetails repeat={entry.count} />
     </div>
   );
 }

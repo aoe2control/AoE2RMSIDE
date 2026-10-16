@@ -688,6 +688,7 @@ impl Server {
             "textDocument/prepareRename" => self.prepare_rename(params),
             "textDocument/rename" => self.rename(params),
             "rms/semanticIdentity" => self.semantic_identity(params),
+            "rms/snippets" => self.rms_snippets(params),
             _ => Err(RequestError {
                 code: -32601,
                 message: "method not found".to_owned(),

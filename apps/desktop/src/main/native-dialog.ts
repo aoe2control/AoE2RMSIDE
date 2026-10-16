@@ -11,6 +11,14 @@ export function dialogPointerPosition(cursor: Point, content: Rectangle): Point 
   return { x: Math.round(x), y: Math.round(y) };
 }
 
+export function reconcilePointerHover(window: DialogWindow, cursorPosition: () => Point): void {
+  if (window.isDestroyed() || window.webContents.isDestroyed() || !window.isFocused()) return;
+  window.webContents.sendInputEvent({
+    type: 'mouseMove',
+    ...dialogPointerPosition(cursorPosition(), window.getContentBounds()),
+  });
+}
+
 export async function withNativeDialog<T>(
   window: DialogWindow,
   show: () => Promise<T>,
@@ -19,11 +27,6 @@ export async function withNativeDialog<T>(
   try {
     return await show();
   } finally {
-    if (!window.isDestroyed() && !window.webContents.isDestroyed() && window.isFocused()) {
-      window.webContents.sendInputEvent({
-        type: 'mouseMove',
-        ...dialogPointerPosition(cursorPosition(), window.getContentBounds()),
-      });
-    }
+    reconcilePointerHover(window, cursorPosition);
   }
 }

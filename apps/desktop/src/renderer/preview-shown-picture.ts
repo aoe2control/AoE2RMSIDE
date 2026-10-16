@@ -61,6 +61,8 @@ export function finalPictureReady(state: {
   return !state.gameTexturesExpected || state.presented;
 }
 
+export const lookPendingDelayMilliseconds = 150;
+
 export function generationBlurShown(state: {
   activity: Pick<GenerationActivity, 'kind' | 'progressive'> | null;
   gameTexturesExpected: boolean;

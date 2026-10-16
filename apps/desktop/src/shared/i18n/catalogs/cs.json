@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Otevřít složku…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Najít v souborech…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Procházet nainstalované mapy…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Vybrat vše"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Vložit fragment…"
+    },
     "app-menu.edit.format-document": {
       "message": "Formátovat dokument"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Zobrazovat průběžné fáze generování"
     },
+    "app-menu.view.outline-row": {
+      "message": "Zobrazovat řádek osnovy"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Zobrazovat nápovědy v kódu"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Jazyk…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Motiv…"
     },
     "app-menu.view.theme": {
       "message": "Motiv"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} mapa} few {{count} mapy} many {{count} mapy} other {{count} map}}"
+    },
+    "output.run.fact.players": {
+      "message": "Hráči"
+    },
+    "output.run.fact.maps": {
+      "message": "Mapy"
+    },
+    "output.run.fact.duration": {
+      "message": "Doba trvání"
+    },
+    "output.run.fact.result": {
+      "message": "Výsledek"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Test mapy"
     },
+    "settings.theme.app-theme": {
+      "message": "Motiv aplikace"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Barvy editoru"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Výchozí"
+    },
+    "settings.theme.close-label": {
+      "message": "Zavřít nastavení motivu"
+    },
     "settings.language.title": {
       "message": "Jazyk"
-    },
-    "settings.language.description": {
-      "message": "Nabídky, dialogy a zprávy používají tento jazyk. Příkazy skriptů, protokoly a balíčky pro podporu zůstávají v angličtině."
     },
     "settings.language.label": {
       "message": "Jazyk rozhraní"
     },
     "settings.language.system": {
       "message": "Jazyk zobrazení Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Zavřít"
     },
     "settings.language.close-label": {
       "message": "Zavřít nastavení jazyka"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Hledat soubory"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Najít v souborech"
+    },
+    "explorer.search.contents": {
+      "message": "Hledat v obsahu souborů"
+    },
+    "explorer.search.match-case": {
+      "message": "Rozlišovat malá a velká písmena"
+    },
+    "explorer.search.whole-word": {
+      "message": "Pouze celá slova"
+    },
+    "explorer.search.scope": {
+      "message": "ve složce {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Hledat v celé složce"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} výskyt} few {{count} výskyty} many {{count} výskytu} other {{count} výskytů}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Některé soubory byly z tohoto hledání vynechány, protože jsou příliš velké nebo je jich příliš mnoho."
+    },
     "explorer.search.clear": {
       "message": "Vymazat hledání souborů"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Otevřít v Průzkumníku"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Najít v souborech…"
     },
     "explorer.context.rename": {
       "message": "Přejmenovat"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Uložit obrázek…"
     },
+    "map-icon.copy-image": {
+      "message": "Kopírovat obrázek"
+    },
+    "map-icon.image-copied": {
+      "message": "Obrázek zkopírován"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Ikonu mapy se nepodařilo uložit"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Ikonu mapy se nepodařilo zkopírovat"
     },
     "map-icon.lightbox.close": {
       "message": "Zavřít náhled ikony mapy"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "Editor zdrojového kódu RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Osnova"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, řádek {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Přejít na oddíl"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Přejít na blok"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Přejít na funkci"
+    },
     "code-editor.tabs.label": {
       "message": "Otevřené soubory"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Otevřít vložený soubor"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Vložit fragment…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Vložit fragment"
+    },
+    "code-editor.snippets.close": {
+      "message": "Zavřít"
+    },
+    "code-editor.snippets.search": {
+      "message": "Hledat fragmenty"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Hledat fragmenty"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Vymazat hledání"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Zobrazit vše"
+    },
+    "code-editor.snippets.list": {
+      "message": "Fragmenty"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Vkládaný text"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Načítání fragmentů…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Fragmenty se nepodařilo načíst. Zavřete toto okno a zkuste to znovu."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Na místo kurzoru se nehodí žádný fragment. Chcete-li vidět všechny fragmenty, zapněte Zobrazit vše."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Hledání neodpovídá žádný fragment."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Vložit"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Zrušit"
+    },
     "code-editor.include.open": {
       "message": "Otevřít {name}"
     },
@@ -3223,6 +3349,12 @@
       "message": "Uložit ikonu mapy"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Obrázek PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Uložit obrázek mapy"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Obrázek PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Malé stromy"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Kopírovat obrázek"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Uložit obrázek…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Obrázek mapy uložen jako {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Obrázek mapy se nepodařilo uložit"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Obrázek mapy se nepodařilo zkopírovat"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "náhled mapy shora v barvách minimapy"

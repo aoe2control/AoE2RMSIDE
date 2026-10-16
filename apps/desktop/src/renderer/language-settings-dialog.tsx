@@ -1,5 +1,4 @@
 import { X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -46,7 +45,6 @@ export function LanguageSettingsDialog({
         <DialogHeader>
           <DialogTitle>{t('settings.language.title')}</DialogTitle>
         </DialogHeader>
-        <p className="language-settings-description">{t('settings.language.description')}</p>
         <Select
           onValueChange={(value) => {
             if (typeof value === 'string') void setPreference(value).catch(console.error);
@@ -78,11 +76,6 @@ export function LanguageSettingsDialog({
             {t('settings.language.editor-next-start')}
           </p>
         ) : null}
-        <div className="language-settings-actions">
-          <Button onClick={() => onOpenChange(false)} variant="secondary">
-            {t('settings.language.close')}
-          </Button>
-        </div>
       </DialogContent>
     </Dialog>
   );

@@ -1,3 +1,5 @@
+import { insertSnippetActionId } from './insert-snippet';
+
 export interface MonacoMenuAction {
   readonly id: string;
   readonly label: string;
@@ -96,6 +98,11 @@ export const sourceEditorMenuActionIds: ReadonlySet<string> = new Set([
   commandPaletteActionId,
 ]);
 
+export const rmsEditorMenuActionIds: ReadonlySet<string> = new Set([
+  ...sourceEditorMenuActionIds,
+  insertSnippetActionId,
+]);
+
 export const mapTestEditorMenuActionIds: ReadonlySet<string> = new Set([
   'editor.action.revealDefinition',
   'editor.action.quickOutline',
@@ -109,10 +116,14 @@ export const mapTestEditorMenuActionIds: ReadonlySet<string> = new Set([
 ]);
 
 const reviewedEditorMenuActionIds: ReadonlyMap<string, ReadonlySet<string>> = new Map([
-  ['rms', sourceEditorMenuActionIds],
+  ['rms', rmsEditorMenuActionIds],
   ['xs', sourceEditorMenuActionIds],
   ['starlark', mapTestEditorMenuActionIds],
 ]);
+
+export function reviewedMenuActionId(id: string): string {
+  return id.replace(/^vs\.editor\.ICodeEditor:\d+:/u, '');
+}
 
 function holdsAction(actions: readonly MonacoMenuAction[], id: string): boolean {
   return actions.some(
@@ -128,7 +139,7 @@ export function editorMenuActionFilter(
   const reviewed = languageId ? reviewedEditorMenuActionIds.get(languageId) : undefined;
   if (!reviewed) return null;
   if (!holdsAction(actions, commandPaletteActionId)) return null;
-  return (action) => reviewed.has(action.id);
+  return (action) => reviewed.has(reviewedMenuActionId(action.id));
 }
 
 export function editorMenuEntries(

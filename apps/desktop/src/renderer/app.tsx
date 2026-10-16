@@ -18,8 +18,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import type {
   ApplicationMenuAction,
-  ApplicationMenuName,
-  ApplicationMenuTriggerBounds,
   PreviewGenerationResult,
   PreviewProvenanceOperation,
   DesktopSession,
@@ -40,8 +38,14 @@ import {
 import { createSessionAutosaveReporter } from './session-autosave';
 import { outputNote, type OutputMessage } from '../shared/output-message';
 import type { PreviewLook, PreviewPerspective } from '../shared/game-art';
-import { AppPanelContext, type MapTestResultsState, type SourceSelection } from './app-context';
+import {
+  AppPanelContext,
+  type EditorFindRequest,
+  type MapTestResultsState,
+  type SourceSelection,
+} from './app-context';
 import { mapTestReplayInput } from './map-test-replay';
+import { contentMatchStep, type ContentMatchGesture, type ContentMatchVisit } from './monaco-find';
 import { mapTestPreviewShown, type PreviewMapOrigin } from './map-test-preview';
 import {
   anchorMapTestRunDiagnostics,
@@ -98,23 +102,25 @@ import {
 import { isModalSurfaceOpen } from './modal-surfaces';
 import { usePresence } from './motion';
 import { runEditorHistoryCommand, setRmsConditionalIndentation } from './monaco-language';
+import { requestInsertSnippet } from './insert-snippet';
 import {
   noSourceHighlightOperations,
   operationsIntersectingByteRanges,
   sameSourceHighlightRequest,
   type SourceHighlightRequest,
 } from './source-highlight';
-import { useKeyboardNavigationFocus } from './keyboard-focus';
 import { nextPaneIndex } from './keyboard-navigation';
 import { navigateToPreviewOperation } from './source-navigation';
 import { resolveTheme, type ThemePreference } from './theme';
 import { useWorkspaceController } from './workspace-controller';
 import { WorkspaceDialog } from './workspace-dialog';
 import { LanguageSettingsDialog } from './language-settings-dialog';
+import { ThemeSettingsDialog } from './theme-settings-dialog';
+import { defaultEditorColorScheme, type EditorColorSchemeId } from '../shared/editor-color-scheme';
 import { DefinitionFileDialog, type DefinitionFileRequest } from './definition-file-dialog';
 import { useI18n } from './i18n';
-import type { MessageId } from '../shared/i18n/translator';
 import { WorkspaceSidebar } from './workspace-sidebar';
+import { ApplicationMenuBar } from './application-menu-bar';
 import {
   UpdateDialog,
   UpdateHeaderControl,
@@ -131,12 +137,6 @@ const previewMinimumWidth = 300;
 const snapThreshold = 96;
 const keyboardResizeStep = 16;
 
-const applicationMenus: { name: ApplicationMenuName; label: MessageId; accessKey: string }[] = [
-  { name: 'file', label: 'app-menu.file.name', accessKey: 'f' },
-  { name: 'edit', label: 'app-menu.edit.name', accessKey: 'e' },
-  { name: 'view', label: 'app-menu.view.name', accessKey: 'v' },
-  { name: 'help', label: 'app-menu.help.name', accessKey: 'h' },
-];
 type BottomPanelTab = 'problems' | 'output' | 'test-results';
 type HorizontalDrag = {
   kind: 'explorer' | 'preview';
@@ -188,6 +188,7 @@ export function App() {
   const [bottomPanelTab, setBottomPanelTab] = useState<BottomPanelTab>('output');
   const [explorerExpanded, setExplorerExpanded] = useState(true);
   const [explorerWidth, setExplorerWidth] = useState(explorerDefaultWidth);
+  const [findInFilesRequest, setFindInFilesRequest] = useState(0);
   const [previewExpanded, setPreviewExpanded] = useState(true);
   const [profilerOpen, setProfilerOpen] = useState(false);
   const [executionProfiler] = useState(() => new ExecutionProfilerStore());
@@ -213,12 +214,16 @@ export function App() {
     () => window.matchMedia('(prefers-color-scheme: dark)').matches,
   );
   const [themePreference, setThemePreference] = useState<ThemePreference>('system');
+  const [editorColorScheme, setEditorColorScheme] =
+    useState<EditorColorSchemeId>(defaultEditorColorScheme);
+  const [themeSettingsOpen, setThemeSettingsOpen] = useState(false);
   const [formatOnSave, setFormatOnSave] = useState(true);
   const [indentConditionals, setIndentConditionals] = useState(true);
   const [liveGenerationStages, setLiveGenerationStages] = useState(true);
   const [gpuMapRendering, setGpuMapRendering] = useState(true);
   const [mapTransitions, setMapTransitions] = useState(true);
   const [inlayHints, setInlayHints] = useState(true);
+  const [outlineRow, setOutlineRow] = useState(true);
   const [deletePermanently, setDeletePermanently] = useState(false);
   const [previewPerspective, setPreviewPerspective] = useState<PreviewPerspective>('top-down');
   const [previewLook, setPreviewLook] = useState<PreviewLook>('minimap');
@@ -246,7 +251,7 @@ export function App() {
     definitionFileRequestKey.current += 1;
     setDefinitionFileRequest({ key: definitionFileRequestKey.current, folderId });
   }, []);
-  const { state: localeState, t } = useI18n();
+  const { t } = useI18n();
   const [managedModDeploymentOpen, setManagedModDeploymentOpen] = useState(false);
   const [managedModDeploymentSourceId, setManagedModDeploymentSourceId] = useState<string | null>(
     null,
@@ -256,7 +261,6 @@ export function App() {
   const bottomPanelResize = useRef<BottomPanelResize | null>(null);
   const horizontalResizeFrame = useRef<number | null>(null);
   const bottomResizeFrame = useRef<number | null>(null);
-  const applicationMenuElement = useRef<HTMLElement>(null);
   const appShellElement = useRef<HTMLElement>(null);
   const bindAppShell = useCallback(
     (element: HTMLElement | null) => {
@@ -290,6 +294,30 @@ export function App() {
   const workspace = useWorkspaceController(appendOutput, formatOnSave, deletePermanently);
   const workspaceRef = useRef(workspace);
   workspaceRef.current = workspace;
+  const lastContentMatch = useRef<ContentMatchVisit | null>(null);
+  const openContentSearchMatch = useCallback(
+    async (path: string, gesture: ContentMatchGesture, find: EditorFindRequest) => {
+      const activeUriBefore = workspaceRef.current.activeDocument.uri;
+      const document = await workspaceRef.current.openWorkspaceFile(path, gesture === 'pin');
+      if (!document) return;
+      const step = contentMatchStep(
+        lastContentMatch.current,
+        { uri: document.uri, find, activeUriBefore },
+        gesture,
+      );
+      if (step === 'stay') return;
+      lastContentMatch.current = { uri: document.uri, find, step };
+      setSelection({
+        uri: document.uri,
+        utf16StartOffset: 0,
+        utf16EndOffset: 0,
+        marker: `${document.name}, ${step} occurrence of ${JSON.stringify(find.query)}`,
+        find,
+        ...(step === 'next' ? { findNext: true } : {}),
+      });
+    },
+    [],
+  );
   const readOnlySourceKeys = useMemo(
     () =>
       new Set(
@@ -596,6 +624,7 @@ export function App() {
       openManagedModDeployment,
       openSourceLocation,
       resolvedTheme,
+      editorColorScheme,
       executionProfiler,
       previewCandidates,
       liveGenerationStages,
@@ -654,6 +683,7 @@ export function App() {
       pinnedPreviewSource,
       previewExecution,
       resolvedTheme,
+      editorColorScheme,
       selectPreviewOperation,
       selection,
       sourceInvalid,
@@ -741,12 +771,14 @@ export function App() {
     if (!workspace.sessionReady || !workspace.restoredSession || sessionApplied) return;
     const session = workspace.restoredSession;
     setThemePreference(session.themePreference);
+    setEditorColorScheme(session.editorColorScheme);
     setFormatOnSave(session.formatOnSave);
     setIndentConditionals(session.indentConditionals);
     setLiveGenerationStages(session.liveGenerationStages);
     setGpuMapRendering(session.gpuMapRendering);
     setMapTransitions(session.mapTransitions);
     setInlayHints(session.inlayHints);
+    setOutlineRow(session.outlineRow);
     setDeletePermanently(session.deletePermanently);
     setPreviewPerspective(session.previewPerspective);
     setPreviewLook(session.previewLook);
@@ -803,12 +835,14 @@ export function App() {
         ...workspace.restoredSession!,
         version: 1,
         themePreference,
+        editorColorScheme,
         formatOnSave,
         indentConditionals,
         liveGenerationStages,
         gpuMapRendering,
         mapTransitions,
         inlayHints,
+        outlineRow,
         deletePermanently,
         previewPerspective,
         previewLook,
@@ -844,6 +878,7 @@ export function App() {
     sessionAutosave,
     bottomPanelHeight,
     bottomPanelTab,
+    editorColorScheme,
     explorerExpanded,
     explorerWidth,
     formatOnSave,
@@ -852,6 +887,7 @@ export function App() {
     gpuMapRendering,
     mapTransitions,
     inlayHints,
+    outlineRow,
     deletePermanently,
     previewPerspective,
     previewLook,
@@ -933,39 +969,11 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    const menuElement = applicationMenuElement.current;
-    if (!menuElement) return undefined;
-    const syncBounds = () => {
-      const bounds = Array.from(
-        menuElement.querySelectorAll<HTMLButtonElement>('[data-application-menu]'),
-      ).map((element) => {
-        const rectangle = element.getBoundingClientRect();
-        return {
-          name: element.dataset.applicationMenu as ApplicationMenuName,
-          x: rectangle.left,
-          y: rectangle.top,
-          width: rectangle.width,
-          height: rectangle.height,
-        } satisfies ApplicationMenuTriggerBounds;
-      });
-      if (bounds.length === applicationMenus.length)
-        void window.rmside.syncApplicationMenuBounds(bounds);
-    };
-    const observer = new ResizeObserver(syncBounds);
-    observer.observe(menuElement);
-    window.addEventListener('resize', syncBounds);
-    syncBounds();
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', syncBounds);
-    };
-  }, [localeState.locale]);
-
-  useEffect(() => {
     const runMenuAction = (action: ApplicationMenuAction) => {
       const currentWorkspace = workspaceRef.current;
       if (action.type === 'undo' || action.type === 'redo') runEditorHistoryCommand(action.type);
       else if (action.type === 'set-theme') setThemePreference(action.theme);
+      else if (action.type === 'open-theme-settings') setThemeSettingsOpen(true);
       else if (action.type === 'open-language-settings') setLanguageSettingsOpen(true);
       else if (action.type === 'reset-layout') void resetLayout();
       else if (action.type === 'new-file') currentWorkspace.newFile();
@@ -974,7 +982,12 @@ export function App() {
       else if (action.type === 'new-xs-script') currentWorkspace.newXsScript();
       else if (action.type === 'open-file') void currentWorkspace.pickFiles();
       else if (action.type === 'open-folder') void currentWorkspace.pickFolder();
-      else if (action.type === 'browse-installed-sources') openInstalledSources();
+      else if (action.type === 'find-in-files') {
+        if (currentWorkspace.folder) {
+          setExplorerExpanded(true);
+          setFindInFilesRequest((request) => request + 1);
+        }
+      } else if (action.type === 'browse-installed-sources') openInstalledSources();
       else if (action.type === 'deploy-managed-mod') openManagedModDeployment(null);
       else if (action.type === 'import-map-test-report') void importMapTestReport();
       else if (action.type === 'unlink-game-folder') void unlinkSelectedGameInstallation();
@@ -982,6 +995,7 @@ export function App() {
       else if (action.type === 'save') void currentWorkspace.saveActive();
       else if (action.type === 'save-as') void currentWorkspace.saveActiveAs();
       else if (action.type === 'format-document') void currentWorkspace.formatActive();
+      else if (action.type === 'insert-snippet') requestInsertSnippet();
       else if (action.type === 'set-format-on-save') {
         setFormatOnSave(action.enabled);
       } else if (action.type === 'set-indent-conditionals') {
@@ -992,6 +1006,8 @@ export function App() {
         setMapTransitions(action.enabled);
       } else if (action.type === 'set-inlay-hints') {
         setInlayHints(action.enabled);
+      } else if (action.type === 'set-outline-row') {
+        setOutlineRow(action.enabled);
       } else if (action.type === 'set-delete-permanently') {
         setDeletePermanently(action.enabled);
       } else if (action.type === 'set-live-generation-stages') {
@@ -1097,32 +1113,6 @@ export function App() {
       cancel();
     };
   }, []);
-
-  const focusBeforeApplicationMenu = useRef<HTMLElement | null>(null);
-  const applicationMenuKeyboardFocus = useKeyboardNavigationFocus();
-  useEffect(() => {
-    const remember = (event: FocusEvent) => {
-      const target = event.target;
-      if (target instanceof HTMLElement && !target.closest('.application-menu')) {
-        focusBeforeApplicationMenu.current = target;
-      }
-    };
-    document.addEventListener('focusin', remember, true);
-    return () => document.removeEventListener('focusin', remember, true);
-  }, []);
-  const openApplicationMenu = useCallback(
-    (event: ReactMouseEvent<HTMLButtonElement>, name: ApplicationMenuName) => {
-      const trigger = event.currentTarget;
-      const bounds = trigger.getBoundingClientRect();
-      if (document.activeElement === trigger) {
-        const previous = focusBeforeApplicationMenu.current;
-        if (previous?.isConnected) previous.focus({ focusVisible: false, preventScroll: true });
-        else trigger.blur();
-      }
-      void window.rmside.openApplicationMenu(name, bounds.left, bounds.bottom);
-    },
-    [],
-  );
 
   const selectBottomPanelTab = useCallback(
     (tab: BottomPanelTab) => {
@@ -1506,29 +1496,7 @@ export function App() {
               )}
             </TooltipContent>
           </Tooltip>
-          <nav
-            aria-label={t('workbench.application-menu.label')}
-            className="application-menu"
-            ref={applicationMenuElement}
-          >
-            {applicationMenus.map((menu) => (
-              <Button
-                accessKey={menu.accessKey}
-                aria-haspopup="menu"
-                className="application-menu-trigger"
-                data-application-menu={menu.name}
-                key={menu.name}
-                onBlur={applicationMenuKeyboardFocus.onBlur}
-                onClick={(event) => openApplicationMenu(event, menu.name)}
-                onFocus={applicationMenuKeyboardFocus.onFocus}
-                onMouseDown={(event) => event.preventDefault()}
-                size="sm"
-                variant="ghost"
-              >
-                {t(menu.label)}
-              </Button>
-            ))}
-          </nav>
+          <ApplicationMenuBar />
           <div aria-hidden="true" className="window-drag-region" />
         </header>
 
@@ -1549,7 +1517,9 @@ export function App() {
         >
           <WorkspaceSidebar
             expanded={explorerExpanded}
+            findInFilesRequest={findInFilesRequest}
             onGenerateDefinitionFile={openDefinitionFile}
+            onOpenContentMatch={openContentSearchMatch}
             workspace={workspace}
           />
           {explorerExpanded || horizontalDragKind === 'explorer' ? (
@@ -1579,6 +1549,7 @@ export function App() {
               <div className="workspace-editor-region">
                 <EditorPanel
                   inlayHints={inlayHints}
+                  outlineRow={outlineRow}
                   executionFailureNotice={executionFailure.notice}
                   executionFailureSequence={executionFailure.raised}
                   onDismissExecutionFailureNotice={dismissExecutionFailureNotice}
@@ -1822,6 +1793,14 @@ export function App() {
           onOpenChange={setLanguageSettingsOpen}
           open={languageSettingsOpen}
         />
+        <ThemeSettingsDialog
+          editorColorScheme={editorColorScheme}
+          onEditorColorSchemeChange={setEditorColorScheme}
+          onOpenChange={setThemeSettingsOpen}
+          onThemePreferenceChange={setThemePreference}
+          open={themeSettingsOpen}
+          themePreference={themePreference}
+        />
         {definitionFilesAvailable(editionCapabilities) ? (
           <DefinitionFileDialog
             onClose={() => setDefinitionFileRequest(null)}
@@ -1877,7 +1856,7 @@ function paneFocusTarget(pane: HTMLElement): HTMLElement | null {
   return (
     Array.from(
       pane.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex="0"]',
+        'button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex="0"]:not([disabled])',
       ),
     ).find((element) => element.getClientRects().length > 0 && !element.closest('[inert]')) ?? null
   );

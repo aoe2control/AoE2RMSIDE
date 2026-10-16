@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Apri cartella…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Cerca nei file…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Sfoglia mappe installate…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Seleziona tutto"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Inserisci frammento…"
+    },
     "app-menu.edit.format-document": {
       "message": "Formatta documento"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Mostra fasi di generazione"
     },
+    "app-menu.view.outline-row": {
+      "message": "Mostra barra della struttura"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Mostra suggerimenti nel codice"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Lingua…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Tema…"
     },
     "app-menu.view.theme": {
       "message": "Tema"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} mappa} many {{count} mappe} other {{count} mappe}}"
+    },
+    "output.run.fact.players": {
+      "message": "Giocatori"
+    },
+    "output.run.fact.maps": {
+      "message": "Mappe"
+    },
+    "output.run.fact.duration": {
+      "message": "Durata"
+    },
+    "output.run.fact.result": {
+      "message": "Risultato"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Test delle mappe"
     },
+    "settings.theme.app-theme": {
+      "message": "Tema dell’app"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Colori dell’editor"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Predefinito"
+    },
+    "settings.theme.close-label": {
+      "message": "Chiudi impostazioni del tema"
+    },
     "settings.language.title": {
       "message": "Lingua"
-    },
-    "settings.language.description": {
-      "message": "Menu, finestre di dialogo e messaggi usano questa lingua. I comandi degli script, i log e i pacchetti di assistenza rimangono in inglese."
     },
     "settings.language.label": {
       "message": "Lingua dell’interfaccia"
     },
     "settings.language.system": {
       "message": "Lingua di visualizzazione di Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Chiudi"
     },
     "settings.language.close-label": {
       "message": "Chiudi impostazioni della lingua"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Cerca file"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Cerca nei file"
+    },
+    "explorer.search.contents": {
+      "message": "Cerca nel contenuto dei file"
+    },
+    "explorer.search.match-case": {
+      "message": "Maiuscole/minuscole"
+    },
+    "explorer.search.whole-word": {
+      "message": "Parola intera"
+    },
+    "explorer.search.scope": {
+      "message": "in {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Cerca in tutta la cartella"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} occorrenza} many {{count} occorrenze} other {{count} occorrenze}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Alcuni file sono stati esclusi da questa ricerca perché troppo grandi o troppo numerosi."
+    },
     "explorer.search.clear": {
       "message": "Cancella la ricerca dei file"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Apri in Esplora file"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Cerca nei file…"
     },
     "explorer.context.rename": {
       "message": "Rinomina"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Salva immagine…"
     },
+    "map-icon.copy-image": {
+      "message": "Copia immagine"
+    },
+    "map-icon.image-copied": {
+      "message": "Immagine copiata"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Impossibile salvare l’icona della mappa"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Impossibile copiare l’icona della mappa"
     },
     "map-icon.lightbox.close": {
       "message": "Chiudi l’anteprima dell’icona della mappa"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "Editor del sorgente RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Struttura"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, riga {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Vai a una sezione"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Vai a un blocco"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Vai a una funzione"
+    },
     "code-editor.tabs.label": {
       "message": "File aperti"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Apri file incluso"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Inserisci frammento…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Inserisci frammento"
+    },
+    "code-editor.snippets.close": {
+      "message": "Chiudi"
+    },
+    "code-editor.snippets.search": {
+      "message": "Cerca frammenti"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Cerca frammenti"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Cancella ricerca"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Mostra tutti"
+    },
+    "code-editor.snippets.list": {
+      "message": "Frammenti"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Testo da inserire"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Caricamento dei frammenti…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Impossibile caricare i frammenti. Chiudi questa finestra e riprova."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Nessun frammento è adatto alla posizione del cursore. Attiva Mostra tutti per vedere tutti i frammenti."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Nessun frammento corrisponde alla ricerca."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Inserisci"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Annulla"
+    },
     "code-editor.include.open": {
       "message": "Apri {name}"
     },
@@ -3223,6 +3349,12 @@
       "message": "Salva icona della mappa"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Immagine PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Salva immagine della mappa"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Immagine PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Alberi piccoli"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Copia immagine"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Salva immagine…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Immagine della mappa salvata come {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Impossibile salvare l’immagine della mappa"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Impossibile copiare l’immagine della mappa"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "anteprima della mappa dall’alto con i colori della minimappa"

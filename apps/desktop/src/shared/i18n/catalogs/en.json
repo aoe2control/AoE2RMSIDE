@@ -93,6 +93,13 @@
       "maxLength": 40,
       "meaning": "Opens a folder in the Explorer; the ellipsis says a dialog follows."
     },
+    "app-menu.file.find-in-files": {
+      "message": "Find in Files…",
+      "screen": "application-menu/file",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Searches the text of the files in the open folder: turns the Explorer search to file contents and puts the cursor in it. Off while no folder is open. The ellipsis says more input follows."
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Browse Installed Maps…",
       "screen": "application-menu/file",
@@ -251,6 +258,13 @@
       "maxLength": 40,
       "meaning": "Selects all text; also in the text selection context menu."
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Insert Snippet…",
+      "screen": "application-menu/edit",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Opens a searchable list of ready-made pieces of script (snippets) and inserts the chosen one at the cursor of the active RMS script."
+    },
     "app-menu.edit.format-document": {
       "message": "Format Document",
       "screen": "application-menu/edit",
@@ -306,6 +320,13 @@
       "control": "menu-item",
       "maxLength": 40,
       "meaning": "Check item: show each stage of the map while it generates."
+    },
+    "app-menu.view.outline-row": {
+      "message": "Show Outline Row",
+      "screen": "application-menu/view",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Check item, on by default: show the slim row below the code that names where the cursor is (its section and block, or its function) and lists the other sections, blocks, or functions to jump to."
     },
     "app-menu.view.inlay-hints": {
       "message": "Show Inlay Hints",
@@ -371,33 +392,40 @@
       "maxLength": 40,
       "meaning": "Opens the interface language setting."
     },
-    "app-menu.view.theme": {
-      "message": "Theme",
+    "app-menu.view.theme-panel": {
+      "message": "Theme…",
       "screen": "application-menu/view",
       "control": "menu-item",
       "maxLength": 40,
-      "meaning": "Submenu of color themes."
+      "meaning": "Opens the Theme panel: the app's light or dark theme and the colors of the code editor's text. The ellipsis says a dialog follows."
+    },
+    "app-menu.view.theme": {
+      "message": "Theme",
+      "screen": "theme-dialog",
+      "control": "dialog-title",
+      "maxLength": 40,
+      "meaning": "Title of the Theme panel (View > Theme…), which holds the app's light or dark theme and the color schemes of the code editor. Before the panel, this was the name of the View menu's theme submenu."
     },
     "app-menu.view.theme.system": {
       "message": "System",
-      "screen": "application-menu/view/theme",
-      "control": "menu-item",
+      "screen": "theme-dialog",
+      "control": "option",
       "maxLength": 24,
-      "meaning": "Radio item: follow the Windows light or dark setting."
+      "meaning": "Option of the app theme switch in the Theme panel: follow the Windows light or dark setting."
     },
     "app-menu.view.theme.light": {
       "message": "Light",
-      "screen": "application-menu/view/theme",
-      "control": "menu-item",
+      "screen": "theme-dialog",
+      "control": "option",
       "maxLength": 24,
-      "meaning": "Radio item: the light color theme."
+      "meaning": "Option of the app theme switch in the Theme panel: the light color theme."
     },
     "app-menu.view.theme.dark": {
       "message": "Dark",
-      "screen": "application-menu/view/theme",
-      "control": "menu-item",
+      "screen": "theme-dialog",
+      "control": "option",
       "maxLength": 24,
-      "meaning": "Radio item: the dark color theme."
+      "meaning": "Option of the app theme switch in the Theme panel: the dark color theme."
     },
     "app-menu.view.actual-size": {
       "message": "Actual Size",
@@ -951,6 +979,34 @@
       "placeholders": {
         "count": "the number of generated maps"
       }
+    },
+    "output.run.fact.players": {
+      "message": "Players",
+      "screen": "output",
+      "control": "label",
+      "maxLength": 20,
+      "meaning": "Label in the fact table of an open run group in Output (label column, value column beside it): how many players the map was generated for, such as 2."
+    },
+    "output.run.fact.maps": {
+      "message": "Maps",
+      "screen": "output",
+      "control": "label",
+      "maxLength": 20,
+      "meaning": "Label in the fact table of an open map-test group in Output: how many maps the map test generated, such as 25."
+    },
+    "output.run.fact.duration": {
+      "message": "Duration",
+      "screen": "output",
+      "control": "label",
+      "maxLength": 20,
+      "meaning": "Label in the fact table of an open run group in Output: how long the run took, such as 0.4 s (not the clock time it finished, which the header shows)."
+    },
+    "output.run.fact.result": {
+      "message": "Result",
+      "screen": "output",
+      "control": "label",
+      "maxLength": 20,
+      "meaning": "Label in the fact table of an open run group in Output: how the run ended, such as Generated, Failed, or Passed."
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms",
@@ -2142,18 +2198,39 @@
       "control": "accessible-name",
       "meaning": "Accessible name of the running map test's progress bar in the Output bar."
     },
+    "settings.theme.app-theme": {
+      "message": "App theme",
+      "screen": "theme-dialog",
+      "control": "label",
+      "maxLength": 32,
+      "meaning": "Label above the switch of System, Light, and Dark in the Theme panel; also the switch's accessible name. It sets the light or dark look of the whole app."
+    },
+    "settings.theme.editor-colors": {
+      "message": "Editor colors",
+      "screen": "theme-dialog",
+      "control": "label",
+      "maxLength": 32,
+      "meaning": "Label above the row of color scheme cards in the Theme panel; also the row's accessible name. A scheme sets the colors of the code editor's text (keywords, comments, numbers, and so on); each card previews its light and dark colors, and the app theme picks which of them the editor uses."
+    },
+    "settings.theme.scheme.default": {
+      "message": "Default",
+      "screen": "theme-dialog",
+      "control": "option",
+      "maxLength": 20,
+      "meaning": "Name of the code editor's original color scheme, the first card in the Theme panel. The other schemes keep their own names (Solarized, Catppuccin, Gruvbox, Ayu, One). It stands alone under the card's preview, so where the language inflects it, it agrees with “color scheme”."
+    },
+    "settings.theme.close-label": {
+      "message": "Close theme settings",
+      "screen": "theme-dialog",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Theme panel's icon-only close button."
+    },
     "settings.language.title": {
       "message": "Language",
       "screen": "language-dialog",
       "control": "dialog-title",
       "maxLength": 32,
       "meaning": "Title of the interface language dialog."
-    },
-    "settings.language.description": {
-      "message": "Menus, dialogs, and messages use this language. Script commands, logs, and support bundles stay in English.",
-      "screen": "language-dialog",
-      "control": "dialog-text",
-      "meaning": "Explains what the language setting changes and what stays English."
     },
     "settings.language.label": {
       "message": "Interface language",
@@ -2170,13 +2247,6 @@
       "placeholders": {
         "language": "the language’s own name, such as English"
       }
-    },
-    "settings.language.close": {
-      "message": "Close",
-      "screen": "language-dialog",
-      "control": "button",
-      "maxLength": 20,
-      "meaning": "Closes the language dialog; a choice applies at once."
     },
     "settings.language.close-label": {
       "message": "Close language settings",
@@ -6936,6 +7006,61 @@
       "maxLength": 24,
       "meaning": "Grey hint text inside the empty Explorer search box."
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Find in files",
+      "screen": "explorer/toolbar",
+      "control": "placeholder",
+      "maxLength": 24,
+      "meaning": "Grey hint text inside the empty Explorer search box while it searches the text inside the files (not their names). Keep it short: at the smallest window the field leaves room for about 20 characters beside its option buttons, so a shorter wording such as “Search text” is fine."
+    },
+    "explorer.search.contents": {
+      "message": "Search file contents",
+      "screen": "explorer/toolbar",
+      "control": "toggle",
+      "meaning": "Accessible name and tooltip of an icon toggle inside the Explorer search box: when on, the search finds files by the text inside them instead of by their names."
+    },
+    "explorer.search.match-case": {
+      "message": "Match case",
+      "screen": "explorer/toolbar",
+      "control": "toggle",
+      "meaning": "Accessible name and tooltip of an icon toggle inside the Explorer search box, shown while it searches file contents: when on, upper and lower case letters must match the way they are typed. Where the code editor's own find box has words for the same option in the language, use them."
+    },
+    "explorer.search.whole-word": {
+      "message": "Whole word",
+      "screen": "explorer/toolbar",
+      "control": "toggle",
+      "meaning": "Accessible name and tooltip of an icon toggle inside the Explorer search box, shown while it searches file contents: when on, the text matches only as a whole word, not as part of a longer word. Where the code editor's own find box has words for the same option in the language, use them."
+    },
+    "explorer.search.scope": {
+      "message": "in {name}",
+      "screen": "explorer/toolbar",
+      "control": "label",
+      "meaning": "Small label under the Explorer search box after Find in Files on a folder: the search covers only that folder. Lower case in English, read as a continuation of the search.",
+      "placeholders": {
+        "name": "the folder's name, shown as written"
+      }
+    },
+    "explorer.search.scope.remove": {
+      "message": "Search the whole folder",
+      "screen": "explorer/toolbar",
+      "control": "button",
+      "meaning": "Accessible name and tooltip of the small x beside the “in folder” label under the Explorer search box: removes the limit, so the search covers the whole open folder again."
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} occurrence} other {{count} occurrences}}",
+      "screen": "explorer/search",
+      "control": "accessible-name",
+      "meaning": "Read by screen readers for a file or folder row while the Explorer searches file contents: how often the searched text occurs in the file, or in all files below the folder. The row shows the number alone.",
+      "placeholders": {
+        "count": "a count, shown as digits"
+      }
+    },
+    "explorer.search.truncated": {
+      "message": "Some files were left out of this search because they are too large or too many.",
+      "screen": "explorer/search",
+      "control": "notice",
+      "meaning": "Small note under the Explorer's search results while it searches file contents, when a size or count limit kept some files from being searched."
+    },
     "explorer.search.clear": {
       "message": "Clear file search",
       "screen": "explorer/toolbar",
@@ -7025,6 +7150,13 @@
       "control": "menu-item",
       "maxLength": 32,
       "meaning": "Explorer folder menu item that shows the folder in Windows File Explorer (the Windows program, not this panel)."
+    },
+    "explorer.context.find-in-files": {
+      "message": "Find in Files…",
+      "screen": "explorer/context-menu",
+      "control": "menu-item",
+      "maxLength": 32,
+      "meaning": "Explorer folder menu item: searches the text of the files in this folder (in the open folder's own menu: in the whole folder) and puts the cursor in the Explorer search box."
     },
     "explorer.context.rename": {
       "message": "Rename",
@@ -7727,35 +7859,35 @@
       "screen": "problems",
       "control": "label",
       "maxLength": 10,
-      "meaning": "The severity word at the start of a Problems row."
+      "meaning": "The severity of a Problems row: the tooltip of the row's leading severity icon and the word screen readers announce for it."
     },
     "problems-panel.severity.warning": {
       "message": "Warning",
       "screen": "problems",
       "control": "label",
       "maxLength": 12,
-      "meaning": "The severity word at the start of a Problems row."
+      "meaning": "The severity of a Problems row: the tooltip of the row's leading severity icon and the word screen readers announce for it."
     },
     "problems-panel.severity.info": {
       "message": "Note",
       "screen": "problems",
       "control": "label",
       "maxLength": 10,
-      "meaning": "The severity word at the start of a Problems row (an informational note)."
+      "meaning": "The severity of a Problems row (an informational note): the tooltip of the row's leading severity icon and the word screen readers announce for it."
     },
     "problems-panel.group.file": {
       "message": "File",
       "screen": "problems",
       "control": "label",
       "maxLength": 10,
-      "meaning": "The quiet word at the start of a file group header in Problems: the problems below are in this script file."
+      "meaning": "The tooltip and screen-reader word of the icon at the start of a file group header in Problems: the problems below are in this script file."
     },
     "problems-panel.group.game-file": {
       "message": "Game file",
       "screen": "problems",
       "control": "label",
       "maxLength": 16,
-      "meaning": "The quiet word at the start of a file group header in Problems for a file of the game itself, which the user cannot edit."
+      "meaning": "The tooltip and screen-reader word of the icon at the start of a file group header in Problems, for a file of the game itself, which the user cannot edit."
     },
     "problems-panel.group.errors": {
       "message": "{count, plural, one {{count} error} other {{count} errors}}",
@@ -8083,6 +8215,18 @@
       "control": "tooltip",
       "meaning": "Tooltip of the icon-only button that saves the map icon as a PNG file; the ellipsis says a Save dialog follows."
     },
+    "map-icon.copy-image": {
+      "message": "Copy image",
+      "screen": "deploy-panel/map-icon",
+      "control": "button",
+      "meaning": "Accessible name and tooltip of the icon-only button beside Save image that copies the map icon to the clipboard as an image."
+    },
+    "map-icon.image-copied": {
+      "message": "Image copied",
+      "screen": "deploy-panel/map-icon",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the map icon's copy image button for a moment after it copied the icon to the clipboard; the button shows a check meanwhile."
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px",
       "screen": "deploy-panel/map-icon",
@@ -8278,6 +8422,12 @@
       "screen": "output",
       "control": "message-headline",
       "meaning": "Output headline when Save image failed."
+    },
+    "map-icon.output.copy-failed": {
+      "message": "The map icon could not be copied",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when copying the map icon to the clipboard failed."
     },
     "map-icon.lightbox.close": {
       "message": "Close map icon preview",
@@ -8878,6 +9028,40 @@
       "control": "accessible-name",
       "meaning": "Accessible name of the code editor panel where random map scripts (RMS) are written. Keep \"RMS\" as written."
     },
+    "code-editor.outline.label": {
+      "message": "Outline",
+      "screen": "editor/outline-row",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the slim row below the code that names where the cursor is: the section and block (or function) the cursor is in, each a button that lists the others to jump to."
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, line {line}",
+      "screen": "editor/outline-row",
+      "control": "accessible-name",
+      "meaning": "Accessible name of one entry in the list a button of the outline row opens: a section, block, or function of the file and the line it starts on; choosing it moves the cursor there. Word it like the file and line pairs in Output (message.format.file-line), with {label} in place of the file name.",
+      "placeholders": {
+        "label": "The entry as written in the script, such as <OBJECTS_GENERATION> or create_object GOLD; never translated.",
+        "line": "The 1-based line number the entry starts on."
+      }
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Go to section",
+      "screen": "editor/outline-row",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the outline row's first button (a small chevron) while the cursor is in no section of the random map script, such as above the first one; it opens the list of the script's sections, and choosing one moves the cursor there."
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Go to block",
+      "screen": "editor/outline-row",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the outline row's second button (a small chevron) while the cursor is in a section of the random map script but in none of its blocks (commands with braces, such as create_object GOLD { … }); it opens the list of that section's blocks, and choosing one moves the cursor there."
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Go to function",
+      "screen": "editor/outline-row",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the outline row's button (a small chevron) while the cursor is in no function of an XS script or map-test script, such as between two; it opens the list of the script's functions (and XS rules), and choosing one moves the cursor there."
+    },
     "code-editor.tabs.label": {
       "message": "Open files",
       "screen": "editor/tabs",
@@ -9283,6 +9467,102 @@
       "maxLength": 32,
       "meaning": "Item of the editor's context menu, shown while the caret is on the file name of an include line (such as #include): opens that file."
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Insert Snippet…",
+      "screen": "editor/context-menu",
+      "control": "menu-item",
+      "maxLength": 32,
+      "meaning": "Item of the editor's context menu in an RMS script: opens a searchable list of ready-made pieces of script (snippets) to insert at the cursor."
+    },
+    "code-editor.snippets.title": {
+      "message": "Insert Snippet",
+      "screen": "editor/insert-snippet",
+      "control": "dialog-title",
+      "meaning": "Title of the dialog that lists ready-made pieces of script (snippets) to insert at the cursor."
+    },
+    "code-editor.snippets.close": {
+      "message": "Close",
+      "screen": "editor/insert-snippet",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Insert Snippet dialog's icon-only close button."
+    },
+    "code-editor.snippets.search": {
+      "message": "Search snippets",
+      "screen": "editor/insert-snippet",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the search field that filters the snippets by their name, description, and first word."
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Search snippets",
+      "screen": "editor/insert-snippet",
+      "control": "placeholder",
+      "maxLength": 24,
+      "meaning": "Shown in the empty search field of the Insert Snippet dialog."
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Clear search",
+      "screen": "editor/insert-snippet",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the button that empties the snippet search field."
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Show all",
+      "screen": "editor/insert-snippet",
+      "control": "toggle",
+      "maxLength": 16,
+      "meaning": "Toggle next to the snippet search: off, the list holds only the snippets that fit where the cursor is (its section and block); on, it holds every snippet. The note shown when no snippet fits (code-editor.snippets.empty.here) names this toggle; keep the same words in both."
+    },
+    "code-editor.snippets.list": {
+      "message": "Snippets",
+      "screen": "editor/insert-snippet",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the list of snippets in the Insert Snippet dialog."
+    },
+    "code-editor.snippets.preview": {
+      "message": "Inserted text",
+      "screen": "editor/insert-snippet",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Heading above the preview of the text the chosen snippet inserts, with each placeholder shown as its default."
+    },
+    "code-editor.snippets.loading": {
+      "message": "Loading snippets…",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown in place of the list while the snippets are being read."
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "The snippets could not be loaded. Close this dialog and try again.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown in place of the list when the snippets could not be read from the language service."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "No snippet fits where the cursor is. Turn on Show all to see every snippet.",
+      "screen": "editor/insert-snippet",
+      "control": "empty-state",
+      "meaning": "Shown in place of the list when no snippet fits the cursor's section or block and Show all is off; “Show all” names the toggle next to the search and must use the same words as that toggle (code-editor.snippets.show-all)."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "No snippet matches this search.",
+      "screen": "editor/insert-snippet",
+      "control": "empty-state",
+      "meaning": "Shown in place of the list when the search matches no snippet."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Insert",
+      "screen": "editor/insert-snippet",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Inserts the highlighted snippet at the cursor and closes the dialog."
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Cancel",
+      "screen": "editor/insert-snippet",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Closes the Insert Snippet dialog without inserting anything."
+    },
     "code-editor.include.open": {
       "message": "Open {name}",
       "screen": "editor/hover",
@@ -9568,6 +9848,20 @@
       "control": "label",
       "maxLength": 32,
       "meaning": "File type name in the Windows Save dialog for a map icon. PNG is the image format and stays as written."
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Save map image",
+      "screen": "native-dialog/preview-image",
+      "control": "dialog-title",
+      "maxLength": 48,
+      "meaning": "Title of the Windows Save dialog that saves the picture the map preview shows as a PNG file."
+    },
+    "native-dialog.preview-image.filter": {
+      "message": "PNG image",
+      "screen": "native-dialog/preview-image",
+      "control": "label",
+      "maxLength": 32,
+      "meaning": "File type name in the Windows Save dialog for the map preview's picture. PNG is the image format and stays as written."
     },
     "file-actions.included-files.refresh-failed": {
       "message": "Included files could not be refreshed",
@@ -10364,6 +10658,41 @@
       "screen": "preview/toolbar",
       "control": "toggle",
       "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar, shown only while the map uses the art of the user's own linked game: draws trees at about half size so the tile under each tree stays visible, as a popular game mod does."
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Copy Image",
+      "screen": "preview/map",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Item of the menu that opens on a right-click on the map preview (without dragging): copies the picture the preview shows to the clipboard as an image. Title case like other menu items."
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Save Image…",
+      "screen": "preview/map",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Item of the menu that opens on a right-click on the map preview (without dragging): saves the picture the preview shows as a PNG file; the ellipsis says a Save dialog follows. Title case like other menu items."
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Saved the map image as {name}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note after Save Image… in the map preview's right-click menu saved the picture the map preview shows.",
+      "placeholders": {
+        "name": "the saved file name, such as arabia.png"
+      }
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "The map image could not be saved",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when saving the picture the map preview shows failed."
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "The map image could not be copied",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when copying the picture the map preview shows to the clipboard failed."
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "top-down map preview in minimap colors",
@@ -11657,7 +11986,7 @@
       "screen": "test-results",
       "control": "label",
       "maxLength": 10,
-      "meaning": "Quiet word in the source column of a check's header row in Test Results (a check is an expect or report call of a map test)."
+      "meaning": "The tooltip and screen-reader word of the icon at the start of a check's header row in Test Results (a check is an expect or report call of a map test)."
     },
     "test-results.results.hide-check-findings": {
       "message": "Hide findings of the check on line {line}",
@@ -11730,7 +12059,7 @@
       "screen": "test-results",
       "control": "label",
       "maxLength": 10,
-      "meaning": "Quiet word in the source column of a finding row in Test Results (a finding is one failed check on one map)."
+      "meaning": "The tooltip and screen-reader word of the icon at the start of a finding row in Test Results (a finding is one failed check on one map)."
     },
     "game-options.map-size.tiny": {
       "message": "Tiny",

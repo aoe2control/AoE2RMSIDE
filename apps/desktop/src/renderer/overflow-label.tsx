@@ -28,6 +28,8 @@ export function OverflowingLabel({
   measure = 'observe',
   focusable = false,
   revealOnParentFocus = false,
+  hoverArea,
+  hoverAreaExcept,
   name,
   textClassName,
 }: {
@@ -36,6 +38,8 @@ export function OverflowingLabel({
   measure?: 'observe' | 'hover';
   focusable?: boolean;
   revealOnParentFocus?: boolean;
+  hoverArea?: string;
+  hoverAreaExcept?: string;
   name: string;
   textClassName: string;
 }) {
@@ -100,6 +104,46 @@ export function OverflowingLabel({
     dispatch({ type: 'leave', offset });
   }, [dispatch]);
 
+  const areaHovered = useRef(false);
+  const hovered = useCallback(
+    (element: HTMLElement) => (hoverArea ? areaHovered.current : element.matches(':hover')),
+    [hoverArea],
+  );
+  const keyboardFocused = useCallback(
+    (element: HTMLElement) =>
+      (focusable && element.matches(':focus')) ||
+      (revealOnParentFocus && parentButton.current === element.ownerDocument.activeElement),
+    [focusable, revealOnParentFocus],
+  );
+
+  useEffect(() => {
+    const element = label.current;
+    const area = hoverArea ? element?.closest<HTMLElement>(hoverArea) : null;
+    if (!element || !area) return undefined;
+    const update = (next: boolean) => {
+      if (areaHovered.current === next) return;
+      areaHovered.current = next;
+      if (next) reveal();
+      else if (!keyboardFocused(element)) restore();
+    };
+    const over = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const excepted = hoverAreaExcept ? target?.closest(hoverAreaExcept) : null;
+      update(!(excepted && area.contains(excepted)));
+    };
+    const out = (event: PointerEvent) => {
+      const next = event.relatedTarget instanceof Node ? event.relatedTarget : null;
+      if (next && area.contains(next)) return;
+      update(false);
+    };
+    area.addEventListener('pointerover', over);
+    area.addEventListener('pointerout', out);
+    return () => {
+      area.removeEventListener('pointerover', over);
+      area.removeEventListener('pointerout', out);
+    };
+  }, [hoverArea, hoverAreaExcept, keyboardFocused, restore, reveal]);
+
   useEffect(() => {
     if (!revealOnParentFocus) return undefined;
     const element = label.current;
@@ -107,7 +151,7 @@ export function OverflowingLabel({
     if (!element || !button) return undefined;
     parentButton.current = button;
     const blur = () => {
-      if (!element.matches(':hover')) restore();
+      if (!hovered(element)) restore();
     };
     button.addEventListener('focus', reveal);
     button.addEventListener('blur', blur);
@@ -117,7 +161,7 @@ export function OverflowingLabel({
       button.removeEventListener('blur', blur);
       parentButton.current = null;
     };
-  }, [revealOnParentFocus, reveal, restore]);
+  }, [hovered, revealOnParentFocus, reveal, restore]);
 
   return (
     <span
@@ -128,7 +172,7 @@ export function OverflowingLabel({
       onBlur={
         focusable
           ? (event) => {
-              if (!event.currentTarget.matches(':hover')) restore();
+              if (!hovered(event.currentTarget)) restore();
             }
           : undefined
       }
@@ -142,14 +186,14 @@ export function OverflowingLabel({
             }
           : undefined
       }
-      onPointerEnter={reveal}
-      onPointerLeave={(event) => {
-        const element = event.currentTarget;
-        const keyboardFocused =
-          (focusable && element.matches(':focus')) ||
-          (revealOnParentFocus && parentButton.current === element.ownerDocument.activeElement);
-        if (!keyboardFocused) restore();
-      }}
+      onPointerEnter={hoverArea ? undefined : reveal}
+      onPointerLeave={
+        hoverArea
+          ? undefined
+          : (event) => {
+              if (!keyboardFocused(event.currentTarget)) restore();
+            }
+      }
       ref={label}
       style={style}
       tabIndex={focusable && overflow > 0 ? 0 : undefined}

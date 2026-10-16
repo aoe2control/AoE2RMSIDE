@@ -47,6 +47,9 @@
     "app-menu.file.open-folder": {
       "message": "Buka Folder…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Cari dalam Fail…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Semak Imbas Peta Terpasang…"
     },
@@ -116,6 +119,9 @@
     "app-menu.edit.select-all": {
       "message": "Pilih Semua"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Sisipkan Coretan Kod…"
+    },
     "app-menu.edit.format-document": {
       "message": "Format Dokumen"
     },
@@ -140,6 +146,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Tunjukkan Peringkat Penjanaan Langsung"
     },
+    "app-menu.view.outline-row": {
+      "message": "Tunjukkan Baris Kerangka"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Tunjukkan Petunjuk Sebaris"
     },
@@ -163,6 +172,9 @@
     },
     "app-menu.view.language": {
       "message": "Bahasa…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Tema…"
     },
     "app-menu.view.theme": {
       "message": "Tema"
@@ -403,6 +415,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, other {{count} peta}}"
+    },
+    "output.run.fact.players": {
+      "message": "Pemain"
+    },
+    "output.run.fact.maps": {
+      "message": "Peta"
+    },
+    "output.run.fact.duration": {
+      "message": "Tempoh"
+    },
+    "output.run.fact.result": {
+      "message": "Hasil"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -923,20 +947,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Ujian peta"
     },
+    "settings.theme.app-theme": {
+      "message": "Tema aplikasi"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Warna penyunting"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Lalai"
+    },
+    "settings.theme.close-label": {
+      "message": "Tutup tetapan tema"
+    },
     "settings.language.title": {
       "message": "Bahasa"
-    },
-    "settings.language.description": {
-      "message": "Menu, dialog dan mesej menggunakan bahasa ini. Perintah skrip, log dan pakej sokongan kekal dalam bahasa Inggeris."
     },
     "settings.language.label": {
       "message": "Bahasa antara muka"
     },
     "settings.language.system": {
       "message": "Bahasa paparan Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Tutup"
     },
     "settings.language.close-label": {
       "message": "Tutup tetapan bahasa"
@@ -2093,6 +2123,30 @@
     "explorer.search.placeholder": {
       "message": "Cari fail"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Cari dalam fail"
+    },
+    "explorer.search.contents": {
+      "message": "Cari kandungan fail"
+    },
+    "explorer.search.match-case": {
+      "message": "Padankan huruf besar/kecil"
+    },
+    "explorer.search.whole-word": {
+      "message": "Seluruh perkataan"
+    },
+    "explorer.search.scope": {
+      "message": "dalam {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Cari seluruh folder"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, other {{count} padanan}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Sesetengah fail tidak disertakan dalam carian ini kerana terlalu besar atau terlalu banyak."
+    },
     "explorer.search.clear": {
       "message": "Kosongkan carian fail"
     },
@@ -2134,6 +2188,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Buka dalam Explorer"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Cari dalam Fail…"
     },
     "explorer.context.rename": {
       "message": "Namakan Semula"
@@ -2582,6 +2639,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Simpan imej…"
     },
+    "map-icon.copy-image": {
+      "message": "Salin imej"
+    },
+    "map-icon.image-copied": {
+      "message": "Imej disalin"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2662,6 +2725,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Ikon peta tidak dapat disimpan"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Ikon peta tidak dapat disalin"
     },
     "map-icon.lightbox.close": {
       "message": "Tutup pratonton ikon peta"
@@ -2933,6 +2999,21 @@
     "code-editor.panel.label": {
       "message": "Penyunting sumber RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Kerangka"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, baris {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Pergi ke bahagian"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Pergi ke blok"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Pergi ke fungsi"
+    },
     "code-editor.tabs.label": {
       "message": "Fail terbuka"
     },
@@ -3116,6 +3197,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Buka Fail Include"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Sisipkan Coretan Kod…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Sisipkan coretan kod"
+    },
+    "code-editor.snippets.close": {
+      "message": "Tutup"
+    },
+    "code-editor.snippets.search": {
+      "message": "Cari coretan kod"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Cari coretan kod"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Kosongkan carian"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Tunjukkan semua"
+    },
+    "code-editor.snippets.list": {
+      "message": "Coretan kod"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Teks untuk disisipkan"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Memuatkan coretan kod…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Coretan kod tidak dapat dimuatkan. Tutup dialog ini dan cuba lagi."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Tiada coretan kod yang sesuai di kedudukan kursor. Hidupkan Tunjukkan semua untuk melihat setiap coretan kod."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Tiada coretan kod sepadan dengan carian ini."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Sisipkan"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Batal"
+    },
     "code-editor.include.open": {
       "message": "Buka {name}"
     },
@@ -3231,6 +3357,12 @@
       "message": "Simpan ikon peta"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Imej PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Simpan imej peta"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Imej PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3553,6 +3685,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Pokok kecil"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Salin Imej"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Simpan Imej…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Imej peta disimpan sebagai {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Imej peta tidak dapat disimpan"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Imej peta tidak dapat disalin"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "pratonton peta dari atas dengan warna peta mini"

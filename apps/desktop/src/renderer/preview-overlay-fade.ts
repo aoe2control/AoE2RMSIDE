@@ -99,8 +99,12 @@ export class OverlayFade<T> {
     incoming: T,
     equals: (first: T, second: T) => boolean,
   ): number {
-    const resumed =
-      this.frame !== null && this.shown !== null && equals(this.shown, incoming) ? this.opacity : 0;
+    const fading = this.frame !== null && this.shown !== null;
+    const returning = fading && equals(this.shown as T, incoming);
+    if (fading && !returning && scope === this.shownScope && this.opacity > opacity) {
+      return 0;
+    }
+    const resumed = returning ? this.opacity : 0;
     this.shown = leaving;
     this.shownScope = scope;
     this.present = false;
@@ -211,11 +215,24 @@ export function sameTileIndices(first: readonly number[], second: readonly numbe
   return true;
 }
 
+export interface CrossFadingHighlight {
+  fill: OverlayFade<readonly number[]>;
+  leaving: OverlayFade<readonly number[]>;
+}
+
+export function crossFadingHighlight(options: OverlayFadeOptions): CrossFadingHighlight {
+  const fill = new OverlayFade<readonly number[]>(options);
+  const leaving = new OverlayFade<readonly number[]>(options);
+  fill.crossFadeWith(leaving, sameTileIndices);
+  return { fill, leaving };
+}
+
 export interface PreviewOverlayFades {
   selection: OverlayFade<unknown>;
-  source: OverlayFade<unknown>;
-  legend: OverlayFade<number[]>;
-  legendLeaving: OverlayFade<number[]>;
+  source: OverlayFade<readonly number[]>;
+  sourceLeaving: OverlayFade<readonly number[]>;
+  legend: OverlayFade<readonly number[]>;
+  legendLeaving: OverlayFade<readonly number[]>;
   tileGrid: OverlayFade<true>;
 }
 
@@ -233,20 +250,34 @@ export function usePreviewOverlayFades(
       requestRender: () => {
         scheduler.current?.request();
         const container = host.current;
-        const { selection, source, legend, legendLeaving, tileGrid } = created;
-        if (!container || !selection || !source || !legend || !legendLeaving || !tileGrid) return;
+        const { selection, source, sourceLeaving, legend, legendLeaving, tileGrid } = created;
+        if (
+          !container ||
+          !selection ||
+          !source ||
+          !sourceLeaving ||
+          !legend ||
+          !legendLeaving ||
+          !tileGrid
+        ) {
+          return;
+        }
         container.dataset.selectionFade = selection.state;
         container.dataset.sourceHighlightFade = source.state;
+        container.dataset.sourceHighlightLeavingFade = sourceLeaving.state;
+        container.dataset.sourceHighlightOpacities = `${source.currentOpacity.toFixed(3)} ${sourceLeaving.currentOpacity.toFixed(3)}`;
         container.dataset.legendHoverFade = legend.state;
         container.dataset.legendHoverLeavingFade = legendLeaving.state;
         container.dataset.tileGridFade = tileGrid.state;
       },
     };
     created.selection = new OverlayFade(options);
-    created.source = new OverlayFade(options);
-    created.legend = new OverlayFade<number[]>(options);
-    created.legendLeaving = new OverlayFade<number[]>(options);
-    created.legend.crossFadeWith(created.legendLeaving, sameTileIndices);
+    const source = crossFadingHighlight(options);
+    created.source = source.fill;
+    created.sourceLeaving = source.leaving;
+    const legend = crossFadingHighlight(options);
+    created.legend = legend.fill;
+    created.legendLeaving = legend.leaving;
     created.tileGrid = new OverlayFade<true>(options);
     return created as PreviewOverlayFades;
   });
@@ -254,6 +285,7 @@ export function usePreviewOverlayFades(
     () => () => {
       fades.selection.destroy();
       fades.source.destroy();
+      fades.sourceLeaving.destroy();
       fades.legend.destroy();
       fades.legendLeaving.destroy();
       fades.tileGrid.destroy();
@@ -288,6 +320,7 @@ export function bindPreviewOverlayFades(
   overlays: {
     selection: Graphics;
     source: [Graphics, ShownRaisedHighlight | null];
+    sourceLeaving: [Graphics, ShownRaisedHighlight | null];
     legend: [Graphics, ShownRaisedHighlight | null];
     legendLeaving: [Graphics, ShownRaisedHighlight | null];
   },
@@ -295,6 +328,7 @@ export function bindPreviewOverlayFades(
   const bound = [
     [fades.selection, overlays.selection, null],
     [fades.source, ...overlays.source],
+    [fades.sourceLeaving, ...overlays.sourceLeaving],
     [fades.legend, ...overlays.legend],
     [fades.legendLeaving, ...overlays.legendLeaving],
   ] as const;

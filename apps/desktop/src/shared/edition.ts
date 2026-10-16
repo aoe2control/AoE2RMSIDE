@@ -249,6 +249,8 @@ const featureChannels: Record<
     'runDevelopmentFixture',
     'previewCandidateAcknowledge',
     'standardIncludeAccess',
+    'clipboardWriteImage',
+    'previewImageSave',
   ],
   generationEngine: ['configurationCatalog'],
   sourceCatalog: ['localPresentationNames', 'definitionFilePrepare', 'definitionFileGenerate'],

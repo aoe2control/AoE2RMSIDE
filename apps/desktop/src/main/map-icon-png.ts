@@ -102,6 +102,19 @@ export function encodeMapIconPng(
   ) {
     throw new MapIconPngError('invalid-input', 'map icon RGBA pixel buffer has an invalid length');
   }
+  const compressed = deflateSync(rgbaPngScanlines(rgba, width, height), deflateOptions);
+  const total = rgbaPngByteLength(compressed.byteLength);
+  if (total > maximumMapIconPngBytesFor(width as MapIconSaveSize)) {
+    throw new MapIconPngError('too-large', 'encoded map icon exceeds the byte limit');
+  }
+  return assembleRgbaPng(width, height, compressed);
+}
+
+export function rgbaPngScanlines(
+  rgba: Uint8Array | Uint8ClampedArray,
+  width: number,
+  height: number,
+): Uint8Array {
   const rowBytes = width * 4;
   const raw = new Uint8Array(height * (1 + rowBytes));
   for (let row = 0; row < height; row += 1) {
@@ -109,7 +122,14 @@ export function encodeMapIconPng(
     raw[target] = 0;
     raw.set(rgba.subarray(row * rowBytes, (row + 1) * rowBytes), target + 1);
   }
-  const compressed = deflateSync(raw, deflateOptions);
+  return raw;
+}
+
+export function rgbaPngByteLength(compressedLength: number): number {
+  return pngSignature.byteLength + (12 + ihdrLength) + (12 + compressedLength) + 12;
+}
+
+export function assembleRgbaPng(width: number, height: number, compressed: Uint8Array): Uint8Array {
   const header = new Uint8Array(ihdrLength);
   const headerView = new DataView(header.buffer);
   headerView.setUint32(0, width);
@@ -119,11 +139,7 @@ export function encodeMapIconPng(
   header[10] = 0;
   header[11] = 0;
   header[12] = 0;
-  const total = pngSignature.byteLength + (12 + ihdrLength) + (12 + compressed.byteLength) + 12;
-  if (total > maximumMapIconPngBytesFor(width as MapIconSaveSize)) {
-    throw new MapIconPngError('too-large', 'encoded map icon exceeds the byte limit');
-  }
-  const output = new Uint8Array(total);
+  const output = new Uint8Array(rgbaPngByteLength(compressed.byteLength));
   output.set(pngSignature, 0);
   let offset = pngSignature.byteLength;
   offset = writeChunk(output, offset, 'IHDR', header);

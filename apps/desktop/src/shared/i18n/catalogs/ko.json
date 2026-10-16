@@ -47,6 +47,9 @@
     "app-menu.file.open-folder": {
       "message": "폴더 열기…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "파일에서 찾기…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "설치된 맵 찾아보기…"
     },
@@ -116,6 +119,9 @@
     "app-menu.edit.select-all": {
       "message": "모두 선택"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "코드 조각 삽입…"
+    },
     "app-menu.edit.format-document": {
       "message": "문서 서식 지정"
     },
@@ -140,6 +146,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "생성 단계 실시간 표시"
     },
+    "app-menu.view.outline-row": {
+      "message": "개요 줄 표시"
+    },
     "app-menu.view.inlay-hints": {
       "message": "인레이 힌트 표시"
     },
@@ -163,6 +172,9 @@
     },
     "app-menu.view.language": {
       "message": "언어…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "테마…"
     },
     "app-menu.view.theme": {
       "message": "테마"
@@ -403,6 +415,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, other {맵 {count}개}}"
+    },
+    "output.run.fact.players": {
+      "message": "플레이어"
+    },
+    "output.run.fact.maps": {
+      "message": "맵"
+    },
+    "output.run.fact.duration": {
+      "message": "소요 시간"
+    },
+    "output.run.fact.result": {
+      "message": "결과"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -923,20 +947,26 @@
     "run-menu.map-test-progress.label": {
       "message": "맵 테스트"
     },
+    "settings.theme.app-theme": {
+      "message": "앱 테마"
+    },
+    "settings.theme.editor-colors": {
+      "message": "편집기 색상"
+    },
+    "settings.theme.scheme.default": {
+      "message": "기본"
+    },
+    "settings.theme.close-label": {
+      "message": "테마 설정 닫기"
+    },
     "settings.language.title": {
       "message": "언어"
-    },
-    "settings.language.description": {
-      "message": "메뉴, 대화 상자 및 메시지에 이 언어를 사용합니다. 스크립트 명령, 로그 및 지원 번들은 영어로 유지됩니다."
     },
     "settings.language.label": {
       "message": "인터페이스 언어"
     },
     "settings.language.system": {
       "message": "Windows 표시 언어({language})"
-    },
-    "settings.language.close": {
-      "message": "닫기"
     },
     "settings.language.close-label": {
       "message": "언어 설정 닫기"
@@ -2093,6 +2123,30 @@
     "explorer.search.placeholder": {
       "message": "파일 검색"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "파일에서 찾기"
+    },
+    "explorer.search.contents": {
+      "message": "파일 내용 검색"
+    },
+    "explorer.search.match-case": {
+      "message": "대/소문자 구분"
+    },
+    "explorer.search.whole-word": {
+      "message": "단어 단위로"
+    },
+    "explorer.search.scope": {
+      "message": "{name}에서"
+    },
+    "explorer.search.scope.remove": {
+      "message": "전체 폴더 검색"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, other {일치 항목 {count}개}}"
+    },
+    "explorer.search.truncated": {
+      "message": "일부 파일은 너무 크거나 너무 많아서 이번 검색에서 제외되었습니다."
+    },
     "explorer.search.clear": {
       "message": "파일 검색 지우기"
     },
@@ -2134,6 +2188,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "탐색기에서 열기"
+    },
+    "explorer.context.find-in-files": {
+      "message": "파일에서 찾기…"
     },
     "explorer.context.rename": {
       "message": "이름 바꾸기"
@@ -2582,6 +2639,12 @@
     "map-icon.save-image.tooltip": {
       "message": "이미지 저장…"
     },
+    "map-icon.copy-image": {
+      "message": "이미지 복사"
+    },
+    "map-icon.image-copied": {
+      "message": "이미지 복사됨"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2662,6 +2725,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "맵 아이콘을 저장하지 못했습니다"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "맵 아이콘을 복사하지 못했습니다"
     },
     "map-icon.lightbox.close": {
       "message": "맵 아이콘 미리 보기 닫기"
@@ -2933,6 +2999,21 @@
     "code-editor.panel.label": {
       "message": "RMS 소스 편집기"
     },
+    "code-editor.outline.label": {
+      "message": "개요"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, {line}행"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "섹션으로 이동"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "블록으로 이동"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "함수로 이동"
+    },
     "code-editor.tabs.label": {
       "message": "열린 파일"
     },
@@ -3116,6 +3197,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "include 파일 열기"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "코드 조각 삽입…"
+    },
+    "code-editor.snippets.title": {
+      "message": "코드 조각 삽입"
+    },
+    "code-editor.snippets.close": {
+      "message": "닫기"
+    },
+    "code-editor.snippets.search": {
+      "message": "코드 조각 검색"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "코드 조각 검색"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "검색 지우기"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "모두 표시"
+    },
+    "code-editor.snippets.list": {
+      "message": "코드 조각"
+    },
+    "code-editor.snippets.preview": {
+      "message": "삽입될 텍스트"
+    },
+    "code-editor.snippets.loading": {
+      "message": "코드 조각 불러오는 중…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "코드 조각을 불러오지 못했습니다. 이 대화 상자를 닫고 다시 시도하세요."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "커서 위치에 맞는 코드 조각이 없습니다. 모든 코드 조각을 보려면 모두 표시를 켜세요."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "검색 조건과 일치하는 코드 조각이 없습니다."
+    },
+    "code-editor.snippets.insert": {
+      "message": "삽입"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "취소"
+    },
     "code-editor.include.open": {
       "message": "{name} 열기"
     },
@@ -3231,6 +3357,12 @@
       "message": "맵 아이콘 저장"
     },
     "native-dialog.map-icon.filter": {
+      "message": "PNG 이미지"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "맵 이미지 저장"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "PNG 이미지"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3553,6 +3685,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "작은 나무"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "이미지 복사"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "이미지 저장…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "맵 이미지를 {name} 이름으로 저장했습니다"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "맵 이미지를 저장하지 못했습니다"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "맵 이미지를 복사하지 못했습니다"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "미니맵 색상으로 위에서 본 맵 미리 보기"

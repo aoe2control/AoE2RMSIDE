@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "打开文件夹…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "在文件中查找…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "浏览已安装地图…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "全选"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "插入代码片段…"
+    },
     "app-menu.edit.format-document": {
       "message": "格式化文档"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "实时显示生成阶段"
     },
+    "app-menu.view.outline-row": {
+      "message": "显示大纲栏"
+    },
     "app-menu.view.inlay-hints": {
       "message": "显示内嵌提示"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "语言…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "主题…"
     },
     "app-menu.view.theme": {
       "message": "主题"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, other {{count} 张地图}}"
+    },
+    "output.run.fact.players": {
+      "message": "玩家"
+    },
+    "output.run.fact.maps": {
+      "message": "地图"
+    },
+    "output.run.fact.duration": {
+      "message": "用时"
+    },
+    "output.run.fact.result": {
+      "message": "结果"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} 毫秒"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "地图测试"
     },
+    "settings.theme.app-theme": {
+      "message": "应用主题"
+    },
+    "settings.theme.editor-colors": {
+      "message": "编辑器配色"
+    },
+    "settings.theme.scheme.default": {
+      "message": "默认"
+    },
+    "settings.theme.close-label": {
+      "message": "关闭主题设置"
+    },
     "settings.language.title": {
       "message": "语言"
-    },
-    "settings.language.description": {
-      "message": "菜单、对话框和消息将使用此语言。脚本命令、日志和支持包仍使用英语。"
     },
     "settings.language.label": {
       "message": "界面语言"
     },
     "settings.language.system": {
       "message": "Windows 显示语言（{language}）"
-    },
-    "settings.language.close": {
-      "message": "关闭"
     },
     "settings.language.close-label": {
       "message": "关闭语言设置"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "搜索文件"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "在文件中查找"
+    },
+    "explorer.search.contents": {
+      "message": "搜索文件内容"
+    },
+    "explorer.search.match-case": {
+      "message": "区分大小写"
+    },
+    "explorer.search.whole-word": {
+      "message": "全字匹配"
+    },
+    "explorer.search.scope": {
+      "message": "在 {name} 中"
+    },
+    "explorer.search.scope.remove": {
+      "message": "搜索整个文件夹"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, other {{count} 处匹配}}"
+    },
+    "explorer.search.truncated": {
+      "message": "部分文件过大或数量过多，未包含在此次搜索中。"
+    },
     "explorer.search.clear": {
       "message": "清空文件搜索"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "在 Windows 资源管理器中打开"
+    },
+    "explorer.context.find-in-files": {
+      "message": "在文件中查找…"
     },
     "explorer.context.rename": {
       "message": "重命名"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "保存图像…"
     },
+    "map-icon.copy-image": {
+      "message": "复制图像"
+    },
+    "map-icon.image-copied": {
+      "message": "已复制图像"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} 像素"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "无法保存地图图标"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "无法复制地图图标"
     },
     "map-icon.lightbox.close": {
       "message": "关闭地图图标预览"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "RMS 源代码编辑器"
     },
+    "code-editor.outline.label": {
+      "message": "大纲"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}，第 {line} 行"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "转到区段"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "转到代码块"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "转到函数"
+    },
     "code-editor.tabs.label": {
       "message": "打开的文件"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "打开包含文件"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "插入代码片段…"
+    },
+    "code-editor.snippets.title": {
+      "message": "插入代码片段"
+    },
+    "code-editor.snippets.close": {
+      "message": "关闭"
+    },
+    "code-editor.snippets.search": {
+      "message": "搜索代码片段"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "搜索代码片段"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "清空搜索"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "显示全部"
+    },
+    "code-editor.snippets.list": {
+      "message": "代码片段"
+    },
+    "code-editor.snippets.preview": {
+      "message": "将插入的文本"
+    },
+    "code-editor.snippets.loading": {
+      "message": "正在加载代码片段…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "无法加载代码片段。请关闭此对话框后重试。"
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "没有适合光标位置的代码片段。打开“显示全部”即可查看所有代码片段。"
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "没有符合搜索条件的代码片段。"
+    },
+    "code-editor.snippets.insert": {
+      "message": "插入"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "取消"
+    },
     "code-editor.include.open": {
       "message": "打开 {name}"
     },
@@ -3223,6 +3349,12 @@
       "message": "保存地图图标"
     },
     "native-dialog.map-icon.filter": {
+      "message": "PNG 图像"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "保存地图图像"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "PNG 图像"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "小树"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "复制图像"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "保存图像…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "已将地图图像保存为 {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "无法保存地图图像"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "无法复制地图图像"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "使用小地图配色的俯视地图预览"

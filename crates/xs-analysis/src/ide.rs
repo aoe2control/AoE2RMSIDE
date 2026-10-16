@@ -364,6 +364,9 @@ fn collect_completions(
     wanted: &dyn Fn(&str) -> bool,
     builtin_documentation_inline: bool,
 ) -> Vec<CompletionEntry> {
+    if in_comment_or_string(file, offset) {
+        return Vec::new();
+    }
     if let Some(mut members) = member_completions(file, analysis, offset) {
         members.retain(|entry| wanted(&entry.label));
         return members;
@@ -468,6 +471,47 @@ fn collect_completions(
         });
     }
     entries
+}
+
+fn in_comment_or_string(file: &XsFile, offset: ByteOffset) -> bool {
+    let tokens = &file.tree.tokens;
+    let index = tokens.partition_point(|token| token.range.end < offset);
+    let Some(token) = tokens.get(index) else {
+        return false;
+    };
+    if token.range.start >= offset {
+        return false;
+    }
+    let bytes = file.source.bytes();
+    let start = (token.range.start.0 as usize).min(bytes.len());
+    let end = (token.range.end.0 as usize).clamp(start, bytes.len());
+    let text = &bytes[start..end];
+    match token.kind {
+        TokenKind::LineComment => true,
+        TokenKind::BlockComment => {
+            offset < token.range.end || !(text.len() >= 4 && text.ends_with(b"*/"))
+        }
+        TokenKind::String => offset < token.range.end || !string_is_closed(text),
+        _ => false,
+    }
+}
+
+fn string_is_closed(text: &[u8]) -> bool {
+    let mut index = 1;
+    while index < text.len() {
+        match text[index] {
+            b'"' => return index + 1 == text.len(),
+            b'\\'
+                if text
+                    .get(index + 1)
+                    .is_some_and(|byte| !matches!(byte, b'\r' | b'\n')) =>
+            {
+                index += 2;
+            }
+            _ => index += 1,
+        }
+    }
+    false
 }
 
 fn label_completions(

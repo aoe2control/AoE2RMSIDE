@@ -54,8 +54,15 @@ interface PictureLayer {
   destroy(): void;
 }
 
+interface ParkedPicture {
+  terrain: NonNullable<GameArtLayerCache['gameArtTerrain']>;
+  sprites: GameArtLayerCache['gameArtSprites'];
+  cliffs: GameArtLayerCache['gameArtCliffs'];
+}
+
 export interface GameArtPresentationState {
   outgoing: OutgoingPicture | null;
+  parked: ParkedPicture | null;
   minimapShown: boolean;
   minimapHidden: boolean;
   kinds: { objects: boolean; cliffs: boolean };
@@ -65,6 +72,7 @@ export interface GameArtPresentationState {
 export function createGameArtPresentationState(): GameArtPresentationState {
   return {
     outgoing: null,
+    parked: null,
     minimapShown: false,
     minimapHidden: false,
     kinds: { objects: true, cliffs: true },
@@ -85,6 +93,7 @@ export interface GameArtLayerInputs {
   onGpuUnavailable?(reason: GpuMapUnavailableReason): void;
   host: HTMLElement;
   onPresented(): void;
+  keep?: string | null;
   raised?: { surface: ElevationSurface; uniforms: RaisedTerrainUniforms } | null;
 }
 
@@ -123,6 +132,83 @@ function destroyOutgoing(state: GameArtPresentationState): void {
   state.outgoing = null;
   for (const layer of outgoing.layers) layer.destroy();
   outgoing.root.destroy({ children: true });
+}
+
+function parkedLayers(parked: ParkedPicture): PictureLayer[] {
+  const layers: PictureLayer[] = [parked.terrain.layer];
+  if (parked.sprites) layers.push(parked.sprites.layer);
+  if (parked.cliffs) layers.push(parked.cliffs.layer);
+  return layers;
+}
+
+function destroyParked(state: GameArtPresentationState): void {
+  const parked = state.parked;
+  if (!parked) return;
+  state.parked = null;
+  for (const layer of parkedLayers(parked)) layer.destroy();
+}
+
+function parkPicture(cache: GameArtLayerCache): void {
+  const state = cache.gameArtPresentation;
+  const terrain = cache.gameArtTerrain;
+  if (!terrain) return;
+  destroyParked(state);
+  const parked: ParkedPicture = {
+    terrain,
+    sprites: cache.gameArtSprites,
+    cliffs: cache.gameArtCliffs,
+  };
+  for (const layer of parkedLayers(parked)) cache.container.removeChild(layer.container);
+  cache.gameArtTerrain = null;
+  cache.gameArtSprites = null;
+  cache.gameArtCliffs = null;
+  state.parked = parked;
+}
+
+function unparkPicture(cache: GameArtLayerCache): void {
+  const state = cache.gameArtPresentation;
+  const parked = state.parked;
+  if (!parked) return;
+  state.parked = null;
+  destroyOutgoing(state);
+  cache.gameArtTerrain?.layer.destroy();
+  cache.gameArtSprites?.layer.destroy();
+  cache.gameArtCliffs?.layer.destroy();
+  cache.gameArtTerrain = parked.terrain;
+  cache.gameArtSprites = parked.sprites;
+  cache.gameArtCliffs = parked.cliffs;
+  for (const layer of parkedLayers(parked)) cache.container.addChild(layer.container);
+}
+
+export function gameArtPictureKey(cache: GameArtLayerCache): string | null {
+  const terrain = cache.gameArtTerrain;
+  if (terrain?.layer.presented) return terrain.view.key;
+  return cache.gameArtPresentation.parked?.terrain.view.key ?? null;
+}
+
+export function keepsGameArtPicture(
+  replaced: GameArtLayerCache & { sceneKey: string; key: string },
+  next: { sceneKey: string; key: string },
+  keep: string | null,
+): boolean {
+  return (
+    keep !== null &&
+    replaced.key !== next.key &&
+    replaced.sceneKey === next.sceneKey &&
+    gameArtPictureKey(replaced) === keep
+  );
+}
+
+export function framedGameArtTerrain(
+  cache: GameArtLayerCache,
+): 'textures' | 'previous' | 'colours' | 'none' {
+  const terrain = cache.gameArtTerrain?.layer;
+  if (terrain?.presented && terrain.container.visible && terrain.container.parent) {
+    return 'textures';
+  }
+  if (cache.gameArtPresentation.outgoing) return 'previous';
+  for (const chunk of cache.chunks.values()) if (chunk.container.visible) return 'colours';
+  return 'none';
 }
 
 function terrainPresented(cache: GameArtLayerCache): boolean {
@@ -181,8 +267,25 @@ export function syncGameArtLayers(cache: GameArtLayerCache, inputs: GameArtLayer
   cache.gameArtStore = inputs.store;
   if (!inputs.expected) state.minimapShown = true;
   const renderer = inputs.renderer ?? 'cpu';
+  const keep = inputs.keep ?? null;
+  const parked = state.parked;
+  if (parked) {
+    if (inputs.expected && inputs.terrain !== null && inputs.terrain === parked.terrain.view) {
+      unparkPicture(cache);
+    } else if (inputs.terrain !== null || parked.terrain.view.key !== keep) {
+      destroyParked(state);
+    }
+  }
   const current = cache.gameArtTerrain;
-  if (current && (current.view !== inputs.terrain || current.layer.renderer !== renderer)) {
+  if (
+    current &&
+    !inputs.expected &&
+    inputs.terrain === null &&
+    current.layer.presented &&
+    current.view.key === keep
+  ) {
+    parkPicture(cache);
+  } else if (current && (current.view !== inputs.terrain || current.layer.renderer !== renderer)) {
     if (inputs.terrain && current.layer.presented) {
       const kept: PictureLayer[] = [current.layer];
       if (cache.gameArtSprites) kept.push(cache.gameArtSprites.layer);
@@ -335,6 +438,7 @@ export function handOverGameArtPicture(from: GameArtLayerCache, to: GameArtLayer
 
 export function destroyGameArtLayers(cache: GameArtLayerCache): void {
   destroyOutgoing(cache.gameArtPresentation);
+  destroyParked(cache.gameArtPresentation);
   cache.gameArtTerrain?.layer.destroy();
   cache.gameArtTerrain = null;
   cache.gameArtSprites?.layer.destroy();

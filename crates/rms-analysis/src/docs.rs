@@ -615,17 +615,24 @@ pub fn constant_markdown(family: Option<&Family>, name: &str, value: Option<&str
 }
 
 pub fn snippet_markdown(snippet: &Snippet) -> String {
-    let preview = snippet
+    format!(
+        "{}\n\n{}",
+        snippet.summary,
+        code_block(&snippet_preview_lines(snippet))
+    )
+}
+
+pub fn snippet_preview_lines(snippet: &Snippet) -> Vec<String> {
+    snippet
         .body
         .iter()
-        .map(|line| {
-            strip_placeholders(&line.replace('\t', "    "))
+        .filter_map(|line| {
+            let shown = strip_placeholders(&line.replace('\t', "    "))
                 .trim_end()
-                .to_owned()
+                .to_owned();
+            (!shown.is_empty() || line.is_empty()).then_some(shown)
         })
-        .filter(|line| !line.is_empty())
-        .collect::<Vec<_>>();
-    format!("{}\n\n{}", snippet.summary, code_block(&preview))
+        .collect()
 }
 
 pub fn strip_placeholders(text: &str) -> String {

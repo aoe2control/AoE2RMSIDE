@@ -214,6 +214,58 @@ export function insetBoundaryFrame(
   return { left: inset, top: inset, right: width - inset, bottom: height - inset };
 }
 
+export const boundaryEntranceMarginShare = 0.2;
+
+export function boundaryEntranceMargin(
+  distance: number,
+  fraction: number,
+  inradius: number,
+): number {
+  if (!Number.isFinite(distance) || !Number.isFinite(fraction) || !Number.isFinite(inradius)) {
+    return 0;
+  }
+  const share = Math.min(1, Math.max(0, fraction));
+  const full = Math.min(Math.max(0, distance), Math.max(0, inradius) * boundaryEntranceMarginShare);
+  return full * share;
+}
+
+export function boundaryEdgePixelsPerTile(scaleX: number, scaleY: number): number {
+  const length = Math.hypot(scaleX, scaleY);
+  if (!Number.isFinite(length) || length === 0) return 0;
+  return (2 * Math.abs(scaleX * scaleY)) / length;
+}
+
+export function expandBoundaryLoop(
+  points: readonly number[],
+  width: number,
+  height: number,
+  tiles: number,
+): number[] {
+  const expanded = points.slice();
+  if (!(tiles > 0) || !Number.isFinite(tiles)) return expanded;
+  for (let index = 0; index + 2 < expanded.length; index += 3) {
+    const x = expanded[index]!;
+    const y = expanded[index + 1]!;
+    if (x <= 0) expanded[index] = x - tiles;
+    else if (x >= width) expanded[index] = x + tiles;
+    if (y <= 0) expanded[index + 1] = y - tiles;
+    else if (y >= height) expanded[index + 1] = y + tiles;
+  }
+  return expanded;
+}
+
+export function cssNumber(value: string, fallback: number): number {
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+export function cssPixels(value: string): number {
+  const match = /^\s*(-?[\d.]+)px\s*$/u.exec(value);
+  if (!match) return 0;
+  const amount = Number.parseFloat(match[1]!);
+  return Number.isFinite(amount) && amount > 0 ? amount : 0;
+}
+
 function atX(from: BoundaryPoint, to: BoundaryPoint, x: number): BoundaryPoint {
   const t = (x - from.x) / (to.x - from.x);
   return { x, y: from.y + (to.y - from.y) * t };

@@ -31,13 +31,16 @@ function ContextMenuContent({
   sideOffset = 0,
   anchor,
   collisionBoundary,
+  surface = 'menu',
   ref,
   ...props
 }: ContextMenuPrimitive.Popup.Props &
   Pick<
     ContextMenuPrimitive.Positioner.Props,
     'align' | 'alignOffset' | 'anchor' | 'collisionBoundary' | 'side' | 'sideOffset'
-  >) {
+  > & {
+    surface?: 'menu' | 'popup';
+  }) {
   const popupRef = useLeavingSurface(ref);
   return (
     <ContextMenuPrimitive.Portal>
@@ -53,6 +56,7 @@ function ContextMenuContent({
         <ContextMenuPrimitive.Popup
           ref={popupRef}
           data-slot="context-menu-content"
+          data-surface={surface}
           className={cn(
             'motion-surface z-50 max-h-(--available-height) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none relative bg-popover/70 before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:backdrop-blur-2xl before:backdrop-saturate-150 **:data-[slot$=-item]:focus:bg-foreground/10 **:data-[slot$=-item]:data-highlighted:bg-foreground/10 **:data-[slot$=-separator]:bg-foreground/5 **:data-[slot$=-trigger]:focus:bg-foreground/10 **:data-[slot$=-trigger]:aria-expanded:bg-foreground/10! **:data-[variant=destructive]:focus:bg-foreground/10! **:data-[variant=destructive]:text-accent-foreground! **:data-[variant=destructive]:**:text-accent-foreground!',
             className,

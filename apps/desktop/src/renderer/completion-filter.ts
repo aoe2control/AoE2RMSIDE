@@ -53,8 +53,13 @@ export function completionList<T>(
 
 export type WordBasedSuggestions = 'off' | 'matchingDocuments';
 
-export function wordBasedSuggestionsFor(languageId: string): WordBasedSuggestions {
-  return languageId === 'rms' || languageId === 'xs' ? 'off' : 'matchingDocuments';
+export function wordBasedSuggestionsFor(
+  languageId: string,
+  cursorIn: 'code' | 'string' | 'comment' = 'code',
+): WordBasedSuggestions {
+  return languageId === 'rms' || languageId === 'xs' || cursorIn !== 'code'
+    ? 'off'
+    : 'matchingDocuments';
 }
 
 export const triggerParameterHintsCommand = 'editor.action.triggerParameterHints';

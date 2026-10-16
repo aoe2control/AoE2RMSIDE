@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Открыть папку…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Найти в файлах…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Просмотреть установленные карты…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Выделить всё"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Вставить фрагмент…"
+    },
     "app-menu.edit.format-document": {
       "message": "Форматировать документ"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Показывать этапы создания карты"
     },
+    "app-menu.view.outline-row": {
+      "message": "Показывать строку структуры"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Показывать встроенные подсказки"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Язык…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Тема…"
     },
     "app-menu.view.theme": {
       "message": "Тема"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} карта} few {{count} карты} many {{count} карт} other {{count} карты}}"
+    },
+    "output.run.fact.players": {
+      "message": "Игроки"
+    },
+    "output.run.fact.maps": {
+      "message": "Карты"
+    },
+    "output.run.fact.duration": {
+      "message": "Длительность"
+    },
+    "output.run.fact.result": {
+      "message": "Результат"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} мс"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Тест карты"
     },
+    "settings.theme.app-theme": {
+      "message": "Тема приложения"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Цвета редактора"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Стандартная"
+    },
+    "settings.theme.close-label": {
+      "message": "Закрыть настройки темы"
+    },
     "settings.language.title": {
       "message": "Язык"
-    },
-    "settings.language.description": {
-      "message": "Этот язык используется в меню, диалогах и сообщениях. Команды скриптов, журналы и пакеты данных для поддержки остаются на английском."
     },
     "settings.language.label": {
       "message": "Язык интерфейса"
     },
     "settings.language.system": {
       "message": "Язык интерфейса Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Закрыть"
     },
     "settings.language.close-label": {
       "message": "Закрыть настройки языка"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Поиск файлов"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Найти в файлах"
+    },
+    "explorer.search.contents": {
+      "message": "Искать в содержимом файлов"
+    },
+    "explorer.search.match-case": {
+      "message": "С учётом регистра"
+    },
+    "explorer.search.whole-word": {
+      "message": "Слово целиком"
+    },
+    "explorer.search.scope": {
+      "message": "в папке {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Искать во всей папке"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} вхождение} few {{count} вхождения} many {{count} вхождений} other {{count} вхождения}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Некоторые файлы не вошли в этот поиск: они слишком большие или их слишком много."
+    },
     "explorer.search.clear": {
       "message": "Очистить поиск файлов"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Открыть в Проводнике"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Найти в файлах…"
     },
     "explorer.context.rename": {
       "message": "Переименовать"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Сохранить изображение…"
     },
+    "map-icon.copy-image": {
+      "message": "Копировать изображение"
+    },
+    "map-icon.image-copied": {
+      "message": "Изображение скопировано"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} пикс."
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Не удалось сохранить значок карты"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Не удалось скопировать значок карты"
     },
     "map-icon.lightbox.close": {
       "message": "Закрыть предпросмотр значка карты"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "Редактор исходного кода RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Структура"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, строка {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Перейти к разделу"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Перейти к блоку"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Перейти к функции"
+    },
     "code-editor.tabs.label": {
       "message": "Открытые файлы"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Открыть подключаемый файл"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Вставить фрагмент…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Вставить фрагмент"
+    },
+    "code-editor.snippets.close": {
+      "message": "Закрыть"
+    },
+    "code-editor.snippets.search": {
+      "message": "Поиск фрагментов"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Поиск фрагментов"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Очистить поиск"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Показать все"
+    },
+    "code-editor.snippets.list": {
+      "message": "Фрагменты"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Вставляемый текст"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Загрузка фрагментов…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Не удалось загрузить фрагменты. Закройте это окно и попробуйте снова."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Ни один фрагмент не подходит для места, где стоит курсор. Включите «Показать все», чтобы увидеть все фрагменты."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Нет фрагментов, соответствующих поиску."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Вставить"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Отмена"
+    },
     "code-editor.include.open": {
       "message": "Открыть {name}"
     },
@@ -3223,6 +3349,12 @@
       "message": "Сохранить значок карты"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Изображение PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Сохранить изображение карты"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Изображение PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Маленькие деревья"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Копировать изображение"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Сохранить изображение…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Изображение карты сохранено как {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Не удалось сохранить изображение карты"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Не удалось скопировать изображение карты"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "предпросмотр карты сверху в цветах мини-карты"

@@ -254,16 +254,63 @@ export function outputMessageCount(state: OutputLogState): number {
   return count;
 }
 
-export function outputRunHeaderPrefix(header: OutputRunHeader): string {
-  const parts = [header.script];
-  if (header.seed !== undefined) parts.push(t('output.run.seed', { seed: header.seed }));
-  if (header.size) parts.push(header.size);
-  if (header.players !== undefined) {
-    parts.push(t('output.run.players', { count: header.players }));
+export type OutputRunFactId = 'seed' | 'size' | 'players' | 'maps' | 'duration';
+
+export interface OutputRunFact {
+  id: OutputRunFactId;
+  label: string;
+  value: string;
+  inline: string;
+}
+
+export function outputRunFacts(header: OutputRunHeader): OutputRunFact[] {
+  const facts: OutputRunFact[] = [];
+  if (header.seed !== undefined) {
+    facts.push({
+      id: 'seed',
+      label: t('code-editor.run-menu.seed'),
+      value: String(header.seed),
+      inline: t('output.run.seed', { seed: header.seed }),
+    });
   }
-  if (header.maps !== undefined) parts.push(t('output.run.maps', { count: header.maps }));
-  if (header.durationMs !== undefined) parts.push(formatRunDuration(header.durationMs));
-  return parts.join(' · ');
+  if (header.size) {
+    facts.push({
+      id: 'size',
+      label: t('run-menu.map-size'),
+      value: header.size,
+      inline: header.size,
+    });
+  }
+  if (header.players !== undefined) {
+    facts.push({
+      id: 'players',
+      label: t('output.run.fact.players'),
+      value: String(header.players),
+      inline: t('output.run.players', { count: header.players }),
+    });
+  }
+  if (header.maps !== undefined) {
+    facts.push({
+      id: 'maps',
+      label: t('output.run.fact.maps'),
+      value: String(header.maps),
+      inline: t('output.run.maps', { count: header.maps }),
+    });
+  }
+  if (header.durationMs !== undefined) {
+    const duration = formatRunDuration(header.durationMs);
+    facts.push({
+      id: 'duration',
+      label: t('output.run.fact.duration'),
+      value: duration,
+      inline: duration,
+    });
+  }
+  return facts;
+}
+
+export function outputRunHeaderPrefix(header: OutputRunHeader): string {
+  return [header.script, ...outputRunFacts(header).map((fact) => fact.inline)].join(' · ');
 }
 
 export function outputRunResultLabel(header: OutputRunHeader): string | null {

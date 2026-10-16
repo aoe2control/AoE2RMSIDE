@@ -5,6 +5,7 @@ import type {
   MapTestRunResult,
   PreviewGenerationResult,
 } from '../shared/api';
+import type { EditorColorSchemeId } from '../shared/editor-color-scheme';
 import type { PreviewLook, PreviewPerspective } from '../shared/game-art';
 import type { OutputMessage } from '../shared/output-message';
 import type { ExecutionProfilerStore } from './execution-profiler';
@@ -22,6 +23,14 @@ export interface SourceSelection {
   utf16StartOffset: number;
   utf16EndOffset: number;
   marker: string;
+  find?: EditorFindRequest;
+  findNext?: boolean;
+}
+
+export interface EditorFindRequest {
+  query: string;
+  matchCase: boolean;
+  wholeWord: boolean;
 }
 
 export interface AppPanelContextValue {
@@ -51,6 +60,7 @@ export interface AppPanelContextValue {
   openManagedModDeployment(sourceId: string | null): void;
   openSourceLocation(uri: string, line: number, character: number): Promise<boolean>;
   resolvedTheme: 'light' | 'dark';
+  editorColorScheme: EditorColorSchemeId;
   executionProfiler: ExecutionProfilerStore;
   previewCandidates: PreviewCandidateStore;
   liveGenerationStages: boolean;

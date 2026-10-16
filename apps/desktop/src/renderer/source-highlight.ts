@@ -10,11 +10,14 @@ export interface SourceOutlineSymbol {
   kind: number;
   line: number;
   name?: string;
+  character?: number;
+  endLine?: number;
+  endCharacter?: number;
 }
 
 export interface SourceBlockStructure {
   symbols: readonly SourceOutlineSymbol[];
-  folds: readonly { startLine: number; endLine: number }[];
+  folds: readonly { startLine: number; endLine: number; startCharacter?: number }[];
 }
 
 export interface LineSpan {

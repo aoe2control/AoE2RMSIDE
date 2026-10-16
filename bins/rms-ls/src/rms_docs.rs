@@ -1,12 +1,13 @@
 use std::collections::BTreeMap;
 use std::sync::OnceLock;
 
+use rms_analysis::analyze_document;
 use rms_analysis::docs::{
     DocContext, DocumentationCatalog, TermKind, constant_markdown, documentation_catalog,
-    snippet_markdown, term_markdown,
+    snippet_markdown, snippet_preview_lines, term_markdown,
 };
 use rms_content::packaged_support_bundles;
-use rms_source::ByteOffset;
+use rms_source::{ByteOffset, SourceId, SourceText};
 use rms_syntax::{Token, TokenKind};
 use serde_json::{Value, json};
 
@@ -247,6 +248,66 @@ pub(crate) fn snippet_items(block: &Block, section: &str, sort: &str) -> Vec<Val
             })
         })
         .collect()
+}
+
+pub(crate) fn snippet_list(block: Option<&Block>, section: &str) -> Value {
+    let Some(catalog) = catalog() else {
+        return json!({ "snippets": [] });
+    };
+    let previews = snippet_previews(catalog);
+    let snippets = catalog
+        .snippets
+        .iter()
+        .zip(previews)
+        .map(|(snippet, (preview, tokens))| {
+            let fits =
+                block.is_some_and(|block| snippet.offered(section, *block == Block::TopLevel));
+            json!({
+                "id": snippet.id,
+                "label": snippet.label,
+                "prefix": snippet.prefix,
+                "summary": snippet.summary,
+                "sections": snippet.places,
+                "insertText": snippet.insert_text(),
+                "preview": preview,
+                "previewTokens": tokens,
+                "fits": fits,
+            })
+        })
+        .collect::<Vec<_>>();
+    json!({ "snippets": snippets })
+}
+
+fn snippet_previews(catalog: &DocumentationCatalog) -> &'static [(String, Vec<u32>)] {
+    static PREVIEWS: OnceLock<Vec<(String, Vec<u32>)>> = OnceLock::new();
+    PREVIEWS.get_or_init(|| {
+        catalog
+            .snippets
+            .iter()
+            .map(|snippet| {
+                let preview = snippet_preview_lines(snippet).join("\n");
+                let tokens = preview_semantic_tokens(&preview);
+                (preview, tokens)
+            })
+            .collect()
+    })
+}
+
+fn preview_semantic_tokens(text: &str) -> Vec<u32> {
+    let Ok(source_id) = SourceId::new("untitled:snippet-preview") else {
+        return Vec::new();
+    };
+    let Ok(source) = SourceText::from_bytes(source_id, text.as_bytes()) else {
+        return Vec::new();
+    };
+    let analysis = analyze_document(&source);
+    crate::semantic_token_data(
+        &source,
+        analysis
+            .semantic_tokens
+            .iter()
+            .map(|token| (token.range, crate::semantic_token_kind(token.kind))),
+    )
 }
 
 pub(crate) fn signature_help(

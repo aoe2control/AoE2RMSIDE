@@ -23,6 +23,7 @@ function DropdownMenuContent({
   side = 'bottom',
   sideOffset = 4,
   collisionAvoidance,
+  surface = 'menu',
   className,
   ref,
   ...props
@@ -30,7 +31,9 @@ function DropdownMenuContent({
   Pick<
     MenuPrimitive.Positioner.Props,
     'align' | 'alignOffset' | 'side' | 'sideOffset' | 'collisionAvoidance'
-  >) {
+  > & {
+    surface?: 'menu' | 'popup';
+  }) {
   const popupRef = useLeavingSurface(ref);
   return (
     <MenuPrimitive.Portal>
@@ -45,6 +48,7 @@ function DropdownMenuContent({
         <MenuPrimitive.Popup
           ref={popupRef}
           data-slot="dropdown-menu-content"
+          data-surface={surface}
           className={cn(
             'motion-surface z-50 max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none backdrop-blur-2xl backdrop-saturate-150 data-closed:overflow-hidden bg-popover/70 **:data-[slot$=-item]:focus:bg-foreground/10 **:data-[slot$=-item]:data-highlighted:bg-foreground/10 **:data-[slot$=-separator]:bg-foreground/5 **:data-[slot$=-trigger]:focus:bg-foreground/10 **:data-[slot$=-trigger]:aria-expanded:bg-foreground/10! **:data-[variant=destructive]:focus:bg-foreground/10! **:data-[variant=destructive]:text-accent-foreground! **:data-[variant=destructive]:**:text-accent-foreground!',
             className,

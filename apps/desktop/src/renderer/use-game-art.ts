@@ -29,6 +29,8 @@ import type { GameArtTerrainSources } from './game-art-terrain';
 import { cliffColors } from './game-art-cliffs';
 import type { TopDownObject, TopDownScene } from './top-down-preview';
 
+export const gameArtKeptPictureIdleMilliseconds = 3 * 60 * 1000;
+
 export interface GameArtTerrainView {
   key: string;
   mapHash: string;
@@ -60,6 +62,8 @@ export interface GameArtView {
   cliffs: GameArtCliffView | null;
   store: GameArtAssetStore;
   playerColors: GameArtTeamColors | null;
+  keptKey: string | null;
+  builds: number;
 }
 
 export function useGameArtStatus(): GameArtStatus {
@@ -120,6 +124,13 @@ export interface GameArtTerrainIndexState {
   failed: boolean;
 }
 
+export function gameArtIndexReusable(
+  loaded: { revision: number; index: GameArtTerrainIndex | null } | null,
+  revision: number,
+): boolean {
+  return loaded !== null && loaded.revision === revision && loaded.index !== null;
+}
+
 export function useGameArtTerrainIndex(
   status: GameArtStatus,
   enabled: boolean,
@@ -129,8 +140,11 @@ export function useGameArtTerrainIndex(
     revision: number;
     index: GameArtTerrainIndex | null;
   } | null>(null);
+  const loadedRef = useRef(loaded);
+  loadedRef.current = loaded;
   useEffect(() => {
     if (revision === null) return undefined;
+    if (gameArtIndexReusable(loadedRef.current, revision)) return undefined;
     let current = true;
     void window.rmside
       .getGameArtTerrain()
@@ -201,6 +215,31 @@ interface PublishedGameArt {
   terrain: GameArtTerrainView;
   sprites: GameArtSpriteView | null;
   spritesKey: string | null;
+  revision: number;
+}
+
+export function gameArtKeptKey(
+  published: { terrain: { key: string; mapHash: string }; revision: number } | null,
+  current: { mapHash: string | null; revision: number | null },
+): string | null {
+  if (!published || current.mapHash === null || current.revision === null) return null;
+  if (published.terrain.mapHash !== current.mapHash || published.revision !== current.revision) {
+    return null;
+  }
+  return published.terrain.key;
+}
+
+export function gameArtBuildInFlight(
+  running: { terrainKey: string; spritesKey: string | null } | null,
+  terrainKey: string | null,
+  spritesKey: string | null,
+): boolean {
+  return (
+    running !== null &&
+    terrainKey !== null &&
+    running.terrainKey === terrainKey &&
+    running.spritesKey === spritesKey
+  );
 }
 
 export function gameArtTerrainKey(parts: {
@@ -320,11 +359,20 @@ export function useGameArt(options: {
     revision: number;
     set: GameArtSpriteSet | null;
   } | null>(null);
+  const spriteSetRef = useRef(spriteSet);
+  spriteSetRef.current = spriteSet;
   const mapHash = map?.semanticHash ?? null;
   useEffect(() => {
     if (!wanted || !index || !scene || !mapHash) return undefined;
-    let current = true;
     const revision = index.revision;
+    const loaded = spriteSetRef.current;
+    if (
+      loaded?.set &&
+      gameArtSpriteSetCurrent(loaded, { mapHash, civilizations: civilizationKey, revision })
+    ) {
+      return undefined;
+    }
+    let current = true;
     const objects = spriteRequestObjects(
       scene.objects,
       drawn,
@@ -376,16 +424,43 @@ export function useGameArt(options: {
   const reportedGlyphs = useRef<string | null>(null);
   const inputs = useRef({ appendOutput, civilizationFor, drawn, minimapColor, objectName });
   inputs.current = { appendOutput, civilizationFor, drawn, minimapColor, objectName };
+  const building = useRef<{
+    terrainKey: string;
+    spritesKey: string | null;
+    cancel(): void;
+  } | null>(null);
+  const statistics = useRef({ builds: 0 }).current;
+  useEffect(
+    () => () => {
+      building.current?.cancel();
+      building.current = null;
+    },
+    [],
+  );
   useEffect(() => {
-    if (!wanted) {
-      setPublished(null);
-      return undefined;
-    }
-    if (!terrainKey || !index || !scene || !map || !terrainIds || !mapHash) return undefined;
+    const running = building.current;
+    const stop = () => {
+      running?.cancel();
+      building.current = null;
+    };
+    if (!wanted) return stop();
+    if (!terrainKey || !index || !scene || !map || !terrainIds || !mapHash) return stop();
     const previous = publishedRef.current;
     const reusedTerrain = previous?.terrain.key === terrainKey ? previous.terrain : null;
-    if (previous && gameArtPublishedFor(previous, terrainKey, spritesKey)) return undefined;
+    if (previous && gameArtPublishedFor(previous, terrainKey, spritesKey)) return stop();
+    if (gameArtBuildInFlight(running, terrainKey, spritesKey)) return undefined;
+    stop();
     let current = true;
+    const token = {
+      terrainKey,
+      spritesKey,
+      cancel: () => {
+        current = false;
+      },
+    };
+    building.current = token;
+    statistics.builds += 1;
+    const revision = index.revision;
     const { appendOutput, civilizationFor, drawn, minimapColor, objectName } = inputs.current;
     const build = async () => {
       let terrain = reusedTerrain;
@@ -451,14 +526,14 @@ export function useGameArt(options: {
         }
       }
       store.retain(new Set([...terrain.sources.assetKeys, ...spriteKeys]));
-      setPublished({ terrain, sprites, spritesKey });
+      if (building.current === token) building.current = null;
+      setPublished({ terrain, sprites, spritesKey, revision });
     };
     build().catch(() => {
+      if (building.current === token) building.current = null;
       if (current) setFailedKey(terrainKey);
     });
-    return () => {
-      current = false;
-    };
+    return undefined;
   }, [
     index,
     map,
@@ -481,6 +556,21 @@ export function useGameArt(options: {
     !terrainIndex.failed &&
     (terrainKey === null || failedKey !== terrainKey);
   const shown = wanted && published && published.terrain.mapHash === mapHash ? published : null;
+  const keptKey = offered
+    ? gameArtKeptKey(published, {
+        mapHash,
+        revision: status.state === 'ready' ? status.revision : null,
+      })
+    : null;
+  useEffect(() => {
+    if (wanted || !published) return undefined;
+    if (keptKey === null) {
+      setPublished(null);
+      return undefined;
+    }
+    const timer = window.setTimeout(() => setPublished(null), gameArtKeptPictureIdleMilliseconds);
+    return () => window.clearTimeout(timer);
+  }, [keptKey, published, wanted]);
   const pending =
     expected &&
     map !== null &&
@@ -509,6 +599,8 @@ export function useGameArt(options: {
     cliffs: active ? cliffs : null,
     store,
     playerColors: index?.playerColors ?? null,
+    keptKey,
+    builds: statistics.builds,
   };
 }
 

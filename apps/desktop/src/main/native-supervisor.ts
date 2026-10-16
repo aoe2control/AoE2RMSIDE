@@ -808,6 +808,7 @@ const languageServerRequestMethods = new Set<LanguageServerRequestMethod>([
   'textDocument/inlayHint',
   'completionItem/resolve',
   'rms/semanticIdentity',
+  'rms/snippets',
 ]);
 
 const languageServerNotificationMethods = new Set<LanguageServerNotificationMethod>([

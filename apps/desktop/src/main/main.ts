@@ -8,15 +8,19 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
   app,
   BrowserWindow,
+  clipboard,
+  ClipboardItem,
   dialog,
   ipcMain as electronIpcMain,
   Menu,
+  nativeImage,
   nativeTheme,
   net,
   protocol,
   screen,
   session,
   shell,
+  type MenuItem,
   type MenuItemConstructorOptions,
   type OpenDialogOptions,
   type SaveDialogOptions,
@@ -24,13 +28,17 @@ import {
 import { dialogDirectory, type DialogPurpose } from './dialog-location';
 import { withNativeDialog } from './native-dialog';
 import {
+  applicationMenuModel,
+  findApplicationMenuItem,
+  reportApplicationMenuClicks,
+} from './application-menu-model';
+import { isApplicationMenuKey } from '../shared/application-menu-model';
+import {
   externalLinkUrls,
   ipcChannels,
   isDeploymentProfileId,
   validateMapIconRenderInput,
   type ApplicationMenuAction,
-  type ApplicationMenuName,
-  type ApplicationMenuTriggerBounds,
   type ConfigurationCatalog,
   type ContentPackDescriptor,
   type ControlConnectPurpose,
@@ -93,7 +101,7 @@ import {
   helpMenuItems,
   languageMenuItemVisible,
   liveGenerationStagesMenuState,
-  themeMenuItems,
+  themePanelMenuItem,
 } from './menu-items';
 import { LocaleService } from './locale-service';
 import { deploymentTargetFolderToOpen } from './deployment-target-folder';
@@ -208,6 +216,7 @@ import { validateGameArtImageKeys, validateGameArtSpriteRequest } from '../share
 import { readLocalStandardIncludePaths } from './standard-resource-policy';
 import { InstalledSourceService } from './installed-source-service';
 import { saveGeneratedMapIcon, saveManualMapIcon } from './map-icon-save';
+import { copyImageToClipboard, savePreviewImage } from './image-export';
 import { MapIconSourceCancelled, MapIconSourceGeneration } from './map-icon-source-generation';
 import { linkedGameProcessState } from './linked-game-process';
 import {
@@ -303,13 +312,13 @@ let modalSurfaceOpen = false;
 let gameFolderLinked = false;
 let openLinkedGameFolderAction: (() => Promise<void>) | undefined;
 let resolvedTheme: ResolvedTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
-let themePreference: ThemePreference = 'system';
 let formatOnSavePreference = true;
 let indentConditionalsPreference = true;
 let liveGenerationStagesPreference = true;
 let gpuMapRenderingPreference = true;
 let mapTransitionsPreference = true;
 let inlayHintsPreference = true;
+let outlineRowPreference = true;
 let deletePermanentlyPreference = false;
 let rmsLintRuleSettings: RmsLintWorkspaceRules[] = [];
 let localeService: LocaleService | undefined;
@@ -329,10 +338,8 @@ const presentationArbiter = new PreviewPresentationArbiter<MapTestEvent>({
 });
 let mapTestResultsVisible = false;
 let mapTestPreviewShown = false;
-let applicationMenuBounds: ApplicationMenuTriggerBounds[] = [];
-let activeApplicationMenu: ApplicationMenuName | undefined;
-let applicationMenuGeneration = 0;
-let applicationMenuHoverTimer: NodeJS.Timeout | undefined;
+let insertSnippetAvailable = false;
+let publishedApplicationMenuModel = '';
 let windowCloseApproved = false;
 let rendererUnavailableForClose = false;
 const executionLease = new ExecutionLease(publishExecutionState);
@@ -629,6 +636,7 @@ async function createApplication(): Promise<void> {
   rendererUnavailableForClose = false;
   mapTestResultsVisible = false;
   mapTestPreviewShown = false;
+  insertSnippetAvailable = false;
   disposeEditorInventory();
   scheduleEditorInventoryRefresh = () => {};
   disposeEditorInventory = () => {};
@@ -704,9 +712,9 @@ async function createApplication(): Promise<void> {
   gpuMapRenderingPreference = initialSession.gpuMapRendering;
   mapTransitionsPreference = developmentOverrides().mapTransitions ?? initialSession.mapTransitions;
   inlayHintsPreference = initialSession.inlayHints;
+  outlineRowPreference = initialSession.outlineRow;
   deletePermanentlyPreference = initialSession.deletePermanently;
   rmsLintRuleSettings = initialSession.rmsLintRules;
-  themePreference = initialSession.themePreference;
   installationKind = await detectInstallationKind({
     isPackaged: app.isPackaged,
     executablePath: process.execPath,
@@ -867,7 +875,6 @@ async function createApplication(): Promise<void> {
   });
   mainWindow.on('session-end', () => closeForSessionEnd());
   mainWindow.on('closed', () => {
-    stopApplicationMenuHoverTracking();
     modalSurfaceOpen = false;
     if (windowStateTimer) clearTimeout(windowStateTimer);
     windowStateTimer = undefined;
@@ -985,6 +992,17 @@ function createApplicationMenu(): Menu {
           accelerator: 'CmdOrCtrl+Shift+O',
           click: () => publishMenuAction({ type: 'open-folder' }),
         },
+        {
+          id: 'file.find-in-files',
+          label: t('app-menu.file.find-in-files'),
+          accelerator: applicationShortcuts.findInFiles,
+          enabled: Boolean(workspaceServiceInstance?.workspaceRoot()),
+          click: () => {
+            if (workspaceServiceInstance?.workspaceRoot()) {
+              publishMenuAction({ type: 'find-in-files' });
+            }
+          },
+        },
         ...(editionCapabilities.installedSourceBrowser
           ? [
               {
@@ -1074,6 +1092,12 @@ function createApplicationMenu(): Menu {
         { label: t('app-menu.edit.paste'), role: 'paste' },
         { label: t('app-menu.edit.select-all'), role: 'selectAll' },
         { type: 'separator' },
+        {
+          id: 'edit.insert-snippet',
+          label: t('app-menu.edit.insert-snippet'),
+          enabled: insertSnippetAvailable,
+          click: () => publishMenuAction({ type: 'insert-snippet' }),
+        },
         {
           id: 'edit.format-document',
           label: t('app-menu.edit.format-document'),
@@ -1197,6 +1221,20 @@ function createApplicationMenu(): Menu {
             ] satisfies MenuItemConstructorOptions[])
           : []),
         {
+          id: 'view.outline-row',
+          label: t('app-menu.view.outline-row'),
+          type: 'checkbox',
+          checked: outlineRowPreference,
+          click: (item) => {
+            const enabled =
+              item.checked === outlineRowPreference ? !outlineRowPreference : item.checked;
+            item.checked = enabled;
+            outlineRowPreference = enabled;
+            void desktopSessionStore?.updateOutlineRow(enabled);
+            publishMenuAction({ type: 'set-outline-row', enabled });
+          },
+        },
+        {
           id: 'view.inlay-hints',
           label: t('app-menu.view.inlay-hints'),
           type: 'checkbox',
@@ -1247,11 +1285,8 @@ function createApplicationMenu(): Menu {
             ]
           : []),
         {
-          label: t('app-menu.view.theme'),
-          submenu: themeMenuItems(themePreference).map(({ theme, ...item }) => ({
-            ...item,
-            click: () => publishMenuAction({ type: 'set-theme', theme }),
-          })),
+          ...themePanelMenuItem(),
+          click: () => publishMenuAction({ type: 'open-theme-settings' }),
         },
         { type: 'separator' },
         { label: t('app-menu.view.actual-size'), role: 'resetZoom' },
@@ -1334,7 +1369,10 @@ function dispatchMenuShortcut(input: Electron.Input): boolean {
   );
   const item = shortcut ? applicationMenu?.getMenuItemById(shortcut.id) : null;
   if (!item) return false;
-  if (!input.isAutoRepeat) item.click();
+  if (!input.isAutoRepeat) {
+    item.click();
+    publishApplicationMenuModel();
+  }
   return true;
 }
 
@@ -1424,7 +1462,9 @@ async function refreshRecentApplicationMenu(): Promise<void> {
 
 function refreshApplicationMenu(): void {
   applicationMenu = createApplicationMenu();
+  reportApplicationMenuClicks(applicationMenu, publishApplicationMenuModel);
   Menu.setApplicationMenu(applicationMenu);
+  publishApplicationMenuModel();
 }
 
 let firstGameFolderLinkHandler: (() => void) | undefined;
@@ -1515,65 +1555,19 @@ function applyNativeTheme(nextResolvedTheme: ResolvedTheme): void {
   });
 }
 
-function showApplicationMenu(
-  browserWindow: BrowserWindow,
-  name: ApplicationMenuName,
-  x: number,
-  y: number,
-): void {
-  const submenu = applicationMenu?.getMenuItemById(`menu.${name}`)?.submenu;
-  if (!submenu) throw new Error('application menu is unavailable');
-
-  const previousName = activeApplicationMenu;
-  const generation = ++applicationMenuGeneration;
-  activeApplicationMenu = name;
-  if (previousName) {
-    applicationMenu?.getMenuItemById(`menu.${previousName}`)?.submenu?.closePopup(browserWindow);
-  }
-
-  const open = () => {
-    if (generation !== applicationMenuGeneration || activeApplicationMenu !== name) return;
-    submenu.popup({
-      callback: () => {
-        if (generation !== applicationMenuGeneration || activeApplicationMenu !== name) return;
-        activeApplicationMenu = undefined;
-        stopApplicationMenuHoverTracking();
-      },
-      window: browserWindow,
-      x,
-      y,
-    });
-  };
-  if (previousName) setTimeout(open, 0);
-  else open();
-  startApplicationMenuHoverTracking(browserWindow);
+function publishApplicationMenuModel(): void {
+  const model = JSON.stringify(applicationMenuModel(applicationMenu));
+  if (model === publishedApplicationMenuModel) return;
+  publishedApplicationMenuModel = model;
+  if (!mainWindow || mainWindow.isDestroyed() || mainWindow.webContents.isDestroyed()) return;
+  mainWindow.webContents.send(ipcChannels.applicationMenuModelChanged, JSON.parse(model));
 }
 
-function startApplicationMenuHoverTracking(browserWindow: BrowserWindow): void {
-  if (applicationMenuHoverTimer) return;
-  applicationMenuHoverTimer = setInterval(() => {
-    if (!activeApplicationMenu || browserWindow.isDestroyed()) {
-      stopApplicationMenuHoverTracking();
-      return;
-    }
-    const contentBounds = browserWindow.getContentBounds();
-    const cursor = screen.getCursorScreenPoint();
-    const hovered = applicationMenuBounds.find(
-      (bounds) =>
-        cursor.x >= contentBounds.x + bounds.x &&
-        cursor.x < contentBounds.x + bounds.x + bounds.width &&
-        cursor.y >= contentBounds.y + bounds.y &&
-        cursor.y < contentBounds.y + bounds.y + bounds.height,
-    );
-    if (!hovered || hovered.name === activeApplicationMenu) return;
-    showApplicationMenu(browserWindow, hovered.name, hovered.x, hovered.y + hovered.height);
-  }, 50);
-}
-
-function stopApplicationMenuHoverTracking(): void {
-  if (!applicationMenuHoverTimer) return;
-  clearInterval(applicationMenuHoverTimer);
-  applicationMenuHoverTimer = undefined;
+function activateApplicationMenuItem(browserWindow: BrowserWindow, key: string): void {
+  const item = findApplicationMenuItem(applicationMenu, key) as MenuItem | undefined;
+  if (!item) throw new Error('application menu item is unavailable');
+  item.click({}, browserWindow, browserWindow.webContents);
+  publishApplicationMenuModel();
 }
 
 function showSelectionContextMenu(selectionText: string, canCopy: boolean): void {
@@ -2652,9 +2646,13 @@ function registerIpc(
     inlayHintsPreference = authorized.inlayHints;
     const inlayHintsMenuItem = applicationMenu?.getMenuItemById('view.inlay-hints');
     if (inlayHintsMenuItem) inlayHintsMenuItem.checked = inlayHintsPreference;
+    outlineRowPreference = authorized.outlineRow;
+    const outlineRowMenuItem = applicationMenu?.getMenuItemById('view.outline-row');
+    if (outlineRowMenuItem) outlineRowMenuItem.checked = outlineRowPreference;
     deletePermanentlyPreference = authorized.deletePermanently;
     const deleteMenuItem = applicationMenu?.getMenuItemById('edit.delete-permanently');
     if (deleteMenuItem) deleteMenuItem.checked = deletePermanentlyPreference;
+    publishApplicationMenuModel();
     return sessionStore.write({
       ...authorized,
       window: currentWindowRecord(browserWindow),
@@ -3035,6 +3033,7 @@ function registerIpc(
               'textDocument/semanticTokens/full',
               'textDocument/documentSymbol',
               'textDocument/foldingRange',
+              'rms/snippets',
             ].includes(method) &&
             !!editorRequest.uri &&
             /\.(?:rms|rms2|inc|def)$/iu.test(editorRequest.uri);
@@ -3841,6 +3840,41 @@ function registerIpc(
       rememberDirectory: (path) => sessionStore.updateDialogLocation('mapIconSave', path),
     });
   });
+  ipcMain.handle(ipcChannels.clipboardWriteImage, async (event, request: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    await copyImageToClipboard(request, {
+      mapIcon: (token) => managedDeploymentService.manualMapIcon(token),
+      writeImage: async (png) => {
+        const bytes = Buffer.from(png);
+        if (nativeImage.createFromBuffer(bytes).isEmpty()) return false;
+        await clipboard.write([
+          new ClipboardItem({ 'image/png': new Blob([bytes], { type: 'image/png' }) }),
+        ]);
+        return true;
+      },
+    });
+  });
+  ipcMain.handle(ipcChannels.previewImageSave, async (event, request: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    const browserWindow = assertMainWindowSender(event.sender);
+    return savePreviewImage(request, {
+      rememberedDirectory: async () => (await sessionStore.read()).dialogLocations.previewImageSave,
+      validDirectory: (path) => workspaceService.validDialogPath('folder', path),
+      fallbackDirectories: () =>
+        (['pictures', 'documents'] as const).map((name) => {
+          try {
+            return app.getPath(name);
+          } catch {
+            return null;
+          }
+        }),
+      showSaveDialog: (options) => showSaveDialog(browserWindow, options),
+      writeFile: (path, bytes, exclusive) =>
+        writeFile(path, bytes, exclusive ? { flag: 'wx' } : undefined),
+      rememberDirectory: (path) => sessionStore.updateDialogLocation('previewImageSave', path),
+    });
+  });
   ipcMain.handle(ipcChannels.mapIconRenderInputGet, async (event) => {
     assertTrustedSender(event.senderFrame?.url);
     const session = await sessionStore.read();
@@ -3982,21 +4016,17 @@ function registerIpc(
     controller?.abort();
     return Boolean(controller);
   });
-  ipcMain.handle(
-    ipcChannels.openApplicationMenu,
-    (event, name: ApplicationMenuName, x: number, y: number) => {
-      assertTrustedSender(event.senderFrame?.url);
-      if (name !== 'file' && name !== 'edit' && name !== 'view' && name !== 'help') {
-        throw new Error('invalid application menu name');
-      }
-      if (!Number.isInteger(x) || !Number.isInteger(y) || x < 0 || y < 0) {
-        throw new Error('invalid application menu position');
-      }
-      const browserWindow = BrowserWindow.fromWebContents(event.sender);
-      if (!browserWindow || browserWindow !== mainWindow) throw new Error('untrusted menu window');
-      showApplicationMenu(browserWindow, name, x, y);
-    },
-  );
+  ipcMain.handle(ipcChannels.applicationMenuModel, (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return applicationMenuModel(applicationMenu);
+  });
+  ipcMain.handle(ipcChannels.activateApplicationMenuItem, (event, key: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    const browserWindow = assertMainWindowSender(event.sender);
+    if (!isApplicationMenuKey(key)) throw new Error('application menu item key is invalid');
+    activateApplicationMenuItem(browserWindow, key);
+  });
   ipcMain.handle(ipcChannels.openExternalLink, (event, target: ExternalLinkTarget) => {
     assertTrustedSender(event.senderFrame?.url);
     assertMainWindowSender(event.sender);
@@ -4060,38 +4090,6 @@ function registerIpc(
     }
     return shell.openExternal(url.href);
   });
-  ipcMain.handle(
-    ipcChannels.syncApplicationMenuBounds,
-    (event, bounds: ApplicationMenuTriggerBounds[]) => {
-      assertTrustedSender(event.senderFrame?.url);
-      if (!Array.isArray(bounds) || bounds.length !== 4) {
-        throw new Error('invalid application menu bounds');
-      }
-      const names = new Set<ApplicationMenuName>();
-      applicationMenuBounds = bounds.map((entry) => {
-        if (
-          !entry ||
-          (entry.name !== 'file' &&
-            entry.name !== 'edit' &&
-            entry.name !== 'view' &&
-            entry.name !== 'help') ||
-          names.has(entry.name)
-        ) {
-          throw new Error('invalid application menu bounds name');
-        }
-        names.add(entry.name);
-        for (const coordinate of [entry.x, entry.y, entry.width, entry.height]) {
-          if (!Number.isInteger(coordinate) || coordinate < 0 || coordinate > 16_384) {
-            throw new Error('invalid application menu bounds coordinate');
-          }
-        }
-        if (entry.width < 1 || entry.height < 1) {
-          throw new Error('application menu bounds must be non-empty');
-        }
-        return { ...entry };
-      });
-    },
-  );
   ipcMain.handle(ipcChannels.syncMapTestResultsVisibility, (event, visible: boolean) => {
     assertTrustedSender(event.senderFrame?.url);
     if (typeof visible !== 'boolean') throw new Error('invalid map-test results visibility');
@@ -4106,6 +4104,15 @@ function registerIpc(
     if (shown === mapTestPreviewShown) return;
     mapTestPreviewShown = shown;
     refreshApplicationMenu();
+  });
+  ipcMain.handle(ipcChannels.syncInsertSnippetAvailable, (event, available: boolean) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    if (typeof available !== 'boolean') throw new Error('invalid insert snippet state');
+    insertSnippetAvailable = available;
+    const item = applicationMenu?.getMenuItemById('edit.insert-snippet');
+    if (item) item.enabled = available;
+    publishApplicationMenuModel();
   });
   ipcMain.handle(ipcChannels.syncModalSurfaceOpen, (event, open: boolean) => {
     assertTrustedSender(event.senderFrame?.url);
@@ -4124,10 +4131,6 @@ function registerIpc(
         throw new Error('invalid resolved theme');
       }
       applyNativeTheme(nextResolvedTheme);
-      if (preference !== themePreference) {
-        themePreference = preference;
-        refreshApplicationMenu();
-      }
       return sessionStore.updateTheme(preference);
     },
   );
@@ -4302,6 +4305,10 @@ function registerIpc(
   ipcMain.handle(ipcChannels.workspaceSearch, (event, query: string) => {
     assertTrustedSender(event.senderFrame?.url);
     return workspaceService.searchWorkspace(query);
+  });
+  ipcMain.handle(ipcChannels.workspaceSearchContents, (event, request: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    return workspaceService.searchWorkspaceContents(request);
   });
   ipcMain.handle(ipcChannels.workspaceCancelSearch, (event) => {
     assertTrustedSender(event.senderFrame?.url);

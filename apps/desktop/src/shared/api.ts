@@ -9,6 +9,12 @@ import type { RmsLintWorkspaceRules } from './rms-lint-rules';
 import type { LanguagePreference, LocaleState } from './i18n/locale';
 import type { WorkspaceTreeChange } from './workspace-tree-change';
 import type { UpdateState } from './update';
+import type { EditorColorSchemeId } from './editor-color-scheme';
+import type {
+  ClipboardImageRequest,
+  PreviewImageSaveRequest,
+  PreviewImageSaveResult,
+} from './image-export';
 import type {
   DefinitionCandidates,
   DefinitionFileIdentities,
@@ -74,6 +80,8 @@ export const ipcChannels = {
   mapIconSourceGenerate: 'rmside:map-icon:source-generate',
   mapIconSourceCancel: 'rmside:map-icon:source-cancel',
   mapIconExecutionProgress: 'rmside:map-icon:execution-progress',
+  clipboardWriteImage: 'rmside:clipboard:write-image',
+  previewImageSave: 'rmside:preview-image:save',
   controlLauncherStatus: 'rmside:control-launcher:status',
   controlLauncherSelect: 'rmside:control-launcher:select',
   controlLauncherForget: 'rmside:control-launcher:forget',
@@ -89,14 +97,16 @@ export const ipcChannels = {
   languageServerNotification: 'rmside:language-server:notification',
   languageServerEvent: 'rmside:language-server:event',
   languageGameVersion: 'rmside:language:game-version',
-  openApplicationMenu: 'rmside:menu:open',
+  applicationMenuModel: 'rmside:menu:model',
+  applicationMenuModelChanged: 'rmside:menu:model-changed',
+  activateApplicationMenuItem: 'rmside:menu:activate',
   openExternalLink: 'rmside:external-link:open',
   openDocumentLink: 'rmside:document-link:open',
   editorPaste: 'rmside:editor:paste',
-  syncApplicationMenuBounds: 'rmside:menu:sync-bounds',
   syncMapTestResultsVisibility: 'rmside:map-test:results-visibility',
   syncMapTestPreviewShown: 'rmside:map-test:preview-shown',
   syncModalSurfaceOpen: 'rmside:modal:sync-open',
+  syncInsertSnippetAvailable: 'rmside:editor:insert-snippet-available',
   menuAction: 'rmside:menu:action',
   syncNativeTheme: 'rmside:theme:sync-native',
   localeState: 'rmside:locale:state',
@@ -114,6 +124,7 @@ export const ipcChannels = {
   workspaceOpenFolderInExplorer: 'rmside:workspace:open-folder-in-explorer',
   workspaceSearch: 'rmside:workspace:search',
   workspaceCancelSearch: 'rmside:workspace:cancel-search',
+  workspaceSearchContents: 'rmside:workspace:search-contents',
   workspaceClose: 'rmside:workspace:close',
   workspaceCreate: 'rmside:workspace:create',
   definitionFilePrepare: 'rmside:definition-file:prepare',
@@ -151,6 +162,29 @@ export type NativeProcessName = 'rmsd' | 'rms-ls' | 'rms-test' | 'rms-test-lsp';
 export type NativeProcessState = 'stopped' | 'starting' | 'running' | 'failed';
 export type ApplicationMenuName = 'file' | 'edit' | 'view' | 'help';
 export type { ExternalLinkTarget } from './external-links';
+
+export type ApplicationMenuEntry =
+  | { kind: 'separator' }
+  | {
+      kind: 'item';
+      key: string;
+      label: string;
+      enabled: boolean;
+      accelerator: string | null;
+      check: 'none' | 'checkbox' | 'radio';
+      checked: boolean;
+    }
+  | {
+      kind: 'submenu';
+      key: string;
+      label: string;
+      enabled: boolean;
+      entries: ApplicationMenuEntry[];
+    };
+
+export interface ApplicationMenuModel {
+  menus: { name: ApplicationMenuName; label: string; entries: ApplicationMenuEntry[] }[];
+}
 
 export const mapIconRenderContract = {
   version: 13,
@@ -448,6 +482,7 @@ export type ApplicationMenuAction =
   | { type: 'new-xs-script' }
   | { type: 'open-file' }
   | { type: 'open-folder' }
+  | { type: 'find-in-files' }
   | { type: 'browse-installed-sources' }
   | { type: 'deploy-managed-mod' }
   | { type: 'import-map-test-report' }
@@ -456,26 +491,21 @@ export type ApplicationMenuAction =
   | { type: 'save' }
   | { type: 'save-as' }
   | { type: 'format-document' }
+  | { type: 'insert-snippet' }
   | { type: 'set-format-on-save'; enabled: boolean }
   | { type: 'set-indent-conditionals'; enabled: boolean }
   | { type: 'set-live-generation-stages'; enabled: boolean }
   | { type: 'set-gpu-map-rendering'; enabled: boolean }
   | { type: 'set-map-transitions'; enabled: boolean }
   | { type: 'set-inlay-hints'; enabled: boolean }
+  | { type: 'set-outline-row'; enabled: boolean }
   | { type: 'set-delete-permanently'; enabled: boolean }
   | { type: 'close-tab' }
   | { type: 'close-folder' }
   | { type: 'reset-layout' }
   | { type: 'set-theme'; theme: ThemePreference }
+  | { type: 'open-theme-settings' }
   | { type: 'open-language-settings' };
-
-export interface ApplicationMenuTriggerBounds {
-  name: ApplicationMenuName;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
 
 export interface NativeProcessStatus {
   name: NativeProcessName;
@@ -1628,6 +1658,7 @@ export type LanguageServerRequestMethod =
   | 'textDocument/inlayHint'
   | 'completionItem/resolve'
   | 'rms/semanticIdentity'
+  | 'rms/snippets'
   | 'rms/validateSourceCatalogIdentity';
 
 export type LanguageServerNotificationMethod =
@@ -1718,6 +1749,25 @@ export interface WorkspaceDirectoryEntry {
 export interface WorkspaceSearchResult extends WorkspaceDirectoryEntry {
   relativePath: string;
   matched: boolean;
+  occurrences?: number;
+}
+
+export interface WorkspaceUnsavedText {
+  path: string;
+  content: string | null;
+}
+
+export interface WorkspaceContentSearchRequest {
+  query: string;
+  matchCase: boolean;
+  wholeWord: boolean;
+  scopeId?: string;
+  unsavedDocuments: WorkspaceUnsavedText[];
+}
+
+export interface WorkspaceContentSearchResult {
+  results: WorkspaceSearchResult[];
+  truncated: boolean;
 }
 
 export interface WorkspaceCreateRequest {
@@ -1883,6 +1933,7 @@ export type InstalledSourceOriginFilter = Record<InstalledSourceOwnership, boole
 export interface DesktopSession {
   version: 1;
   themePreference: ThemePreference;
+  editorColorScheme: EditorColorSchemeId;
   formatOnSave: boolean;
   indentConditionals: boolean;
   liveGenerationStages: boolean;
@@ -1890,6 +1941,7 @@ export interface DesktopSession {
   mapTransitions: boolean;
   inlayHints: boolean;
   inlayHintsVersion: typeof inlayHintsSettingVersion;
+  outlineRow: boolean;
   deletePermanently: boolean;
   checkForNewVersions: boolean;
   languagePreference: LanguagePreference;
@@ -1944,6 +1996,7 @@ export interface DesktopSession {
     folder: string | null;
     installedSourceClone: string | null;
     mapIconSave: string | null;
+    previewImageSave: string | null;
     sourceSave: string | null;
     definitionSave: string | null;
     mapTestReportImport: string | null;
@@ -2019,6 +2072,8 @@ export interface RmsideDesktopApi {
   saveGeneratedMapIcon(
     request: GeneratedMapIconSaveRequest,
   ): Promise<ManualDeploymentMapIconSaveResult>;
+  copyImageToClipboard(request: ClipboardImageRequest): Promise<void>;
+  savePreviewImage(request: PreviewImageSaveRequest): Promise<PreviewImageSaveResult>;
   getMapIconRenderInput(): Promise<MapIconRenderInput>;
   setMapIconRenderInput(input: MapIconRenderInput): Promise<void>;
   generateMapIconSource(request: MapIconSourceRequest): Promise<PreviewGenerationResult>;
@@ -2041,14 +2096,16 @@ export interface RmsideDesktopApi {
   requestLanguageServer(method: LanguageServerRequestMethod, params: unknown): Promise<unknown>;
   notifyLanguageServer(method: LanguageServerNotificationMethod, params: unknown): Promise<void>;
   onLanguageServerEvent(listener: (event: LanguageServerEvent) => void): () => void;
-  openApplicationMenu(name: ApplicationMenuName, x: number, y: number): Promise<void>;
+  getApplicationMenuModel(): Promise<ApplicationMenuModel>;
+  onApplicationMenuModelChange(listener: (model: ApplicationMenuModel) => void): () => void;
+  activateApplicationMenuItem(key: string): Promise<void>;
   openExternalLink(target: ExternalLinkTarget): Promise<void>;
   openDocumentLink(url: string): Promise<void>;
   pasteIntoEditor(): Promise<void>;
-  syncApplicationMenuBounds(bounds: ApplicationMenuTriggerBounds[]): Promise<void>;
   syncMapTestResultsVisibility(visible: boolean): Promise<void>;
   syncMapTestPreviewShown(shown: boolean): Promise<void>;
   syncModalSurfaceOpen(open: boolean): Promise<void>;
+  syncInsertSnippetAvailable(available: boolean): Promise<void>;
   syncNativeTheme(preference: ThemePreference, resolved: ResolvedTheme): Promise<void>;
   getLocaleState(): Promise<LocaleState>;
   setLanguagePreference(preference: LanguagePreference): Promise<LocaleState>;
@@ -2066,6 +2123,9 @@ export interface RmsideDesktopApi {
   openWorkspaceFolderInExplorer(entryId: string): Promise<void>;
   searchWorkspace(query: string): Promise<WorkspaceSearchResult[]>;
   cancelWorkspaceSearch(): Promise<void>;
+  searchWorkspaceContents(
+    request: WorkspaceContentSearchRequest,
+  ): Promise<WorkspaceContentSearchResult>;
   closeWorkspace(): Promise<void>;
   createWorkspaceEntry(request: WorkspaceCreateRequest): Promise<WorkspaceMutationResult>;
   prepareDefinitionFile(request: DefinitionFilePrepareRequest): Promise<DefinitionFilePlan>;

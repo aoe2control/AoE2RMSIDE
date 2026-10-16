@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Відкрити папку…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Знайти у файлах…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Переглянути встановлені мапи…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Вибрати все"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Вставити фрагмент…"
+    },
     "app-menu.edit.format-document": {
       "message": "Форматувати документ"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Показувати етапи під час створення"
     },
+    "app-menu.view.outline-row": {
+      "message": "Показувати рядок структури"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Показувати вбудовані підказки"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Мова…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Тема…"
     },
     "app-menu.view.theme": {
       "message": "Тема"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} мапа} few {{count} мапи} many {{count} мап} other {{count} мапи}}"
+    },
+    "output.run.fact.players": {
+      "message": "Гравці"
+    },
+    "output.run.fact.maps": {
+      "message": "Мапи"
+    },
+    "output.run.fact.duration": {
+      "message": "Тривалість"
+    },
+    "output.run.fact.result": {
+      "message": "Результат"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} мс"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Тест мапи"
     },
+    "settings.theme.app-theme": {
+      "message": "Тема програми"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Кольори редактора"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Стандартна"
+    },
+    "settings.theme.close-label": {
+      "message": "Закрити налаштування теми"
+    },
     "settings.language.title": {
       "message": "Мова"
-    },
-    "settings.language.description": {
-      "message": "Меню, діалоги й повідомлення використовують цю мову. Команди скриптів, журнали й пакети для служби підтримки залишаються англійською."
     },
     "settings.language.label": {
       "message": "Мова інтерфейсу"
     },
     "settings.language.system": {
       "message": "Мова інтерфейсу Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Закрити"
     },
     "settings.language.close-label": {
       "message": "Закрити налаштування мови"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Шукати файли"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Знайти у файлах"
+    },
+    "explorer.search.contents": {
+      "message": "Шукати у вмісті файлів"
+    },
+    "explorer.search.match-case": {
+      "message": "З урахуванням регістру"
+    },
+    "explorer.search.whole-word": {
+      "message": "Слово цілком"
+    },
+    "explorer.search.scope": {
+      "message": "у папці {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Шукати в усій папці"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} входження} few {{count} входження} many {{count} входжень} other {{count} входження}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Деякі файли не ввійшли до цього пошуку: вони завеликі або їх забагато."
+    },
     "explorer.search.clear": {
       "message": "Очистити пошук файлів"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Відкрити у Провіднику"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Знайти у файлах…"
     },
     "explorer.context.rename": {
       "message": "Перейменувати"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Зберегти зображення…"
     },
+    "map-icon.copy-image": {
+      "message": "Копіювати зображення"
+    },
+    "map-icon.image-copied": {
+      "message": "Зображення скопійовано"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} пікс."
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "Не вдалося зберегти піктограму мапи"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "Не вдалося скопіювати піктограму мапи"
     },
     "map-icon.lightbox.close": {
       "message": "Закрити перегляд піктограми мапи"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "Редактор джерельного коду RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Структура"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, рядок {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Перейти до розділу"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Перейти до блоку"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Перейти до функції"
+    },
     "code-editor.tabs.label": {
       "message": "Відкриті файли"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Відкрити включений файл"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Вставити фрагмент…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Вставити фрагмент"
+    },
+    "code-editor.snippets.close": {
+      "message": "Закрити"
+    },
+    "code-editor.snippets.search": {
+      "message": "Шукати фрагменти"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Шукати фрагменти"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Очистити пошук"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Показати всі"
+    },
+    "code-editor.snippets.list": {
+      "message": "Фрагменти"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Текст для вставлення"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Завантаження фрагментів…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Не вдалося завантажити фрагменти. Закрийте це вікно й спробуйте ще раз."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Жоден фрагмент не підходить для місця, де стоїть курсор. Увімкніть «Показати всі», щоб побачити всі фрагменти."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Жоден фрагмент не відповідає пошуку."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Вставити"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Скасувати"
+    },
     "code-editor.include.open": {
       "message": "Відкрити {name}"
     },
@@ -3223,6 +3349,12 @@
       "message": "Зберегти піктограму мапи"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Зображення PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Зберегти зображення мапи"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Зображення PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Маленькі дерева"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Копіювати зображення"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Зберегти зображення…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Зображення мапи збережено як {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "Не вдалося зберегти зображення мапи"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "Не вдалося скопіювати зображення мапи"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "перегляд мапи згори в кольорах мінімапи"

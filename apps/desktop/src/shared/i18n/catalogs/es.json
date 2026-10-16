@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Abrir carpeta…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Buscar en archivos…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Explorar mapas instalados…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Seleccionar todo"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Insertar fragmento de código…"
+    },
     "app-menu.edit.format-document": {
       "message": "Dar formato al documento"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Mostrar etapas de generación"
     },
+    "app-menu.view.outline-row": {
+      "message": "Mostrar barra de esquema"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Mostrar sugerencias en el código"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Idioma…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Tema…"
     },
     "app-menu.view.theme": {
       "message": "Tema"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} mapa} many {{count} mapas} other {{count} mapas}}"
+    },
+    "output.run.fact.players": {
+      "message": "Jugadores"
+    },
+    "output.run.fact.maps": {
+      "message": "Mapas"
+    },
+    "output.run.fact.duration": {
+      "message": "Duración"
+    },
+    "output.run.fact.result": {
+      "message": "Resultado"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Prueba de mapas"
     },
+    "settings.theme.app-theme": {
+      "message": "Tema de la aplicación"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Colores del editor"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Predeterminado"
+    },
+    "settings.theme.close-label": {
+      "message": "Cerrar configuración de tema"
+    },
     "settings.language.title": {
       "message": "Idioma"
-    },
-    "settings.language.description": {
-      "message": "Los menús, cuadros de diálogo y mensajes usan este idioma. Los comandos de los scripts, registros y paquetes de soporte siguen en inglés."
     },
     "settings.language.label": {
       "message": "Idioma de la interfaz"
     },
     "settings.language.system": {
       "message": "Idioma de visualización de Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Cerrar"
     },
     "settings.language.close-label": {
       "message": "Cerrar configuración de idioma"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Buscar archivos"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Buscar en archivos"
+    },
+    "explorer.search.contents": {
+      "message": "Buscar en el contenido de los archivos"
+    },
+    "explorer.search.match-case": {
+      "message": "Coincidir mayúsculas y minúsculas"
+    },
+    "explorer.search.whole-word": {
+      "message": "Solo palabras completas"
+    },
+    "explorer.search.scope": {
+      "message": "en {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Buscar en toda la carpeta"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} coincidencia} many {{count} coincidencias} other {{count} coincidencias}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Algunos archivos no se incluyeron en esta búsqueda porque son demasiado grandes o hay demasiados."
+    },
     "explorer.search.clear": {
       "message": "Borrar la búsqueda de archivos"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Abrir en el Explorador"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Buscar en archivos…"
     },
     "explorer.context.rename": {
       "message": "Cambiar nombre"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Guardar imagen…"
     },
+    "map-icon.copy-image": {
+      "message": "Copiar imagen"
+    },
+    "map-icon.image-copied": {
+      "message": "Imagen copiada"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "No se ha podido guardar el icono del mapa"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "No se ha podido copiar el icono del mapa"
     },
     "map-icon.lightbox.close": {
       "message": "Cerrar la vista previa del icono del mapa"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "Editor de código RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Esquema"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, línea {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Ir a una sección"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Ir a un bloque"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Ir a una función"
+    },
     "code-editor.tabs.label": {
       "message": "Archivos abiertos"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Abrir archivo incluido"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Insertar fragmento de código…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Insertar fragmento de código"
+    },
+    "code-editor.snippets.close": {
+      "message": "Cerrar"
+    },
+    "code-editor.snippets.search": {
+      "message": "Buscar fragmentos"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Buscar fragmentos"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Borrar búsqueda"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Mostrar todos"
+    },
+    "code-editor.snippets.list": {
+      "message": "Fragmentos de código"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Texto que se insertará"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Cargando fragmentos de código…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "No se han podido cargar los fragmentos de código. Cierra este cuadro de diálogo e inténtalo de nuevo."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Ningún fragmento de código encaja donde está el cursor. Activa Mostrar todos para ver todos los fragmentos."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Ningún fragmento de código coincide con esta búsqueda."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Insertar"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Cancelar"
+    },
     "code-editor.include.open": {
       "message": "Abrir {name}"
     },
@@ -3223,6 +3349,12 @@
       "message": "Guardar icono del mapa"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Imagen PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Guardar imagen del mapa"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Imagen PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Árboles pequeños"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Copiar imagen"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Guardar imagen…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Se ha guardado la imagen del mapa como {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "No se ha podido guardar la imagen del mapa"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "No se ha podido copiar la imagen del mapa"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "vista previa cenital del mapa con colores del minimapa"

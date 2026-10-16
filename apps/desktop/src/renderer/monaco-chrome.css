@@ -1,5 +1,6 @@
 body.rmside-monaco-056 {
-  --rmside-monaco-surface-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --rmside-monaco-surface: var(--menu-surface);
+  --rmside-monaco-surface-shadow: var(--menu-surface-shadow);
   --rmside-monaco-row-selected: color-mix(in oklch, var(--foreground) 10%, transparent);
   --rmside-monaco-row-hover: color-mix(in oklch, var(--foreground) 5%, transparent);
   --rmside-monaco-separator: color-mix(in oklch, var(--foreground) 8%, transparent);
@@ -44,11 +45,11 @@ body.rmside-monaco-056 {
   --vscode-textBlockQuote-border: var(--rmside-monaco-separator);
   --vscode-textSeparator-foreground: var(--rmside-monaco-separator);
 
-  --vscode-editorWidget-background: var(--popover);
+  --vscode-editorWidget-background: var(--rmside-monaco-surface);
   --vscode-editorWidget-foreground: var(--popover-foreground);
   --vscode-editorWidget-border: transparent;
   --vscode-editorWidget-resizeBorder: transparent;
-  --vscode-editorSuggestWidget-background: var(--popover);
+  --vscode-editorSuggestWidget-background: var(--rmside-monaco-surface);
   --vscode-editorSuggestWidget-border: transparent;
   --vscode-editorSuggestWidget-foreground: var(--popover-foreground);
   --vscode-editorSuggestWidget-selectedBackground: var(--rmside-monaco-row-selected);
@@ -57,12 +58,12 @@ body.rmside-monaco-056 {
   --vscode-editorSuggestWidget-highlightForeground: var(--popover-foreground);
   --vscode-editorSuggestWidget-focusHighlightForeground: var(--popover-foreground);
   --vscode-editorSuggestWidgetStatus-foreground: var(--muted-foreground);
-  --vscode-editorHoverWidget-background: var(--popover);
+  --vscode-editorHoverWidget-background: var(--rmside-monaco-surface);
   --vscode-editorHoverWidget-foreground: var(--popover-foreground);
   --vscode-editorHoverWidget-border: var(--rmside-monaco-separator);
-  --vscode-editorHoverWidget-statusBarBackground: var(--popover);
+  --vscode-editorHoverWidget-statusBarBackground: var(--rmside-monaco-surface);
   --vscode-editorHoverWidget-highlightForeground: var(--popover-foreground);
-  --vscode-editorMarkerNavigation-background: var(--popover);
+  --vscode-editorMarkerNavigation-background: var(--rmside-monaco-surface);
 
   --vscode-list-hoverBackground: var(--rmside-monaco-row-hover);
   --vscode-list-hoverForeground: var(--popover-foreground);
@@ -78,7 +79,7 @@ body.rmside-monaco-056 {
   --vscode-list-focusAndSelectionOutline: transparent;
   --vscode-list-highlightForeground: var(--popover-foreground);
   --vscode-list-focusHighlightForeground: var(--popover-foreground);
-  --vscode-quickInput-background: var(--popover);
+  --vscode-quickInput-background: var(--rmside-monaco-surface);
   --vscode-quickInput-foreground: var(--popover-foreground);
   --vscode-quickInputTitle-background: transparent;
   --vscode-quickInputList-focusBackground: var(--rmside-monaco-row-selected);
@@ -87,11 +88,11 @@ body.rmside-monaco-056 {
   --vscode-quickInputList-focusHighlightForeground: var(--popover-foreground);
   --vscode-pickerGroup-foreground: var(--muted-foreground);
   --vscode-pickerGroup-border: var(--rmside-monaco-separator);
-  --vscode-editorActionList-background: var(--popover);
+  --vscode-editorActionList-background: var(--rmside-monaco-surface);
   --vscode-editorActionList-foreground: var(--popover-foreground);
   --vscode-editorActionList-focusBackground: var(--rmside-monaco-row-selected);
   --vscode-editorActionList-focusForeground: var(--popover-foreground);
-  --vscode-menu-background: var(--popover);
+  --vscode-menu-background: var(--rmside-monaco-surface);
   --vscode-menu-foreground: var(--popover-foreground);
   --vscode-menu-selectionBackground: var(--rmside-monaco-row-selected);
   --vscode-menu-selectionForeground: var(--popover-foreground);
@@ -107,13 +108,13 @@ body.rmside-monaco-056 {
   --vscode-inputOption-activeForeground: var(--foreground);
   --vscode-inputOption-activeBorder: transparent;
   --vscode-inputOption-hoverBackground: var(--rmside-monaco-control-hover);
-  --vscode-inputValidation-errorBackground: var(--popover);
+  --vscode-inputValidation-errorBackground: var(--rmside-monaco-surface);
   --vscode-inputValidation-errorForeground: var(--popover-foreground);
   --vscode-inputValidation-errorBorder: var(--destructive);
-  --vscode-inputValidation-warningBackground: var(--popover);
+  --vscode-inputValidation-warningBackground: var(--rmside-monaco-surface);
   --vscode-inputValidation-warningForeground: var(--popover-foreground);
   --vscode-inputValidation-warningBorder: var(--caution);
-  --vscode-inputValidation-infoBackground: var(--popover);
+  --vscode-inputValidation-infoBackground: var(--rmside-monaco-surface);
   --vscode-inputValidation-infoForeground: var(--popover-foreground);
   --vscode-inputValidation-infoBorder: transparent;
   --vscode-toolbar-hoverBackground: var(--rmside-monaco-control-hover);
@@ -144,18 +145,18 @@ body.rmside-monaco-056 {
   --vscode-scrollbarSlider-activeBackground: var(--rmside-monaco-thumb-active);
   --vscode-sash-hoverBorder: var(--ring);
   --vscode-peekView-border: transparent;
-  --vscode-peekViewTitle-background: var(--popover);
+  --vscode-peekViewTitle-background: var(--rmside-monaco-surface);
   --vscode-peekViewTitleLabel-foreground: var(--popover-foreground);
   --vscode-peekViewTitleDescription-foreground: var(--muted-foreground);
-  --vscode-peekViewResult-background: var(--popover);
+  --vscode-peekViewResult-background: var(--rmside-monaco-surface);
   --vscode-peekViewResult-fileForeground: var(--popover-foreground);
   --vscode-peekViewResult-lineForeground: var(--muted-foreground);
   --vscode-peekViewResult-selectionBackground: var(--rmside-monaco-row-selected);
   --vscode-peekViewResult-selectionForeground: var(--popover-foreground);
-  --vscode-peekViewEditor-background: var(--popover);
-  --vscode-peekViewEditorGutter-background: var(--popover);
-  --vscode-peekViewEditorStickyScroll-background: var(--popover);
-  --vscode-peekViewEditorStickyScrollGutter-background: var(--popover);
+  --vscode-peekViewEditor-background: var(--rmside-monaco-surface);
+  --vscode-peekViewEditorGutter-background: var(--rmside-monaco-surface);
+  --vscode-peekViewEditorStickyScroll-background: var(--rmside-monaco-surface);
+  --vscode-peekViewEditorStickyScrollGutter-background: var(--rmside-monaco-surface);
 
   --vscode-editorLineNumber-foreground: var(--muted-foreground);
   --vscode-editorLineNumber-activeForeground: var(--foreground);
@@ -178,14 +179,16 @@ body.rmside-monaco-056 {
 .rmside-monaco-056
   .monaco-editor
   :is(.suggest-widget, .suggest-details, .find-widget, .rename-box, .parameter-hints-widget) {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border: 0 !important;
   box-shadow: var(--rmside-monaco-surface-shadow) !important;
   color: var(--popover-foreground) !important;
   outline: none !important;
 }
 
-.rmside-monaco-056 .monaco-editor :is(.suggest-widget, .suggest-details, .find-widget) {
+.rmside-monaco-056
+  .monaco-editor
+  :is(.suggest-widget, .suggest-details, .find-widget, .rename-box, .parameter-hints-widget) {
   border-radius: var(--radius-lg) !important;
 }
 
@@ -194,23 +197,22 @@ body.rmside-monaco-056 {
 }
 
 .rmside-monaco-056 .monaco-editor :is(.rename-box, .parameter-hints-widget) {
-  border-radius: var(--radius-md) !important;
   overflow: hidden;
 }
 
 .rmside-monaco-056 .monaco-editor .monaco-resizable-hover {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border: 0 !important;
-  border-radius: var(--radius-md) !important;
+  border-radius: var(--radius-lg) !important;
   box-shadow: var(--rmside-monaco-surface-shadow) !important;
   outline: none !important;
   overflow: hidden;
 }
 
 .rmside-monaco-056 .monaco-hover {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border: 0 !important;
-  border-radius: var(--radius-md) !important;
+  border-radius: var(--radius-lg) !important;
   box-shadow: none !important;
   color: var(--popover-foreground) !important;
   outline: none !important;
@@ -244,12 +246,12 @@ body.rmside-monaco-056 {
 }
 
 .rmside-monaco-056 .context-view.monaco-component .workbench-hover-pointer::after {
-  background: var(--popover) !important;
-  border-color: transparent !important;
+  background: var(--rmside-monaco-surface) !important;
+  border-color: var(--menu-surface-ring) !important;
 }
 
 .rmside-monaco-056 .action-widget {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border: 0 !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: var(--rmside-monaco-surface-shadow) !important;
@@ -580,12 +582,13 @@ body.rmside-monaco-056 {
 }
 
 .rmside-monaco-056 .monaco-editor .zone-widget .zone-widget-container.reference-zone-widget {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border: 0 !important;
-  border-radius: var(--radius-md) !important;
+  border-radius: var(--radius-lg) !important;
   box-shadow: none !important;
   color: var(--popover-foreground) !important;
-  outline: none !important;
+  outline: 1px solid var(--menu-surface-ring) !important;
+  outline-offset: -1px;
   overflow: hidden;
 }
 
@@ -594,7 +597,7 @@ body.rmside-monaco-056 {
 .rmside-monaco-056 .monaco-editor .reference-zone-widget.peekview-widget > .body,
 .rmside-monaco-056 .monaco-editor .reference-zone-widget .ref-tree,
 .rmside-monaco-056 .monaco-editor .reference-zone-widget .preview {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border-color: transparent !important;
   box-shadow: none !important;
   outline: none !important;
@@ -615,19 +618,21 @@ body.rmside-monaco-056 {
   .preview
   .monaco-editor
   :is(.monaco-editor-background, .inputarea.ime-input, .margin) {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
 }
 
 .rmside-monaco-056
   .monaco-editor
   .zone-widget
   .zone-widget-container.peekview-widget:has(> .marker-widget) {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border-bottom-width: 0 !important;
-  border-radius: var(--radius-md) !important;
+  border-radius: var(--radius-lg) !important;
   border-top-width: 2px !important;
   box-shadow: none !important;
   color: var(--popover-foreground) !important;
+  outline: 1px solid var(--menu-surface-ring) !important;
+  outline-offset: -1px;
   overflow: hidden;
 }
 
@@ -638,12 +643,12 @@ body.rmside-monaco-056 {
   .peekview-widget
   > .marker-widget
   .descriptioncontainer {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   color: var(--popover-foreground) !important;
 }
 
 .rmside-monaco-056 .monaco-editor .zone-widget .peekview-widget:has(> .marker-widget) > .head {
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .rmside-monaco-056 .monaco-editor .marker-widget .descriptioncontainer .filename,
@@ -667,9 +672,9 @@ body.rmside-monaco-056 {
 }
 
 .rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage .message {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border: 0 !important;
-  border-radius: var(--radius-md) !important;
+  border-radius: var(--radius-lg) !important;
   box-shadow: var(--rmside-monaco-surface-shadow) !important;
   color: var(--popover-foreground) !important;
   line-height: 16px;
@@ -679,11 +684,11 @@ body.rmside-monaco-056 {
 }
 
 .rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage .anchor.top {
-  border-bottom-color: var(--popover) !important;
+  border-bottom-color: var(--rmside-monaco-surface) !important;
 }
 
 .rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage .anchor.below {
-  border-top-color: var(--popover) !important;
+  border-top-color: var(--rmside-monaco-surface) !important;
 }
 
 .rmside-monaco-056 .context-view.monaco-component:has(.monaco-hover) {
@@ -692,7 +697,7 @@ body.rmside-monaco-056 {
 }
 
 .rmside-monaco-056 .quick-input-widget {
-  background: var(--popover) !important;
+  background: var(--rmside-monaco-surface) !important;
   border: 0 !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: var(--rmside-monaco-surface-shadow) !important;

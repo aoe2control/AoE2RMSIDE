@@ -50,18 +50,40 @@ async function saveMapIconImage(
   icon: ManualDeploymentMapIconImage,
   dependencies: Omit<MapIconSaveDependencies, 'icon'>,
 ): Promise<ManualDeploymentMapIconSaveResult> {
+  return savePngThroughDialog(
+    {
+      bytes: icon.bytes,
+      fileName: icon.fileName,
+      filterName: t('native-dialog.map-icon.filter'),
+      title: t('native-dialog.map-icon.title'),
+    },
+    dependencies,
+  );
+}
+
+export interface PngSaveRequest {
+  bytes: Uint8Array;
+  fileName: string;
+  filterName: string;
+  title: string;
+}
+
+export async function savePngThroughDialog(
+  request: PngSaveRequest,
+  dependencies: Omit<MapIconSaveDependencies, 'icon'>,
+): Promise<{ status: 'saved'; fileName: string } | { status: 'cancelled' }> {
   const directory = await mapIconSaveDirectory(dependencies);
   const selection = await dependencies.showSaveDialog({
-    defaultPath: directory ? join(directory, icon.fileName) : icon.fileName,
-    filters: [{ name: t('native-dialog.map-icon.filter'), extensions: ['png'] }],
-    title: t('native-dialog.map-icon.title'),
+    defaultPath: directory ? join(directory, request.fileName) : request.fileName,
+    filters: [{ name: request.filterName, extensions: ['png'] }],
+    title: request.title,
   });
   if (selection.canceled || !selection.filePath) return { status: 'cancelled' };
-  if (!isAbsolute(selection.filePath)) throw new Error('map icon save path is invalid');
+  if (!isAbsolute(selection.filePath)) throw new Error('image save path is invalid');
   const confirmedByDialog = extname(selection.filePath).toLowerCase() === '.png';
   const path = confirmedByDialog ? selection.filePath : `${selection.filePath}.png`;
   await dependencies.rememberDirectory(dirname(path));
-  await dependencies.writeFile(path, icon.bytes, !confirmedByDialog);
+  await dependencies.writeFile(path, request.bytes, !confirmedByDialog);
   return { status: 'saved', fileName: basename(path) };
 }
 

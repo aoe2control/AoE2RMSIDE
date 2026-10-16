@@ -62,13 +62,16 @@ function SelectContent({
   alignOffset = 0,
   alignItemWithTrigger = true,
   collisionPadding,
+  surface = 'menu',
   ref,
   ...props
 }: SelectPrimitive.Popup.Props &
   Pick<
     SelectPrimitive.Positioner.Props,
     'align' | 'alignItemWithTrigger' | 'alignOffset' | 'collisionPadding' | 'side' | 'sideOffset'
-  >) {
+  > & {
+    surface?: 'menu' | 'popup';
+  }) {
   const popupRef = useLeavingSurface(ref);
   return (
     <SelectPrimitive.Portal>
@@ -85,6 +88,7 @@ function SelectContent({
           ref={popupRef}
           data-slot="select-content"
           data-align-trigger={alignItemWithTrigger}
+          data-surface={surface}
           className={cn(
             'motion-surface isolate z-50 max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 backdrop-blur-2xl backdrop-saturate-150 bg-popover/70 **:data-[slot$=-item]:focus:bg-foreground/10 **:data-[slot$=-item]:data-highlighted:bg-foreground/10 **:data-[slot$=-separator]:bg-foreground/5 **:data-[slot$=-trigger]:focus:bg-foreground/10 **:data-[slot$=-trigger]:aria-expanded:bg-foreground/10! **:data-[variant=destructive]:focus:bg-foreground/10! **:data-[variant=destructive]:text-accent-foreground! **:data-[variant=destructive]:**:text-accent-foreground!',
             className,

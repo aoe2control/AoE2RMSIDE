@@ -39,6 +39,9 @@
     "app-menu.file.open-folder": {
       "message": "Ouvrir un dossier…"
     },
+    "app-menu.file.find-in-files": {
+      "message": "Rechercher dans les fichiers…"
+    },
     "app-menu.file.browse-installed-sources": {
       "message": "Parcourir les cartes installées…"
     },
@@ -108,6 +111,9 @@
     "app-menu.edit.select-all": {
       "message": "Tout sélectionner"
     },
+    "app-menu.edit.insert-snippet": {
+      "message": "Insérer un extrait…"
+    },
     "app-menu.edit.format-document": {
       "message": "Mettre en forme le document"
     },
@@ -132,6 +138,9 @@
     "app-menu.view.live-generation-stages": {
       "message": "Afficher les étapes de génération"
     },
+    "app-menu.view.outline-row": {
+      "message": "Afficher la barre de structure"
+    },
     "app-menu.view.inlay-hints": {
       "message": "Afficher les indications dans le code"
     },
@@ -155,6 +164,9 @@
     },
     "app-menu.view.language": {
       "message": "Langue…"
+    },
+    "app-menu.view.theme-panel": {
+      "message": "Thème…"
     },
     "app-menu.view.theme": {
       "message": "Thème"
@@ -395,6 +407,18 @@
     },
     "output.run.maps": {
       "message": "{count, plural, one {{count} carte} many {{count} cartes} other {{count} cartes}}"
+    },
+    "output.run.fact.players": {
+      "message": "Joueurs"
+    },
+    "output.run.fact.maps": {
+      "message": "Cartes"
+    },
+    "output.run.fact.duration": {
+      "message": "Durée"
+    },
+    "output.run.fact.result": {
+      "message": "Résultat"
     },
     "output.duration.milliseconds": {
       "message": "{value, number, integer} ms"
@@ -915,20 +939,26 @@
     "run-menu.map-test-progress.label": {
       "message": "Test de cartes"
     },
+    "settings.theme.app-theme": {
+      "message": "Thème de l’application"
+    },
+    "settings.theme.editor-colors": {
+      "message": "Couleurs de l’éditeur"
+    },
+    "settings.theme.scheme.default": {
+      "message": "Par défaut"
+    },
+    "settings.theme.close-label": {
+      "message": "Fermer les paramètres de thème"
+    },
     "settings.language.title": {
       "message": "Langue"
-    },
-    "settings.language.description": {
-      "message": "Les menus, dialogues et messages utilisent cette langue. Les commandes des scripts, les journaux et les paquets d’assistance restent en anglais."
     },
     "settings.language.label": {
       "message": "Langue de l’interface"
     },
     "settings.language.system": {
       "message": "Langue d’affichage de Windows ({language})"
-    },
-    "settings.language.close": {
-      "message": "Fermer"
     },
     "settings.language.close-label": {
       "message": "Fermer les paramètres de langue"
@@ -2085,6 +2115,30 @@
     "explorer.search.placeholder": {
       "message": "Rechercher des fichiers"
     },
+    "explorer.search.placeholder.contents": {
+      "message": "Rechercher du texte"
+    },
+    "explorer.search.contents": {
+      "message": "Rechercher dans le contenu des fichiers"
+    },
+    "explorer.search.match-case": {
+      "message": "Respecter la casse"
+    },
+    "explorer.search.whole-word": {
+      "message": "Mot entier"
+    },
+    "explorer.search.scope": {
+      "message": "dans {name}"
+    },
+    "explorer.search.scope.remove": {
+      "message": "Rechercher dans tout le dossier"
+    },
+    "explorer.search.occurrences": {
+      "message": "{count, plural, one {{count} occurrence} many {{count} occurrences} other {{count} occurrences}}"
+    },
+    "explorer.search.truncated": {
+      "message": "Certains fichiers n’ont pas été inclus dans cette recherche, car ils sont trop volumineux ou trop nombreux."
+    },
     "explorer.search.clear": {
       "message": "Effacer la recherche de fichiers"
     },
@@ -2126,6 +2180,9 @@
     },
     "explorer.context.open-in-explorer": {
       "message": "Ouvrir dans l’Explorateur"
+    },
+    "explorer.context.find-in-files": {
+      "message": "Rechercher dans les fichiers…"
     },
     "explorer.context.rename": {
       "message": "Renommer"
@@ -2574,6 +2631,12 @@
     "map-icon.save-image.tooltip": {
       "message": "Enregistrer l’image…"
     },
+    "map-icon.copy-image": {
+      "message": "Copier l’image"
+    },
+    "map-icon.image-copied": {
+      "message": "Image copiée"
+    },
     "map-icon.save-size": {
       "message": "{width} × {height} px"
     },
@@ -2654,6 +2717,9 @@
     },
     "map-icon.output.save-failed": {
       "message": "L’icône de carte n’a pas pu être enregistrée"
+    },
+    "map-icon.output.copy-failed": {
+      "message": "L’icône de carte n’a pas pu être copiée"
     },
     "map-icon.lightbox.close": {
       "message": "Fermer l’aperçu de l’icône de carte"
@@ -2925,6 +2991,21 @@
     "code-editor.panel.label": {
       "message": "Éditeur de source RMS"
     },
+    "code-editor.outline.label": {
+      "message": "Structure"
+    },
+    "code-editor.outline.item": {
+      "message": "{label}, ligne {line}"
+    },
+    "code-editor.outline.go-to-section": {
+      "message": "Aller à une section"
+    },
+    "code-editor.outline.go-to-block": {
+      "message": "Aller à un bloc"
+    },
+    "code-editor.outline.go-to-function": {
+      "message": "Aller à une fonction"
+    },
     "code-editor.tabs.label": {
       "message": "Fichiers ouverts"
     },
@@ -3108,6 +3189,51 @@
     "code-editor.context-menu.open-included-file": {
       "message": "Ouvrir le fichier inclus"
     },
+    "code-editor.context-menu.insert-snippet": {
+      "message": "Insérer un extrait…"
+    },
+    "code-editor.snippets.title": {
+      "message": "Insérer un extrait"
+    },
+    "code-editor.snippets.close": {
+      "message": "Fermer"
+    },
+    "code-editor.snippets.search": {
+      "message": "Rechercher des extraits"
+    },
+    "code-editor.snippets.search.placeholder": {
+      "message": "Rechercher des extraits"
+    },
+    "code-editor.snippets.search.clear": {
+      "message": "Effacer la recherche"
+    },
+    "code-editor.snippets.show-all": {
+      "message": "Tout afficher"
+    },
+    "code-editor.snippets.list": {
+      "message": "Extraits"
+    },
+    "code-editor.snippets.preview": {
+      "message": "Texte à insérer"
+    },
+    "code-editor.snippets.loading": {
+      "message": "Chargement des extraits…"
+    },
+    "code-editor.snippets.unavailable": {
+      "message": "Les extraits n’ont pas pu être chargés. Fermez cette boîte de dialogue et réessayez."
+    },
+    "code-editor.snippets.empty.here": {
+      "message": "Aucun extrait ne convient à l’emplacement du curseur. Activez Tout afficher pour voir tous les extraits."
+    },
+    "code-editor.snippets.empty.search": {
+      "message": "Aucun extrait ne correspond à cette recherche."
+    },
+    "code-editor.snippets.insert": {
+      "message": "Insérer"
+    },
+    "code-editor.snippets.cancel": {
+      "message": "Annuler"
+    },
     "code-editor.include.open": {
       "message": "Ouvrir {name}"
     },
@@ -3223,6 +3349,12 @@
       "message": "Enregistrer l’icône de carte"
     },
     "native-dialog.map-icon.filter": {
+      "message": "Image PNG"
+    },
+    "native-dialog.preview-image.title": {
+      "message": "Enregistrer l’image de la carte"
+    },
+    "native-dialog.preview-image.filter": {
       "message": "Image PNG"
     },
     "file-actions.included-files.refresh-failed": {
@@ -3545,6 +3677,21 @@
     },
     "preview-panel.tool.small-trees": {
       "message": "Petits arbres"
+    },
+    "preview-panel.image-menu.copy": {
+      "message": "Copier l’image"
+    },
+    "preview-panel.image-menu.save": {
+      "message": "Enregistrer l’image…"
+    },
+    "preview-panel.output.image-saved": {
+      "message": "Image de la carte enregistrée sous {name}"
+    },
+    "preview-panel.output.image-save-failed": {
+      "message": "L’image de la carte n’a pas pu être enregistrée"
+    },
+    "preview-panel.output.image-copy-failed": {
+      "message": "L’image de la carte n’a pas pu être copiée"
     },
     "preview-panel.canvas.top-down.minimap": {
       "message": "aperçu de carte vu de dessus avec les couleurs de la mini-carte"

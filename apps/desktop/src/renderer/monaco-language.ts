@@ -21,7 +21,13 @@ import {
   type IncludeLink,
 } from './include-navigation';
 import type { SourceBlockStructure } from './source-highlight';
-import { semanticTokensForVersion, type SemanticTokensResult } from './semantic-tokens';
+import { mapTestFunctionDefinition, type XsOutlineSymbol } from './editor-outline';
+import {
+  codeSemanticTokenTypes,
+  createSemanticTokensRetry,
+  semanticTokensForVersion,
+  type SemanticTokensResult,
+} from './semantic-tokens';
 import { xsLanguageConfiguration, xsMonarchLanguage } from './xs-language';
 import { rmsLanguageConfigurationFor, rmsMonarchLanguage } from './rms-language';
 import { rmsInlayHintsFromLsp } from './rms-inlay-hints';
@@ -48,6 +54,12 @@ import {
   type LspSignatureParameter,
 } from './rms-completion';
 import { onGameInstallationChanged } from './game-installation';
+import {
+  starlarkAliases,
+  starlarkCodeOnly,
+  starlarkCursorContext,
+  starlarkSignatureHelp,
+} from './starlark-call-context';
 import { hoverlessAt, PublishedCodeActions } from './editor-answers';
 
 interface LspPosition {
@@ -159,6 +171,7 @@ function markerOwner(languageId: string): string {
   return languageId === 'starlark' ? 'starlark-lsp' : 'rms-ls';
 }
 const semanticTokensChanged = new monaco.Emitter<void>();
+const semanticTokensRetry = createSemanticTokensRetry(() => semanticTokensChanged.fire());
 const languageAnswersChanged = new monaco.Emitter<void>();
 
 export const onLanguageAnswersChanged = languageAnswersChanged.event;
@@ -250,6 +263,7 @@ export function configureRmsLanguage(): void {
   registerProviders('starlark');
   registerProviders('xs');
   registerMapTestHostProviders();
+  languageAnswersChanged.event(() => semanticTokensRetry.answersChanged());
   window.rmside.onLanguageServerEvent((event) => {
     if (event.method !== 'textDocument/publishDiagnostics') return;
     const params = event.params as {
@@ -348,6 +362,13 @@ export function attachLanguageDocument(
   };
 }
 
+export async function requestRmsSnippets(
+  model: monaco.editor.ITextModel,
+  position: monaco.Position,
+): Promise<unknown> {
+  return requestLanguageOrThrow<unknown>('rms/snippets', positionParams(model, position));
+}
+
 export async function requestRmsSourceStructure(
   model: monaco.editor.ITextModel,
 ): Promise<SourceBlockStructure | null> {
@@ -359,18 +380,57 @@ export async function requestRmsSourceStructure(
   if (model.isDisposed() || model.getVersionId() !== version) return null;
   if (!Array.isArray(symbols) || !Array.isArray(folds)) return null;
   return {
-    symbols: symbols
-      .filter(isLspDocumentSymbol)
-      .map((symbol) => ({ kind: symbol.kind, line: symbol.range.start.line, name: symbol.name })),
+    symbols: symbols.filter(isLspDocumentSymbol).map((symbol) => ({
+      kind: symbol.kind,
+      line: symbol.range.start.line,
+      name: symbol.name,
+      character: symbol.range.start.character,
+      endLine: symbol.range.end.line,
+      endCharacter: symbol.range.end.character,
+    })),
     folds: folds.flatMap((fold) => {
-      const value = fold as { startLine?: unknown; endLine?: unknown; kind?: unknown } | null;
+      const value = fold as {
+        startLine?: unknown;
+        startCharacter?: unknown;
+        endLine?: unknown;
+        kind?: unknown;
+      } | null;
       return typeof value?.startLine === 'number' &&
         typeof value.endLine === 'number' &&
         value.kind !== 'comment'
-        ? [{ startLine: value.startLine, endLine: value.endLine }]
+        ? [
+            {
+              startLine: value.startLine,
+              endLine: value.endLine,
+              ...(typeof value.startCharacter === 'number'
+                ? { startCharacter: value.startCharacter }
+                : {}),
+            },
+          ]
         : [];
     }),
   };
+}
+
+export async function requestXsOutlineSymbols(
+  model: monaco.editor.ITextModel,
+): Promise<XsOutlineSymbol[] | null> {
+  if (model.getLanguageId() !== 'xs') return null;
+  const version = model.getVersionId();
+  const symbols = await requestLanguage<unknown[]>(
+    'textDocument/documentSymbol',
+    textDocumentParams(model),
+  );
+  if (model.isDisposed() || model.getVersionId() !== version) return null;
+  if (!Array.isArray(symbols)) return null;
+  return symbols.filter(isLspDocumentSymbol).map((symbol) => ({
+    kind: symbol.kind,
+    name: symbol.name,
+    startLine: symbol.range.start.line,
+    endLine: symbol.range.end.line,
+    line: symbol.selectionRange.start.line,
+    character: symbol.selectionRange.start.character,
+  }));
 }
 
 export function registerActiveRmsEditor(
@@ -599,6 +659,12 @@ function registerProviders(languageId: SourceLanguageId): void {
   monaco.languages.registerCompletionItemProvider(languageId, {
     triggerCharacters: completionTriggerCharacters[languageId],
     provideCompletionItems: async (model, position, context) => {
+      if (
+        languageId === 'starlark' &&
+        starlarkCursorContext(model.getValue(), model.getOffsetAt(position)).kind !== 'code'
+      ) {
+        return { suggestions: [] };
+      }
       const rms = languageId === 'rms';
       if (rms) void contentNamesSnapshot();
       const localNames = rms ? rmsContentNamesSnapshot : null;
@@ -963,18 +1029,7 @@ function registerProviders(languageId: SourceLanguageId): void {
     monaco.languages.registerDocumentSemanticTokensProvider(languageId, {
       onDidChange: semanticTokensChanged.event,
       getLegend: () => ({
-        tokenTypes: [
-          'comment',
-          'keyword',
-          'namespace',
-          'function',
-          'property',
-          'number',
-          'string',
-          'variable',
-          'operator',
-          'control',
-        ],
+        tokenTypes: [...codeSemanticTokenTypes],
         tokenModifiers: [],
       }),
       provideDocumentSemanticTokens: async (model) => {
@@ -983,6 +1038,8 @@ function registerProviders(languageId: SourceLanguageId): void {
           'textDocument/semanticTokens/full',
           textDocumentParams(model),
         );
+        if (result === null) semanticTokensRetry.missed();
+        else semanticTokensRetry.answered();
         return semanticTokensForVersion(model, version, result);
       },
       releaseDocumentSemanticTokens: () => undefined,
@@ -1445,58 +1502,8 @@ function inferredNativeMethods(
   return null;
 }
 
-function starlarkCodeMask(source: string): string {
-  let result = '';
-  let index = 0;
-  const appendMasked = (): string => {
-    const character = source[index++] ?? '';
-    result += character === '\r' || character === '\n' ? character : ' ';
-    return character;
-  };
-
-  while (index < source.length) {
-    const character = source[index]!;
-    if (character === '#') {
-      while (index < source.length && source[index] !== '\r' && source[index] !== '\n') {
-        appendMasked();
-      }
-      continue;
-    }
-    if (character !== '"' && character !== "'") {
-      result += character;
-      index += 1;
-      continue;
-    }
-
-    const quote = character;
-    const triple = source.slice(index, index + 3) === quote.repeat(3);
-    const delimiterLength = triple ? 3 : 1;
-    for (let offset = 0; offset < delimiterLength; offset += 1) appendMasked();
-    while (index < source.length) {
-      if (triple && source.slice(index, index + 3) === quote.repeat(3)) {
-        appendMasked();
-        appendMasked();
-        appendMasked();
-        break;
-      }
-      if (!triple && source[index] === quote) {
-        appendMasked();
-        break;
-      }
-      if (source[index] === '\\') {
-        appendMasked();
-        if (index < source.length) appendMasked();
-        continue;
-      }
-      if (!triple && (source[index] === '\r' || source[index] === '\n')) break;
-      appendMasked();
-    }
-  }
-  return result;
-}
-
 function starlarkVisibleBindings(sourceBeforeCursor: string): StarlarkNativeCompletion[] {
-  const codeLines = starlarkCodeMask(sourceBeforeCursor).split(/\r\n|\r|\n/u);
+  const codeLines = starlarkCodeOnly(sourceBeforeCursor).split(/\r\n|\r|\n/u);
   const globals = new Map<string, StarlarkNativeCompletion>();
   let activeFunction:
     | {
@@ -1572,12 +1579,12 @@ function mapTestDocumentSymbols(
   model: monaco.editor.ITextModel,
 ): monaco.languages.DocumentSymbol[] {
   return model.getLinesContent().flatMap((line, index) => {
-    const match = /^\s*def\s+([A-Za-z_]\w*)\s*\(/u.exec(line);
-    if (!match || match.index === undefined) return [];
-    const startColumn = line.indexOf(match[1]!) + 1;
+    const definition = mapTestFunctionDefinition(line);
+    if (!definition) return [];
+    const startColumn = definition.character + 1;
     return [
       {
-        name: match[1]!,
+        name: definition.name,
         detail: t('code-editor.symbol.starlark-function'),
         kind: monaco.languages.SymbolKind.Function,
         tags: [],
@@ -1586,7 +1593,7 @@ function mapTestDocumentSymbols(
           index + 1,
           startColumn,
           index + 1,
-          startColumn + match[1]!.length,
+          startColumn + definition.name.length,
         ),
       },
     ];
@@ -1731,23 +1738,17 @@ function registerMapTestHostProviders(): void {
   monaco.languages.registerCompletionItemProvider('starlark', {
     triggerCharacters: ['.', '_'],
     provideCompletionItems: (model, position) => {
+      const source = model.getValue();
+      if (starlarkCursorContext(source, model.getOffsetAt(position)).kind !== 'code') {
+        return { suggestions: [] };
+      }
       const prefix = model.getLineContent(position.lineNumber).slice(0, position.column - 1);
       const range = completionReplacementRange(model, position);
       const receiver = /\b([A-Za-z_]\w*)\.[A-Za-z_]*$/u.exec(prefix)?.[1];
-      const source = model.getValue();
       const sourceBeforeCursor = model.getValueInRange(
         new monaco.Range(1, 1, position.lineNumber, position.column),
       );
-      const sampleAliases = new Set(
-        [...source.matchAll(/\bfor\s+([A-Za-z_]\w*)\s+in\s+rms\.generate\s*\(/gu)].map(
-          (match) => match[1]!,
-        ),
-      );
-      const mapAliases = new Set(
-        [...source.matchAll(/\b([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)\.map\b/gu)]
-          .filter((match) => sampleAliases.has(match[2]!))
-          .map((match) => match[1]!),
-      );
+      const { samples: sampleAliases, maps: mapAliases } = starlarkAliases(source);
       const native = inferredNativeMethods(prefix, source, receiver);
       const hostLabels =
         receiver === 'rms'
@@ -1865,61 +1866,25 @@ function registerMapTestHostProviders(): void {
   });
   monaco.languages.registerSignatureHelpProvider('starlark', {
     signatureHelpTriggerCharacters: ['(', ','],
+    signatureHelpRetriggerCharacters: [')'],
     provideSignatureHelp: (model, position) => {
-      const prefix = model.getValueInRange(
-        new monaco.Range(
-          Math.max(1, position.lineNumber - 8),
-          1,
-          position.lineNumber,
-          position.column,
-        ),
-      );
-      const signatures = [
-        [
-          'rms.source',
-          'rms.source(path = None)',
-          'Selects the default/pinned or explicit authorized RMS source.',
-        ],
-        [
-          'rms.seeds',
-          'rms.seeds(start, count = 1, step = 1)',
-          'Creates a checked deterministic uint32 sequence.',
-        ],
-        [
-          'rms.generate',
-          'rms.generate(target, seeds, preview = True)',
-          'Generates immutable samples in seed order.',
-        ],
-        [
-          'sample.expect',
-          'sample.expect(condition, message, values = None, code = None)',
-          'Records a failed assertion and continues.',
-        ],
-        [
-          'sample.report',
-          'sample.report(message, values = None, code = None)',
-          'Records an unconditional finding.',
-        ],
-        [
-          '.format',
-          'string.format(*args, **kwargs)',
-          'Substitutes positional or named values into `{}` fields.',
-        ],
-      ] as const;
-      const nearest = signatures
-        .map((signature) => ({
-          index: prefix.lastIndexOf(`${signature[0]}(`),
-          signature,
-        }))
-        .filter(({ index }) => index >= 0)
-        .sort((left, right) => right.index - left.index)[0];
-      if (!nearest) return null;
-      const match = nearest.signature;
+      const help = starlarkSignatureHelp(model.getValue(), model.getOffsetAt(position));
+      if (!help) return null;
       return {
         value: {
-          signatures: [{ label: match[1], documentation: match[2], parameters: [] }],
+          signatures: [
+            {
+              label: help.signature.label,
+              ...(help.signature.documentation === undefined
+                ? {}
+                : { documentation: help.signature.documentation }),
+              parameters: help.signature.parameters.map((parameter) => ({
+                label: parameter.label,
+              })),
+            },
+          ],
           activeSignature: 0,
-          activeParameter: Math.max(0, prefix.slice(nearest.index).split(',').length - 1),
+          activeParameter: help.activeParameter,
         },
         dispose: () => undefined,
       };

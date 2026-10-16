@@ -5,6 +5,7 @@ export const applicationShortcuts = {
   stop: 'Shift+F5',
   deployManagedMod: 'CmdOrCtrl+Shift+B',
   browseInstalledSources: 'CmdOrCtrl+Shift+G',
+  findInFiles: 'CmdOrCtrl+Shift+F',
 } as const;
 
 export type ApplicationShortcutName = keyof typeof applicationShortcuts;
@@ -76,6 +77,7 @@ export function matchesShortcut(event: ShortcutKeyEvent, accelerator: string): b
 export const menuShortcutItems = [
   { id: 'file.deploy-managed-mod', accelerator: applicationShortcuts.deployManagedMod },
   { id: 'file.browse-installed-sources', accelerator: applicationShortcuts.browseInstalledSources },
+  { id: 'file.find-in-files', accelerator: applicationShortcuts.findInFiles },
 ] as const;
 
 export const modalSafeMenuActions: ReadonlySet<ApplicationMenuAction['type']> = new Set<
@@ -89,6 +91,7 @@ export const modalSafeMenuActions: ReadonlySet<ApplicationMenuAction['type']> = 
   'set-live-generation-stages',
   'set-gpu-map-rendering',
   'set-map-transitions',
+  'set-outline-row',
   'set-inlay-hints',
   'set-delete-permanently',
 ]);
