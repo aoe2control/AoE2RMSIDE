@@ -1166,6 +1166,7 @@ fn framed_generation_response(
         envelope_request_id,
         Payload::GenerationResponse(execution.response),
     );
+    fit_tile_write_runs(&mut response);
     connection_routes::fit_connection_routes(&mut response);
     fits_frame(&response)
         .map(|()| (sequence, response))
@@ -2545,6 +2546,10 @@ fn protocol_generation_response(
             connection_operation_indices_le: encode_u32(
                 map.connection_operation_indices.iter().copied(),
             ),
+            tile_write_runs_le: map
+                .tile_write_runs
+                .as_deref()
+                .map_or_else(Vec::new, encode_tile_write_runs),
         }),
         semantic_hash: map.final_semantic_hash.to_vec(),
         committed: true,
@@ -3310,6 +3315,35 @@ fn encode_i32(values: impl IntoIterator<Item = i32>) -> Vec<u8> {
 
 fn encode_u32(values: impl IntoIterator<Item = u32>) -> Vec<u8> {
     values.into_iter().flat_map(u32::to_le_bytes).collect()
+}
+
+fn encode_tile_write_runs(runs: &[rms_engine::TileWriteRun]) -> Vec<u8> {
+    let mut bytes = Vec::with_capacity(runs.len() * 12);
+    for run in runs {
+        bytes.extend_from_slice(&run.operation_index.to_le_bytes());
+        bytes.extend_from_slice(&run.first_tile.to_le_bytes());
+        bytes.extend_from_slice(&run.tile_count.to_le_bytes());
+    }
+    bytes
+}
+
+fn fit_tile_write_runs(message: &mut v1::Envelope) {
+    let Some(Payload::GenerationResponse(response)) = message.payload.as_ref() else {
+        return;
+    };
+    if response
+        .provenance
+        .as_ref()
+        .is_none_or(|provenance| provenance.tile_write_runs_le.is_empty())
+        || prost::Message::encoded_len(message) <= rms_protocol::MAX_FRAME_BYTES
+    {
+        return;
+    }
+    if let Some(Payload::GenerationResponse(response)) = message.payload.as_mut()
+        && let Some(provenance) = response.provenance.as_mut()
+    {
+        provenance.tile_write_runs_le = Vec::new();
+    }
 }
 
 fn encode_cliff_pieces(pieces: &[rms_engine::CliffPiece]) -> Vec<u8> {

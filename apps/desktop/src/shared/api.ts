@@ -852,6 +852,7 @@ export interface PreviewGenerationResult {
   objectOperationIndicesLe: Uint8Array;
   cliffOperationIndicesLe: Uint8Array;
   connectionOperationIndicesLe: Uint8Array;
+  tileWriteRunsLe?: Uint8Array;
   semanticHash: string;
   requestHash: string;
   sourceCatalogRevision: number;

@@ -112,6 +112,7 @@ import {
   mapIconArtObjectDescriptors,
 } from '../shared/map-icon-art-objects';
 import { decodeAppearanceObjectColumn } from '../shared/terrain-appearances';
+import { validTileWriteRuns } from '../shared/tile-write-runs';
 import { constantNamesFor } from './constant-names-provider';
 import {
   connectionRoutesFormatMajor,
@@ -156,7 +157,7 @@ interface PendingRequest {
   reject(error: Error): void;
 }
 
-const protocolVersion = { major: 2, minor: 20, patch: 0 } as const;
+const protocolVersion = { major: 2, minor: 21, patch: 0 } as const;
 
 export class ProtocolResponseError extends Error {
   constructor(
@@ -1272,6 +1273,14 @@ function toPreviewResult(
     objectOperationIndicesLe: Uint8Array.from(provenance.objectOperationIndicesLe),
     cliffOperationIndicesLe: Uint8Array.from(provenance.cliffOperationIndicesLe),
     connectionOperationIndicesLe: Uint8Array.from(provenance.connectionOperationIndicesLe),
+    ...(provenance.tileWriteRunsLe.byteLength > 0 &&
+    validTileWriteRuns(
+      provenance.tileWriteRunsLe,
+      map.width * map.height,
+      provenance.operations.length,
+    )
+      ? { tileWriteRunsLe: Uint8Array.from(provenance.tileWriteRunsLe) }
+      : {}),
     semanticHash: toHex(response.semanticHash),
     requestHash: toHex(response.requestHash),
     sourceCatalogRevision: sourceCatalog.revision,

@@ -6,6 +6,7 @@ import type {
 } from '../shared/api';
 import type { PreviewLook } from '../shared/game-art';
 import { failedConnectionSearch, type ConnectionRouteSet } from '../shared/connection-routes';
+import { forEachWrittenTile } from '../shared/tile-write-runs';
 import { t, type MessageId } from '../shared/i18n/translator';
 import type { PresentedPreviewResult } from './presentation-names';
 import { classifyTerrainFamily, terrainFamilyColor } from './terrain-families';
@@ -921,6 +922,11 @@ export function operationTileIndices(
     if (operation !== null && operations.has(operation)) {
       addPoint({ x: tileIndex % scene.width, y: Math.floor(tileIndex / scene.width) });
     }
+  }
+  if (map.tileWriteRunsLe && map.width === scene.width && map.height === scene.height) {
+    forEachWrittenTile(map.tileWriteRunsLe, operations, (tileIndex) =>
+      addPoint({ x: tileIndex % scene.width, y: Math.floor(tileIndex / scene.width) }),
+    );
   }
   scene.objects.forEach((object, index) => {
     if (visibility ? !isDrawnPreviewObject(object, visibility) : !isVisiblePreviewObject(object))

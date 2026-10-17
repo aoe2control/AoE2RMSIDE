@@ -162,6 +162,7 @@ fn shrink(mut map: GeneratedMap) -> GeneratedMap {
     map.object_operation_indices.shrink_to_fit();
     map.cliff_operation_indices.shrink_to_fit();
     map.connection_operation_indices.shrink_to_fit();
+    map.tile_write_runs = None;
     map.stage_hashes.shrink_to_fit();
     map.warnings.shrink_to_fit();
     map.provenance.shrink_to_fit();
@@ -189,6 +190,7 @@ pub(crate) fn map_heap_bytes(map: &GeneratedMap) -> u64 {
         + vector_bytes(&map.object_operation_indices)
         + vector_bytes(&map.cliff_operation_indices)
         + vector_bytes(&map.connection_operation_indices)
+        + map.tile_write_runs.as_ref().map_or(0, vector_bytes)
         + map
             .connection_routes
             .as_ref()

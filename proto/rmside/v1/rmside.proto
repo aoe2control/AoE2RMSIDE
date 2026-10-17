@@ -579,6 +579,7 @@ message ProvenanceColumns {
   bytes object_operation_indices_le = 8;
   bytes cliff_operation_indices_le = 9;
   bytes connection_operation_indices_le = 10;
+  bytes tile_write_runs_le = 11;
 }
 
 message ProvenanceOperation {

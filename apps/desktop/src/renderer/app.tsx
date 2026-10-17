@@ -107,8 +107,10 @@ import {
   noSourceHighlightOperations,
   operationsIntersectingByteRanges,
   sameSourceHighlightRequest,
+  sourceHighlightRangesForMap,
   type SourceHighlightRequest,
 } from './source-highlight';
+import { previewSourceContents } from './preview-source-content';
 import { nextPaneIndex } from './keyboard-navigation';
 import { navigateToPreviewOperation } from './source-navigation';
 import { resolveTheme, type ThemePreference } from './theme';
@@ -448,7 +450,10 @@ export function App() {
         ? operationsIntersectingByteRanges(
             current.provenanceOperations,
             sourceHighlightRequest.sourceId,
-            sourceHighlightRequest.byteRanges,
+            sourceHighlightRangesForMap(sourceHighlightRequest, {
+              documentUri: current.documentUri,
+              content: previewSourceContents.get(current),
+            }),
           )
         : noSourceHighlightOperations;
     const previous = stableSourceHighlightOperations.current;

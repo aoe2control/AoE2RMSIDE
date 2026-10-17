@@ -1,4 +1,6 @@
 import type { PreviewProvenanceOperation } from '../shared/api';
+import { byteRangesInEarlierContent } from './preview-provenance';
+import { sameSourceIdentity } from './source-identity';
 
 export const outlineSymbolKind = Object.freeze({
   section: 3,
@@ -40,6 +42,7 @@ export interface SourceByteRange {
 export interface SourceHighlightRequest {
   sourceId: string;
   byteRanges: readonly SourceByteRange[];
+  content?: string;
 }
 
 export interface SourceBraceBlock {
@@ -319,8 +322,17 @@ export function operationsIntersectingByteRanges(
   byteRanges: readonly SourceByteRange[],
 ): number[] {
   if (byteRanges.length === 0) return [];
+  const sameSource = new Map<string, boolean>();
+  const inSource = (candidate: string) => {
+    let same = sameSource.get(candidate);
+    if (same === undefined) {
+      same = sameSourceIdentity(candidate, sourceId);
+      sameSource.set(candidate, same);
+    }
+    return same;
+  };
   return operations.flatMap((operation, operationIndex) => {
-    if (operation.sourceId !== sourceId) return [];
+    if (!inSource(operation.sourceId)) return [];
     const intersects = byteRanges.some((range) =>
       operation.byteStart === operation.byteEnd
         ? range.start <= operation.byteStart && operation.byteStart <= range.end
@@ -328,6 +340,21 @@ export function operationsIntersectingByteRanges(
     );
     return intersects ? [operationIndex] : [];
   });
+}
+
+export function sourceHighlightRangesForMap(
+  request: SourceHighlightRequest,
+  map: { documentUri: string; content: string | undefined },
+): readonly SourceByteRange[] {
+  if (
+    request.content === undefined ||
+    map.content === undefined ||
+    request.content === map.content ||
+    !sameSourceIdentity(request.sourceId, map.documentUri)
+  ) {
+    return request.byteRanges;
+  }
+  return byteRangesInEarlierContent(map.content, request.content, request.byteRanges);
 }
 
 export const noSourceHighlightOperations: readonly number[] = Object.freeze([]);
@@ -340,6 +367,7 @@ export function sameSourceHighlightRequest(
   if (!left || !right) return false;
   return (
     left.sourceId === right.sourceId &&
+    left.content === right.content &&
     left.byteRanges.length === right.byteRanges.length &&
     left.byteRanges.every(
       (range, index) =>

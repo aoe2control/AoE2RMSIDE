@@ -5,8 +5,8 @@ import type { ElevationSurface } from './preview-elevation';
 
 export const previewChunkSize = 32;
 export const minimumPreviewZoom = 0.95;
-export const closestPreviewTileScale = 48;
-export const minimumClosestPreviewZoom = 4;
+export const closestPreviewTileScale = 72;
+export const minimumClosestPreviewZoom = 6;
 
 export function maximumPreviewZoomFor(
   mapWidth: number,

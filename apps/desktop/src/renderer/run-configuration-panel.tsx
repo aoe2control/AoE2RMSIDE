@@ -128,6 +128,7 @@ import {
 import { BoundedPreviewLru, type PreviewCacheDiagnostics } from './preview-cache';
 import { previewResultBytes } from './preview-result-bytes';
 import { remapEquivalentPreviewResult, remapHistoricalPreviewResult } from './preview-provenance';
+import { previewSourceContents } from './preview-source-content';
 import { SelectGameFolderItem } from './select-game-folder-button';
 import {
   classifyMapTestRejection,
@@ -736,7 +737,7 @@ export function RunConfigurationPanel({
   admitRunRef.current = admitRun;
   const sourceInvalidRef = useRef(sourceInvalid);
   sourceInvalidRef.current = sourceInvalid;
-  const provenanceSourceContent = useRef(new WeakMap<PreviewGenerationResult, string>());
+  const provenanceSourceContent = useRef(previewSourceContents);
   const resultGenerationFacts = useRef(
     new WeakMap<PreviewGenerationResult, { configurationKey: string; seed: number }>(),
   );

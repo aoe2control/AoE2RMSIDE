@@ -135,7 +135,10 @@ import { RunningIndicator } from './running-indicator';
 import { previewTerrainCacheKeys } from './preview-terrain-cache-key';
 import { useDelayedFlag } from './use-delayed-flag';
 import { useI18n } from './i18n';
+import { usePreviewLayerArt } from './preview-layer-art';
 import {
+  gameArtCivilizationKey,
+  gameArtCivilizationResolver,
   useGameArt,
   type GameArtCliffView,
   type GameArtSpriteView,
@@ -225,9 +228,16 @@ import {
   previewKeyboardShortcuts,
   type PreviewKeyboardCursor,
 } from './preview-keyboard';
+import { anchoredZoomFrame, panDragCamera, type PreviewPanDrag } from './preview-pan-drag';
+import {
+  cameraCommittedOnDragRelease,
+  followSelectionDrag,
+  sceneBuildCamera,
+  selectionDragRectangle,
+  type PreviewSelectionDrag,
+} from './preview-selection-drag';
 import {
   clampPreviewCamera,
-  clampedTileAtScreenPoint,
   decodeTopDownScene,
   fitPreviewCamera,
   hasLandConnection,
@@ -235,7 +245,6 @@ import {
   mapRectangleScreenPolygon,
   mapScreenBounds,
   mapToScreen,
-  panPreviewCamera,
   previewCliffStrokeWidth,
   previewMarkerVerticalScale,
   previewLevelPixels,
@@ -249,7 +258,6 @@ import {
   visibleTileRange,
   zoomPreviewCamera,
   type PreviewCamera,
-  type PreviewHit,
   type PreviewProjection,
   type PreviewScreenTransform,
   type PreviewSelection,
@@ -344,24 +352,7 @@ import {
 const previewPadding = 28;
 const narrowPreviewWidth = 380;
 type PreviewPointerGesture =
-  | {
-      kind: 'selection';
-      pointerId: number;
-      start: PreviewHit;
-      end: PreviewHit;
-      startScreenX: number;
-      startScreenY: number;
-      camera: PreviewCamera;
-      cancelled?: boolean;
-    }
-  | {
-      kind: 'pan';
-      pointerId: number;
-      x: number;
-      y: number;
-      camera: PreviewCamera;
-      startCamera: PreviewCamera;
-    };
+  ({ kind: 'selection' } & PreviewSelectionDrag) | ({ kind: 'pan' } & PreviewPanDrag);
 
 interface DiagnosticOverlays {
   cliffs: boolean;
@@ -801,6 +792,7 @@ interface CameraAnimation {
   startedAt: number;
   target: PreviewCamera;
   wheel: boolean;
+  anchor?: { x: number; y: number };
 }
 
 interface CachedTerrainChunk {
@@ -884,6 +876,7 @@ export function PreviewPanel() {
   const stageMorphTerrain = useRef<Container | null>(null);
   const builtMapLayer = useRef<(BuiltMapLayer & { key: PreviewCamera }) | null>(null);
   const gesture = useRef<PreviewPointerGesture | null>(null);
+  const followSelectionDragCamera = useRef<() => PreviewSelection | null>(() => null);
   const selectionOutline = useRef<Graphics | null>(null);
   const sourceHighlightOutline = useRef<Graphics | null>(null);
   const legendHoverOutline = useRef<Graphics | null>(null);
@@ -1272,6 +1265,8 @@ export function PreviewPanel() {
     [candidateCoversScene, map, minimapObjectsShown, objectVisibility.helperObjectIds, scene],
   );
   const legendObjectColors = minimapObjectsLegendColors ?? markerObjectColors;
+  const gameTexturesTerrainColors =
+    cliffLook === 'game-textures' ? colourLayerColors?.terrains : undefined;
   const legendMap = useMemo(
     () =>
       presentedMap
@@ -1284,18 +1279,25 @@ export function PreviewPanel() {
                     ? { ...shownColourColors, gaiaObjects: minimapObjectsLegendColors }
                     : shownColourColors,
                 }
-              : legendObjectColors
+              : legendObjectColors || gameTexturesTerrainColors
                 ? {
                     lookColors: {
-                      terrains: new Map<number, number>(),
-                      gaiaObjects: legendObjectColors,
+                      terrains: gameTexturesTerrainColors ?? new Map<number, number>(),
+                      gaiaObjects: legendObjectColors ?? new Map<number, number>(),
                       cliffs: new Map<number, number>(),
                     },
                   }
                 : {}),
           }
         : presentedMap,
-    [cliffLook, legendObjectColors, minimapObjectsLegendColors, presentedMap, shownColourColors],
+    [
+      cliffLook,
+      gameTexturesTerrainColors,
+      legendObjectColors,
+      minimapObjectsLegendColors,
+      presentedMap,
+      shownColourColors,
+    ],
   );
   const sourceHighlightTileIndices = useMemo(
     () =>
@@ -1373,6 +1375,7 @@ export function PreviewPanel() {
       keptLiveStage.current?.transform(next, viewport, viewScene);
       const layer = renderedMapLayer.current;
       if (layer) transformMapLayer(layer, renderedCamera.current, next, viewScene, viewport);
+      const dragSelection = followSelectionDragCamera.current();
       drawPreviewOutlines(
         selectionOutline.current,
         sourceHighlightOutline.current,
@@ -1381,7 +1384,7 @@ export function PreviewPanel() {
         viewScene,
         next,
         viewport,
-        displaySelection,
+        dragSelection ?? displaySelection,
         sourceHighlightTiles.current,
         legendHoverTileIndices.current,
       );
@@ -1433,7 +1436,30 @@ export function PreviewPanel() {
           ? 1
           : Math.min(1, Math.max(0, (now - active.startedAt) / cameraEaseDurationMs));
         const easedProgress = 1 - (1 - progress) ** 3;
-        const frameCamera = interpolateCamera(active.from, active.target, easedProgress);
+        let frameCamera = interpolateCamera(active.from, active.target, easedProgress);
+        const pan = gesture.current?.kind === 'pan' ? gesture.current : null;
+        const anchor = pan?.pointer ?? active.anchor;
+        if (anchor) {
+          const shown = displayedCamera.current;
+          frameCamera = anchoredZoomFrame(
+            shown,
+            frameCamera.zoom,
+            anchor,
+            viewScene.width,
+            viewScene.height,
+            viewport,
+          );
+          active.target = anchoredZoomFrame(
+            shown,
+            active.target.zoom,
+            anchor,
+            viewScene.width,
+            viewScene.height,
+            viewport,
+          );
+          if (progress >= 1) frameCamera = active.target;
+          pendingCamera.current = active.target;
+        }
         applyDisplayedCamera(frameCamera);
         if (progress < 1) {
           cameraAnimationFrame.current = window.requestAnimationFrame(animate);
@@ -1448,14 +1474,14 @@ export function PreviewPanel() {
         }
         if (container) delete container.dataset.cameraAnimation;
         if (!active.wheel) {
-          setCamera(active.target);
+          if (gesture.current?.kind !== 'pan') setCamera(active.target);
           return;
         }
         if (container) container.dataset.cameraCommit = 'deferred';
         wheelCommitTimer.current = window.setTimeout(() => {
           wheelCommitTimer.current = null;
           if (container) delete container.dataset.cameraCommit;
-          if (cameraAnimation.current || gesture.current) return;
+          if (cameraAnimation.current || gesture.current?.kind === 'pan') return;
           setCamera(displayedCamera.current);
         }, wheelBurstSettleMs);
       };
@@ -1836,8 +1862,14 @@ export function PreviewPanel() {
     const container = host.current;
     const scene = viewScene;
     if (!pixiReady || !pixi || !container || !scene) return undefined;
-    const camera =
-      outgoingSizeCamera.current === stateCamera ? displayedCamera.current : stateCamera;
+    const camera = sceneBuildCamera(
+      stateCamera,
+      displayedCamera.current,
+      outgoingSizeCamera.current === stateCamera ||
+        cameraAnimation.current !== null ||
+        wheelCommitTimer.current !== null ||
+        gesture.current !== null,
+    );
     outgoingSizeCamera.current = null;
     const canvas = pixi.canvas;
     latencyProbe.sceneBuild('start');
@@ -2398,9 +2430,27 @@ export function PreviewPanel() {
     };
     clearConnectionHover.current = () => hoverConnectionAt(null);
     const pickSurface = () => shownRaisedSurface.current();
-    const updatePointer = (point: { x: number; y: number }, pointerId: number) => {
+    const followDrag = (drag: PreviewSelectionDrag, point: { x: number; y: number }) => {
+      const nextSelectionPreview = followSelectionDrag(
+        drag,
+        scene,
+        displayedCamera.current,
+        viewport,
+        pickSurface(),
+        point,
+      );
+      setSelectionPreview((current) =>
+        samePreviewSelection(current, nextSelectionPreview) ? current : nextSelectionPreview,
+      );
+      return nextSelectionPreview;
+    };
+    const updatePointer = (
+      point: { x: number; y: number },
+      pointerId: number,
+      drawOutline = true,
+    ) => {
       const currentGesture = gesture.current;
-      const interactionCamera = currentGesture?.camera ?? displayedCamera.current;
+      const interactionCamera = displayedCamera.current;
       const mapPoint = screenToVisibleMap(
         point,
         scene.width,
@@ -2429,64 +2479,53 @@ export function PreviewPanel() {
       }
       if (currentGesture.kind === 'selection') {
         if (currentGesture.cancelled) return;
-        const end = clampedTileAtScreenPoint(
-          scene,
-          interactionCamera,
-          viewport,
-          point,
-          pickSurface(),
-        );
-        currentGesture.end = end;
-        const nextSelectionPreview = rectangularSelectionFromDrag(
-          currentGesture.start,
-          end,
-          scene.width,
-          scene.height,
-        );
-        setSelectionPreview((current) =>
-          samePreviewSelection(current, nextSelectionPreview) ? current : nextSelectionPreview,
-        );
-        drawSelectionOutline(
-          selectionOutline.current,
-          scene,
-          currentGesture.camera,
-          viewport,
-          nextSelectionPreview,
-        );
+        const nextSelectionPreview = followDrag(currentGesture, point);
+        if (drawOutline) {
+          drawSelectionOutline(
+            selectionOutline.current,
+            scene,
+            interactionCamera,
+            viewport,
+            nextSelectionPreview,
+          );
+        }
         return;
       }
-      const deltaX = point.x - currentGesture.x;
-      const deltaY = point.y - currentGesture.y;
-      currentGesture.x = point.x;
-      currentGesture.y = point.y;
-      currentGesture.camera = panPreviewCamera(
-        currentGesture.camera,
-        deltaX,
-        deltaY,
+      const panned = panDragCamera(
+        currentGesture,
+        displayedCamera.current,
+        point,
         scene.width,
         scene.height,
         viewport,
       );
-      displayedCamera.current = currentGesture.camera;
-      transformTerrainLayer(terrainCache.container, currentGesture.camera, scene, viewport);
-      updateTerrainChunkVisibility(terrainCache, [currentGesture.camera], viewport, container);
-      candidateLayer.current?.transform(currentGesture.camera, viewport, scene);
-      transformMapLayer(mapLayer, renderedCamera.current, currentGesture.camera, scene, viewport);
+      displayedCamera.current = panned;
+      transformTerrainLayer(terrainCache.container, panned, scene, viewport);
+      updateTerrainChunkVisibility(terrainCache, [panned], viewport, container);
+      candidateLayer.current?.transform(panned, viewport, scene);
+      transformMapLayer(mapLayer, renderedCamera.current, panned, scene, viewport);
       drawPreviewOutlines(
         selectionOutline.current,
         sourceHighlightOutline.current,
         legendHoverOutline.current,
         mapBoundary.current,
         scene,
-        currentGesture.camera,
+        panned,
         viewport,
         displaySelection,
         sourceHighlightTiles.current,
         legendHoverTileIndices.current,
       );
-      setCameraDataset(container, scene, currentGesture.camera, viewport);
-      container.dataset.outlineCameraZoom = currentGesture.camera.zoom.toFixed(4);
+      setCameraDataset(container, scene, panned, viewport);
+      container.dataset.outlineCameraZoom = panned.zoom.toFixed(4);
     };
+    const followCameraDuringDrag = () => {
+      const drag = gesture.current;
+      if (drag?.kind !== 'selection' || drag.cancelled) return null;
+      updatePointer(drag.pointer, drag.pointerId, false);
+      return selectionDragRectangle(drag, scene);
+    };
+    followSelectionDragCamera.current = followCameraDuringDrag;
     interaction.on('pointerdown', (event: FederatedPointerEvent) => {
       rightPress.current =
         event.button === 2 ? { x: event.clientX, y: event.clientY, travelled: 0 } : null;
@@ -2519,22 +2558,21 @@ export function PreviewPanel() {
           setSelectionPreview(null);
           return;
         }
-        gesture.current = {
-          kind: 'selection',
+        const drag: PreviewSelectionDrag = {
           pointerId: event.pointerId,
           start: hit,
           end: hit,
-          startScreenX: event.global.x,
-          startScreenY: event.global.y,
-          camera: interactionCamera,
+          pointer: { x: event.global.x, y: event.global.y },
         };
-        setSelectionPreview(rectangularSelectionFromDrag(hit, hit, scene.width, scene.height));
+        gesture.current = { kind: 'selection', ...drag };
+        const pressedSelection = selectionDragRectangle(drag, scene);
+        setSelectionPreview(pressedSelection);
         drawSelectionOutline(
           selectionOutline.current,
           scene,
           interactionCamera,
           viewport,
-          rectangularSelectionFromDrag(hit, hit, scene.width, scene.height),
+          pressedSelection,
         );
       } else {
         const interactionCamera = commitCameraTransition();
@@ -2542,9 +2580,7 @@ export function PreviewPanel() {
         gesture.current = {
           kind: 'pan',
           pointerId: event.pointerId,
-          x: event.global.x,
-          y: event.global.y,
-          camera: interactionCamera,
+          pointer: { x: event.global.x, y: event.global.y },
           startCamera: interactionCamera,
         };
         canvas.style.cursor = 'grabbing';
@@ -2575,21 +2611,15 @@ export function PreviewPanel() {
         finishedGesture.kind === 'selection' &&
         !finishedGesture.cancelled;
       if (finishedGesture.kind === 'selection') {
+        const releasedCamera = cameraCommittedOnDragRelease(
+          displayedCamera.current,
+          cameraAnimation.current !== null || wheelCommitTimer.current !== null,
+        );
+        if (releasedCamera) setCamera(releasedCamera);
         if (commitSelection && !finishedGesture.cancelled && !connectionClick) {
-          displayedCamera.current = finishedGesture.camera;
-          setCamera(finishedGesture.camera);
           selectionDimensions.current = `${scene.width}x${scene.height}`;
-          setSelection(
-            rectangularSelectionFromDrag(
-              finishedGesture.start,
-              finishedGesture.end,
-              scene.width,
-              scene.height,
-            ),
-          );
+          setSelection(selectionDragRectangle(finishedGesture, scene));
         } else {
-          displayedCamera.current = finishedGesture.camera;
-          setCamera(finishedGesture.camera);
           drawSelectionOutline(
             selectionOutline.current,
             scene,
@@ -2600,10 +2630,19 @@ export function PreviewPanel() {
         }
         setSelectionPreview(null);
       } else if (commitSelection) {
-        pendingCamera.current = null;
-        displayedCamera.current = finishedGesture.camera;
-        setCamera(finishedGesture.camera);
+        const active = cameraAnimation.current;
+        if (active) active.anchor = { ...finishedGesture.pointer };
+        const releasedCamera = cameraCommittedOnDragRelease(
+          displayedCamera.current,
+          active !== null || wheelCommitTimer.current !== null,
+        );
+        if (releasedCamera) {
+          pendingCamera.current = null;
+          setCamera(releasedCamera);
+        }
       } else {
+        stopCameraAnimation();
+        pendingCamera.current = null;
         displayedCamera.current = finishedGesture.startCamera;
         setCamera(finishedGesture.startCamera);
         transformTerrainLayer(terrainCache.container, finishedGesture.startCamera, scene, viewport);
@@ -2744,6 +2783,9 @@ export function PreviewPanel() {
       for (const fill of raisedFills) fill.destroy();
       if (connectionHoverFrame !== null) window.cancelAnimationFrame(connectionHoverFrame);
       clearConnectionHover.current = () => {};
+      if (followSelectionDragCamera.current === followCameraDuringDrag) {
+        followSelectionDragCamera.current = () => null;
+      }
       if (frozenCanvasTransform.current === transformFrozenCanvas) {
         frozenCanvasTransform.current = null;
       }
@@ -2973,19 +3015,13 @@ export function PreviewPanel() {
     followedSurface.current = surface;
     if (viewScene) {
       const current = gesture.current;
-      const camera = current?.camera ?? displayedCamera.current;
       drawSelectionOutline(
         selectionOutline.current,
         viewScene,
-        camera,
+        displayedCamera.current,
         viewport,
         current?.kind === 'selection' && !current.cancelled
-          ? rectangularSelectionFromDrag(
-              current.start,
-              current.end,
-              viewScene.width,
-              viewScene.height,
-            )
+          ? selectionDragRectangle(current, viewScene)
           : displaySelection,
       );
       drawLegendHover(
@@ -3554,6 +3590,35 @@ export function PreviewPanel() {
   const shownLegendLayers = useHeld(legendLayers, holdLegend);
   const shownLegendContent = useHeld(legendContent ?? 'selection', holdLegend);
   const legendShown = legendPresence.mounted && shownLegendLayers !== null;
+  const layerArtCivilizationKey = gameArtCivilizationKey(map?.playerCivilizationIds);
+  const layerArtCivilizationFor = useMemo(
+    () => gameArtCivilizationResolver(layerArtCivilizationKey.split(',').map(Number)),
+    [layerArtCivilizationKey],
+  );
+  const layerArtContext = useMemo(
+    () => ({
+      index: gameArt.terrainIndex,
+      spriteSet: gameArt.spriteSet,
+      civilizationFor: layerArtCivilizationFor,
+      teamColor: gameArtTeamColor,
+      objects: !minimapObjectsShown,
+    }),
+    [
+      gameArt.spriteSet,
+      gameArt.terrainIndex,
+      gameArtTeamColor,
+      layerArtCivilizationFor,
+      minimapObjectsShown,
+    ],
+  );
+  const layerArtListed = shownLegendContent !== 'provisional';
+  const layerArt = usePreviewLayerArt({
+    enabled: gameArtExpected && !candidateCoversScene && layerArtListed,
+    shown: cliffLook === 'game-textures' && layerArtListed,
+    layers: legendShown ? shownLegendLayers : null,
+    context: layerArtContext,
+    shared: gameArtStore,
+  });
   const legendEntersAlone = informationWasMounted.current;
   const [legendFilter, setLegendFilter] = useState('');
   const legendWidths = usePreviewLegendWidth(presentedMap?.objectNames, presentedMap?.terrainNames);
@@ -3947,6 +4012,7 @@ export function PreviewPanel() {
                     content={shownLegendContent}
                     entersAlone={legendEntersAlone}
                     filter={legendFilter}
+                    layerArt={layerArt}
                     layers={shownLegendLayers}
                     maxHeight={previewLegendMaxHeight(viewport.height, {
                       narrow: narrowPreview,
@@ -4060,6 +4126,7 @@ function SelectionLayerLegend({
   content,
   entersAlone,
   filter,
+  layerArt,
   layers,
   maxHeight,
   readOnly = false,
@@ -4076,6 +4143,7 @@ function SelectionLayerLegend({
   readOnly?: boolean;
   entersAlone: boolean;
   filter: string;
+  layerArt: ReadonlyMap<string, string> | null;
   layers: AggregatedSelectionLayer[];
   maxHeight: number;
   onActivate(layer: AggregatedSelectionLayer): void;
@@ -4260,6 +4328,7 @@ function SelectionLayerLegend({
         >
           {listedLayers.map((layer) => (
             <SelectionLayerRow
+              art={layerArt?.get(layer.key)}
               key={layer.key}
               label={labels.get(layer.key)!}
               layer={layer}
@@ -4296,6 +4365,7 @@ function SelectionLayerLegend({
 }
 
 const SelectionLayerRow = memo(function SelectionLayerRow({
+  art,
   label,
   layer,
   onActivate,
@@ -4303,6 +4373,7 @@ const SelectionLayerRow = memo(function SelectionLayerRow({
   setFocusedLayerKey,
   setPointerLayerKey,
 }: {
+  art: string | undefined;
   label: PreviewLayerLabel;
   layer: AggregatedSelectionLayer;
   onActivate(layer: AggregatedSelectionLayer): void;
@@ -4350,7 +4421,7 @@ const SelectionLayerRow = memo(function SelectionLayerRow({
           />
         }
       >
-        <LayerIcon material={layer.material} />
+        <LayerIcon art={art} material={layer.material} />
         <LayerName label={label} />
         <span className="preview-layer-count">{layer.count}</span>
       </TooltipTrigger>
@@ -5084,17 +5155,23 @@ function LayerTooltip({ label }: { label: PreviewLayerLabel }) {
   );
 }
 
-function LayerIcon({ material }: { material: PreviewMaterial }) {
+function LayerIcon({ art, material }: { art?: string | undefined; material: PreviewMaterial }) {
   const color = `#${material.color.toString(16).padStart(6, '0')}`;
   return (
     <span
       aria-hidden="true"
       className="preview-layer-icon"
+      data-art={art ? material.subject.kind : undefined}
       data-color={color}
       data-color-source={material.colorSource}
       data-helper={material.helper ? 'true' : undefined}
       data-shape={material.shape}
-      style={{ '--preview-layer-color': color } as React.CSSProperties}
+      style={
+        {
+          '--preview-layer-color': color,
+          ...(art ? { backgroundImage: `url("${art}")` } : {}),
+        } as React.CSSProperties
+      }
     />
   );
 }

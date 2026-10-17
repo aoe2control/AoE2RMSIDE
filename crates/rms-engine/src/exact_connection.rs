@@ -90,6 +90,7 @@ pub struct ExactConnectionState {
     pub tile_operation_indices: Vec<u32>,
     pub connections: Vec<MapConnection>,
     pub connection_operation_indices: Vec<u32>,
+    pub tile_writes: TileWriteRecorder,
     pub rng_state: RmsRngState,
     pub statistics: ExactConnectionStatistics,
 }
@@ -225,6 +226,7 @@ pub(crate) fn resolve_exact_connection_state_with_substages(
             tile_operation_indices: terrain.tile_operation_indices.clone(),
             connections: Vec::new(),
             connection_operation_indices: Vec::new(),
+            tile_writes: TileWriteRecorder::default(),
             rng_state: rng.state(),
             statistics: ExactConnectionStatistics::default(),
         });
@@ -264,6 +266,7 @@ pub(crate) fn resolve_exact_connection_state_with_substages(
         tile_operation_indices: terrain.tile_operation_indices.clone(),
         connections: Vec::new(),
         connection_operation_indices: Vec::new(),
+        tile_writes: TileWriteRecorder::default(),
         rng_state: rng.state(),
         statistics: ExactConnectionStatistics::default(),
     };
@@ -274,6 +277,7 @@ pub(crate) fn resolve_exact_connection_state_with_substages(
     let mut aggregate_paint = vec![None::<(TerrainId, u32)>; tile_count];
 
     let mut path_ordinal = 0_u16;
+    let mut operations_before = state.tile_operation_indices.clone();
     for descriptor_index in 0..state.descriptors.len() {
         if isolate_descriptors {
             state.terrain.clone_from(&terrain_at_stage_entry);
@@ -281,6 +285,7 @@ pub(crate) fn resolve_exact_connection_state_with_substages(
                 .tile_operation_indices
                 .clone_from(&operations_at_stage_entry);
         }
+        operations_before.clone_from(&state.tile_operation_indices);
         let descriptor = state.descriptors[descriptor_index].clone();
         let mut connection_permissions = [true; TERRAIN_SLOT_COUNT];
         connection_permissions[0] = false;
@@ -359,6 +364,9 @@ pub(crate) fn resolve_exact_connection_state_with_substages(
                 }
             }
         }
+        state
+            .tile_writes
+            .record_changes(Some(&operations_before), &state.tile_operation_indices);
     }
     if isolate_descriptors {
         state.terrain = terrain_at_stage_entry;

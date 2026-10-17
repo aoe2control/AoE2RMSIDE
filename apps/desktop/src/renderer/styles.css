@@ -3705,10 +3705,10 @@ div:has(> .preview-layer-tooltip) {
 .preview-layer-icon {
   --preview-layer-color: currentColor;
   display: block;
-  height: 12px;
+  height: 16px;
   justify-self: center;
   position: relative;
-  width: 12px;
+  width: 16px;
 }
 
 .preview-layer-icon[data-shape='square'] {
@@ -3722,15 +3722,15 @@ div:has(> .preview-layer-tooltip) {
 
 .preview-layer-icon[data-shape='diamond'] {
   background: var(--preview-layer-color);
-  height: 9px;
+  height: 11px;
   transform: rotate(45deg);
-  width: 9px;
+  width: 11px;
 }
 
 .preview-layer-icon[data-shape='triangle'] {
-  border-bottom: 11px solid var(--preview-layer-color);
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
+  border-bottom: 15px solid var(--preview-layer-color);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
   height: 0;
   width: 0;
 }
@@ -3744,11 +3744,27 @@ div:has(> .preview-layer-tooltip) {
   left: 0;
   position: absolute;
   right: 0;
+  top: 7px;
+}
+
+.preview-layer-icon[data-shape='double-line']::before {
   top: 5px;
 }
 
 .preview-layer-icon[data-shape='double-line']::after {
   top: 9px;
+}
+
+.preview-layer-icon[data-art] {
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  border: 0;
+  border-radius: 0;
+  height: 16px;
+  transform: none;
+  width: 16px;
 }
 
 .preview-map-readout {

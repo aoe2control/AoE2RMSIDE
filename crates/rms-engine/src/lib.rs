@@ -14,6 +14,7 @@ mod execution_cost;
 mod lobby_labels;
 pub mod local_content;
 pub mod placement_oracle;
+mod tile_writes;
 mod visual_checkpoint;
 
 pub use exact_zone::ExactRestrictionZones;
@@ -45,6 +46,7 @@ pub use connection_routes::{
 pub use exact_appearance::ExactAppearanceObject;
 
 pub use lobby_labels::LOBBY_LABELS;
+pub use tile_writes::{MAXIMUM_TILE_WRITE_RUNS, TileWriteRecorder, TileWriteRun};
 
 pub use exact_cliff::{
     ExactCliffAttempt, ExactCliffConfiguration, ExactCliffDirectionSample, ExactCliffState,
@@ -1340,6 +1342,7 @@ pub struct GeneratedMap {
     pub object_operation_indices: Vec<u32>,
     pub cliff_operation_indices: Vec<u32>,
     pub connection_operation_indices: Vec<u32>,
+    pub tile_write_runs: Option<Vec<TileWriteRun>>,
     pub stage_hashes: Vec<(GenerationStage, [u8; 32])>,
     pub final_semantic_hash: [u8; 32],
     pub warnings: Vec<GenerationWarning>,
@@ -3492,6 +3495,17 @@ impl ExactRmsGenerationBackend {
             connection.dimensions,
             &mut presentation_adjustments,
         );
+        let mut tile_writes = TileWriteRecorder::default();
+        tile_writes.record_changes(None, &land.tile_operation_indices);
+        tile_writes.extend(&elevation.tile_writes);
+        tile_writes.record_changes(None, &cliff.tile_operation_indices);
+        tile_writes.extend(&terrain.tile_writes);
+        tile_writes.extend(&connection.tile_writes);
+        tile_writes.record_changes(
+            Some(&connection.tile_operation_indices),
+            &object.tile_operation_indices,
+        );
+        let tile_write_runs = tile_writes.finish(&object.tile_operation_indices);
         let mut map = GeneratedMap {
             dimensions: connection.dimensions,
             terrain: final_terrain,
@@ -3511,6 +3525,7 @@ impl ExactRmsGenerationBackend {
             object_operation_indices: final_object_operation_indices,
             cliff_operation_indices: cliff.cliff_operation_indices.clone(),
             connection_operation_indices: connection.connection_operation_indices.clone(),
+            tile_write_runs,
             stage_hashes: vec![
                 (GenerationStage::Setup, setup_stage_hash),
                 (GenerationStage::Land, land_stage_hash),

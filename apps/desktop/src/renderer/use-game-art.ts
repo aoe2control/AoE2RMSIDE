@@ -62,6 +62,8 @@ export interface GameArtView {
   cliffs: GameArtCliffView | null;
   store: GameArtAssetStore;
   playerColors: GameArtTeamColors | null;
+  terrainIndex: GameArtTerrainIndex | null;
+  spriteSet: GameArtSpriteSet | null;
   keptKey: string | null;
   builds: number;
 }
@@ -599,6 +601,8 @@ export function useGameArt(options: {
     cliffs: active ? cliffs : null,
     store,
     playerColors: index?.playerColors ?? null,
+    terrainIndex: index,
+    spriteSet: set,
     keptKey,
     builds: statistics.builds,
   };

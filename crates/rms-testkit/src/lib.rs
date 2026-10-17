@@ -431,6 +431,7 @@ impl GenerationBackend for SyntheticGenerationBackend {
             object_operation_indices,
             cliff_operation_indices,
             connection_operation_indices,
+            tile_write_runs: None,
             stage_hashes,
             final_semantic_hash: [0; 32],
             warnings: vec![GenerationWarning {

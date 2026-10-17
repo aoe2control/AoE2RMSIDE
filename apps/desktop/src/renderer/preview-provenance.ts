@@ -84,6 +84,43 @@ function trackUtf8ByteRangeThroughEdit(
   };
 }
 
+export function byteRangesInEarlierContent(
+  previousContent: string,
+  nextContent: string,
+  ranges: readonly { start: number; end: number }[],
+): { start: number; end: number }[] {
+  if (previousContent === nextContent) return ranges.map((range) => ({ ...range }));
+  const edit = cachedChangedByteInterval(previousContent, nextContent);
+  const delta = edit.newEnd - edit.oldEnd;
+  return ranges.flatMap((range) => {
+    if (range.end <= edit.oldStart) return [{ ...range }];
+    if (range.start >= edit.newEnd) {
+      return [{ start: range.start - delta, end: range.end - delta }];
+    }
+    if (range.start >= edit.oldStart && range.end <= edit.newEnd) return [];
+    return [
+      {
+        start: Math.min(range.start, edit.oldStart),
+        end: range.end > edit.newEnd ? range.end - delta : edit.oldEnd,
+      },
+    ];
+  });
+}
+
+let lastChangedInterval: { previous: string; next: string; edit: ByteEdit } | null = null;
+
+function cachedChangedByteInterval(previousContent: string, nextContent: string): ByteEdit {
+  if (
+    lastChangedInterval?.previous === previousContent &&
+    lastChangedInterval.next === nextContent
+  ) {
+    return lastChangedInterval.edit;
+  }
+  const edit = changedByteInterval(previousContent, nextContent);
+  lastChangedInterval = { previous: previousContent, next: nextContent, edit };
+  return edit;
+}
+
 function remapHistoricalProvenance(
   result: PreviewGenerationResult,
   previousContent: string,

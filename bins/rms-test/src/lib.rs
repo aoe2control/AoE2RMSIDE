@@ -2189,6 +2189,7 @@ fn generate_sample(
     drop(observed);
     let mut map = generated?;
     map.connection_routes = None;
+    map.tile_write_runs = None;
     Ok(GeneratedSample {
         record: SampleRecord {
             seed,

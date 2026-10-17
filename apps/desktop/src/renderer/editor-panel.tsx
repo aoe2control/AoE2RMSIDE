@@ -690,11 +690,24 @@ export function EditorPanel({
   const sourceHighlightModel = useRef<{
     model: monaco.editor.ITextModel;
     version: number;
+    content: string;
     lines: SourceByteRange[];
     scopes: SourceLineScopes | null;
+    provisional: boolean;
     blocks: SourceBlockStructure | null;
     structure: SourceStructureRequest<SourceBlockStructure>;
   } | null>(null);
+  const answeredSourceScopes = useRef(
+    new WeakMap<
+      monaco.editor.ITextModel,
+      {
+        version: number;
+        lineCount: number;
+        scopes: SourceLineScopes;
+        blocks: SourceBlockStructure;
+      }
+    >(),
+  );
   const updateSourceHighlight = useRef<() => void>(() => undefined);
   const outlineRowShown = useRef(outlineRow);
   outlineRowShown.current = outlineRow;
@@ -1442,12 +1455,19 @@ export function EditorPanel({
       let current = sourceHighlightModel.current;
       if (current?.model !== model || current.version !== version) {
         current?.structure.stop();
+        const content = model.getValue();
+        const lineCount = model.getLineCount();
+        const answered = answeredSourceScopes.current.get(model);
+        const answeredNow = answered?.version === version;
+        const reusable = answered && (answeredNow || answered.lineCount === lineCount);
         const entry: NonNullable<typeof sourceHighlightModel.current> = {
           model,
           version,
-          lines: lineByteRanges(model.getValue()),
-          scopes: null,
-          blocks: null,
+          content,
+          lines: lineByteRanges(content),
+          scopes: reusable ? answered.scopes : null,
+          provisional: Boolean(reusable && !answeredNow),
+          blocks: answeredNow ? answered.blocks : null,
           structure: new SourceStructureRequest<SourceBlockStructure>({
             request: () => requestRmsSourceStructure(model),
             current: () =>
@@ -1456,7 +1476,14 @@ export function EditorPanel({
               model.getVersionId() === entry.version,
             apply: (structure) => {
               entry.scopes = sourceLineScopes(structure, model.getLineCount());
+              entry.provisional = false;
               entry.blocks = structure;
+              answeredSourceScopes.current.set(model, {
+                version: entry.version,
+                lineCount: model.getLineCount(),
+                scopes: entry.scopes,
+                blocks: structure,
+              });
               if (instance.getModel() === model) {
                 refreshSourceHighlight();
                 rebuildOutline.current();
@@ -1469,8 +1496,9 @@ export function EditorPanel({
         };
         sourceHighlightModel.current = entry;
         current = entry;
-        entry.structure.start();
-      } else if (current.scopes === null) {
+        if (answeredNow) entry.structure.stop();
+        else entry.structure.start();
+      } else if (current.scopes === null || current.provisional) {
         current.structure.poke();
       }
       const spans = sourceHighlightLineSpans(
@@ -1480,13 +1508,14 @@ export function EditorPanel({
       highlightPreviewSourceRef.current({
         sourceId: sourceDocument.uri,
         byteRanges: lineSpanByteRanges(current.lines, spans),
+        content: current.content,
       });
     };
     updateSourceHighlight.current = refreshSourceHighlight;
     instance.onDidChangeCursorSelection(refreshSourceHighlight);
     const languageAnswersSubscription = onLanguageAnswersChanged(() => {
       const current = sourceHighlightModel.current;
-      if (current && current.scopes === null) current.structure.poke();
+      if (current && (current.scopes === null || current.provisional)) current.structure.poke();
       xsOutlineRequest?.request.poke();
     });
     const outlineSources = new WeakMap<

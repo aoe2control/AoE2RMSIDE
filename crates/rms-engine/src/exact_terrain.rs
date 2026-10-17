@@ -118,6 +118,7 @@ pub struct ExactTerrainState {
     pub land_id: Vec<u16>,
     pub terrain_zone: Vec<u32>,
     pub tile_operation_indices: Vec<u32>,
+    pub tile_writes: TileWriteRecorder,
     pub rng_state: RmsRngState,
     pub statistics: ExactTerrainStatistics,
 }
@@ -341,7 +342,10 @@ pub fn resolve_exact_terrain_state(
     let mut work = 0_u64;
     let finalizer_rules = terrain_finalizer_rules(content, "RMSGEN3301")?;
 
+    let mut tile_writes = TileWriteRecorder::default();
+    let mut operations_before = tile_operation_indices.clone();
     for (descriptor_index, descriptor) in descriptors.iter().enumerate() {
+        operations_before.clone_from(&tile_operation_indices);
         let terrain_before_hash = terrain_hash(&terrain)?;
         let terrain_zone_before_hash = terrain_zone_hash(&terrain_zone);
         let rng_draws_before = rng.state().draws();
@@ -377,6 +381,7 @@ pub fn resolve_exact_terrain_state(
             maximum_work,
             cancellation,
         )?;
+        tile_writes.record_changes(Some(&operations_before), &tile_operation_indices);
         layer_statistics.rng_draws_after = rng.state().draws();
         layer_statistics.terrain_after_hash = terrain_hash(&terrain)?;
         layer_statistics.terrain_zone_after_hash = terrain_zone_hash(&terrain_zone);
@@ -433,6 +438,7 @@ pub fn resolve_exact_terrain_state(
         land_id,
         terrain_zone,
         tile_operation_indices,
+        tile_writes,
         rng_state: rng.state(),
         statistics,
     })

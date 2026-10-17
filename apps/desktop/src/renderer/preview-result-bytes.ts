@@ -48,6 +48,7 @@ export function previewResultBytes(result: PreviewGenerationResult): number {
     result.tileOperationIndicesLe.byteLength +
     result.objectOperationIndicesLe.byteLength +
     result.cliffOperationIndicesLe.byteLength +
-    result.connectionOperationIndicesLe.byteLength
+    result.connectionOperationIndicesLe.byteLength +
+    (result.tileWriteRunsLe?.byteLength ?? 0)
   );
 }

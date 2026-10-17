@@ -117,6 +117,7 @@ pub struct ExactElevationState {
     pub modifier: Vec<u8>,
     pub elevation: Vec<i16>,
     pub tile_operation_indices: Vec<u32>,
+    pub tile_writes: TileWriteRecorder,
     pub rng_state: RmsRngState,
     pub statistics: ExactElevationStatistics,
 }
@@ -426,6 +427,7 @@ pub fn resolve_exact_elevation_state(
             modifier: vec![0; tile_count],
             elevation: land.elevation.clone(),
             tile_operation_indices: vec![u32::MAX; tile_count],
+            tile_writes: TileWriteRecorder::default(),
             rng_state: rng.state(),
             statistics: ExactElevationStatistics::default(),
         });
@@ -456,8 +458,11 @@ pub fn resolve_exact_elevation_state(
         )?;
     }
 
+    let mut tile_writes = TileWriteRecorder::default();
+    let mut operations_before = operation_indices.clone();
     for (descriptor_index, descriptor) in descriptors.iter().enumerate() {
         cancellation_checkpoint(cancellation, GenerationStage::Terrain, work)?;
+        operations_before.clone_from(&operation_indices);
         let statistics_before = (
             statistics.initial_popped_candidates,
             statistics.initial_seeds,
@@ -487,6 +492,7 @@ pub fn resolve_exact_elevation_state(
             cancellation,
         )?;
         let rng_draws_after = rng.state().draws();
+        tile_writes.record_changes(Some(&operations_before), &operation_indices);
         let elevation_after_descriptor_hash = elevation_hash(&elevation);
         clean_elevation(
             &mut elevation,
@@ -543,6 +549,7 @@ pub fn resolve_exact_elevation_state(
         modifier: modifiers,
         elevation,
         tile_operation_indices: operation_indices,
+        tile_writes,
         rng_state: rng.state(),
         statistics,
     })
