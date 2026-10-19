@@ -813,6 +813,7 @@ message ContentPackDescriptor {
   repeated uint32 tree_object_ids = 13;
   repeated uint32 gold_object_ids = 14;
   repeated uint32 stone_object_ids = 15;
+  repeated uint32 object_class_ids = 16;
 }
 
 message ObjectNameDescriptor {

@@ -6,9 +6,12 @@ import { productIdentity } from '../shared/edition';
 import '../shared/i18n/bundled-catalogs';
 import { applyLocaleState, englishLocaleState, I18nProvider } from './i18n';
 import { loadMonacoMessages } from './monaco-locale';
+import { installPointerGestureOwnership } from './pointer-gesture-ownership';
 import { installQuietFocus } from './quiet-focus';
 
 installQuietFocus();
+
+installPointerGestureOwnership();
 
 document.title = productIdentity.displayName;
 

@@ -8,6 +8,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   externalLinkUrls,
   type ExternalLinkTarget,
@@ -129,10 +130,13 @@ export function OutputSeverityIcon({
 }) {
   const Icon = severityIcons[severity];
   return (
-    <span className="output-severity" data-severity={severity} title={source}>
-      <Icon aria-hidden="true" />
-      <span className="output-source sr-only">{source}</span>
-    </span>
+    <Tooltip disableHoverablePopup>
+      <TooltipTrigger render={<span className="output-severity" data-severity={severity} />}>
+        <Icon aria-hidden="true" />
+        <span className="output-source sr-only">{source}</span>
+      </TooltipTrigger>
+      <TooltipContent>{source}</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -168,7 +172,6 @@ export function OutputGroupHeader({
       data-expandable={expandable ? 'true' : 'false'}
       onClick={click.onClick}
       onMouseDown={click.onMouseDown}
-      title={tooltip}
     >
       <span className="output-group-toggle-cell">
         {expandable ? (
@@ -188,7 +191,16 @@ export function OutputGroupHeader({
       {icon}
       <div className="output-text">
         <p className="output-headline output-group-title">
-          <span id={titleId}>{title}</span>
+          {tooltip ? (
+            <Tooltip disableHoverablePopup>
+              <TooltipTrigger render={<span id={titleId} />}>{title}</TooltipTrigger>
+              <TooltipContent align="start" className="path-tooltip">
+                {tooltip}
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <span id={titleId}>{title}</span>
+          )}
         </p>
       </div>
       {end}
@@ -210,10 +222,15 @@ function OutputRunStatusIcon({ header }: { header: OutputRunHeader }) {
   const Icon = runStatusIcons[header.result];
   const source = outputSourceLabel(header.kind === 'map-test' ? 'Map test' : 'Run');
   return (
-    <span className="output-severity output-run-status" data-result={header.result} title={source}>
-      <Icon aria-hidden="true" />
-      <span className="output-source sr-only">{source}</span>
-    </span>
+    <Tooltip disableHoverablePopup>
+      <TooltipTrigger
+        render={<span className="output-severity output-run-status" data-result={header.result} />}
+      >
+        <Icon aria-hidden="true" />
+        <span className="output-source sr-only">{source}</span>
+      </TooltipTrigger>
+      <TooltipContent>{source}</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -267,10 +284,13 @@ export function OutputMessageText({
           <LinkedText text={message.headline} />
         </span>
         {repeat > 1 ? (
-          <span className="output-repeat" title={t('output.repeat.tooltip', { count: repeat })}>
-            {' '}
-            {t('output.repeat', { count: repeat })}
-          </span>
+          <Tooltip disableHoverablePopup>
+            <TooltipTrigger render={<span className="output-repeat" />}>
+              {' '}
+              {t('output.repeat', { count: repeat })}
+            </TooltipTrigger>
+            <TooltipContent>{t('output.repeat.tooltip', { count: repeat })}</TooltipContent>
+          </Tooltip>
         ) : null}
       </p>
       {message.cause || message.action ? (
@@ -348,17 +368,21 @@ function ExternalLink({
   className?: string;
   target: ExternalLinkTarget;
 }) {
-  return (
+  const url = externalLinkUrls[target];
+  const link = (
     <Button
       className={`output-link h-auto${className ? ` ${className}` : ''}`}
       onClick={() => void window.rmside.openExternalLink(target).catch(() => undefined)}
       role="link"
-      title={externalLinkUrls[target]}
       type="button"
       variant="link"
-    >
-      {children}
-    </Button>
+    />
+  );
+  return (
+    <Tooltip disableHoverablePopup disabled={children === url}>
+      <TooltipTrigger render={link}>{children}</TooltipTrigger>
+      <TooltipContent className="path-tooltip">{url}</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -507,16 +531,22 @@ function OutputRunConstructList({
         <ul aria-label={t('output.constructs.label')} className="output-run-constructs-list">
           {constructs.items.map((item) => (
             <li key={item.label}>
-              <Button
-                className="output-run-construct h-auto"
-                disabled={!onNavigate}
-                onClick={() => onNavigate?.(item.operation)}
-                title={t('output.constructs.go-to')}
-                type="button"
-                variant="link"
-              >
-                {item.label}
-              </Button>
+              <Tooltip disableHoverablePopup disabled={!onNavigate}>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      className="output-run-construct h-auto"
+                      disabled={!onNavigate}
+                      onClick={() => onNavigate?.(item.operation)}
+                      type="button"
+                      variant="link"
+                    />
+                  }
+                >
+                  {item.label}
+                </TooltipTrigger>
+                <TooltipContent>{t('output.constructs.go-to')}</TooltipContent>
+              </Tooltip>
             </li>
           ))}
           {constructs.omitted > 0 ? (

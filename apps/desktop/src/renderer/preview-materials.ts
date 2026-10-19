@@ -12,6 +12,11 @@ import type { PresentedPreviewResult } from './presentation-names';
 import { classifyTerrainFamily, terrainFamilyColor } from './terrain-families';
 import { failedConnectionSearchColor } from './preview-connection-routes';
 import {
+  previewObjectCategory,
+  type PreviewCategoryObject,
+  type PreviewObjectCategory,
+} from './preview-object-category';
+import {
   selectionTileIndices,
   type PreviewSelection,
   type TopDownConnection,
@@ -19,13 +24,46 @@ import {
   type TopDownScene,
 } from './top-down-preview';
 
-export type AtomicShape = 'circle' | 'diamond' | 'square' | 'triangle' | 'line' | 'double-line';
+export type AtomicShape =
+  | 'circle'
+  | 'diamond'
+  | 'square'
+  | 'triangle'
+  | 'line'
+  | 'double-line'
+  | 'wall'
+  | 'building'
+  | 'farm'
+  | 'crown'
+  | 'cluster'
+  | 'star';
+
+const starOutline: readonly number[] = Array.from({ length: 10 }, (_, point) => {
+  const radius = point % 2 === 0 ? 1 : 0.45;
+  const angle = -Math.PI / 2 + (point * Math.PI) / 5;
+  return [radius * Math.cos(angle), radius * Math.sin(angle)];
+}).flat();
 
 const markerShapeOutlines: Partial<Record<AtomicShape, readonly number[]>> = {
   diamond: [0, -1, 1, 0, 0, 1, -1, 0],
   triangle: [0, -1, 1, 1, -1, 1],
   square: [-1, -1, 1, -1, 1, 1, -1, 1],
+  star: starOutline,
 };
+
+export const objectCategoryShapes: Readonly<Record<PreviewObjectCategory, AtomicShape>> =
+  Object.freeze({
+    building: 'building',
+    farm: 'farm',
+    wall: 'wall',
+    unit: 'circle',
+    animal: 'triangle',
+    mine: 'diamond',
+    forage: 'cluster',
+    tree: 'crown',
+    special: 'star',
+    unknown: 'circle',
+  });
 
 export function markerShapeOutline(shape: AtomicShape): readonly number[] | null {
   return markerShapeOutlines[shape] ?? null;
@@ -125,10 +163,6 @@ export function isDrawnPreviewObject(
     (visibility.decorations === true || !isDecorationPreviewObject(object)) &&
     (visibility.helpers || !isHelperPreviewObject(object, visibility.helperObjectIds))
   );
-}
-
-export function hasVisiblePreviewFootprint(object: Pick<TopDownObject, 'objectId'>): boolean {
-  return object.objectId === 109;
 }
 
 export type SelectedTileLayerKind = 'terrain' | 'connection' | 'cliff' | 'object' | 'wall';
@@ -499,7 +533,7 @@ export function terrainMaterial(
 }
 
 export function objectMaterial(
-  object: Pick<TopDownObject, 'objectId' | 'owner' | 'presentationKind'>,
+  object: Pick<TopDownObject, 'objectId' | 'owner'> & PreviewCategoryObject,
   playerColorIds: readonly number[] = [],
   objectNames: PreviewGenerationResult['objectNames'] = [],
   minimapPalette: SelectedMinimapPalette | null = null,
@@ -516,16 +550,14 @@ export function objectMaterial(
       : {};
   const id = object.objectId;
   const nameIdentity = objectName === null ? `id:${id}` : `name:${objectName}`;
+  const shape = objectCategoryShapes[previewObjectCategory(object)];
   if (helperObjectIds && isHelperPreviewObject(object, helperObjectIds)) {
     return {
       color: helperObjectColor,
       helper: true,
       identity: nameIdentity,
       name: objectName,
-      shape:
-        object.presentationKind === 'wall'
-          ? 'double-line'
-          : (['circle', 'diamond', 'triangle'] as const)[Math.abs(id) % 3]!,
+      shape,
       subject: { kind: 'helper', id },
       ...nameSource,
     };
@@ -535,12 +567,11 @@ export function objectMaterial(
       color: 0x8c8174,
       identity: nameIdentity,
       name: objectName,
-      shape: 'double-line',
+      shape: 'wall',
       subject: { kind: 'wall', id },
       ...nameSource,
     };
   }
-  const shape = (['circle', 'diamond', 'triangle'] as const)[Math.abs(id) % 3]!;
   const neutralColor =
     lookObjectColors?.get(id) ??
     findById(minimapPalette?.neutralObjectColors, 'objectId', id)?.color;
@@ -659,7 +690,7 @@ export function terrainColorSourcesIdentity(
 
 function presentedObjectMaterial(
   map: PresentedPreviewResult,
-  object: Pick<TopDownObject, 'objectId' | 'owner' | 'presentationKind'>,
+  object: Pick<TopDownObject, 'objectId' | 'owner'> & PreviewCategoryObject,
   visibility: PreviewObjectVisibility,
 ): PreviewMaterial {
   return objectMaterial(

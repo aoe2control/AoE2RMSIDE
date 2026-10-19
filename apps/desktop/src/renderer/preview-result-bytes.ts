@@ -10,6 +10,7 @@ export function previewResultBytes(result: PreviewGenerationResult): number {
       (bytes, entry) => bytes + 8 + entry.name.length * 2,
       0,
     ) +
+    (result.objectClasses?.length ?? 0) * 16 +
     result.terrainIdsLe.byteLength +
     result.preConnectionTerrainIdsLe.byteLength +
     result.elevations.byteLength +

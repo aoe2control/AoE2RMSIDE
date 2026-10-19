@@ -702,14 +702,14 @@
       "meaning": "Shown when saving a file that changed on disk."
     },
     "dialog.external-change.replace": {
-      "message": "Replace on disk",
+      "message": "Replace on Disk",
       "screen": "confirmation-dialog/external-change",
       "control": "button",
       "maxLength": 24,
       "meaning": "Overwrites the file on disk with the editor’s text."
     },
     "dialog.external-change.reload": {
-      "message": "Reload from disk",
+      "message": "Reload from Disk",
       "screen": "confirmation-dialog/external-change",
       "control": "button",
       "maxLength": 24,
@@ -722,7 +722,7 @@
       "meaning": "Shown when a file with unsaved changes changed on disk."
     },
     "dialog.external-change.keep-editing": {
-      "message": "Keep editing",
+      "message": "Keep Editing",
       "screen": "confirmation-dialog/external-change",
       "control": "button",
       "maxLength": 24,
@@ -897,7 +897,7 @@
       "meaning": "Shown in the Output panel when the severity filter hides every message."
     },
     "output.jump-to-latest": {
-      "message": "Jump to latest ({count} new)",
+      "message": "Jump to Latest ({count} New)",
       "screen": "output",
       "control": "button",
       "maxLength": 32,
@@ -1176,7 +1176,7 @@
       "message": "Select game folder for listing installed RMS files",
       "screen": "installed-maps-dialog",
       "control": "dialog-text",
-      "meaning": "Shown with the Select game folder button when no game folder is linked. RMS stays as written."
+      "meaning": "Shown with the Select Game Folder button when no game folder is linked. RMS stays as written."
     },
     "installed-maps.origin.built-in": {
       "message": "Built-in",
@@ -1752,18 +1752,18 @@
       "meaning": "Stands for the behavior profile in the unverified version explanation when no profile is available (lower case, inside parentheses mid-sentence)."
     },
     "run-menu.game-folder.select": {
-      "message": "Select game folder",
+      "message": "Select Game Folder",
       "screen": "run-menu/game-folder",
       "control": "button",
       "maxLength": 28,
-      "meaning": "The app's one Select game folder action (deployment panel, installed maps, run menu, and the game version select): opens a folder picker for the game's installation folder."
+      "meaning": "The app's one Select Game Folder action (deployment panel, installed maps, run menu, and the game version select): opens a folder picker for the game's installation folder."
     },
     "run-menu.game-folder.selecting": {
-      "message": "Selecting game folder…",
+      "message": "Selecting Game Folder…",
       "screen": "run-menu/game-folder",
       "control": "button",
       "maxLength": 32,
-      "meaning": "The Select game folder button while its folder picker is open."
+      "meaning": "The Select Game Folder button while its folder picker is open."
     },
     "run-menu.game-folder.linked-version": {
       "message": "Using local AoE2DE {version}",
@@ -2218,6 +2218,41 @@
       "control": "option",
       "maxLength": 20,
       "meaning": "Name of the code editor's original color scheme, the first card in the Theme panel. The other schemes keep their own names (Solarized, Catppuccin, Gruvbox, Ayu, One). It stands alone under the card's preview, so where the language inflects it, it agrees with “color scheme”."
+    },
+    "settings.theme.background-blur": {
+      "message": "Background blur",
+      "screen": "theme-dialog",
+      "control": "label",
+      "maxLength": 32,
+      "meaning": "Label above the switch of Clear and Blurred in the Theme panel; also the switch's accessible name. It sets whether the live map preview's buttons, panels, and menus, and the code editor where it lies over the map, blur the map seen through them."
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Clear",
+      "screen": "theme-dialog",
+      "control": "option",
+      "maxLength": 20,
+      "meaning": "Option of settings.theme.background-blur (the default): the map shows through the preview's buttons, panels, and menus without blur. An adjective for how the background looks, the opposite of settings.theme.background-blur.blurred."
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Blurred",
+      "screen": "theme-dialog",
+      "control": "option",
+      "maxLength": 20,
+      "meaning": "Option of settings.theme.background-blur: the map seen through the preview's buttons, panels, and menus, and through the code editor where it lies over the map, is blurred. An adjective for how the background looks, the opposite of settings.theme.background-blur.clear."
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "The map shows through the preview's buttons, panels, and menus, and through the editor over the map, without blur.",
+      "screen": "theme-dialog",
+      "control": "tooltip",
+      "maxLength": 160,
+      "meaning": "Tooltip of the option settings.theme.background-blur.clear in the Theme panel. \"The editor over the map\" is the code editor in the layout where the map preview fills the workspace behind it."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "The map behind the preview's buttons, panels, and menus, and behind the editor over the map, is blurred.",
+      "screen": "theme-dialog",
+      "control": "tooltip",
+      "maxLength": 160,
+      "meaning": "Tooltip of the option settings.theme.background-blur.blurred in the Theme panel. \"The editor over the map\" is the code editor in the layout where the map preview fills the workspace behind it."
     },
     "settings.theme.close-label": {
       "message": "Close theme settings",
@@ -4991,7 +5026,7 @@
       "message": "Files can’t be saved into the game folder or into installed maps.",
       "screen": "output",
       "control": "message-cause",
-      "meaning": "Cause when Save As or a new Definition File would write into the linked game folder or an installed (subscribed or built-in) map’s folder, which AoE2RMSIDE keeps read-only. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why."
+      "meaning": "Cause when Save As or a new Definition File would write into the linked game folder or an installed (subscribed or built-in) map’s folder, which AoE2RMSIDE keeps read-only, or when saving such a read-only file in place is refused. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why."
     },
     "message.files.extension-required.cause": {
       "message": "The file name must end in {extension}.",
@@ -7482,7 +7517,7 @@
       "screen": "deploy-panel",
       "control": "option",
       "maxLength": 24,
-      "meaning": "Option beside the Deploy mod button, on by default and remembered: after deploying, the IDE turns the mod on in the game's own list of mods."
+      "meaning": "Option beside the Deploy Mod button, on by default and remembered: after deploying, the IDE turns the mod on in the game's own list of mods."
     },
     "deploy-panel.enable-mod.tooltip": {
       "message": "Turns the mod on in the game's mod list. The map and its icon appear after the game restarts.",
@@ -7518,7 +7553,7 @@
       "meaning": "Warning in the deployment's success confirmation when the IDE enabled the mod while the linked game was running. The game may write its own mod list when it closes."
     },
     "deploy-panel.success.open-folder": {
-      "message": "Open mods folder",
+      "message": "Open Mods Folder",
       "screen": "deploy-panel/success",
       "control": "button",
       "maxLength": 24,
@@ -7648,7 +7683,7 @@
       "message": "The mods folder could not be opened",
       "screen": "output",
       "control": "message-headline",
-      "meaning": "Output headline when Open mods folder in the deployment's success confirmation failed."
+      "meaning": "Output headline when Open Mods Folder in the deployment's success confirmation failed."
     },
     "deploy-panel.target.open-folder": {
       "message": "Open target directory in Windows Explorer",
@@ -7698,7 +7733,7 @@
       "message": "Select game folder for deploying",
       "screen": "deploy-panel",
       "control": "dialog-text",
-      "meaning": "Shown with the Select game folder button when no game folder is linked: deploying needs the game's profile folders."
+      "meaning": "Shown with the Select Game Folder button when no game folder is linked: deploying needs the game's profile folders."
     },
     "deploy-panel.source": {
       "message": "RMS source",
@@ -7794,14 +7829,14 @@
       "message": "{note}: {names}",
       "screen": "deploy-panel",
       "control": "accessible-name",
-      "meaning": "Accessible name of the quiet note beside Deploy mod that says how many script commands were not compared against the game, followed by their names.",
+      "meaning": "Accessible name of the quiet note beside Deploy Mod that says how many script commands were not compared against the game, followed by their names.",
       "placeholders": {
         "note": "the note, such as \"3 commands not compared against the game\"",
         "names": "the list of command names (RMS commands, not translated)"
       }
     },
     "deploy-panel.deploy": {
-      "message": "Deploy mod",
+      "message": "Deploy Mod",
       "screen": "deploy-panel",
       "control": "button",
       "maxLength": 20,
@@ -7824,7 +7859,7 @@
       }
     },
     "deploy-panel.replace.confirm": {
-      "message": "Replace mod",
+      "message": "Replace Mod",
       "screen": "deploy-panel/replace",
       "control": "button",
       "maxLength": 20,
@@ -8521,7 +8556,7 @@
       "meaning": "Accessible name and tooltip of the icon-only button that generates the icon's map again with a random seed."
     },
     "map-icon.use-editor-seed": {
-      "message": "Use editor seed",
+      "message": "Use Editor Seed",
       "screen": "deploy-panel/map-icon-lightbox",
       "control": "button",
       "maxLength": 32,
@@ -8847,13 +8882,13 @@
       "message": "Resize file explorer",
       "screen": "workspace",
       "control": "accessible-name",
-      "meaning": "Accessible name of the splitter between the file explorer and the editor; dragging it or pressing the arrow keys changes the explorer's width."
+      "meaning": "Accessible name of the splitter between the file explorer and the editor; dragging it changes the explorer's width."
     },
     "workbench.preview.resize": {
       "message": "Resize live map preview",
       "screen": "workspace",
       "control": "accessible-name",
-      "meaning": "Accessible name of the splitter between the code editor and the live map preview; dragging it or pressing the arrow keys changes the preview's width."
+      "meaning": "Accessible name of the splitter between the code editor and the live map preview; dragging it changes the preview's width."
     },
     "workbench.preview.stages-shown-next-run": {
       "message": "Live generation stages shown from the next run",
@@ -8883,7 +8918,7 @@
       "message": "Resize problems and output panel",
       "screen": "bottom-panel",
       "control": "accessible-name",
-      "meaning": "Accessible name of the splitter at the top of the bottom panel; dragging it or pressing the arrow keys changes the panel's height."
+      "meaning": "Accessible name of the splitter at the top of the bottom panel; dragging it changes the panel's height."
     },
     "workbench.bottom-panel.tab.output": {
       "message": "{count} Output",
@@ -9121,13 +9156,6 @@
       "maxLength": 24,
       "meaning": "Item of the editor tabs' context menu that saves the active file."
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Clone / Save As…",
-      "screen": "editor/tab-menu",
-      "control": "menu-item",
-      "maxLength": 28,
-      "meaning": "Item of the editor tabs' context menu for a protected (read-only) game or mod file: saves a copy under a new name. Keep the ellipsis: it opens a save dialog."
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Save As…",
       "screen": "editor/tab-menu",
@@ -9247,12 +9275,12 @@
       "maxLength": 20,
       "meaning": "Accessible name and tooltip of the seed mode toggle while it keeps the seed the same for every run."
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Randomize on run",
+    "code-editor.run-menu.seed-lock": {
+      "message": "Lock seed",
       "screen": "run-menu",
       "control": "accessible-name",
-      "maxLength": 28,
-      "meaning": "Accessible name and tooltip of the seed mode toggle while every run picks a new random seed."
+      "maxLength": 20,
+      "meaning": "Accessible name and tooltip of the seed lock (always a lock icon) while every run picks a new random seed: a click keeps the seed the same for every run, and the toggle then reads code-editor.run-menu.seed-locked."
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Use current match seed",
@@ -9382,37 +9410,32 @@
       }
     },
     "code-editor.control-download.confirm": {
-      "message": "Got it",
+      "message": "Got It",
       "screen": "control-download-dialog",
       "control": "button",
       "maxLength": 20,
       "meaning": "Button that closes the notice before extracting AoE2Control."
     },
-    "code-editor.preview.collapse": {
-      "message": "Collapse live map preview",
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Side by side",
       "screen": "editor/toolbar",
       "control": "accessible-name",
-      "meaning": "Accessible name of the button above the editor that hides the live map preview beside it."
+      "maxLength": 32,
+      "meaning": "Accessible name and tooltip of the workspace layout button above the editor while the live map preview sits beside the code editor. A click switches to code-editor.preview.layout.behind-editor."
     },
-    "code-editor.preview.expand": {
-      "message": "Expand live map preview",
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Preview behind editor",
       "screen": "editor/toolbar",
       "control": "accessible-name",
-      "meaning": "Accessible name of the button above the editor that shows the live map preview again."
+      "maxLength": 32,
+      "meaning": "Accessible name and tooltip of the workspace layout button above the editor while the live map preview fills the whole workspace behind a see-through code editor. A click switches to code-editor.preview.layout.editor-only. \"Preview\" is the panel's name."
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Collapse Preview",
+    "code-editor.preview.layout.editor-only": {
+      "message": "Editor only",
       "screen": "editor/toolbar",
-      "control": "tooltip",
-      "maxLength": 40,
-      "meaning": "Tooltip of the button that hides the live map preview. \"Preview\" is the panel's name."
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Expand Preview",
-      "screen": "editor/toolbar",
-      "control": "tooltip",
-      "maxLength": 40,
-      "meaning": "Tooltip of the button that shows the live map preview again. \"Preview\" is the panel's name."
+      "control": "accessible-name",
+      "maxLength": 32,
+      "meaning": "Accessible name and tooltip of the workspace layout button above the editor while the live map preview is hidden and the code editor takes the whole workspace. A click switches to code-editor.preview.layout.side-by-side."
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Dismiss script execution failure",
@@ -9454,11 +9477,36 @@
         "percent": "the zoom in percent, a whole number such as 120"
       }
     },
-    "code-editor.read-only-message": {
-      "message": "This installation or subscribed-mod source is protected. Use Clone or Save As.",
+    "code-editor.read-only-message.game-installation": {
+      "message": "This file is part of the game installation. Game updates can replace it, so it can't be edited here. Save a copy to edit it.",
       "screen": "editor",
       "control": "tooltip",
-      "meaning": "Message the editor shows when the user types in a protected (read-only) game or subscribed-mod file. \"Clone\" and \"Save As\" name the context-menu items that save a copy."
+      "meaning": "Message the editor shows when the user types in a file of the linked game installation (such as one of the game's own random map scripts), which the app opens read-only. A Save As… link below it saves a copy (code-editor.read-only-message.save-as)."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "This file belongs to a subscribed mod. Mod updates can replace it, so it can't be edited here. Save a copy to edit it.",
+      "screen": "editor",
+      "control": "tooltip",
+      "meaning": "Message the editor shows when the user types in a file of a mod the user subscribed to in the game, which the app opens read-only. A Save As… link below it saves a copy (code-editor.read-only-message.save-as)."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE writes this mod's files when it deploys, so edits here would be lost. Edit your own copy of the map instead.",
+      "screen": "editor",
+      "control": "tooltip",
+      "meaning": "Message the editor shows when the user types in a file of a local mod AoE2RMSIDE writes itself (a mod it deployed, or its live-test mod), which the app opens read-only because the next deploy replaces the files. A Save As… link below it saves a copy (code-editor.read-only-message.save-as)."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "This file is read-only in AoE2RMSIDE. Save a copy to edit it.",
+      "screen": "editor",
+      "control": "tooltip",
+      "meaning": "Message the editor shows when the user types in a file the app opens read-only for a reason it cannot name. A Save As… link below it saves a copy (code-editor.read-only-message.save-as)."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Save As…",
+      "screen": "editor",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Link below the editor's read-only message (code-editor.read-only-message.*): opens the Save As dialog to save a copy of the read-only file. Word it like the Save As… menu items; keep the ellipsis: a save dialog follows."
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Open Included File",
@@ -10512,10 +10560,10 @@
       "meaning": "Why Run is unavailable for the open document: files ending in .inc, .def, or .xs are only included by a map script and cannot be generated on their own. Keep .inc, .def, and .xs as written."
     },
     "preview-panel.tool.objects": {
-      "message": "Objects and Town Center footprint",
+      "message": "Objects and building footprints",
       "screen": "preview/toolbar",
       "control": "button",
-      "meaning": "Accessible name and tooltip of the objects button in the map preview toolbar, which cycles how the objects on the map are drawn; this state shows them as markers, with the Town Center’s footprint. The next states are Minimap objects and Objects off. Use the game’s own name for the Town Center building."
+      "meaning": "Accessible name and tooltip of the objects button in the map preview toolbar, which cycles how the objects on the map are drawn; this state shows each object as a marker in the shape of its kind, and each building as its footprint on the map’s tiles. The next states are Minimap objects and Objects off."
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Minimap objects",
@@ -10958,7 +11006,7 @@
       }
     },
     "preview-panel.legend.helpers.show": {
-      "message": "Show helper objects ({count})",
+      "message": "Show Helper Objects ({count})",
       "screen": "preview/legend",
       "control": "button",
       "maxLength": 32,
@@ -10968,7 +11016,7 @@
       }
     },
     "preview-panel.legend.helpers.hide": {
-      "message": "Hide helper objects ({count})",
+      "message": "Hide Helper Objects ({count})",
       "screen": "preview/legend",
       "control": "button",
       "maxLength": 32,
@@ -12016,7 +12064,7 @@
       }
     },
     "test-results.results.show-more": {
-      "message": "Show {count} more",
+      "message": "Show {count} More",
       "screen": "test-results",
       "control": "button",
       "maxLength": 24,
@@ -12140,7 +12188,7 @@
       "message": "Death Match",
       "screen": "run-menu/settings",
       "control": "option",
-      "maxLength": 24,
+      "maxLength": 30,
       "meaning": "Game mode \"Death Match\" in the run menu's game mode select. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
     },
     "game-options.game-mode.king-of-the-hill": {
@@ -12154,7 +12202,7 @@
       "message": "Wonder Race",
       "screen": "run-menu/settings",
       "control": "option",
-      "maxLength": 24,
+      "maxLength": 30,
       "meaning": "Game mode \"Wonder Race\" in the run menu's game mode select. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
     },
     "game-options.game-mode.defend-the-wonder": {
@@ -12189,7 +12237,7 @@
       "message": "Battle Royale",
       "screen": "run-menu/settings",
       "control": "option",
-      "maxLength": 24,
+      "maxLength": 30,
       "meaning": "Game mode \"Battle Royale\" in the run menu's game mode select. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
     },
     "game-options.game-mode.empire-wars": {

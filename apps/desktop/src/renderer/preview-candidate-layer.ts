@@ -6,10 +6,26 @@ import { previewCandidateChunkBounds, previewCandidateStages } from '../shared/p
 import {
   cliffMaterial,
   isDrawnPreviewObject,
+  markerShapeOutline,
   objectMaterial,
+  type PreviewMaterial,
   type PreviewObjectVisibility,
 } from './preview-materials';
-import type { CandidateApplyResult, PreviewCandidateStore } from './preview-candidate-store';
+import {
+  buildingInsetLighten,
+  buildingInsetMinimumBase,
+  clusterBlob,
+  clusterDots,
+  clusterMinimumRadius,
+  crownScale,
+  farmFill,
+  mixColor,
+} from './preview-object-markers';
+import type {
+  CandidateApplyResult,
+  CandidateObject,
+  PreviewCandidateStore,
+} from './preview-candidate-store';
 import { chunkSpriteMatrix } from './game-art-terrain';
 import { ElevationSurface, raisedLightStrength } from './preview-elevation';
 import { raisedRectMesh } from './preview-raised-mesh';
@@ -39,13 +55,26 @@ import {
   type MinimapSquareSizes,
 } from './minimap-squares';
 import { requestPreviewRender } from './preview-render-scheduler';
+import {
+  gateObjectClass,
+  isStraightWallRun,
+  previewWallPostHalfWidth,
+  previewWallStrokeWidth,
+  wallJoinDirections,
+  wallJoinRole,
+  wallJoins,
+  wallPostPolygon,
+} from './preview-wall-joins';
 import { buildTerrainTexels } from './preview-terrain-texture';
 import {
   previewCliffStrokeWidth,
+  previewMarkerScreenRadius,
+  previewObjectFootprintSpan,
   previewObjectMarkerScreenRadius,
   previewObjectMarkerSpan,
   previewProjectionVerticalScale,
   previewScale,
+  previewViewCenter,
   type PreviewCamera,
   type PreviewViewport,
 } from './top-down-preview';
@@ -66,6 +95,141 @@ export interface CandidatePresentation {
   raised?: boolean;
   minimapSquares?: { classifier: MinimapSquareClassifier; sizes: MinimapSquareSizes } | null;
   verticalScale?: number;
+  objectClasses?: ReadonlyMap<number, number>;
+}
+
+function drawCandidateMarker(
+  vectors: Graphics,
+  object: CandidateObject,
+  material: PreviewMaterial,
+  color: number,
+  x: number,
+  y: number,
+  markerComponent: number,
+  units: number,
+): void {
+  const helper = material.helper === true;
+  const paint = (graphics: Graphics) =>
+    helper
+      ? graphics.stroke({ color, width: units, alpha: 0.75 })
+      : graphics.fill({ color, alpha: 1 });
+  const shape = material.shape;
+  if (shape === 'building' || shape === 'farm') {
+    const width = previewObjectFootprintSpan(object.footprintWidth);
+    const height = previewObjectFootprintSpan(object.footprintHeight);
+    const base = markerComponent * Math.min(width, height) * 0.5;
+    const grow =
+      base > 0 && base < previewMarkerScreenRadius.minimum
+        ? previewMarkerScreenRadius.minimum / base
+        : 1;
+    const rectangle = (halfWidth: number, halfHeight: number) => {
+      const points: number[] = [];
+      for (const [signX, signY] of [
+        [-1, -1],
+        [1, -1],
+        [1, 1],
+        [-1, 1],
+      ] as const) {
+        const deltaX = signX * halfWidth * grow;
+        const deltaY = signY * halfHeight * grow;
+        points.push(x + deltaX + deltaY, y + deltaY - deltaX);
+      }
+      return points;
+    };
+    vectors.poly(rectangle(width / 2, height / 2));
+    if (helper) {
+      vectors.stroke({ color, width: units, alpha: 0.75 });
+    } else if (shape === 'farm') {
+      vectors.fill({ color: mixColor(color, 0xffffff, farmFill.lighten), alpha: farmFill.alpha });
+    } else {
+      vectors.fill({ color, alpha: 1 });
+      if (grow === 1 && base >= buildingInsetMinimumBase) {
+        const inset = Math.min(width, height) / 8;
+        vectors.poly(rectangle(width / 2 - inset, height / 2 - inset)).stroke({
+          color: mixColor(color, 0xffffff, buildingInsetLighten),
+          width: units,
+          alpha: 1,
+        });
+      }
+    }
+    return;
+  }
+  const crown = shape === 'crown' ? crownScale : 1;
+  const radius =
+    previewObjectMarkerScreenRadius(markerComponent * Math.SQRT2, previewObjectMarkerSpan(object)) *
+    crown *
+    units;
+  if (shape === 'wall') {
+    paint(vectors.rect(x - radius, y - radius, radius * 2, radius * 2));
+  } else if (shape === 'diamond') {
+    paint(vectors.poly([x, y - radius, x + radius, y, x, y + radius, x - radius, y]));
+  } else if (shape === 'triangle') {
+    paint(vectors.poly([x, y - radius, x + radius, y + radius, x - radius, y + radius]));
+  } else if (shape === 'star') {
+    const outline = markerShapeOutline('star')!;
+    paint(vectors.poly(outline.map((value, index) => (index % 2 === 0 ? x : y) + value * radius)));
+  } else if (shape === 'cluster' && radius / units < clusterMinimumRadius) {
+    paint(
+      vectors.ellipse(
+        x,
+        y + clusterBlob.offsetY * radius,
+        clusterBlob.radiusX * radius,
+        clusterBlob.radiusY * radius,
+      ),
+    );
+  } else if (shape === 'cluster') {
+    for (const [unitX, unitY] of clusterDots) {
+      paint(vectors.circle(x + unitX * radius, y + unitY * radius, radius * 0.5));
+    }
+  } else {
+    paint(vectors.circle(x, y, radius));
+  }
+}
+
+function drawCandidateWall(
+  vectors: Graphics,
+  object: CandidateObject,
+  bits: number,
+  color: number,
+  helper: boolean,
+  markerComponent: number,
+  units: number,
+  lift: (x: number, y: number) => number,
+  raised: boolean,
+): void {
+  const tileEdgePixels = markerComponent * Math.SQRT2;
+  const centerX = object.x + object.y;
+  const centerY = object.y - object.x - lift(object.x, object.y);
+  const tileX = Math.floor(object.x) + 0.5;
+  const tileY = Math.floor(object.y) + 0.5;
+  const ends: [number, number][] = [];
+  for (const { dx, dy, bit } of wallJoinDirections) {
+    if ((bits & bit) === 0) continue;
+    const endX = tileX + dx * 0.5;
+    const endY = tileY + dy * 0.5;
+    ends.push([endX + endY, endY - endX - lift(endX, endY)]);
+  }
+  const strokeWidth = previewWallStrokeWidth(tileEdgePixels);
+  const cap = raised ? ('square' as const) : ('butt' as const);
+  const stroke = helper
+    ? { color, width: units, alpha: 0.75, cap }
+    : { color, width: strokeWidth * units, alpha: 1, cap };
+  if (isStraightWallRun(bits)) {
+    vectors
+      .moveTo(ends[0]![0], ends[0]![1])
+      .lineTo(centerX, centerY)
+      .lineTo(ends[1]![0], ends[1]![1])
+      .stroke(stroke);
+  } else {
+    for (const [endX, endY] of ends) {
+      vectors.moveTo(centerX, centerY).lineTo(endX, endY).stroke(stroke);
+    }
+  }
+  const postHalfWidth = previewWallPostHalfWidth(bits, strokeWidth, tileEdgePixels);
+  if (postHalfWidth <= 0) return;
+  vectors.poly(wallPostPolygon(centerX, centerY, postHalfWidth * units, 1, 1));
+  if (helper) vectors.stroke(stroke);
+  else vectors.fill({ color, alpha: 1 });
 }
 
 interface CandidateChunk {
@@ -131,6 +295,8 @@ export class PreviewCandidateLayer {
   private destroyed = false;
   private held = false;
   private drawnDimensions = { width: 0, height: 0 };
+  private wallJoinCache: { key: unknown[]; joins: Map<CandidateObject, number> } | null = null;
+  private readonly wallChunks = new Set<number>();
   lastUpdateMilliseconds = 0;
   rebuiltChunks = 0;
   vectorComponent = 0;
@@ -244,6 +410,7 @@ export class PreviewCandidateLayer {
     if (this.held) return;
     const started = this.timing.now();
     this.presentation = presentation;
+    this.wallJoinCache = null;
     const view = this.store.view;
     const grid = this.store.chunkGrid();
     const terrain = this.store.terrainIds();
@@ -359,9 +526,15 @@ export class PreviewCandidateLayer {
       this.chunks.set(key, { terrain: container, vectors: null, texture, raised: null });
       this.terrainRoot.addChild(container);
     }
+    const wallNeighbours = reset
+      ? []
+      : [...this.wallNeighbourChunks(change.changedChunks, grid, presentation)].filter(
+          (key) => !keys.has(key),
+        );
     if (this.picture) this.destroyPicture(this.picture);
     this.picture = null;
     for (const key of keys) this.drawVectors(key, presentation);
+    for (const key of wallNeighbours) this.drawVectors(key, presentation);
     this.vectorComponent = presentation.markerComponent;
     this.rebuiltChunks = keys.size;
     this.onPictureChange?.('after', flatChange);
@@ -393,7 +566,8 @@ export class PreviewCandidateLayer {
       const batch = this.batch ?? this.newBatch(this.picture!, false, 0);
       for (const key of terrainKeys) this.enqueue(batch, key);
       if (!batch.whole) {
-        for (const key of change.changedChunks) {
+        const wallNeighbours = this.wallNeighbourChunks(change.changedChunks, grid, presentation);
+        for (const key of new Set([...change.changedChunks, ...wallNeighbours])) {
           if (!batch.queued.has(key) && !batch.built.has(key)) {
             this.drawVectors(key, presentation);
           }
@@ -627,43 +801,113 @@ export class PreviewCandidateLayer {
       this.vectorRoot.addChild(vectors);
       return;
     }
+    const materials = new Map<number, PreviewMaterial>();
+    const classes = presentation.objectClasses;
+    let holdsWalls = false;
     for (const object of this.store.chunkObjects(key)) {
       if (!isDrawnPreviewObject(object, presentation.visibility)) continue;
-      const base = objectMaterial(
-        object,
-        presentation.playerColorIds,
-        [],
-        presentation.minimapPalette,
-        undefined,
-        presentation.visibility.helperObjectIds,
-        presentation.lookObjectColors,
-      );
-      const material = { ...base, color: shade(base.color, object) };
-      const radius =
-        previewObjectMarkerScreenRadius(
-          presentation.markerComponent * Math.SQRT2,
-          previewObjectMarkerSpan(object),
-        ) * units;
+      const materialKey =
+        (object.objectId * 256 + (object.owner & 0xff)) * 2 +
+        (object.presentationKind === 'wall' ? 1 : 0);
+      let base = materials.get(materialKey);
+      const objectClass = classes?.get(object.objectId);
+      if (objectClass === gateObjectClass) holdsWalls = true;
+      if (!base) {
+        base = objectMaterial(
+          objectClass === undefined ? object : { ...object, objectClass },
+          presentation.playerColorIds,
+          [],
+          presentation.minimapPalette,
+          undefined,
+          presentation.visibility.helperObjectIds,
+          presentation.lookObjectColors,
+        );
+        materials.set(materialKey, base);
+      }
+      const color = shade(base.color, object);
+      if (base.shape === 'wall') {
+        holdsWalls = true;
+        drawCandidateWall(
+          vectors,
+          object,
+          this.wallJoins(presentation).get(object) ?? 0,
+          color,
+          base.helper === true,
+          presentation.markerComponent,
+          units,
+          lift,
+          surface !== null,
+        );
+        continue;
+      }
       const x = object.x + object.y;
       const y = object.y - object.x - lift(object.x, object.y);
-      if (material.helper) {
-        vectors.circle(x, y, radius).stroke({ color: material.color, width: units, alpha: 0.75 });
-      } else if (material.shape === 'double-line') {
-        vectors.rect(x - radius, y - radius * 0.35, radius * 2, radius * 0.7).fill(material.color);
-      } else if (material.shape === 'diamond') {
-        vectors
-          .poly([x, y - radius, x + radius, y, x, y + radius, x - radius, y])
-          .fill(material.color);
-      } else if (material.shape === 'triangle') {
-        vectors
-          .poly([x, y - radius, x + radius, y + radius, x - radius, y + radius])
-          .fill(material.color);
-      } else {
-        vectors.circle(x, y, radius).fill(material.color);
-      }
+      drawCandidateMarker(vectors, object, base, color, x, y, presentation.markerComponent, units);
     }
+    if (holdsWalls) this.wallChunks.add(key);
+    else this.wallChunks.delete(key);
     chunk.vectors = vectors;
     this.vectorRoot.addChild(vectors);
+  }
+
+  private wallJoins(presentation: CandidatePresentation): Map<CandidateObject, number> {
+    const { visibility, objectClasses } = presentation;
+    const key = [visibility.objects, visibility.helpers, visibility.helperObjectIds, objectClasses];
+    const cached = this.wallJoinCache;
+    if (cached && cached.key.every((value, index) => value === key[index])) return cached.joins;
+    const objects = this.allObjects();
+    const positions = wallJoins(
+      objects,
+      this.drawnDimensions.width,
+      this.drawnDimensions.height,
+      (object) => isDrawnPreviewObject(object, visibility),
+      objectClasses ? (object) => objectClasses.get(object.objectId) : undefined,
+    );
+    const joins = new Map<CandidateObject, number>();
+    for (const [position, bits] of positions) joins.set(objects[position]!, bits);
+    this.wallJoinCache = { key, joins };
+    return joins;
+  }
+
+  private allObjects(): CandidateObject[] {
+    const grid = this.store.chunkGrid();
+    const objects: CandidateObject[] = [];
+    if (!grid) return objects;
+    for (let key = 0; key < grid.columns * grid.rows; key += 1) {
+      for (const object of this.store.chunkObjects(key)) objects.push(object);
+    }
+    return objects;
+  }
+
+  private wallNeighbourChunks(
+    changed: Iterable<number>,
+    grid: { columns: number; rows: number },
+    presentation: CandidatePresentation,
+  ): Set<number> {
+    const neighbours = new Set<number>();
+    const classes = presentation.objectClasses;
+    for (const key of changed) {
+      const holds = this.store.chunkObjects(key).some((object) => {
+        if (!isDrawnPreviewObject(object, presentation.visibility)) return false;
+        const objectClass = classes?.get(object.objectId);
+        return (
+          wallJoinRole(objectClass === undefined ? object : { ...object, objectClass }) !== null
+        );
+      });
+      if (!holds && !this.wallChunks.has(key)) continue;
+      const chunkX = key % grid.columns;
+      const chunkY = Math.floor(key / grid.columns);
+      for (let dy = -1; dy <= 1; dy += 1) {
+        for (let dx = -1; dx <= 1; dx += 1) {
+          const x = chunkX + dx;
+          const y = chunkY + dy;
+          if ((dx !== 0 || dy !== 0) && x >= 0 && y >= 0 && x < grid.columns && y < grid.rows) {
+            neighbours.add(y * grid.columns + x);
+          }
+        }
+      }
+    }
+    return neighbours;
   }
 
   private drawMinimapSquareVectors(
@@ -731,9 +975,10 @@ export class PreviewCandidateLayer {
       previewScale(dimensions.width, dimensions.height, camera, viewport) * Math.SQRT1_2;
     const verticalComponent = component * previewProjectionVerticalScale(viewport);
     this.container.scale.set(component, verticalComponent);
+    const center = previewViewCenter(viewport);
     this.container.position.set(
-      viewport.width / 2 - (camera.centerX + camera.centerY) * component,
-      viewport.height / 2 - (camera.centerY - camera.centerX) * verticalComponent,
+      center.x - (camera.centerX + camera.centerY) * component,
+      center.y - (camera.centerY - camera.centerX) * verticalComponent,
     );
     this.view = raisedViewRect(dimensions, [camera], viewport, raisedCullOverscan);
     this.applyCulling();
@@ -770,6 +1015,7 @@ export class PreviewCandidateLayer {
 
   private clear(): void {
     for (const key of [...this.chunks.keys()]) this.destroyChunk(key);
+    this.wallChunks.clear();
   }
 
   private destroyChunk(key: number): void {

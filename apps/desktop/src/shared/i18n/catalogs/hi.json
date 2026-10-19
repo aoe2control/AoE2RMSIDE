@@ -956,6 +956,21 @@
     "settings.theme.scheme.default": {
       "message": "डिफ़ॉल्ट"
     },
+    "settings.theme.background-blur": {
+      "message": "पृष्ठभूमि धुंधलापन"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "साफ़"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "धुंधली"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "पूर्वावलोकन के बटनों, पैनलों और मेनू से, और मानचित्र के ऊपर के संपादक से मानचित्र बिना धुंधलेपन के दिखता है।"
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "पूर्वावलोकन के बटनों, पैनलों और मेनू के पीछे, और मानचित्र के ऊपर के संपादक के पीछे मानचित्र धुंधला दिखता है।"
+    },
     "settings.theme.close-label": {
       "message": "थीम की सेटिंग्स बंद करें"
     },
@@ -3041,9 +3056,6 @@
     "code-editor.tab-menu.save": {
       "message": "सहेजें"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "क्लोन / इस रूप में सहेजें…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "इस रूप में सहेजें…"
     },
@@ -3095,8 +3107,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "लॉक है"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "हर रन पर रैंडम सीड"
+    "code-editor.run-menu.seed-lock": {
+      "message": "सीड लॉक करें"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "मौजूदा मैच का सीड इस्तेमाल करें"
@@ -3161,17 +3173,14 @@
     "code-editor.control-download.confirm": {
       "message": "समझ गया"
     },
-    "code-editor.preview.collapse": {
-      "message": "लाइव मानचित्र पूर्वावलोकन समेटें"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "अगल-बगल"
     },
-    "code-editor.preview.expand": {
-      "message": "लाइव मानचित्र पूर्वावलोकन फैलाएँ"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "संपादक के पीछे पूर्वावलोकन"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "पूर्वावलोकन समेटें"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "पूर्वावलोकन फैलाएँ"
+    "code-editor.preview.layout.editor-only": {
+      "message": "केवल संपादक"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "स्क्रिप्ट चलाने की विफलता का संदेश हटाएँ"
@@ -3191,8 +3200,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "यह इंस्टॉलेशन या सब्सक्राइब किए मॉड का स्रोत सुरक्षित है। क्लोन या इस रूप में सहेजें इस्तेमाल करें।"
+    "code-editor.read-only-message.game-installation": {
+      "message": "यह फ़ाइल गेम इंस्टॉलेशन का हिस्सा है। गेम अपडेट इसे बदल सकते हैं, इसलिए इसे यहाँ संपादित नहीं किया जा सकता। इसे संपादित करने के लिए एक कॉपी सहेजें।"
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "यह फ़ाइल एक सब्सक्राइब्ड मॉड की है। मॉड अपडेट इसे बदल सकते हैं, इसलिए इसे यहाँ संपादित नहीं किया जा सकता। इसे संपादित करने के लिए एक कॉपी सहेजें।"
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE तैनात करते समय इस मॉड की फ़ाइलें खुद लिखता है, इसलिए यहाँ किए गए बदलाव खो जाएँगे। इसके बजाय मैप की अपनी कॉपी संपादित करें।"
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "यह फ़ाइल AoE2RMSIDE में केवल पढ़ने के लिए है। इसे संपादित करने के लिए एक कॉपी सहेजें।"
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "इस रूप में सहेजें…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "शामिल फ़ाइल खोलें"
@@ -3537,7 +3558,7 @@
       "message": "घास"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "उथला पानी"
+      "message": "छिछला"
     },
     "preview-panel.material.terrain.water": {
       "message": "पानी"
@@ -3615,7 +3636,7 @@
       "message": ".inc, .def और .xs दस्तावेज़ केवल include के लिए हैं और सीधे नहीं चलाए जा सकते।"
     },
     "preview-panel.tool.objects": {
-      "message": "वस्तुएँ और नगर केंद्र का क्षेत्र"
+      "message": "वस्तुएँ और इमारतों का क्षेत्र"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "मिनिमैप वस्तुएँ"

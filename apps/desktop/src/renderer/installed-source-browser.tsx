@@ -365,15 +365,23 @@ export function InstalledSourceBrowser({
           {!searching
             ? filteredSources.map((source) => (
                 <div className="installed-source-row" key={source.sourceId}>
-                  <Button
-                    aria-label={source.relativePath}
-                    className="installed-source-open"
-                    onClick={() => void openSource(source.sourceId)}
-                    title={source.displayPath}
-                    variant="ghost"
-                  >
-                    <span>{source.relativePath}</span>
-                  </Button>
+                  <Tooltip disableHoverablePopup>
+                    <TooltipTrigger
+                      render={
+                        <Button
+                          aria-label={source.relativePath}
+                          className="installed-source-open"
+                          onClick={() => void openSource(source.sourceId)}
+                          variant="ghost"
+                        />
+                      }
+                    >
+                      <span>{source.relativePath}</span>
+                    </TooltipTrigger>
+                    <TooltipContent align="start" className="path-tooltip">
+                      {source.displayPath}
+                    </TooltipContent>
+                  </Tooltip>
                   <div>
                     <span className="installed-source-origin" data-ownership={source.ownership}>
                       {installedSourceOriginLabel(source.ownership)}

@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "默认"
     },
+    "settings.theme.background-blur": {
+      "message": "背景模糊"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "清晰"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "模糊"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "地图透过预览的按钮、面板和菜单以及地图上方的编辑器清晰显示，不会模糊。"
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "预览的按钮、面板和菜单以及地图上方的编辑器后面的地图会变模糊。"
+    },
     "settings.theme.close-label": {
       "message": "关闭主题设置"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "保存"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "克隆 / 另存为…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "另存为…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "已锁定"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "每次运行随机生成"
+    "code-editor.run-menu.seed-lock": {
+      "message": "锁定种子"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "使用当前对局种子"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "知道了"
     },
-    "code-editor.preview.collapse": {
-      "message": "折叠实时地图预览"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "并排"
     },
-    "code-editor.preview.expand": {
-      "message": "展开实时地图预览"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "预览位于编辑器后方"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "折叠预览"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "展开预览"
+    "code-editor.preview.layout.editor-only": {
+      "message": "仅编辑器"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "关闭脚本运行失败提示"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "此游戏安装或订阅模组的源文件受到保护。请使用“克隆”或“另存为”。"
+    "code-editor.read-only-message.game-installation": {
+      "message": "此文件是游戏安装的一部分。游戏更新可能会替换它，因此无法在此编辑。请保存副本后再编辑。"
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "此文件属于已订阅模组。模组更新可能会替换它，因此无法在此编辑。请保存副本后再编辑。"
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE 会在部署时自行写入此模组的文件，因此在此所做的修改会丢失。请改为编辑你自己的地图副本。"
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "此文件在 AoE2RMSIDE 中为只读。请保存副本后再编辑。"
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "另存为…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "打开包含文件"
@@ -3607,7 +3628,7 @@
       "message": ".inc、.def 和 .xs 文档只能由其他文件包含，无法直接运行。"
     },
     "preview-panel.tool.objects": {
-      "message": "对象和城镇中心占地范围"
+      "message": "对象和建筑占地范围"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "小地图式对象"

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { MenuIcon } from '@animateicons/react/lucide';
+import { MenuIcon } from './hover-scale-icon';
 import { Bot, Check, Pencil, Plus, SlidersHorizontal, Trash2, UserRound } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -140,6 +140,7 @@ import {
 } from './run-outcome';
 import type { OutputRunHeader, OutputRunResult } from './output-log';
 import { assertStreamMatchesResult } from './preview-reconstruction';
+import { contentObjectClassLookup } from './top-down-preview';
 import {
   developmentFixtureRunnable,
   isPreviewScriptName,
@@ -730,6 +731,7 @@ export function RunConfigurationPanel({
       job.configuration.input.progressivePreview === true && !job.configuration.fixtureId,
       job.configuration.input.minimapPalette,
       job.configuration.input.texturePalette ?? null,
+      contentObjectClassLookup(job.configuration.input.contentPack),
     );
     return key;
   }, []);
@@ -1409,6 +1411,7 @@ export function RunConfigurationPanel({
         progressive: mapTestProgressivePreview,
         minimapPalette: input.minimapPalette,
         texturePalette: input.texturePalette ?? null,
+        objectClasses: contentObjectClassLookup(input.contentPack),
       });
       const startedAt = performance.now();
       const mapTestHeader = (
@@ -2853,28 +2856,46 @@ function PreviewPresetControls({
                           value={String(configuration.teamIds[index])}
                         />
                         {liveTestOnRun && configuration.playerSlots[index] !== 1 ? (
-                          <IconToggleButton
-                            aria-disabled="true"
-                            aria-label={t('run-menu.players.computer', { player: index + 1 })}
-                            className="preview-player-computer"
-                            data-live-computer=""
-                            pressed
-                            size="icon"
-                            title={t('run-menu.players.live-computer')}
-                          >
-                            <Bot aria-hidden="true" />
-                          </IconToggleButton>
+                          <Tooltip>
+                            <TooltipTrigger
+                              render={
+                                <IconToggleButton
+                                  aria-disabled="true"
+                                  aria-label={t('run-menu.players.computer', {
+                                    player: index + 1,
+                                  })}
+                                  className="preview-player-computer"
+                                  data-live-computer=""
+                                  pressed
+                                  size="icon"
+                                />
+                              }
+                            >
+                              <Bot aria-hidden="true" />
+                            </TooltipTrigger>
+                            <TooltipContent>{t('run-menu.players.live-computer')}</TooltipContent>
+                          </Tooltip>
                         ) : (
-                          <IconToggleButton
-                            aria-label={t('run-menu.players.computer', { player: index + 1 })}
-                            className="preview-player-computer"
-                            onClick={() => togglePlayerController(index)}
-                            pressed={configuration.computerPlayers[index] === true}
-                            size="icon"
-                            title={t('run-menu.players.computer-tooltip')}
-                          >
-                            <Bot aria-hidden="true" />
-                          </IconToggleButton>
+                          <Tooltip>
+                            <TooltipTrigger
+                              render={
+                                <IconToggleButton
+                                  aria-label={t('run-menu.players.computer', {
+                                    player: index + 1,
+                                  })}
+                                  className="preview-player-computer"
+                                  onClick={() => togglePlayerController(index)}
+                                  pressed={configuration.computerPlayers[index] === true}
+                                  size="icon"
+                                />
+                              }
+                            >
+                              <Bot aria-hidden="true" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              {t('run-menu.players.computer-tooltip')}
+                            </TooltipContent>
+                          </Tooltip>
                         )}
                       </div>
                     );

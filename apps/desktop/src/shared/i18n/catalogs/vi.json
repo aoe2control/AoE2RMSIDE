@@ -956,6 +956,21 @@
     "settings.theme.scheme.default": {
       "message": "Mặc định"
     },
+    "settings.theme.background-blur": {
+      "message": "Làm mờ nền"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Rõ nét"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Mờ"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "Bản đồ hiện rõ, không bị mờ, qua các nút, bảng và menu của bản xem trước cũng như qua trình soạn thảo phía trên bản đồ."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "Bản đồ phía sau các nút, bảng và menu của bản xem trước cũng như phía sau trình soạn thảo phía trên bản đồ bị làm mờ."
+    },
     "settings.theme.close-label": {
       "message": "Đóng thiết lập giao diện"
     },
@@ -3041,9 +3056,6 @@
     "code-editor.tab-menu.save": {
       "message": "Lưu"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Tạo bản sao / Lưu thành…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Lưu thành…"
     },
@@ -3095,8 +3107,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Đã khóa"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Ngẫu nhiên mỗi lượt chạy"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Khóa hạt giống"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Dùng hạt giống của trận hiện tại"
@@ -3161,17 +3173,14 @@
     "code-editor.control-download.confirm": {
       "message": "Đã hiểu"
     },
-    "code-editor.preview.collapse": {
-      "message": "Thu gọn xem trước bản đồ trực tiếp"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Cạnh nhau"
     },
-    "code-editor.preview.expand": {
-      "message": "Mở rộng xem trước bản đồ trực tiếp"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Xem trước sau trình soạn thảo"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Thu gọn Xem trước"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Mở rộng Xem trước"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Chỉ trình soạn thảo"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Đóng thông báo chạy kịch bản thất bại"
@@ -3191,8 +3200,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "Mã nguồn từ bản cài đặt hoặc mod đã đăng ký được bảo vệ. Hãy dùng Tạo bản sao hoặc Lưu thành."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Tệp này thuộc bản cài đặt trò chơi. Các bản cập nhật trò chơi có thể thay thế tệp, nên không thể chỉnh sửa tệp tại đây. Hãy lưu một bản sao để chỉnh sửa."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Tệp này thuộc một mod đã đăng ký. Các bản cập nhật mod có thể thay thế tệp, nên không thể chỉnh sửa tệp tại đây. Hãy lưu một bản sao để chỉnh sửa."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE tự ghi các tệp của mod này mỗi khi triển khai, nên các thay đổi tại đây sẽ bị mất. Thay vào đó, hãy chỉnh sửa bản sao bản đồ của riêng bạn."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Tệp này ở chế độ chỉ đọc trong AoE2RMSIDE. Hãy lưu một bản sao để chỉnh sửa."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Lưu thành…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Mở tệp include"
@@ -3537,7 +3558,7 @@
       "message": "Cỏ"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "Nước nông"
+      "message": "Vũng cạn"
     },
     "preview-panel.material.terrain.water": {
       "message": "Nước"
@@ -3615,7 +3636,7 @@
       "message": "Tài liệu .inc, .def và .xs chỉ dùng để include, không chạy riêng được."
     },
     "preview-panel.tool.objects": {
-      "message": "Đối tượng và diện tích chiếm chỗ của Nhà chính"
+      "message": "Đối tượng và diện tích chiếm chỗ của công trình"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Đối tượng kiểu bản đồ nhỏ"

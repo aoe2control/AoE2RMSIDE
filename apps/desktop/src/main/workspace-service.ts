@@ -6,6 +6,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import type {
   DesktopSession,
   DesktopSessionRestore,
+  ProtectedSourceReason,
   RecentWorkspaceEntry,
   RecoveryDocument,
   RecoverySnapshot,
@@ -93,6 +94,11 @@ export interface GeneratedFileTarget {
 export type GeneratedFileWriteResult =
   { status: 'written'; path: string } | { status: 'exists'; fileName: string };
 
+export interface ProtectedRoot {
+  path: string;
+  reason: ProtectedSourceReason;
+}
+
 interface OpenedDocumentCapability {
   path: string;
   sourceKind: WorkspaceSourceKind;
@@ -146,8 +152,8 @@ export class WorkspaceService {
   private readonly entries = new Map<string, EntryCapability>();
   private readonly openedDocuments = new Map<string, OpenedDocumentCapability>();
   private readonly configuredProtectedRoots: string[];
-  private installedProtectedRoots: string[] = [];
-  private readonly protectedRootOwners = new Map<string, string[]>();
+  private installedProtectedRoots: ProtectedRoot[] = [];
+  private readonly protectedRootOwners = new Map<string, ProtectedRoot[]>();
   private readonly recentStore: RecentStore;
   private readonly directoryWatchers = new Map<string, DirectoryWatcher>();
   private readonly watchTimers = new Map<string, NodeJS.Timeout>();
@@ -421,20 +427,26 @@ export class WorkspaceService {
   }
 
   setInstalledProtectedRoots(
-    roots: readonly string[],
+    roots: readonly ProtectedRoot[],
     owner: 'installed-sources' | 'linked-installation' = 'installed-sources',
   ): void {
-    this.protectedRootOwners.set(owner, roots.map(normalizeAbsolutePath));
+    this.protectedRootOwners.set(
+      owner,
+      roots.map((root) => ({ path: normalizeAbsolutePath(root.path), reason: root.reason })),
+    );
     const seen = new Set<string>();
     const next = [...this.protectedRootOwners.values()].flat().filter((root) => {
-      const key = pathKey(root);
+      const key = pathKey(root.path);
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
     });
     if (
       next.length === this.installedProtectedRoots.length &&
-      next.every((root, index) => pathKey(root) === pathKey(this.installedProtectedRoots[index]!))
+      next.every((root, index) => {
+        const current = this.installedProtectedRoots[index]!;
+        return pathKey(root.path) === pathKey(current.path) && root.reason === current.reason;
+      })
     ) {
       return;
     }
@@ -1227,36 +1239,39 @@ export class WorkspaceService {
   authorizeRecoverySnapshot(snapshot: RecoverySnapshot): RecoverySnapshot {
     const folder = snapshot.folder ? this.activeRootFolder(snapshot.folder.path) : null;
     const replacedIds = new Map<string, string>();
-    const documents = snapshot.documents.map((document): RecoveryDocument => {
-      if (!document.path) return document;
-      const requested = pathKey(document.path);
-      const match = [...this.openedDocuments].find(
-        ([, capability]) => pathKey(capability.path) === requested,
-      );
-      if (match) {
-        const [id, capability] = match;
-        replacedIds.set(document.id, id);
+    const documents = snapshot.documents.map(
+      ({ protectedReason: _reason, ...document }): RecoveryDocument => {
+        if (!document.path) return document;
+        const requested = pathKey(document.path);
+        const match = [...this.openedDocuments].find(
+          ([, capability]) => pathKey(capability.path) === requested,
+        );
+        if (match) {
+          const [id, capability] = match;
+          replacedIds.set(document.id, id);
+          return {
+            ...document,
+            id,
+            uri: pathToFileURL(capability.path).href,
+            path: capability.path,
+            sourceKind: capability.sourceKind,
+            readOnly: capability.sourceKind === 'protected',
+            ...(capability.sourceKind === 'protected' ? this.protectedReason(capability.path) : {}),
+          };
+        }
+        const recoveredId = `recovered:${randomUUID()}`;
+        replacedIds.set(document.id, recoveredId);
         return {
           ...document,
-          id,
-          uri: pathToFileURL(capability.path).href,
-          path: capability.path,
-          sourceKind: capability.sourceKind,
-          readOnly: capability.sourceKind === 'protected',
+          id: recoveredId,
+          uri: `untitled://recovered/${encodeURIComponent(document.name)}`,
+          path: null,
+          sourceKind: 'ordinary',
+          readOnly: false,
+          diskHash: '0'.repeat(64),
         };
-      }
-      const recoveredId = `recovered:${randomUUID()}`;
-      replacedIds.set(document.id, recoveredId);
-      return {
-        ...document,
-        id: recoveredId,
-        uri: `untitled://recovered/${encodeURIComponent(document.name)}`,
-        path: null,
-        sourceKind: 'ordinary',
-        readOnly: false,
-        diskHash: '0'.repeat(64),
-      };
-    });
+      },
+    );
     const activeDocumentId =
       snapshot.activeDocumentId === null
         ? null
@@ -1272,7 +1287,7 @@ export class WorkspaceService {
   ): Promise<{ snapshot: RecoverySnapshot; diagnostics: OutputText[] }> {
     const diagnostics: OutputText[] = [];
     const documents: RecoveryDocument[] = [];
-    for (const document of snapshot.documents) {
+    for (const { protectedReason: _reason, ...document } of snapshot.documents) {
       if (!document.path) {
         documents.push(document);
         continue;
@@ -1291,6 +1306,7 @@ export class WorkspaceService {
           name: basename(canonicalPath),
           sourceKind,
           readOnly: sourceKind === 'protected',
+          ...(sourceKind === 'protected' ? this.protectedReason(canonicalPath) : {}),
         };
         documents.push(restored);
         this.openedDocuments.set(id, {
@@ -1490,6 +1506,7 @@ export class WorkspaceService {
       newlineStyle: decoded.newlineStyle,
       sourceKind,
       readOnly: sourceKind === 'protected',
+      ...(sourceKind === 'protected' ? this.protectedReason(canonicalPath) : {}),
       diskHash: hashBytes(bytes),
     };
     if (registerCapability) {
@@ -2080,11 +2097,17 @@ export class WorkspaceService {
   }
 
   private sourceKind(targetPath: string): WorkspaceSourceKind {
-    return [...this.configuredProtectedRoots, ...this.installedProtectedRoots].some((root) =>
-      isPathInside(targetPath, root),
-    )
+    return [
+      ...this.configuredProtectedRoots,
+      ...this.installedProtectedRoots.map((root) => root.path),
+    ].some((root) => isPathInside(targetPath, root))
       ? 'protected'
       : 'ordinary';
+  }
+
+  private protectedReason(targetPath: string): { protectedReason?: ProtectedSourceReason } {
+    const root = this.installedProtectedRoots.find((entry) => isPathInside(targetPath, entry.path));
+    return root ? { protectedReason: root.reason } : {};
   }
 }
 
@@ -2273,11 +2296,45 @@ export async function atomicReplaceFile(targetPath: string, bytes: Uint8Array): 
     await handle.sync();
     await handle.close();
     handle = undefined;
-    await rename(temporaryPath, targetPath);
+    await renameReplacing(temporaryPath, targetPath);
   } catch (error) {
     await handle?.close().catch(() => undefined);
     await rm(temporaryPath, { force: true }).catch(() => undefined);
     throw error;
+  }
+}
+
+const transientReplaceErrors = new Set(['EPERM', 'EACCES', 'EBUSY']);
+
+export interface RenameReplacingOptions {
+  renameFile?: (source: string, target: string) => Promise<void>;
+  wait?: (milliseconds: number) => Promise<void>;
+  retryMilliseconds?: number;
+}
+
+export async function renameReplacing(
+  source: string,
+  target: string,
+  {
+    renameFile = rename,
+    wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds)),
+    retryMilliseconds = 2_000,
+  }: RenameReplacingOptions = {},
+): Promise<void> {
+  let waited = 0;
+  let pause = 5;
+  for (;;) {
+    try {
+      await renameFile(source, target);
+      return;
+    } catch (error) {
+      const code = (error as NodeJS.ErrnoException | null)?.code;
+      if (!code || !transientReplaceErrors.has(code) || waited >= retryMilliseconds) throw error;
+      const delay = Math.min(pause, retryMilliseconds - waited);
+      await wait(delay);
+      waited += delay;
+      pause = Math.min(pause * 2, 100);
+    }
   }
 }
 

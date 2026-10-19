@@ -22,6 +22,7 @@ import {
   DropletIcon,
   EyeOffIcon,
   FootprintsIcon,
+  HoverScaleIcon,
   ImageIcon,
   LayersIcon,
   LayoutGridIcon,
@@ -31,7 +32,7 @@ import {
   MoveDiagonal2Icon,
   RouteIcon,
   SunDimIcon,
-} from '@animateicons/react/lucide';
+} from './hover-scale-icon';
 import {
   Application,
   BufferImageSource,
@@ -180,6 +181,7 @@ import {
   nextBoundaryMotion,
   visibleMapBoundary,
 } from './preview-boundary';
+import { isPreviewLayout, previewLayoutSwitchGlides } from '../shared/preview-layout';
 import { documentTransitionEnvironment, watchSizeTransitions } from './layout-transition';
 import { ListMotion } from './list-motion';
 import { prefersReducedMotion, presenceProps, useHeld, usePresence } from './motion';
@@ -210,6 +212,7 @@ import {
   type TransitionPicture,
 } from './preview-transitions';
 import {
+  candidateObjectClassLookup,
   previewLegendContent,
   ProvisionalLegendCounts,
   provisionalLegendLayers,
@@ -228,7 +231,15 @@ import {
   previewKeyboardShortcuts,
   type PreviewKeyboardCursor,
 } from './preview-keyboard';
-import { anchoredZoomFrame, panDragCamera, type PreviewPanDrag } from './preview-pan-drag';
+import { panDragCamera, type PreviewPanDrag } from './preview-pan-drag';
+import {
+  cameraTransitionFrame,
+  cameraTransitionTo,
+  wheelZoomFactor,
+  zoomStepStartsTransition,
+  zoomTransitionTarget,
+  type CameraTransition,
+} from './preview-camera-zoom';
 import {
   cameraCommittedOnDragRelease,
   followSelectionDrag,
@@ -245,14 +256,21 @@ import {
   mapRectangleScreenPolygon,
   mapScreenBounds,
   mapToScreen,
+  previewCameraForCentre,
+  previewCameraIsCentred,
   previewCliffStrokeWidth,
   previewMarkerVerticalScale,
   previewLevelPixels,
   previewScale,
   previewScreenTransform,
+  previewViewCenter,
   previewViewportIsCollapsed,
+  previewVisibleWidth,
   rectangularSelectionFromDrag,
   raisedMapToScreen,
+  samePreviewEditorInsets,
+  samePreviewFocus,
+  samePreviewViewport,
   screenToVisibleMap,
   visibleTerrainChunks,
   visibleTileRange,
@@ -305,7 +323,16 @@ import {
   type OverlayFade,
 } from './preview-overlay-fade';
 import { highlightTileRuns } from './preview-highlight-runs';
-import { applyPreviewResizeAnchor, previewResizeAnchor } from './preview-resize-anchor';
+import {
+  applyPreviewResizeAnchor,
+  previewLayoutSwitchAnchor,
+  previewLayoutSwitchCamera,
+  previewLayoutSwitchPlan,
+  previewLayoutSwitchSettles,
+  previewResizeAnchor,
+  type PreviewCanvasSize,
+  type PreviewLayoutSwitchPlan,
+} from './preview-resize-anchor';
 import { drawObjects, objectHeightMapLight } from './preview-object-markers';
 import { chunkSpriteMatrix } from './game-art-terrain';
 import { litColor, raisedSurfaceFor, type ElevationSurface } from './preview-elevation';
@@ -495,13 +522,21 @@ const lookButtons = [
 const tileGridButton = {
   key: 'tileGrid',
   labelId: 'preview-panel.tool.tile-grid',
-  renderIcon: () => <Grid3x3 aria-hidden="true" size={14} />,
+  renderIcon: (ref: Ref<AnimatedIconHandle>) => (
+    <HoverScaleIcon ref={ref}>
+      <Grid3x3 aria-hidden="true" size={14} />
+    </HoverScaleIcon>
+  ),
 } as const;
 
 const smallTreesButton = {
   key: 'smallTrees',
   labelId: 'preview-panel.tool.small-trees',
-  renderIcon: () => <TreePine aria-hidden="true" size={14} />,
+  renderIcon: (ref: Ref<AnimatedIconHandle>) => (
+    <HoverScaleIcon ref={ref}>
+      <TreePine aria-hidden="true" size={14} />
+    </HoverScaleIcon>
+  ),
 } as const;
 
 function perspectiveProjection(perspective: PreviewPerspective): PreviewProjection {
@@ -784,15 +819,10 @@ function PreviewProjectionModeButton({
   );
 }
 
-const cameraEaseDurationMs = 160;
 export const wheelBurstSettleMs = 150;
 
-interface CameraAnimation {
-  from: PreviewCamera;
-  startedAt: number;
-  target: PreviewCamera;
+interface CameraAnimation extends CameraTransition {
   wheel: boolean;
-  anchor?: { x: number; y: number };
 }
 
 interface CachedTerrainChunk {
@@ -927,8 +957,20 @@ export function PreviewPanel() {
   const displayedCamera = useRef<PreviewCamera>(fitPreviewCamera(1, 1));
   const cameraIsFitted = useRef(true);
   const pendingCamera = useRef<PreviewCamera | null>(null);
+  const layoutSwitchPlan = useRef<
+    (PreviewLayoutSwitchPlan & { committed: boolean; expiresAt: number }) | null
+  >(null);
+  const staleLayerCamera = useRef<{ camera: PreviewCamera; viewport: PreviewViewport } | null>(
+    null,
+  );
+  const switchRestore = useRef<{
+    before: PreviewCamera;
+    fitted: boolean;
+    after: PreviewCamera;
+    behindEditor: boolean;
+  } | null>(null);
   const frozenCanvasTransform = useRef<
-    ((width: number, height: number) => PreviewScreenTransform | null) | null
+    ((size: PreviewCanvasSize) => PreviewScreenTransform | null) | null
   >(null);
   const refreshFrozenCanvas = useRef<(() => void) | null>(null);
   const sceneBuilds = useRef(0);
@@ -1398,33 +1440,39 @@ export function PreviewPanel() {
 
   const commitCameraTransition = useCallback(() => {
     const next = displayedCamera.current;
+    if (cameraAnimation.current?.settle) return next;
     stopCameraAnimation();
     pendingCamera.current = null;
     return next;
   }, [stopCameraAnimation]);
 
   const scheduleCameraTransition = useCallback(
-    (next: PreviewCamera, wheel = false) => {
+    (next: PreviewCamera, wheel = false, anchor?: { x: number; y: number }, pan = false) => {
       if (!viewScene) return;
-      pendingCamera.current = next;
+      const transition = cameraTransitionTo(
+        displayedCamera.current,
+        performance.now(),
+        next,
+        anchor,
+        viewScene.width,
+        viewScene.height,
+        viewport,
+        pan,
+      );
+      pendingCamera.current = transition.target;
       const container = host.current;
       if (container) container.dataset.cameraAnimation = 'ease-out';
       const terrainCache = terrainChunkCache.current;
       if (terrainCache) {
         updateTerrainChunkVisibility(
           terrainCache,
-          [displayedCamera.current, next],
+          [displayedCamera.current, next, transition.target],
           viewport,
           container,
         );
       }
       const reduceMotion = globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      cameraAnimation.current = {
-        from: displayedCamera.current,
-        startedAt: performance.now(),
-        target: next,
-        wheel,
-      };
+      cameraAnimation.current = { ...transition, wheel };
       if (wheelCommitTimer.current !== null) {
         window.clearTimeout(wheelCommitTimer.current);
         wheelCommitTimer.current = null;
@@ -1432,36 +1480,24 @@ export function PreviewPanel() {
       const animate = (now: number) => {
         const active = cameraAnimation.current;
         if (!active) return;
-        const progress = reduceMotion
-          ? 1
-          : Math.min(1, Math.max(0, (now - active.startedAt) / cameraEaseDurationMs));
-        const easedProgress = 1 - (1 - progress) ** 3;
-        let frameCamera = interpolateCamera(active.from, active.target, easedProgress);
         const pan = gesture.current?.kind === 'pan' ? gesture.current : null;
-        const anchor = pan?.pointer ?? active.anchor;
+        const anchor = active.settle ? undefined : (pan?.pointer ?? active.anchor);
+        const frame = cameraTransitionFrame(
+          active,
+          now,
+          displayedCamera.current,
+          anchor,
+          reduceMotion,
+          viewScene.width,
+          viewScene.height,
+          viewport,
+        );
         if (anchor) {
-          const shown = displayedCamera.current;
-          frameCamera = anchoredZoomFrame(
-            shown,
-            frameCamera.zoom,
-            anchor,
-            viewScene.width,
-            viewScene.height,
-            viewport,
-          );
-          active.target = anchoredZoomFrame(
-            shown,
-            active.target.zoom,
-            anchor,
-            viewScene.width,
-            viewScene.height,
-            viewport,
-          );
-          if (progress >= 1) frameCamera = active.target;
-          pendingCamera.current = active.target;
+          active.target = frame.target;
+          pendingCamera.current = frame.target;
         }
-        applyDisplayedCamera(frameCamera);
-        if (progress < 1) {
+        applyDisplayedCamera(frame.camera);
+        if (!frame.done) {
           cameraAnimationFrame.current = window.requestAnimationFrame(animate);
           return;
         }
@@ -1485,9 +1521,10 @@ export function PreviewPanel() {
           setCamera(displayedCamera.current);
         }, wheelBurstSettleMs);
       };
-      if (cameraAnimationFrame.current === null) {
-        cameraAnimationFrame.current = window.requestAnimationFrame(animate);
+      if (cameraAnimationFrame.current !== null) {
+        window.cancelAnimationFrame(cameraAnimationFrame.current);
       }
+      cameraAnimationFrame.current = window.requestAnimationFrame(animate);
     },
     [applyDisplayedCamera, viewScene, viewport],
   );
@@ -1499,20 +1536,44 @@ export function PreviewPanel() {
   }, [viewScene, scheduleCameraTransition]);
 
   const zoom = useCallback(
-    (factor: number, anchor = { x: viewport.width / 2, y: viewport.height / 2 }, wheel = false) => {
+    (factor: number, anchor = previewViewCenter(viewport), wheel = false) => {
       if (!viewScene) return;
-      cameraIsFitted.current = false;
-      scheduleCameraTransition(
-        zoomPreviewCamera(
-          pendingCamera.current ?? displayedCamera.current,
+      if (wheel) {
+        const shown = displayedCamera.current;
+        const base = pendingCamera.current ?? shown;
+        const target = zoomTransitionTarget(
+          shown,
+          base,
           factor,
           anchor,
           viewScene.width,
           viewScene.height,
           viewport,
-        ),
-        wheel,
+        );
+        if (!zoomStepStartsTransition(base, target, viewScene.width, viewScene.height, viewport)) {
+          return;
+        }
+        cameraIsFitted.current = false;
+        scheduleCameraTransition(target, true, anchor);
+        return;
+      }
+      const base = pendingCamera.current ?? displayedCamera.current;
+      const target = zoomPreviewCamera(
+        base,
+        factor,
+        anchor,
+        viewScene.width,
+        viewScene.height,
+        viewport,
       );
+      if (
+        cameraAnimation.current?.settle &&
+        !zoomStepStartsTransition(base, target, viewScene.width, viewScene.height, viewport)
+      ) {
+        return;
+      }
+      cameraIsFitted.current = false;
+      scheduleCameraTransition(target);
     },
     [viewScene, scheduleCameraTransition, viewport],
   );
@@ -1528,6 +1589,9 @@ export function PreviewPanel() {
           viewScene.height,
           viewport,
         ),
+        false,
+        undefined,
+        true,
       );
     },
     [viewScene, scheduleCameraTransition, viewport],
@@ -1554,6 +1618,7 @@ export function PreviewPanel() {
     }
   }, [candidateActive, scene]);
 
+  const cameraViewport = useRef(viewport);
   useLayoutEffect(() => {
     if (!viewScene) {
       previousMapDimensions.current = null;
@@ -1571,7 +1636,52 @@ export function PreviewPanel() {
     const dimensionsChanged = previousDimensions !== dimensions;
     previousMapDimensions.current = dimensions;
     let nextCamera: PreviewCamera;
-    if (!dimensionsChanged) {
+    let restoresSwitch = false;
+    const switchPlan = layoutSwitchPlan.current;
+    const adoptsSwitch =
+      !dimensionsChanged &&
+      switchPlan !== null &&
+      !switchPlan.committed &&
+      previewLayoutSwitchSettles(switchPlan.settled, viewport);
+    if (adoptsSwitch) {
+      switchPlan.committed = true;
+      const built = builtMapLayer.current;
+      if (built) {
+        const stale = staleLayerCamera.current;
+        staleLayerCamera.current = {
+          camera:
+            stale && stale.viewport === built.viewport ? stale.camera : displayedCamera.current,
+          viewport: built.viewport,
+        };
+      }
+      const before = transitionTarget ?? displayedCamera.current;
+      const fittedBefore = cameraIsFitted.current;
+      cameraIsFitted.current = switchPlan.fitted;
+      nextCamera = previewLayoutSwitchCamera(viewScene, switchPlan, viewport);
+      cameraViewport.current = viewport;
+      switchRestore.current = {
+        before,
+        fitted: fittedBefore,
+        after: nextCamera,
+        behindEditor: !(viewport.behindEditor ?? false),
+      };
+    } else if (
+      !dimensionsChanged &&
+      transitionTarget === null &&
+      switchRestore.current !== null &&
+      !previewViewportIsCollapsed(viewport) &&
+      (viewport.behindEditor ?? false) === switchRestore.current.behindEditor &&
+      samePreviewCamera(displayedCamera.current, switchRestore.current.after)
+    ) {
+      const restore = switchRestore.current;
+      switchRestore.current = null;
+      restoresSwitch = true;
+      cameraIsFitted.current = restore.fitted;
+      nextCamera = restore.fitted
+        ? fitPreviewCamera(viewScene.width, viewScene.height)
+        : clampPreviewCamera(restore.before, viewScene.width, viewScene.height, viewport);
+      cameraViewport.current = viewport;
+    } else if (!dimensionsChanged) {
       nextCamera = clampPreviewCamera(
         transitionTarget ?? displayedCamera.current,
         viewScene.width,
@@ -1601,7 +1711,10 @@ export function PreviewPanel() {
     if (!candidateCoversScene) stashedCamera.current = null;
     displayedCamera.current = nextCamera;
     outgoingSizeCamera.current =
-      dimensionsChanged && !samePreviewCamera(camera, nextCamera) ? camera : null;
+      (dimensionsChanged || adoptsSwitch || restoresSwitch) &&
+      !samePreviewCamera(camera, nextCamera)
+        ? camera
+        : null;
     setCamera((current) => (samePreviewCamera(current, nextCamera) ? current : nextCamera));
     setHoveredCoordinate(null);
   }, [
@@ -1617,10 +1730,18 @@ export function PreviewPanel() {
     if (!viewScene) return;
     const transitionTarget = pendingCamera.current;
     stopCameraAnimation();
+    const laidOut = cameraViewport.current;
+    cameraViewport.current = viewport;
     const clampedCamera = cameraIsFitted.current
       ? fitPreviewCamera(viewScene.width, viewScene.height)
       : clampPreviewCamera(
-          transitionTarget ?? displayedCamera.current,
+          previewCameraForCentre(
+            transitionTarget ?? displayedCamera.current,
+            viewScene.width,
+            viewScene.height,
+            laidOut,
+            viewport,
+          ),
           viewScene.width,
           viewScene.height,
           viewport,
@@ -1631,6 +1752,43 @@ export function PreviewPanel() {
   }, [viewScene?.height, viewScene?.width, stopCameraAnimation, viewport]);
 
   useEffect(() => () => stopCameraAnimation(), [stopCameraAnimation]);
+
+  useLayoutEffect(() => {
+    const container = host.current;
+    const section = container?.closest<HTMLElement>('.preview-panel');
+    if (!container || !section) return undefined;
+    const publish = () => {
+      const { insetLeft, insetRight } = previewEditorInsets(
+        container,
+        Math.max(1, container.clientWidth),
+      );
+      section.style.setProperty('--preview-inset-left', `${insetLeft}px`);
+      section.style.setProperty('--preview-inset-right', `${insetRight}px`);
+      const behind = insetLeft > 0 ? 'left' : insetRight > 0 ? 'right' : null;
+      if (behind) section.dataset.behindEditor = behind;
+      else delete section.dataset.behindEditor;
+    };
+    publish();
+    const observer = new ResizeObserver(publish);
+    observer.observe(container);
+    const editorRegion = workspaceEditorRegion(container);
+    if (editorRegion) observer.observe(editorRegion);
+    const region = container.closest<HTMLElement>('.workspace-preview-region');
+    const layoutObserver = new MutationObserver(publish);
+    if (region) {
+      layoutObserver.observe(region, {
+        attributeFilter: ['data-layout', 'data-layout-from', 'data-expanded'],
+        attributes: true,
+      });
+    }
+    return () => {
+      observer.disconnect();
+      layoutObserver.disconnect();
+      section.style.removeProperty('--preview-inset-left');
+      section.style.removeProperty('--preview-inset-right');
+      delete section.dataset.behindEditor;
+    };
+  }, []);
 
   useEffect(() => {
     const container = host.current;
@@ -1680,18 +1838,85 @@ export function PreviewPanel() {
         application.current = pixi;
         scheduler = new PreviewRenderScheduler(
           () => {
+            if (layoutGlide && frozenSize === null) {
+              const width = Math.max(1, container.clientWidth);
+              const height = Math.max(1, container.clientHeight);
+              if (
+                Math.abs(pixi.renderer.screen.width - width) >= 0.5 ||
+                Math.abs(pixi.renderer.screen.height - height) >= 0.5
+              ) {
+                pixi.renderer.resize(width, height);
+              }
+            }
             const screen = pixi.renderer.screen;
-            applyPreviewResizeAnchor(
-              pixi.stage,
-              previewResizeAnchor(
-                builtMapLayer.current,
+            const unrevealed = layoutGlide
+              ? previewUnrevealedInsets(container, screen.width)
+              : noPreviewInsets;
+            if (layoutGlide) {
+              if (unrevealed.insetLeft > 0 || unrevealed.insetRight > 0) glideRevealed = true;
+              else if (glideRevealed || !previewLayoutSwitching(region)) layoutGlide = false;
+            }
+            const behindEditor = previewLaidOutBehindEditor(container);
+            const focus = behindEditor
+              ? previewFocusInsets(container, screen.width, true)
+              : noPreviewFocus;
+            shownFocus = focus;
+            drawnRegionReach = behindEditor || layoutGlide ? previewRegionReach(container) : 0;
+            const size: PreviewCanvasSize = {
+              width: screen.width,
+              height: screen.height,
+              ...unrevealed,
+              behindEditor,
+              ...focus,
+            };
+            const built = builtMapLayer.current;
+            const stale = staleLayerCamera.current;
+            const staleLayers =
+              stale !== null && built !== null && stale.viewport === built.viewport;
+            if (!staleLayers) staleLayerCamera.current = null;
+            const drawnCamera = staleLayers ? stale.camera : displayedCamera.current;
+            let plan = layoutSwitchPlan.current;
+            if (plan && (plan.committed ? !layoutGlide : performance.now() > plan.expiresAt)) {
+              layoutSwitchPlan.current = null;
+              plan = null;
+            }
+            let anchor: PreviewScreenTransform | null;
+            if (plan && built && !previewViewportIsCollapsed(built.viewport)) {
+              const shownViewport = { ...built.viewport, ...size };
+              const switchCamera = !plan.committed
+                ? layoutGlide
+                  ? plan.target
+                  : previewLayoutSwitchCamera(built.scene, plan, shownViewport)
+                : cameraIsFitted.current
+                  ? fitPreviewCamera(built.scene.width, built.scene.height)
+                  : displayedCamera.current;
+              const drawn = { camera: drawnCamera, viewport: built.viewport };
+              anchor = layoutGlide
+                ? previewLayoutSwitchAnchor(
+                    built.scene,
+                    drawn,
+                    switchCamera,
+                    plan,
+                    previewLayoutSwitchShare(container, region),
+                  )
+                : previewScreenTransform(
+                    built.scene.width,
+                    built.scene.height,
+                    drawnCamera,
+                    built.viewport,
+                    switchCamera,
+                    shownViewport,
+                  );
+            } else {
+              anchor = previewResizeAnchor(
+                built,
                 displayedCamera.current,
                 cameraIsFitted.current,
-                screen.width,
-                screen.height,
-              ),
-              container,
-            );
+                size,
+                staleLayers ? { drawnCamera, laidOut: viewportRef.current } : {},
+              );
+            }
+            applyPreviewResizeAnchor(pixi.stage, anchor, container);
             pixi.render();
           },
           {
@@ -1724,23 +1949,100 @@ export function PreviewPanel() {
         });
         transitions.enabled = mapTransitionsSettingRef.current;
         mapTransitions.current = transitions;
-        const width = Math.max(1, container.clientWidth);
-        const height = Math.max(1, container.clientHeight);
-        pixi.renderer.resize(width, height);
+        const size = measureSize();
+        pixi.renderer.resize(size.width, size.height);
         scheduler.request();
-        requestedSize = { width, height };
+        requestedSize = size;
         setViewport((current) => ({
-          width,
-          height,
+          ...size,
           padding: previewPadding,
           projection: current.projection,
         }));
         setPixiReady(true);
       });
     let viewportCommits = 0;
-    let requestedSize: { width: number; height: number } | null = null;
-    const commitViewport = (width: number, height: number, synchronous: boolean) => {
+    let requestedSize: PreviewCanvasSize | null = null;
+    const measureSize = (): PreviewCanvasSize => {
+      const width = Math.max(1, container.clientWidth);
+      const behindEditor = previewLaidOutBehindEditor(container);
+      return {
+        width,
+        height: Math.max(1, container.clientHeight),
+        behindEditor,
+        ...(behindEditor ? previewFocusInsets(container, width, false) : noPreviewFocus),
+      };
+    };
+    let shownFocus: ReturnType<typeof previewFocusInsets> = noPreviewFocus;
+    const region = container.closest<HTMLElement>('.workspace-preview-region');
+    let layoutGlide = false;
+    let glideRevealed = false;
+    let glideFrame: number | null = null;
+    let drawnRegionReach = previewRegionReach(container);
+    let seenLayout = region?.dataset.layout;
+    const planLayoutSwitch = () => {
+      const layout = region?.dataset.layout;
+      const from = seenLayout;
+      seenLayout = layout;
+      if (
+        layout === from ||
+        !isPreviewLayout(layout) ||
+        !isPreviewLayout(from) ||
+        !previewLayoutSwitchGlides(layout, from)
+      ) {
+        return;
+      }
+      layoutSwitchPlan.current = null;
+      const built = builtMapLayer.current;
+      if (!initialized || disposed || !built || previewViewportIsCollapsed(built.viewport)) return;
+      const reach = previewRegionReach(container);
+      const stale = staleLayerCamera.current;
+      const drawnCamera =
+        stale && stale.viewport === built.viewport ? stale.camera : displayedCamera.current;
+      const camera = pendingCamera.current ?? displayedCamera.current;
+      const { settled } = previewLayoutSwitchAt(
+        container,
+        Math.max(1, container.clientWidth),
+        Math.max(1, container.clientHeight),
+      );
+      const plan = previewLayoutSwitchPlan(
+        built.scene,
+        { camera: drawnCamera, viewport: built.viewport },
+        { scale: pixi.stage.scale.x, x: pixi.stage.position.x, y: pixi.stage.position.y },
+        reach - drawnRegionReach,
+        { ...viewportRef.current, ...settled },
+        cameraIsFitted.current ||
+          previewCameraIsCentred(camera, built.scene.width, built.scene.height),
+      );
+      layoutSwitchPlan.current = {
+        ...plan,
+        committed: false,
+        expiresAt: performance.now() + layoutSwitchPlanLifetimeMs,
+      };
+      drawnRegionReach = reach;
+    };
+    const followLayoutGlide = () => {
+      glideFrame = null;
+      if (disposed || !initialized || !layoutGlide) return;
+      if (frozenSize === null) scheduler?.renderNow();
+      glideFrame = requestAnimationFrame(followLayoutGlide);
+    };
+    const layoutObserver = new MutationObserver(() => {
+      planLayoutSwitch();
+      if (!previewLayoutSwitching(region) || prefersReducedMotion()) return;
+      layoutGlide = true;
+      glideRevealed = false;
+      if (glideFrame === null) glideFrame = requestAnimationFrame(followLayoutGlide);
+    });
+    if (region) {
+      layoutObserver.observe(region, {
+        attributeFilter: ['data-layout', 'data-layout-from'],
+        attributes: true,
+      });
+    }
+    const commitViewport = (size: PreviewCanvasSize, synchronous: boolean) => {
+      const { width, height } = size;
       clearFrozenCanvas(initialized && !disposed ? pixi.canvas : null);
+      const previous = requestedSize ?? viewportRef.current;
       if (
         initialized &&
         !disposed &&
@@ -1750,16 +2052,23 @@ export function PreviewPanel() {
         if (synchronous) scheduler?.request();
         else scheduler?.renderNow();
       }
-      const previous = requestedSize ?? viewportRef.current;
-      if (previous.width === width && previous.height === height) return;
-      requestedSize = { width, height };
+      if (
+        previous.width === width &&
+        previous.height === height &&
+        (previous.behindEditor ?? false) === (size.behindEditor ?? false) &&
+        samePreviewFocus(previous, size) &&
+        samePreviewEditorInsets(previous, size)
+      ) {
+        return;
+      }
+      requestedSize = size;
       viewportCommits += 1;
       container.dataset.viewportCommits = String(viewportCommits);
       const update = () =>
         setViewport((current) =>
-          current.width === width && current.height === height
+          samePreviewViewport(current, { ...current, ...size })
             ? current
-            : { width, height, padding: previewPadding, projection: current.projection },
+            : { ...size, padding: previewPadding, projection: current.projection },
         );
       if (!synchronous) {
         update();
@@ -1768,10 +2077,11 @@ export function PreviewPanel() {
       flushSync(update);
       if (initialized && !disposed) scheduler?.renderNow();
     };
-    let frozenSize: { width: number; height: number } | null = null;
+    let frozenSize: PreviewCanvasSize | null = null;
+    let keptCollapsed = false;
     const showFrozenCanvas = () => {
       if (!frozenSize || !initialized || disposed) return;
-      const transform = frozenCanvasTransform.current?.(frozenSize.width, frozenSize.height);
+      const transform = frozenCanvasTransform.current?.(frozenSize);
       applyFrozenCanvas(pixi.canvas, transform ?? null);
     };
     refreshFrozenCanvas.current = showFrozenCanvas;
@@ -1786,36 +2096,76 @@ export function PreviewPanel() {
           const settled = frozenSize;
           frozenSize = null;
           if (!settled) return;
-          const width = Math.max(1, container.clientWidth);
-          const height = Math.max(1, container.clientHeight);
+          const size = measureSize();
           if (
             frozenCanvasTransform.current &&
             !previewViewportIsCollapsed(viewportRef.current) &&
-            previewViewportIsCollapsed({ ...viewportRef.current, width, height })
+            previewViewportIsCollapsed({ ...viewportRef.current, ...size })
           ) {
-            frozenSize = { width, height };
+            frozenSize = size;
             showFrozenCanvas();
             frozenSize = null;
+            keptCollapsed = true;
             return;
           }
-          commitViewport(width, height, true);
+          keptCollapsed = false;
+          commitViewport(size, true);
         },
       },
       documentTransitionEnvironment(container.ownerDocument),
     );
     const resizeObserver = new ResizeObserver(() => {
-      const width = Math.max(1, container.clientWidth);
-      const height = Math.max(1, container.clientHeight);
-      if (transitionWatch.active && frozenCanvasTransform.current) {
-        frozenSize = { width, height };
+      const size = measureSize();
+      if (transitionWatch.active && frozenCanvasTransform.current && !layoutGlide) {
+        frozenSize = size;
         showFrozenCanvas();
         return;
       }
-      commitViewport(width, height, false);
+      if (keptCollapsed && previewViewportIsCollapsed({ ...viewportRef.current, ...size })) return;
+      keptCollapsed = false;
+      commitViewport(size, false);
     });
     resizeObserver.observe(container);
+    const workspace = container.closest<HTMLElement>('.fixed-workspace');
+    let centreFrame: number | null = null;
+    let centreStill = 0;
+    const centreRestFrames = 8;
+    const followCentre = () => {
+      centreFrame = null;
+      if (disposed || !initialized) return;
+      if (!previewLaidOutBehindEditor(container)) return;
+      const live = previewFocusInsets(container, pixi.renderer.screen.width, true);
+      const moved = !samePreviewFocus(live, shownFocus);
+      if (moved && frozenSize === null && !layoutGlide) scheduler?.renderNow();
+      const size = measureSize();
+      const dragging = container.ownerDocument.body.classList.contains('resizing-horizontal');
+      centreStill = moved || dragging || !samePreviewFocus(live, size) ? 0 : centreStill + 1;
+      if (centreStill >= centreRestFrames) {
+        if (frozenSize === null) commitViewport(size, false);
+        return;
+      }
+      centreFrame = requestAnimationFrame(followCentre);
+    };
+    const startFollowingCentre = () => {
+      centreStill = 0;
+      if (centreFrame === null && initialized && !disposed) {
+        centreFrame = requestAnimationFrame(followCentre);
+      }
+    };
+    const editorShownObserver = new MutationObserver(startFollowingCentre);
+    if (workspace) {
+      editorShownObserver.observe(workspace, { attributeFilter: ['data-editor-shown'] });
+    }
+    const editorRegionObserver = new ResizeObserver(startFollowingCentre);
+    const editorRegion = workspaceEditorRegion(container);
+    if (editorRegion) editorRegionObserver.observe(editorRegion);
     return () => {
       disposed = true;
+      layoutObserver.disconnect();
+      editorShownObserver.disconnect();
+      editorRegionObserver.disconnect();
+      if (centreFrame !== null) cancelAnimationFrame(centreFrame);
+      if (glideFrame !== null) cancelAnimationFrame(glideFrame);
       transitionWatch.dispose();
       if (refreshFrozenCanvas.current === showFrozenCanvas) refreshFrozenCanvas.current = null;
       delete container.dataset.layoutTransition;
@@ -2221,6 +2571,9 @@ export function PreviewPanel() {
         );
     container.dataset.drawnObjectCount = String(drawnObjects.objects);
     container.dataset.drawnHelperCount = String(drawnObjects.helpers);
+    container.dataset.drawnWallJoins = String(
+      'wallJoins' in drawnObjects ? drawnObjects.wallJoins : 0,
+    );
     container.dataset.objectMarkerRadiusRange = drawnObjects.radiusRange;
     const connectionHoverGraphics = new Graphics();
     mapLayer.addChild(connectionHoverGraphics);
@@ -2491,6 +2844,10 @@ export function PreviewPanel() {
         }
         return;
       }
+      if (cameraAnimation.current?.settle) {
+        currentGesture.pointer = { x: point.x, y: point.y };
+        return;
+      }
       const panned = panDragCamera(
         currentGesture,
         displayedCamera.current,
@@ -2581,7 +2938,9 @@ export function PreviewPanel() {
           kind: 'pan',
           pointerId: event.pointerId,
           pointer: { x: event.global.x, y: event.global.y },
-          startCamera: interactionCamera,
+          startCamera: cameraAnimation.current?.settle
+            ? cameraAnimation.current.target
+            : clampPreviewCamera(interactionCamera, scene.width, scene.height, viewport),
         };
         canvas.style.cursor = 'grabbing';
       }
@@ -2596,6 +2955,12 @@ export function PreviewPanel() {
     });
     interaction.on('pointermove', (event: FederatedPointerEvent) => {
       if (gesture.current?.pointerId === event.pointerId) return;
+      const target = event.nativeEvent?.target;
+      if (target instanceof Node && !container.contains(target)) {
+        if (!gesture.current) setHoveredCoordinate(null);
+        hoverConnectionAt(null);
+        return;
+      }
       updatePointer(event.global, event.pointerId);
       hoverConnectionAt(event.global);
     });
@@ -2631,7 +2996,7 @@ export function PreviewPanel() {
         setSelectionPreview(null);
       } else if (commitSelection) {
         const active = cameraAnimation.current;
-        if (active) active.anchor = { ...finishedGesture.pointer };
+        if (active && !active.settle) active.anchor = { ...finishedGesture.pointer };
         const releasedCamera = cameraCommittedOnDragRelease(
           displayedCamera.current,
           active !== null || wheelCommitTimer.current !== null,
@@ -2746,18 +3111,28 @@ export function PreviewPanel() {
     };
     renderScheduler.current?.request();
     const drawnViewport = viewport;
-    const transformFrozenCanvas = (width: number, height: number) => {
+    const transformFrozenCanvas = (size: PreviewCanvasSize) => {
       if (previewViewportIsCollapsed(drawnViewport)) return null;
-      const shownViewport = { ...drawnViewport, width, height };
+      const shownViewport = { ...drawnViewport, ...size };
       const drawnCamera = displayedCamera.current;
-      const shownCamera = cameraIsFitted.current
-        ? fitPreviewCamera(scene.width, scene.height)
-        : clampPreviewCamera(
-            pendingCamera.current ?? drawnCamera,
-            scene.width,
-            scene.height,
-            shownViewport,
-          );
+      const switchPlan = layoutSwitchPlan.current;
+      const shownCamera =
+        switchPlan && !switchPlan.committed
+          ? previewLayoutSwitchCamera(scene, switchPlan, shownViewport)
+          : cameraIsFitted.current
+            ? fitPreviewCamera(scene.width, scene.height)
+            : clampPreviewCamera(
+                previewCameraForCentre(
+                  pendingCamera.current ?? drawnCamera,
+                  scene.width,
+                  scene.height,
+                  drawnViewport,
+                  shownViewport,
+                ),
+                scene.width,
+                scene.height,
+                shownViewport,
+              );
       return previewScreenTransform(
         scene.width,
         scene.height,
@@ -2933,6 +3308,7 @@ export function PreviewPanel() {
     generationActivity !== null
       ? (generationActivity.texturePalette ?? null)
       : (presentedMap?.texturePalette ?? null);
+  const candidateObjectClasses = candidateObjectClassLookup(generationActivity, presentedMap);
   const candidateLook = liveStageLook(flatLook, gameArtLiveStages);
   const candidateLookColors =
     candidateLook === 'texture-colors' && candidateTexturePalette
@@ -2982,6 +3358,7 @@ export function PreviewPanel() {
           }
         : null,
     verticalScale: previewMarkerVerticalScale(viewport),
+    ...(candidateObjectClasses ? { objectClasses: candidateObjectClasses } : {}),
   };
   const liveRun = liveStageRun.current;
   const keepingLiveStage =
@@ -3484,9 +3861,11 @@ export function PreviewPanel() {
     (event: React.WheelEvent<HTMLDivElement>) => {
       if (!viewScene || event.target !== application.current?.canvas) return;
       event.preventDefault();
+      const factor = wheelZoomFactor(event);
+      if (factor === null) return;
       const bounds = event.currentTarget.getBoundingClientRect();
       zoom(
-        event.deltaY < 0 ? 1.2 : 1 / 1.2,
+        factor,
         {
           x: event.clientX - bounds.left,
           y: event.clientY - bounds.top,
@@ -3534,9 +3913,11 @@ export function PreviewPanel() {
         ? provisionalLegendLayers(provisionalEntries, presentedMap, objectVisibility, {
             minimapPalette: candidatePalette,
             ...candidateTerrainSources,
+            objectClasses: candidateObjectClasses,
           })
         : null,
     [
+      candidateObjectClasses,
       candidatePalette,
       candidateSelection,
       candidateTerrainSources,
@@ -3564,14 +3945,18 @@ export function PreviewPanel() {
     : false;
   const readoutSelection = selectionPreview ?? (candidateShown ? displaySelection : selection);
   const informationPresent = Boolean(legendLayers || readoutSelection || hoveredCoordinate);
-  const information = usePresence(informationPresent);
   const informationWasMounted = useRef(false);
   const legendWasMounted = useRef(false);
+  const selectionLabelWasMounted = useRef(false);
+  const information = usePresence(informationPresent, {
+    reversible:
+      (!legendWasMounted.current || legendLayers !== null) &&
+      (!selectionLabelWasMounted.current || readoutSelection !== null),
+  });
   const legendPresence = usePresence(
     legendLayers !== null || (information.closing && legendWasMounted.current),
   );
   const holdLegend = legendPresence.closing || information.closing;
-  const selectionLabelWasMounted = useRef(false);
   const cursorLabelWasMounted = useRef(false);
   const selectionLabel = usePresence(
     readoutSelection !== null || (information.closing && selectionLabelWasMounted.current),
@@ -3624,7 +4009,8 @@ export function PreviewPanel() {
   const legendWidths = usePreviewLegendWidth(presentedMap?.objectNames, presentedMap?.terrainNames);
   const legendWidth = legendWidths?.panel ?? null;
   const readoutStacked =
-    legendWidths !== null && previewReadoutStacked(legendWidths.readout, viewport.width);
+    legendWidths !== null &&
+    previewReadoutStacked(legendWidths.readout, previewVisibleWidth(viewport));
   useEffect(() => {
     informationWasMounted.current = information.mounted;
     legendWasMounted.current = legendPresence.mounted;
@@ -3709,7 +4095,8 @@ export function PreviewPanel() {
   useEffect(() => {
     renderScheduler.current?.request();
   });
-  const narrowPreview = viewScene !== null && pixiReady && viewport.width < narrowPreviewWidth;
+  const narrowPreview =
+    viewScene !== null && pixiReady && previewVisibleWidth(viewport) < narrowPreviewWidth;
   const blurOutdatedMap = generationBlurShown({
     activity: generationActivity,
     gameTexturesExpected: gameArtExpected,
@@ -3970,7 +4357,8 @@ export function PreviewPanel() {
                 }
                 {...presenceProps(information.closing)}
               >
-                {(selectionLabel.mounted && shownReadoutSelection) ||
+                {legendShown ||
+                (selectionLabel.mounted && shownReadoutSelection) ||
                 (cursorLabel.mounted && shownHoveredCoordinate) ? (
                   <div className="preview-map-readout">
                     {selectionLabel.mounted && shownReadoutSelection ? (
@@ -5070,7 +5458,7 @@ function drawMapBoundaryOutline(
   const paths = boundarySubpaths(visible);
   border.setAttribute('d', paths.border);
   frame.setAttribute('d', paths.frame);
-  const center = visible.center ?? { x: viewport.width / 2, y: viewport.height / 2 };
+  const center = visible.center ?? previewViewCenter(viewport);
   arc.style.setProperty('--preview-boundary-center-x', `${center.x.toFixed(2)}px`);
   arc.style.setProperty('--preview-boundary-center-y', `${center.y.toFixed(2)}px`);
   arc.dataset.frameSides = boundaryFrameSides(visible).join(' ');
@@ -5720,18 +6108,6 @@ function samePreviewSelection(
   );
 }
 
-function interpolateCamera(
-  from: PreviewCamera,
-  target: PreviewCamera,
-  progress: number,
-): PreviewCamera {
-  return {
-    centerX: from.centerX + (target.centerX - from.centerX) * progress,
-    centerY: from.centerY + (target.centerY - from.centerY) * progress,
-    zoom: from.zoom + (target.zoom - from.zoom) * progress,
-  };
-}
-
 function transformMapLayer(
   layer: Container,
   renderedCamera: PreviewCamera,
@@ -5753,6 +6129,130 @@ function transformMapLayer(
   requestPreviewRender(layer);
   const host = connectionProbeHosts.get(layer);
   if (host) writeConnectionProbes(host, layer);
+}
+
+const noPreviewInsets = { insetLeft: 0, insetRight: 0 } as const;
+const noPreviewFocus = {
+  focusInsetLeft: 0,
+  focusInsetRight: 0,
+  editorInsetLeft: 0,
+  editorInsetRight: 0,
+} as const;
+
+function previewFocusInsets(
+  container: HTMLElement,
+  width: number,
+  eased: boolean,
+): {
+  focusInsetLeft: number;
+  focusInsetRight: number;
+  editorInsetLeft: number;
+  editorInsetRight: number;
+} {
+  const covered = previewEditorInsets(container, width);
+  if (covered.insetLeft === 0 && covered.insetRight === 0) return noPreviewFocus;
+  let shown: number;
+  if (eased) {
+    const hidden = Number.parseFloat(
+      getComputedStyle(container).getPropertyValue('--editor-hidden-amount'),
+    );
+    shown = 1 - Math.min(1, Math.max(0, Number.isFinite(hidden) ? hidden : 0));
+  } else {
+    const workspace = container.closest<HTMLElement>('.fixed-workspace');
+    shown = workspace?.dataset.editorShown === 'false' ? 0 : 1;
+  }
+  return {
+    focusInsetLeft: covered.insetLeft * shown,
+    focusInsetRight: covered.insetRight * shown,
+    editorInsetLeft: covered.insetLeft,
+    editorInsetRight: covered.insetRight,
+  };
+}
+
+function previewLayoutSwitching(region: HTMLElement | null): boolean {
+  if (!region) return false;
+  const { layout, layoutFrom } = region.dataset;
+  return (
+    isPreviewLayout(layout) &&
+    isPreviewLayout(layoutFrom) &&
+    previewLayoutSwitchGlides(layout, layoutFrom)
+  );
+}
+
+function previewLayoutSwitchAt(
+  container: HTMLElement,
+  width: number,
+  height: number,
+): { settled: PreviewCanvasSize } {
+  const behindEditor = previewLaidOutBehindEditor(container);
+  return {
+    settled: {
+      width,
+      height,
+      ...(behindEditor ? noPreviewInsets : previewEditorInsets(container, width)),
+      behindEditor,
+      ...(behindEditor ? previewFocusInsets(container, width, false) : noPreviewFocus),
+    },
+  };
+}
+
+function previewLayoutSwitchShare(container: HTMLElement, region: HTMLElement | null): number {
+  if (!previewLayoutSwitching(region)) return 1;
+  const overlay = Number.parseFloat(
+    getComputedStyle(container).getPropertyValue('--workspace-overlay'),
+  );
+  if (!Number.isFinite(overlay)) return 1;
+  const amount = Math.min(1, Math.max(0, overlay));
+  return previewLaidOutBehindEditor(container) ? amount : 1 - amount;
+}
+
+const layoutSwitchPlanLifetimeMs = 2000;
+
+function previewRegionReach(container: HTMLElement): number {
+  const region = container.closest<HTMLElement>('.workspace-preview-region');
+  if (!region) return 0;
+  return Math.max(0, -Number.parseFloat(getComputedStyle(region).marginLeft) || 0);
+}
+
+function previewUnrevealedInsets(
+  container: HTMLElement,
+  width: number,
+): { insetLeft: number; insetRight: number } {
+  const covered = previewEditorInsets(container, width);
+  if (covered.insetLeft === 0 && covered.insetRight === 0) return noPreviewInsets;
+  const overlay = Number.parseFloat(
+    getComputedStyle(container).getPropertyValue('--workspace-overlay'),
+  );
+  const unrevealed = 1 - Math.min(1, Math.max(0, Number.isFinite(overlay) ? overlay : 1));
+  return {
+    insetLeft: covered.insetLeft * unrevealed,
+    insetRight: covered.insetRight * unrevealed,
+  };
+}
+
+function previewEditorInsets(
+  container: HTMLElement,
+  width: number,
+): { insetLeft: number; insetRight: number } {
+  const region = container.closest<HTMLElement>('.workspace-preview-region');
+  if (!region) return { insetLeft: 0, insetRight: 0 };
+  const style = getComputedStyle(region);
+  const covered = (margin: string) =>
+    Math.min(width, Math.max(0, Math.round(-parseFloat(margin) || 0)));
+  return { insetLeft: covered(style.marginLeft), insetRight: covered(style.marginRight) };
+}
+
+function previewLaidOutBehindEditor(container: HTMLElement): boolean {
+  const layout = container.closest<HTMLElement>('.workspace-preview-region')?.dataset.layout;
+  return layout === 'behind-editor';
+}
+
+function workspaceEditorRegion(container: HTMLElement): HTMLElement | null {
+  return (
+    container
+      .closest<HTMLElement>('.workspace-preview-region')
+      ?.parentElement?.querySelector<HTMLElement>(':scope > .workspace-editor-region') ?? null
+  );
 }
 
 function samePreviewCamera(left: PreviewCamera, right: PreviewCamera): boolean {

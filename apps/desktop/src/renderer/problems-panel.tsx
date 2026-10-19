@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import type { MessageId } from '../shared/i18n/translator';
 import type { OutputSeverity } from '../shared/output-message';
 import { useFollowBottom } from './follow-bottom';
@@ -184,16 +185,24 @@ function ProblemRowView({
     >
       <OutputSeverityIcon severity={entry.severity} source={t(severityWords[entry.severity])} />
       <OutputMessageText message={entry.message} noteDetails repeat={entry.count} />
-      <Button
-        aria-label={t('problems-panel.row.go-to', { location: entry.location })}
-        className="output-row-end problems-position"
-        onClick={go}
-        size="xs"
-        title={t('problems-panel.row.go-to', { location: entry.location })}
-        variant="ghost"
-      >
-        {entry.position}
-      </Button>
+      <Tooltip disableHoverablePopup>
+        <TooltipTrigger
+          render={
+            <Button
+              aria-label={t('problems-panel.row.go-to', { location: entry.location })}
+              className="output-row-end problems-position"
+              onClick={go}
+              size="xs"
+              variant="ghost"
+            />
+          }
+        >
+          {entry.position}
+        </TooltipTrigger>
+        <TooltipContent>
+          {t('problems-panel.row.go-to', { location: entry.location })}
+        </TooltipContent>
+      </Tooltip>
     </div>
   );
 }

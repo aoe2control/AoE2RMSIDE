@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Par défaut"
     },
+    "settings.theme.background-blur": {
+      "message": "Flou de l’arrière-plan"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Net"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Flou"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "La carte reste visible sans flou à travers les boutons, panneaux et menus de l’aperçu, et à travers l’éditeur sur la carte."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "La carte derrière les boutons, panneaux et menus de l’aperçu, et derrière l’éditeur sur la carte, est floutée."
+    },
     "settings.theme.close-label": {
       "message": "Fermer les paramètres de thème"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Enregistrer"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Cloner / Enregistrer sous…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Enregistrer sous…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Verrouillée"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Aléatoire à chaque exécution"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Verrouiller"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Utiliser la graine de la partie en cours"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Compris"
     },
-    "code-editor.preview.collapse": {
-      "message": "Masquer l’aperçu de carte en direct"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Côte à côte"
     },
-    "code-editor.preview.expand": {
-      "message": "Afficher l’aperçu de carte en direct"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Aperçu derrière l’éditeur"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Masquer l’Aperçu"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Afficher l’Aperçu"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Éditeur seul"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Fermer l’avis d’échec d’exécution du script"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent} %"
     },
-    "code-editor.read-only-message": {
-      "message": "Ce fichier de l’installation ou d’un mod suivi est protégé. Utilisez Cloner ou Enregistrer sous."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Ce fichier fait partie de l’installation du jeu. Les mises à jour du jeu peuvent le remplacer, il ne peut donc pas être modifié ici. Enregistrez une copie pour le modifier."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Ce fichier appartient à un mod suivi. Les mises à jour du mod peuvent le remplacer, il ne peut donc pas être modifié ici. Enregistrez une copie pour le modifier."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE écrit lui-même les fichiers de ce mod à chaque déploiement, les modifications faites ici seraient donc perdues. Modifiez plutôt votre propre copie de la carte."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Ce fichier est en lecture seule dans AoE2RMSIDE. Enregistrez une copie pour le modifier."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Enregistrer sous…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Ouvrir le fichier inclus"
@@ -3607,7 +3628,7 @@
       "message": "Les documents .inc, .def et .xs sont réservés aux inclusions et ne peuvent pas être exécutés seuls."
     },
     "preview-panel.tool.objects": {
-      "message": "Objets et emprise du forum"
+      "message": "Objets et emprise des bâtiments"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Objets de la mini-carte"

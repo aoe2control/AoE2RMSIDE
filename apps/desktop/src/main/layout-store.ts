@@ -42,6 +42,13 @@ import {
   type PreviewLook,
   type PreviewPerspective,
 } from '../shared/game-art';
+import {
+  defaultPreviewLayout,
+  defaultOverlayEditorShown,
+  migrateOverlayEditorShown,
+  migratePreviewLayout,
+  previewLayoutShowsPreview,
+} from '../shared/preview-layout';
 import { readFileBounded, replaceFileAtomically } from './bounded-file';
 import { isLanguagePreference, type LanguagePreference } from '../shared/i18n/locale';
 import {
@@ -60,6 +67,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   version: 1,
   themePreference: 'system',
   editorColorScheme: defaultEditorColorScheme,
+  previewBlur: false,
   formatOnSave: true,
   indentConditionals: true,
   liveGenerationStages: true,
@@ -98,6 +106,8 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
     explorerExpanded: true,
     explorerWidth: 248,
     previewExpanded: true,
+    previewLayout: defaultPreviewLayout,
+    overlayEditorShown: defaultOverlayEditorShown,
     previewWidth: null,
     bottomPanelHeight: 150,
     bottomPanelTab: 'output',
@@ -320,6 +330,7 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     version: 1,
     themePreference: 'system',
     editorColorScheme: defaultEditorColorScheme,
+    previewBlur: false,
     formatOnSave: true,
     indentConditionals: true,
     liveGenerationStages: true,
@@ -358,6 +369,8 @@ export function cloneDefaultDesktopSession(): DesktopSession {
       explorerExpanded: true,
       explorerWidth: 248,
       previewExpanded: true,
+      previewLayout: defaultPreviewLayout,
+      overlayEditorShown: defaultOverlayEditorShown,
       previewWidth: null,
       bottomPanelHeight: 150,
       bottomPanelTab: 'output',
@@ -394,6 +407,10 @@ export function validateDesktopSession(value: unknown): DesktopSession {
   if (!isRecord(value.dialogLocations)) throw new Error('dialog locations are invalid');
   const normalTabs = validateArray(value.workspace.normalTabs, maximumTabs, validateSessionTab);
   const activePath = validateNullablePath(value.workspace.activePath);
+  const previewLayout = migratePreviewLayout(
+    value.layout.previewLayout,
+    validateBoolean(value.layout.previewExpanded, 'preview state'),
+  );
   if (activePath && !normalTabs.some((tab) => pathKey(tab.path) === pathKey(activePath))) {
     throw new Error('active session tab is missing');
   }
@@ -401,6 +418,10 @@ export function validateDesktopSession(value: unknown): DesktopSession {
     version: 1,
     themePreference: validateTheme(value.themePreference),
     editorColorScheme: validateEditorColorScheme(value.editorColorScheme),
+    previewBlur:
+      value.previewBlur === undefined
+        ? false
+        : validateBoolean(value.previewBlur, 'background blur preference'),
     formatOnSave:
       value.formatOnSave === undefined
         ? true
@@ -537,7 +558,9 @@ export function validateDesktopSession(value: unknown): DesktopSession {
     layout: {
       explorerExpanded: validateBoolean(value.layout.explorerExpanded, 'Explorer state'),
       explorerWidth: validateInteger(value.layout.explorerWidth, 220, 420, 'Explorer width'),
-      previewExpanded: validateBoolean(value.layout.previewExpanded, 'preview state'),
+      previewExpanded: previewLayoutShowsPreview(previewLayout),
+      previewLayout,
+      overlayEditorShown: migrateOverlayEditorShown(value.layout.overlayEditorShown),
       previewWidth:
         value.layout.previewWidth === null
           ? null

@@ -80,7 +80,10 @@ formatting check reports every file.
   and tokens (`motion-surface`, `motion-dialog`, `--motion-*`). Do not add
   per-site animations. Respect reduced motion.
 - Everything must work with the keyboard alone, with a visible focus
-  indicator, readable contrast, and accessible names.
+  indicator, readable contrast, and accessible names. The one exception is
+  the panel separators, which resize with the pointer only; View → Reset
+  Layout restores their sizes.
+- Dialog and panel action buttons and menu items use Title Case.
 - Check every change in both the light and dark themes, at a small window
   size, and at increased display scaling. Text in other languages is often
   longer than in English; a label that may not fit uses the shared

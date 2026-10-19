@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Standaard"
     },
+    "settings.theme.background-blur": {
+      "message": "Achtergrondvervaging"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Scherp"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Vervaagd"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "De kaart is zonder vervaging zichtbaar door de knoppen, panelen en menu's van het voorbeeld en door de editor boven de kaart."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "De kaart achter de knoppen, panelen en menu's van het voorbeeld en achter de editor boven de kaart wordt vervaagd."
+    },
     "settings.theme.close-label": {
       "message": "Thema-instellingen sluiten"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Opslaan"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Klonen / Opslaan als…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Opslaan als…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Vergrendeld"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Willekeurig bij uitvoeren"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Vergrendelen"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Startwaarde van huidige partij gebruiken"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Begrepen"
     },
-    "code-editor.preview.collapse": {
-      "message": "Live kaartvoorbeeld inklappen"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Naast elkaar"
     },
-    "code-editor.preview.expand": {
-      "message": "Live kaartvoorbeeld uitklappen"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Voorbeeld achter editor"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Voorbeeld inklappen"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Voorbeeld uitklappen"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Alleen editor"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Melding over mislukte scriptuitvoering sluiten"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "Deze bron uit de installatie of een geabonneerde mod is beveiligd. Gebruik Klonen of Opslaan als."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Dit bestand hoort bij de spelinstallatie. Spelupdates kunnen het vervangen, dus het kan hier niet worden bewerkt. Sla een kopie op om het te bewerken."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Dit bestand hoort bij een geabonneerde mod. Mod-updates kunnen het vervangen, dus het kan hier niet worden bewerkt. Sla een kopie op om het te bewerken."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE schrijft de bestanden van deze mod zelf bij het installeren, dus wijzigingen hier zouden verloren gaan. Bewerk in plaats daarvan je eigen kopie van de kaart."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Dit bestand is alleen-lezen in AoE2RMSIDE. Sla een kopie op om het te bewerken."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Opslaan als…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Ingevoegd bestand openen"
@@ -3607,7 +3628,7 @@
       "message": ".inc-, .def- en .xs-documenten kunnen alleen worden ingevoegd en niet zelfstandig worden uitgevoerd."
     },
     "preview-panel.tool.objects": {
-      "message": "Objecten en grondvlak van het Town Center"
+      "message": "Objecten en grondvlakken van gebouwen"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Minikaartobjecten"

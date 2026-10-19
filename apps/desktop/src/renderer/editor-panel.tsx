@@ -1,5 +1,6 @@
 import { outputNote } from '../shared/output-message';
 import type { ResolvedTheme, RootExecutionPhase } from '../shared/api';
+import { editorTabPressOutcome, type PreviewLayout } from '../shared/preview-layout';
 import { SourceStructureRequest } from './source-structure-request';
 import {
   useCallback,
@@ -9,19 +10,21 @@ import {
   useState,
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+  type Ref,
 } from 'react';
-import { MapIcon, PlayIcon, XIcon } from '@animateicons/react/lucide';
+import { PlayIcon, XIcon } from '@animateicons/react/lucide';
 import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   Cpu,
   Download,
-  Dices,
   FilePen,
   FolderOpen,
   Gamepad2,
   LockKeyhole,
+  LockKeyholeOpen,
   MonitorPlay,
   Pin,
   Play,
@@ -64,6 +67,7 @@ import {
 } from '@/components/ui/toggle-button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { type AnimatedIconHandle, playIconAnimation, useAnimatedIconHover } from './animated-icon';
+import { CodeXmlIcon, HoverScaleIcon, LayersIcon, MapIcon } from './hover-scale-icon';
 import { CopyFeedbackIcon, useCopyFeedback } from './copy-button';
 import { rovingKeyTarget } from './keyboard-navigation';
 import { useI18n } from './i18n';
@@ -95,6 +99,7 @@ import {
   setLanguageEditGuard,
 } from './monaco-language';
 import { cursorOnIncludeContextKey, joinConcurrentOpens } from './include-navigation';
+import { readOnlyMessage, saveAsFromReadOnlyMessageCommandId } from './read-only-message';
 import {
   insertSnippetActionId,
   insertSnippetAvailable,
@@ -644,6 +649,32 @@ const sourceStructureRetryDelays = [100, 250, 500, 1_000, 2_000] as const;
 const outlineCursorDelayMilliseconds = 60;
 const outlineContentDelayMilliseconds = 300;
 
+const editorOutlineRowHeight = 24;
+
+const previewLayoutButtons = {
+  'side-by-side': {
+    labelId: 'code-editor.preview.layout.side-by-side',
+    renderIcon: (ref: Ref<AnimatedIconHandle>) => (
+      <MapIcon aria-hidden="true" ref={ref} size={14} />
+    ),
+  },
+  'behind-editor': {
+    labelId: 'code-editor.preview.layout.behind-editor',
+    renderIcon: (ref: Ref<AnimatedIconHandle>) => (
+      <LayersIcon aria-hidden="true" ref={ref} size={14} />
+    ),
+  },
+  'editor-only': {
+    labelId: 'code-editor.preview.layout.editor-only',
+    renderIcon: (ref: Ref<AnimatedIconHandle>) => (
+      <CodeXmlIcon aria-hidden="true" ref={ref} size={14} />
+    ),
+  },
+} as const satisfies Record<
+  PreviewLayout,
+  { labelId: string; renderIcon(ref: Ref<AnimatedIconHandle>): ReactNode }
+>;
+
 export function EditorPanel({
   inlayHints,
   outlineRow,
@@ -651,9 +682,13 @@ export function EditorPanel({
   executionFailureSequence,
   onDismissExecutionFailureNotice,
   previewExpanded,
+  previewLayout,
+  editorShown,
+  onHideEditor,
+  onShowEditor,
   recoveryNotice,
   onDismissRecoveryNotice,
-  onTogglePreview,
+  onCyclePreviewLayout,
 }: {
   inlayHints: boolean;
   outlineRow: boolean;
@@ -661,9 +696,13 @@ export function EditorPanel({
   executionFailureSequence: number;
   onDismissExecutionFailureNotice(): void;
   previewExpanded: boolean;
+  previewLayout: PreviewLayout;
+  editorShown: boolean;
+  onHideEditor(): void;
+  onShowEditor(): void;
   recoveryNotice: string | null;
   onDismissRecoveryNotice(): void;
-  onTogglePreview(): void;
+  onCyclePreviewLayout(): void;
 }) {
   const { t } = useI18n();
   const container = useRef<HTMLDivElement>(null);
@@ -723,6 +762,7 @@ export function EditorPanel({
   const [closingTabIds, setClosingTabIds] = useState<Set<string>>(new Set());
   const [hoveredTabId, setHoveredTabId] = useState<string | null>(null);
   const [tabHoverSuppressed, setTabHoverSuppressed] = useState(false);
+  const [tabMenuOpen, setTabMenuOpen] = useState(false);
   const [fontSizeNotice, setFontSizeNotice] = useState({
     fontSize: editorDefaultFontSize,
     visible: false,
@@ -771,6 +811,7 @@ export function EditorPanel({
     closeGameTexturesNotice,
   );
   const workspaceRef = useRef(workspace);
+  const focusAfterSaveAs = useRef(false);
   const openSourceLocationRef = useRef(openSourceLocation);
   openSourceLocationRef.current = openSourceLocation;
   workspaceRef.current = workspace;
@@ -829,6 +870,7 @@ export function EditorPanel({
     previewExecution?.adoptMatchSeedBlockingReason ??
     (!previewExecution?.canAdoptMatchSeed ? t('code-editor.run-menu.adopt-seed-required') : null);
   const runIcon = useAnimatedIconHover();
+  const runSwitchIcon = useRef<AnimatedIconHandle>(null);
   const previewIcon = useAnimatedIconHover();
   const previousRunState = useRef(runState);
   const [runCompletionAnimationSequence, setRunCompletionAnimationSequence] = useState(0);
@@ -838,7 +880,7 @@ export function EditorPanel({
     const previous = previousRunState.current;
     previousRunState.current = runState;
     if (previous === 'running' && runState !== 'running') {
-      playIconAnimation(runIcon.iconRef.current);
+      playIconAnimation(runSwitchIcon.current);
       setRunCompletionAnimationSequence((current) => current + 1);
     }
   }, [runState]);
@@ -1859,9 +1901,24 @@ export function EditorPanel({
       guides: { bracketPairs: bracketPairs ? 'active' : false, highlightActiveBracketPair: true },
       matchBrackets: 'always',
       readOnly: workspace.activeDocument.readOnly,
-      readOnlyMessage: { value: t('code-editor.read-only-message') },
+      readOnlyMessage: readOnlyMessage(workspace.activeDocument.protectedReason),
     });
+    if (focusAfterSaveAs.current) {
+      focusAfterSaveAs.current = false;
+      editor.current?.focus();
+    }
   }, [t, workspace.activeDocument, workspace.activeDocumentId, workspace.documents]);
+
+  useEffect(() => {
+    const command = monaco.editor.registerCommand(saveAsFromReadOnlyMessageCommandId, () => {
+      const documentId = workspaceRef.current.activeDocumentId;
+      void workspaceRef.current.saveActiveAs().finally(() => {
+        if (!workspaceRef.current.latestDocument(documentId)) focusAfterSaveAs.current = true;
+        editor.current?.focus();
+      });
+    });
+    return () => command.dispose();
+  }, []);
 
   const [snippetDialog, setSnippetDialog] = useState<InsertSnippetDialogState>({
     id: 0,
@@ -2009,6 +2066,55 @@ export function EditorPanel({
     if (caretInView) instance.revealPosition(position, monaco.editor.ScrollType.Immediate);
   }, [outlineRowPresent]);
 
+  const outlineRowFloats = previewLayout === 'behind-editor' && outlineRowPresent;
+  useEffect(() => {
+    editor.current?.updateOptions({
+      padding: { top: 16, bottom: outlineRowFloats ? editorOutlineRowHeight : 0 },
+    });
+  }, [outlineRowFloats]);
+
+  const onShowEditorRef = useRef(onShowEditor);
+  onShowEditorRef.current = onShowEditor;
+  const editorShownRef = useRef(editorShown);
+  editorShownRef.current = editorShown;
+  const shownRevealSequence = useRef(workspace.revealSequence);
+  useEffect(() => {
+    if (shownRevealSequence.current === workspace.revealSequence) return;
+    shownRevealSequence.current = workspace.revealSequence;
+    if (!editorShownRef.current) onShowEditorRef.current();
+  }, [workspace.revealSequence]);
+  const shownSelection = useRef(selection);
+  useEffect(() => {
+    if (shownSelection.current === selection) return;
+    shownSelection.current = selection;
+    if (selection && !editorShownRef.current) onShowEditorRef.current();
+  }, [selection]);
+  const focusEditorWhenShown = useRef(false);
+  useLayoutEffect(() => {
+    if (!editorShown) return;
+    editor.current?.layout();
+    if (!focusEditorWhenShown.current) return;
+    focusEditorWhenShown.current = false;
+    editor.current?.focus();
+  }, [editorShown]);
+  const pressEditorTabTrigger = (documentId: string) => {
+    const outcome = editorTabPressOutcome(
+      previewLayout,
+      editorShown,
+      documentId === workspace.activeDocumentId,
+    );
+    if (outcome === 'hide-editor') {
+      onHideEditor();
+      focusEditorTab(tabList.current, documentId);
+      return;
+    }
+    workspace.setActiveDocument(documentId);
+    if (outcome === 'show-editor') {
+      focusEditorWhenShown.current = true;
+      onShowEditor();
+    }
+  };
+
   useEffect(() => {
     updateSourceHighlight.current();
   }, [workspace.activeDocument.uri, workspace.activeDocument.name, workspace.activeDocumentId]);
@@ -2076,12 +2182,10 @@ export function EditorPanel({
       aria-label={t('code-editor.panel.label')}
       data-execution-failure-sequence={executionFailureSequence}
       data-outline-row={outlineRowPresent || undefined}
-      onPointerEnter={() => setEditorPointerInside(true)}
-      onPointerLeave={() => setEditorPointerInside(false)}
     >
       <div className="editor-tabs-shell">
         <div className="editor-tabs-viewport">
-          <ContextMenu>
+          <ContextMenu onOpenChange={setTabMenuOpen}>
             <ContextMenuTrigger
               aria-label={t('code-editor.tabs.label')}
               className="editor-tabs"
@@ -2109,7 +2213,7 @@ export function EditorPanel({
               {workspace.documents.map((document) => (
                 <div
                   className="editor-tab"
-                  data-active={document.id === workspace.activeDocumentId}
+                  data-active={editorShown && document.id === workspace.activeDocumentId}
                   data-dirty={document.dirty}
                   data-document-id={document.id}
                   data-dragging={draggingTabId === document.id || undefined}
@@ -2129,50 +2233,65 @@ export function EditorPanel({
                     setHoveredTabId((current) => (current === document.id ? null : current))
                   }
                 >
-                  <Button
-                    aria-description={editorTabDescription(document) ?? undefined}
-                    aria-selected={document.id === workspace.activeDocumentId}
-                    className="editor-tab-trigger"
-                    onClick={() => workspace.setActiveDocument(document.id)}
-                    onDoubleClick={() => workspace.promoteDocument(document.id)}
-                    onKeyDown={(event) => {
-                      if (event.ctrlKey || event.metaKey || event.altKey) return;
-                      if (event.key === 'Delete') {
-                        event.preventDefault();
-                        closeTab(document.id);
-                        return;
-                      }
-                      const index = workspace.documents.findIndex(
-                        (entry) => entry.id === document.id,
-                      );
-                      const target = rovingKeyTarget(event.key, index, workspace.documents.length);
-                      if (target === null) return;
-                      event.preventDefault();
-                      const next = workspace.documents[target];
-                      if (!next) return;
-                      workspace.setActiveDocument(next.id);
-                      focusEditorTab(tabList.current, next.id);
-                    }}
-                    role="tab"
-                    tabIndex={document.id === workspace.activeDocumentId ? 0 : -1}
-                    title={document.path ?? document.name}
-                    variant="ghost"
+                  <Tooltip
+                    disabled={draggingTabId !== null || tabMenuOpen || tabHoverSuppressed}
+                    disableHoverablePopup
                   >
-                    {document.readOnly ? <LockKeyhole aria-hidden="true" /> : null}
-                    {document.id === pinnedPreviewSource?.id ? (
-                      <Play aria-hidden="true" className="editor-tab-pinned-preview" />
-                    ) : null}
-                    <EditorTabTitle name={document.name} />
-                  </Button>
+                    <TooltipTrigger
+                      render={
+                        <Button
+                          aria-description={editorTabDescription(document) ?? undefined}
+                          aria-selected={editorShown && document.id === workspace.activeDocumentId}
+                          className="editor-tab-trigger"
+                          onClick={() => pressEditorTabTrigger(document.id)}
+                          onDoubleClick={() => workspace.promoteDocument(document.id)}
+                          onKeyDown={(event) => {
+                            if (event.ctrlKey || event.metaKey || event.altKey) return;
+                            if (event.key === 'Delete') {
+                              event.preventDefault();
+                              closeTab(document.id);
+                              return;
+                            }
+                            const index = workspace.documents.findIndex(
+                              (entry) => entry.id === document.id,
+                            );
+                            const target = rovingKeyTarget(
+                              event.key,
+                              index,
+                              workspace.documents.length,
+                            );
+                            if (target === null) return;
+                            event.preventDefault();
+                            const next = workspace.documents[target];
+                            if (!next) return;
+                            if (editorShown) workspace.setActiveDocument(next.id);
+                            focusEditorTab(tabList.current, next.id);
+                          }}
+                          role="tab"
+                          tabIndex={document.id === workspace.activeDocumentId ? 0 : -1}
+                          variant="ghost"
+                        />
+                      }
+                    >
+                      {document.readOnly ? <LockKeyhole aria-hidden="true" /> : null}
+                      {document.id === pinnedPreviewSource?.id ? (
+                        <Play aria-hidden="true" className="editor-tab-pinned-preview" />
+                      ) : null}
+                      <EditorTabTitle name={document.name} />
+                    </TooltipTrigger>
+                    <TooltipContent className="path-tooltip">
+                      {document.path ?? document.name}
+                    </TooltipContent>
+                  </Tooltip>
                   <EditorTabCloseButton
-                    active={document.id === workspace.activeDocumentId}
+                    active={editorShown && document.id === workspace.activeDocumentId}
                     closing={closingTabIds.has(document.id)}
                     dirty={document.dirty}
                     name={document.name}
                     onClose={() => closeTab(document.id)}
                     visible={
                       document.dirty ||
-                      document.id === workspace.activeDocumentId ||
+                      (editorShown && document.id === workspace.activeDocumentId) ||
                       (!tabHoverSuppressed && hoveredTabId === document.id)
                     }
                   />
@@ -2191,13 +2310,11 @@ export function EditorPanel({
                   <ContextMenuSeparator />
                 </>
               ) : null}
-              <ContextMenuItem onClick={() => void workspace.saveActive()}>
-                {t(
-                  workspace.activeDocument.readOnly
-                    ? 'code-editor.tab-menu.clone-save-as'
-                    : 'code-editor.tab-menu.save',
-                )}
-              </ContextMenuItem>
+              {workspace.activeDocument.readOnly ? null : (
+                <ContextMenuItem onClick={() => void workspace.saveActive()}>
+                  {t('code-editor.tab-menu.save')}
+                </ContextMenuItem>
+              )}
               <ContextMenuItem onClick={() => void workspace.saveActiveAs()}>
                 {t('code-editor.tab-menu.save-as')}
               </ContextMenuItem>
@@ -2284,7 +2401,9 @@ export function EditorPanel({
                       />
                     </>
                   ) : (
-                    <PlayIcon aria-hidden="true" ref={runIcon.iconRef} size={14} />
+                    <HoverScaleIcon ref={runIcon.iconRef}>
+                      <PlayIcon aria-hidden="true" ref={runSwitchIcon} size={14} />
+                    </HoverScaleIcon>
                   )}
                 </TooltipTrigger>
                 <TooltipContent side="bottom">{runActionTooltip}</TooltipContent>
@@ -2399,7 +2518,7 @@ export function EditorPanel({
                             aria-label={t(
                               previewSeedLocked
                                 ? 'code-editor.run-menu.seed-locked'
-                                : 'code-editor.run-menu.seed-randomize',
+                                : 'code-editor.run-menu.seed-lock',
                             )}
                             className="preview-run-seed-mode"
                             data-randomize={!previewSeedLocked || undefined}
@@ -2408,7 +2527,7 @@ export function EditorPanel({
                               if (!previewSeedControls(previewExecution).modeToggleable) return;
                               previewExecution?.toggleSeedMode();
                             }}
-                            pressed={!previewSeedLocked}
+                            pressed={previewSeedLocked}
                             size="icon-compact"
                           />
                         }
@@ -2416,14 +2535,14 @@ export function EditorPanel({
                         {previewSeedLocked ? (
                           <LockKeyhole aria-hidden="true" />
                         ) : (
-                          <Dices aria-hidden="true" />
+                          <LockKeyholeOpen aria-hidden="true" />
                         )}
                       </TooltipTrigger>
                       <TooltipContent>
                         {t(
                           previewSeedLocked
                             ? 'code-editor.run-menu.seed-locked'
-                            : 'code-editor.run-menu.seed-randomize',
+                            : 'code-editor.run-menu.seed-lock',
                         )}
                       </TooltipContent>
                     </Tooltip>
@@ -2642,125 +2761,130 @@ export function EditorPanel({
                 render={
                   <Button
                     {...previewIcon.animationHandlers}
-                    aria-expanded={previewExpanded}
-                    aria-label={t(
-                      previewExpanded
-                        ? 'code-editor.preview.collapse'
-                        : 'code-editor.preview.expand',
-                    )}
+                    aria-label={t(previewLayoutButtons[previewLayout].labelId)}
                     className="preview-toggle"
                     data-expanded={previewExpanded}
-                    onClick={onTogglePreview}
+                    data-layout={previewLayout}
+                    onClick={onCyclePreviewLayout}
                     size="icon-compact"
                     variant="ghost"
                   />
                 }
               >
-                <MapIcon aria-hidden="true" ref={previewIcon.iconRef} size={14} />
+                {previewLayoutButtons[previewLayout].renderIcon(previewIcon.iconRef)}
               </TooltipTrigger>
               <TooltipContent side="bottom">
-                {t(
-                  previewExpanded
-                    ? 'code-editor.preview.collapse-tooltip'
-                    : 'code-editor.preview.expand-tooltip',
-                )}
+                {t(previewLayoutButtons[previewLayout].labelId)}
               </TooltipContent>
             </Tooltip>
           </>
         ) : null}
       </div>
-      <div className="monaco-host" onMouseDownCapture={openCommentLink}>
-        <div className="monaco-editor-mount" dir="ltr" ref={container} />
-        <EditorContextMenu />
-        <InsertSnippetDialog
-          colors={colorSchemeById(editorColorScheme)[resolvedTheme]}
-          onClose={() => closeSnippetDialog(null)}
-          onInsert={(snippet) => closeSnippetDialog(snippet)}
-          state={snippetDialog}
-        />
-        {editorNoticePresence.mounted &&
-        shownEditorNotice === 'execution-failure' &&
-        shownExecutionFailure ? (
-          <Alert
-            className="recovery-notice execution-failure-notice motion-surface"
-            data-motion-from="bottom"
-            data-testid="execution-failure-notice"
-            ref={editorNoticePresence.ref}
-            variant="destructive"
-            {...executionFailureNoticeHold}
-            {...presenceProps(editorNoticePresence.closing)}
-          >
-            <AlertTitle>{shownExecutionFailure.title}</AlertTitle>
-            {shownExecutionFailure.detail ? (
-              <AlertDescription data-testid="execution-failure-detail">
-                {shownExecutionFailure.detail}
-              </AlertDescription>
-            ) : null}
-            <Button
-              aria-label={t('code-editor.notice.execution-failure.dismiss')}
-              onClick={onDismissExecutionFailureNotice}
-              size="icon"
-              variant="ghost"
+      <div
+        className="editor-body"
+        data-shown={editorShown}
+        data-testid="editor-body"
+        inert={!editorShown ? true : undefined}
+      >
+        <div className="monaco-host" onMouseDownCapture={openCommentLink}>
+          <div
+            className="monaco-editor-mount"
+            dir="ltr"
+            onPointerEnter={() => setEditorPointerInside(true)}
+            onPointerLeave={() => setEditorPointerInside(false)}
+            ref={container}
+          />
+          <EditorContextMenu />
+          <InsertSnippetDialog
+            colors={colorSchemeById(editorColorScheme)[resolvedTheme]}
+            onClose={() => closeSnippetDialog(null)}
+            onInsert={(snippet) => closeSnippetDialog(snippet)}
+            state={snippetDialog}
+          />
+          {editorNoticePresence.mounted &&
+          shownEditorNotice === 'execution-failure' &&
+          shownExecutionFailure ? (
+            <Alert
+              className="recovery-notice execution-failure-notice motion-surface"
+              data-motion-from="bottom"
+              data-testid="execution-failure-notice"
+              ref={editorNoticePresence.ref}
+              variant="destructive"
+              {...executionFailureNoticeHold}
+              {...presenceProps(editorNoticePresence.closing)}
             >
-              <X />
-            </Button>
-          </Alert>
-        ) : editorNoticePresence.mounted && shownEditorNotice === 'game-textures' ? (
-          <Alert
-            className="recovery-notice motion-surface"
-            data-motion-from="bottom"
-            data-testid="game-textures-notice"
-            ref={editorNoticePresence.ref}
-            {...gameTexturesNoticeHold}
-            {...presenceProps(editorNoticePresence.closing)}
-          >
-            <AlertTitle>{t('code-editor.notice.game-textures')}</AlertTitle>
-          </Alert>
-        ) : editorNoticePresence.mounted && shownEditorNotice === 'recovery' ? (
-          <Alert
-            className="recovery-notice motion-surface"
-            data-motion-from="bottom"
-            data-testid="recovery-notice"
-            ref={editorNoticePresence.ref}
-            {...recoveryNoticeHold}
-            {...presenceProps(editorNoticePresence.closing)}
-          >
-            <AlertTitle>{t('code-editor.notice.recovery')}</AlertTitle>
-            <Button
-              aria-label={t('code-editor.notice.recovery.dismiss')}
-              onClick={onDismissRecoveryNotice}
-              size="icon"
-              variant="ghost"
+              <AlertTitle>{shownExecutionFailure.title}</AlertTitle>
+              {shownExecutionFailure.detail ? (
+                <AlertDescription data-testid="execution-failure-detail">
+                  {shownExecutionFailure.detail}
+                </AlertDescription>
+              ) : null}
+              <Button
+                aria-label={t('code-editor.notice.execution-failure.dismiss')}
+                onClick={onDismissExecutionFailureNotice}
+                size="icon"
+                variant="ghost"
+              >
+                <X />
+              </Button>
+            </Alert>
+          ) : editorNoticePresence.mounted && shownEditorNotice === 'game-textures' ? (
+            <Alert
+              className="recovery-notice motion-surface"
+              data-motion-from="bottom"
+              data-testid="game-textures-notice"
+              ref={editorNoticePresence.ref}
+              {...gameTexturesNoticeHold}
+              {...presenceProps(editorNoticePresence.closing)}
             >
-              <X />
-            </Button>
-          </Alert>
+              <AlertTitle>{t('code-editor.notice.game-textures')}</AlertTitle>
+            </Alert>
+          ) : editorNoticePresence.mounted && shownEditorNotice === 'recovery' ? (
+            <Alert
+              className="recovery-notice motion-surface"
+              data-motion-from="bottom"
+              data-testid="recovery-notice"
+              ref={editorNoticePresence.ref}
+              {...recoveryNoticeHold}
+              {...presenceProps(editorNoticePresence.closing)}
+            >
+              <AlertTitle>{t('code-editor.notice.recovery')}</AlertTitle>
+              <Button
+                aria-label={t('code-editor.notice.recovery.dismiss')}
+                onClick={onDismissRecoveryNotice}
+                size="icon"
+                variant="ghost"
+              >
+                <X />
+              </Button>
+            </Alert>
+          ) : null}
+          <output
+            aria-atomic="true"
+            aria-label={t('code-editor.font-size.label')}
+            aria-live="polite"
+            className="editor-font-size-indicator"
+            data-visible={fontSizeNotice.visible}
+          >
+            {t('code-editor.font-size.value', {
+              percent: Math.round((fontSizeNotice.fontSize / editorDefaultFontSize) * 100),
+            })}
+          </output>
+        </div>
+        {outlineRowPresent ? (
+          <EditorOutlineRow
+            focusEditor={focusEditorAfterOutline}
+            onChoose={revealOutlineEntry}
+            outline={outlineView.outline}
+            path={outlineView.path}
+          />
         ) : null}
-        <output
-          aria-atomic="true"
-          aria-label={t('code-editor.font-size.label')}
-          aria-live="polite"
-          className="editor-font-size-indicator"
-          data-visible={fontSizeNotice.visible}
-        >
-          {t('code-editor.font-size.value', {
-            percent: Math.round((fontSizeNotice.fontSize / editorDefaultFontSize) * 100),
-          })}
-        </output>
       </div>
-      {outlineRowPresent ? (
-        <EditorOutlineRow
-          focusEditor={focusEditorAfterOutline}
-          onChoose={revealOutlineEntry}
-          outline={outlineView.outline}
-          path={outlineView.path}
-        />
-      ) : null}
       <output hidden data-testid="source-reveal">
         {selection
           ? `${selection.uri} — ${selection.marker}`
           : workspace.activeDocument.readOnly
-            ? 'Read-only protected source — use Clone / Save As to edit'
+            ? 'Read-only protected source — use Save As to edit'
             : workspace.activeDocument.path
               ? workspace.activeDocument.name
               : 'Unsaved file'}

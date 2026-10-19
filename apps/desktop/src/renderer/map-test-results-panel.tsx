@@ -179,16 +179,24 @@ function CheckGroupView({
     >
       <OutputGroupHeader
         end={
-          <Button
-            aria-label={t('test-results.results.go-to-check', { location: group.location })}
-            className="output-row-end problems-position"
-            onClick={onGoToCheck}
-            size="xs"
-            title={t('test-results.results.go-to-check', { location: group.location })}
-            variant="ghost"
-          >
-            {group.position}
-          </Button>
+          <Tooltip disableHoverablePopup>
+            <TooltipTrigger
+              render={
+                <Button
+                  aria-label={t('test-results.results.go-to-check', { location: group.location })}
+                  className="output-row-end problems-position"
+                  onClick={onGoToCheck}
+                  size="xs"
+                  variant="ghost"
+                />
+              }
+            >
+              {group.position}
+            </TooltipTrigger>
+            <TooltipContent>
+              {t('test-results.results.go-to-check', { location: group.location })}
+            </TooltipContent>
+          </Tooltip>
         }
         icon={
           <OutputSeverityIcon severity="error" source={t('test-results.results.check-source')} />
@@ -280,20 +288,29 @@ function FindingRowView({
       <OutputMessageText message={entry.message} repeat={entry.count} />
       <span className="output-row-end test-results-finding-end">
         {mapShown ? null : (
-          <span className="test-results-map" title={entry.mapPath}>
-            {entry.mapName}
-          </span>
+          <Tooltip disableHoverablePopup>
+            <TooltipTrigger render={<span className="test-results-map" />}>
+              {entry.mapName}
+            </TooltipTrigger>
+            <TooltipContent className="path-tooltip">{entry.mapPath}</TooltipContent>
+          </Tooltip>
         )}
-        <Button
-          aria-label={label}
-          className="problems-position test-results-seed"
-          onClick={replay}
-          size="xs"
-          title={label}
-          variant="ghost"
-        >
-          {t('test-results.results.seed', { seed: entry.seed })}
-        </Button>
+        <Tooltip disableHoverablePopup>
+          <TooltipTrigger
+            render={
+              <Button
+                aria-label={label}
+                className="problems-position test-results-seed"
+                onClick={replay}
+                size="xs"
+                variant="ghost"
+              />
+            }
+          >
+            {t('test-results.results.seed', { seed: entry.seed })}
+          </TooltipTrigger>
+          <TooltipContent>{label}</TooltipContent>
+        </Tooltip>
       </span>
     </div>
   );

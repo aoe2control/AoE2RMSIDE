@@ -111,6 +111,7 @@ import {
   isAscendingObjectIdList,
   mapIconArtObjectDescriptors,
 } from '../shared/map-icon-art-objects';
+import { isObjectClassList, objectClassesFor } from '../shared/object-classes';
 import { decodeAppearanceObjectColumn } from '../shared/terrain-appearances';
 import { validTileWriteRuns } from '../shared/tile-write-runs';
 import { constantNamesFor } from './constant-names-provider';
@@ -157,7 +158,7 @@ interface PendingRequest {
   reject(error: Error): void;
 }
 
-const protocolVersion = { major: 2, minor: 21, patch: 0 } as const;
+const protocolVersion = { major: 2, minor: 22, patch: 0 } as const;
 
 export class ProtocolResponseError extends Error {
   constructor(
@@ -1199,6 +1200,7 @@ function toPreviewResult(
     objectNames: input.contentPack.objectNames.map((entry) => ({ ...entry })),
     graphiclessObjectIds: [...(input.contentPack.graphiclessObjectIds ?? [])],
     mapIconArtObjects: mapIconArtObjectDescriptors(input.contentPack),
+    ...objectClassesFor(input.contentPack),
     terrainNames: [],
     ...constantNamesFor(input.contentPack),
     minimapPalette: input.minimapPalette ? structuredClone(input.minimapPalette) : null,
@@ -1934,6 +1936,9 @@ function toContentPackDescriptor(pack: ProtocolContentPackDescriptor): ContentPa
     ) {
       throw new Error('catalog map icon art classes are invalid');
     }
+    if (!isObjectClassList(pack.objectClassIds, pack.objectNames.length)) {
+      throw new Error('catalog object classes are invalid');
+    }
     return {
       packId: pack.packId,
       packVersion: pack.packVersion,
@@ -1955,6 +1960,7 @@ function toContentPackDescriptor(pack: ProtocolContentPackDescriptor): ContentPa
       treeObjectIds: [...pack.treeObjectIds],
       goldObjectIds: [...pack.goldObjectIds],
       stoneObjectIds: [...pack.stoneObjectIds],
+      objectClassIds: [...pack.objectClassIds],
     };
   }
 }

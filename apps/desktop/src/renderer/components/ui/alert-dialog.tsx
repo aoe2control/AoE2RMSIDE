@@ -3,6 +3,13 @@ import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog
 
 import { cn } from '@/lib/utils';
 import { isRepeatedActivation, useDialogInitialFocus } from '@/dialog-initial-focus';
+import {
+  DialogLayerContext,
+  refusesCoveredDismissal,
+  useDialogLayer,
+  useStackedBackdrop,
+  useStackedPopup,
+} from '@/dialog-stack';
 import { useModalSurface } from '@/modal-surfaces';
 import { useLeavingSurface } from '@/motion';
 import { Button } from '@/components/ui/button';
@@ -24,20 +31,27 @@ function AlertDialog({
   );
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen ?? false);
   useModalSurface(open ?? uncontrolledOpen);
+  const stacking = useDialogLayer('confirmation', open ?? uncontrolledOpen);
 
   return (
     <AlertDialogDismissContext.Provider value={dismiss}>
-      <AlertDialogPrimitive.Root
-        actionsRef={resolvedActionsRef}
-        data-slot="alert-dialog"
-        defaultOpen={defaultOpen}
-        onOpenChange={(nextOpen, eventDetails) => {
-          onOpenChange?.(nextOpen, eventDetails);
-          if (open === undefined && !eventDetails.isCanceled) setUncontrolledOpen(nextOpen);
-        }}
-        open={open}
-        {...props}
-      />
+      <DialogLayerContext.Provider value={stacking}>
+        <AlertDialogPrimitive.Root
+          actionsRef={resolvedActionsRef}
+          data-slot="alert-dialog"
+          defaultOpen={defaultOpen}
+          onOpenChange={(nextOpen, eventDetails) => {
+            if (!nextOpen && refusesCoveredDismissal(stacking.layer, eventDetails.reason)) {
+              eventDetails.cancel();
+              return;
+            }
+            onOpenChange?.(nextOpen, eventDetails);
+            if (open === undefined && !eventDetails.isCanceled) setUncontrolledOpen(nextOpen);
+          }}
+          open={open}
+          {...props}
+        />
+      </DialogLayerContext.Provider>
     </AlertDialogDismissContext.Provider>
   );
 }
@@ -50,12 +64,19 @@ function AlertDialogPortal({ ...props }: AlertDialogPrimitive.Portal.Props) {
   return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
 }
 
-function AlertDialogOverlay({ className, ...props }: AlertDialogPrimitive.Backdrop.Props) {
+function AlertDialogOverlay({
+  className,
+  forceRender = true,
+  ...props
+}: AlertDialogPrimitive.Backdrop.Props) {
   const dismiss = React.useContext(AlertDialogDismissContext);
+  const stackedBackdrop = useStackedBackdrop();
   const { onPointerDown, ...overlayProps } = props;
   return (
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-overlay"
+      data-dialog-backdrop={stackedBackdrop}
+      forceRender={forceRender}
       className={cn(
         'motion-backdrop fixed inset-0 isolate z-50 bg-black/80 supports-backdrop-filter:backdrop-blur-xs',
         className,
@@ -79,7 +100,8 @@ function AlertDialogContent({
 }: AlertDialogPrimitive.Popup.Props & {
   size?: 'default' | 'sm';
 }) {
-  const focus = useDialogInitialFocus(initialFocus, ref);
+  const stacked = useStackedPopup(ref);
+  const focus = useDialogInitialFocus(initialFocus, stacked.ref);
   const popupRef = useLeavingSurface(focus.ref);
   return (
     <AlertDialogPortal>
@@ -92,6 +114,7 @@ function AlertDialogContent({
         }}
         ref={popupRef}
         data-slot="alert-dialog-content"
+        data-dialog-cover={stacked.cover}
         data-size={size}
         className={cn(
           'motion-dialog group/alert-dialog-content fixed top-1/2 left-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-3 rounded-xl bg-popover p-4 text-popover-foreground ring-1 ring-foreground/10 outline-none data-[size=default]:max-w-xs data-[size=sm]:max-w-64 data-[size=default]:sm:max-w-sm',

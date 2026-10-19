@@ -6,7 +6,6 @@ import {
   useState,
   useSyncExternalStore,
   type CSSProperties,
-  type KeyboardEvent as ReactKeyboardEvent,
   type MouseEvent as ReactMouseEvent,
   type MutableRefObject,
   type PointerEvent as ReactPointerEvent,
@@ -38,6 +37,14 @@ import {
 import { createSessionAutosaveReporter } from './session-autosave';
 import { outputNote, type OutputMessage } from '../shared/output-message';
 import type { PreviewLook, PreviewPerspective } from '../shared/game-art';
+import {
+  defaultOverlayEditorShown,
+  defaultPreviewLayout,
+  nextPreviewLayout,
+  previewLayoutShowsEditor,
+  previewLayoutShowsPreview,
+  type PreviewLayout,
+} from '../shared/preview-layout';
 import {
   AppPanelContext,
   type EditorFindRequest,
@@ -89,6 +96,7 @@ import {
   type SeverityFilter,
 } from './severity-filter';
 import { SeverityFilterToggles } from './severity-filter-toggles';
+import { SeparatorPill } from './separator-pill-view';
 import { ManagedModDeploymentPanel } from './managed-mod-deployment-panel';
 import { PreviewPanel } from './preview-panel';
 import type { PinnedPreviewSource, PreviewExecutionController } from './preview-execution';
@@ -136,8 +144,10 @@ const explorerMinimumWidth = 220;
 const explorerMaximumWidth = 420;
 const editorMinimumWidth = 360;
 const previewMinimumWidth = 300;
+const previewSeparatorWidth = 1;
 const snapThreshold = 96;
-const keyboardResizeStep = 16;
+
+const previewLayoutSettleMilliseconds = 1_000;
 
 type BottomPanelTab = 'problems' | 'output' | 'test-results';
 type HorizontalDrag = {
@@ -145,16 +155,15 @@ type HorizontalDrag = {
   pointerId: number;
   width: number;
   expanded: boolean;
+  layout: PreviewLayout;
   edge: number;
   maximum: number;
-  handle: HTMLDivElement;
 };
 type BottomPanelResize = {
   pointerId: number;
   startHeight: number;
   startY: number;
   height: number;
-  handle: HTMLDivElement;
 };
 
 export function App() {
@@ -191,7 +200,36 @@ export function App() {
   const [explorerExpanded, setExplorerExpanded] = useState(true);
   const [explorerWidth, setExplorerWidth] = useState(explorerDefaultWidth);
   const [findInFilesRequest, setFindInFilesRequest] = useState(0);
-  const [previewExpanded, setPreviewExpanded] = useState(true);
+  const [previewLayoutState, setPreviewLayoutState] = useState<{
+    layout: PreviewLayout;
+    from: PreviewLayout;
+  }>({ layout: defaultPreviewLayout, from: defaultPreviewLayout });
+  const previewLayout = previewLayoutState.layout;
+  const previewExpanded = previewLayoutShowsPreview(previewLayout);
+  const [overlayEditorShown, setOverlayEditorShown] = useState(defaultOverlayEditorShown);
+  const editorShown =
+    !editionCapabilities.preview || previewLayoutShowsEditor(previewLayout, overlayEditorShown);
+  const previewLayoutRef = useRef(previewLayout);
+  previewLayoutRef.current = previewLayout;
+  const setEditorShownBehindPreview = useCallback((shown: boolean) => {
+    if (previewLayoutRef.current === 'behind-editor') setOverlayEditorShown(shown);
+  }, []);
+  const showEditor = useCallback(
+    () => setEditorShownBehindPreview(true),
+    [setEditorShownBehindPreview],
+  );
+  const hideEditor = useCallback(
+    () => setEditorShownBehindPreview(false),
+    [setEditorShownBehindPreview],
+  );
+  const changePreviewLayout = useCallback(
+    (next: PreviewLayout | ((current: PreviewLayout) => PreviewLayout)) =>
+      setPreviewLayoutState((state) => {
+        const layout = typeof next === 'function' ? next(state.layout) : next;
+        return layout === state.layout ? state : { layout, from: state.layout };
+      }),
+    [],
+  );
   const [profilerOpen, setProfilerOpen] = useState(false);
   const [executionProfiler] = useState(() => new ExecutionProfilerStore());
   const [previewCandidates] = useState(
@@ -208,7 +246,29 @@ export function App() {
   });
   const [outputProfilerHost, setOutputProfilerHost] = useState<HTMLDivElement | null>(null);
   const [outputVersionHost, setOutputVersionHost] = useState<HTMLDivElement | null>(null);
-  const expandPreview = useCallback(() => setPreviewExpanded(true), []);
+  const expandPreview = useCallback(
+    () =>
+      changePreviewLayout((current) =>
+        previewLayoutShowsPreview(current) ? current : defaultPreviewLayout,
+      ),
+    [changePreviewLayout],
+  );
+  const settlePreviewLayout = useCallback(
+    () =>
+      setPreviewLayoutState((state) =>
+        state.from === state.layout ? state : { ...state, from: state.layout },
+      ),
+    [],
+  );
+  useEffect(() => {
+    if (previewLayoutState.from === previewLayoutState.layout) return undefined;
+    const timer = window.setTimeout(settlePreviewLayout, previewLayoutSettleMilliseconds);
+    return () => window.clearTimeout(timer);
+  }, [previewLayoutState, settlePreviewLayout]);
+  const cyclePreviewLayout = useCallback(
+    () => changePreviewLayout((current) => nextPreviewLayout(current)),
+    [changePreviewLayout],
+  );
   const [previewWidth, setPreviewWidth] = useState<number | null>(null);
   const [horizontalDragKind, setHorizontalDragKind] = useState<HorizontalDrag['kind'] | null>(null);
   const [sessionApplied, setSessionApplied] = useState(false);
@@ -218,6 +278,7 @@ export function App() {
   const [themePreference, setThemePreference] = useState<ThemePreference>('system');
   const [editorColorScheme, setEditorColorScheme] =
     useState<EditorColorSchemeId>(defaultEditorColorScheme);
+  const [previewBlur, setPreviewBlur] = useState(false);
   const [themeSettingsOpen, setThemeSettingsOpen] = useState(false);
   const [formatOnSave, setFormatOnSave] = useState(true);
   const [indentConditionals, setIndentConditionals] = useState(true);
@@ -294,6 +355,16 @@ export function App() {
     setManagedModDeploymentOpen(true);
   }, []);
   const workspace = useWorkspaceController(appendOutput, formatOnSave, deletePermanently);
+  const [layoutMotionReady, setLayoutMotionReady] = useState(false);
+  const sessionLayoutShown =
+    sessionApplied || (workspace.sessionReady && workspace.restoredSession === null);
+  useEffect(() => {
+    if (!sessionLayoutShown) return undefined;
+    let frame = window.requestAnimationFrame(() => {
+      frame = window.requestAnimationFrame(() => setLayoutMotionReady(true));
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [sessionLayoutShown]);
   const workspaceRef = useRef(workspace);
   workspaceRef.current = workspace;
   const lastContentMatch = useRef<ContentMatchVisit | null>(null);
@@ -710,14 +781,15 @@ export function App() {
     cleanupBottomResize(bottomPanelResize);
     setExplorerExpanded(true);
     setExplorerWidth(explorerDefaultWidth);
-    setPreviewExpanded(true);
+    changePreviewLayout(defaultPreviewLayout);
+    setOverlayEditorShown(defaultOverlayEditorShown);
     setPreviewWidth(null);
     setProfilerOpen(false);
     setBottomPanelOpen(false);
     setBottomPanelHeight(150);
     setBottomPanelTab('output');
     await window.rmside.resetLayout();
-  }, []);
+  }, [changePreviewLayout]);
 
   const openInstalledSources = useCallback(() => {
     setInstalledSourceBrowserOpen(true);
@@ -777,6 +849,7 @@ export function App() {
     const session = workspace.restoredSession;
     setThemePreference(session.themePreference);
     setEditorColorScheme(session.editorColorScheme);
+    setPreviewBlur(session.previewBlur);
     setFormatOnSave(session.formatOnSave);
     setIndentConditionals(session.indentConditionals);
     setLiveGenerationStages(session.liveGenerationStages);
@@ -791,7 +864,11 @@ export function App() {
     setPreviewSmallTrees(session.previewSmallTrees);
     setExplorerExpanded(session.layout.explorerExpanded);
     setExplorerWidth(session.layout.explorerWidth);
-    setPreviewExpanded(session.layout.previewExpanded);
+    setPreviewLayoutState({
+      layout: session.layout.previewLayout,
+      from: session.layout.previewLayout,
+    });
+    setOverlayEditorShown(session.layout.overlayEditorShown);
     setPreviewWidth(session.layout.previewWidth);
     setProfilerOpen(session.layout.profilerOpen);
     setBottomPanelHeight(session.layout.bottomPanelHeight);
@@ -841,6 +918,7 @@ export function App() {
         version: 1,
         themePreference,
         editorColorScheme,
+        previewBlur,
         formatOnSave,
         indentConditionals,
         liveGenerationStages,
@@ -857,6 +935,8 @@ export function App() {
           explorerExpanded,
           explorerWidth,
           previewExpanded,
+          previewLayout,
+          overlayEditorShown,
           previewWidth,
           bottomPanelHeight,
           bottomPanelTab,
@@ -884,6 +964,7 @@ export function App() {
     bottomPanelHeight,
     bottomPanelTab,
     editorColorScheme,
+    previewBlur,
     explorerExpanded,
     explorerWidth,
     formatOnSave,
@@ -899,6 +980,8 @@ export function App() {
     previewTileGrid,
     previewSmallTrees,
     previewExpanded,
+    previewLayout,
+    overlayEditorShown,
     previewWidth,
     profilerOpen,
     outputSeverityFilter,
@@ -929,6 +1012,10 @@ export function App() {
     document.documentElement.style.colorScheme = resolvedTheme;
     if (sessionApplied) void window.rmside.syncNativeTheme(themePreference, resolvedTheme);
   }, [resolvedTheme, sessionApplied, themePreference]);
+
+  useEffect(() => {
+    document.documentElement.dataset.previewBlur = String(previewBlur);
+  }, [previewBlur]);
 
   useEffect(() => {
     if (!editionCapabilities.mapTests) return;
@@ -999,9 +1086,13 @@ export function App() {
       else if (action.type === 'open-recent') void currentWorkspace.openRecent(action.path);
       else if (action.type === 'save') void currentWorkspace.saveActive();
       else if (action.type === 'save-as') void currentWorkspace.saveActiveAs();
-      else if (action.type === 'format-document') void currentWorkspace.formatActive();
-      else if (action.type === 'insert-snippet') requestInsertSnippet();
-      else if (action.type === 'set-format-on-save') {
+      else if (action.type === 'format-document') {
+        showEditor();
+        void currentWorkspace.formatActive();
+      } else if (action.type === 'insert-snippet') {
+        showEditor();
+        requestInsertSnippet();
+      } else if (action.type === 'set-format-on-save') {
         setFormatOnSave(action.enabled);
       } else if (action.type === 'set-indent-conditionals') {
         setIndentConditionals(action.enabled);
@@ -1041,6 +1132,7 @@ export function App() {
     openInstalledSources,
     previewCandidates,
     resetLayout,
+    showEditor,
     unlinkSelectedGameInstallation,
   ]);
 
@@ -1162,7 +1254,6 @@ export function App() {
         startHeight: bottomPanelHeight,
         startY: event.clientY,
         height: bottomPanelHeight,
-        handle: event.currentTarget,
       };
       event.currentTarget.setPointerCapture(event.pointerId);
       document.body.classList.add('resizing-bottom-panel');
@@ -1186,22 +1277,7 @@ export function App() {
         'grid-template-rows',
         workspaceGridRows(current.height),
       );
-      current.handle.setAttribute('aria-valuenow', String(current.height));
     });
-  }, []);
-
-  const resizeBottomPanelWithKeyboard = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
-    if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
-    event.preventDefault();
-    event.stopPropagation();
-    const maximumHeight = Math.max(180, Math.floor(window.innerHeight * 0.65));
-    setBottomPanelHeight((current) =>
-      clamp(
-        current + (event.key === 'ArrowUp' ? keyboardResizeStep : -keyboardResizeStep),
-        96,
-        maximumHeight,
-      ),
-    );
   }, []);
 
   const finishBottomPanelResize = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
@@ -1228,21 +1304,27 @@ export function App() {
       const maximum =
         kind === 'explorer'
           ? Math.min(explorerMaximumWidth, Math.floor(bounds.width * 0.4))
-          : Math.max(previewMinimumWidth, bounds.width - editorMinimumWidth - 5);
+          : Math.max(
+              previewMinimumWidth,
+              bounds.width - editorMinimumWidth - previewSeparatorWidth,
+            );
       horizontalDrag.current = {
         kind,
         pointerId: event.pointerId,
         width: kind === 'explorer' ? explorerWidth : (previewWidth ?? Math.floor(bounds.width / 2)),
         expanded: kind === 'explorer' ? explorerExpanded : previewExpanded,
-        edge: kind === 'explorer' ? bounds.left : bounds.right,
+        layout: previewExpanded ? previewLayout : defaultPreviewLayout,
+        edge:
+          kind === 'explorer'
+            ? event.clientX - explorerWidth
+            : event.clientX + shownPreviewWidth(previewRegionElement.current),
         maximum,
-        handle: event.currentTarget,
       };
       setHorizontalDragKind(kind);
       event.currentTarget.setPointerCapture(event.pointerId);
       document.body.classList.add('resizing-horizontal');
     },
-    [explorerExpanded, explorerWidth, previewExpanded, previewWidth],
+    [explorerExpanded, explorerWidth, previewExpanded, previewLayout, previewWidth],
   );
 
   const resizeHorizontally = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
@@ -1267,14 +1349,14 @@ export function App() {
       if (requested <= snapThreshold) {
         if (drag.expanded) {
           drag.expanded = false;
-          setPreviewExpanded(false);
+          changePreviewLayout('editor-only');
         }
         return;
       }
       drag.width = clamp(requested, previewMinimumWidth, drag.maximum);
       if (!drag.expanded) {
         drag.expanded = true;
-        setPreviewExpanded(true);
+        changePreviewLayout(drag.layout);
       }
     }
     if (horizontalResizeFrame.current !== null) return;
@@ -1289,11 +1371,10 @@ export function App() {
         );
       } else {
         previewRegionElement.current?.style.setProperty(
-          'flex-basis',
-          current.expanded ? `${current.width}px` : '0px',
+          '--preview-side-width',
+          `${current.width}px`,
         );
       }
-      current.handle.setAttribute('aria-valuenow', String(current.width));
     });
   }, []);
 
@@ -1308,42 +1389,6 @@ export function App() {
     finishCapturedPointer(event, horizontalDrag);
     setHorizontalDragKind(null);
   }, []);
-
-  const resizePaneWithKeyboard = useCallback(
-    (kind: HorizontalDrag['kind'], event: ReactKeyboardEvent<HTMLDivElement>) => {
-      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-      event.preventDefault();
-      if (kind === 'explorer') {
-        const bounds = layoutElement.current?.getBoundingClientRect();
-        const maximum = Math.min(
-          explorerMaximumWidth,
-          Math.floor((bounds?.width ?? explorerMaximumWidth) * 0.4),
-        );
-        setExplorerWidth((current) =>
-          clamp(
-            current + (event.key === 'ArrowRight' ? keyboardResizeStep : -keyboardResizeStep),
-            explorerMinimumWidth,
-            maximum,
-          ),
-        );
-      } else {
-        const bounds = splitElement.current?.getBoundingClientRect();
-        const maximum = Math.max(
-          previewMinimumWidth,
-          (bounds?.width ?? 960) - editorMinimumWidth - 5,
-        );
-        const current = previewWidth ?? Math.floor((bounds?.width ?? 960) / 2);
-        setPreviewWidth(
-          clamp(
-            current + (event.key === 'ArrowLeft' ? keyboardResizeStep : -keyboardResizeStep),
-            previewMinimumWidth,
-            maximum,
-          ),
-        );
-      }
-    },
-    [previewWidth],
-  );
 
   const exportMapTestReport = useCallback(async () => {
     if (!mapTestResults) return;
@@ -1438,14 +1483,6 @@ export function App() {
     [appendOutput, mapTestResults, openSourceLocation, workspace.documents],
   );
 
-  const explorerMaximum = Math.min(
-    explorerMaximumWidth,
-    Math.floor((layoutElement.current?.clientWidth ?? 1440) * 0.4),
-  );
-  const previewMaximum = Math.max(
-    previewMinimumWidth,
-    (splitElement.current?.clientWidth ?? 960) - editorMinimumWidth - 5,
-  );
   const renderedExplorerWidth =
     horizontalDrag.current?.kind === 'explorer' ? horizontalDrag.current.width : explorerWidth;
   const renderedPreviewWidth =
@@ -1459,13 +1496,8 @@ export function App() {
     gridTemplateColumns: explorerGridColumns(explorerExpanded, renderedExplorerWidth),
   } satisfies CSSProperties;
   const previewRegionStyle = {
-    flexBasis: previewExpanded
-      ? renderedPreviewWidth === null
-        ? '50%'
-        : `${renderedPreviewWidth}px`
-      : '0px',
-    maxWidth: `calc(100% - ${editorMinimumWidth + 5}px)`,
-  } satisfies CSSProperties;
+    '--preview-side-width': renderedPreviewWidth === null ? '50%' : `${renderedPreviewWidth}px`,
+  } as CSSProperties;
 
   return (
     <AppPanelContext.Provider value={panelContext}>
@@ -1531,27 +1563,39 @@ export function App() {
             <div
               aria-label={t('workbench.explorer.resize')}
               aria-orientation="vertical"
-              aria-valuemax={explorerMaximum}
-              aria-valuemin={explorerMinimumWidth}
-              aria-valuenow={renderedExplorerWidth}
               className="workspace-separator explorer-separator"
-              onKeyDown={(event) => resizePaneWithKeyboard('explorer', event)}
               onLostPointerCapture={finishHorizontalResize}
               onPointerCancel={finishHorizontalResize}
               onPointerDown={(event) => beginHorizontalResize('explorer', event)}
               onPointerMove={resizeHorizontally}
               onPointerUp={finishHorizontalResize}
               role="separator"
-              tabIndex={0}
-            />
+            >
+              <SeparatorPill orientation="vertical" />
+            </div>
           ) : null}
           <div className="workspace-main">
             <div
               className="workspace fixed-workspace"
+              data-editor-shown={editorShown}
+              data-layout-motion={layoutMotionReady ? 'on' : 'off'}
+              data-preview-layout={editionCapabilities.preview ? previewLayout : 'editor-only'}
+              data-preview-overlay={
+                editionCapabilities.preview &&
+                (previewLayout === 'behind-editor' || previewLayoutState.from === 'behind-editor')
+              }
               data-testid="fixed-workspace"
+              onTransitionEnd={(event) => {
+                if (
+                  event.target === event.currentTarget &&
+                  event.propertyName === '--workspace-overlay'
+                ) {
+                  settlePreviewLayout();
+                }
+              }}
               ref={splitElement}
             >
-              <div className="workspace-editor-region">
+              <div className="workspace-editor-region" data-pointer-surface="editor">
                 <EditorPanel
                   inlayHints={inlayHints}
                   outlineRow={outlineRow}
@@ -1559,38 +1603,40 @@ export function App() {
                   executionFailureSequence={executionFailure.raised}
                   onDismissExecutionFailureNotice={dismissExecutionFailureNotice}
                   onDismissRecoveryNotice={workspace.dismissRecoveryNotice}
-                  onTogglePreview={() => setPreviewExpanded((current) => !current)}
+                  onCyclePreviewLayout={cyclePreviewLayout}
+                  editorShown={editorShown}
+                  onHideEditor={hideEditor}
+                  onShowEditor={showEditor}
                   previewExpanded={previewExpanded}
+                  previewLayout={previewLayout}
                   recoveryNotice={workspace.recoveryNotice}
                 />
               </div>
               {editionCapabilities.preview &&
               (previewExpanded || horizontalDragKind === 'preview') ? (
                 <div
+                  aria-hidden={!editorShown || undefined}
                   aria-label={t('workbench.preview.resize')}
                   aria-orientation="vertical"
-                  aria-valuemax={previewMaximum}
-                  aria-valuemin={previewMinimumWidth}
-                  aria-valuenow={
-                    renderedPreviewWidth ??
-                    Math.floor((splitElement.current?.clientWidth ?? 960) / 2)
-                  }
                   className="workspace-separator preview-separator"
-                  onKeyDown={(event) => resizePaneWithKeyboard('preview', event)}
                   onLostPointerCapture={finishHorizontalResize}
                   onPointerCancel={finishHorizontalResize}
                   onPointerDown={(event) => beginHorizontalResize('preview', event)}
                   onPointerMove={resizeHorizontally}
                   onPointerUp={finishHorizontalResize}
                   role="separator"
-                  tabIndex={0}
-                />
+                >
+                  <SeparatorPill orientation="vertical" />
+                </div>
               ) : null}
               {editionCapabilities.preview ? (
                 <div
                   aria-hidden={!previewExpanded}
                   className="workspace-preview-region"
                   data-expanded={previewExpanded}
+                  data-layout={previewLayout}
+                  data-layout-from={previewLayoutState.from}
+                  data-pointer-surface="preview"
                   inert={!previewExpanded ? true : undefined}
                   ref={previewRegionElement}
                   style={previewRegionStyle}
@@ -1621,19 +1667,16 @@ export function App() {
               <div
                 aria-label={t('workbench.bottom-panel.resize')}
                 aria-orientation="horizontal"
-                aria-valuemax={Math.floor(window.innerHeight * 0.65)}
-                aria-valuemin={96}
-                aria-valuenow={bottomPanelHeight}
                 className="bottom-panel-resize-handle"
-                onKeyDown={resizeBottomPanelWithKeyboard}
                 onLostPointerCapture={finishBottomPanelResize}
                 onPointerCancel={finishBottomPanelResize}
                 onPointerDown={beginBottomPanelResize}
                 onPointerMove={resizeBottomPanel}
                 onPointerUp={finishBottomPanelResize}
                 role="separator"
-                tabIndex={0}
-              />
+              >
+                <SeparatorPill orientation="horizontal" />
+              </div>
             ) : null}
             <TabsList className="bottom-tabs" variant="line">
               <TabsTrigger onClick={() => selectBottomPanelTab('output')} value="output">
@@ -1801,6 +1844,8 @@ export function App() {
         <ThemeSettingsDialog
           editorColorScheme={editorColorScheme}
           onEditorColorSchemeChange={setEditorColorScheme}
+          onPreviewBlurChange={setPreviewBlur}
+          previewBlur={previewBlur}
           onOpenChange={setThemeSettingsOpen}
           onThemePreferenceChange={setThemePreference}
           open={themeSettingsOpen}
@@ -1913,6 +1958,12 @@ function cleanupBottomResize(resize: MutableRefObject<BottomPanelResize | null>)
 
 function clamp(value: number, minimum: number, maximum: number): number {
   return Math.min(maximum, Math.max(minimum, Math.round(value)));
+}
+
+function shownPreviewWidth(region: HTMLElement | null): number {
+  if (!region) return 0;
+  const margin = Number.parseFloat(getComputedStyle(region).marginInlineStart) || 0;
+  return Math.max(0, region.getBoundingClientRect().width + margin);
 }
 
 function workspaceGridRows(bottomHeight: number): string {

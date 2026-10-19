@@ -956,6 +956,21 @@
     "settings.theme.scheme.default": {
       "message": "預設"
     },
+    "settings.theme.background-blur": {
+      "message": "背景模糊"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "清晰"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "模糊"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "地圖透過預覽的按鈕、面板和選單以及地圖上方的編輯器清晰顯示，不會模糊。"
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "預覽的按鈕、面板和選單以及地圖上方的編輯器後方的地圖會變模糊。"
+    },
     "settings.theme.close-label": {
       "message": "關閉佈景主題設定"
     },
@@ -3041,9 +3056,6 @@
     "code-editor.tab-menu.save": {
       "message": "儲存"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "複製／另存新檔…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "另存新檔…"
     },
@@ -3095,8 +3107,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "已鎖定"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "每次執行時隨機產生"
+    "code-editor.run-menu.seed-lock": {
+      "message": "鎖定種子"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "使用目前對局的種子"
@@ -3161,17 +3173,14 @@
     "code-editor.control-download.confirm": {
       "message": "知道了"
     },
-    "code-editor.preview.collapse": {
-      "message": "收合即時地圖預覽"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "並排"
     },
-    "code-editor.preview.expand": {
-      "message": "展開即時地圖預覽"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "預覽位於編輯器後方"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "收合預覽"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "展開預覽"
+    "code-editor.preview.layout.editor-only": {
+      "message": "僅編輯器"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "關閉指令碼執行失敗通知"
@@ -3191,8 +3200,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "這個安裝目錄或已訂閱模組中的原始檔受到保護。請使用「複製」或「另存新檔」。"
+    "code-editor.read-only-message.game-installation": {
+      "message": "這個檔案屬於遊戲安裝目錄。遊戲更新可能會取代它，因此無法在這裡編輯。請儲存副本後再編輯。"
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "這個檔案屬於已訂閱的模組。模組更新可能會取代它，因此無法在這裡編輯。請儲存副本後再編輯。"
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE 會在部署時自行寫入這個模組的檔案，因此在這裡所做的修改會遺失。請改為編輯你自己的地圖副本。"
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "這個檔案在 AoE2RMSIDE 中為唯讀。請儲存副本後再編輯。"
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "另存新檔…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "開啟引入檔"
@@ -3543,7 +3564,7 @@
       "message": "水域"
     },
     "preview-panel.material.terrain.beach": {
-      "message": "沙灘"
+      "message": "海灘"
     },
     "preview-panel.material.terrain.earth": {
       "message": "裸地"
@@ -3615,7 +3636,7 @@
       "message": ".inc、.def 和 .xs 文件只能作為引入檔，無法單獨執行。"
     },
     "preview-panel.tool.objects": {
-      "message": "物件與城鎮中心占地範圍"
+      "message": "物件與建築占地範圍"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "小地圖式物件"

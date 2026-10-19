@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Standard"
     },
+    "settings.theme.background-blur": {
+      "message": "Hintergrundunschärfe"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Scharf"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Unscharf"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "Die Karte scheint ohne Unschärfe durch die Schaltflächen, Bereiche und Menüs der Vorschau und durch den Editor über der Karte."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "Die Karte hinter den Schaltflächen, Bereichen und Menüs der Vorschau und hinter dem Editor über der Karte wird unscharf."
+    },
     "settings.theme.close-label": {
       "message": "Designeinstellungen schließen"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Speichern"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Klonen / Speichern unter…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Speichern unter…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Gesperrt"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Bei Ausführung zufällig"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Startwert sperren"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Startwert der aktuellen Partie übernehmen"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Verstanden"
     },
-    "code-editor.preview.collapse": {
-      "message": "Live-Kartenvorschau einklappen"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Nebeneinander"
     },
-    "code-editor.preview.expand": {
-      "message": "Live-Kartenvorschau ausklappen"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Vorschau hinter dem Editor"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Vorschau einklappen"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Vorschau ausklappen"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Nur Editor"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Hinweis auf fehlgeschlagene Skriptausführung schließen"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent} %"
     },
-    "code-editor.read-only-message": {
-      "message": "Diese Quelle aus der Installation oder einer abonnierten Mod ist geschützt. Verwende „Klonen“ oder „Speichern unter“."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Diese Datei gehört zur Spielinstallation. Spielupdates können sie ersetzen, daher kann sie hier nicht bearbeitet werden. Speichere eine Kopie, um sie zu bearbeiten."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Diese Datei gehört zu einer abonnierten Mod. Mod-Updates können sie ersetzen, daher kann sie hier nicht bearbeitet werden. Speichere eine Kopie, um sie zu bearbeiten."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE schreibt die Dateien dieser Mod beim Bereitstellen selbst, daher würden Änderungen hier verloren gehen. Bearbeite stattdessen deine eigene Kopie der Karte."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Diese Datei ist in AoE2RMSIDE schreibgeschützt. Speichere eine Kopie, um sie zu bearbeiten."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Speichern unter…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Eingebundene Datei öffnen"
@@ -3499,7 +3520,7 @@
       "message": "Hilfsobjekt"
     },
     "preview-panel.material.cliff": {
-      "message": "Klippe"
+      "message": "Felsenklippe"
     },
     "preview-panel.material.cliff-type": {
       "message": "Klippentyp {id}"
@@ -3529,7 +3550,7 @@
       "message": "Gras"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "Seichtes Wasser"
+      "message": "Seichtes Gewässer"
     },
     "preview-panel.material.terrain.water": {
       "message": "Wasser"
@@ -3607,7 +3628,7 @@
       "message": ".inc-, .def- und .xs-Dokumente können nur eingebunden und nicht ausgeführt werden."
     },
     "preview-panel.tool.objects": {
-      "message": "Objekte und Grundfläche des Dorfzentrums"
+      "message": "Objekte und Gebäudegrundflächen"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Minikartenobjekte"

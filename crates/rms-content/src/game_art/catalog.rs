@@ -19,6 +19,7 @@ pub const GAME_ART_BLEND_ATLASES: [&str; 9] = [
 
 pub const MAXIMUM_OBJECT_ART_PARTS: usize = 64;
 const MAXIMUM_DELTA_DEPTH: usize = 4;
+const MAXIMUM_ANNEX_DEPTH: usize = 3;
 
 #[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -221,11 +222,7 @@ impl GameArtCatalog {
         if let Some(graphic) = master.standing_graphic {
             self.collect_parts(graphic, 0, 0, 0, &mut parts);
         }
-        let invisible = parts.is_empty()
-            && master.annexes.is_empty()
-            && master
-                .standing_graphic
-                .is_some_and(|graphic| self.placeholder_only(graphic, 0));
+        let invisible = self.shows_nothing(object, civilization, &|_| false);
         Some(ObjectArt {
             object,
             civilization,
@@ -237,18 +234,59 @@ impl GameArtCatalog {
         })
     }
 
-    fn placeholder_only(&self, id: u32, depth: usize) -> bool {
+    #[must_use]
+    pub fn shows_nothing(
+        &self,
+        object: u32,
+        civilization: u32,
+        imageless: &dyn Fn(u32) -> bool,
+    ) -> bool {
+        self.object_shows_nothing(object, civilization, imageless, 0)
+    }
+
+    fn object_shows_nothing(
+        &self,
+        object: u32,
+        civilization: u32,
+        imageless: &dyn Fn(u32) -> bool,
+        depth: usize,
+    ) -> bool {
+        let Some((_, master)) = self.master(object, civilization) else {
+            return false;
+        };
+        if let Some(graphic) = master.standing_graphic
+            && !self.graphic_shows_nothing(graphic, imageless, 0)
+        {
+            return false;
+        }
+        master.annexes.is_empty()
+            || (depth < MAXIMUM_ANNEX_DEPTH
+                && master.annexes.iter().all(|annex| {
+                    self.object_shows_nothing(annex.object, civilization, imageless, depth + 1)
+                }))
+    }
+
+    fn graphic_shows_nothing(
+        &self,
+        id: u32,
+        imageless: &dyn Fn(u32) -> bool,
+        depth: usize,
+    ) -> bool {
         let Some(graphic) = self.graphic(id) else {
             return false;
         };
-        graphic.file.is_empty()
-            && graphic.deltas.iter().all(|delta| match delta.graphic {
-                None => true,
-                Some(child) if child == id => true,
-                Some(child) => {
-                    depth < MAXIMUM_DELTA_DEPTH && self.placeholder_only(child, depth + 1)
-                }
-            })
+        let own = graphic.file.is_empty() || imageless(id);
+        if graphic.deltas.is_empty() {
+            return own;
+        }
+        graphic.deltas.iter().all(|delta| match delta.graphic {
+            None => own,
+            Some(child) if child == id => true,
+            Some(child) => {
+                depth < MAXIMUM_DELTA_DEPTH
+                    && self.graphic_shows_nothing(child, imageless, depth + 1)
+            }
+        })
     }
 
     fn collect_parts(&self, id: u32, x: i32, y: i32, depth: usize, parts: &mut Vec<ArtPart>) {

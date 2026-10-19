@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Predefinito"
     },
+    "settings.theme.background-blur": {
+      "message": "Sfocatura dello sfondo"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Nitido"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Sfocato"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "La mappa si vede senza sfocatura attraverso i pulsanti, i pannelli e i menu dell’anteprima e attraverso l’editor sopra la mappa."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "La mappa dietro i pulsanti, i pannelli e i menu dell’anteprima e dietro l’editor sopra la mappa è sfocata."
+    },
     "settings.theme.close-label": {
       "message": "Chiudi impostazioni del tema"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Salva"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Clona / Salva con nome…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Salva con nome…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Bloccato"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Casuale a ogni esecuzione"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Blocca il seme"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Usa il seme della partita attuale"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Ho capito"
     },
-    "code-editor.preview.collapse": {
-      "message": "Comprimi l’anteprima della mappa in tempo reale"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Affiancati"
     },
-    "code-editor.preview.expand": {
-      "message": "Espandi l’anteprima della mappa in tempo reale"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Anteprima dietro l’editor"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Comprimi Anteprima"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Espandi Anteprima"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Solo editor"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Chiudi l’avviso di esecuzione dello script non riuscita"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "Questo file dell’installazione o di un mod a cui sei iscritto è protetto. Usa Clona o Salva con nome."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Questo file fa parte dell’installazione del gioco. Gli aggiornamenti del gioco possono sostituirlo, quindi non è possibile modificarlo qui. Salva una copia per modificarlo."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Questo file appartiene a un mod seguito. Gli aggiornamenti del mod possono sostituirlo, quindi non è possibile modificarlo qui. Salva una copia per modificarlo."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE scrive direttamente i file di questo mod quando lo installa, quindi le modifiche fatte qui andrebbero perse. Modifica invece la tua copia della mappa."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Questo file è in sola lettura in AoE2RMSIDE. Salva una copia per modificarlo."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Salva con nome…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Apri file incluso"
@@ -3529,7 +3550,7 @@
       "message": "Erba"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "Acque basse"
+      "message": "Secche"
     },
     "preview-panel.material.terrain.water": {
       "message": "Acqua"
@@ -3607,7 +3628,7 @@
       "message": "I documenti .inc, .def e .xs possono solo essere inclusi in altri script e non possono essere eseguiti da soli."
     },
     "preview-panel.tool.objects": {
-      "message": "Oggetti e ingombro del centro città"
+      "message": "Oggetti e ingombro degli edifici"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Oggetti della minimappa"
@@ -4237,7 +4258,7 @@
       "message": "Regicidio"
     },
     "game-options.game-mode.death-match": {
-      "message": "All’ultimo sangue"
+      "message": "Partita all’ultimo sangue"
     },
     "game-options.game-mode.king-of-the-hill": {
       "message": "Re della collina"

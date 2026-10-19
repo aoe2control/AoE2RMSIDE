@@ -1,13 +1,29 @@
 import { previewCandidateChunkBounds } from '../shared/preview-candidate';
 import type { PresentedPreviewResult } from './presentation-names';
-import type { PreviewCandidateStore } from './preview-candidate-store';
+import type { GenerationActivity, PreviewCandidateStore } from './preview-candidate-store';
 import {
   objectMaterial,
   terrainMaterial,
   type AggregatedSelectionLayer,
   type PreviewObjectVisibility,
 } from './preview-materials';
-import type { PreviewSelection } from './top-down-preview';
+import { previewObjectClassLookup, type PreviewSelection } from './top-down-preview';
+
+export function candidateObjectClassLookup(
+  activity: Pick<GenerationActivity, 'objectClasses'> | null,
+  map: Pick<PresentedPreviewResult, 'objectClasses'> | null,
+): ReadonlyMap<number, number> | undefined {
+  if (activity !== null) return activity.objectClasses;
+  return map ? previewObjectClassLookup(map) : undefined;
+}
+
+function objectClassOf(
+  classes: ReadonlyMap<number, number> | null,
+  objectId: number,
+): { objectClass?: number } {
+  const objectClass = classes?.get(objectId);
+  return objectClass === undefined ? {} : { objectClass };
+}
 
 export interface ProvisionalLegendEntry {
   key: string;
@@ -134,12 +150,18 @@ export function provisionalLegendLayers(
   entries: readonly ProvisionalLegendEntry[],
   map: PresentedPreviewResult | null,
   visibility: PreviewObjectVisibility,
-  candidate: Pick<
-    PresentedPreviewResult,
-    'minimapPalette' | 'terrainNames' | 'localTerrainColors'
-  > | null = null,
+  candidate:
+    | (Pick<PresentedPreviewResult, 'minimapPalette' | 'terrainNames' | 'localTerrainColors'> & {
+        objectClasses?: ReadonlyMap<number, number> | undefined;
+      })
+    | null = null,
 ): AggregatedSelectionLayer[] {
   const palette = candidate ? candidate.minimapPalette : (map?.minimapPalette ?? null);
+  const classes = candidate
+    ? (candidate.objectClasses ?? null)
+    : map
+      ? previewObjectClassLookup(map)
+      : null;
   return entries
     .filter(
       (entry) =>
@@ -167,6 +189,7 @@ export function provisionalLegendLayers(
                 objectId: entry.id,
                 owner: entry.owner,
                 presentationKind: entry.kind === 'wall' ? 'wall' : 'object',
+                ...objectClassOf(classes, entry.id),
               },
               map?.playerColorIds ?? [],
               map?.objectNames ?? [],

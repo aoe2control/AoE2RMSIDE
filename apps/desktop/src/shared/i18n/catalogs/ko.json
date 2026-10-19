@@ -956,6 +956,21 @@
     "settings.theme.scheme.default": {
       "message": "기본"
     },
+    "settings.theme.background-blur": {
+      "message": "배경 흐림"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "선명하게"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "흐리게"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "미리 보기의 버튼, 패널, 메뉴와 맵 위의 편집기 너머로 맵이 흐림 없이 비쳐 보입니다."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "미리 보기의 버튼, 패널, 메뉴와 맵 위의 편집기 뒤에 있는 맵이 흐리게 보입니다."
+    },
     "settings.theme.close-label": {
       "message": "테마 설정 닫기"
     },
@@ -3041,9 +3056,6 @@
     "code-editor.tab-menu.save": {
       "message": "저장"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "복제 / 다른 이름으로 저장…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "다른 이름으로 저장…"
     },
@@ -3095,8 +3107,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "고정됨"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "실행 시 무작위 시드"
+    "code-editor.run-menu.seed-lock": {
+      "message": "시드 고정"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "현재 대전 시드 사용"
@@ -3161,17 +3173,14 @@
     "code-editor.control-download.confirm": {
       "message": "확인"
     },
-    "code-editor.preview.collapse": {
-      "message": "실시간 맵 미리 보기 접기"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "나란히 보기"
     },
-    "code-editor.preview.expand": {
-      "message": "실시간 맵 미리 보기 펼치기"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "편집기 뒤에 미리 보기"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "미리 보기 접기"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "미리 보기 펼치기"
+    "code-editor.preview.layout.editor-only": {
+      "message": "편집기만"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "스크립트 실행 실패 알림 닫기"
@@ -3191,8 +3200,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "설치 파일 또는 구독한 모드의 소스는 보호되어 있습니다. 복제 또는 다른 이름으로 저장을 사용하세요."
+    "code-editor.read-only-message.game-installation": {
+      "message": "이 파일은 게임 설치의 일부입니다. 게임 업데이트로 교체될 수 있으므로 여기서 편집할 수 없습니다. 편집하려면 사본을 저장하세요."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "이 파일은 구독한 모드에 속합니다. 모드 업데이트로 교체될 수 있으므로 여기서 편집할 수 없습니다. 편집하려면 사본을 저장하세요."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE는 배포할 때 이 모드의 파일을 직접 쓰므로 여기서 편집한 내용은 사라집니다. 대신 직접 만든 맵 사본을 편집하세요."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "이 파일은 AoE2RMSIDE에서 읽기 전용입니다. 편집하려면 사본을 저장하세요."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "다른 이름으로 저장…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "include 파일 열기"
@@ -3537,7 +3558,7 @@
       "message": "풀밭"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "얕은 물"
+      "message": "여울"
     },
     "preview-panel.material.terrain.water": {
       "message": "물"
@@ -3615,7 +3636,7 @@
       "message": ".inc, .def 및 .xs 문서는 include 전용이므로 실행할 수 없습니다."
     },
     "preview-panel.tool.objects": {
-      "message": "오브젝트 및 마을 회관 점유 영역"
+      "message": "오브젝트 및 건물 점유 영역"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "미니맵 오브젝트"

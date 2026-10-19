@@ -1788,7 +1788,12 @@ function registerIpc(
       ? await realpath(linkedScripts).catch(() => linkedScripts)
       : null;
     workspaceServiceInstance?.setInstalledProtectedRoots(
-      linkedScripts && canonicalScripts ? [linkedScripts, canonicalScripts] : [],
+      linkedScripts && canonicalScripts
+        ? [linkedScripts, canonicalScripts].map((path) => ({
+            path,
+            reason: 'game-installation' as const,
+          }))
+        : [],
       'linked-installation',
     );
     workspaceService.setLocalStandardIncludePaths(localPaths);

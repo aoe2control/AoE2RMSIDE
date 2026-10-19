@@ -3081,17 +3081,31 @@ pub(crate) fn content_pack_descriptor(
     let standard_includes = profile_bundle
         .map(|bundle| bundle.standard_includes.standard_includes.clone())
         .unwrap_or_default();
-    let graphicless_object_ids =
-        if content.source.kind == ContentSourceKind::ReviewedBundle || local {
-            content
-                .objects
-                .iter()
-                .filter(|object| object.standing_graphic_id.is_none())
-                .map(|object| object.id.0)
-                .collect()
-        } else {
-            Vec::new()
-        };
+    let projected = content.source.kind == ContentSourceKind::ReviewedBundle || local;
+    let graphicless_object_ids = if projected {
+        content
+            .objects
+            .iter()
+            .filter(|object| object.standing_graphic_id.is_none())
+            .map(|object| object.id.0)
+            .collect()
+    } else {
+        Vec::new()
+    };
+    let object_class_ids = if projected
+        && content
+            .objects
+            .iter()
+            .all(|object| object.class_id <= u32::from(u16::MAX))
+    {
+        content
+            .objects
+            .iter()
+            .map(|object| object.class_id)
+            .collect()
+    } else {
+        Vec::new()
+    };
     Ok(v1::ContentPackDescriptor {
         pack_id: identity.pack_id,
         pack_version: identity.pack_version,
@@ -3110,6 +3124,7 @@ pub(crate) fn content_pack_descriptor(
         tree_object_ids: art.trees,
         gold_object_ids: art.gold,
         stone_object_ids: art.stone,
+        object_class_ids,
     })
 }
 

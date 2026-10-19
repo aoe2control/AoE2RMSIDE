@@ -33,7 +33,7 @@ import {
   MapIcon,
   MoveDiagonal2Icon,
   SunDimIcon,
-} from '@animateicons/react/lucide';
+} from './hover-scale-icon';
 import {
   Blend,
   ChevronUp,
@@ -1782,7 +1782,7 @@ function OpenFolderButton({
           />
         }
       >
-        <FolderOpenIcon aria-hidden="true" duration={0.4} ref={iconRef} size={14} />
+        <FolderOpenIcon aria-hidden="true" ref={iconRef} size={14} />
       </TooltipTrigger>
       <TooltipContent>{label}</TooltipContent>
     </Tooltip>

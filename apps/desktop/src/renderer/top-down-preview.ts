@@ -1,10 +1,11 @@
-import type { PreviewGenerationResult } from '../shared/api';
+import type { ContentPackDescriptor, PreviewGenerationResult } from '../shared/api';
 import { decodeCliffPieceColumn, type CliffPieceRecord } from '../shared/game-art';
+import { objectClassDescriptors } from '../shared/object-classes';
 import { decodeAppearanceObjectColumn } from '../shared/terrain-appearances';
 import type { ElevationSurface } from './preview-elevation';
 
 export const previewChunkSize = 32;
-export const minimumPreviewZoom = 0.95;
+export const minimumPreviewZoom = 0.76;
 export const closestPreviewTileScale = 72;
 export const minimumClosestPreviewZoom = 6;
 
@@ -25,6 +26,101 @@ export interface PreviewViewport {
   height: number;
   padding: number;
   projection?: PreviewProjection;
+  insetLeft?: number;
+  insetRight?: number;
+  behindEditor?: boolean;
+  focusInsetLeft?: number;
+  focusInsetRight?: number;
+  editorInsetLeft?: number;
+  editorInsetRight?: number;
+}
+
+export type PreviewZoomLimitViewport = Pick<
+  PreviewViewport,
+  | 'width'
+  | 'height'
+  | 'padding'
+  | 'insetLeft'
+  | 'insetRight'
+  | 'focusInsetLeft'
+  | 'focusInsetRight'
+  | 'editorInsetLeft'
+  | 'editorInsetRight'
+>;
+
+export function previewVisibleFitRatio(viewport: PreviewZoomLimitViewport): number {
+  const padding = viewport.padding * 2;
+  const height = Math.max(1, viewport.height - padding);
+  const laidOut = Math.min(Math.max(1, previewVisibleWidth(viewport) - padding), height);
+  const left = Math.max(
+    viewport.insetLeft ?? 0,
+    viewport.focusInsetLeft ?? 0,
+    viewport.editorInsetLeft ?? 0,
+  );
+  const right = Math.max(
+    viewport.insetRight ?? 0,
+    viewport.focusInsetRight ?? 0,
+    viewport.editorInsetRight ?? 0,
+  );
+  const visible = Math.min(Math.max(1, viewport.width - left - right - padding), height);
+  return Math.min(1, visible / laidOut);
+}
+
+export function minimumPreviewZoomFor(viewport: PreviewZoomLimitViewport): number {
+  return minimumPreviewZoom * previewVisibleFitRatio(viewport);
+}
+
+export function previewVisibleWidth(
+  viewport: Pick<PreviewViewport, 'width' | 'insetLeft' | 'insetRight'>,
+): number {
+  return Math.max(0, viewport.width - (viewport.insetLeft ?? 0) - (viewport.insetRight ?? 0));
+}
+
+export function previewViewCenter(
+  viewport: Pick<
+    PreviewViewport,
+    'width' | 'height' | 'insetLeft' | 'insetRight' | 'focusInsetLeft' | 'focusInsetRight'
+  >,
+): ScreenPoint {
+  const left = Math.max(viewport.insetLeft ?? 0, viewport.focusInsetLeft ?? 0);
+  const right = Math.max(viewport.insetRight ?? 0, viewport.focusInsetRight ?? 0);
+  return { x: left + Math.max(0, viewport.width - left - right) / 2, y: viewport.height / 2 };
+}
+
+export function samePreviewFocus(
+  left: Pick<PreviewViewport, 'focusInsetLeft' | 'focusInsetRight'>,
+  right: Pick<PreviewViewport, 'focusInsetLeft' | 'focusInsetRight'>,
+): boolean {
+  return (
+    Math.abs((left.focusInsetLeft ?? 0) - (right.focusInsetLeft ?? 0)) < 0.5 &&
+    Math.abs((left.focusInsetRight ?? 0) - (right.focusInsetRight ?? 0)) < 0.5
+  );
+}
+
+export function samePreviewEditorInsets(
+  left: Pick<PreviewViewport, 'editorInsetLeft' | 'editorInsetRight'>,
+  right: Pick<PreviewViewport, 'editorInsetLeft' | 'editorInsetRight'>,
+): boolean {
+  return (
+    Math.abs((left.editorInsetLeft ?? 0) - (right.editorInsetLeft ?? 0)) < 0.5 &&
+    Math.abs((left.editorInsetRight ?? 0) - (right.editorInsetRight ?? 0)) < 0.5
+  );
+}
+
+export function samePreviewViewport(left: PreviewViewport, right: PreviewViewport): boolean {
+  return (
+    left.width === right.width &&
+    left.height === right.height &&
+    left.padding === right.padding &&
+    left.projection === right.projection &&
+    (left.insetLeft ?? 0) === (right.insetLeft ?? 0) &&
+    (left.insetRight ?? 0) === (right.insetRight ?? 0) &&
+    (left.behindEditor ?? false) === (right.behindEditor ?? false) &&
+    (left.focusInsetLeft ?? 0) === (right.focusInsetLeft ?? 0) &&
+    (left.focusInsetRight ?? 0) === (right.focusInsetRight ?? 0) &&
+    (left.editorInsetLeft ?? 0) === (right.editorInsetLeft ?? 0) &&
+    (left.editorInsetRight ?? 0) === (right.editorInsetRight ?? 0)
+  );
 }
 
 export interface PreviewCamera {
@@ -58,6 +154,7 @@ export interface TopDownConnection {
 export interface TopDownObject {
   index: number;
   objectId: number;
+  objectClass?: number;
   x: number;
   y: number;
   owner: number;
@@ -167,14 +264,17 @@ export function decodeTopDownScene(
 
 export function appendAppearanceObjects(
   objects: TopDownObject[],
-  map: Pick<PreviewGenerationResult, 'appearanceObjectsLe' | 'width' | 'height'>,
+  map: Pick<PreviewGenerationResult, 'appearanceObjectsLe' | 'width' | 'height' | 'objectClasses'>,
 ): void {
   if (!map.appearanceObjectsLe) return;
   const records = decodeAppearanceObjectColumn(map.appearanceObjectsLe, map.width, map.height);
+  const classes = previewObjectClassLookup(map);
   for (const record of records ?? []) {
+    const objectClass = classes.get(record.objectId);
     objects.push({
       index: objects.length,
       objectId: record.objectId,
+      ...(objectClass === undefined ? {} : { objectClass }),
       x: record.x,
       y: record.y,
       owner: 0,
@@ -205,16 +305,10 @@ export function previewScale(
   camera: PreviewCamera,
   viewport: PreviewViewport,
 ): number {
-  const availableWidth = Math.max(1, viewport.width - viewport.padding * 2);
+  const availableWidth = Math.max(1, previewVisibleWidth(viewport) - viewport.padding * 2);
   const availableHeight = Math.max(1, viewport.height - viewport.padding * 2);
   const mapDiagonal = diamondBasisComponent * (mapWidth + mapHeight);
-  const verticalScale = previewProjectionVerticalScale(viewport);
-  return (
-    Math.max(
-      0.000_001,
-      Math.min(availableWidth / mapDiagonal, availableHeight / (mapDiagonal * verticalScale)),
-    ) * camera.zoom
-  );
+  return Math.max(0.000_001, Math.min(availableWidth, availableHeight) / mapDiagonal) * camera.zoom;
 }
 
 export function previewProjectionVerticalScale(
@@ -230,14 +324,12 @@ export const previewMarkerMaximumSpan = 4;
 
 export function previewObjectMarkerSpan(
   object: Pick<TopDownObject, 'footprintWidth' | 'footprintHeight' | 'presentationKind'>,
+  kind: TopDownObject['presentationKind'] = object.presentationKind,
 ): number {
   const footprint = Math.min(object.footprintWidth, object.footprintHeight);
   return Math.min(
     previewMarkerMaximumSpan,
-    Math.max(
-      previewMarkerMinimumSpan[object.presentationKind],
-      Number.isFinite(footprint) ? footprint : 0,
-    ),
+    Math.max(previewMarkerMinimumSpan[kind], Number.isFinite(footprint) ? footprint : 0),
   );
 }
 
@@ -300,9 +392,10 @@ export function mapToScreen(
   const verticalComponent = component * previewProjectionVerticalScale(viewport);
   const relativeX = point.x - camera.centerX;
   const relativeY = point.y - camera.centerY;
+  const center = previewViewCenter(viewport);
   return {
-    x: viewport.width / 2 + (relativeX + relativeY) * component,
-    y: viewport.height / 2 + (relativeY - relativeX) * verticalComponent,
+    x: center.x + (relativeX + relativeY) * component,
+    y: center.y + (relativeY - relativeX) * verticalComponent,
   };
 }
 
@@ -314,8 +407,9 @@ export function screenToMap(
   viewport: PreviewViewport,
 ): MapPoint {
   const scale = previewScale(mapWidth, mapHeight, camera, viewport);
-  const deltaX = point.x - viewport.width / 2;
-  const deltaY = point.y - viewport.height / 2;
+  const center = previewViewCenter(viewport);
+  const deltaX = point.x - center.x;
+  const deltaY = point.y - center.y;
   const component = scale * diamondBasisComponent;
   const relativeSum = deltaX / component;
   const relativeDifference = deltaY / (component * previewProjectionVerticalScale(viewport));
@@ -359,10 +453,11 @@ export function screenToLayerPoint(
   viewport: PreviewViewport,
 ): { s: number; t: number } {
   const component = previewScale(mapWidth, mapHeight, camera, viewport) * diamondBasisComponent;
+  const center = previewViewCenter(viewport);
   return {
-    s: (point.x - viewport.width / 2) / component + camera.centerX + camera.centerY,
+    s: (point.x - center.x) / component + camera.centerX + camera.centerY,
     t:
-      (point.y - viewport.height / 2) / (component * previewProjectionVerticalScale(viewport)) +
+      (point.y - center.y) / (component * previewProjectionVerticalScale(viewport)) +
       camera.centerY -
       camera.centerX,
   };
@@ -409,7 +504,10 @@ export function previewScreenTransform(
 }
 
 export function previewViewportIsCollapsed(viewport: PreviewViewport): boolean {
-  return viewport.width <= viewport.padding * 2 + 1 || viewport.height <= viewport.padding * 2 + 1;
+  return (
+    previewVisibleWidth(viewport) <= viewport.padding * 2 + 1 ||
+    viewport.height <= viewport.padding * 2 + 1
+  );
 }
 
 export function mapRectangleScreenPolygon(
@@ -429,33 +527,80 @@ export function mapRectangleScreenPolygon(
   return corners.flatMap((point) => [point.x, point.y]);
 }
 
+export function previewZoomIsMinimum(zoom: number, viewport: PreviewZoomLimitViewport): boolean {
+  return zoom <= minimumPreviewZoomFor(viewport) * (1 + 1e-9);
+}
+
+export function previewCameraIsCentred(
+  camera: PreviewCamera,
+  mapWidth: number,
+  mapHeight: number,
+): boolean {
+  return camera.centerX === mapWidth / 2 && camera.centerY === mapHeight / 2;
+}
+
+export function previewCameraForCentre(
+  camera: PreviewCamera,
+  mapWidth: number,
+  mapHeight: number,
+  drawn: PreviewViewport,
+  shown: PreviewViewport,
+): PreviewCamera {
+  if (samePreviewFocus(drawn, shown) || previewCameraIsCentred(camera, mapWidth, mapHeight)) {
+    return camera;
+  }
+  const before = {
+    ...shown,
+    focusInsetLeft: drawn.focusInsetLeft,
+    focusInsetRight: drawn.focusInsetRight,
+  };
+  const point = screenToMap(previewViewCenter(shown), mapWidth, mapHeight, camera, before);
+  return { zoom: camera.zoom, centerX: point.x, centerY: point.y };
+}
+
+export function clampPreviewCameraToMap(
+  camera: PreviewCamera,
+  mapWidth: number,
+  mapHeight: number,
+  viewport: PreviewViewport,
+): PreviewCamera {
+  const minimum = minimumPreviewZoomFor(viewport);
+  const zoom = previewZoomIsMinimum(camera.zoom, viewport)
+    ? minimum
+    : clamp(camera.zoom, minimum, maximumPreviewZoomFor(mapWidth, mapHeight, viewport));
+  if (
+    camera.centerX >= 0 &&
+    camera.centerX <= mapWidth &&
+    camera.centerY >= 0 &&
+    camera.centerY <= mapHeight
+  ) {
+    return { zoom, centerX: camera.centerX, centerY: camera.centerY };
+  }
+  const [clampedU, clampedV] = nearestPolygonPoint(
+    [
+      [0, 0],
+      [mapWidth, mapWidth],
+      [mapWidth + mapHeight, mapWidth - mapHeight],
+      [mapHeight, -mapHeight],
+    ],
+    [camera.centerX + camera.centerY, camera.centerX - camera.centerY],
+    previewProjectionVerticalScale(viewport),
+    [(mapWidth + mapHeight) / 2, (mapWidth - mapHeight) / 2],
+  );
+  return {
+    zoom,
+    centerX: (clampedU + clampedV) / 2,
+    centerY: (clampedU - clampedV) / 2,
+  };
+}
+
 export function clampPreviewCamera(
   camera: PreviewCamera,
   mapWidth: number,
   mapHeight: number,
   viewport: PreviewViewport,
 ): PreviewCamera {
-  const zoom = clamp(
-    camera.zoom,
-    minimumPreviewZoom,
-    maximumPreviewZoomFor(mapWidth, mapHeight, viewport),
-  );
-  const normalized = { ...camera, zoom };
-  const scale = previewScale(mapWidth, mapHeight, normalized, viewport);
-  const component = diamondBasisComponent * scale;
-  const verticalComponent = component * previewProjectionVerticalScale(viewport);
-  const halfVisibleU = Math.max(0, viewport.width - viewport.padding * 2) / (2 * component);
-  const halfVisibleV =
-    Math.max(0, viewport.height - viewport.padding * 2) / (2 * verticalComponent);
-  const cameraU = camera.centerX + camera.centerY;
-  const cameraV = camera.centerX - camera.centerY;
-  const clampedU = clampRangeCenter(cameraU, 0, mapWidth + mapHeight, halfVisibleU);
-  const clampedV = clampRangeCenter(cameraV, -mapHeight, mapWidth, halfVisibleV);
-  return {
-    zoom,
-    centerX: (clampedU + clampedV) / 2,
-    centerY: (clampedU - clampedV) / 2,
-  };
+  return clampPreviewCameraToMap(camera, mapWidth, mapHeight, viewport);
 }
 
 export function panPreviewCamera(
@@ -470,7 +615,7 @@ export function panPreviewCamera(
   const component = diamondBasisComponent * scale;
   const deltaU = deltaScreenX / component;
   const deltaV = deltaScreenY / (component * previewProjectionVerticalScale(viewport));
-  return clampPreviewCamera(
+  return clampPreviewCameraToMap(
     {
       ...camera,
       centerX: camera.centerX - (deltaU - deltaV) / 2,
@@ -493,17 +638,18 @@ export function zoomPreviewCamera(
   const mapAnchor = screenToMap(anchor, mapWidth, mapHeight, camera, viewport);
   const zoom = clamp(
     camera.zoom * factor,
-    minimumPreviewZoom,
+    minimumPreviewZoomFor(viewport),
     maximumPreviewZoomFor(mapWidth, mapHeight, viewport),
   );
   const candidate = { ...camera, zoom };
   const scale = previewScale(mapWidth, mapHeight, candidate, viewport);
-  const deltaX = anchor.x - viewport.width / 2;
-  const deltaY = anchor.y - viewport.height / 2;
+  const center = previewViewCenter(viewport);
+  const deltaX = anchor.x - center.x;
+  const deltaY = anchor.y - center.y;
   const component = diamondBasisComponent * scale;
   const relativeSum = deltaX / component;
   const relativeDifference = deltaY / (component * previewProjectionVerticalScale(viewport));
-  return clampPreviewCamera(
+  return clampPreviewCameraToMap(
     {
       zoom,
       centerX: mapAnchor.x - (relativeSum - relativeDifference) / 2,
@@ -851,15 +997,18 @@ function decodeObjects(
   ) {
     throw new Error('object byte columns have an invalid length');
   }
+  const classes = previewObjectClassLookup(map);
   return Array.from({ length: count }, (_, index) => {
     const x = xs[index]! / 256;
     const y = ys[index]! / 256;
     if (x < 0 || x > width || y < 0 || y > height) {
       throw new Error('object coordinate is outside the map');
     }
+    const objectClass = classes.get(ids[index]!);
     return {
       index,
       objectId: ids[index]!,
+      ...(objectClass === undefined ? {} : { objectClass }),
       x,
       y,
       owner: map.objects.owners[index]!,
@@ -879,18 +1028,80 @@ function decodeObjects(
   });
 }
 
+const objectClassLookups = new WeakMap<
+  NonNullable<PreviewGenerationResult['objectClasses']>,
+  ReadonlyMap<number, number>
+>();
+const noObjectClasses: ReadonlyMap<number, number> = new Map();
+
+export function previewObjectClassLookup(
+  map: Pick<PreviewGenerationResult, 'objectClasses'>,
+): ReadonlyMap<number, number> {
+  const table = map.objectClasses;
+  if (!table || table.length === 0) return noObjectClasses;
+  let lookup = objectClassLookups.get(table);
+  if (!lookup) {
+    lookup = new Map(table.map((entry) => [entry.objectId, entry.classId]));
+    objectClassLookups.set(table, lookup);
+  }
+  return lookup;
+}
+
+const contentObjectClassLookups = new WeakMap<
+  NonNullable<ContentPackDescriptor['objectClassIds']>,
+  ReadonlyMap<number, number>
+>();
+
+export function contentObjectClassLookup(
+  pack: Pick<ContentPackDescriptor, 'objectNames' | 'objectClassIds'>,
+): ReadonlyMap<number, number> {
+  const list = pack.objectClassIds;
+  if (!list || list.length === 0) return noObjectClasses;
+  let lookup = contentObjectClassLookups.get(list);
+  if (!lookup) {
+    lookup = new Map(
+      objectClassDescriptors(pack).map((entry) => [entry.objectId, entry.classId] as const),
+    );
+    contentObjectClassLookups.set(list, lookup);
+  }
+  return lookup;
+}
+
 function mapPointIsBounded(point: MapPoint, width: number, height: number): boolean {
   return point.x >= 0 && point.x < width && point.y >= 0 && point.y < height;
 }
 
-function clampRangeCenter(
-  value: number,
-  minimum: number,
-  maximum: number,
-  halfVisible: number,
-): number {
-  if (halfVisible >= (maximum - minimum) / 2) return (minimum + maximum) / 2;
-  return clamp(value, minimum + halfVisible, maximum - halfVisible);
+function nearestPolygonPoint(
+  polygon: Array<[number, number]>,
+  point: [number, number],
+  verticalScale: number,
+  fallback: [number, number],
+): [number, number] {
+  let nearest = fallback;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+  for (let index = 0; index < polygon.length; index += 1) {
+    const from = polygon[index]!;
+    const to = polygon[(index + 1) % polygon.length]!;
+    const edgeU = to[0] - from[0];
+    const edgeV = (to[1] - from[1]) * verticalScale;
+    const offsetU = point[0] - from[0];
+    const offsetV = (point[1] - from[1]) * verticalScale;
+    const lengthSquared = edgeU * edgeU + edgeV * edgeV;
+    const share =
+      lengthSquared > 0 ? clamp((offsetU * edgeU + offsetV * edgeV) / lengthSquared, 0, 1) : 0;
+    const candidate: [number, number] = [
+      from[0] + (to[0] - from[0]) * share,
+      from[1] + (to[1] - from[1]) * share,
+    ];
+    const distanceU = point[0] - candidate[0];
+    const distanceV = (point[1] - candidate[1]) * verticalScale;
+    const distance = distanceU * distanceU + distanceV * distanceV;
+    if (distance < nearestDistance) {
+      nearest = candidate;
+      nearestDistance = distance;
+    }
+  }
+  return nearest;
 }
 
 function clamp(value: number, minimum: number, maximum: number): number {

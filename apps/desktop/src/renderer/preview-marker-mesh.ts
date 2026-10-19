@@ -26,10 +26,11 @@ export class MarkerMeshBuilder {
   private vertexCount = 0;
   private indexCount = 0;
   private readonly zoom = new MarkerZoomRecorder();
-  private readonly outlinePoints = [
-    [0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
-    [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
-  ];
+  private readonly outlinePoints = new Map<number, number[]>([
+    [6, [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]],
+    [8, [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]],
+    [20, new Array<number>(20).fill(0.5)],
+  ]);
 
   get empty(): boolean {
     return this.indexCount === 0;
@@ -68,7 +69,7 @@ export class MarkerMeshBuilder {
     this.paint(firstVertex, vertexAdded, color, 1);
   }
 
-  polygon(points: readonly number[], color: number): void {
+  polygon(points: readonly number[], color: number, alpha = 1): void {
     const triangles = earcut(points as number[], noHoles, 2);
     if (!triangles) return;
     const firstVertex = this.vertexCount;
@@ -81,7 +82,7 @@ export class MarkerMeshBuilder {
     for (let index = 0; index < points.length; index += 1) {
       vertices[firstVertex * 2 + index] = points[index]!;
     }
-    this.paint(firstVertex, vertexAdded, color, 1);
+    this.paint(firstVertex, vertexAdded, color, alpha);
   }
 
   outline(
@@ -92,8 +93,8 @@ export class MarkerMeshBuilder {
     verticalScale: number,
     color: number,
   ): void {
-    const points = this.outlinePoints[unit.length === 6 ? 0 : 1]!;
-    if (points.length !== unit.length) {
+    const points = this.outlinePoints.get(unit.length);
+    if (!points) {
       this.polygon(
         unit.map((value, index) =>
           index % 2 === 0 ? x + value * radius : y + value * radius * verticalScale,
@@ -112,14 +113,14 @@ export class MarkerMeshBuilder {
   stroke(
     points: readonly number[],
     closed: boolean,
-    style: { color: number; width: number; alpha: number },
+    style: { color: number; width: number; alpha: number; cap?: 'butt' | 'square' },
   ): void {
     if (points.length <= 2) return;
     const vertices: number[] = [];
     const indices: number[] = [];
     buildLine(
       points as number[],
-      { ...markerStrokeStyle, width: style.width },
+      { ...markerStrokeStyle, width: style.width, cap: style.cap ?? markerStrokeStyle.cap },
       false,
       closed,
       vertices,

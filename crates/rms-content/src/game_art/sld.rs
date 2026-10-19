@@ -12,6 +12,11 @@ const UNKNOWN: u8 = 0x04;
 const DAMAGE: u8 = 0x08;
 const PLAYER: u8 = 0x10;
 const LAYERS: [u8; 5] = [MAIN, SHADOW, UNKNOWN, DAMAGE, PLAYER];
+const HEADER_SIZES: [u16; 2] = [14, 16];
+
+fn block_edge(canvas: u16) -> u16 {
+    canvas.div_ceil(4).saturating_mul(4)
+}
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 struct LayerRef {
@@ -71,8 +76,14 @@ impl<'a> SldFile<'a> {
         if count > MAXIMUM_SLD_FRAMES {
             return Err(GameArtError::Limit("SLD frames"));
         }
+        let header = reader.u16(10)?;
+        if !HEADER_SIZES.contains(&header) {
+            return Err(GameArtError::Unsupported(format!(
+                "SLD header size {header}"
+            )));
+        }
         let mut frames = Vec::with_capacity(count);
-        let mut at = 16;
+        let mut at = usize::from(header);
         for _ in 0..count {
             let canvas_width = reader.u16(at)?;
             let canvas_height = reader.u16(at + 2)?;
@@ -106,41 +117,43 @@ impl<'a> SldFile<'a> {
                     .checked_add(length)
                     .filter(|end| length >= 4 && *end <= bytes.len())
                     .ok_or(GameArtError::Truncated("SLD layer"))?;
-                let full = matches!(layer, MAIN | SHADOW | UNKNOWN);
-                let (rect, flags, commands) = if full {
-                    let rect = [
-                        reader.u16(at + 4)?,
-                        reader.u16(at + 6)?,
-                        reader.u16(at + 8)?,
-                        reader.u16(at + 10)?,
-                    ];
-                    (rect, reader.u8(at + 12)?, at + 14)
-                } else {
-                    let rect = main_rect.ok_or(GameArtError::Invalid("SLD mask without image"))?;
-                    (rect, reader.u8(at + 4)?, at + 6)
-                };
-                if commands > end {
-                    return Err(GameArtError::Truncated("SLD layer header"));
-                }
-                if layer != UNKNOWN {
+                if matches!(layer, MAIN | PLAYER) {
+                    let (rect, flags, commands) = if layer == MAIN {
+                        let rect = [
+                            reader.u16(at + 4)?,
+                            reader.u16(at + 6)?,
+                            reader.u16(at + 8)?,
+                            reader.u16(at + 10)?,
+                        ];
+                        (rect, reader.u8(at + 12)?, at + 14)
+                    } else {
+                        let rect =
+                            main_rect.ok_or(GameArtError::Invalid("SLD mask without image"))?;
+                        (rect, reader.u8(at + 4)?, at + 6)
+                    };
+                    if commands > end {
+                        return Err(GameArtError::Truncated("SLD layer header"));
+                    }
                     let [x1, y1, x2, y2] = rect;
-                    if x1 > x2 || y1 > y2 || x2 > canvas_width || y2 > canvas_height {
+                    if x1 > x2
+                        || y1 > y2
+                        || x2 > block_edge(canvas_width)
+                        || y2 > block_edge(canvas_height)
+                    {
                         return Err(GameArtError::Invalid("SLD layer rectangle"));
                     }
-                }
-                let reference = LayerRef {
-                    commands,
-                    end,
-                    rect,
-                    flags,
-                };
-                match layer {
-                    MAIN => {
+                    let reference = LayerRef {
+                        commands,
+                        end,
+                        rect,
+                        flags,
+                    };
+                    if layer == MAIN {
                         main_rect = Some(rect);
                         frame.main = Some(reference);
+                    } else {
+                        frame.player = Some(reference);
                     }
-                    PLAYER => frame.player = Some(reference),
-                    _ => {}
                 }
                 at = end + (4 - length % 4) % 4;
             }

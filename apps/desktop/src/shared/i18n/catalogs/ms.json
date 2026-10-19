@@ -956,6 +956,21 @@
     "settings.theme.scheme.default": {
       "message": "Lalai"
     },
+    "settings.theme.background-blur": {
+      "message": "Kabur latar belakang"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Jelas"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Kabur"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "Peta kelihatan tanpa kabur melalui butang, panel dan menu pratonton, serta melalui penyunting di atas peta."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "Peta di belakang butang, panel dan menu pratonton, serta di belakang penyunting di atas peta, kelihatan kabur."
+    },
     "settings.theme.close-label": {
       "message": "Tutup tetapan tema"
     },
@@ -3041,9 +3056,6 @@
     "code-editor.tab-menu.save": {
       "message": "Simpan"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Klon / Simpan Sebagai…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Simpan Sebagai…"
     },
@@ -3095,8 +3107,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Dikunci"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Rawakkan setiap pelaksanaan"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Kunci benih"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Gunakan benih perlawanan semasa"
@@ -3161,17 +3173,14 @@
     "code-editor.control-download.confirm": {
       "message": "Faham"
     },
-    "code-editor.preview.collapse": {
-      "message": "Runtuhkan pratonton peta langsung"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Sebelah-menyebelah"
     },
-    "code-editor.preview.expand": {
-      "message": "Kembangkan pratonton peta langsung"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Pratonton di belakang penyunting"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Runtuhkan Pratonton"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Kembangkan Pratonton"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Penyunting sahaja"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Tutup notis kegagalan pelaksanaan skrip"
@@ -3191,8 +3200,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "Sumber pemasangan atau mod langganan ini dilindungi. Gunakan Klon atau Simpan Sebagai."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Fail ini sebahagian daripada pemasangan permainan. Kemas kini permainan boleh menggantikannya, jadi fail ini tidak boleh disunting di sini. Simpan salinan untuk menyuntingnya."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Fail ini milik mod yang dilanggan. Kemas kini mod boleh menggantikannya, jadi fail ini tidak boleh disunting di sini. Simpan salinan untuk menyuntingnya."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE menulis sendiri fail mod ini setiap kali memasangnya, jadi suntingan di sini akan hilang. Sebaliknya, sunting salinan peta anda sendiri."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Fail ini baca sahaja dalam AoE2RMSIDE. Simpan salinan untuk menyuntingnya."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Simpan Sebagai…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Buka Fail Include"
@@ -3507,7 +3528,7 @@
       "message": "Objek pembantu"
     },
     "preview-panel.material.cliff": {
-      "message": "Tebing"
+      "message": "Cenuram"
     },
     "preview-panel.material.cliff-type": {
       "message": "Jenis tebing {id}"
@@ -3537,7 +3558,7 @@
       "message": "Rumput"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "Air cetek"
+      "message": "Kawasan Cetek"
     },
     "preview-panel.material.terrain.water": {
       "message": "Air"
@@ -3615,7 +3636,7 @@
       "message": "Dokumen .inc, .def dan .xs hanya untuk include dan tidak boleh dijalankan."
     },
     "preview-panel.tool.objects": {
-      "message": "Objek dan tapak Pusat Bandar"
+      "message": "Objek dan tapak bangunan"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Objek peta mini"
@@ -4215,7 +4236,7 @@
       "message": "Dapatan"
     },
     "game-options.map-size.tiny": {
-      "message": "Sangat kecil"
+      "message": "Sangat Kecil"
     },
     "game-options.map-size.small": {
       "message": "Kecil"
@@ -4266,7 +4287,7 @@
       "message": "Kalah Mati"
     },
     "game-options.game-mode.battle-royale": {
-      "message": "Battle Royale"
+      "message": "Pertempuran Besar-besaran"
     },
     "game-options.game-mode.empire-wars": {
       "message": "Perang Empayar"
@@ -4542,13 +4563,13 @@
       "message": "Orang Tupi"
     },
     "game-options.civilization.saxons": {
-      "message": "Orang Saxon"
+      "message": "Saxon"
     },
     "game-options.civilization.varangians": {
-      "message": "Orang Varangian"
+      "message": "Varangian"
     },
     "game-options.civilization.danes": {
-      "message": "Orang Denmark"
+      "message": "Denmark"
     },
     "game-options.civilization.unknown": {
       "message": "Tamadun {id}"

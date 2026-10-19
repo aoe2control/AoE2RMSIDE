@@ -10,6 +10,7 @@ import type { LanguagePreference, LocaleState } from './i18n/locale';
 import type { WorkspaceTreeChange } from './workspace-tree-change';
 import type { UpdateState } from './update';
 import type { EditorColorSchemeId } from './editor-color-scheme';
+import type { PreviewLayout } from './preview-layout';
 import type {
   ClipboardImageRequest,
   PreviewImageSaveRequest,
@@ -704,6 +705,12 @@ export interface ContentPackDescriptor {
   treeObjectIds?: number[];
   goldObjectIds?: number[];
   stoneObjectIds?: number[];
+  objectClassIds?: number[];
+}
+
+export interface ObjectClassDescriptor {
+  objectId: number;
+  classId: number;
 }
 
 export type MapIconArtKind = 'tree' | 'gold' | 'stone';
@@ -797,6 +804,7 @@ export interface PreviewGenerationResult {
   objectNames: ObjectNameDescriptor[];
   graphiclessObjectIds?: number[];
   mapIconArtObjects?: MapIconArtObjectDescriptor[];
+  objectClasses?: ObjectClassDescriptor[];
   terrainNames: TerrainNameDescriptor[];
   constantNames?: RmsConstantNames;
   minimapPalette: SelectedMinimapPalette | null;
@@ -1715,6 +1723,7 @@ export interface LanguageServerDiagnostic {
 
 export type WorkspaceEntryKind = 'file' | 'folder';
 export type WorkspaceSourceKind = 'ordinary' | 'protected';
+export type ProtectedSourceReason = 'game-installation' | 'subscribed-mod' | 'managed-mod';
 export type SourceEncodingName = 'utf8' | 'utf8-bom' | 'windows-1252';
 export type SourceNewlineStyle = 'none' | 'lf' | 'crlf' | 'cr' | 'mixed';
 
@@ -1728,6 +1737,7 @@ export interface WorkspaceDocument {
   newlineStyle: SourceNewlineStyle;
   sourceKind: WorkspaceSourceKind;
   readOnly: boolean;
+  protectedReason?: ProtectedSourceReason;
   diskHash: string;
 }
 
@@ -1885,6 +1895,7 @@ export interface RecoveryDocument {
   newlineStyle: SourceNewlineStyle;
   sourceKind: WorkspaceSourceKind;
   readOnly: boolean;
+  protectedReason?: ProtectedSourceReason;
   diskHash: string;
   dirty: boolean;
   viewState?: MonacoViewState | null;
@@ -1935,6 +1946,7 @@ export interface DesktopSession {
   version: 1;
   themePreference: ThemePreference;
   editorColorScheme: EditorColorSchemeId;
+  previewBlur: boolean;
   formatOnSave: boolean;
   indentConditionals: boolean;
   liveGenerationStages: boolean;
@@ -1977,6 +1989,8 @@ export interface DesktopSession {
     explorerExpanded: boolean;
     explorerWidth: number;
     previewExpanded: boolean;
+    previewLayout: PreviewLayout;
+    overlayEditorShown: boolean;
     previewWidth: number | null;
     bottomPanelHeight: number;
     bottomPanelTab: 'problems' | 'output' | 'test-results';

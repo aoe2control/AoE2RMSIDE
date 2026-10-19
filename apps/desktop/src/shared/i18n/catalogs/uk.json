@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Стандартна"
     },
+    "settings.theme.background-blur": {
+      "message": "Розмиття тла"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Чітке"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Розмите"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "Мапа просвічує без розмиття крізь кнопки, панелі та меню перегляду і крізь редактор над мапою."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "Мапа за кнопками, панелями та меню перегляду і за редактором над мапою розмита."
+    },
     "settings.theme.close-label": {
       "message": "Закрити налаштування теми"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Зберегти"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Клонувати / Зберегти як…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Зберегти як…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Зафіксоване"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Випадкове при запуску"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Зафіксувати зерно"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Узяти зерно поточної гри"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Зрозуміло"
     },
-    "code-editor.preview.collapse": {
-      "message": "Згорнути поточний перегляд мапи"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Поруч"
     },
-    "code-editor.preview.expand": {
-      "message": "Розгорнути поточний перегляд мапи"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Перегляд за редактором"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Згорнути перегляд"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Розгорнути перегляд"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Лише редактор"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Закрити повідомлення про збій виконання скрипту"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent} %"
     },
-    "code-editor.read-only-message": {
-      "message": "Цей код із папки гри або моду з підписки захищений. Скористайтеся «Клонувати» або «Зберегти як»."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Цей файл є частиною інсталяції гри. Оновлення гри можуть його замінити, тому тут його не можна редагувати. Щоб редагувати, збережіть копію."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Цей файл належить моду за підпискою. Оновлення моду можуть його замінити, тому тут його не можна редагувати. Щоб редагувати, збережіть копію."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE сама записує файли цього моду під час розгортання, тому зміни тут буде втрачено. Натомість редагуйте власну копію мапи."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Цей файл у AoE2RMSIDE доступний лише для читання. Щоб редагувати, збережіть копію."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Зберегти як…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Відкрити включений файл"
@@ -3607,7 +3628,7 @@
       "message": "Документи .inc, .def і .xs призначені лише для включення, їх не можна запускати."
     },
     "preview-panel.tool.objects": {
-      "message": "Об’єкти й контур міського центру"
+      "message": "Об’єкти й контури будівель"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Об’єкти мінімапи"

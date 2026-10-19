@@ -60,11 +60,25 @@ export interface Presence {
   ref(element: HTMLElement | null): void;
 }
 
-export function usePresence(present: boolean): Presence {
+export function usePresence(present: boolean, { reversible = true } = {}): Presence {
   const [mounted, setMounted] = useState(present);
+  const [leaving, setLeaving] = useState(false);
+  const [resting, setResting] = useState(false);
   const element = useRef<HTMLElement | null>(null);
-  if (present && !mounted) setMounted(true);
-  const closing = mounted && !present;
+  const committedClosing = useRef(false);
+  if (present && !mounted && !resting) setMounted(true);
+  if (present && mounted && !leaving && !reversible && committedClosing.current) setLeaving(true);
+  const latched = leaving || (present && mounted && !reversible && committedClosing.current);
+  const closing = mounted && (!present || latched);
+  const leavingNow = useRef(latched);
+  leavingNow.current = latched;
+  useEffect(() => {
+    committedClosing.current = closing;
+  });
+  useEffect(() => {
+    if (!resting) return;
+    setResting(false);
+  }, [resting]);
   useEffect(() => {
     if (!closing) return undefined;
     let active = true;
@@ -72,6 +86,10 @@ export function usePresence(present: boolean): Presence {
       if (!active) return;
       active = false;
       setMounted(false);
+      if (leavingNow.current) {
+        setLeaving(false);
+        setResting(true);
+      }
     };
     const node = element.current;
     const animations = node ? finiteAnimations(node) : [];
@@ -85,11 +103,11 @@ export function usePresence(present: boolean): Presence {
       active = false;
       window.clearTimeout(ceiling);
     };
-  }, [closing]);
+  }, [closing, leaving]);
   const ref = useCallback((node: HTMLElement | null) => {
     element.current = node;
   }, []);
-  return { closing, mounted: mounted || present, ref };
+  return { closing, mounted: mounted || (present && !resting), ref };
 }
 
 export function presenceProps(closing: boolean): {

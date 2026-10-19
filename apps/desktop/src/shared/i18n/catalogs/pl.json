@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Domyślny"
     },
+    "settings.theme.background-blur": {
+      "message": "Rozmycie tła"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Ostre"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Rozmyte"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "Mapa prześwituje bez rozmycia przez przyciski, panele i menu podglądu oraz przez edytor nad mapą."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "Mapa za przyciskami, panelami i menu podglądu oraz za edytorem nad mapą jest rozmyta."
+    },
     "settings.theme.close-label": {
       "message": "Zamknij ustawienia motywu"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Zapisz"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Klonuj / Zapisz jako…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Zapisz jako…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Zablokowane"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Losuj przy uruchomieniu"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Zablokuj ziarno"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Użyj ziarna bieżącej rozgrywki"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Rozumiem"
     },
-    "code-editor.preview.collapse": {
-      "message": "Zwiń podgląd mapy na żywo"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Obok siebie"
     },
-    "code-editor.preview.expand": {
-      "message": "Rozwiń podgląd mapy na żywo"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Podgląd za edytorem"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Zwiń Podgląd"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Rozwiń Podgląd"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Tylko edytor"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Zamknij powiadomienie o błędzie wykonania skryptu"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "Ten plik instalacji lub subskrybowanego moda jest chroniony. Użyj polecenia Klonuj lub Zapisz jako."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Ten plik należy do instalacji gry. Aktualizacje gry mogą go zastąpić, dlatego nie można go tu edytować. Zapisz kopię, aby go edytować."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Ten plik należy do subskrybowanego moda. Aktualizacje moda mogą go zastąpić, dlatego nie można go tu edytować. Zapisz kopię, aby go edytować."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE sam zapisuje pliki tego moda przy każdym wdrożeniu, więc wprowadzone tu zmiany zostałyby utracone. Zamiast tego edytuj własną kopię mapy."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Ten plik jest w AoE2RMSIDE tylko do odczytu. Zapisz kopię, aby go edytować."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Zapisz jako…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Otwórz dołączany plik"
@@ -3529,7 +3550,7 @@
       "message": "Trawa"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "Płycizna"
+      "message": "Płytkie wody"
     },
     "preview-panel.material.terrain.water": {
       "message": "Woda"
@@ -3607,7 +3628,7 @@
       "message": "Pliki .inc, .def i .xs służą tylko do dołączania i nie można ich uruchamiać samodzielnie."
     },
     "preview-panel.tool.objects": {
-      "message": "Obiekty i obrys centrum miasta"
+      "message": "Obiekty i obrysy budynków"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Obiekty minimapy"
@@ -4225,7 +4246,7 @@
       "message": "Wielka"
     },
     "game-options.map-size.ludicrous": {
-      "message": "Niedorzeczna"
+      "message": "Niedorzeczne"
     },
     "game-options.map-size.option": {
       "message": "{size} ({width}×{height})"

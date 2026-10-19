@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Varsayılan"
     },
+    "settings.theme.background-blur": {
+      "message": "Arka plan bulanıklığı"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Net"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Bulanık"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "Harita, önizlemenin düğmeleri, panelleri ve menüleri ile haritanın üzerindeki editörün ardından bulanıklaşmadan görünür."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "Önizlemenin düğmeleri, panelleri ve menüleri ile haritanın üzerindeki editörün arkasında kalan harita bulanıklaşır."
+    },
     "settings.theme.close-label": {
       "message": "Tema ayarlarını kapat"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Kaydet"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Klonla / Farklı kaydet…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Farklı kaydet…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Kilitli"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Çalıştırırken rastgele seç"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Tohumu kilitle"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Mevcut maçın tohumunu kullan"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Anladım"
     },
-    "code-editor.preview.collapse": {
-      "message": "Canlı harita önizlemesini gizle"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Yan yana"
     },
-    "code-editor.preview.expand": {
-      "message": "Canlı harita önizlemesini göster"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Önizleme editörün arkasında"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Önizlemeyi gizle"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Önizlemeyi göster"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Yalnızca editör"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Betik çalıştırma hatası bildirimini kapat"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "%{percent}"
     },
-    "code-editor.read-only-message": {
-      "message": "Bu kurulum veya abone olunan mod kaynağı korumalıdır. Klonla veya Farklı kaydet seçeneğini kullanın."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Bu dosya oyun kurulumunun bir parçasıdır. Oyun güncellemeleri onu değiştirebilir, bu yüzden burada düzenlenemez. Düzenlemek için bir kopyasını kaydedin."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Bu dosya abone olunan bir moda aittir. Mod güncellemeleri onu değiştirebilir, bu yüzden burada düzenlenemez. Düzenlemek için bir kopyasını kaydedin."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE bu modun dosyalarını kurulum sırasında kendisi yazar, bu yüzden burada yapılan düzenlemeler kaybolur. Bunun yerine haritanın kendi kopyanızı düzenleyin."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Bu dosya AoE2RMSIDE içinde salt okunurdur. Düzenlemek için bir kopyasını kaydedin."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Farklı kaydet…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Dahil edilen dosyayı aç"
@@ -3529,13 +3550,13 @@
       "message": "Çimen"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "Sığ su"
+      "message": "Sığlık"
     },
     "preview-panel.material.terrain.water": {
       "message": "Su"
     },
     "preview-panel.material.terrain.beach": {
-      "message": "Kumsal"
+      "message": "Sahil"
     },
     "preview-panel.material.terrain.earth": {
       "message": "Çıplak toprak"
@@ -3607,7 +3628,7 @@
       "message": ".inc, .def ve .xs belgeleri yalnızca başka betiklere dahil edilebilir; çalıştırılamaz."
     },
     "preview-panel.tool.objects": {
-      "message": "Nesneler ve Şehir Merkezinin kapladığı alan"
+      "message": "Nesneler ve binaların kapladığı alan"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Küçük harita nesneleri"

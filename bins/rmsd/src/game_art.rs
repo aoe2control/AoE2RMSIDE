@@ -670,10 +670,24 @@ pub(crate) fn standing_frame(
 
 type CacheFiles = Vec<(String, Vec<u8>)>;
 
+const NO_VISIBLE_STANDING_FRAME: &str = "the sprite has no visible standing frame";
+
+#[derive(Debug, Eq, PartialEq)]
+enum GraphicFailure {
+    NoVisibleFrame,
+    Other(String),
+}
+
+impl From<String> for GraphicFailure {
+    fn from(reason: String) -> Self {
+        Self::Other(reason)
+    }
+}
+
 fn convert_graphic(
     graphic: &game_art::ArtGraphic,
     bytes: &[u8],
-) -> Result<(SpriteGraphic, CacheFiles), String> {
+) -> Result<(SpriteGraphic, CacheFiles), GraphicFailure> {
     let file = game_art::sld::SldFile::parse(bytes).map_err(|error| error.to_string())?;
     let facings = usize::from(graphic.angle_count.max(1)).min(MAXIMUM_FACINGS);
     let mut outputs = Vec::new();
@@ -740,7 +754,7 @@ fn convert_graphic(
         });
     }
     if described.is_empty() {
-        return Err("the sprite has no visible standing frame".to_owned());
+        return Err(GraphicFailure::NoVisibleFrame);
     }
     Ok((
         SpriteGraphic {
@@ -846,6 +860,7 @@ fn sprites_inner(
         .collect::<Vec<_>>();
     let total = graphics.len() as u32;
     let mut result = Ok(());
+    let mut imageless = BTreeSet::new();
     for (position, id) in graphics.iter().enumerate() {
         if let Err(failure) = outcome.check(context) {
             result = Err(failure);
@@ -863,6 +878,9 @@ fn sprites_inner(
                         .resolve(&SPRITES, &format!("{}.{extension}", graphic.file))
                         .is_ok()
                 });
+                if !other {
+                    imageless.insert(*id);
+                }
                 outcome.fallback(
                     entry.clone(),
                     if other {
@@ -884,7 +902,7 @@ fn sprites_inner(
                     outcome.reused += 1;
                 } else {
                     let converted = Source::read(&path, MAXIMUM_SPRITE_BYTES)
-                        .map_err(read_failure_reason)
+                        .map_err(|error| GraphicFailure::Other(read_failure_reason(error)))
                         .and_then(|bytes| convert_graphic(graphic, &bytes));
                     match converted {
                         Ok((described, files)) => {
@@ -910,7 +928,14 @@ fn sprites_inner(
                                 }
                             }
                         }
-                        Err(reason) => {
+                        Err(failure) => {
+                            let reason = match failure {
+                                GraphicFailure::NoVisibleFrame => {
+                                    imageless.insert(*id);
+                                    NO_VISIBLE_STANDING_FRAME.to_owned()
+                                }
+                                GraphicFailure::Other(reason) => reason,
+                            };
                             outcome.fallback(entry.clone(), reason);
                             index.graphics.remove(&id.to_string());
                         }
@@ -919,6 +944,13 @@ fn sprites_inner(
             }
         }
         outcome.progress(context, Phase::Sprites, position as u32 + 1, total, false);
+    }
+    for (key, art) in &objects {
+        if let Some(entry) = index.objects.get_mut(key) {
+            entry.invisible = catalog.shows_nothing(art.object, art.civilization, &|graphic| {
+                imageless.contains(&graphic)
+            });
+        }
     }
     index
         .graphics

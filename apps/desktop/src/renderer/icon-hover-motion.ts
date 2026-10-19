@@ -8,6 +8,13 @@ export type IconPoseChannel = keyof IconPose;
 
 const channels: readonly IconPoseChannel[] = ['scale', 'rotate', 'y'];
 
+export interface IconHoverVariants {
+  normal: IconPose;
+  animate: Readonly<Record<IconPoseChannel, readonly number[]>> & {
+    transition: { duration: number; ease: 'easeInOut' };
+  };
+}
+
 export const iconHoverVariants = {
   normal: { scale: 1, rotate: 0, y: 0 },
   animate: {
@@ -16,7 +23,21 @@ export const iconHoverVariants = {
     y: [0, -2, 1, 0],
     transition: { duration: 0.9, ease: 'easeInOut' },
   },
-} as const;
+} as const satisfies IconHoverVariants;
+
+export const iconScaleHoverVariants = {
+  normal: { scale: 1, rotate: 0, y: 0 },
+  animate: {
+    scale: [1, 1.1, 1],
+    rotate: [0],
+    y: [0],
+    transition: { duration: 0.6, ease: 'easeInOut' },
+  },
+} as const satisfies IconHoverVariants;
+
+export function iconScaleTransform(pose: IconPose): string {
+  return `scale(${pose.scale})`;
+}
 
 export const easeInOutCurve = [0.42, 0, 0.58, 1] as const;
 
@@ -108,6 +129,7 @@ export function springDuration(spring: (t: number) => { done: boolean }): number
 
 export interface IconHoverMotionOptions {
   render(pose: IconPose | null): void;
+  variants?: IconHoverVariants;
   duration?: number;
   now?: () => number;
   requestFrame?: (callback: () => void) => number;
@@ -135,12 +157,13 @@ export function createIconHoverMotion(options: IconHoverMotionOptions): IconHove
   const requestFrame = options.requestFrame ?? ((callback) => requestAnimationFrame(callback));
   const cancelFrame = options.cancelFrame ?? ((handle) => cancelAnimationFrame(handle));
   const reducedMotion = options.reducedMotion ?? (() => false);
-  const duration = iconHoverVariants.animate.transition.duration * (options.duration ?? 1) * 1000;
+  const variants = options.variants ?? iconHoverVariants;
+  const duration = variants.animate.transition.duration * (options.duration ?? 1) * 1000;
   const state = Object.fromEntries(
     channels.map((channel) => [
       channel,
       {
-        value: iconHoverVariants.normal[channel],
+        value: variants.normal[channel],
         previous: undefined,
         updatedAt: 0,
         previousUpdatedAt: 0,
@@ -152,7 +175,7 @@ export function createIconHoverMotion(options: IconHoverMotionOptions): IconHove
   let frame: number | null = null;
 
   const atRest = () =>
-    channels.every((channel) => state[channel].value === iconHoverVariants.normal[channel]);
+    channels.every((channel) => state[channel].value === variants.normal[channel]);
   const cancel = () => {
     if (frame !== null) cancelFrame(frame);
     frame = null;
@@ -161,7 +184,7 @@ export function createIconHoverMotion(options: IconHoverMotionOptions): IconHove
   const rest = () => {
     cancel();
     for (const channel of channels) {
-      state[channel].value = iconHoverVariants.normal[channel];
+      state[channel].value = variants.normal[channel];
       state[channel].previous = undefined;
     }
     options.render(null);
@@ -217,7 +240,7 @@ export function createIconHoverMotion(options: IconHoverMotionOptions): IconHove
       }
       const at = now();
       advance(at);
-      const tracks = iconHoverVariants.animate;
+      const tracks = variants.animate;
       play(
         (elapsed) => ({
           pose: {
@@ -244,14 +267,14 @@ export function createIconHoverMotion(options: IconHoverMotionOptions): IconHove
       const springs = channels.map((channel) => {
         const spring = returnSpring(
           state[channel].value,
-          iconHoverVariants.normal[channel],
+          variants.normal[channel],
           velocityOf(channel, at),
           iconHoverReturnSprings[channel],
         );
         return { channel, spring, settlesAt: springDuration(spring) };
       });
       play((elapsed) => {
-        const pose: IconPose = { ...iconHoverVariants.normal };
+        const pose: IconPose = { ...variants.normal };
         for (const { channel, spring, settlesAt } of springs) {
           if (elapsed < settlesAt) pose[channel] = spring(elapsed).value;
         }

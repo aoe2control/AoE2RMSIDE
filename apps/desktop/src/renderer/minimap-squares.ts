@@ -5,9 +5,9 @@ import {
   ownerPreviewColor,
 } from './preview-materials';
 import {
-  minimumPreviewZoom,
   previewProjectionVerticalScale,
   previewScale,
+  previewVisibleFitRatio,
   type PreviewCamera,
   type PreviewViewport,
   type ZoomSizeLaw,
@@ -245,6 +245,8 @@ export function minimapSquareDrawLayer(kind: MinimapSquareClass): 0 | 1 | 2 | 3 
   return 1;
 }
 
+export const minimapSquareBaseZoom = 0.95;
+
 export function previewMinimapSquareSizes(
   mapWidth: number,
   mapHeight: number,
@@ -273,8 +275,12 @@ function previewMinimapSquareSizeInput(
 ): MinimapSquareSizeInput {
   const component = previewScale(mapWidth, mapHeight, camera, viewport) * Math.SQRT1_2;
   const baseComponent =
-    previewScale(mapWidth, mapHeight, { ...camera, zoom: minimumPreviewZoom }, viewport) *
-    Math.SQRT1_2;
+    previewScale(
+      mapWidth,
+      mapHeight,
+      { ...camera, zoom: minimapSquareBaseZoom * previewVisibleFitRatio(viewport) },
+      viewport,
+    ) * Math.SQRT1_2;
   return { component, baseComponent, verticalScale: previewProjectionVerticalScale(viewport) };
 }
 

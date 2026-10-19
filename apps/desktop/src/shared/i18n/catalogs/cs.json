@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Výchozí"
     },
+    "settings.theme.background-blur": {
+      "message": "Rozmazání pozadí"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Ostré"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Rozmazané"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "Mapa prosvítá tlačítky, panely a nabídkami náhledu i editorem nad mapou bez rozmazání."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "Mapa za tlačítky, panely a nabídkami náhledu i za editorem nad mapou je rozmazaná."
+    },
     "settings.theme.close-label": {
       "message": "Zavřít nastavení motivu"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Uložit"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Klonovat / Uložit jako…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Uložit jako…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Uzamčeno"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Náhodné při spuštění"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Uzamknout semínko"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Použít semínko aktuálního zápasu"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Rozumím"
     },
-    "code-editor.preview.collapse": {
-      "message": "Skrýt průběžný náhled mapy"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Vedle sebe"
     },
-    "code-editor.preview.expand": {
-      "message": "Zobrazit průběžný náhled mapy"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Náhled za editorem"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Skrýt Náhled"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Zobrazit Náhled"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Jen editor"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Zavřít oznámení o selhání spuštění skriptu"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent} %"
     },
-    "code-editor.read-only-message": {
-      "message": "Tento zdrojový kód z instalace nebo odebíraného modu je chráněn. Použijte Klonovat nebo Uložit jako."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Tento soubor je součástí instalace hry. Aktualizace hry jej mohou nahradit, proto jej zde nelze upravovat. Chcete-li jej upravit, uložte si kopii."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Tento soubor patří k odebíranému modu. Aktualizace modu jej mohou nahradit, proto jej zde nelze upravovat. Chcete-li jej upravit, uložte si kopii."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE při nasazení zapisuje soubory tohoto modu sám, takže úpravy provedené zde by se ztratily. Upravte místo toho vlastní kopii mapy."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Tento soubor je v AoE2RMSIDE jen pro čtení. Chcete-li jej upravit, uložte si kopii."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Uložit jako…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Otevřít vložený soubor"
@@ -3607,7 +3628,7 @@
       "message": "Dokumenty .inc, .def a .xs slouží pouze k vložení do jiného skriptu a nelze je spustit samostatně."
     },
     "preview-panel.tool.objects": {
-      "message": "Objekty a půdorys městského centra"
+      "message": "Objekty a půdorysy budov"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Objekty minimapy"

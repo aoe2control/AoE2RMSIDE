@@ -2,14 +2,17 @@ import { Radio } from '@base-ui/react/radio';
 import { RadioGroup } from '@base-ui/react/radio-group';
 import type { CSSProperties, ReactNode } from 'react';
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 interface SegmentedControlOption<Value extends string> {
   value: Value;
   label: ReactNode;
+  tooltip?: ReactNode;
 }
 
 function SegmentedControl<Value extends string>({
+  backdrop,
   className,
   label,
   onValueChange,
@@ -17,6 +20,7 @@ function SegmentedControl<Value extends string>({
   value,
   ...props
 }: {
+  backdrop?: ReactNode;
   className?: string;
   label?: string;
   'aria-labelledby'?: string;
@@ -34,6 +38,7 @@ function SegmentedControl<Value extends string>({
       aria-label={label}
       className={cn('segmented-control', className)}
       data-slot="segmented-control"
+      data-value={value}
       onValueChange={(next) => onValueChange(next)}
       style={
         {
@@ -44,19 +49,34 @@ function SegmentedControl<Value extends string>({
       value={value}
       {...props}
     >
+      {backdrop ? (
+        <span aria-hidden="true" className="segmented-control-backdrop">
+          {backdrop}
+        </span>
+      ) : null}
       <span aria-hidden="true" className="segmented-control-indicator" />
-      {options.map((option) => (
-        <Radio.Root<Value>
-          className="segmented-control-item"
-          data-slot="segmented-control-item"
-          key={option.value}
-          nativeButton
-          render={<button type="button" />}
-          value={option.value}
-        >
-          {option.label}
-        </Radio.Root>
-      ))}
+      {options.map((option) => {
+        const button = <button type="button" />;
+        const item = (
+          <Radio.Root<Value>
+            className="segmented-control-item"
+            data-slot="segmented-control-item"
+            key={option.value}
+            nativeButton
+            render={option.tooltip === undefined ? button : <TooltipTrigger render={button} />}
+            value={option.value}
+          >
+            {option.label}
+          </Radio.Root>
+        );
+        if (option.tooltip === undefined) return item;
+        return (
+          <Tooltip key={option.value}>
+            {item}
+            <TooltipContent>{option.tooltip}</TooltipContent>
+          </Tooltip>
+        );
+      })}
     </RadioGroup>
   );
 }

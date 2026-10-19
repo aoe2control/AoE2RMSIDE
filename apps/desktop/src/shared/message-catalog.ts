@@ -1690,7 +1690,7 @@ const desktopRefusalCatalog: Record<string, CatalogEntry> = {
   'files.too-large': {
     cause: (facts) => t('message.files.too-large.cause', { limit: numberParam(facts, 'limit') }),
   },
-  'files.protected': { cause: 'code-editor.read-only-message' },
+  'files.protected': { cause: 'message.files.protected-target.cause' },
   'files.protected-target': { cause: 'message.files.protected-target.cause' },
   'files.extension-required': {
     cause: (facts) =>

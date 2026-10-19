@@ -486,14 +486,16 @@ body.rmside-monaco-056 {
 .rmside-monaco-056 .monaco-hover .hover-row.status-bar .actions .action-container a,
 .rmside-monaco-056 .monaco-hover .markdown-hover a:not(.code-link),
 .rmside-monaco-056 .monaco-editor .parameter-hints-widget .docs a,
-.rmside-monaco-056 .monaco-editor .suggest-details .docs a {
+.rmside-monaco-056 .monaco-editor .suggest-details .docs a,
+.rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage .message a {
   color: var(--primary) !important;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .rmside-monaco-056 .monaco-hover .hover-row.status-bar .actions .action-container a:hover,
-.rmside-monaco-056 .monaco-hover .markdown-hover a:not(.code-link):hover {
+.rmside-monaco-056 .monaco-hover .markdown-hover a:not(.code-link):hover,
+.rmside-monaco-056 .monaco-editor .monaco-editor-overlaymessage .message a:hover {
   color: var(--vscode-textLink-activeForeground) !important;
 }
 
@@ -743,6 +745,107 @@ body.rmside-monaco-056 {
 .rmside-monaco-056 .quick-input-widget .monaco-icon-label,
 .rmside-monaco-056 .quick-input-widget .monaco-list-row.focused .codicon {
   color: inherit !important;
+}
+
+.rmside-monaco-056
+  .fixed-workspace[data-preview-overlay='true']
+  .monaco-editor-mount
+  > .monaco-editor {
+  background-color: color-mix(
+    in srgb,
+    var(--vscode-editor-background) calc(var(--editor-surface-alpha, 1) * 100%),
+    transparent
+  );
+}
+
+.rmside-monaco-056
+  .fixed-workspace[data-preview-overlay='true']
+  .monaco-editor-mount
+  > .monaco-editor
+  > .overflow-guard
+  > .margin,
+.rmside-monaco-056
+  .fixed-workspace[data-preview-overlay='true']
+  .monaco-editor-mount
+  > .monaco-editor
+  > .overflow-guard
+  > .editor-scrollable
+  > .lines-content {
+  background-color: transparent;
+}
+
+.rmside-monaco-056 .monaco-editor:not(.hc-black, .hc-light) .cslr.monaco-editor-background {
+  background-color: transparent;
+}
+
+.rmside-monaco-056
+  .monaco-editor:not(.hc-black, .hc-light)
+  .cslr.selected-text:has(+ .cslr.monaco-editor-background) {
+  --rmside-selection-radius: 3px;
+  --rmside-corner-top-left: linear-gradient(transparent, transparent);
+  --rmside-corner-top-right: linear-gradient(transparent, transparent);
+  --rmside-corner-bottom-left: linear-gradient(transparent, transparent);
+  --rmside-corner-bottom-right: linear-gradient(transparent, transparent);
+  mask-image:
+    var(--rmside-corner-top-left), var(--rmside-corner-top-right), var(--rmside-corner-bottom-left),
+    var(--rmside-corner-bottom-right);
+  mask-position:
+    left top,
+    right top,
+    left bottom,
+    right bottom;
+  mask-repeat: no-repeat;
+  mask-size: var(--rmside-selection-radius) var(--rmside-selection-radius);
+}
+
+.rmside-monaco-056
+  .monaco-editor:not(.hc-black, .hc-light)
+  .cslr.selected-text:has(+ .cslr.monaco-editor-background.top-left-radius) {
+  --rmside-corner-top-left: radial-gradient(
+    circle at 100% 100%,
+    transparent calc(var(--rmside-selection-radius) - 0.5px),
+    black calc(var(--rmside-selection-radius) + 0.5px)
+  );
+}
+
+.rmside-monaco-056
+  .monaco-editor:not(.hc-black, .hc-light)
+  .cslr.selected-text:has(+ .cslr.monaco-editor-background.top-right-radius) {
+  --rmside-corner-top-right: radial-gradient(
+    circle at 0 100%,
+    transparent calc(var(--rmside-selection-radius) - 0.5px),
+    black calc(var(--rmside-selection-radius) + 0.5px)
+  );
+}
+
+.rmside-monaco-056
+  .monaco-editor:not(.hc-black, .hc-light)
+  .cslr.selected-text:has(+ .cslr.monaco-editor-background.bottom-left-radius) {
+  --rmside-corner-bottom-left: radial-gradient(
+    circle at 100% 0,
+    transparent calc(var(--rmside-selection-radius) - 0.5px),
+    black calc(var(--rmside-selection-radius) + 0.5px)
+  );
+}
+
+.rmside-monaco-056
+  .monaco-editor:not(.hc-black, .hc-light)
+  .cslr.selected-text:has(+ .cslr.monaco-editor-background.bottom-right-radius) {
+  --rmside-corner-bottom-right: radial-gradient(
+    circle at 0 0,
+    transparent calc(var(--rmside-selection-radius) - 0.5px),
+    black calc(var(--rmside-selection-radius) + 0.5px)
+  );
+}
+
+.rmside-monaco-056
+  .fixed-workspace[data-preview-layout='behind-editor']
+  [data-outline-row='true']
+  .monaco-editor-mount
+  > .monaco-editor
+  .editor-scrollable
+  > .scrollbar.horizontal {
+  bottom: 24px !important;
 }
 
 @media (forced-colors: active) {

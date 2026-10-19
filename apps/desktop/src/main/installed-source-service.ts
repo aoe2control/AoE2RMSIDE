@@ -13,7 +13,7 @@ import type {
 } from '../shared/api';
 import type { OutputWords } from '../shared/output-message';
 import { managedModContract, managedModDirectoryName } from './managed-deployment-service';
-import type { WorkspaceService } from './workspace-service';
+import type { ProtectedRoot, WorkspaceService } from './workspace-service';
 import { readFileBounded } from './bounded-file';
 import { DesktopError } from '../shared/desktop-error';
 
@@ -82,7 +82,7 @@ export class InstalledSourceService {
     const roots: InstalledSourceRoot[] = [];
     const entries: InstalledSourceEntry[] = [];
     const diagnostics: OutputWords[] = [];
-    const protectedRoots: string[] = [];
+    const protectedRoots: ProtectedRoot[] = [];
     let managedOutputsOmitted = 0;
 
     for (const report of reports.slice(0, 32)) {
@@ -132,10 +132,16 @@ export class InstalledSourceService {
       }
 
       for (const profile of report.evidence.userProfiles) {
-        protectedRoots.push(resolve(profile.source, 'mods', 'local', managedModDirectoryName));
+        protectedRoots.push({
+          path: resolve(profile.source, 'mods', 'local', managedModDirectoryName),
+          reason: 'managed-mod',
+        });
         const canonicalProfile = await realpath(profile.source).catch(() => null);
         if (canonicalProfile) {
-          protectedRoots.push(join(canonicalProfile, 'mods', 'local', managedModDirectoryName));
+          protectedRoots.push({
+            path: join(canonicalProfile, 'mods', 'local', managedModDirectoryName),
+            reason: 'managed-mod',
+          });
         }
         profiles.push({
           installationId,
@@ -166,7 +172,10 @@ export class InstalledSourceService {
                   modName,
                 )))
             ) {
-              protectedRoots.push(await canonicalDirectory(modRoot).catch(() => resolve(modRoot)));
+              protectedRoots.push({
+                path: await canonicalDirectory(modRoot).catch(() => resolve(modRoot)),
+                reason: 'managed-mod',
+              });
               managedOutputsOmitted += 1;
               continue;
             }
@@ -198,8 +207,14 @@ export class InstalledSourceService {
       );
     }
     protectedRoots.push(...protectedRootsFor(this.roots.values()));
-    this.protectedRoots = [...new Set(protectedRoots)];
-    this.workspace.setInstalledProtectedRoots(this.protectedRoots);
+    const seenRoots = new Set<string>();
+    const uniqueRoots = protectedRoots.filter((root) => {
+      if (seenRoots.has(root.path)) return false;
+      seenRoots.add(root.path);
+      return true;
+    });
+    this.protectedRoots = uniqueRoots.map((root) => root.path);
+    this.workspace.setInstalledProtectedRoots(uniqueRoots);
     return Object.freeze({
       contractVersion: Object.freeze({ major: 1, minor: 1, patch: 0 }),
       profiles: profiles.sort(compareProfiles),
@@ -585,8 +600,13 @@ async function boundedFile(path: string, maximumBytes: number): Promise<Buffer> 
   return readFileBounded(path, maximumBytes);
 }
 
-function protectedRootsFor(roots: Iterable<RootCapability>): string[] {
-  return [...roots].filter((root) => root.readOnly).map((root) => root.ownershipRoot);
+function protectedRootsFor(roots: Iterable<RootCapability>): ProtectedRoot[] {
+  return [...roots]
+    .filter((root) => root.readOnly)
+    .map((root) => ({
+      path: root.ownershipRoot,
+      reason: root.ownership === 'subscribed' ? 'subscribed-mod' : 'game-installation',
+    }));
 }
 
 function safeJoin(root: string, child: string): string {

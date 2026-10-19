@@ -1,5 +1,6 @@
 import {
   panPreviewCamera,
+  previewVisibleWidth,
   selectionTileCount,
   type MapPoint,
   type PreviewCamera,
@@ -106,7 +107,7 @@ export function moveKeyboardSelection(
 
 export function keyboardPanStep(viewport: PreviewViewport): { x: number; y: number } {
   return {
-    x: Math.max(24, Math.round(viewport.width / 8)),
+    x: Math.max(24, Math.round(previewVisibleWidth(viewport) / 8)),
     y: Math.max(24, Math.round(viewport.height / 8)),
   };
 }

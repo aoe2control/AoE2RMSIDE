@@ -27,6 +27,7 @@ import type {
 } from '../shared/api';
 import { DesktopError, desktopErrorMessage } from '../shared/desktop-error';
 import { mapIconArtObjectDescriptors } from '../shared/map-icon-art-objects';
+import { objectClassesFor } from '../shared/object-classes';
 import {
   isMapTestProgressCounts,
   mapTestWorkerRequest,
@@ -595,6 +596,7 @@ function toPreviewResult(
     objectNames: input.contentPack.objectNames.map((entry) => ({ ...entry })),
     graphiclessObjectIds: [...(input.contentPack.graphiclessObjectIds ?? [])],
     mapIconArtObjects: mapIconArtObjectDescriptors(input.contentPack),
+    ...objectClassesFor(input.contentPack),
     terrainNames: [],
     ...constantNamesFor(input.contentPack),
     minimapPalette: input.minimapPalette ? structuredClone(input.minimapPalette) : null,

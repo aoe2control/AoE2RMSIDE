@@ -1,5 +1,6 @@
 import { CircleX, Info, TriangleAlert } from 'lucide-react';
 import { IconToggleButton } from '@/components/ui/toggle-button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import type { MessageId } from '../shared/i18n/translator';
 import type { OutputSeverity } from '../shared/output-message';
 import { useI18n } from './i18n';
@@ -51,19 +52,24 @@ export function SeverityFilterToggles({
         const count = counts[severity];
         const words = severityLabels[severity];
         return (
-          <IconToggleButton
-            aria-label={t(words.label, { count })}
-            className="severity-filter-toggle"
-            data-severity={severity}
-            key={severity}
-            onClick={() => onToggle(severity)}
-            pressed={filter[severity]}
-            size="xs"
-            title={filter[severity] ? t(words.hide) : t(words.show)}
-          >
-            <Icon aria-hidden="true" />
-            <span className="severity-filter-count">{count}</span>
-          </IconToggleButton>
+          <Tooltip disableHoverablePopup key={severity}>
+            <TooltipTrigger
+              render={
+                <IconToggleButton
+                  aria-label={t(words.label, { count })}
+                  className="severity-filter-toggle"
+                  data-severity={severity}
+                  onClick={() => onToggle(severity)}
+                  pressed={filter[severity]}
+                  size="xs"
+                />
+              }
+            >
+              <Icon aria-hidden="true" />
+              <span className="severity-filter-count">{count}</span>
+            </TooltipTrigger>
+            <TooltipContent>{filter[severity] ? t(words.hide) : t(words.show)}</TooltipContent>
+          </Tooltip>
         );
       })}
     </div>

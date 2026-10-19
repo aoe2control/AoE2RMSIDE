@@ -3,6 +3,7 @@ import { requestPreviewRender } from './preview-render-scheduler';
 import {
   previewProjectionVerticalScale,
   previewScale,
+  previewViewCenter,
   type MapPoint,
   type PreviewCamera,
   type PreviewViewport,
@@ -31,11 +32,12 @@ export function terrainLayerTransform(
 ): { scaleX: number; scaleY: number; x: number; y: number } {
   const component = previewScale(scene.width, scene.height, camera, viewport) * Math.SQRT1_2;
   const verticalComponent = component * previewProjectionVerticalScale(viewport);
+  const center = previewViewCenter(viewport);
   return {
     scaleX: component,
     scaleY: verticalComponent,
-    x: viewport.width / 2 - (camera.centerX + camera.centerY) * component,
-    y: viewport.height / 2 - (camera.centerY - camera.centerX) * verticalComponent,
+    x: center.x - (camera.centerX + camera.centerY) * component,
+    y: center.y - (camera.centerY - camera.centerX) * verticalComponent,
   };
 }
 

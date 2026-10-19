@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Predeterminado"
     },
+    "settings.theme.background-blur": {
+      "message": "Desenfoque del fondo"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Nítido"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Desenfocado"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "El mapa se ve sin desenfoque a través de los botones, paneles y menús de la vista previa, y a través del editor sobre el mapa."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "El mapa detrás de los botones, paneles y menús de la vista previa, y detrás del editor sobre el mapa, se ve desenfocado."
+    },
     "settings.theme.close-label": {
       "message": "Cerrar configuración de tema"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Guardar"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Clonar / Guardar como…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Guardar como…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Bloqueada"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Aleatoria en cada ejecución"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Bloquear semilla"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Usar la semilla de la partida actual"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Entendido"
     },
-    "code-editor.preview.collapse": {
-      "message": "Contraer la vista previa del mapa en directo"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Lado a lado"
     },
-    "code-editor.preview.expand": {
-      "message": "Expandir la vista previa del mapa en directo"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Vista previa detrás del editor"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Contraer Vista previa"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Expandir Vista previa"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Solo el editor"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Cerrar el aviso de fallo de ejecución del script"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent} %"
     },
-    "code-editor.read-only-message": {
-      "message": "Este archivo de la instalación o de un mod suscrito está protegido. Usa Clonar o Guardar como."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Este archivo forma parte de la instalación del juego. Las actualizaciones del juego pueden reemplazarlo, así que no se puede editar aquí. Guarda una copia para editarlo."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Este archivo pertenece a un mod suscrito. Las actualizaciones del mod pueden reemplazarlo, así que no se puede editar aquí. Guarda una copia para editarlo."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE escribe los archivos de este mod cada vez que lo instala, así que los cambios hechos aquí se perderían. Edita en su lugar tu propia copia del mapa."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Este archivo es de solo lectura en AoE2RMSIDE. Guarda una copia para editarlo."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Guardar como…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Abrir archivo incluido"
@@ -3529,7 +3550,7 @@
       "message": "Hierba"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "Aguas poco profundas"
+      "message": "Vado"
     },
     "preview-panel.material.terrain.water": {
       "message": "Agua"
@@ -3607,7 +3628,7 @@
       "message": "Los documentos .inc, .def y .xs solo se pueden incluir en otros scripts y no se pueden ejecutar por sí solos."
     },
     "preview-panel.tool.objects": {
-      "message": "Objetos y superficie del centro urbano"
+      "message": "Objetos y superficie de los edificios"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Objetos del minimapa"
@@ -4243,7 +4264,7 @@
       "message": "Rey de la colina"
     },
     "game-options.game-mode.wonder-race": {
-      "message": "Carrera de maravillas"
+      "message": "Carrera de las Maravillas"
     },
     "game-options.game-mode.defend-the-wonder": {
       "message": "Defender la Maravilla"

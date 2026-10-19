@@ -2,14 +2,22 @@ import type { SelectedMinimapPalette } from '../shared/api';
 import { litColor, type ElevationSurface } from './preview-elevation';
 import { MarkerMeshBuilder, OrderedMarkerLayer } from './preview-marker-mesh';
 import {
-  hasVisiblePreviewFootprint,
   isDrawnPreviewObject,
   markerShapeOutline,
   objectMaterial,
+  type AtomicShape,
   type PreviewMaterial,
   type PreviewObjectVisibility,
 } from './preview-materials';
 import { heightMapObjectLightAt, type ElevationRange } from './preview-terrain-mesh';
+import {
+  isStraightWallRun,
+  previewWallPostHalfWidth,
+  previewWallStrokeWidth,
+  sceneWallJoins,
+  wallJoinDirections,
+  wallPostPolygon,
+} from './preview-wall-joins';
 import {
   diamondBasisComponent,
   mapRectangleScreenPolygon,
@@ -19,10 +27,10 @@ import {
   previewMarkerVerticalScale,
   previewObjectFootprintSpan,
   previewObjectMarkerRadiusBase,
-  previewObjectMarkerScreenRadius,
   previewObjectMarkerSpan,
   previewProjectionVerticalScale,
   previewScale,
+  previewViewCenter,
   type PreviewCamera,
   type PreviewViewport,
   type TopDownScene,
@@ -33,6 +41,7 @@ export interface DrawnObjectMarkers {
   objects: number;
   radiusRange: string;
   culled: boolean;
+  wallJoins: number;
 }
 
 export function drawObjects(
@@ -50,15 +59,20 @@ export function drawObjects(
   surface: ElevationSurface | null = null,
   heightMap: ElevationRange | null = null,
 ): DrawnObjectMarkers {
-  const drawn: DrawnObjectMarkers = { helpers: 0, objects: 0, radiusRange: '', culled: false };
+  const drawn: DrawnObjectMarkers = {
+    helpers: 0,
+    objects: 0,
+    radiusRange: '',
+    culled: false,
+    wallJoins: 0,
+  };
   if (!visibility.objects) return drawn;
   const layer = new OrderedMarkerLayer(stage);
   const marks = layer.marks;
   const scale = previewScale(scene.width, scene.height, camera, viewport);
   const component = scale * diamondBasisComponent;
   const verticalComponent = component * previewProjectionVerticalScale(viewport);
-  const halfWidth = viewport.width / 2;
-  const halfHeight = viewport.height / 2;
+  const { x: halfWidth, y: halfHeight } = previewViewCenter(viewport);
   const verticalScale = previewMarkerVerticalScale(viewport);
   const levelPixels = surface ? previewLevelPixels(scene.width, scene.height, camera, viewport) : 0;
   const rowKeys = scene.width + 1;
@@ -69,6 +83,7 @@ export function drawObjects(
   const insideRight = viewport.width + cullMargin.x - footprintCullTolerance;
   const insideBottom = viewport.height + cullMargin.y - footprintCullTolerance;
   const materials = new Map<number, PreviewMaterial>();
+  let joins: Map<number, number> | null = null;
   let minimumRadius = Number.POSITIVE_INFINITY;
   let maximumRadius = 0;
   marks.setOffsetLaw({ base: scale * 0.16, minimum: 2, maximum: 8 });
@@ -118,23 +133,6 @@ export function drawObjects(
     const mapY = centerY;
     centerX += offsetX;
     centerY += offsetY;
-    const outlined = hasVisiblePreviewFootprint(object);
-    let footprint: number[] | null = null;
-    if (
-      outlined ||
-      !(
-        centerX > insideLeft &&
-        centerX < insideRight &&
-        centerY > insideTop &&
-        centerY < insideBottom
-      )
-    ) {
-      footprint = objectFootprint(object, scene, camera, viewport, offsetX, offsetY - lift);
-      if (footprintCulled(footprint, viewport, cullMargin)) {
-        drawn.culled = true;
-        continue;
-      }
-    }
     const materialKey =
       (object.objectId * 256 + (object.owner & 0xff)) * 2 +
       (object.presentationKind === 'wall' ? 1 : 0);
@@ -151,46 +149,103 @@ export function drawObjects(
       );
       materials.set(materialKey, material);
     }
-    const color = heightMap
-      ? litColor(material.color, heightMapObjectLightAt(scene, object.x, object.y, heightMap))
-      : material.color;
-    const span = previewObjectMarkerSpan(object);
-    const minimum = object.appearance
-      ? previewAppearanceMarkerMinimumRadius
-      : previewMarkerScreenRadius.minimum;
-    const radius = previewObjectMarkerScreenRadius(scale, span, minimum);
-    minimumRadius = Math.min(minimumRadius, radius);
-    maximumRadius = Math.max(maximumRadius, radius);
-    const radiusBase = previewObjectMarkerRadiusBase(scale, span);
-    if (material.helper) {
-      drawn.helpers += 1;
+    const style = material.helper ? 'outline' : 'fill';
+    if (material.shape === 'wall') {
+      joins ??= sceneWallJoins(scene, (candidate) => isDrawnPreviewObject(candidate, visibility), [
+        visibility.objects,
+        visibility.helpers,
+        visibility.helperObjectIds,
+        visibility.decorations === true,
+      ]);
+      const bits = joins.get(objectIndex) ?? 0;
+      const color = heightMap
+        ? litColor(material.color, heightMapObjectLightAt(scene, object.x, object.y, heightMap))
+        : material.color;
+      if (material.helper) drawn.helpers += 1;
+      else drawn.objects += 1;
+      drawn.wallJoins += drawWallPiece(
+        marks,
+        wallPieceGeometry(
+          object,
+          bits,
+          mapX,
+          mapY,
+          component,
+          verticalComponent,
+          scale,
+          surface ? (x, y) => surface.heightAt(x, y) * levelPixels : null,
+        ),
+        mapX,
+        mapY,
+        color,
+        style,
+      );
+      continue;
+    }
+    if (isFootprintShape(material.shape)) {
+      const footprint = footprintMarker(
+        object,
+        component,
+        verticalComponent,
+        centerX,
+        centerY,
+        scale,
+      );
+      if (footprintCulled(footprint.polygon, viewport, cullMargin)) {
+        drawn.culled = true;
+        continue;
+      }
+      const color = heightMap
+        ? litColor(material.color, heightMapObjectLightAt(scene, object.x, object.y, heightMap))
+        : material.color;
+      if (material.helper) drawn.helpers += 1;
+      else drawn.objects += 1;
       marks.anchor(
         mapX,
         mapY,
         centerX,
         centerY,
-        radiusBase,
-        minimum,
-        previewMarkerScreenRadius.maximum,
+        footprint.base,
+        footprint.minimum,
+        Number.POSITIVE_INFINITY,
       );
-      drawMarker(marks, centerX, centerY, radius, material, color, 'outline', verticalScale);
+      drawFootprintMarker(marks, footprint, material.shape, color, style);
       continue;
     }
-    drawn.objects += 1;
-    if (outlined && footprint) {
-      marks.anchor(mapX, mapY, centerX, centerY, 1, 0, Number.POSITIVE_INFINITY);
-      marks.stroke(footprint, true, { color, width: 1, alpha: 1 });
+    if (
+      !(
+        centerX > insideLeft &&
+        centerX < insideRight &&
+        centerY > insideTop &&
+        centerY < insideBottom
+      ) &&
+      footprintCulled(
+        objectFootprint(object, scene, camera, viewport, offsetX, offsetY - lift),
+        viewport,
+        cullMargin,
+      )
+    ) {
+      drawn.culled = true;
+      continue;
     }
-    marks.anchor(
-      mapX,
-      mapY,
-      centerX,
-      centerY,
-      radiusBase,
-      minimum,
-      previewMarkerScreenRadius.maximum,
-    );
-    drawMarker(marks, centerX, centerY, radius, material, color, 'fill', verticalScale);
+    const color = heightMap
+      ? litColor(material.color, heightMapObjectLightAt(scene, object.x, object.y, heightMap))
+      : material.color;
+    const span = previewObjectMarkerSpan(object);
+    const factor = material.shape === 'crown' && !object.appearance ? crownScale : 1;
+    const minimum =
+      (object.appearance
+        ? previewAppearanceMarkerMinimumRadius
+        : previewMarkerScreenRadius.minimum) * factor;
+    const maximum = previewMarkerScreenRadius.maximum * factor;
+    const radiusBase = previewObjectMarkerRadiusBase(scale, span) * factor;
+    const radius = Math.min(Math.max(radiusBase, minimum), maximum);
+    minimumRadius = Math.min(minimumRadius, radius);
+    maximumRadius = Math.max(maximumRadius, radius);
+    if (material.helper) drawn.helpers += 1;
+    else drawn.objects += 1;
+    marks.anchor(mapX, mapY, centerX, centerY, radiusBase, minimum, maximum);
+    drawMarker(marks, centerX, centerY, radius, material, color, style, verticalScale);
   }
   layer.finish();
   if (maximumRadius > 0) {
@@ -209,6 +264,184 @@ export function objectHeightMapLight(
   range: ElevationRange,
 ): number {
   return heightMapObjectLightAt(scene, object.x, object.y, range);
+}
+
+export const crownScale = 1.25;
+
+export function isFootprintShape(shape: AtomicShape): shape is 'building' | 'farm' {
+  return shape === 'building' || shape === 'farm';
+}
+
+export interface FootprintMarker {
+  polygon: number[];
+  inset: number[] | null;
+  base: number;
+  minimum: number;
+}
+
+export const buildingInsetMinimumBase = 6;
+
+export function footprintMarker(
+  object: Pick<TopDownScene['objects'][number], 'footprintWidth' | 'footprintHeight'>,
+  component: number,
+  verticalComponent: number,
+  centerX: number,
+  centerY: number,
+  scale: number,
+): FootprintMarker {
+  const width = previewObjectFootprintSpan(object.footprintWidth);
+  const height = previewObjectFootprintSpan(object.footprintHeight);
+  const base = previewObjectMarkerRadiusBase(scale, Math.min(width, height));
+  const minimum = previewMarkerScreenRadius.minimum;
+  const grow = base > 0 && base < minimum ? minimum / base : 1;
+  const rectangle = (halfWidth: number, halfHeight: number) => {
+    const points: number[] = [];
+    for (const [signX, signY] of footprintCorners) {
+      const deltaX = signX * halfWidth * grow;
+      const deltaY = signY * halfHeight * grow;
+      points.push(
+        centerX + (deltaX + deltaY) * component,
+        centerY + (deltaY - deltaX) * verticalComponent,
+      );
+    }
+    return points;
+  };
+  const inset = Math.min(width, height) / 8;
+  return {
+    polygon: rectangle(width / 2, height / 2),
+    inset:
+      grow === 1 && base >= buildingInsetMinimumBase
+        ? rectangle(width / 2 - inset, height / 2 - inset)
+        : null,
+    base,
+    minimum,
+  };
+}
+
+const footprintCorners: readonly (readonly [number, number])[] = [
+  [-1, -1],
+  [1, -1],
+  [1, 1],
+  [-1, 1],
+];
+
+export const farmFill = Object.freeze({ lighten: 0.3, alpha: 0.65 });
+
+export const buildingInsetLighten = 0.45;
+
+export function drawFootprintMarker(
+  marks: MarkerMeshBuilder,
+  footprint: FootprintMarker,
+  shape: 'building' | 'farm',
+  color: number,
+  style: 'fill' | 'outline',
+): void {
+  if (style === 'outline') {
+    marks.stroke(footprint.polygon, true, { color, width: 1, alpha: 0.75 });
+    return;
+  }
+  if (shape === 'farm') {
+    marks.polygon(footprint.polygon, mixColor(color, 0xffffff, farmFill.lighten), farmFill.alpha);
+    return;
+  }
+  marks.polygon(footprint.polygon, color);
+  if (footprint.inset) {
+    marks.stroke(footprint.inset, true, {
+      color: mixColor(color, 0xffffff, buildingInsetLighten),
+      width: 1,
+      alpha: 1,
+    });
+  }
+}
+
+export interface WallPieceGeometry {
+  lines: number[][];
+  post: number[] | null;
+  postHalfWidth: number;
+  strokeWidth: number;
+  joins: number;
+  cap: 'butt' | 'square';
+}
+
+export function wallPieceGeometry(
+  object: Pick<TopDownScene['objects'][number], 'x' | 'y'>,
+  bits: number,
+  centerX: number,
+  centerY: number,
+  component: number,
+  verticalComponent: number,
+  scale: number,
+  liftAt: ((x: number, y: number) => number) | null = null,
+): WallPieceGeometry {
+  const tileX = Math.floor(object.x) + 0.5;
+  const tileY = Math.floor(object.y) + 0.5;
+  const centerLift = liftAt ? liftAt(object.x, object.y) : 0;
+  const ends: number[][] = [];
+  for (const { dx, dy, bit } of wallJoinDirections) {
+    if ((bits & bit) === 0) continue;
+    const endX = tileX + dx * 0.5;
+    const endY = tileY + dy * 0.5;
+    const relativeX = endX - object.x;
+    const relativeY = endY - object.y;
+    const lift = liftAt ? liftAt(endX, endY) - centerLift : 0;
+    ends.push([
+      centerX + (relativeX + relativeY) * component,
+      centerY + (relativeY - relativeX) * verticalComponent - lift,
+    ]);
+  }
+  const lines = isStraightWallRun(bits)
+    ? [[ends[0]![0]!, ends[0]![1]!, centerX, centerY, ends[1]![0]!, ends[1]![1]!]]
+    : ends.map(([endX, endY]) => [centerX, centerY, endX!, endY!]);
+  const strokeWidth = previewWallStrokeWidth(scale);
+  const postHalfWidth = previewWallPostHalfWidth(bits, strokeWidth, scale);
+  return {
+    lines,
+    post:
+      postHalfWidth > 0
+        ? wallPostPolygon(centerX, centerY, postHalfWidth, component, verticalComponent)
+        : null,
+    postHalfWidth,
+    strokeWidth,
+    joins: ends.length,
+    cap: liftAt ? 'square' : 'butt',
+  };
+}
+
+export function drawWallPiece(
+  marks: MarkerMeshBuilder,
+  piece: WallPieceGeometry,
+  mapX: number,
+  mapY: number,
+  color: number,
+  style: 'fill' | 'outline',
+): number {
+  const helper = style === 'outline';
+  marks.anchor(mapX, mapY, mapX, mapY, 1, 0, Number.POSITIVE_INFINITY);
+  for (const line of piece.lines) {
+    marks.stroke(line, false, {
+      color,
+      width: helper ? 1 : piece.strokeWidth,
+      alpha: helper ? 0.75 : 1,
+      cap: piece.cap,
+    });
+  }
+  if (piece.post) {
+    const half = piece.postHalfWidth;
+    marks.anchor(mapX, mapY, mapX, mapY, half, half, half);
+    if (helper) marks.stroke(piece.post, true, { color, width: 1, alpha: 0.75 });
+    else marks.polygon(piece.post, color);
+  }
+  return piece.joins;
+}
+
+export function mixColor(color: number, target: number, amount: number): number {
+  let mixed = 0;
+  for (const shift of [16, 8, 0]) {
+    const from = (color >> shift) & 0xff;
+    const to = (target >> shift) & 0xff;
+    mixed |= Math.round(from + (to - from) * amount) << shift;
+  }
+  return mixed >>> 0;
 }
 
 function objectFootprint(
@@ -260,6 +493,16 @@ function footprintCulled(
   );
 }
 
+export const clusterDots: readonly (readonly [number, number])[] = [
+  [0, -0.5],
+  [0.433, 0.25],
+  [-0.433, 0.25],
+];
+
+export const clusterMinimumRadius = 3;
+
+export const clusterBlob = Object.freeze({ offsetY: -0.125, radiusX: 0.933, radiusY: 0.875 });
+
 export function drawMarker(
   marks: MarkerMeshBuilder,
   x: number,
@@ -270,21 +513,37 @@ export function drawMarker(
   style: 'fill' | 'outline',
   verticalScale: number,
 ): void {
-  if (material.shape === 'double-line') {
-    const wallGap = Math.min(2, Math.max(1, radius * 0.5)) * verticalScale;
-    marks.stroke([x - radius, y - wallGap, x + radius, y - wallGap], false, {
-      color,
-      width: style === 'outline' ? 1 : 2,
-      alpha: 1,
-    });
-    marks.stroke([x - radius, y + wallGap, x + radius, y + wallGap], false, {
-      color,
-      width: 1,
-      alpha: 1,
-    });
+  if (material.shape === 'cluster' && radius < clusterMinimumRadius) {
+    const blobY = y + clusterBlob.offsetY * radius * verticalScale;
+    const blobX = clusterBlob.radiusX * radius;
+    const blobHeight = clusterBlob.radiusY * radius * verticalScale;
+    if (style === 'outline') {
+      marks.strokeEllipse(x, blobY, blobX, blobHeight, { color, width: 1, alpha: 0.75 });
+    } else {
+      marks.ellipse(x, blobY, blobX, blobHeight, color);
+    }
     return;
   }
-  const outline = markerShapeOutline(material.shape);
+  if (material.shape === 'cluster') {
+    const dot = radius * 0.5;
+    for (const [unitX, unitY] of clusterDots) {
+      const dotX = x + unitX * radius;
+      const dotY = y + unitY * radius * verticalScale;
+      if (style === 'outline') {
+        marks.strokeEllipse(dotX, dotY, dot, dot * verticalScale, {
+          color,
+          width: 1,
+          alpha: 0.75,
+        });
+      } else {
+        marks.ellipse(dotX, dotY, dot, dot * verticalScale, color);
+      }
+    }
+    return;
+  }
+  const outline = markerShapeOutline(
+    isFootprintShape(material.shape) || material.shape === 'wall' ? 'square' : material.shape,
+  );
   if (style === 'outline') {
     const stroke = { color, width: 1, alpha: 0.75 };
     if (!outline) {

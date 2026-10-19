@@ -81,6 +81,7 @@ export interface WorkspaceController {
   lastNormalActivePath: string | null;
   lastSave: { documentId: string; sequence: number } | null;
   mutationRevision: number;
+  revealSequence: number;
   sessionReady: boolean;
   restoredSession: DesktopSession | null;
   recoveryNotice: string | null;
@@ -142,6 +143,8 @@ export function useWorkspaceController(
   const [lastNormalActivePath, setLastNormalActivePath] = useState<string | null>(null);
   const [lastSave, setLastSave] = useState<{ documentId: string; sequence: number } | null>(null);
   const [mutationRevision, setMutationRevision] = useState(0);
+  const [revealSequence, setRevealSequence] = useState(0);
+  const countReveal = useCallback(() => setRevealSequence((sequence) => sequence + 1), []);
   const [sessionReady, setSessionReady] = useState(false);
   const [restoredSession, setRestoredSession] = useState<DesktopSession | null>(null);
   const [recoveryNotice, setRecoveryNotice] = useState<string | null>(null);
@@ -585,7 +588,10 @@ export function useWorkspaceController(
       documentsRef.current = next;
       setDocuments(next);
       const lastDocument = incoming.at(-1);
-      if (lastDocument) setActiveDocumentId(lastDocument.id);
+      if (lastDocument) {
+        setActiveDocumentId(lastDocument.id);
+        countReveal();
+      }
       if (result.folder) {
         folderRef.current = result.folder;
         setFolder(result.folder);
@@ -605,7 +611,7 @@ export function useWorkspaceController(
       }
       setMutationRevision((revision) => revision + 1);
     },
-    [],
+    [countReveal],
   );
 
   useEffect(() => {
@@ -655,7 +661,8 @@ export function useWorkspaceController(
       replaceCleanPreviewOrAppend(current, document),
     );
     setActiveDocumentId(document.id);
-  }, []);
+    countReveal();
+  }, [countReveal]);
 
   const newMapTestScript = useCallback(() => {
     const document = createUntitledMapTestDocument(untitledCounter.current++);
@@ -663,7 +670,8 @@ export function useWorkspaceController(
       replaceCleanPreviewOrAppend(current, document),
     );
     setActiveDocumentId(document.id);
-  }, []);
+    countReveal();
+  }, [countReveal]);
 
   const newXsScript = useCallback(() => {
     const document = createUntitledXsDocument(untitledCounter.current++);
@@ -671,7 +679,8 @@ export function useWorkspaceController(
       replaceCleanPreviewOrAppend(current, document),
     );
     setActiveDocumentId(document.id);
-  }, []);
+    countReveal();
+  }, [countReveal]);
 
   const pickFiles = useCallback(async () => {
     try {
@@ -722,6 +731,8 @@ export function useWorkspaceController(
 
   const appendOutputRef = useRef(appendOutput);
   appendOutputRef.current = appendOutput;
+  const countRevealRef = useRef(countReveal);
+  countRevealRef.current = countReveal;
   const openWorkspaceFile = useMemo(
     () =>
       createWorkspaceFileOpener({
@@ -733,6 +744,7 @@ export function useWorkspaceController(
         activate: (id, path) => {
           setActiveDocumentId(id);
           setSelectedPath(path);
+          countRevealRef.current();
         },
         read: async (path) => documentFromWorkspace(await window.rmside.openWorkspaceFile(path)),
         failed: (error) =>
@@ -762,6 +774,7 @@ export function useWorkspaceController(
         }
         setActiveDocumentId(existing.id);
         setSelectedPath(explorerSelection(existing.path, folderRef.current));
+        countReveal();
         return existing;
       }
       try {
@@ -784,6 +797,7 @@ export function useWorkspaceController(
           }
           setActiveDocumentId(alreadyOpen.id);
           setSelectedPath(explorerSelection(alreadyOpen.path, folderRef.current));
+          countReveal();
           return selected;
         }
         const previewIndex = current.findIndex((document) => document.preview && !document.dirty);
@@ -794,6 +808,7 @@ export function useWorkspaceController(
         setDocuments(next);
         setActiveDocumentId(incoming.id);
         setSelectedPath(explorerSelection(incoming.path, folderRef.current));
+        countReveal();
         return incoming;
       } catch (error) {
         appendOutput(
@@ -806,7 +821,7 @@ export function useWorkspaceController(
         return null;
       }
     },
-    [appendOutput],
+    [appendOutput, countReveal],
   );
 
   const openDroppedFiles = useCallback(
@@ -1128,6 +1143,7 @@ export function useWorkspaceController(
       lastNormalActivePath,
       lastSave,
       mutationRevision,
+      revealSequence,
       sessionReady,
       restoredSession,
       recoveryNotice,
@@ -1184,6 +1200,7 @@ export function useWorkspaceController(
       expandedPaths,
       folder,
       mutationRevision,
+      revealSequence,
       newMapTestScript,
       newXsScript,
       newFile,

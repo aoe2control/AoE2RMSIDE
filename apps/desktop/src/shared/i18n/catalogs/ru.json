@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Стандартная"
     },
+    "settings.theme.background-blur": {
+      "message": "Размытие фона"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Чёткий"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Размытый"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "Карта просвечивает без размытия сквозь кнопки, панели и меню предпросмотра и сквозь редактор поверх карты."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "Карта за кнопками, панелями и меню предпросмотра и за редактором поверх карты размыта."
+    },
     "settings.theme.close-label": {
       "message": "Закрыть настройки темы"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Сохранить"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Копия / Сохранить как…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Сохранить как…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Фиксированное"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Случайное при запуске"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Зафиксировать зерно"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Взять зерно текущего матча"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Понятно"
     },
-    "code-editor.preview.collapse": {
-      "message": "Свернуть предпросмотр карты"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Рядом друг с другом"
     },
-    "code-editor.preview.expand": {
-      "message": "Развернуть предпросмотр карты"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Предпросмотр за редактором"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Свернуть предпросмотр"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Развернуть предпросмотр"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Только редактор"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Закрыть уведомление о сбое выполнения скрипта"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent} %"
     },
-    "code-editor.read-only-message": {
-      "message": "Этот файл из установки игры или мода по подписке защищён. Используйте «Копия» или «Сохранить как»."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Этот файл входит в установку игры. Обновления игры могут заменить его, поэтому здесь его нельзя править. Чтобы внести правки, сохраните копию."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Этот файл принадлежит моду по подписке. Обновления мода могут заменить его, поэтому здесь его нельзя править. Чтобы внести правки, сохраните копию."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE сам записывает файлы этого мода при развёртывании, поэтому правки здесь будут потеряны. Вместо этого правьте свою копию карты."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Этот файл доступен в AoE2RMSIDE только для чтения. Чтобы внести правки, сохраните копию."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Сохранить как…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Открыть подключаемый файл"
@@ -3499,7 +3520,7 @@
       "message": "Служебный объект"
     },
     "preview-panel.material.cliff": {
-      "message": "Обрыв"
+      "message": "Утес"
     },
     "preview-panel.material.cliff-type": {
       "message": "Тип обрыва {id}"
@@ -3535,7 +3556,7 @@
       "message": "Вода"
     },
     "preview-panel.material.terrain.beach": {
-      "message": "Пляж"
+      "message": "Берег"
     },
     "preview-panel.material.terrain.earth": {
       "message": "Земля"
@@ -3607,7 +3628,7 @@
       "message": "Файлы .inc, .def и .xs предназначены только для подключения и не могут запускаться самостоятельно."
     },
     "preview-panel.tool.objects": {
-      "message": "Объекты и площадь, занимаемая городским советом"
+      "message": "Объекты и площадь зданий"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Объекты мини-карты"
@@ -4288,7 +4309,7 @@
       "message": "Стандартная начальная эпоха"
     },
     "game-options.age.dark-age": {
-      "message": "Тёмная эпоха"
+      "message": "Темная эпоха"
     },
     "game-options.age.feudal-age": {
       "message": "Феодальная эпоха"
@@ -4318,10 +4339,10 @@
       "message": "Красный"
     },
     "game-options.color.green": {
-      "message": "Зелёный"
+      "message": "Зеленый"
     },
     "game-options.color.yellow": {
-      "message": "Жёлтый"
+      "message": "Желтый"
     },
     "game-options.color.cyan": {
       "message": "Голубой"

@@ -948,6 +948,21 @@
     "settings.theme.scheme.default": {
       "message": "Padrão"
     },
+    "settings.theme.background-blur": {
+      "message": "Desfoque do fundo"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "Nítido"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "Desfocado"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "O mapa aparece sem desfoque através dos botões, painéis e menus da prévia e através do editor sobre o mapa."
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "O mapa atrás dos botões, painéis e menus da prévia e atrás do editor sobre o mapa fica desfocado."
+    },
     "settings.theme.close-label": {
       "message": "Fechar configurações de tema"
     },
@@ -3033,9 +3048,6 @@
     "code-editor.tab-menu.save": {
       "message": "Salvar"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "Clonar / Salvar como…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "Salvar como…"
     },
@@ -3087,8 +3099,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "Bloqueada"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "Aleatória a cada execução"
+    "code-editor.run-menu.seed-lock": {
+      "message": "Bloquear semente"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "Usar a semente da partida atual"
@@ -3153,17 +3165,14 @@
     "code-editor.control-download.confirm": {
       "message": "Entendi"
     },
-    "code-editor.preview.collapse": {
-      "message": "Recolher a prévia do mapa em tempo real"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "Lado a lado"
     },
-    "code-editor.preview.expand": {
-      "message": "Expandir a prévia do mapa em tempo real"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "Prévia atrás do editor"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "Recolher Prévia"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "Expandir Prévia"
+    "code-editor.preview.layout.editor-only": {
+      "message": "Apenas o editor"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "Fechar o aviso de falha na execução do script"
@@ -3183,8 +3192,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "Este arquivo da instalação ou de um mod inscrito está protegido. Use Clonar ou Salvar como."
+    "code-editor.read-only-message.game-installation": {
+      "message": "Este arquivo faz parte da instalação do jogo. As atualizações do jogo podem substituí-lo, então ele não pode ser editado aqui. Salve uma cópia para editá-lo."
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "Este arquivo pertence a um mod inscrito. As atualizações do mod podem substituí-lo, então ele não pode ser editado aqui. Salve uma cópia para editá-lo."
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "O AoE2RMSIDE grava ele mesmo os arquivos deste mod ao instalá-lo, então as alterações feitas aqui seriam perdidas. Em vez disso, edite sua própria cópia do mapa."
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "Este arquivo é somente leitura no AoE2RMSIDE. Salve uma cópia para editá-lo."
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "Salvar como…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "Abrir arquivo incluído"
@@ -3529,7 +3550,7 @@
       "message": "Grama"
     },
     "preview-panel.material.terrain.shallows": {
-      "message": "Águas rasas"
+      "message": "Água Rasa"
     },
     "preview-panel.material.terrain.water": {
       "message": "Água"
@@ -3607,7 +3628,7 @@
       "message": "Os documentos .inc, .def e .xs só podem ser incluídos em outros scripts e não podem ser executados sozinhos."
     },
     "preview-panel.tool.objects": {
-      "message": "Objetos e área do centro da cidade"
+      "message": "Objetos e área dos edifícios"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "Objetos do minimapa"

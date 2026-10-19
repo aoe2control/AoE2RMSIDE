@@ -57,6 +57,7 @@ export interface GenerationActivity {
   progressive: boolean;
   minimapPalette: SelectedMinimapPalette | null;
   texturePalette?: SelectedTexturePalette | null;
+  objectClasses?: ReadonlyMap<number, number>;
 }
 
 interface CandidateData {
@@ -111,8 +112,17 @@ export class PreviewCandidateStore {
     progressive: boolean,
     minimapPalette: SelectedMinimapPalette | null = null,
     texturePalette: SelectedTexturePalette | null = null,
+    objectClasses?: ReadonlyMap<number, number>,
   ): void {
-    this.running = { key, requestId: null, kind, progressive, minimapPalette, texturePalette };
+    this.running = {
+      key,
+      requestId: null,
+      kind,
+      progressive,
+      minimapPalette,
+      texturePalette,
+      ...(objectClasses ? { objectClasses } : {}),
+    };
     this.admittedAt = this.timing.now();
     this.clear();
     this.publishActivity();
@@ -122,7 +132,7 @@ export class PreviewCandidateStore {
     requestId: string,
     key?: string,
     options: Pick<GenerationActivity, 'kind' | 'progressive'> &
-      Partial<Pick<GenerationActivity, 'minimapPalette' | 'texturePalette'>> = {
+      Partial<Pick<GenerationActivity, 'minimapPalette' | 'texturePalette' | 'objectClasses'>> = {
       kind: 'preview',
       progressive: true,
     },
@@ -139,6 +149,7 @@ export class PreviewCandidateStore {
           progressive: options.progressive,
           minimapPalette: options.minimapPalette ?? null,
           texturePalette: options.texturePalette ?? null,
+          ...(options.objectClasses ? { objectClasses: options.objectClasses } : {}),
         };
     this.clear();
     this.publishActivity();

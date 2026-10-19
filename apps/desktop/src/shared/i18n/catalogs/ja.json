@@ -956,6 +956,21 @@
     "settings.theme.scheme.default": {
       "message": "既定"
     },
+    "settings.theme.background-blur": {
+      "message": "背景のぼかし"
+    },
+    "settings.theme.background-blur.clear": {
+      "message": "鮮明"
+    },
+    "settings.theme.background-blur.blurred": {
+      "message": "ぼかし"
+    },
+    "settings.theme.background-blur.clear.tooltip": {
+      "message": "プレビューのボタン、パネル、メニュー、およびマップ上のエディター越しに、マップがぼかしなしで透けて見えます。"
+    },
+    "settings.theme.background-blur.blurred.tooltip": {
+      "message": "プレビューのボタン、パネル、メニュー、およびマップ上のエディターの背後にあるマップがぼかされます。"
+    },
     "settings.theme.close-label": {
       "message": "テーマ設定を閉じる"
     },
@@ -3041,9 +3056,6 @@
     "code-editor.tab-menu.save": {
       "message": "保存"
     },
-    "code-editor.tab-menu.clone-save-as": {
-      "message": "複製／名前を付けて保存…"
-    },
     "code-editor.tab-menu.save-as": {
       "message": "名前を付けて保存…"
     },
@@ -3095,8 +3107,8 @@
     "code-editor.run-menu.seed-locked": {
       "message": "固定"
     },
-    "code-editor.run-menu.seed-randomize": {
-      "message": "実行ごとにランダム化"
+    "code-editor.run-menu.seed-lock": {
+      "message": "シードを固定"
     },
     "code-editor.run-menu.adopt-seed": {
       "message": "現在の対戦のシードを使用"
@@ -3161,17 +3173,14 @@
     "code-editor.control-download.confirm": {
       "message": "確認しました"
     },
-    "code-editor.preview.collapse": {
-      "message": "リアルタイムマッププレビューを折りたたむ"
+    "code-editor.preview.layout.side-by-side": {
+      "message": "左右に並べる"
     },
-    "code-editor.preview.expand": {
-      "message": "リアルタイムマッププレビューを展開"
+    "code-editor.preview.layout.behind-editor": {
+      "message": "エディターの背面にプレビュー"
     },
-    "code-editor.preview.collapse-tooltip": {
-      "message": "プレビューを折りたたむ"
-    },
-    "code-editor.preview.expand-tooltip": {
-      "message": "プレビューを展開"
+    "code-editor.preview.layout.editor-only": {
+      "message": "エディターのみ"
     },
     "code-editor.notice.execution-failure.dismiss": {
       "message": "スクリプト実行失敗の通知を閉じる"
@@ -3191,8 +3200,20 @@
     "code-editor.font-size.value": {
       "message": "{percent}%"
     },
-    "code-editor.read-only-message": {
-      "message": "このインストール済みファイルまたは登録済み MOD のソースは保護されています。「複製」または「名前を付けて保存」を使用してください。"
+    "code-editor.read-only-message.game-installation": {
+      "message": "このファイルはゲームのインストール先に含まれています。ゲームの更新で置き換えられることがあるため、ここでは編集できません。編集するにはコピーを保存してください。"
+    },
+    "code-editor.read-only-message.subscribed-mod": {
+      "message": "このファイルは登録済み MOD のものです。MOD の更新で置き換えられることがあるため、ここでは編集できません。編集するにはコピーを保存してください。"
+    },
+    "code-editor.read-only-message.managed-mod": {
+      "message": "AoE2RMSIDE は配置のたびにこの MOD のファイルを書き込むため、ここで編集しても失われます。代わりに、自分用のマップのコピーを編集してください。"
+    },
+    "code-editor.read-only-message.protected": {
+      "message": "このファイルは AoE2RMSIDE では読み取り専用です。編集するにはコピーを保存してください。"
+    },
+    "code-editor.read-only-message.save-as": {
+      "message": "名前を付けて保存…"
     },
     "code-editor.context-menu.open-included-file": {
       "message": "インクルード先のファイルを開く"
@@ -3543,7 +3564,7 @@
       "message": "水域"
     },
     "preview-panel.material.terrain.beach": {
-      "message": "砂浜"
+      "message": "海岸"
     },
     "preview-panel.material.terrain.earth": {
       "message": "地面"
@@ -3615,7 +3636,7 @@
       "message": ".inc、.def、.xs のドキュメントはインクルード専用のため、単独では実行できません。"
     },
     "preview-panel.tool.objects": {
-      "message": "オブジェクトと町の中心の占有範囲"
+      "message": "オブジェクトと建物の占有範囲"
     },
     "preview-panel.tool.objects.minimap": {
       "message": "ミニマップ風オブジェクト"
@@ -4239,16 +4260,16 @@
       "message": "{size}（{width}×{height}）"
     },
     "game-options.game-mode.random-map": {
-      "message": "ランダムマップ"
+      "message": "ランダム マップ"
     },
     "game-options.game-mode.regicide": {
       "message": "チェックメイト"
     },
     "game-options.game-mode.death-match": {
-      "message": "デスマッチ"
+      "message": "デス マッチ"
     },
     "game-options.game-mode.king-of-the-hill": {
-      "message": "キングオブザヒル"
+      "message": "キング オブ ザ ヒル"
     },
     "game-options.game-mode.wonder-race": {
       "message": "民族の象徴の建造"
@@ -4257,7 +4278,7 @@
       "message": "民族の象徴の防衛"
     },
     "game-options.game-mode.turbo-random-map": {
-      "message": "ターボランダムマップ"
+      "message": "ターボ ランダム マップ"
     },
     "game-options.game-mode.capture-the-relic": {
       "message": "聖遺物の確保"
@@ -4266,10 +4287,10 @@
       "message": "サドンデス"
     },
     "game-options.game-mode.battle-royale": {
-      "message": "バトルロイヤル"
+      "message": "バトル ロイヤル"
     },
     "game-options.game-mode.empire-wars": {
-      "message": "エンパイアウォーズ"
+      "message": "エンパイア ウォーズ"
     },
     "game-options.resources.standard": {
       "message": "標準の資源"
