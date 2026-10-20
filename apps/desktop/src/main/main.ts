@@ -177,6 +177,14 @@ import {
   validateRecoverySnapshot,
 } from './workspace-service';
 import { FileTooLargeError, readFileBounded } from './bounded-file';
+import { OwnSnippetStore, type OwnSnippetStoreReset } from './own-snippet-store';
+import {
+  SnippetFileError,
+  ownSnippetLimits,
+  parseSnippetFile,
+  serializeSnippetFile,
+  validateOwnSnippet,
+} from '../shared/own-snippets';
 import {
   authorizedGameRoots,
   resolveStandardIncludeAccess,
@@ -339,6 +347,8 @@ const presentationArbiter = new PreviewPresentationArbiter<MapTestEvent>({
 let mapTestResultsVisible = false;
 let mapTestPreviewShown = false;
 let insertSnippetAvailable = false;
+let saveSnippetAvailable = false;
+let ownSnippetStore: OwnSnippetStore | undefined;
 let publishedApplicationMenuModel = '';
 let windowCloseApproved = false;
 let rendererUnavailableForClose = false;
@@ -637,6 +647,7 @@ async function createApplication(): Promise<void> {
   mapTestResultsVisible = false;
   mapTestPreviewShown = false;
   insertSnippetAvailable = false;
+  saveSnippetAvailable = false;
   disposeEditorInventory();
   scheduleEditorInventoryRefresh = () => {};
   disposeEditorInventory = () => {};
@@ -686,6 +697,9 @@ async function createApplication(): Promise<void> {
     },
   });
   recoveryStoreInstance = new RecoveryStore(userDataPath);
+  ownSnippetStore = new OwnSnippetStore(userDataPath, (reset) =>
+    publishWorkspaceDiagnostic(ownSnippetStoreResetNote(reset)),
+  );
   const installationSelectionStore = new InstallationSelectionStore(userDataPath);
   const controlLauncherPreference = new ControlLauncherPreferenceStore(userDataPath);
   controlSessionBridgeInstance = new ControlSessionBridge(
@@ -1097,6 +1111,12 @@ function createApplicationMenu(): Menu {
           label: t('app-menu.edit.insert-snippet'),
           enabled: insertSnippetAvailable,
           click: () => publishMenuAction({ type: 'insert-snippet' }),
+        },
+        {
+          id: 'edit.save-snippet',
+          label: t('app-menu.edit.save-snippet'),
+          enabled: saveSnippetAvailable,
+          click: () => publishMenuAction({ type: 'save-snippet' }),
         },
         {
           id: 'edit.format-document',
@@ -4119,6 +4139,87 @@ function registerIpc(
     if (item) item.enabled = available;
     publishApplicationMenuModel();
   });
+  ipcMain.handle(ipcChannels.syncSaveSnippetAvailable, (event, available: boolean) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    if (typeof available !== 'boolean') throw new Error('invalid save snippet state');
+    saveSnippetAvailable = available;
+    const item = applicationMenu?.getMenuItemById('edit.save-snippet');
+    if (item) item.enabled = available;
+    publishApplicationMenuModel();
+  });
+  ipcMain.handle(ipcChannels.ownSnippetsList, async (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return requireOwnSnippetStore().list();
+  });
+  ipcMain.handle(
+    ipcChannels.ownSnippetSave,
+    async (event, snippet: unknown, previousName: unknown) => {
+      assertTrustedSender(event.senderFrame?.url);
+      assertMainWindowSender(event.sender);
+      return requireOwnSnippetStore().save(
+        validateOwnSnippet(snippet),
+        previousName === null ? null : boundedSnippetName(previousName),
+      );
+    },
+  );
+  ipcMain.handle(ipcChannels.ownSnippetDelete, async (event, name: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return requireOwnSnippetStore().delete(boundedSnippetName(name));
+  });
+  ipcMain.handle(ipcChannels.ownSnippetsExport, async (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    const browserWindow = assertMainWindowSender(event.sender);
+    const snippets = await requireOwnSnippetStore().list();
+    if (snippets.length === 0) return null;
+    const text = serializeSnippetFile(snippets);
+    const directory = await selectionDirectory('snippetFile');
+    const name = 'rms-snippets.json';
+    const selection = await showSaveDialog(browserWindow, {
+      defaultPath: directory ? join(directory, name) : name,
+      filters: [{ name: t('native-dialog.snippets.filter'), extensions: ['json'] }],
+      title: t('native-dialog.snippets.export.title'),
+    });
+    if (selection.canceled || !selection.filePath) return null;
+    await sessionStore.updateDialogLocation('snippetFile', dirname(selection.filePath));
+    await writeFile(selection.filePath, Buffer.from(text, 'utf8'));
+    return { count: snippets.length };
+  });
+  ipcMain.handle(ipcChannels.ownSnippetsImport, async (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    const browserWindow = assertMainWindowSender(event.sender);
+    const defaultPath = await selectionDirectory('snippetFile');
+    const selection = await showOpenDialog(browserWindow, {
+      ...(defaultPath ? { defaultPath } : {}),
+      filters: [{ name: t('native-dialog.snippets.filter'), extensions: ['json'] }],
+      properties: ['openFile', 'dontAddToRecent'],
+      title: t('native-dialog.snippets.import.title'),
+    });
+    const path = selection.filePaths[0];
+    if (selection.canceled || !path) return null;
+    await sessionStore.updateDialogLocation('snippetFile', dirname(path));
+    let bytes: Buffer;
+    try {
+      bytes = await readFileBounded(path, ownSnippetLimits.fileBytes);
+    } catch (error) {
+      return {
+        status: 'refused',
+        reason: error instanceof FileTooLargeError ? 'too-large' : 'unreadable',
+      } as const;
+    }
+    try {
+      const imported = parseSnippetFile(bytes);
+      const { snippets, added, renamed } = await requireOwnSnippetStore().import(imported);
+      return { status: 'imported', snippets, added, renamed } as const;
+    } catch (error) {
+      if (error instanceof SnippetFileError) {
+        return { status: 'refused', reason: error.reason } as const;
+      }
+      throw error;
+    }
+  });
   ipcMain.handle(ipcChannels.syncModalSurfaceOpen, (event, open: boolean) => {
     assertTrustedSender(event.senderFrame?.url);
     assertMainWindowSender(event.sender);
@@ -4796,6 +4897,36 @@ function validSelectedMinimapPalette(value: SelectedMinimapPalette | null): bool
         validColor(color.leftColor) &&
         validColor(color.rightColor),
     )
+  );
+}
+
+function requireOwnSnippetStore(): OwnSnippetStore {
+  if (!ownSnippetStore) throw new Error('the snippet store is unavailable');
+  return ownSnippetStore;
+}
+
+function boundedSnippetName(value: unknown): string {
+  if (typeof value !== 'string' || value.length < 1 || value.length > ownSnippetLimits.name) {
+    throw new Error('invalid snippet name');
+  }
+  return value;
+}
+
+function ownSnippetStoreResetNote(reset: OwnSnippetStoreReset): OutputMessage {
+  return outputNote(
+    'App',
+    'snippet-store.reset',
+    { id: 'code-editor.snippets.store-reset' },
+    {
+      severity: 'warning',
+      cause: reset.backupPath
+        ? {
+            id: 'code-editor.snippets.store-reset.backup',
+            args: { name: basename(reset.backupPath) },
+          }
+        : { id: 'code-editor.snippets.store-reset.kept' },
+      detail: reset.reason,
+    },
   );
 }
 

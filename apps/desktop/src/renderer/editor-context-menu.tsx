@@ -100,8 +100,9 @@ function isInsideEditorMenu(target: EventTarget | null): boolean {
   return target instanceof Element && target.closest('.editor-context-menu') !== null;
 }
 
-export function EditorContextMenu() {
-  const live = useSyncExternalStore(subscribeEditorMenu, currentEditorMenu);
+export function EditorContextMenu({ scope = null }: { scope?: string | null } = {}) {
+  const published = useSyncExternalStore(subscribeEditorMenu, currentEditorMenu);
+  const live = published?.scope === scope ? published : null;
   const request = useHeld(live, live === null);
   useLayoutEffect(() => {
     if (!live) return undefined;
@@ -127,7 +128,9 @@ export function EditorContextMenu() {
         anchor={anchor}
         className="editor-context-menu"
         collisionBoundary={
-          document.querySelector<HTMLElement>('.workspace-editor-region') ?? undefined
+          scope === null
+            ? (document.querySelector<HTMLElement>('.workspace-editor-region') ?? undefined)
+            : undefined
         }
         finalFocus={false}
         {...(request.anchor.element ? { side: 'bottom' as const, alignOffset: 0 } : {})}

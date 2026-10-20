@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Codeausschnitt einfügen…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Als Codeausschnitt speichern…"
+    },
     "app-menu.edit.format-document": {
       "message": "Dokument formatieren"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "Dateien in {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Keine Kartendateien"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Keine Skriptdateien"
+    },
     "explorer.empty.maps": {
       "message": "Öffne einen Ordner, um seine Karten zu durchsuchen und zu bearbeiten."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Abbrechen"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Als Codeausschnitt speichern…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Meine Codeausschnitte"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Mitgelieferte Codeausschnitte"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Codeausschnitt bearbeiten"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "{name} bearbeiten"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Codeausschnitt löschen"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "{name} löschen"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Codeausschnitt „{name}“ löschen?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Er wird aus „Meine Codeausschnitte“ entfernt. Dies kann nicht rückgängig gemacht werden."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Löschen"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Abbrechen"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Der Codeausschnitt konnte nicht gelöscht werden."
+    },
+    "code-editor.snippets.import": {
+      "message": "Importieren…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Exportieren…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {# Codeausschnitt exportiert.} other {# Codeausschnitte exportiert.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Die Codeausschnitte konnten nicht exportiert werden."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {# Codeausschnitt importiert.} other {# Codeausschnitte importiert.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {# Codeausschnitt importiert.} other {# Codeausschnitte importiert.}} {renamed, plural, one {# erhielt eine Nummer hinter dem Namen, weil du schon einen Codeausschnitt mit diesem Namen hattest.} other {# erhielten eine Nummer hinter dem Namen, weil du schon Codeausschnitte mit diesen Namen hattest.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Die Codeausschnitte konnten nicht importiert werden."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Diese Datei ist keine Codeausschnittdatei von AoE2RMSIDE, daher wurde nichts importiert."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Diese Codeausschnittdatei stammt aus einer neueren Version von AoE2RMSIDE, daher wurde nichts importiert. Aktualisiere AoE2RMSIDE, um sie zu importieren."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Ein Codeausschnitt in dieser Datei kann nicht gelesen werden, daher wurde nichts importiert."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Du kannst bis zu 500 Codeausschnitte behalten, und diese Datei würde mehr hinzufügen, daher wurde nichts importiert."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Die Codeausschnitte wären zusammen größer als 2 MB, daher wurde nichts importiert."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Die Datei konnte nicht gelesen werden, daher wurde nichts importiert."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Abschnitt {section} erstellen?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Dieser Codeausschnitt gehört in den Abschnitt {section}, den dieses Skript noch nicht hat. AoE2RMSIDE kann den Abschnitt an der richtigen Stelle hinzufügen und den Codeausschnitt dort einfügen."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Abschnitt erstellen"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Am Ende von {section} einfügen?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Dieser Codeausschnitt gehört in den Abschnitt {section}. AoE2RMSIDE kann ihn am Ende dieses Abschnitts einfügen."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Dort einfügen"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Hier einfügen"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Abbrechen"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Deine gespeicherten Codeausschnitte konnten nicht gelesen werden, daher ist „Meine Codeausschnitte“ leer."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Die Datei wurde als {name} im Datenordner der App aufbewahrt."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Die Datei wurde an ihrem Ort belassen."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Als Codeausschnitt speichern"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Codeausschnitt bearbeiten"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Schließen"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Name"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Abschnitt"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Beliebiger Abschnitt"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Beschreibung"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Optional"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Code"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Speichern"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Abbrechen"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Gib einen Namen ein."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Du hast bereits einen Codeausschnitt mit diesem Namen."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Verwende einen Namen ohne Zeilenumbrüche oder Steuerzeichen."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Der Code darf nicht leer sein."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Der Code ist länger als 20.000 Zeichen."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Du kannst bis zu 500 Codeausschnitte behalten. Lösche einen, um diesen zu speichern."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Deine Codeausschnitte wären zusammen größer als 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Der Codeausschnitt konnte nicht gespeichert werden."
+    },
     "code-editor.include.open": {
       "message": "{name} öffnen"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Kartentestbericht importieren"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Codeausschnittdatei"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Codeausschnitte exportieren"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Codeausschnitte importieren"
     },
     "native-dialog.game-folder.title": {
       "message": "Ordner von Age of Empires II: Definitive Edition auswählen"

@@ -61,6 +61,7 @@
   --preview-tile-grid: oklch(0.12 0 0 / 40%);
   --preview-map-boundary-width: 4px;
   --editor-overlay-opacity: 0.85;
+  --quiet-opacity: 0.6;
   --editor-surface: #f1f1f1;
   --editor-surface-opposite: #171717;
   --separator-pill: var(--editor-surface-opposite);
@@ -1262,6 +1263,18 @@ img {
   color: var(--sidebar-accent-foreground);
 }
 
+.explorer-row[data-visually-empty='true'] > .explorer-entry > * {
+  opacity: var(--quiet-opacity);
+}
+
+.explorer-row[data-visually-empty='true'][data-context-open='true'] > .explorer-entry > *,
+.explorer-content[data-searching='true']
+  .explorer-row[data-visually-empty='true'][data-active='true']
+  > .explorer-entry
+  > * {
+  opacity: 1;
+}
+
 .directory-children,
 .explorer-directory {
   min-width: 0;
@@ -2226,7 +2239,7 @@ img {
 }
 
 .editor-tab[data-preview='true'] .editor-tab-title {
-  opacity: 0.6;
+  opacity: var(--quiet-opacity);
 }
 
 @property --overflow-fade-start {
@@ -2429,7 +2442,7 @@ img {
 }
 
 .fixed-workspace[data-preview-layout='behind-editor'] .monaco-host {
-  margin: calc(var(--editor-overlay-inset) - 4px) 5px var(--editor-overlay-inset)
+  margin: calc(var(--editor-overlay-inset) - 5px) 5px var(--editor-overlay-inset)
     var(--editor-overlay-inset);
 }
 
@@ -3063,7 +3076,7 @@ img {
 }
 
 .preview-version-trigger [data-slot='select-value'] {
-  opacity: 0.6;
+  opacity: var(--quiet-opacity);
   transition:
     font-weight 120ms ease,
     opacity 120ms ease;
@@ -5489,15 +5502,60 @@ div:has(> .preview-layer-tooltip) {
   background: var(--card);
 }
 
+.insert-snippet-group {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.insert-snippet-group + .insert-snippet-group {
+  margin-block-start: 6px;
+}
+
+.insert-snippet-group-heading {
+  padding-block: 4px 2px;
+  padding-inline: 8px;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: start;
+}
+
 .insert-snippet-option {
   display: grid;
-  gap: 1px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px;
   padding-block: 6px;
   padding-inline: 8px;
   border-radius: var(--radius-md);
   cursor: default;
   text-align: start;
   overflow-wrap: anywhere;
+}
+
+.insert-snippet-option[data-own='true'] {
+  padding-inline-end: 4px;
+}
+
+.insert-snippet-option-text {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.insert-snippet-option-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.insert-snippet-option-action {
+  color: var(--muted-foreground);
+}
+
+.insert-snippet-option[data-active='true'] .insert-snippet-option-action {
+  color: inherit;
 }
 
 .insert-snippet-option[data-active='true'] {
@@ -5564,10 +5622,49 @@ div:has(> .preview-layer-tooltip) {
   white-space: pre;
 }
 
+.insert-snippet-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  min-width: 0;
+}
+
+.insert-snippet-file-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.insert-snippet-notice {
+  flex: 1 1 160px;
+  min-width: 0;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+
+.insert-snippet-notice[data-kind='alert'] {
+  color: var(--destructive);
+}
+
 .insert-snippet-actions {
   display: flex;
+  flex: none;
   justify-content: flex-end;
   gap: 8px;
+  margin-inline-start: auto;
+}
+
+.insert-snippet-dialog[data-editing],
+.insert-snippet-dialog[data-editing] *,
+:root:has(.insert-snippet-dialog[data-editing]) .insert-snippet-option-tooltip {
+  visibility: hidden;
+  transition: none;
 }
 
 @media (max-width: 640px) {
@@ -5575,6 +5672,134 @@ div:has(> .preview-layer-tooltip) {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
     block-size: min(480px, calc(100dvh - 220px));
+  }
+}
+
+.save-snippet-dialog {
+  width: min(560px, calc(100vw - 40px));
+  max-width: 560px !important;
+  max-block-size: calc(100dvh - 40px);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+}
+
+.save-snippet-dialog [data-slot='dialog-title'] {
+  padding-inline-end: 32px;
+  font-size: 16px;
+  text-align: start;
+}
+
+.save-snippet-close {
+  position: absolute;
+  inset-block-start: 10px;
+  inset-inline-end: 10px;
+}
+
+.save-snippet-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.save-snippet-field {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 12px;
+  font-size: 12px;
+  text-align: start;
+}
+
+.save-snippet-field [data-slot='input'],
+.save-snippet-section {
+  width: 100%;
+}
+
+.save-snippet-code-field {
+  align-items: start;
+}
+
+.save-snippet-code-field > :first-child {
+  padding-block-start: 6px;
+}
+
+.save-snippet-code {
+  block-size: min(240px, calc(100dvh - 340px));
+  min-block-size: 96px;
+  min-inline-size: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklch, var(--input) 20%, transparent);
+  text-align: left;
+  transition:
+    border-color var(--motion-duration-surface) var(--motion-ease-out),
+    box-shadow var(--motion-duration-surface) var(--motion-ease-out);
+}
+
+.dark .save-snippet-code {
+  background: color-mix(in oklch, var(--input) 30%, transparent);
+}
+
+.save-snippet-code:focus-within {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.save-snippet-code[data-invalid] {
+  border-color: var(--destructive);
+}
+
+.dark .save-snippet-code[data-invalid] {
+  border-color: color-mix(in oklch, var(--destructive) 50%, transparent);
+}
+
+.save-snippet-code :is(.monaco-editor, .monaco-editor-background, .margin) {
+  background-color: transparent;
+}
+
+.save-snippet-dialog code,
+.save-snippet-section-menu code {
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 12px;
+}
+
+.save-snippet-problem {
+  grid-column: 2;
+  margin: 0;
+  color: var(--destructive);
+  font-size: 11px;
+  text-align: start;
+}
+
+.save-snippet-save-problem {
+  grid-column: auto;
+}
+
+.save-snippet-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.save-snippet-nested-backdrop {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+@media (max-width: 480px) {
+  .save-snippet-field {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .save-snippet-problem {
+    grid-column: auto;
+  }
+
+  .save-snippet-code-field > :first-child {
+    padding-block-start: 0;
   }
 }
 

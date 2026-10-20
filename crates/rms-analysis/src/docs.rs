@@ -214,6 +214,8 @@ pub struct Snippet {
     pub prefix: String,
     #[serde(rename = "where")]
     pub places: Vec<String>,
+    #[serde(default)]
+    pub only_without_sections: bool,
     pub summary: String,
     pub body: Vec<String>,
 }
@@ -223,10 +225,17 @@ impl Snippet {
         self.body.join("\n")
     }
 
-    pub fn offered(&self, section: &str, top_level: bool) -> bool {
+    pub fn offered(&self, section: &str, top_level: bool, document_has_sections: bool) -> bool {
+        if self.only_without_sections {
+            return top_level && !document_has_sections;
+        }
         self.places
             .iter()
             .any(|place| place == "*" || (top_level && place == section))
+    }
+
+    pub fn listed(&self, document_has_sections: bool) -> bool {
+        !(self.only_without_sections && document_has_sections)
     }
 }
 
@@ -1045,6 +1054,16 @@ fn validate(raw: &RawCatalog) -> Result<(), String> {
         for place in &snippet.places {
             if place != "*" && !SECTIONS.contains(&place.as_str()) {
                 return Err(format!("{owner}: unknown section {place}"));
+            }
+        }
+        if snippet.only_without_sections {
+            if raw.schema_version == "1.0.0" {
+                return Err(format!(
+                    "{owner}: onlyWithoutSections needs schema version 1.1.0"
+                ));
+            }
+            if snippet.places != ["*"] {
+                return Err(format!("{owner}: onlyWithoutSections needs where [\"*\"]"));
             }
         }
         let stops = tab_stops(&snippet.insert_text());

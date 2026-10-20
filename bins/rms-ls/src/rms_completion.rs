@@ -50,6 +50,17 @@ const SORT_GLOBAL: &str = "1";
 const SORT_CONTROL: &str = "2";
 const SORT_DIRECTIVE: &str = "3";
 const SORT_SECTION: &str = "4";
+const SORT_SECTION_LEADING: &str = "!";
+
+const SECTION_ORDER: &[&str] = &[
+    "<PLAYER_SETUP>",
+    "<LAND_GENERATION>",
+    "<ELEVATION_GENERATION>",
+    "<CLIFF_GENERATION>",
+    "<TERRAIN_GENERATION>",
+    "<CONNECTION_GENERATION>",
+    "<OBJECTS_GENERATION>",
+];
 
 const CONTROL_TERMS: &[&str] = &[
     "if",
@@ -421,6 +432,7 @@ struct StatementPosition {
     scan: Scan,
     section: String,
     open_control: Option<Control>,
+    written_sections: BTreeSet<&'static str>,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -495,7 +507,25 @@ fn statement_position(
         scan,
         section,
         open_control: open_control(source, tokens, index),
+        written_sections: written_sections(tokens, offset, &text),
     }
+}
+
+fn written_sections<'t>(
+    tokens: &[Token],
+    offset: ByteOffset,
+    text: &impl Fn(&Token) -> &'t str,
+) -> BTreeSet<&'static str> {
+    tokens
+        .iter()
+        .filter(|token| {
+            token.kind == TokenKind::Section
+                && !(token.range.start < offset && offset <= token.range.end)
+        })
+        .filter_map(|token| strict_command(text(token)))
+        .filter(|command| matches!(command.kind, StrictCommandKind::Section(_)))
+        .map(|command| command.name)
+        .collect()
 }
 
 fn triggered_by(params: &Value, character: &str) -> bool {
@@ -715,14 +745,37 @@ fn statement_sort(command: &StrictCommand, position: &StatementPosition) -> Opti
     }
 }
 
+fn sections_lead(word: &str, position: &StatementPosition) -> bool {
+    (word.is_empty() || word.starts_with('<')) && position.block == Block::TopLevel
+}
+
+fn asks_again(word: &str, position: &StatementPosition) -> bool {
+    word.is_empty() && position.block == Block::TopLevel
+}
+
 fn statement_items(word: &str, position: &StatementPosition) -> Vec<Value> {
     let mut items = Vec::new();
     let sections_only = word.starts_with('<');
     let directives_only = word.starts_with('#');
     if !directives_only && position.block == Block::TopLevel {
+        let lead = sections_lead(word, position);
         for command in strict_commands() {
             if let StrictCommandKind::Section(_) = command.kind {
-                items.push(item(command.name, KIND_KEYWORD, None, SORT_SECTION));
+                let sort = if lead {
+                    let rank = SECTION_ORDER
+                        .iter()
+                        .position(|name| *name == command.name)
+                        .unwrap_or(SECTION_ORDER.len());
+                    let group = if position.written_sections.contains(command.name) {
+                        SORT_SECTION
+                    } else {
+                        SORT_SECTION_LEADING
+                    };
+                    format!("{group}{rank}")
+                } else {
+                    SORT_SECTION.to_owned()
+                };
+                items.push(item(command.name, KIND_KEYWORD, None, &sort));
             }
         }
     }
@@ -764,6 +817,7 @@ fn statement_items(word: &str, position: &StatementPosition) -> Vec<Value> {
     items.extend(crate::rms_docs::snippet_items(
         &position.block,
         &position.section,
+        !position.written_sections.is_empty(),
         SORT_CONTROL,
     ));
     items
@@ -968,6 +1022,7 @@ impl Server {
 
     pub(crate) fn rms_snippets(&self, params: &Value) -> RequestResult<Value> {
         let (uri, position) = request_position(params)?;
+        let previews = crate::rms_docs::own_preview_tokens(params.get("previews"))?;
         let document = self.document(uri)?;
         let offset = byte_offset(&document.source, position)?;
         let tokens = &document.analysis.cst.tokens;
@@ -976,7 +1031,21 @@ impl Server {
             CaretContext::Inside | CaretContext::Operand { .. } => None,
         };
         let section = crate::section_at(document, offset);
-        Ok(crate::rms_docs::snippet_list(block.as_ref(), &section))
+        let bytes = document.source.bytes();
+        let text = |token: &Token| {
+            std::str::from_utf8(&bytes[token.range.start.0 as usize..token.range.end.0 as usize])
+                .unwrap_or("")
+        };
+        let document_has_sections = !written_sections(tokens, offset, &text).is_empty();
+        let mut answer =
+            crate::rms_docs::snippet_list(block.as_ref(), &section, document_has_sections);
+        answer["caret"] = json!({
+            "section": if section.is_empty() { Value::Null } else { json!(section) },
+            "statement": block.is_some(),
+        });
+        answer["documentSections"] = Value::Array(crate::snippet_sections(document));
+        answer["previewTokens"] = json!(previews);
+        Ok(answer)
     }
 
     pub(crate) fn rms_completion(&self, params: &Value) -> RequestResult<Value> {
@@ -998,7 +1067,7 @@ impl Server {
                 let position =
                     statement_position(&document.source, tokens, offset, index, block, section);
                 return Ok(json!({
-                    "isIncomplete": false,
+                    "isIncomplete": asks_again(&word, &position),
                     "items": statement_items(&word, &position),
                 }));
             }

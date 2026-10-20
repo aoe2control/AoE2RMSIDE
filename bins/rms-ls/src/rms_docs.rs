@@ -12,7 +12,7 @@ use rms_syntax::{Token, TokenKind};
 use serde_json::{Value, json};
 
 use crate::rms_completion::{Block, CaretContext, caret_context};
-use crate::{OpenDocument, Server, lsp_range, section_at};
+use crate::{OpenDocument, RequestError, RequestResult, Server, lsp_range, section_at};
 
 const KIND_FUNCTION: u64 = 3;
 const KIND_PROPERTY: u64 = 10;
@@ -226,7 +226,12 @@ pub(crate) fn resolve(params: &Value) -> Option<Value> {
     Some(item)
 }
 
-pub(crate) fn snippet_items(block: &Block, section: &str, sort: &str) -> Vec<Value> {
+pub(crate) fn snippet_items(
+    block: &Block,
+    section: &str,
+    document_has_sections: bool,
+    sort: &str,
+) -> Vec<Value> {
     let Some(catalog) = catalog() else {
         return Vec::new();
     };
@@ -234,7 +239,7 @@ pub(crate) fn snippet_items(block: &Block, section: &str, sort: &str) -> Vec<Val
     catalog
         .snippets
         .iter()
-        .filter(|snippet| snippet.offered(section, top_level))
+        .filter(|snippet| snippet.offered(section, top_level, document_has_sections))
         .map(|snippet| {
             json!({
                 "label": snippet.label,
@@ -250,7 +255,11 @@ pub(crate) fn snippet_items(block: &Block, section: &str, sort: &str) -> Vec<Val
         .collect()
 }
 
-pub(crate) fn snippet_list(block: Option<&Block>, section: &str) -> Value {
+pub(crate) fn snippet_list(
+    block: Option<&Block>,
+    section: &str,
+    document_has_sections: bool,
+) -> Value {
     let Some(catalog) = catalog() else {
         return json!({ "snippets": [] });
     };
@@ -259,9 +268,11 @@ pub(crate) fn snippet_list(block: Option<&Block>, section: &str) -> Value {
         .snippets
         .iter()
         .zip(previews)
+        .filter(|(snippet, _)| snippet.listed(document_has_sections))
         .map(|(snippet, (preview, tokens))| {
-            let fits =
-                block.is_some_and(|block| snippet.offered(section, *block == Block::TopLevel));
+            let fits = block.is_some_and(|block| {
+                snippet.offered(section, *block == Block::TopLevel, document_has_sections)
+            });
             json!({
                 "id": snippet.id,
                 "label": snippet.label,
@@ -291,6 +302,27 @@ fn snippet_previews(catalog: &DocumentationCatalog) -> &'static [(String, Vec<u3
             })
             .collect()
     })
+}
+
+const MAXIMUM_OWN_PREVIEWS: usize = 500;
+const MAXIMUM_OWN_PREVIEW_BYTES: usize = 128 * 1024;
+
+pub(crate) fn own_preview_tokens(previews: Option<&Value>) -> RequestResult<Vec<Vec<u32>>> {
+    let Some(previews) = previews else {
+        return Ok(Vec::new());
+    };
+    let list = previews
+        .as_array()
+        .filter(|list| list.len() <= MAXIMUM_OWN_PREVIEWS)
+        .ok_or_else(|| RequestError::invalid("snippet previews must be a bounded list"))?;
+    list.iter()
+        .map(|text| {
+            text.as_str()
+                .filter(|text| text.len() <= MAXIMUM_OWN_PREVIEW_BYTES)
+                .map(preview_semantic_tokens)
+                .ok_or_else(|| RequestError::invalid("a snippet preview must be a bounded string"))
+        })
+        .collect()
 }
 
 fn preview_semantic_tokens(text: &str) -> Vec<u32> {

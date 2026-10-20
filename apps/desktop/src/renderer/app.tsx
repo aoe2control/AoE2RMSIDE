@@ -97,6 +97,7 @@ import {
 } from './severity-filter';
 import { SeverityFilterToggles } from './severity-filter-toggles';
 import { SeparatorPill } from './separator-pill-view';
+import { isSnippetCodeUri } from './snippet-code';
 import { ManagedModDeploymentPanel } from './managed-mod-deployment-panel';
 import { PreviewPanel } from './preview-panel';
 import type { PinnedPreviewSource, PreviewExecutionController } from './preview-execution';
@@ -110,7 +111,7 @@ import {
 import { isModalSurfaceOpen } from './modal-surfaces';
 import { usePresence } from './motion';
 import { runEditorHistoryCommand, setRmsConditionalIndentation } from './monaco-language';
-import { requestInsertSnippet } from './insert-snippet';
+import { requestInsertSnippet, requestSaveSnippet } from './insert-snippet';
 import {
   noSourceHighlightOperations,
   operationsIntersectingByteRanges,
@@ -1092,6 +1093,9 @@ export function App() {
       } else if (action.type === 'insert-snippet') {
         showEditor();
         requestInsertSnippet();
+      } else if (action.type === 'save-snippet') {
+        showEditor();
+        requestSaveSnippet();
       } else if (action.type === 'set-format-on-save') {
         setFormatOnSave(action.enabled);
       } else if (action.type === 'set-indent-conditionals') {
@@ -1174,6 +1178,7 @@ export function App() {
         if (event.method !== 'textDocument/publishDiagnostics') return;
         const params = event.params as { uri?: unknown; diagnostics?: unknown };
         if (typeof params?.uri !== 'string' || !Array.isArray(params.diagnostics)) return;
+        if (isSnippetCodeUri(params.uri)) return;
         const diagnostics = params.diagnostics.filter(isLanguageServerDiagnostic);
         setLanguageDiagnostics((current) => {
           const next = new Map(current);

@@ -36,7 +36,7 @@ use rms_source::{
     SourceCatalogRole, SourceCatalogVersion, SourceId, SourceText, StandardIncludeAccess,
     Utf16Position, Utf16Range, VirtualSource, VirtualSourceResolver,
 };
-use rms_syntax::{CstKind, Token};
+use rms_syntax::{CstKind, Token, TokenKind};
 use serde_json::{Map, Value, json};
 
 use crate::facts::Closed;
@@ -3151,6 +3151,167 @@ fn section_at(document: &OpenDocument, offset: ByteOffset) -> String {
         .rfind(|item| item.kind == OutlineKind::Section && item.range.start <= offset)
         .map(|item| item.name.trim_matches(['<', '>']).to_ascii_lowercase())
         .unwrap_or_default()
+}
+
+fn snippet_sections(document: &OpenDocument) -> Vec<Value> {
+    let source = &document.source;
+    let cst = &document.analysis.cst;
+    let nodes = &cst.nodes;
+    let word = |index: usize| -> &[u8] {
+        cst.tokens
+            .get(nodes[index].token_start as usize)
+            .map_or(&[][..], |token| token.bytes(source))
+    };
+    let line = |offset: ByteOffset| {
+        source
+            .byte_to_utf16(offset)
+            .map_or(0, |position| position.line)
+    };
+    let mut sections = Vec::new();
+    let mut open: Vec<usize> = Vec::new();
+    let mut previous_header: Option<usize> = None;
+    for index in 0..nodes.len() {
+        match nodes[index].kind {
+            CstKind::Conditional | CstKind::RandomBranch => match word(index) {
+                b"if" | b"start_random" => open.push(index),
+                b"endif" | b"end_random" => {
+                    open.pop();
+                }
+                _ => {}
+            },
+            CstKind::Section => {
+                let wrapper = open
+                    .iter()
+                    .copied()
+                    .find(|opener| previous_header.is_none_or(|header| *opener > header));
+                let first = wrapper.unwrap_or(index);
+                let start = attached_comment_start(cst, nodes[first].token_start as usize)
+                    .unwrap_or(nodes[first].range.start);
+                let end = section_content_end(cst, index, &word);
+                let name = String::from_utf8_lossy(word(index))
+                    .trim_matches(['<', '>'])
+                    .to_ascii_lowercase();
+                sections.push(json!({
+                    "name": name,
+                    "header": line(nodes[index].range.start),
+                    "start": line(start),
+                    "end": line(end),
+                }));
+                previous_header = Some(index);
+            }
+            _ => {}
+        }
+    }
+    sections
+}
+
+fn attached_comment_start(cst: &rms_syntax::CstDocument, first: usize) -> Option<ByteOffset> {
+    let tokens = &cst.tokens;
+    let mut start = None;
+    let mut index = first;
+    loop {
+        let mut newlines = 0;
+        let mut previous = index;
+        while previous > 0 {
+            previous -= 1;
+            match tokens[previous].kind {
+                TokenKind::Whitespace => {}
+                TokenKind::Newline => newlines += 1,
+                _ => break,
+            }
+            if newlines > 1 {
+                return start;
+            }
+        }
+        if previous == index
+            || newlines != 1
+            || !matches!(
+                tokens[previous].kind,
+                TokenKind::LineComment | TokenKind::BlockComment
+            )
+        {
+            return start;
+        }
+        let mut before = previous;
+        let mut own_line = true;
+        while before > 0 {
+            before -= 1;
+            match tokens[before].kind {
+                TokenKind::Whitespace | TokenKind::Bom => {}
+                TokenKind::Newline => break,
+                _ => {
+                    own_line = false;
+                    break;
+                }
+            }
+        }
+        if !own_line {
+            return start;
+        }
+        start = Some(tokens[previous].range.start);
+        index = previous;
+    }
+}
+
+fn section_content_end<'a>(
+    cst: &rms_syntax::CstDocument,
+    header: usize,
+    word: &impl Fn(usize) -> &'a [u8],
+) -> ByteOffset {
+    let nodes = &cst.nodes;
+    let mut open = 0usize;
+    let mut outermost: Option<usize> = None;
+    let mut boundary = nodes.len();
+    for (index, node) in nodes.iter().enumerate().skip(header + 1) {
+        match node.kind {
+            CstKind::Section => {
+                boundary = if open > 0 {
+                    outermost.unwrap_or(index)
+                } else {
+                    index
+                };
+                break;
+            }
+            CstKind::Conditional | CstKind::RandomBranch => match word(index) {
+                b"if" | b"start_random" => {
+                    if open == 0 {
+                        outermost = Some(index);
+                    }
+                    open += 1;
+                }
+                b"endif" | b"end_random" => {
+                    if open == 0 {
+                        boundary = index;
+                        break;
+                    }
+                    open -= 1;
+                }
+                b"elseif" | b"else" | b"percent_chance" if open == 0 => {
+                    boundary = index;
+                    break;
+                }
+                _ => {}
+            },
+            _ => {}
+        }
+    }
+    let mut end = nodes[header + 1..boundary]
+        .iter()
+        .map(|node| node.range.end)
+        .max()
+        .unwrap_or(nodes[header].range.end)
+        .max(nodes[header].range.end);
+    let tokens = &cst.tokens;
+    let mut index = tokens.partition_point(|token| token.range.start < end);
+    while let Some(token) = tokens.get(index) {
+        match token.kind {
+            TokenKind::Whitespace => {}
+            TokenKind::LineComment | TokenKind::BlockComment => end = token.range.end,
+            _ => break,
+        }
+        index += 1;
+    }
+    end
 }
 
 struct IncludeSyntax {

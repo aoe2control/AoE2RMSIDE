@@ -11,6 +11,7 @@ import {
   type PreviewImageSaveRequest,
 } from '../shared/image-export';
 import { isUpdateVersion, validateUpdateState, type UpdateState } from '../shared/update';
+import { ownSnippetLimits, validateOwnSnippet, type OwnSnippet } from '../shared/own-snippets';
 import {
   ipcChannels,
   isDeploymentProfileId,
@@ -1237,6 +1238,24 @@ const api: RmsideDesktopApi = Object.freeze({
     ipcRenderer.invoke(ipcChannels.syncModalSurfaceOpen, assertBoolean(open)),
   syncInsertSnippetAvailable: (available: boolean) =>
     ipcRenderer.invoke(ipcChannels.syncInsertSnippetAvailable, assertBoolean(available)),
+  syncSaveSnippetAvailable: (available: boolean) =>
+    ipcRenderer.invoke(ipcChannels.syncSaveSnippetAvailable, assertBoolean(available)),
+  listOwnSnippets: () => ipcRenderer.invoke(ipcChannels.ownSnippetsList),
+  saveOwnSnippet: (snippet: OwnSnippet, previousName: string | null) =>
+    ipcRenderer.invoke(
+      ipcChannels.ownSnippetSave,
+      validateOwnSnippet(snippet),
+      previousName === null
+        ? null
+        : assertBoundedString(previousName, 'snippet name', ownSnippetLimits.name),
+    ),
+  deleteOwnSnippet: (name: string) =>
+    ipcRenderer.invoke(
+      ipcChannels.ownSnippetDelete,
+      assertBoundedString(name, 'snippet name', ownSnippetLimits.name),
+    ),
+  exportOwnSnippets: () => ipcRenderer.invoke(ipcChannels.ownSnippetsExport),
+  importOwnSnippets: () => ipcRenderer.invoke(ipcChannels.ownSnippetsImport),
   syncNativeTheme: (preference: ThemePreference, resolved: ResolvedTheme) =>
     ipcRenderer.invoke(
       ipcChannels.syncNativeTheme,

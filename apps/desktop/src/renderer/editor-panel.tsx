@@ -103,13 +103,36 @@ import { readOnlyMessage, saveAsFromReadOnlyMessageCommandId } from './read-only
 import {
   insertSnippetActionId,
   insertSnippetAvailable,
+  ownEditorSnippet,
+  ownSnippetPreview,
+  parseSnippetContext,
   parseSnippetList,
+  saveSnippetActionId,
+  saveSnippetAvailable,
+  snippetTextFromSelection,
   subscribeInsertSnippetRequests,
+  subscribeSaveSnippetRequests,
   type EditorSnippet,
+  type SnippetContext,
 } from './insert-snippet';
 import { InsertSnippetDialog, type InsertSnippetDialogState } from './insert-snippet-dialog';
+import { SaveSnippetDialog, type SaveSnippetDialogState } from './save-snippet-dialog';
+import {
+  snippetEdit,
+  snippetPlacement,
+  type SnippetEdit,
+  type SnippetPlacement,
+  type SnippetPlacementMode,
+} from './snippet-placement';
+import {
+  anySnippetSection,
+  isOwnSnippetSection,
+  type OwnSnippet,
+  type OwnSnippetSection,
+} from '../shared/own-snippets';
 import { sourceLanguageIdForName } from '../shared/xs-contract';
 import { bracketColorizationFor } from './rms-language';
+import { editorDefaultFontSize, editorFontFamily } from './editor-font';
 import { registerRmsEnter } from './rms-enter';
 import { editionCapabilities } from '../shared/edition';
 import {
@@ -216,7 +239,6 @@ function wordBasedSuggestionsAtCursor(
   );
 }
 
-const editorDefaultFontSize = 14;
 const editorFontSizeNoticeDelayMilliseconds = 2_000;
 const editorTabMovementAnimationId = 'rmside-tab-movement';
 const editorTabOpenAnimationId = 'rmside-tab-open';
@@ -1402,7 +1424,7 @@ export function EditorPanel({
       bracketPairColorization: { enabled: false },
       inlayHints: { enabled: 'offUnlessPressed', padding: true },
       detectIndentation: false,
-      fontFamily: "'Cascadia Code', Consolas, monospace",
+      fontFamily: editorFontFamily,
       fontSize: editorDefaultFontSize,
       fixedOverflowWidgets: true,
       minimap: { enabled: false },
@@ -1929,9 +1951,42 @@ export function EditorPanel({
   const snippetTarget = useRef<{
     model: monaco.editor.ITextModel;
     selection: monaco.Selection;
+    version: number;
+    context: SnippetContext | null;
   } | null>(null);
-  const snippetChoice = useRef<EditorSnippet | null>(null);
+  const snippetChoice = useRef<{ snippet: EditorSnippet; mode: SnippetPlacementMode } | null>(null);
   const snippetDialogSequence = useRef(0);
+  const loadSnippets = useCallback(
+    async (id: number, ownSnippets?: readonly OwnSnippet[]): Promise<void> => {
+      const target = snippetTarget.current;
+      if (!target) return;
+      const own = ownSnippets ?? (await window.rmside.listOwnSnippets().catch(() => []));
+      const previews = own.map((snippet) => ownSnippetPreview(snippet.body));
+      const sent =
+        previews.reduce((total, preview) => total + preview.length, 0) <= maximumColoredPreviews
+          ? previews
+          : [];
+      const answer = await requestRmsSnippets(
+        target.model,
+        target.selection.getStartPosition(),
+        sent,
+      );
+      const builtIn = parseSnippetList(answer);
+      const context = parseSnippetContext(answer, sent.length);
+      if (snippetDialogSequence.current !== id || snippetTarget.current !== target) return;
+      target.context = context;
+      const snippets = [
+        ...own.map((snippet, index) =>
+          ownEditorSnippet(snippet, context.caret, context.previewTokens[index]),
+        ),
+        ...builtIn,
+      ];
+      setSnippetDialog((current) =>
+        current.id === id ? { ...current, status: 'ready', snippets } : current,
+      );
+    },
+    [],
+  );
   const openInsertSnippet = useCallback(() => {
     const instance = editor.current;
     const model = instance?.getModel();
@@ -1942,25 +1997,94 @@ export function EditorPanel({
     )
       return;
     const id = ++snippetDialogSequence.current;
-    snippetTarget.current = { model, selection };
+    snippetTarget.current = {
+      model,
+      selection,
+      version: model.getAlternativeVersionId(),
+      context: null,
+    };
     snippetChoice.current = null;
     setSnippetDialog({ id, open: true, status: 'loading', snippets: [] });
-    requestRmsSnippets(model, selection.getStartPosition())
-      .then((answer) => {
-        const snippets = parseSnippetList(answer);
-        setSnippetDialog((current) =>
-          current.id === id ? { ...current, status: 'ready', snippets } : current,
-        );
-      })
-      .catch(() => {
-        setSnippetDialog((current) =>
-          current.id === id ? { ...current, status: 'failed' } : current,
-        );
-      });
+    loadSnippets(id).catch(() => {
+      setSnippetDialog((current) =>
+        current.id === id ? { ...current, status: 'failed' } : current,
+      );
+    });
+  }, [loadSnippets]);
+  const closeSnippetDialog = useCallback(
+    (choice: { snippet: EditorSnippet; mode: SnippetPlacementMode } | null) => {
+      snippetChoice.current = choice;
+      setSnippetDialog((current) => (current.open ? { ...current, open: false } : current));
+    },
+    [],
+  );
+  const snippetPlacementFor = useCallback((snippet: EditorSnippet): SnippetPlacement => {
+    const context = snippetTarget.current?.context;
+    return context
+      ? snippetPlacement(snippet.sections, context.caret, context.sections)
+      : { kind: 'caret' };
   }, []);
-  const closeSnippetDialog = useCallback((choice: EditorSnippet | null) => {
-    snippetChoice.current = choice;
-    setSnippetDialog((current) => (current.open ? { ...current, open: false } : current));
+  const ownSnippetsChanged = useCallback(
+    (own: OwnSnippet[]) => {
+      const id = snippetDialogSequence.current;
+      const caret = snippetTarget.current?.context?.caret ?? { section: null, statement: true };
+      setSnippetDialog((current) =>
+        current.id === id
+          ? {
+              ...current,
+              snippets: [
+                ...own.map((snippet) => ownEditorSnippet(snippet, caret)),
+                ...current.snippets.filter((snippet) => !snippet.own),
+              ],
+            }
+          : current,
+      );
+      void loadSnippets(id, own).catch(() => undefined);
+    },
+    [loadSnippets],
+  );
+
+  const [saveSnippetDialog, setSaveSnippetDialog] = useState<SaveSnippetDialogState>({
+    id: 0,
+    open: false,
+    previousName: null,
+    initial: { name: '', section: anySnippetSection, description: '', body: '' },
+    existing: [],
+  });
+  const openSaveSnippet = useCallback(async () => {
+    const instance = editor.current;
+    const model = instance?.getModel();
+    const selection = instance?.getSelection();
+    if (!instance || !model || !selection) return;
+    if (!saveSnippetAvailable(model.getLanguageId(), workspaceRef.current.activeDocument.readOnly))
+      return;
+    const body = selection.isEmpty()
+      ? ''
+      : snippetTextFromSelection(
+          model.getValueInRange(selection, monaco.editor.EndOfLinePreference.LF),
+          model.getValueInRange({
+            startLineNumber: selection.startLineNumber,
+            startColumn: 1,
+            endLineNumber: selection.startLineNumber,
+            endColumn: selection.startColumn,
+          }),
+        );
+    const [existing, section] = await Promise.all([
+      window.rmside.listOwnSnippets().catch(() => [] as OwnSnippet[]),
+      selectionSection(model, selection.getStartPosition()),
+    ]);
+    if (editor.current !== instance || instance.getModel() !== model) return;
+    setSaveSnippetDialog((current) => ({
+      id: current.id + 1,
+      open: true,
+      previousName: null,
+      initial: { name: '', section, description: '', body },
+      existing,
+    }));
+  }, []);
+  const closeSaveSnippetDialog = useCallback(() => {
+    setSaveSnippetDialog((current) => (current.open ? { ...current, open: false } : current));
+    editor.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -1992,11 +2116,20 @@ export function EditorPanel({
       contextMenuOrder: 1.4,
       run: () => openInsertSnippet(),
     });
+    const saveSnippetAction = instance.addAction({
+      id: saveSnippetActionId,
+      label: t('code-editor.context-menu.save-snippet'),
+      precondition: "editorLangId == 'rms' && !editorReadonly",
+      contextMenuGroupId: '1_modification',
+      contextMenuOrder: 1.5,
+      run: () => void openSaveSnippet(),
+    });
     return () => {
       openIncludeAction.dispose();
       insertSnippetAction.dispose();
+      saveSnippetAction.dispose();
     };
-  }, [openInsertSnippet, t]);
+  }, [openInsertSnippet, openSaveSnippet, t]);
 
   const snippetsAvailable = insertSnippetAvailable(
     sourceLanguageIdForName(workspace.activeDocument.name),
@@ -2006,6 +2139,31 @@ export function EditorPanel({
     void window.rmside.syncInsertSnippetAvailable(snippetsAvailable).catch(() => undefined);
   }, [snippetsAvailable]);
   useEffect(() => subscribeInsertSnippetRequests(openInsertSnippet), [openInsertSnippet]);
+  useEffect(() => subscribeSaveSnippetRequests(() => void openSaveSnippet()), [openSaveSnippet]);
+
+  const activeReadOnly = workspace.activeDocument.readOnly;
+  useEffect(() => {
+    const instance = editor.current;
+    if (!instance) return undefined;
+    let synced: boolean | null = null;
+    const sync = () => {
+      const available = saveSnippetAvailable(
+        instance.getModel()?.getLanguageId() ?? null,
+        activeReadOnly,
+      );
+      if (available === synced) return;
+      synced = available;
+      void window.rmside.syncSaveSnippetAvailable(available).catch(() => undefined);
+    };
+    sync();
+    const subscriptions = [
+      instance.onDidChangeModel(sync),
+      instance.onDidChangeModelLanguage(sync),
+    ];
+    return () => {
+      for (const subscription of subscriptions) subscription.dispose();
+    };
+  }, [activeReadOnly]);
 
   useEffect(() => {
     if (snippetDialog.open || snippetDialog.id === 0) return;
@@ -2016,9 +2174,32 @@ export function EditorPanel({
     snippetChoice.current = null;
     if (!instance) return;
     instance.focus();
-    if (choice && target && !target.model.isDisposed() && instance.getModel() === target.model) {
-      insertEditorSnippet(instance, target.selection, choice.insertText);
+    if (!choice || !target || target.model.isDisposed() || instance.getModel() !== target.model) {
+      return;
     }
+    const { snippet, mode } = choice;
+    const placement: SnippetPlacement =
+      mode !== 'caret' && target.context
+        ? snippetPlacement(snippet.sections, target.context.caret, target.context.sections)
+        : { kind: 'caret' };
+    if (
+      placement.kind === 'caret' ||
+      target.version !== target.model.getAlternativeVersionId() ||
+      !target.context
+    ) {
+      insertEditorSnippet(instance, target.selection, snippet.insertText);
+      return;
+    }
+    insertEditorSnippetAt(
+      instance,
+      snippetEdit(
+        target.model.getLinesContent(),
+        target.context.sections,
+        placement.section,
+        mode === 'create-section' ? 'create-section' : 'section-end',
+        snippet.insertText,
+      ),
+    );
   }, [snippetDialog.id, snippetDialog.open]);
 
   useEffect(() => {
@@ -2798,8 +2979,15 @@ export function EditorPanel({
           <InsertSnippetDialog
             colors={colorSchemeById(editorColorScheme)[resolvedTheme]}
             onClose={() => closeSnippetDialog(null)}
-            onInsert={(snippet) => closeSnippetDialog(snippet)}
+            onInsert={(snippet, mode) => closeSnippetDialog({ snippet, mode })}
+            onOwnSnippetsChanged={ownSnippetsChanged}
+            placementFor={snippetPlacementFor}
             state={snippetDialog}
+          />
+          <SaveSnippetDialog
+            onClose={closeSaveSnippetDialog}
+            onSaved={closeSaveSnippetDialog}
+            state={saveSnippetDialog}
           />
           {editorNoticePresence.mounted &&
           shownEditorNotice === 'execution-failure' &&
@@ -2891,6 +3079,49 @@ export function EditorPanel({
       </output>
     </section>
   );
+}
+
+const maximumColoredPreviews = 1_000_000;
+
+async function selectionSection(
+  model: monaco.editor.ITextModel,
+  position: monaco.Position,
+): Promise<OwnSnippetSection> {
+  try {
+    const answer = await Promise.race([
+      requestRmsSnippets(model, position),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('timeout')), 2_000)),
+    ]);
+    const section = parseSnippetContext(answer, 0).caret.section;
+    return section && section !== anySnippetSection && isOwnSnippetSection(section)
+      ? section
+      : anySnippetSection;
+  } catch {
+    return anySnippetSection;
+  }
+}
+
+function insertEditorSnippetAt(
+  instance: monaco.editor.IStandaloneCodeEditor,
+  edit: SnippetEdit,
+): void {
+  const model = instance.getModel();
+  if (!model) return;
+  const position = model.validatePosition({ lineNumber: edit.lineNumber, column: edit.column });
+  instance.setSelection(
+    new monaco.Selection(
+      position.lineNumber,
+      position.column,
+      position.lineNumber,
+      position.column,
+    ),
+  );
+  const controller = instance.getContribution('snippetController2') as unknown as {
+    insert(template: string, options?: { undoStopBefore?: boolean; undoStopAfter?: boolean }): void;
+  } | null;
+  controller?.insert(edit.template, { undoStopBefore: true, undoStopAfter: true });
+  const selection = instance.getSelection();
+  if (selection) instance.revealRangeInCenterIfOutsideViewport(selection);
 }
 
 function insertEditorSnippet(

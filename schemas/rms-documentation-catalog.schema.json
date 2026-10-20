@@ -18,7 +18,7 @@
   ],
   "properties": {
     "$schema": { "const": "https://rmside.invalid/schemas/rms-documentation-catalog/v1" },
-    "schemaVersion": { "const": "1.0.0" },
+    "schemaVersion": { "enum": ["1.0.0", "1.1.0"] },
     "compatibility": {
       "type": "object",
       "additionalProperties": false,
@@ -279,14 +279,52 @@
             ]
           }
         },
+        "onlyWithoutSections": {
+          "description": "Schema 1.1: a whole-map snippet that writes the section headers itself, offered only at the top level of a document without section headers; its where is [\"*\"].",
+          "const": true
+        },
         "summary": { "$ref": "#/definitions/summary" },
         "body": {
           "type": "array",
           "minItems": 1,
-          "maxItems": 24,
+          "maxItems": 48,
           "items": { "type": "string", "maxLength": 120 }
+        }
+      },
+      "if": {
+        "type": "object",
+        "required": ["onlyWithoutSections"],
+        "properties": { "onlyWithoutSections": {} }
+      },
+      "then": {
+        "properties": { "where": { "type": "array", "const": ["*"] } }
+      },
+      "else": {
+        "properties": { "body": { "type": "array", "maxItems": 24 } }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "required": ["schemaVersion"],
+        "properties": { "schemaVersion": { "const": "1.0.0" } }
+      },
+      "then": {
+        "properties": {
+          "snippets": {
+            "type": "array",
+            "items": {
+              "not": {
+                "type": "object",
+                "required": ["onlyWithoutSections"],
+                "properties": { "onlyWithoutSections": {} }
+              }
+            }
+          }
         }
       }
     }
-  }
+  ]
 }

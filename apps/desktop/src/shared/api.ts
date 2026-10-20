@@ -6,6 +6,7 @@ import type { PreviewConnectionRoutesPayload } from './connection-routes';
 import type { ExecutionCostSummary, ExecutionProgressEvent } from './execution-cost';
 import type { PreviewCandidate, PreviewCandidateAcknowledgement } from './preview-candidate';
 import type { RmsLintWorkspaceRules } from './rms-lint-rules';
+import type { OwnSnippet, SnippetFileError } from './own-snippets';
 import type { LanguagePreference, LocaleState } from './i18n/locale';
 import type { WorkspaceTreeChange } from './workspace-tree-change';
 import type { UpdateState } from './update';
@@ -108,6 +109,12 @@ export const ipcChannels = {
   syncMapTestPreviewShown: 'rmside:map-test:preview-shown',
   syncModalSurfaceOpen: 'rmside:modal:sync-open',
   syncInsertSnippetAvailable: 'rmside:editor:insert-snippet-available',
+  syncSaveSnippetAvailable: 'rmside:editor:save-snippet-available',
+  ownSnippetsList: 'rmside:own-snippets:list',
+  ownSnippetSave: 'rmside:own-snippets:save',
+  ownSnippetDelete: 'rmside:own-snippets:delete',
+  ownSnippetsExport: 'rmside:own-snippets:export',
+  ownSnippetsImport: 'rmside:own-snippets:import',
   menuAction: 'rmside:menu:action',
   syncNativeTheme: 'rmside:theme:sync-native',
   localeState: 'rmside:locale:state',
@@ -474,6 +481,10 @@ export { externalLinkUrls } from './external-links';
 export type ThemePreference = 'system' | 'light' | 'dark';
 export type ResolvedTheme = Exclude<ThemePreference, 'system'>;
 
+export type OwnSnippetImportResult =
+  | { status: 'imported'; snippets: OwnSnippet[]; added: string[]; renamed: number }
+  | { status: 'refused'; reason: SnippetFileError['reason'] | 'unreadable' };
+
 export type ApplicationMenuAction =
   | { type: 'undo' }
   | { type: 'redo' }
@@ -493,6 +504,7 @@ export type ApplicationMenuAction =
   | { type: 'save-as' }
   | { type: 'format-document' }
   | { type: 'insert-snippet' }
+  | { type: 'save-snippet' }
   | { type: 'set-format-on-save'; enabled: boolean }
   | { type: 'set-indent-conditionals'; enabled: boolean }
   | { type: 'set-live-generation-stages'; enabled: boolean }
@@ -1755,6 +1767,7 @@ export interface WorkspaceDirectoryEntry {
   kind: WorkspaceEntryKind;
   writable: boolean;
   hasChildren?: boolean;
+  visuallyEmpty?: boolean;
 }
 
 export interface WorkspaceSearchResult extends WorkspaceDirectoryEntry {
@@ -2018,6 +2031,7 @@ export interface DesktopSession {
     mapTestReportExport: string | null;
     gameFolder: string | null;
     controlLauncher: string | null;
+    snippetFile: string | null;
   };
 }
 
@@ -2121,6 +2135,12 @@ export interface RmsideDesktopApi {
   syncMapTestPreviewShown(shown: boolean): Promise<void>;
   syncModalSurfaceOpen(open: boolean): Promise<void>;
   syncInsertSnippetAvailable(available: boolean): Promise<void>;
+  syncSaveSnippetAvailable(available: boolean): Promise<void>;
+  listOwnSnippets(): Promise<OwnSnippet[]>;
+  saveOwnSnippet(snippet: OwnSnippet, previousName: string | null): Promise<OwnSnippet[]>;
+  deleteOwnSnippet(name: string): Promise<OwnSnippet[]>;
+  exportOwnSnippets(): Promise<{ count: number } | null>;
+  importOwnSnippets(): Promise<OwnSnippetImportResult | null>;
   syncNativeTheme(preference: ThemePreference, resolved: ResolvedTheme): Promise<void>;
   getLocaleState(): Promise<LocaleState>;
   setLanguagePreference(preference: LanguagePreference): Promise<LocaleState>;

@@ -122,6 +122,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "スニペットを挿入…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "スニペットとして保存…"
+    },
     "app-menu.edit.format-document": {
       "message": "ドキュメントを整形"
     },
@@ -2189,6 +2192,12 @@
     "explorer.tree.label": {
       "message": "{name} 内のファイル"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "マップファイルなし"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "スクリプトファイルなし"
+    },
     "explorer.empty.maps": {
       "message": "フォルダーを開くと、その中のマップを参照・編集できます。"
     },
@@ -3263,6 +3272,171 @@
     "code-editor.snippets.cancel": {
       "message": "キャンセル"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "スニペットとして保存…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "マイスニペット"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "組み込みスニペット"
+    },
+    "code-editor.snippets.edit": {
+      "message": "スニペットを編集"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "{name} を編集"
+    },
+    "code-editor.snippets.delete": {
+      "message": "スニペットを削除"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "{name} を削除"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "スニペット「{name}」を削除しますか？"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "「マイスニペット」から削除されます。この操作は元に戻せません。"
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "削除"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "キャンセル"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "スニペットを削除できませんでした。"
+    },
+    "code-editor.snippets.import": {
+      "message": "スニペットをインポート…"
+    },
+    "code-editor.snippets.export": {
+      "message": "スニペットをエクスポート…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, other {スニペットを # 個エクスポートしました。}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "スニペットをエクスポートできませんでした。"
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, other {スニペットを # 個インポートしました。}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, other {スニペットを # 個インポートしました。}} {renamed, plural, other {同じ名前のスニペットが既にあったため、# 個の名前の後ろに番号を付けました。}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "スニペットをインポートできませんでした。"
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "このファイルは AoE2RMSIDE のスニペットファイルではないため、何もインポートしませんでした。"
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "このスニペットファイルは新しいバージョンの AoE2RMSIDE で作成されたため、何もインポートしませんでした。インポートするには AoE2RMSIDE を更新してください。"
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "このファイル内のスニペットを読み取れないため、何もインポートしませんでした。"
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "保存できるスニペットは 500 個までで、このファイルを追加すると上限を超えるため、何もインポートしませんでした。"
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "スニペットの合計が 2 MB を超えるため、何もインポートしませんでした。"
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "ファイルを読み取れなかったため、何もインポートしませんでした。"
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "{section} セクションを作成しますか？"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "このスニペットは {section} に属しますが、このスクリプトにはまだそのセクションがありません。AoE2RMSIDE はセクションを正しい位置に追加し、そこにスニペットを挿入できます。"
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "セクションを作成"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "{section} の末尾に挿入しますか？"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "このスニペットは {section} に属します。AoE2RMSIDE はそのセクションの末尾に挿入できます。"
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "末尾に挿入"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "ここに挿入"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "キャンセル"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "保存したスニペットを読み取れなかったため、「マイスニペット」は空の状態で始まります。"
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "ファイルはアプリのデータフォルダーに {name} として保存しました。"
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "ファイルは元の場所に残しました。"
+    },
+    "code-editor.save-snippet.title": {
+      "message": "スニペットとして保存"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "スニペットを編集"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "閉じる"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "名前"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "セクション"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "任意のセクション"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "説明"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "省略可"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "コード"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "スニペットを保存"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "キャンセル"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "名前を入力してください。"
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "この名前のスニペットは既にあります。"
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "改行や制御文字を含まない名前にしてください。"
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "コードを空にすることはできません。"
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "コードが 20,000 文字を超えています。"
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "保存できるスニペットは 500 個までです。このスニペットを保存するには、いずれかを削除してください。"
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "スニペットの合計が 2 MB を超えます。"
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "スニペットを保存できませんでした。"
+    },
     "code-editor.include.open": {
       "message": "{name} を開く"
     },
@@ -3361,6 +3535,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "マップテストレポートをインポート"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "スニペットファイル"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "スニペットをエクスポート"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "スニペットをインポート"
     },
     "native-dialog.game-folder.title": {
       "message": "Age of Empires II: Definitive Edition のフォルダーを選択"

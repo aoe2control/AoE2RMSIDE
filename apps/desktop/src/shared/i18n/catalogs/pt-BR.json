@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Inserir trecho de código…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Salvar como trecho de código…"
+    },
     "app-menu.edit.format-document": {
       "message": "Formatar documento"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "Arquivos de {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Nenhum arquivo de mapa"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Nenhum arquivo de script"
+    },
     "explorer.empty.maps": {
       "message": "Abra uma pasta para explorar e editar seus mapas."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Cancelar"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Salvar como trecho de código…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Meus trechos de código"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Trechos de código integrados"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Editar trecho de código"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Editar {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Excluir trecho de código"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Excluir {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Excluir o trecho de código “{name}”?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Ele será removido de Meus trechos de código. Esta ação não pode ser desfeita."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Excluir"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Cancelar"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Não foi possível excluir o trecho de código."
+    },
+    "code-editor.snippets.import": {
+      "message": "Importar trechos…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Exportar trechos…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, =0 {# trechos de código exportados.} one {# trecho de código exportado.} many {# trechos de código exportados.} other {# trechos de código exportados.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Não foi possível exportar os trechos de código."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, =0 {# trechos de código importados.} one {# trecho de código importado.} many {# trechos de código importados.} other {# trechos de código importados.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, =0 {# trechos de código importados.} one {# trecho de código importado.} many {# trechos de código importados.} other {# trechos de código importados.}} {renamed, plural, =0 {# receberam um número após o nome porque você já tinha trechos de código com esses nomes.} one {# recebeu um número após o nome porque você já tinha um trecho de código com esse nome.} many {# receberam um número após o nome porque você já tinha trechos de código com esses nomes.} other {# receberam um número após o nome porque você já tinha trechos de código com esses nomes.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Não foi possível importar os trechos de código."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Este arquivo não é um arquivo de trechos de código do AoE2RMSIDE, então nada foi importado."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Este arquivo de trechos de código vem de uma versão mais recente do AoE2RMSIDE, então nada foi importado. Atualize o AoE2RMSIDE para importá-lo."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Não é possível ler um trecho de código deste arquivo, então nada foi importado."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Você pode manter até 500 trechos de código, e este arquivo adicionaria mais, então nada foi importado."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Os trechos de código somariam mais de 2 MB, então nada foi importado."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Não foi possível ler o arquivo, então nada foi importado."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Criar a seção {section}?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Este trecho de código pertence a {section}, que este script ainda não tem. O AoE2RMSIDE pode adicionar a seção no lugar certo e inserir o trecho nela."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Criar seção"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Inserir no final de {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Este trecho de código pertence a {section}. O AoE2RMSIDE pode inseri-lo no final dessa seção."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Inserir lá"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Inserir aqui"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Cancelar"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Não foi possível ler seus trechos de código salvos, então Meus trechos de código começa vazio."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "O arquivo foi mantido como {name} na pasta de dados do aplicativo."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "O arquivo foi deixado no lugar."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Salvar como trecho de código"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Editar trecho de código"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Fechar"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Nome"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Seção"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Qualquer seção"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Descrição"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Opcional"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Código"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Salvar trecho"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Cancelar"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Digite um nome."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Você já tem um trecho de código com este nome."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Use um nome sem quebras de linha nem caracteres de controle."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "O código não pode ficar vazio."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "O código tem mais de 20.000 caracteres."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Você pode manter até 500 trechos de código. Exclua um para salvar este."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Seus trechos de código somariam mais de 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Não foi possível salvar o trecho de código."
+    },
     "code-editor.include.open": {
       "message": "Abrir {name}"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Importar relatório de teste de mapas"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Arquivo de trechos de código"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Exportar trechos de código"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Importar trechos de código"
     },
     "native-dialog.game-folder.title": {
       "message": "Selecionar uma pasta do Age of Empires II: Definitive Edition"

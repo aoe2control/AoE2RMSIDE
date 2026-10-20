@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Insérer un extrait…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Enregistrer comme extrait…"
+    },
     "app-menu.edit.format-document": {
       "message": "Mettre en forme le document"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "Fichiers de {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Aucun fichier de carte"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Aucun fichier de script"
+    },
     "explorer.empty.maps": {
       "message": "Ouvrez un dossier pour parcourir et modifier ses cartes."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Annuler"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Enregistrer comme extrait…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Mes extraits"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Extraits intégrés"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Modifier l’extrait"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Modifier {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Supprimer l’extrait"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Supprimer {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Supprimer l’extrait « {name} » ?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Il sera retiré de Mes extraits. Cette action est irréversible."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Supprimer"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Annuler"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "L’extrait n’a pas pu être supprimé."
+    },
+    "code-editor.snippets.import": {
+      "message": "Importer des extraits…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Exporter les extraits…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {# extrait exporté.} many {# extraits exportés.} other {# extraits exportés.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Les extraits n’ont pas pu être exportés."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {# extrait importé.} many {# extraits importés.} other {# extraits importés.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {# extrait importé.} many {# extraits importés.} other {# extraits importés.}} {renamed, plural, one {# a reçu un numéro après son nom, car vous aviez déjà un extrait portant ce nom.} many {# ont reçu un numéro après leur nom, car vous aviez déjà des extraits portant ces noms.} other {# ont reçu un numéro après leur nom, car vous aviez déjà des extraits portant ces noms.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Les extraits n’ont pas pu être importés."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Ce fichier n’est pas un fichier d’extraits AoE2RMSIDE, rien n’a donc été importé."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Ce fichier d’extraits provient d’une version plus récente d’AoE2RMSIDE, rien n’a donc été importé. Mettez à jour AoE2RMSIDE pour l’importer."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Un extrait de ce fichier est illisible, rien n’a donc été importé."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Vous pouvez conserver jusqu’à 500 extraits et ce fichier en ajouterait davantage, rien n’a donc été importé."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Les extraits dépasseraient 2 MB au total, rien n’a donc été importé."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Le fichier n’a pas pu être lu, rien n’a donc été importé."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Créer la section {section} ?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Cet extrait appartient à la section {section}, que ce script n’a pas encore. AoE2RMSIDE peut ajouter la section à sa place et y insérer l’extrait."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Créer la section"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Insérer à la fin de {section} ?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Cet extrait appartient à la section {section}. AoE2RMSIDE peut l’insérer à la fin de cette section."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Insérer à la fin"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Insérer ici"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Annuler"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Vos extraits enregistrés n’ont pas pu être lus, Mes extraits est donc vide."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Le fichier a été conservé sous le nom {name} dans le dossier de données de l’application."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Le fichier a été laissé à son emplacement."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Enregistrer comme extrait"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Modifier l’extrait"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Fermer"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Nom"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Section"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Toutes les sections"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Description"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Facultatif"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Code"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Enregistrer"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Annuler"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Saisissez un nom."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Vous avez déjà un extrait portant ce nom."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Utilisez un nom sans saut de ligne ni caractère de contrôle."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Le code ne peut pas être vide."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Le code dépasse 20 000 caractères."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Vous pouvez conserver jusqu’à 500 extraits. Supprimez-en un pour enregistrer celui-ci."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Vos extraits dépasseraient 2 MB au total."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "L’extrait n’a pas pu être enregistré."
+    },
     "code-editor.include.open": {
       "message": "Ouvrir {name}"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Importer un rapport de test de cartes"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Fichier d’extraits"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Exporter les extraits"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Importer des extraits"
     },
     "native-dialog.game-folder.title": {
       "message": "Sélectionner un dossier d’Age of Empires II: Definitive Edition"

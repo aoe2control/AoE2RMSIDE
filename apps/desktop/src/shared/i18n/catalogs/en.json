@@ -265,6 +265,13 @@
       "maxLength": 40,
       "meaning": "Opens a searchable list of ready-made pieces of script (snippets) and inserts the chosen one at the cursor of the active RMS script."
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Save as Snippet…",
+      "screen": "application-menu/edit",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Saves the selected text of the active RMS script as one of the user's own snippets (My snippets in Insert Snippet…); opens a dialog for its name, section, description, and code. Without a selection the code starts empty. Enabled in an RMS script that can be edited. Word it like Insert Snippet… (app-menu.edit.insert-snippet); keep the ellipsis: a dialog follows."
+    },
     "app-menu.edit.format-document": {
       "message": "Format Document",
       "screen": "application-menu/edit",
@@ -7155,6 +7162,18 @@
         "name": "the open folder's name, such as Maps"
       }
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "No map files",
+      "screen": "explorer",
+      "control": "accessible-name",
+      "meaning": "Read by screen readers for a dimmed folder row in the Explorer: nothing inside the folder, at any depth, is a file the Explorer lists (random map scripts, includes, definition files, map tests, or XS scripts), so the row is drawn faded. The row still opens and accepts new files."
+    },
+    "explorer.folder.visually-empty": {
+      "message": "No script files",
+      "screen": "explorer",
+      "control": "accessible-name",
+      "meaning": "Read by screen readers for a dimmed folder row in the Explorer, in the edition that edits XS scripts only: nothing inside the folder, at any depth, is a script file the Explorer lists, so the row is drawn faded. The row still opens and accepts new files."
+    },
     "explorer.empty.maps": {
       "message": "Open a folder to browse and edit its maps.",
       "screen": "explorer",
@@ -9611,6 +9630,391 @@
       "maxLength": 20,
       "meaning": "Closes the Insert Snippet dialog without inserting anything."
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Save as Snippet…",
+      "screen": "editor/context-menu",
+      "control": "menu-item",
+      "maxLength": 32,
+      "meaning": "Item of the editor's context menu in an RMS script that can be edited: saves the selection (or, without one, code typed in the dialog) as one of the user's own snippets. Same words as app-menu.edit.save-snippet."
+    },
+    "code-editor.snippets.group.own": {
+      "message": "My snippets",
+      "screen": "editor/insert-snippet",
+      "control": "label",
+      "maxLength": 32,
+      "meaning": "Heading of the group of the user's own snippets in the Insert Snippet list, above the built-in ones; shown only when the user has saved or imported snippets."
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Built-in snippets",
+      "screen": "editor/insert-snippet",
+      "control": "label",
+      "maxLength": 32,
+      "meaning": "Heading of the group of the snippets that come with the app, below My snippets (code-editor.snippets.group.own) in the Insert Snippet list."
+    },
+    "code-editor.snippets.edit": {
+      "message": "Edit Snippet",
+      "screen": "editor/insert-snippet",
+      "control": "tooltip",
+      "maxLength": 32,
+      "meaning": "Tooltip of the pencil button on one of the user's own snippets in the Insert Snippet list: opens the snippet's name, section, description, and code to change them."
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Edit {name}",
+      "screen": "editor/insert-snippet",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the pencil button on one of the user's own snippets in the Insert Snippet list: opens that snippet to change it.",
+      "placeholders": {
+        "name": "the name the user gave the snippet, such as Gold for every player (shown as written)"
+      }
+    },
+    "code-editor.snippets.delete": {
+      "message": "Delete Snippet",
+      "screen": "editor/insert-snippet",
+      "control": "tooltip",
+      "maxLength": 32,
+      "meaning": "Tooltip of the trash button on one of the user's own snippets in the Insert Snippet list: deletes the snippet after a confirmation."
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Delete {name}",
+      "screen": "editor/insert-snippet",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the trash button on one of the user's own snippets in the Insert Snippet list: deletes that snippet after a confirmation.",
+      "placeholders": {
+        "name": "the name the user gave the snippet, such as Gold for every player (shown as written)"
+      }
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Delete the snippet “{name}”?",
+      "screen": "editor/insert-snippet/delete",
+      "control": "dialog-title",
+      "meaning": "Title of the confirmation shown before one of the user's own snippets is deleted.",
+      "placeholders": {
+        "name": "the name the user gave the snippet, such as Gold for every player (shown as written)"
+      }
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "It is removed from My snippets. This can't be undone.",
+      "screen": "editor/insert-snippet/delete",
+      "control": "dialog-text",
+      "meaning": "Text of the confirmation shown before one of the user's own snippets is deleted; “My snippets” names the group in the list (code-editor.snippets.group.own) and must use the same words."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Delete",
+      "screen": "editor/insert-snippet/delete",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Deletes the snippet the confirmation names."
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Cancel",
+      "screen": "editor/insert-snippet/delete",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Closes the confirmation without deleting the snippet; the snippet list stays open."
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "The snippet couldn't be deleted.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when deleting one of the user's own snippets failed."
+    },
+    "code-editor.snippets.import": {
+      "message": "Import Snippets…",
+      "screen": "editor/insert-snippet",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Button in the Insert Snippet dialog: opens a Windows dialog to choose a snippet file (exported by another scripter with Export Snippets…) and adds its snippets to My snippets. Keep the ellipsis: a dialog follows."
+    },
+    "code-editor.snippets.export": {
+      "message": "Export Snippets…",
+      "screen": "editor/insert-snippet",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Button in the Insert Snippet dialog, shown while the user has own snippets: saves all of them to a file the user picks, to share with other scripters. Keep the ellipsis: a dialog follows."
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {Exported # snippet.} other {Exported # snippets.}}",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list after Export Snippets… saved the user's own snippets to a file.",
+      "placeholders": {
+        "count": "how many snippets"
+      }
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "The snippets couldn't be exported.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when Export Snippets… could not write the file."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {Imported # snippet.} other {Imported # snippets.}}",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list after Import Snippets… added the snippets of a file to My snippets.",
+      "placeholders": {
+        "count": "how many snippets"
+      }
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {Imported # snippet.} other {Imported # snippets.}} {renamed, plural, one {# got a number after its name because you already had a snippet with that name.} other {# got a number after their names because you already had snippets with those names.}}",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list after Import Snippets… added snippets of which some had a name the user already used; those got “ (2)”, “ (3)”… appended.",
+      "placeholders": {
+        "count": "how many snippets were imported",
+        "renamed": "how many of them got a number after their name"
+      }
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "The snippets couldn't be imported.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when Import Snippets… failed for a reason other than the file itself."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "This file isn't an AoE2RMSIDE snippet file, so nothing was imported.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when the file chosen with Import Snippets… is not a snippet file exported by AoE2RMSIDE."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "This snippet file comes from a newer version of AoE2RMSIDE, so nothing was imported. Update AoE2RMSIDE to import it.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when the snippet file chosen with Import Snippets… uses a newer file format than this version reads."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "A snippet in this file can't be read, so nothing was imported.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when a snippet in the chosen file has a missing or too long name, an unknown section, empty or too long code, or a name another snippet in the file also has."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "You can keep up to 500 snippets, and this file would add more, so nothing was imported.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when importing the chosen file would leave the user with more than 500 own snippets."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "The snippets would be larger than 2 MB together, so nothing was imported.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when the chosen file, or the user's snippets together with it, would be larger than the 2 MB limit."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "The file couldn't be read, so nothing was imported.",
+      "screen": "editor/insert-snippet",
+      "control": "status",
+      "meaning": "Shown under the snippet list when the file chosen with Import Snippets… could not be opened or read."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Create the {section} section?",
+      "screen": "editor/insert-snippet/placement",
+      "control": "dialog-title",
+      "meaning": "Title of the confirmation shown when the chosen snippet belongs in a section the script doesn't have yet.",
+      "placeholders": {
+        "section": "an RMS section header as scripts write it, such as <OBJECTS_GENERATION> (kept as written)"
+      }
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "This snippet belongs in {section}, which this script doesn't have yet. AoE2RMSIDE can add the section in its proper place and insert the snippet there.",
+      "screen": "editor/insert-snippet/placement",
+      "control": "dialog-text",
+      "meaning": "Text of the confirmation shown when the chosen snippet belongs in a section the script doesn't have yet; its buttons are Create Section, Insert Here (at the cursor), and Cancel.",
+      "placeholders": {
+        "section": "an RMS section header as scripts write it, such as <OBJECTS_GENERATION> (kept as written)"
+      }
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Create Section",
+      "screen": "editor/insert-snippet/placement",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Adds the missing section header to the script, in the place the order of sections calls for, and inserts the snippet under it."
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Insert at the end of {section}?",
+      "screen": "editor/insert-snippet/placement",
+      "control": "dialog-title",
+      "meaning": "Title of the confirmation shown when the chosen snippet belongs in a section of the script other than the one the cursor is in.",
+      "placeholders": {
+        "section": "an RMS section header as scripts write it, such as <OBJECTS_GENERATION> (kept as written)"
+      }
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "This snippet belongs in {section}. AoE2RMSIDE can insert it at the end of that section.",
+      "screen": "editor/insert-snippet/placement",
+      "control": "dialog-text",
+      "meaning": "Text of the confirmation shown when the chosen snippet belongs in a section of the script other than the one the cursor is in; its buttons are Insert There, Insert Here (at the cursor), and Cancel.",
+      "placeholders": {
+        "section": "an RMS section header as scripts write it, such as <OBJECTS_GENERATION> (kept as written)"
+      }
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Insert There",
+      "screen": "editor/insert-snippet/placement",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Inserts the snippet at the end of the section it belongs in, instead of at the cursor."
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Insert Here",
+      "screen": "editor/insert-snippet/placement",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Inserts the snippet at the cursor anyway, outside the section it belongs in."
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Cancel",
+      "screen": "editor/insert-snippet/placement",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Closes the confirmation without inserting; the snippet list stays open."
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Your saved snippets couldn't be read, so My snippets starts empty.",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output message shown when the file that keeps the user's own snippets is damaged or from a newer version; the app starts with no own snippets."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "The file was kept as {name} in the app's data folder.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Second sentence of code-editor.snippets.store-reset: the unreadable file was copied aside under a new name.",
+      "placeholders": {
+        "name": "the file name of the kept copy, such as own-snippets-v1.invalid-2026-10-20T10-00-00-000Z.json (shown as written)"
+      }
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "The file was left in place.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Second sentence of code-editor.snippets.store-reset when no copy could be made: the unreadable file stays until a snippet is saved."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Save as Snippet",
+      "screen": "editor/save-snippet",
+      "control": "dialog-title",
+      "meaning": "Title of the dialog that saves the selected text (or, without a selection, code typed in it) as one of the user's own snippets."
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Edit Snippet",
+      "screen": "editor/save-snippet",
+      "control": "dialog-title",
+      "meaning": "Title of the same dialog when it changes one of the user's own snippets (opened with its Edit button in Insert Snippet…)."
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Close",
+      "screen": "editor/save-snippet",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Save as Snippet dialog's icon-only close button."
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Name",
+      "screen": "editor/save-snippet",
+      "control": "label",
+      "maxLength": 16,
+      "meaning": "Label of the snippet's name field (required; shown in the snippet list)."
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Section",
+      "screen": "editor/save-snippet",
+      "control": "label",
+      "maxLength": 16,
+      "meaning": "Label of the choice of the script section the snippet belongs in (an RMS section such as <OBJECTS_GENERATION>, or any section)."
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Any section",
+      "screen": "editor/save-snippet",
+      "control": "option",
+      "maxLength": 24,
+      "meaning": "Option of the Section choice: the snippet fits in every section and is always inserted at the cursor."
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Description",
+      "screen": "editor/save-snippet",
+      "control": "label",
+      "maxLength": 16,
+      "meaning": "Label of the snippet's optional one-line description (shown under its name in the snippet list)."
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Optional",
+      "screen": "editor/save-snippet",
+      "control": "placeholder",
+      "maxLength": 24,
+      "meaning": "Shown in the empty description field: the description may stay empty."
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Code",
+      "screen": "editor/save-snippet",
+      "control": "label",
+      "maxLength": 16,
+      "meaning": "Label of the text area with the script text the snippet inserts (it starts with the selection, or empty without one)."
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Save Snippet",
+      "screen": "editor/save-snippet",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Saves the snippet and closes the dialog."
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Cancel",
+      "screen": "editor/save-snippet",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Closes the dialog without saving."
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Enter a name.",
+      "screen": "editor/save-snippet",
+      "control": "status",
+      "meaning": "Shown under the empty name field when Save Snippet is pressed."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "You already have a snippet with this name.",
+      "screen": "editor/save-snippet",
+      "control": "status",
+      "meaning": "Shown under the name field when another of the user's own snippets has the same name (letter case ignored)."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Use a name without line breaks or control characters.",
+      "screen": "editor/save-snippet",
+      "control": "status",
+      "meaning": "Shown under the name field when the name holds a character a name cannot have."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "The code can't be empty.",
+      "screen": "editor/save-snippet",
+      "control": "status",
+      "meaning": "Shown under the empty code field when Save Snippet is pressed."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "The code is longer than 20,000 characters.",
+      "screen": "editor/save-snippet",
+      "control": "status",
+      "meaning": "Shown under the code field when the snippet's text is longer than the limit."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "You can keep up to 500 snippets. Delete one to save this one.",
+      "screen": "editor/save-snippet",
+      "control": "status",
+      "meaning": "Shown in the dialog when the user already has the most own snippets the app keeps."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Your snippets would be larger than 2 MB together.",
+      "screen": "editor/save-snippet",
+      "control": "status",
+      "meaning": "Shown in the dialog when saving would make the user's own snippets larger than the 2 MB limit."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "The snippet couldn't be saved.",
+      "screen": "editor/save-snippet",
+      "control": "status",
+      "meaning": "Shown in the dialog when saving the snippet failed."
+    },
     "code-editor.include.open": {
       "message": "Open {name}",
       "screen": "editor/hover",
@@ -9854,6 +10258,27 @@
       "control": "dialog-title",
       "maxLength": 48,
       "meaning": "Title of the Windows Open dialog that imports a map-test report file to show its results."
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Snippet File",
+      "screen": "native-dialog/snippets",
+      "control": "label",
+      "maxLength": 40,
+      "meaning": "File type name in the Windows dialogs that export or import the user's own snippets (a .json file to share with other scripters)."
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Export Snippets",
+      "screen": "native-dialog/snippets",
+      "control": "dialog-title",
+      "maxLength": 48,
+      "meaning": "Title of the Windows Save dialog that saves the user's own snippets to a file."
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Import Snippets",
+      "screen": "native-dialog/snippets",
+      "control": "dialog-title",
+      "maxLength": 48,
+      "meaning": "Title of the Windows Open dialog that chooses a snippet file whose snippets are added to the user's own."
     },
     "native-dialog.game-folder.title": {
       "message": "Select an Age of Empires II: Definitive Edition folder",

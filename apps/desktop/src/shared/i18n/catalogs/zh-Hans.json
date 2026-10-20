@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "插入代码片段…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "保存为代码片段…"
+    },
     "app-menu.edit.format-document": {
       "message": "格式化文档"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "{name} 中的文件"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "没有地图文件"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "没有脚本文件"
+    },
     "explorer.empty.maps": {
       "message": "打开文件夹以浏览和编辑其中的地图。"
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "取消"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "保存为代码片段…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "我的代码片段"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "内置代码片段"
+    },
+    "code-editor.snippets.edit": {
+      "message": "编辑代码片段"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "编辑 {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "删除代码片段"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "删除 {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "删除代码片段“{name}”？"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "它将从“我的代码片段”中移除。此操作无法撤销。"
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "删除"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "取消"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "无法删除代码片段。"
+    },
+    "code-editor.snippets.import": {
+      "message": "导入代码片段…"
+    },
+    "code-editor.snippets.export": {
+      "message": "导出代码片段…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, other {已导出 # 个代码片段。}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "无法导出代码片段。"
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, other {已导入 # 个代码片段。}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, other {已导入 # 个代码片段。}} {renamed, plural, other {其中 # 个因你已有同名代码片段，已在名称后加上编号。}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "无法导入代码片段。"
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "此文件不是 AoE2RMSIDE 代码片段文件，因此未导入任何内容。"
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "此代码片段文件来自更新版本的 AoE2RMSIDE，因此未导入任何内容。请更新 AoE2RMSIDE 后再导入。"
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "此文件中有代码片段无法读取，因此未导入任何内容。"
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "你最多可保留 500 个代码片段，导入此文件会超出上限，因此未导入任何内容。"
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "代码片段总计将超过 2 MB，因此未导入任何内容。"
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "无法读取该文件，因此未导入任何内容。"
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "创建 {section} 区段？"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "此代码片段属于 {section}，而此脚本尚无该区段。AoE2RMSIDE 可以在正确的位置添加该区段，并将代码片段插入其中。"
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "创建区段"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "插入到 {section} 的末尾？"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "此代码片段属于 {section}。AoE2RMSIDE 可以将其插入到该区段的末尾。"
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "插入到末尾"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "插入到此处"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "取消"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "无法读取你保存的代码片段，因此“我的代码片段”为空。"
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "该文件已作为 {name} 保留在应用的数据文件夹中。"
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "该文件保留在原处。"
+    },
+    "code-editor.save-snippet.title": {
+      "message": "保存为代码片段"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "编辑代码片段"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "关闭"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "名称"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "区段"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "任意区段"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "说明"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "可选"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "代码"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "保存代码片段"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "取消"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "请输入名称。"
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "你已有同名的代码片段。"
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "请使用不含换行符或控制字符的名称。"
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "代码不能为空。"
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "代码超过 20,000 个字符。"
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "你最多可保留 500 个代码片段。请删除一个后再保存此代码片段。"
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "你的代码片段总计将超过 2 MB。"
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "无法保存代码片段。"
+    },
     "code-editor.include.open": {
       "message": "打开 {name}"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "导入地图测试报告"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "代码片段文件"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "导出代码片段"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "导入代码片段"
     },
     "native-dialog.game-folder.title": {
       "message": "选择 Age of Empires II: Definitive Edition 文件夹"

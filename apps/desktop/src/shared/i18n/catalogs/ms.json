@@ -122,6 +122,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Sisipkan Coretan Kod…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Simpan Sebagai Coretan Kod…"
+    },
     "app-menu.edit.format-document": {
       "message": "Format Dokumen"
     },
@@ -2189,6 +2192,12 @@
     "explorer.tree.label": {
       "message": "Fail {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Tiada fail peta"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Tiada fail skrip"
+    },
     "explorer.empty.maps": {
       "message": "Buka folder untuk menyemak imbas dan menyunting petanya."
     },
@@ -3263,6 +3272,171 @@
     "code-editor.snippets.cancel": {
       "message": "Batal"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Simpan Sebagai Coretan Kod…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Coretan kod saya"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Coretan kod terbina dalam"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Edit coretan kod"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Edit {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Padam coretan kod"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Padam {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Padam coretan kod “{name}”?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Ia akan dibuang daripada Coretan kod saya. Tindakan ini tidak boleh dibuat asal."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Padam"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Batal"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Coretan kod tidak dapat dipadam."
+    },
+    "code-editor.snippets.import": {
+      "message": "Import Coretan Kod…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Eksport Coretan Kod…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, other {# coretan kod telah dieksport.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Coretan kod tidak dapat dieksport."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, other {# coretan kod telah diimport.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, other {# coretan kod telah diimport.}} {renamed, plural, other {# daripadanya diberi nombor selepas nama kerana anda sudah mempunyai coretan kod dengan nama yang sama.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Coretan kod tidak dapat diimport."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Fail ini bukan fail coretan kod AoE2RMSIDE, jadi tiada apa-apa yang diimport."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Fail coretan kod ini daripada versi AoE2RMSIDE yang lebih baharu, jadi tiada apa-apa yang diimport. Kemas kini AoE2RMSIDE untuk mengimportnya."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Satu coretan kod dalam fail ini tidak dapat dibaca, jadi tiada apa-apa yang diimport."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Anda boleh menyimpan sehingga 500 coretan kod dan fail ini akan menambah lebih daripada itu, jadi tiada apa-apa yang diimport."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Jumlah saiz coretan kod akan melebihi 2 MB, jadi tiada apa-apa yang diimport."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Fail tidak dapat dibaca, jadi tiada apa-apa yang diimport."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Cipta bahagian {section}?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Coretan kod ini milik {section}, yang belum ada dalam skrip ini. AoE2RMSIDE boleh menambah bahagian itu di tempat yang betul dan menyisipkan coretan kod di situ."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Cipta Bahagian"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Sisipkan di hujung {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Coretan kod ini milik {section}. AoE2RMSIDE boleh menyisipkannya di hujung bahagian itu."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Sisipkan di Sana"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Sisipkan di Sini"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Batal"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Coretan kod anda yang disimpan tidak dapat dibaca, jadi Coretan kod saya bermula kosong."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Fail itu disimpan sebagai {name} dalam folder data aplikasi."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Fail itu dibiarkan di tempatnya."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Simpan sebagai coretan kod"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Edit coretan kod"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Tutup"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Nama"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Bahagian"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Mana-mana bahagian"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Keterangan"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Pilihan"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Kod"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Simpan Coretan Kod"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Batal"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Masukkan nama."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Anda sudah mempunyai coretan kod dengan nama ini."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Gunakan nama tanpa pemisah baris atau aksara kawalan."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Kod tidak boleh kosong."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Kod melebihi 20,000 aksara."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Anda boleh menyimpan sehingga 500 coretan kod. Padam satu untuk menyimpan yang ini."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Jumlah saiz coretan kod anda akan melebihi 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Coretan kod tidak dapat disimpan."
+    },
     "code-editor.include.open": {
       "message": "Buka {name}"
     },
@@ -3361,6 +3535,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Import Laporan Ujian Peta"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Fail Coretan Kod"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Eksport Coretan Kod"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Import Coretan Kod"
     },
     "native-dialog.game-folder.title": {
       "message": "Pilih folder Age of Empires II: Definitive Edition"

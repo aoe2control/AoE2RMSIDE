@@ -61,6 +61,12 @@ import {
   starlarkSignatureHelp,
 } from './starlark-call-context';
 import { hoverlessAt, PublishedCodeActions } from './editor-answers';
+import {
+  hiddenLineCount,
+  rmsSnippetLanguageId,
+  visibleLspRange,
+  visibleSemanticTokens,
+} from './snippet-code';
 
 interface LspPosition {
   line: number;
@@ -106,6 +112,8 @@ interface AttachedDocument {
   pendingSync: Promise<string | null>;
   syncFailure: string | null;
   version: number;
+  prefix: string;
+  snippet: boolean;
 }
 
 const attachedDocuments = new Map<string, AttachedDocument>();
@@ -211,6 +219,10 @@ export function setRmsConditionalIndentation(enabled: boolean): void {
   rmsIndentConditionals = enabled;
   if (configured) {
     monaco.languages.setLanguageConfiguration('rms', rmsLanguageConfigurationFor(enabled));
+    monaco.languages.setLanguageConfiguration(
+      rmsSnippetLanguageId,
+      rmsLanguageConfigurationFor(enabled),
+    );
   }
 }
 
@@ -227,6 +239,12 @@ export function configureRmsLanguage(): void {
     rmsLanguageConfigurationFor(rmsIndentConditionals),
   );
   monaco.languages.setMonarchTokensProvider('rms', rmsMonarchLanguage);
+  monaco.languages.register({ id: rmsSnippetLanguageId });
+  monaco.languages.setLanguageConfiguration(
+    rmsSnippetLanguageId,
+    rmsLanguageConfigurationFor(rmsIndentConditionals),
+  );
+  monaco.languages.setMonarchTokensProvider(rmsSnippetLanguageId, rmsMonarchLanguage);
   monaco.languages.setLanguageConfiguration('starlark', {
     ...pythonLanguageConfiguration,
     comments: { lineComment: '#' },
@@ -260,6 +278,7 @@ export function configureRmsLanguage(): void {
   onGameInstallationChanged(forgetContentNames);
   window.rmside.onLocaleChanged(forgetContentNames);
   registerProviders('rms');
+  registerProviders('rms', rmsSnippetLanguageId);
   registerProviders('starlark');
   registerProviders('xs');
   registerMapTestHostProviders();
@@ -275,6 +294,7 @@ export function configureRmsLanguage(): void {
     rememberPublishedCodeActions(params);
     const model = monaco.editor.getModel(monaco.Uri.parse(params.uri));
     if (!model) return;
+    if (attachedDocuments.get(model.uri.toString())?.snippet) return;
     const markers = params.diagnostics.filter(isLanguageDiagnostic).map((diagnostic) => {
       const tags = markerTags(diagnostic);
       const related = relatedLocationsFromLsp(diagnostic, params.uri as string).map((location) => ({
@@ -315,13 +335,48 @@ export function attachLanguageDocument(
   model: monaco.editor.ITextModel,
   languageId: SourceLanguageId,
 ): monaco.IDisposable {
+  return attachDocument(model, languageId, '', false).attachment;
+}
+
+export interface RmsSnippetDocument extends monaco.IDisposable {
+  setPrefix(prefix: string): void;
+}
+
+export function attachRmsSnippetDocument(
+  model: monaco.editor.ITextModel,
+  prefix: string,
+): RmsSnippetDocument {
+  const { attachment, document } = attachDocument(model, 'rms', prefix, true);
+  return {
+    setPrefix: (next) => {
+      if (
+        next === document.prefix ||
+        attachedDocuments.get(document.model.uri.toString()) !== document
+      )
+        return;
+      document.prefix = next;
+      document.resend();
+    },
+    dispose: () => attachment.dispose(),
+  };
+}
+
+function attachDocument(
+  model: monaco.editor.ITextModel,
+  languageId: SourceLanguageId,
+  prefix: string,
+  snippet: boolean,
+): { attachment: monaco.IDisposable; document: AttachedDocument & { resend(): void } } {
   const uri = model.uri.toString();
-  const document: AttachedDocument = {
+  const document: AttachedDocument & { resend(): void } = {
     languageId,
     model,
     pendingSync: Promise.resolve(null),
     syncFailure: null,
     version: 1,
+    prefix,
+    snippet,
+    resend: () => undefined,
   };
   attachedDocuments.set(uri, document);
   const track = (pending: Promise<string | null>) => {
@@ -337,27 +392,37 @@ export function attachLanguageDocument(
       return failure;
     }),
   );
-  const subscription = model.onDidChangeContent(() => {
+  const change = () => {
     document.version += 1;
     track(
       syncLanguageDocument(
         window.rmside.notifyLanguageServer('textDocument/didChange', {
           textDocument: { uri, version: document.version },
-          contentChanges: [{ text: model.getValue() }],
+          contentChanges: [{ text: document.prefix + model.getValue() }],
         }),
       ),
     );
-  });
+  };
+  const subscription = model.onDidChangeContent(change);
+  document.resend = () => {
+    change();
+    void document.pendingSync.then((failure) => {
+      if (!failure) semanticTokensChanged.fire();
+    });
+  };
   return {
-    dispose: () => {
-      subscription.dispose();
-      attachedDocuments.delete(uri);
-      includeLinkCache.delete(uri);
-      publishedCodeActions.forget(uri);
-      void window.rmside
-        .notifyLanguageServer('textDocument/didClose', { textDocument: { uri } })
-        .catch(() => undefined);
-      monaco.editor.setModelMarkers(model, markerOwner(languageId), []);
+    document,
+    attachment: {
+      dispose: () => {
+        subscription.dispose();
+        attachedDocuments.delete(uri);
+        includeLinkCache.delete(uri);
+        publishedCodeActions.forget(uri);
+        void window.rmside
+          .notifyLanguageServer('textDocument/didClose', { textDocument: { uri } })
+          .catch(() => undefined);
+        monaco.editor.setModelMarkers(model, markerOwner(languageId), []);
+      },
     },
   };
 }
@@ -365,8 +430,12 @@ export function attachLanguageDocument(
 export async function requestRmsSnippets(
   model: monaco.editor.ITextModel,
   position: monaco.Position,
+  previews: readonly string[] = [],
 ): Promise<unknown> {
-  return requestLanguageOrThrow<unknown>('rms/snippets', positionParams(model, position));
+  return requestLanguageOrThrow<unknown>('rms/snippets', {
+    ...positionParams(model, position),
+    ...(previews.length > 0 ? { previews } : {}),
+  });
 }
 
 export async function requestRmsSourceStructure(
@@ -445,8 +514,11 @@ export function registerActiveRmsEditor(
 }
 
 export function runEditorHistoryCommand(command: 'undo' | 'redo'): void {
-  if (activeRmsEditor?.hasTextFocus()) {
-    activeRmsEditor.trigger('rmside.application-menu', command, null);
+  const focused = activeRmsEditor?.hasTextFocus()
+    ? activeRmsEditor
+    : monaco.editor.getEditors().find((candidate) => candidate.hasTextFocus());
+  if (focused) {
+    focused.trigger('rmside.application-menu', command, null);
     return;
   }
   document.execCommand(command);
@@ -641,7 +713,7 @@ function notifyOpen(document: AttachedDocument): Promise<string | null> {
         uri: document.model.uri.toString(),
         languageId: document.languageId,
         version: document.version,
-        text: document.model.getValue(),
+        text: document.prefix + document.model.getValue(),
       },
     }),
   );
@@ -655,8 +727,12 @@ const completionTriggerCharacters: Record<SourceLanguageId, string[]> = {
 
 const resolvableCompletions = new WeakMap<monaco.languages.CompletionItem, LspCompletionItem>();
 
-function registerProviders(languageId: SourceLanguageId): void {
-  monaco.languages.registerCompletionItemProvider(languageId, {
+function registerProviders(
+  languageId: SourceLanguageId,
+  editorLanguageId: string = languageId,
+): void {
+  const snippet = editorLanguageId === rmsSnippetLanguageId;
+  monaco.languages.registerCompletionItemProvider(editorLanguageId, {
     triggerCharacters: completionTriggerCharacters[languageId],
     provideCompletionItems: async (model, position, context) => {
       if (
@@ -685,6 +761,7 @@ function registerProviders(languageId: SourceLanguageId): void {
                 rmsContext: localContentNameAvailability(localNames),
               }
             : positionParams(model, position);
+      const hidden = hiddenLines(model);
       const result = await requestLanguage<LspCompletionList>('textDocument/completion', params);
       const range = completionReplacementRange(model, position, languageId);
       const textAfter =
@@ -692,7 +769,9 @@ function registerProviders(languageId: SourceLanguageId): void {
           ? model.getLineContent(position.lineNumber).slice(range.endColumn - 1)
           : null;
       const list = completionList(result, (item) => {
-        const edit = rms ? rmsCompletionEdit(item) : null;
+        const written = rms ? rmsCompletionEdit(item) : null;
+        const shown = written && visibleLspRange(written.range, hidden);
+        const edit = written && shown ? { ...written, range: shown } : null;
         const call = textAfter === null ? null : xsCallInsertion(item, textAfter);
         const command = rms ? rmsCompletionCommand(item) : (call?.command ?? null);
         const suggestion: monaco.languages.CompletionItem = {
@@ -740,7 +819,7 @@ function registerProviders(languageId: SourceLanguageId): void {
     },
   });
 
-  monaco.languages.registerSignatureHelpProvider(languageId, {
+  monaco.languages.registerSignatureHelpProvider(editorLanguageId, {
     signatureHelpTriggerCharacters:
       languageId === 'rms' ? [...rmsSignatureHelpTriggerCharacters] : ['(', ','],
     provideSignatureHelp: async (model, position) => {
@@ -769,7 +848,7 @@ function registerProviders(languageId: SourceLanguageId): void {
     },
   });
 
-  monaco.languages.registerHoverProvider(languageId, {
+  monaco.languages.registerHoverProvider(editorLanguageId, {
     provideHover: async (model, position) => {
       if (hoverlessAt(model.getLineContent(position.lineNumber), position.column)) return null;
       const result = await requestLanguage<{
@@ -780,13 +859,43 @@ function registerProviders(languageId: SourceLanguageId): void {
       const values = (Array.isArray(result.contents) ? result.contents : [result.contents]).map(
         (value) => (typeof value === 'string' ? value : (value.value ?? '')),
       );
-      const include = includeFromHover(result);
+      const include = snippet ? null : includeFromHover(result);
+      const range = result.range && visibleLspRange(result.range, hiddenLines(model));
       return {
-        range: result.range ? toMonacoRangeObject(result.range) : undefined,
+        range: range ? toMonacoRangeObject(range) : undefined,
         contents: include ? includeHoverParts(include, values) : values.map((value) => ({ value })),
       };
     },
   });
+
+  if (languageId === 'rms' || languageId === 'xs')
+    monaco.languages.registerDocumentSemanticTokensProvider(editorLanguageId, {
+      onDidChange: semanticTokensChanged.event,
+      getLegend: () => ({
+        tokenTypes: [...codeSemanticTokenTypes],
+        tokenModifiers: [],
+      }),
+      provideDocumentSemanticTokens: async (model) => {
+        const version = model.getVersionId();
+        const hidden = hiddenLines(model);
+        const result = await requestLanguage<SemanticTokensResult>(
+          'textDocument/semanticTokens/full',
+          textDocumentParams(model),
+        );
+        if (result === null) semanticTokensRetry.missed();
+        else semanticTokensRetry.answered();
+        return semanticTokensForVersion(
+          model,
+          version,
+          result && hidden > 0
+            ? { data: visibleSemanticTokens(result.data ?? [], hidden) }
+            : result,
+        );
+      },
+      releaseDocumentSemanticTokens: () => undefined,
+    });
+
+  if (snippet) return;
 
   if (languageId === 'rms' || languageId === 'xs') {
     monaco.languages.registerLinkProvider(languageId, {
@@ -1024,26 +1133,6 @@ function registerProviders(languageId: SourceLanguageId): void {
       { providedCodeActionKinds: ['quickfix'] },
     );
   }
-
-  if (languageId === 'rms' || languageId === 'xs')
-    monaco.languages.registerDocumentSemanticTokensProvider(languageId, {
-      onDidChange: semanticTokensChanged.event,
-      getLegend: () => ({
-        tokenTypes: [...codeSemanticTokenTypes],
-        tokenModifiers: [],
-      }),
-      provideDocumentSemanticTokens: async (model) => {
-        const version = model.getVersionId();
-        const result = await requestLanguage<SemanticTokensResult>(
-          'textDocument/semanticTokens/full',
-          textDocumentParams(model),
-        );
-        if (result === null) semanticTokensRetry.missed();
-        else semanticTokensRetry.answered();
-        return semanticTokensForVersion(model, version, result);
-      },
-      releaseDocumentSemanticTokens: () => undefined,
-    });
 }
 
 let rmsContentNames: Promise<LocalPresentationNames | null> | null = null;
@@ -1987,10 +2076,18 @@ function textDocumentParams(model: monaco.editor.ITextModel) {
   return { textDocument: { uri: model.uri.toString() } };
 }
 
+function hiddenLines(model: monaco.editor.ITextModel): number {
+  const prefix = attachedDocuments.get(model.uri.toString())?.prefix;
+  return prefix ? hiddenLineCount(prefix) : 0;
+}
+
 function positionParams(model: monaco.editor.ITextModel, position: monaco.Position) {
   return {
     ...textDocumentParams(model),
-    position: { line: position.lineNumber - 1, character: position.column - 1 },
+    position: {
+      line: position.lineNumber - 1 + hiddenLines(model),
+      character: position.column - 1,
+    },
   };
 }
 

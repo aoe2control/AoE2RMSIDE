@@ -79,6 +79,7 @@ import {
 import {
   DirectoryListingReader,
   ExplorerRefreshRegistry,
+  explorerTransientListed,
   mergeDirectoryEntries,
 } from './explorer-refresh';
 import { sameUnsavedTexts } from './explorer-content-search';
@@ -589,7 +590,7 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
           ...(draft.template ? { template: draft.template } : {}),
         });
         if (result.kind === 'folder' && result.entry) {
-          setTransientEntry({ ...result.entry, hasChildren: false });
+          setTransientEntry({ ...result.entry, hasChildren: false, visuallyEmpty: true });
           workspace.setFolderExpanded(result.entry.path, true);
           workspace.setSelectedPath(result.entry.path);
         }
@@ -919,6 +920,9 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
                       }
                       onRename={beginRename}
                       onSelect={selectPath}
+                      onTransientListed={(listed) =>
+                        setTransientEntry((current) => (current === listed ? null : current))
+                      }
                       parent={rootEntry}
                       search={searchTree}
                       transientEntry={transientEntry}
@@ -1085,6 +1089,7 @@ interface DirectoryChildrenProps {
   onFindInFiles(entry: WorkspaceDirectoryEntry): void;
   onDraftValueChange(value: string): void;
   onSelect(path: string): void;
+  onTransientListed(entry: WorkspaceDirectoryEntry): void;
   onCommitDraft(): Promise<void>;
   onCancelDraft(): void;
 }
@@ -1104,6 +1109,7 @@ function DirectoryChildren({
   onFindInFiles,
   onDraftValueChange,
   onSelect,
+  onTransientListed,
   onCommitDraft,
   onCancelDraft,
 }: DirectoryChildrenProps) {
@@ -1149,6 +1155,16 @@ function DirectoryChildren({
     () => refreshRegistry?.register(parent.path, () => reader.refresh()),
     [parent.path, reader, refreshRegistry],
   );
+
+  useEffect(() => {
+    if (
+      transientEntry &&
+      error === null &&
+      explorerTransientListed(parent.path, entries, transientEntry)
+    ) {
+      onTransientListed(transientEntry);
+    }
+  }, [entries, error, onTransientListed, parent.path, transientEntry]);
 
   const shownHere = search?.children.get(pathKey(parent.path));
   if (!search || !shownHere) {
@@ -1214,6 +1230,7 @@ function DirectoryChildren({
               onFindInFiles,
               onRename,
               onSelect,
+              onTransientListed,
               parent,
               search,
               transientEntry,
@@ -1347,13 +1364,22 @@ function FolderRow({
       data-match={match ? true : undefined}
       data-row-key={isRoot ? undefined : key}
       data-selected={selected}
+      data-visually-empty={(!isRoot && entry.visuallyEmpty) || undefined}
     >
       <Tooltip>
         <TooltipTrigger
           render={
             <Button
               aria-description={
-                count === undefined ? undefined : t('explorer.search.occurrences', { count })
+                count !== undefined
+                  ? t('explorer.search.occurrences', { count })
+                  : !isRoot && entry.visuallyEmpty
+                    ? t(
+                        editionCapabilities.newRmsScript
+                          ? 'explorer.folder.visually-empty.rms'
+                          : 'explorer.folder.visually-empty',
+                      )
+                    : undefined
               }
               aria-expanded={expanded}
               aria-level={isRoot ? 1 : depth + 2}

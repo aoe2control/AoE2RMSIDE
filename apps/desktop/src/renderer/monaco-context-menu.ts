@@ -1,4 +1,4 @@
-import { insertSnippetActionId } from './insert-snippet';
+import { insertSnippetActionId, saveSnippetActionId } from './insert-snippet';
 
 export interface MonacoMenuAction {
   readonly id: string;
@@ -62,6 +62,7 @@ export interface EditorMenuAnchor {
 
 export interface EditorMenuRequest {
   readonly id: number;
+  readonly scope: string | null;
   readonly anchor: EditorMenuAnchor;
   readonly entries: readonly EditorMenuEntry[];
   readonly focusReturn: HTMLElement | null;
@@ -101,6 +102,7 @@ export const sourceEditorMenuActionIds: ReadonlySet<string> = new Set([
 export const rmsEditorMenuActionIds: ReadonlySet<string> = new Set([
   ...sourceEditorMenuActionIds,
   insertSnippetActionId,
+  saveSnippetActionId,
 ]);
 
 export const mapTestEditorMenuActionIds: ReadonlySet<string> = new Set([
@@ -225,6 +227,32 @@ export function overrideEditorMenuAction(id: string, run: () => unknown): () => 
   };
 }
 
+interface EditorMenuScope {
+  readonly id: string;
+  readonly element: { contains(node: unknown): boolean };
+  readonly actionIds: ReadonlySet<string>;
+}
+
+const menuScopes = new Set<EditorMenuScope>();
+
+export function registerEditorMenuScope(
+  id: string,
+  element: { contains(node: unknown): boolean },
+  actionIds: ReadonlySet<string>,
+): () => void {
+  const scope: EditorMenuScope = { id, element, actionIds };
+  menuScopes.add(scope);
+  return () => {
+    menuScopes.delete(scope);
+  };
+}
+
+export function editorMenuScopeFor(focused: unknown): EditorMenuScope | null {
+  if (focused === null || focused === undefined) return null;
+  for (const scope of menuScopes) if (scope.element.contains(focused)) return scope;
+  return null;
+}
+
 let current: EditorMenuRequest | null = null;
 let nextRequestId = 1;
 const listeners = new Set<Listener>();
@@ -250,15 +278,18 @@ export function editorMenuRequest(
 ): EditorMenuRequest | null {
   const actions = delegate.getActions();
   if (actions.length === 0) return null;
+  const active = typeof document === 'undefined' ? null : document.activeElement;
+  const scope = editorMenuScopeFor(active);
   const entries = editorMenuEntries(
     actions,
     (action) =>
       (delegate.getKeyBinding?.(action) ?? lookupKeybinding(action.id))?.getLabel() ?? null,
     '',
-    editorMenuActionFilter(menuLanguage(), actions),
+    scope
+      ? (action) => scope.actionIds.has(reviewedMenuActionId(action.id))
+      : editorMenuActionFilter(menuLanguage(), actions),
   );
   if (entries.length === 0) return null;
-  const active = typeof document === 'undefined' ? null : document.activeElement;
   const focusReturn =
     typeof HTMLElement !== 'undefined' && active instanceof HTMLElement && active !== document.body
       ? active
@@ -269,6 +300,7 @@ export function editorMenuRequest(
   let settled = false;
   const request: EditorMenuRequest = {
     id: nextRequestId++,
+    scope: scope?.id ?? null,
     anchor: editorMenuAnchor(delegate.getAnchor()),
     entries,
     focusReturn,

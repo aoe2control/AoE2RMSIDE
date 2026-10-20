@@ -122,6 +122,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Chèn đoạn mã…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Lưu thành đoạn mã…"
+    },
     "app-menu.edit.format-document": {
       "message": "Định dạng tài liệu"
     },
@@ -2189,6 +2192,12 @@
     "explorer.tree.label": {
       "message": "Các tệp trong {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Không có tệp bản đồ"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Không có tệp kịch bản"
+    },
     "explorer.empty.maps": {
       "message": "Mở thư mục để duyệt và chỉnh sửa bản đồ bên trong."
     },
@@ -3263,6 +3272,171 @@
     "code-editor.snippets.cancel": {
       "message": "Hủy"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Lưu thành đoạn mã…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Đoạn mã của tôi"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Đoạn mã có sẵn"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Chỉnh sửa đoạn mã"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Chỉnh sửa {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Xóa đoạn mã"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Xóa {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Xóa đoạn mã “{name}”?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Đoạn mã sẽ bị gỡ khỏi Đoạn mã của tôi. Không thể hoàn tác."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Xóa"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Hủy"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Không xóa được đoạn mã."
+    },
+    "code-editor.snippets.import": {
+      "message": "Nhập đoạn mã…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Xuất đoạn mã…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, other {Đã xuất # đoạn mã.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Không xuất được đoạn mã."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, other {Đã nhập # đoạn mã.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, other {Đã nhập # đoạn mã.}} {renamed, plural, other {# đoạn mã được thêm số sau tên vì bạn đã có đoạn mã trùng tên.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Không nhập được đoạn mã."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Tệp này không phải tệp đoạn mã của AoE2RMSIDE nên không có gì được nhập."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Tệp đoạn mã này đến từ phiên bản AoE2RMSIDE mới hơn nên không có gì được nhập. Hãy cập nhật AoE2RMSIDE để nhập tệp này."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Không đọc được một đoạn mã trong tệp này nên không có gì được nhập."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Bạn có thể giữ tối đa 500 đoạn mã và tệp này sẽ khiến số đoạn mã vượt quá mức đó nên không có gì được nhập."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Tổng dung lượng các đoạn mã sẽ lớn hơn 2 MB nên không có gì được nhập."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Không đọc được tệp nên không có gì được nhập."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Tạo phần {section}?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Đoạn mã này thuộc về {section}, phần mà kịch bản này chưa có. AoE2RMSIDE có thể thêm phần đó vào đúng vị trí và chèn đoạn mã vào đó."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Tạo phần"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Chèn vào cuối {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Đoạn mã này thuộc về {section}. AoE2RMSIDE có thể chèn nó vào cuối phần đó."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Chèn vào đó"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Chèn tại đây"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Hủy"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Không đọc được các đoạn mã bạn đã lưu nên Đoạn mã của tôi bắt đầu trống."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Tệp đã được giữ lại với tên {name} trong thư mục dữ liệu của ứng dụng."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Tệp được giữ nguyên tại chỗ."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Lưu thành đoạn mã"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Chỉnh sửa đoạn mã"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Đóng"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Tên"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Phần"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Phần bất kỳ"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Mô tả"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Không bắt buộc"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Mã"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Lưu đoạn mã"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Hủy"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Nhập tên."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Bạn đã có đoạn mã mang tên này."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Dùng tên không có ngắt dòng hoặc ký tự điều khiển."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Mã không được để trống."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Mã dài hơn 20.000 ký tự."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Bạn có thể giữ tối đa 500 đoạn mã. Hãy xóa một đoạn để lưu đoạn này."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Tổng dung lượng các đoạn mã của bạn sẽ lớn hơn 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Không lưu được đoạn mã."
+    },
     "code-editor.include.open": {
       "message": "Mở {name}"
     },
@@ -3361,6 +3535,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Nhập báo cáo kiểm thử bản đồ"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Tệp đoạn mã"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Xuất đoạn mã"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Nhập đoạn mã"
     },
     "native-dialog.game-folder.title": {
       "message": "Chọn thư mục Age of Empires II: Definitive Edition"

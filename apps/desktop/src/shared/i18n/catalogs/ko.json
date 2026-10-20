@@ -122,6 +122,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "코드 조각 삽입…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "코드 조각으로 저장…"
+    },
     "app-menu.edit.format-document": {
       "message": "문서 서식 지정"
     },
@@ -2189,6 +2192,12 @@
     "explorer.tree.label": {
       "message": "{name}의 파일"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "맵 파일 없음"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "스크립트 파일 없음"
+    },
     "explorer.empty.maps": {
       "message": "폴더를 열어 맵을 찾아보고 편집하세요."
     },
@@ -3263,6 +3272,171 @@
     "code-editor.snippets.cancel": {
       "message": "취소"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "코드 조각으로 저장…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "내 코드 조각"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "기본 제공 코드 조각"
+    },
+    "code-editor.snippets.edit": {
+      "message": "코드 조각 편집"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "{name} 편집"
+    },
+    "code-editor.snippets.delete": {
+      "message": "코드 조각 삭제"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "{name} 삭제"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "‘{name}’ 코드 조각을 삭제할까요?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "내 코드 조각에서 제거됩니다. 이 작업은 되돌릴 수 없습니다."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "삭제"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "취소"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "코드 조각을 삭제하지 못했습니다."
+    },
+    "code-editor.snippets.import": {
+      "message": "코드 조각 가져오기…"
+    },
+    "code-editor.snippets.export": {
+      "message": "코드 조각 내보내기…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, other {코드 조각 #개를 내보냈습니다.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "코드 조각을 내보내지 못했습니다."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, other {코드 조각 #개를 가져왔습니다.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, other {코드 조각 #개를 가져왔습니다.}} {renamed, plural, other {같은 이름의 코드 조각이 이미 있어서 #개의 이름 뒤에 번호를 붙였습니다.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "코드 조각을 가져오지 못했습니다."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "이 파일은 AoE2RMSIDE 코드 조각 파일이 아니므로 아무것도 가져오지 않았습니다."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "이 코드 조각 파일은 더 새로운 버전의 AoE2RMSIDE에서 만들어졌으므로 아무것도 가져오지 않았습니다. 가져오려면 AoE2RMSIDE를 업데이트하세요."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "이 파일의 코드 조각을 읽을 수 없으므로 아무것도 가져오지 않았습니다."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "코드 조각은 최대 500개까지 보관할 수 있는데 이 파일을 가져오면 이를 넘으므로 아무것도 가져오지 않았습니다."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "코드 조각의 합계가 2 MB를 넘으므로 아무것도 가져오지 않았습니다."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "파일을 읽지 못해 아무것도 가져오지 않았습니다."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "{section} 섹션을 만들까요?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "이 코드 조각은 {section}에 속하지만 이 스크립트에는 아직 해당 섹션이 없습니다. AoE2RMSIDE가 섹션을 올바른 위치에 추가하고 그곳에 코드 조각을 삽입할 수 있습니다."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "섹션 만들기"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "{section} 끝에 삽입할까요?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "이 코드 조각은 {section}에 속합니다. AoE2RMSIDE가 해당 섹션의 끝에 삽입할 수 있습니다."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "끝에 삽입"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "여기에 삽입"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "취소"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "저장한 코드 조각을 읽지 못해 내 코드 조각이 비어 있는 상태로 시작합니다."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "파일을 앱 데이터 폴더에 {name} 이름으로 보관했습니다."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "파일은 원래 위치에 그대로 두었습니다."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "코드 조각으로 저장"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "코드 조각 편집"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "닫기"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "이름"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "섹션"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "모든 섹션"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "설명"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "선택 사항"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "코드"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "코드 조각 저장"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "취소"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "이름을 입력하세요."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "이 이름의 코드 조각이 이미 있습니다."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "줄 바꿈이나 제어 문자가 없는 이름을 사용하세요."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "코드는 비워 둘 수 없습니다."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "코드가 20,000자를 넘습니다."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "코드 조각은 최대 500개까지 보관할 수 있습니다. 이 코드 조각을 저장하려면 하나를 삭제하세요."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "코드 조각의 합계가 2 MB를 넘게 됩니다."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "코드 조각을 저장하지 못했습니다."
+    },
     "code-editor.include.open": {
       "message": "{name} 열기"
     },
@@ -3361,6 +3535,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "맵 테스트 보고서 가져오기"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "코드 조각 파일"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "코드 조각 내보내기"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "코드 조각 가져오기"
     },
     "native-dialog.game-folder.title": {
       "message": "Age of Empires II: Definitive Edition 폴더 선택"

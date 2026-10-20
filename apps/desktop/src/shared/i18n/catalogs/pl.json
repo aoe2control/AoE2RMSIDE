@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Wstaw fragment kodu…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Zapisz jako fragment kodu…"
+    },
     "app-menu.edit.format-document": {
       "message": "Formatuj dokument"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "Pliki w {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Brak plików map"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Brak plików skryptów"
+    },
     "explorer.empty.maps": {
       "message": "Otwórz folder, aby przeglądać i edytować jego mapy."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Anuluj"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Zapisz jako fragment kodu…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Moje fragmenty kodu"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Wbudowane fragmenty kodu"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Edytuj fragment kodu"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Edytuj {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Usuń fragment kodu"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Usuń {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Usunąć fragment kodu „{name}”?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Zostanie usunięty z listy Moje fragmenty kodu. Tej operacji nie można cofnąć."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Usuń"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Anuluj"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Nie udało się usunąć fragmentu kodu."
+    },
+    "code-editor.snippets.import": {
+      "message": "Importuj fragmenty…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Eksportuj fragmenty…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {Wyeksportowano # fragment kodu.} few {Wyeksportowano # fragmenty kodu.} many {Wyeksportowano # fragmentów kodu.} other {Wyeksportowano # fragmentu kodu.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Nie udało się wyeksportować fragmentów kodu."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {Zaimportowano # fragment kodu.} few {Zaimportowano # fragmenty kodu.} many {Zaimportowano # fragmentów kodu.} other {Zaimportowano # fragmentu kodu.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {Zaimportowano # fragment kodu.} few {Zaimportowano # fragmenty kodu.} many {Zaimportowano # fragmentów kodu.} other {Zaimportowano # fragmentu kodu.}} {renamed, plural, one {# fragment otrzymał numer po nazwie, ponieważ masz już fragment kodu o tej nazwie.} few {# fragmenty otrzymały numery po nazwach, ponieważ masz już fragmenty kodu o tych nazwach.} many {# fragmentów otrzymało numery po nazwach, ponieważ masz już fragmenty kodu o tych nazwach.} other {# fragmentu otrzymało numery po nazwach, ponieważ masz już fragmenty kodu o tych nazwach.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Nie udało się zaimportować fragmentów kodu."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Ten plik nie jest plikiem fragmentów kodu AoE2RMSIDE, więc nic nie zaimportowano."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Ten plik fragmentów kodu pochodzi z nowszej wersji AoE2RMSIDE, więc nic nie zaimportowano. Zaktualizuj AoE2RMSIDE, aby go zaimportować."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Nie można odczytać jednego z fragmentów kodu w tym pliku, więc nic nie zaimportowano."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Możesz przechowywać do 500 fragmentów kodu, a ten plik dodałby więcej, więc nic nie zaimportowano."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Fragmenty kodu zajęłyby łącznie ponad 2 MB, więc nic nie zaimportowano."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Nie udało się odczytać pliku, więc nic nie zaimportowano."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Utworzyć sekcję {section}?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Ten fragment kodu należy do sekcji {section}, której ten skrypt jeszcze nie ma. AoE2RMSIDE może dodać sekcję we właściwym miejscu i wstawić tam fragment."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Utwórz sekcję"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Wstawić na końcu sekcji {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Ten fragment kodu należy do sekcji {section}. AoE2RMSIDE może wstawić go na końcu tej sekcji."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Wstaw na końcu"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Wstaw tutaj"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Anuluj"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Nie udało się odczytać zapisanych fragmentów kodu, więc lista Moje fragmenty kodu jest pusta."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Plik zachowano jako {name} w folderze danych aplikacji."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Plik pozostawiono na miejscu."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Zapisz jako fragment kodu"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Edytuj fragment kodu"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Zamknij"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Nazwa"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Sekcja"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Dowolna sekcja"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Opis"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Opcjonalnie"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Kod"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Zapisz fragment"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Anuluj"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Wpisz nazwę."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Masz już fragment kodu o tej nazwie."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Użyj nazwy bez podziałów wiersza i znaków sterujących."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Kod nie może być pusty."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Kod jest dłuższy niż 20 000 znaków."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Możesz przechowywać do 500 fragmentów kodu. Usuń jeden, aby zapisać ten."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Twoje fragmenty kodu zajęłyby łącznie ponad 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Nie udało się zapisać fragmentu kodu."
+    },
     "code-editor.include.open": {
       "message": "Otwórz {name}"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Importuj raport testu mapy"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Plik fragmentów kodu"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Eksportuj fragmenty kodu"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Importuj fragmenty kodu"
     },
     "native-dialog.game-folder.title": {
       "message": "Wybierz folder Age of Empires II: Definitive Edition"

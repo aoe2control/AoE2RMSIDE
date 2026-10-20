@@ -1,6 +1,17 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { constants, watch, type FSWatcher, type Stats } from 'node:fs';
-import { access, lstat, mkdir, open, readdir, realpath, rename, rm, stat } from 'node:fs/promises';
+import { constants, watch, type Dir, type FSWatcher, type Stats } from 'node:fs';
+import {
+  access,
+  lstat,
+  mkdir,
+  open,
+  opendir,
+  readdir,
+  realpath,
+  rename,
+  rm,
+  stat,
+} from 'node:fs/promises';
 import { basename, dirname, extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type {
@@ -353,16 +364,14 @@ export class WorkspaceService {
         }
         if (!entry.isDirectory() || entry.isSymbolicLink()) continue;
         const canonical = await this.containedCanonicalDirectory(path, context);
-        if (!canonical || !(await this.directoryHasRelevantSource(canonical, context, 1))) continue;
-        visible.push({
-          ...this.grantEntry(
+        if (!canonical) continue;
+        visible.push(
+          await this.folderEntry(
             canonical,
-            'folder',
             parent.writable && (await this.isWritable(canonical)),
-            false,
+            await this.directoryHasRelevantSource(canonical, context, 1),
           ),
-          hasChildren: true,
-        });
+        );
       }
       return visible.sort(compareDirectoryEntries);
     } catch (error) {
@@ -1569,17 +1578,13 @@ export class WorkspaceService {
         context,
         depth + 1,
       );
-      const visible =
-        contents.length > 0 ||
-        (matched && (await this.directoryHasRelevantSource(canonical, context, depth + 1)));
-      if (!visible) {
-        if (matched) state.matched -= 1;
-        continue;
-      }
-      const granted = {
-        ...this.grantEntry(canonical, 'folder', folderWritable, false),
-        hasChildren: true,
-      };
+      if (contents.length === 0 && !matched) continue;
+      const granted = await this.folderEntry(
+        canonical,
+        folderWritable,
+        contents.some((result) => result.kind === 'file') ||
+          (await this.directoryHasRelevantSource(canonical, context, depth + 1)),
+      );
       shown.push({
         entry: granted,
         results: [{ ...granted, relativePath, matched }, ...contents],
@@ -1702,7 +1707,7 @@ export class WorkspaceService {
     directory: string,
     context: TraversalContext,
     depth: number,
-  ): Promise<boolean> {
+  ): Promise<boolean | null> {
     const key = pathKey(directory);
     const cached = this.relevanceCache.get(key);
     if (cached !== undefined) return cached;
@@ -1714,20 +1719,33 @@ export class WorkspaceService {
     try {
       this.assertTraversal(context, depth);
       const entries = await this.readDirectoryEntries(directory, context);
+      let unknown = false;
       for (const entry of entries) {
         const path = join(directory, entry.name);
         if (entry.isFile() && (await isRelevantSourceFile(path))) return remember(true);
         if (!entry.isDirectory() || entry.isSymbolicLink()) continue;
         const canonical = await this.containedCanonicalDirectory(path, context);
-        if (canonical && (await this.directoryHasRelevantSource(canonical, context, depth + 1))) {
-          return remember(true);
-        }
+        if (!canonical) continue;
+        const relevant = await this.directoryHasRelevantSource(canonical, context, depth + 1);
+        if (relevant === true) return remember(true);
+        if (relevant === null) unknown = true;
       }
-      return remember(false);
+      return unknown ? null : remember(false);
     } catch (error) {
+      if (context.signal?.aborted) throw error;
       this.publishTraversalDiagnostic(context, error);
-      return false;
+      return null;
     }
+  }
+
+  private async folderEntry(
+    path: string,
+    writable: boolean,
+    hasSource: boolean | null,
+  ): Promise<WorkspaceDirectoryEntry> {
+    const granted = this.grantEntry(path, 'folder', writable, false);
+    if (hasSource !== false) return { ...granted, hasChildren: true };
+    return { ...granted, hasChildren: await directoryHasEntries(path), visuallyEmpty: true };
   }
 
   private async readDirectoryEntries(directory: string, context: TraversalContext) {
@@ -2691,6 +2709,18 @@ function decodeSearchText(bytes: Uint8Array): string {
     return decodeSourceBytes(bytes).content;
   } catch {
     return new TextDecoder('utf-8').decode(bytes);
+  }
+}
+
+async function directoryHasEntries(directory: string): Promise<boolean> {
+  let handle: Dir | undefined;
+  try {
+    handle = await opendir(directory);
+    return (await handle.read()) !== null;
+  } catch {
+    return true;
+  } finally {
+    await handle?.close().catch(() => undefined);
   }
 }
 

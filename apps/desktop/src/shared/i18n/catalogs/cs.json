@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Vložit fragment…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Uložit jako fragment…"
+    },
     "app-menu.edit.format-document": {
       "message": "Formátovat dokument"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "Soubory složky {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Žádné soubory map"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Žádné soubory skriptů"
+    },
     "explorer.empty.maps": {
       "message": "Otevřete složku, abyste mohli procházet a upravovat její mapy."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Zrušit"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Uložit jako fragment…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Moje fragmenty"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Vestavěné fragmenty"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Upravit fragment"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Upravit {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Smazat fragment"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Smazat {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Smazat fragment „{name}“?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Bude odebrán ze seznamu Moje fragmenty. Tuto akci nelze vrátit."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Smazat"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Zrušit"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Fragment se nepodařilo smazat."
+    },
+    "code-editor.snippets.import": {
+      "message": "Importovat fragmenty…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Exportovat fragmenty…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {Exportován # fragment.} few {Exportovány # fragmenty.} many {Exportováno # fragmentu.} other {Exportováno # fragmentů.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Fragmenty se nepodařilo exportovat."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {Importován # fragment.} few {Importovány # fragmenty.} many {Importováno # fragmentu.} other {Importováno # fragmentů.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {Importován # fragment.} few {Importovány # fragmenty.} many {Importováno # fragmentu.} other {Importováno # fragmentů.}} {renamed, plural, one {# fragment dostal za název číslo, protože už máte fragment s tímto názvem.} few {# fragmenty dostaly za název číslo, protože už máte fragmenty s těmito názvy.} many {# fragmentu dostalo za název číslo, protože už máte fragmenty s těmito názvy.} other {# fragmentů dostalo za název číslo, protože už máte fragmenty s těmito názvy.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Fragmenty se nepodařilo importovat."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Tento soubor není soubor fragmentů AoE2RMSIDE, proto nebylo nic importováno."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Tento soubor fragmentů pochází z novější verze AoE2RMSIDE, proto nebylo nic importováno. Chcete-li jej importovat, aktualizujte AoE2RMSIDE."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Fragment v tomto souboru nelze přečíst, proto nebylo nic importováno."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Můžete mít nejvýše 500 fragmentů a tento soubor by jich přidal víc, proto nebylo nic importováno."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Fragmenty by byly dohromady větší než 2 MB, proto nebylo nic importováno."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Soubor se nepodařilo přečíst, proto nebylo nic importováno."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Vytvořit oddíl {section}?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Tento fragment patří do oddílu {section}, který tento skript zatím nemá. AoE2RMSIDE může oddíl přidat na správné místo a vložit fragment do něj."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Vytvořit oddíl"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Vložit na konec oddílu {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Tento fragment patří do oddílu {section}. AoE2RMSIDE jej může vložit na konec tohoto oddílu."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Vložit na konec"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Vložit sem"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Zrušit"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Uložené fragmenty se nepodařilo přečíst, proto je seznam Moje fragmenty prázdný."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Soubor byl ponechán jako {name} ve složce dat aplikace."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Soubor zůstal na svém místě."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Uložit jako fragment"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Upravit fragment"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Zavřít"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Název"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Oddíl"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Libovolný oddíl"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Popis"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Volitelné"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Kód"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Uložit fragment"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Zrušit"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Zadejte název."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Fragment s tímto názvem už máte."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Použijte název bez zalomení řádků a řídicích znaků."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Kód nemůže být prázdný."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Kód je delší než 20 000 znaků."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Můžete mít nejvýše 500 fragmentů. Chcete-li uložit tento, jeden smažte."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Vaše fragmenty by byly dohromady větší než 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Fragment se nepodařilo uložit."
+    },
     "code-editor.include.open": {
       "message": "Otevřít {name}"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Importovat zprávu testu mapy"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Soubor fragmentů"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Exportovat fragmenty"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Importovat fragmenty"
     },
     "native-dialog.game-folder.title": {
       "message": "Vybrat složku Age of Empires II: Definitive Edition"

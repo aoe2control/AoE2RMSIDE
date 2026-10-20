@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Inserisci frammento…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Salva come frammento…"
+    },
     "app-menu.edit.format-document": {
       "message": "Formatta documento"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "File di {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Nessun file di mappa"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Nessun file di script"
+    },
     "explorer.empty.maps": {
       "message": "Apri una cartella per esplorare e modificare le sue mappe."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Annulla"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Salva come frammento…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "I miei frammenti"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Frammenti integrati"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Modifica frammento"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Modifica {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Elimina frammento"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Elimina {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Eliminare il frammento “{name}”?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Verrà rimosso dall’elenco I miei frammenti. Questa operazione non può essere annullata."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Elimina"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Annulla"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Impossibile eliminare il frammento."
+    },
+    "code-editor.snippets.import": {
+      "message": "Importa frammenti…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Esporta frammenti…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {Esportato # frammento.} many {Esportati # frammenti.} other {Esportati # frammenti.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Impossibile esportare i frammenti."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {Importato # frammento.} many {Importati # frammenti.} other {Importati # frammenti.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {Importato # frammento.} many {Importati # frammenti.} other {Importati # frammenti.}} {renamed, plural, one {# frammento ha ricevuto un numero dopo il nome perché avevi già un frammento con quel nome.} many {# frammenti hanno ricevuto un numero dopo il nome perché avevi già frammenti con quei nomi.} other {# frammenti hanno ricevuto un numero dopo il nome perché avevi già frammenti con quei nomi.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Impossibile importare i frammenti."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Questo file non è un file di frammenti di AoE2RMSIDE, quindi non è stato importato nulla."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Questo file di frammenti proviene da una versione più recente di AoE2RMSIDE, quindi non è stato importato nulla. Aggiorna AoE2RMSIDE per importarlo."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Un frammento in questo file non può essere letto, quindi non è stato importato nulla."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Puoi conservare al massimo 500 frammenti e con questo file li supereresti, quindi non è stato importato nulla."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Nel complesso i frammenti supererebbero 2 MB, quindi non è stato importato nulla."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Impossibile leggere il file, quindi non è stato importato nulla."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Creare la sezione {section}?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Questo frammento va in {section}, che questo script non ha ancora. AoE2RMSIDE può aggiungere la sezione nella posizione corretta e inserirvi il frammento."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Crea sezione"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Inserire alla fine di {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Questo frammento va in {section}. AoE2RMSIDE può inserirlo alla fine di quella sezione."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Inserisci lì"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Inserisci qui"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Annulla"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Impossibile leggere i frammenti salvati, quindi l’elenco I miei frammenti è vuoto."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Il file è stato conservato come {name} nella cartella dei dati dell’app."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Il file è stato lasciato al suo posto."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Salva come frammento"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Modifica frammento"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Chiudi"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Nome"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Sezione"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Qualsiasi sezione"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Descrizione"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Facoltativo"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Codice"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Salva frammento"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Annulla"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Inserisci un nome."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Hai già un frammento con questo nome."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Usa un nome senza a capo né caratteri di controllo."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Il codice non può essere vuoto."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Il codice supera i 20.000 caratteri."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Puoi conservare fino a 500 frammenti. Eliminane uno per salvare questo."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Nel complesso i tuoi frammenti supererebbero 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Impossibile salvare il frammento."
+    },
     "code-editor.include.open": {
       "message": "Apri {name}"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Importa rapporto di test delle mappe"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "File di frammenti"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Esporta frammenti"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Importa frammenti"
     },
     "native-dialog.game-folder.title": {
       "message": "Seleziona una cartella di Age of Empires II: Definitive Edition"

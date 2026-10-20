@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Вставити фрагмент…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Зберегти як фрагмент…"
+    },
     "app-menu.edit.format-document": {
       "message": "Форматувати документ"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "Файли: {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Немає файлів мап"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Немає файлів скриптів"
+    },
     "explorer.empty.maps": {
       "message": "Відкрийте папку, щоб переглядати й редагувати її мапи."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Скасувати"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Зберегти як фрагмент…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Мої фрагменти"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Вбудовані фрагменти"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Редагувати фрагмент"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Редагувати {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Видалити фрагмент"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Видалити {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Видалити фрагмент «{name}»?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Його буде вилучено зі списку «Мої фрагменти». Цю дію неможливо скасувати."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Видалити"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Скасувати"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Не вдалося видалити фрагмент."
+    },
+    "code-editor.snippets.import": {
+      "message": "Імпортувати фрагменти…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Експортувати фрагменти…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {Експортовано # фрагмент.} few {Експортовано # фрагменти.} many {Експортовано # фрагментів.} other {Експортовано # фрагмента.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Не вдалося експортувати фрагменти."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {Імпортовано # фрагмент.} few {Імпортовано # фрагменти.} many {Імпортовано # фрагментів.} other {Імпортовано # фрагмента.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {Імпортовано # фрагмент.} few {Імпортовано # фрагменти.} many {Імпортовано # фрагментів.} other {Імпортовано # фрагмента.}} {renamed, plural, one {# фрагмент отримав номер після назви, бо у вас уже був фрагмент із такою назвою.} few {# фрагменти отримали номери після назв, бо у вас уже були фрагменти з такими назвами.} many {# фрагментів отримали номери після назв, бо у вас уже були фрагменти з такими назвами.} other {# фрагмента отримали номери після назв, бо у вас уже були фрагменти з такими назвами.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Не вдалося імпортувати фрагменти."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Цей файл не є файлом фрагментів AoE2RMSIDE, тому нічого не імпортовано."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Цей файл фрагментів створено в новішій версії AoE2RMSIDE, тому нічого не імпортовано. Оновіть AoE2RMSIDE, щоб імпортувати його."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Не вдається прочитати один із фрагментів у цьому файлі, тому нічого не імпортовано."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Можна зберігати не більше 500 фрагментів, а цей файл додав би більше, тому нічого не імпортовано."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Разом фрагменти займали б понад 2 MB, тому нічого не імпортовано."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Не вдалося прочитати файл, тому нічого не імпортовано."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Створити розділ {section}?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Цей фрагмент належить до розділу {section}, якого в цьому скрипті ще немає. AoE2RMSIDE може додати розділ у правильне місце й вставити туди фрагмент."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Створити розділ"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Вставити в кінець розділу {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Цей фрагмент належить до розділу {section}. AoE2RMSIDE може вставити його в кінець цього розділу."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Вставити в кінець"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Вставити тут"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Скасувати"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Не вдалося прочитати збережені фрагменти, тому список «Мої фрагменти» порожній."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Файл збережено як {name} у папці даних програми."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Файл залишено на місці."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Зберегти як фрагмент"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Редагувати фрагмент"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Закрити"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Назва"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Розділ"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Будь-який розділ"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Опис"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Необов’язково"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Код"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Зберегти фрагмент"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Скасувати"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Введіть назву."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "У вас уже є фрагмент із такою назвою."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Використайте назву без розривів рядків і керівних символів."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Код не може бути порожнім."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Код довший за 20 000 символів."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Можна зберігати не більше 500 фрагментів. Видаліть один, щоб зберегти цей."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Разом ваші фрагменти займали б понад 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Не вдалося зберегти фрагмент."
+    },
     "code-editor.include.open": {
       "message": "Відкрити {name}"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Імпорт звіту тесту мапи"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Файл фрагментів"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Експорт фрагментів"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Імпорт фрагментів"
     },
     "native-dialog.game-folder.title": {
       "message": "Виберіть папку Age of Empires II: Definitive Edition"

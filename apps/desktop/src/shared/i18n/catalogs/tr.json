@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Kod parçacığı ekle…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Kod parçacığı olarak kaydet…"
+    },
     "app-menu.edit.format-document": {
       "message": "Belgeyi biçimlendir"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "{name} klasöründeki dosyalar"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Harita dosyası yok"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Betik dosyası yok"
+    },
     "explorer.empty.maps": {
       "message": "Haritalarına göz atıp düzenlemek için bir klasör açın."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "İptal"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Kod parçacığı olarak kaydet…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Kod parçacıklarım"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Yerleşik kod parçacıkları"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Kod parçacığını düzenle"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Kod parçacığını düzenle: {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Kod parçacığını sil"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Kod parçacığını sil: {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "“{name}” kod parçacığı silinsin mi?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Kod parçacıklarım listesinden kaldırılır. Bu işlem geri alınamaz."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Sil"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "İptal"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Kod parçacığı silinemedi."
+    },
+    "code-editor.snippets.import": {
+      "message": "İçe aktar…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Dışa aktar…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {# kod parçacığı dışa aktarıldı.} other {# kod parçacığı dışa aktarıldı.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Kod parçacıkları dışa aktarılamadı."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {# kod parçacığı içe aktarıldı.} other {# kod parçacığı içe aktarıldı.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {# kod parçacığı içe aktarıldı.} other {# kod parçacığı içe aktarıldı.}} {renamed, plural, one {Aynı ada sahip bir kod parçacığınız zaten olduğu için # parçacığın adının sonuna numara eklendi.} other {Aynı adlara sahip kod parçacıklarınız zaten olduğu için # parçacığın adının sonuna numara eklendi.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Kod parçacıkları içe aktarılamadı."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Bu dosya bir AoE2RMSIDE kod parçacığı dosyası olmadığından hiçbir şey içe aktarılmadı."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Bu kod parçacığı dosyası AoE2RMSIDE uygulamasının daha yeni bir sürümünden geldiği için hiçbir şey içe aktarılmadı. İçe aktarmak için AoE2RMSIDE uygulamasını güncelleyin."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Bu dosyadaki bir kod parçacığı okunamadığından hiçbir şey içe aktarılmadı."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "En fazla 500 kod parçacığı saklayabilirsiniz ve bu dosya bu sınırı aşacağından hiçbir şey içe aktarılmadı."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Kod parçacıklarının toplam boyutu 2 MB sınırını aşacağından hiçbir şey içe aktarılmadı."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Dosya okunamadığından hiçbir şey içe aktarılmadı."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "{section} bölümü oluşturulsun mu?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Bu kod parçacığı, bu betikte henüz bulunmayan {section} bölümüne aittir. AoE2RMSIDE bölümü doğru yerine ekleyip kod parçacığını oraya ekleyebilir."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Bölüm oluştur"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "{section} bölümünün sonuna eklensin mi?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Bu kod parçacığı {section} bölümüne aittir. AoE2RMSIDE onu bu bölümün sonuna ekleyebilir."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Oraya ekle"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Buraya ekle"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "İptal"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Kaydedilmiş kod parçacıklarınız okunamadığından Kod parçacıklarım boş başlıyor."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Dosya, uygulamanın veri klasöründe {name} adıyla saklandı."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Dosya yerinde bırakıldı."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Kod parçacığı olarak kaydet"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Kod parçacığını düzenle"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Kapat"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Ad"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Bölüm"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Herhangi bir bölüm"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Açıklama"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "İsteğe bağlı"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Kod"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Kaydet"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "İptal"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Bir ad girin."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Bu ada sahip bir kod parçacığınız zaten var."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Satır sonu veya denetim karakteri içermeyen bir ad kullanın."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Kod boş olamaz."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Kod 20.000 karakterden uzun."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "En fazla 500 kod parçacığı saklayabilirsiniz. Bunu kaydetmek için birini silin."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Kod parçacıklarınızın toplam boyutu 2 MB sınırını aşar."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Kod parçacığı kaydedilemedi."
+    },
     "code-editor.include.open": {
       "message": "{name} dosyasını aç"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Harita testi raporunu içe aktar"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Kod parçacığı dosyası"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Kod parçacıklarını dışa aktar"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Kod parçacıklarını içe aktar"
     },
     "native-dialog.game-folder.title": {
       "message": "Age of Empires II: Definitive Edition klasörü seç"

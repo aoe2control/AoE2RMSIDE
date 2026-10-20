@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Вставить фрагмент…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Сохранить как фрагмент…"
+    },
     "app-menu.edit.format-document": {
       "message": "Форматировать документ"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "Файлы папки {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Нет файлов карт"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Нет файлов скриптов"
+    },
     "explorer.empty.maps": {
       "message": "Откройте папку для просмотра и редактирования её карт."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Отмена"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Сохранить как фрагмент…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Мои фрагменты"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Встроенные фрагменты"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Изменить фрагмент"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "Изменить {name}"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Удалить фрагмент"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "Удалить {name}"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Удалить фрагмент «{name}»?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Он будет удалён из списка «Мои фрагменты». Это действие нельзя отменить."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Удалить"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Отмена"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Не удалось удалить фрагмент."
+    },
+    "code-editor.snippets.import": {
+      "message": "Импорт фрагментов…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Экспорт фрагментов…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {Экспортирован # фрагмент.} few {Экспортированы # фрагмента.} many {Экспортировано # фрагментов.} other {Экспортировано # фрагмента.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "Не удалось экспортировать фрагменты."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {Импортирован # фрагмент.} few {Импортированы # фрагмента.} many {Импортировано # фрагментов.} other {Импортировано # фрагмента.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {Импортирован # фрагмент.} few {Импортированы # фрагмента.} many {Импортировано # фрагментов.} other {Импортировано # фрагмента.}} {renamed, plural, one {# фрагмент получил номер после названия, так как у вас уже был фрагмент с таким названием.} few {# фрагмента получили номера после названий, так как у вас уже были фрагменты с такими названиями.} many {# фрагментов получили номера после названий, так как у вас уже были фрагменты с такими названиями.} other {# фрагмента получили номера после названий, так как у вас уже были фрагменты с такими названиями.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "Не удалось импортировать фрагменты."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Этот файл не является файлом фрагментов AoE2RMSIDE, поэтому ничего не импортировано."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Этот файл фрагментов создан в более новой версии AoE2RMSIDE, поэтому ничего не импортировано. Обновите AoE2RMSIDE, чтобы импортировать его."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Не удаётся прочитать один из фрагментов в этом файле, поэтому ничего не импортировано."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Можно хранить не более 500 фрагментов, а этот файл добавил бы больше, поэтому ничего не импортировано."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "Вместе фрагменты заняли бы больше 2 MB, поэтому ничего не импортировано."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Не удалось прочитать файл, поэтому ничего не импортировано."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Создать раздел {section}?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Этот фрагмент относится к разделу {section}, которого в скрипте ещё нет. AoE2RMSIDE может добавить раздел в нужное место и вставить туда фрагмент."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Создать раздел"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Вставить в конец раздела {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Этот фрагмент относится к разделу {section}. AoE2RMSIDE может вставить его в конец этого раздела."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Вставить в конец"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Вставить здесь"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Отмена"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Не удалось прочитать сохранённые фрагменты, поэтому список «Мои фрагменты» пуст."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Файл сохранён как {name} в папке данных приложения."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Файл оставлен на месте."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Сохранить как фрагмент"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Изменить фрагмент"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Закрыть"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Название"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Раздел"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Любой раздел"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Описание"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Необязательно"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Код"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Сохранить фрагмент"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Отмена"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Введите название."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "У вас уже есть фрагмент с таким названием."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Используйте название без переносов строк и управляющих символов."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "Код не может быть пустым."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "Код длиннее 20 000 символов."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Можно хранить не более 500 фрагментов. Удалите один, чтобы сохранить этот."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Вместе ваши фрагменты заняли бы больше 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Не удалось сохранить фрагмент."
+    },
     "code-editor.include.open": {
       "message": "Открыть {name}"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Импорт отчёта о тестировании карт"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Файл фрагментов"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Экспорт фрагментов"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Импорт фрагментов"
     },
     "native-dialog.game-folder.title": {
       "message": "Выберите папку Age of Empires II: Definitive Edition"

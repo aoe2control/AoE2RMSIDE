@@ -114,6 +114,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "Fragment invoegen…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "Opslaan als fragment…"
+    },
     "app-menu.edit.format-document": {
       "message": "Document opmaken"
     },
@@ -2181,6 +2184,12 @@
     "explorer.tree.label": {
       "message": "Bestanden in {name}"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "Geen kaartbestanden"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "Geen scriptbestanden"
+    },
     "explorer.empty.maps": {
       "message": "Open een map om de kaarten erin te bekijken en te bewerken."
     },
@@ -3255,6 +3264,171 @@
     "code-editor.snippets.cancel": {
       "message": "Annuleren"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "Opslaan als fragment…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "Mijn fragmenten"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "Meegeleverde fragmenten"
+    },
+    "code-editor.snippets.edit": {
+      "message": "Fragment bewerken"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "{name} bewerken"
+    },
+    "code-editor.snippets.delete": {
+      "message": "Fragment verwijderen"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "{name} verwijderen"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "Fragment ‘{name}’ verwijderen?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "Het wordt verwijderd uit Mijn fragmenten. Dit kan niet ongedaan worden gemaakt."
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "Verwijderen"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "Annuleren"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "Het fragment kon niet worden verwijderd."
+    },
+    "code-editor.snippets.import": {
+      "message": "Fragmenten importeren…"
+    },
+    "code-editor.snippets.export": {
+      "message": "Fragmenten exporteren…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {# fragment geëxporteerd.} other {# fragmenten geëxporteerd.}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "De fragmenten konden niet worden geëxporteerd."
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {# fragment geïmporteerd.} other {# fragmenten geïmporteerd.}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {# fragment geïmporteerd.} other {# fragmenten geïmporteerd.}} {renamed, plural, one {# kreeg een nummer achter de naam omdat je al een fragment met die naam had.} other {# kregen een nummer achter de naam omdat je al fragmenten met die namen had.}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "De fragmenten konden niet worden geïmporteerd."
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "Dit bestand is geen fragmentbestand van AoE2RMSIDE, dus er is niets geïmporteerd."
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "Dit fragmentbestand komt uit een nieuwere versie van AoE2RMSIDE, dus er is niets geïmporteerd. Werk AoE2RMSIDE bij om het te importeren."
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "Een fragment in dit bestand kan niet worden gelezen, dus er is niets geïmporteerd."
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "Je kunt maximaal 500 fragmenten bewaren en dit bestand zou er meer toevoegen, dus er is niets geïmporteerd."
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "De fragmenten zouden samen groter zijn dan 2 MB, dus er is niets geïmporteerd."
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "Het bestand kon niet worden gelezen, dus er is niets geïmporteerd."
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "Sectie {section} maken?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "Dit fragment hoort in {section}, die dit script nog niet heeft. AoE2RMSIDE kan de sectie op de juiste plek toevoegen en het fragment daar invoegen."
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "Sectie maken"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "Invoegen aan het einde van {section}?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "Dit fragment hoort in {section}. AoE2RMSIDE kan het aan het einde van die sectie invoegen."
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "Daar invoegen"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "Hier invoegen"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "Annuleren"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "Je opgeslagen fragmenten konden niet worden gelezen, dus Mijn fragmenten begint leeg."
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "Het bestand is bewaard als {name} in de gegevensmap van de app."
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "Het bestand is op zijn plek gelaten."
+    },
+    "code-editor.save-snippet.title": {
+      "message": "Opslaan als fragment"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "Fragment bewerken"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "Sluiten"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "Naam"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "Sectie"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "Elke sectie"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "Beschrijving"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "Optioneel"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "Code"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "Fragment opslaan"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "Annuleren"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "Voer een naam in."
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "Je hebt al een fragment met deze naam."
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "Gebruik een naam zonder regeleinden of besturingstekens."
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "De code mag niet leeg zijn."
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "De code is langer dan 20.000 tekens."
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "Je kunt maximaal 500 fragmenten bewaren. Verwijder er een om dit fragment op te slaan."
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "Je fragmenten zouden samen groter zijn dan 2 MB."
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "Het fragment kon niet worden opgeslagen."
+    },
     "code-editor.include.open": {
       "message": "{name} openen"
     },
@@ -3353,6 +3527,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "Kaarttestrapport importeren"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "Fragmentbestand"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "Fragmenten exporteren"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "Fragmenten importeren"
     },
     "native-dialog.game-folder.title": {
       "message": "Kies een map van Age of Empires II: Definitive Edition"

@@ -135,6 +135,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
     mapTestReportExport: null,
     gameFolder: null,
     controlLauncher: null,
+    snippetFile: null,
   },
 });
 
@@ -618,6 +619,7 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       mapTestReportExport: validateNullablePath(value.dialogLocations.mapTestReportExport ?? null),
       gameFolder: validateNullablePath(value.dialogLocations.gameFolder ?? null),
       controlLauncher: validateNullablePath(value.dialogLocations.controlLauncher ?? null),
+      snippetFile: validateNullablePath(value.dialogLocations.snippetFile ?? null),
     },
   };
 }
@@ -897,6 +899,7 @@ function remapDesktopSessionPaths(
       mapTestReportExport: remap(session.dialogLocations.mapTestReportExport),
       gameFolder: remap(session.dialogLocations.gameFolder),
       controlLauncher: remap(session.dialogLocations.controlLauncher),
+      snippetFile: remap(session.dialogLocations.snippetFile),
     },
   };
 }

@@ -122,6 +122,9 @@
     "app-menu.edit.insert-snippet": {
       "message": "स्निपेट डालें…"
     },
+    "app-menu.edit.save-snippet": {
+      "message": "स्निपेट के रूप में सहेजें…"
+    },
     "app-menu.edit.format-document": {
       "message": "दस्तावेज़ फ़ॉर्मैट करें"
     },
@@ -2189,6 +2192,12 @@
     "explorer.tree.label": {
       "message": "{name} की फ़ाइलें"
     },
+    "explorer.folder.visually-empty.rms": {
+      "message": "कोई मानचित्र फ़ाइल नहीं"
+    },
+    "explorer.folder.visually-empty": {
+      "message": "कोई स्क्रिप्ट फ़ाइल नहीं"
+    },
     "explorer.empty.maps": {
       "message": "मानचित्र देखने और संपादित करने के लिए फ़ोल्डर खोलें।"
     },
@@ -3263,6 +3272,171 @@
     "code-editor.snippets.cancel": {
       "message": "रद्द करें"
     },
+    "code-editor.context-menu.save-snippet": {
+      "message": "स्निपेट के रूप में सहेजें…"
+    },
+    "code-editor.snippets.group.own": {
+      "message": "मेरे स्निपेट"
+    },
+    "code-editor.snippets.group.built-in": {
+      "message": "अंतर्निहित स्निपेट"
+    },
+    "code-editor.snippets.edit": {
+      "message": "स्निपेट संपादित करें"
+    },
+    "code-editor.snippets.edit.named": {
+      "message": "{name} संपादित करें"
+    },
+    "code-editor.snippets.delete": {
+      "message": "स्निपेट हटाएँ"
+    },
+    "code-editor.snippets.delete.named": {
+      "message": "{name} हटाएँ"
+    },
+    "code-editor.snippets.delete.title": {
+      "message": "स्निपेट ‘{name}’ हटाएँ?"
+    },
+    "code-editor.snippets.delete.description": {
+      "message": "इसे ‘मेरे स्निपेट’ से हटा दिया जाएगा। इसे पूर्ववत नहीं किया जा सकता।"
+    },
+    "code-editor.snippets.delete.confirm": {
+      "message": "हटाएँ"
+    },
+    "code-editor.snippets.delete.cancel": {
+      "message": "रद्द करें"
+    },
+    "code-editor.snippets.delete.failed": {
+      "message": "स्निपेट हटाया नहीं जा सका।"
+    },
+    "code-editor.snippets.import": {
+      "message": "स्निपेट आयात करें…"
+    },
+    "code-editor.snippets.export": {
+      "message": "स्निपेट निर्यात करें…"
+    },
+    "code-editor.snippets.exported": {
+      "message": "{count, plural, one {# स्निपेट निर्यात किया गया।} other {# स्निपेट निर्यात किए गए।}}"
+    },
+    "code-editor.snippets.export.failed": {
+      "message": "स्निपेट निर्यात नहीं किए जा सके।"
+    },
+    "code-editor.snippets.imported": {
+      "message": "{count, plural, one {# स्निपेट आयात किया गया।} other {# स्निपेट आयात किए गए।}}"
+    },
+    "code-editor.snippets.imported.renamed": {
+      "message": "{count, plural, one {# स्निपेट आयात किया गया।} other {# स्निपेट आयात किए गए।}} {renamed, plural, one {# के नाम के बाद एक संख्या जोड़ी गई, क्योंकि आपके पास उस नाम का स्निपेट पहले से था।} other {# के नामों के बाद एक संख्या जोड़ी गई, क्योंकि आपके पास उन नामों के स्निपेट पहले से थे।}}"
+    },
+    "code-editor.snippets.import.failed": {
+      "message": "स्निपेट आयात नहीं किए जा सके।"
+    },
+    "code-editor.snippets.import.refused.format": {
+      "message": "यह फ़ाइल AoE2RMSIDE की स्निपेट फ़ाइल नहीं है, इसलिए कुछ भी आयात नहीं किया गया।"
+    },
+    "code-editor.snippets.import.refused.version": {
+      "message": "यह स्निपेट फ़ाइल AoE2RMSIDE के नए संस्करण से है, इसलिए कुछ भी आयात नहीं किया गया। इसे आयात करने के लिए AoE2RMSIDE अपडेट करें।"
+    },
+    "code-editor.snippets.import.refused.invalid": {
+      "message": "इस फ़ाइल का एक स्निपेट पढ़ा नहीं जा सकता, इसलिए कुछ भी आयात नहीं किया गया।"
+    },
+    "code-editor.snippets.import.refused.too-many": {
+      "message": "आप अधिकतम 500 स्निपेट रख सकते हैं और यह फ़ाइल इससे ज़्यादा जोड़ देती, इसलिए कुछ भी आयात नहीं किया गया।"
+    },
+    "code-editor.snippets.import.refused.too-large": {
+      "message": "सभी स्निपेट मिलाकर 2 MB से बड़े हो जाते, इसलिए कुछ भी आयात नहीं किया गया।"
+    },
+    "code-editor.snippets.import.refused.unreadable": {
+      "message": "फ़ाइल पढ़ी नहीं जा सकी, इसलिए कुछ भी आयात नहीं किया गया।"
+    },
+    "code-editor.snippets.place.create.title": {
+      "message": "{section} अनुभाग बनाएँ?"
+    },
+    "code-editor.snippets.place.create.description": {
+      "message": "यह स्निपेट {section} में आता है, जो इस स्क्रिप्ट में अभी नहीं है। AoE2RMSIDE अनुभाग को उसकी सही जगह जोड़कर स्निपेट वहाँ डाल सकता है।"
+    },
+    "code-editor.snippets.place.create.confirm": {
+      "message": "अनुभाग बनाएँ"
+    },
+    "code-editor.snippets.place.end.title": {
+      "message": "{section} के अंत में डालें?"
+    },
+    "code-editor.snippets.place.end.description": {
+      "message": "यह स्निपेट {section} में आता है। AoE2RMSIDE इसे उस अनुभाग के अंत में डाल सकता है।"
+    },
+    "code-editor.snippets.place.end.confirm": {
+      "message": "वहाँ डालें"
+    },
+    "code-editor.snippets.place.here": {
+      "message": "यहाँ डालें"
+    },
+    "code-editor.snippets.place.cancel": {
+      "message": "रद्द करें"
+    },
+    "code-editor.snippets.store-reset": {
+      "message": "आपके सहेजे गए स्निपेट पढ़े नहीं जा सके, इसलिए ‘मेरे स्निपेट’ खाली है।"
+    },
+    "code-editor.snippets.store-reset.backup": {
+      "message": "फ़ाइल को ऐप के डेटा फ़ोल्डर में {name} नाम से रखा गया है।"
+    },
+    "code-editor.snippets.store-reset.kept": {
+      "message": "फ़ाइल को उसी जगह छोड़ दिया गया है।"
+    },
+    "code-editor.save-snippet.title": {
+      "message": "स्निपेट के रूप में सहेजें"
+    },
+    "code-editor.save-snippet.title.edit": {
+      "message": "स्निपेट संपादित करें"
+    },
+    "code-editor.save-snippet.close": {
+      "message": "बंद करें"
+    },
+    "code-editor.save-snippet.name": {
+      "message": "नाम"
+    },
+    "code-editor.save-snippet.section": {
+      "message": "अनुभाग"
+    },
+    "code-editor.save-snippet.section.any": {
+      "message": "कोई भी अनुभाग"
+    },
+    "code-editor.save-snippet.description": {
+      "message": "विवरण"
+    },
+    "code-editor.save-snippet.description.placeholder": {
+      "message": "वैकल्पिक"
+    },
+    "code-editor.save-snippet.code": {
+      "message": "कोड"
+    },
+    "code-editor.save-snippet.save": {
+      "message": "स्निपेट सहेजें"
+    },
+    "code-editor.save-snippet.cancel": {
+      "message": "रद्द करें"
+    },
+    "code-editor.save-snippet.problem.name-required": {
+      "message": "नाम दर्ज करें।"
+    },
+    "code-editor.save-snippet.problem.name-taken": {
+      "message": "इस नाम का स्निपेट आपके पास पहले से है।"
+    },
+    "code-editor.save-snippet.problem.name-invalid": {
+      "message": "ऐसा नाम चुनें जिसमें लाइन ब्रेक या नियंत्रण वर्ण न हों।"
+    },
+    "code-editor.save-snippet.problem.code-required": {
+      "message": "कोड खाली नहीं हो सकता।"
+    },
+    "code-editor.save-snippet.problem.code-too-long": {
+      "message": "कोड 20,000 वर्णों से लंबा है।"
+    },
+    "code-editor.save-snippet.problem.too-many": {
+      "message": "आप अधिकतम 500 स्निपेट रख सकते हैं। इसे सहेजने के लिए कोई एक हटाएँ।"
+    },
+    "code-editor.save-snippet.problem.too-large": {
+      "message": "आपके सभी स्निपेट मिलाकर 2 MB से बड़े हो जाएँगे।"
+    },
+    "code-editor.save-snippet.problem.failed": {
+      "message": "स्निपेट सहेजा नहीं जा सका।"
+    },
     "code-editor.include.open": {
       "message": "{name} खोलें"
     },
@@ -3361,6 +3535,15 @@
     },
     "native-dialog.map-test-report.import.title": {
       "message": "मानचित्र-परीक्षण रिपोर्ट आयात करें"
+    },
+    "native-dialog.snippets.filter": {
+      "message": "स्निपेट फ़ाइल"
+    },
+    "native-dialog.snippets.export.title": {
+      "message": "स्निपेट निर्यात करें"
+    },
+    "native-dialog.snippets.import.title": {
+      "message": "स्निपेट आयात करें"
     },
     "native-dialog.game-folder.title": {
       "message": "Age of Empires II: Definitive Edition का फ़ोल्डर चुनें"

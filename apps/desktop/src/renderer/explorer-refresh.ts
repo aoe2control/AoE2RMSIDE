@@ -45,13 +45,27 @@ export function mergeDirectoryEntries(
   return changed ? merged : (previous as WorkspaceDirectoryEntry[]);
 }
 
+export function explorerTransientListed(
+  parentPath: string,
+  entries: readonly WorkspaceDirectoryEntry[] | null,
+  transient: WorkspaceDirectoryEntry | null,
+): boolean {
+  if (!transient || !entries) return false;
+  if (explorerPathKey(explorerParentPath(transient.path)) !== explorerPathKey(parentPath)) {
+    return false;
+  }
+  const key = explorerPathKey(transient.path);
+  return entries.some((entry) => explorerPathKey(entry.path) === key);
+}
+
 function sameEntry(left: WorkspaceDirectoryEntry, right: WorkspaceDirectoryEntry): boolean {
   return (
     left.path === right.path &&
     left.name === right.name &&
     left.kind === right.kind &&
     left.writable === right.writable &&
-    left.hasChildren === right.hasChildren
+    left.hasChildren === right.hasChildren &&
+    left.visuallyEmpty === right.visuallyEmpty
   );
 }
 
