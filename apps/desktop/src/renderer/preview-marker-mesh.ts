@@ -319,9 +319,15 @@ interface ZoomedMarkerMesh {
   uniforms: UniformGroup;
 }
 
+export const markerExtensionLabel = 'marker-extension';
+
 export function zoomMarkerMeshes(layer: Container, factor: number): void {
   for (const child of layer.children) {
     if (child instanceof OwnedMarkerMesh) child.setZoom(factor);
+    else if (child.label === markerExtensionLabel) {
+      const product = factor * child.scale.x;
+      zoomMarkerMeshes(child, Math.abs(product - 1) < 1e-9 ? 1 : product);
+    }
   }
 }
 

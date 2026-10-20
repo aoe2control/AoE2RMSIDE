@@ -67,6 +67,17 @@ import {
   visibleLspRange,
   visibleSemanticTokens,
 } from './snippet-code';
+import { sectionOfHeader } from './snippet-placement';
+
+const sectionHeaderAcceptedCommandId = 'rmside.sectionHeaderAccepted';
+const sectionHeaderListeners = new Set<(uri: string, header: string) => void>();
+
+export function onSectionHeaderAccepted(
+  listener: (uri: string, header: string) => void,
+): () => void {
+  sectionHeaderListeners.add(listener);
+  return () => sectionHeaderListeners.delete(listener);
+}
 
 interface LspPosition {
   line: number;
@@ -269,6 +280,11 @@ export function configureRmsLanguage(): void {
   monaco.editor.registerCommand(disableRmsLintRuleCommandId, (_accessor, ...args: unknown[]) => {
     const [code] = args;
     if (isRmsLintCode(code)) void window.rmside.disableRmsLintRule(code).catch(() => undefined);
+  });
+  monaco.editor.registerCommand(sectionHeaderAcceptedCommandId, (_accessor, ...args: unknown[]) => {
+    const [uri, header] = args;
+    if (typeof uri !== 'string' || typeof header !== 'string' || !sectionOfHeader(header)) return;
+    for (const listener of [...sectionHeaderListeners]) listener(uri, header);
   });
   const forgetContentNames = () => {
     rmsContentNames = null;
@@ -725,6 +741,22 @@ const completionTriggerCharacters: Record<SourceLanguageId, string[]> = {
   starlark: ['.', '(', ','],
 };
 
+function sectionHeaderCommand(
+  item: LspCompletionItem,
+  model: monaco.editor.ITextModel,
+  editText: string | undefined,
+): monaco.languages.Command | null {
+  const inserted = editText ?? item.insertText ?? item.label;
+  if (item.insertTextFormat === 2 || inserted !== item.label || !sectionOfHeader(item.label)) {
+    return null;
+  }
+  return {
+    id: sectionHeaderAcceptedCommandId,
+    title: item.label,
+    arguments: [model.uri.toString(), item.label],
+  };
+}
+
 const resolvableCompletions = new WeakMap<monaco.languages.CompletionItem, LspCompletionItem>();
 
 function registerProviders(
@@ -773,7 +805,10 @@ function registerProviders(
         const shown = written && visibleLspRange(written.range, hidden);
         const edit = written && shown ? { ...written, range: shown } : null;
         const call = textAfter === null ? null : xsCallInsertion(item, textAfter);
-        const command = rms ? rmsCompletionCommand(item) : (call?.command ?? null);
+        const command = rms
+          ? (rmsCompletionCommand(item) ??
+            (snippet ? null : sectionHeaderCommand(item, model, edit?.text)))
+          : (call?.command ?? null);
         const suggestion: monaco.languages.CompletionItem = {
           label: item.label,
           kind: completionKind(item.kind),

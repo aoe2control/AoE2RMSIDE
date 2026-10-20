@@ -18,6 +18,8 @@ export interface PresentationNameSources {
 
 export type PresentedPreviewResult = PreviewGenerationResult & {
   presentationNameSources?: PresentationNameSources;
+  objectLabels?: ReadonlyMap<number, string>;
+  terrainLabels?: ReadonlyMap<number, string>;
   localTerrainColors?: readonly TerrainMinimapColor[];
   look?: PreviewLook;
   lookColors?: Pick<TextureLookColors, 'terrains' | 'gaiaObjects' | 'cliffs'>;
@@ -31,6 +33,10 @@ export function localPresentationNameText(entry: LocalPresentationName): string 
     });
   }
   return entry.displayName ?? entry.constant;
+}
+
+export function localPresentationNameLabel(entry: LocalPresentationName): string | null {
+  return entry.displayName && entry.constant ? entry.displayName : null;
 }
 
 const placeholderObjectName = /^Object \d+$/u;
@@ -49,6 +55,8 @@ export function presentPreviewNames(
   }
   const localObjectIds = new Set<number>();
   const localTerrainIds = new Set<number>();
+  const objectLabels = new Map<number, string>();
+  const terrainLabels = new Map<number, string>();
   const objectNames = mergeNames<ObjectNameDescriptor>(
     (constants?.objects ?? []).map((entry) => [entry.objectId, entry.name]),
     result.objectNames.map((entry) => [entry.objectId, entry.name]),
@@ -56,6 +64,7 @@ export function presentPreviewNames(
     placeholderObjectName,
     localObjectIds,
     (objectId, name) => ({ objectId, name }),
+    objectLabels,
   );
   const terrainNames = mergeNames<TerrainNameDescriptor>(
     constantTerrainNames(constants?.terrains),
@@ -64,12 +73,15 @@ export function presentPreviewNames(
     placeholderTerrainName,
     localTerrainIds,
     (terrainId, name) => ({ terrainId, name }),
+    terrainLabels,
   );
   return {
     ...result,
     objectNames,
     terrainNames,
     presentationNameSources: { localObjectIds, localTerrainIds },
+    ...(objectLabels.size > 0 ? { objectLabels } : {}),
+    ...(terrainLabels.size > 0 ? { terrainLabels } : {}),
     ...(local && local.terrainColors.length > 0 ? { localTerrainColors: local.terrainColors } : {}),
   };
 }
@@ -78,13 +90,14 @@ export function presentTerrainColorSources(
   shippedTerrainNames: PreviewGenerationResult['terrainNames'],
   local: LocalPresentationNames | null,
   constants: readonly TerrainNameDescriptor[] = [],
-): Pick<PresentedPreviewResult, 'terrainNames' | 'localTerrainColors'> {
+): Pick<PresentedPreviewResult, 'terrainNames' | 'localTerrainColors' | 'terrainLabels'> {
   if (
     (!local || (local.terrains.length === 0 && local.terrainColors.length === 0)) &&
     constants.length === 0
   ) {
     return { terrainNames: shippedTerrainNames };
   }
+  const terrainLabels = new Map<number, string>();
   const terrainNames = mergeNames<TerrainNameDescriptor>(
     constantTerrainNames(constants),
     shippedTerrainNames.map((entry) => [entry.terrainId, entry.name]),
@@ -92,9 +105,11 @@ export function presentTerrainColorSources(
     placeholderTerrainName,
     new Set<number>(),
     (terrainId, name) => ({ terrainId, name }),
+    terrainLabels,
   );
   return {
     terrainNames,
+    ...(terrainLabels.size > 0 ? { terrainLabels } : {}),
     ...(local && local.terrainColors.length > 0 ? { localTerrainColors: local.terrainColors } : {}),
   };
 }
@@ -121,6 +136,7 @@ function mergeNames<T>(
   placeholder: RegExp,
   localIds: Set<number>,
   create: (id: number, name: string) => T,
+  labels: Map<number, string>,
 ): T[] {
   const names = new Map<number, string>(constants);
   for (const [id, name] of shipped) {
@@ -131,6 +147,9 @@ function mergeNames<T>(
     if (!name) continue;
     names.set(entry.id, name);
     localIds.add(entry.id);
+    const label = localPresentationNameLabel(entry);
+    if (label) labels.set(entry.id, label);
+    else labels.delete(entry.id);
   }
   return [...names.entries()]
     .sort(([left], [right]) => left - right)

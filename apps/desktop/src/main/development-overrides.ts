@@ -6,6 +6,7 @@ export interface DevelopmentOverrides {
   userProfileRoot?: string;
   protectedSourceRoots?: string;
   windowDisplay?: string;
+  windowsAtBack?: boolean;
   pseudoLocale?: string;
   developmentFixtures: boolean;
   releaseCheckFixture?: string;
@@ -13,6 +14,7 @@ export interface DevelopmentOverrides {
   externalRmsServerPath?: string;
   externalXsServerPath?: string;
   mapTransitions?: boolean;
+  tourDone?: boolean;
 }
 
 export const developmentOverrideVariables = [
@@ -23,6 +25,7 @@ export const developmentOverrideVariables = [
   'RMSIDE_USER_PROFILE_ROOT',
   'RMSIDE_PROTECTED_SOURCE_ROOTS',
   'RMSIDE_WINDOW_DISPLAY',
+  'RMSIDE_WINDOW_STACKING',
   'RMSIDE_PSEUDO_LOCALE',
   'RMSIDE_DEVELOPMENT_FIXTURES',
   'RMSIDE_RELEASE_CHECK_FIXTURE',
@@ -30,6 +33,7 @@ export const developmentOverrideVariables = [
   'RMSIDE_EXTERNAL_RMS_SERVER_PATH',
   'RMSIDE_EXTERNAL_XS_SERVER_PATH',
   'RMSIDE_MAP_TRANSITIONS',
+  'RMSIDE_TOUR',
 ] as const;
 
 export function readDevelopmentOverrides(
@@ -42,7 +46,10 @@ export function readDevelopmentOverrides(
     developmentFixtures: environment.RMSIDE_DEVELOPMENT_FIXTURES === '1',
   };
   const assign = <
-    Key extends Exclude<keyof DevelopmentOverrides, 'developmentFixtures' | 'mapTransitions'>,
+    Key extends Exclude<
+      keyof DevelopmentOverrides,
+      'developmentFixtures' | 'mapTransitions' | 'tourDone' | 'windowsAtBack'
+    >,
   >(
     key: Key,
     found: string | undefined,
@@ -64,5 +71,7 @@ export function readDevelopmentOverrides(
   const transitions = value('RMSIDE_MAP_TRANSITIONS');
   if (transitions === 'on' || transitions === 'off')
     overrides.mapTransitions = transitions === 'on';
+  if (value('RMSIDE_TOUR') === 'done') overrides.tourDone = true;
+  if (value('RMSIDE_WINDOW_STACKING') === 'back') overrides.windowsAtBack = true;
   return overrides;
 }

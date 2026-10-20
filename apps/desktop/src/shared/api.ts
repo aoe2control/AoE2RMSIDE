@@ -3,9 +3,11 @@ import type { ExternalLinkTarget } from './external-links';
 import type { GameModeModifier } from './lobby-options';
 import type { ConstructVerification } from './construct-verification';
 import type { PreviewConnectionRoutesPayload } from './connection-routes';
+import type { PreviewSectionStart } from './section-starts';
 import type { ExecutionCostSummary, ExecutionProgressEvent } from './execution-cost';
 import type { PreviewCandidate, PreviewCandidateAcknowledgement } from './preview-candidate';
 import type { RmsLintWorkspaceRules } from './rms-lint-rules';
+import type { TourProgress } from './app-tour';
 import type { OwnSnippet, SnippetFileError } from './own-snippets';
 import type { LanguagePreference, LocaleState } from './i18n/locale';
 import type { WorkspaceTreeChange } from './workspace-tree-change';
@@ -110,6 +112,8 @@ export const ipcChannels = {
   syncModalSurfaceOpen: 'rmside:modal:sync-open',
   syncInsertSnippetAvailable: 'rmside:editor:insert-snippet-available',
   syncSaveSnippetAvailable: 'rmside:editor:save-snippet-available',
+  tourProgress: 'rmside:tour:progress',
+  tourProgressSave: 'rmside:tour:progress-save',
   ownSnippetsList: 'rmside:own-snippets:list',
   ownSnippetSave: 'rmside:own-snippets:save',
   ownSnippetDelete: 'rmside:own-snippets:delete',
@@ -195,7 +199,7 @@ export interface ApplicationMenuModel {
 }
 
 export const mapIconRenderContract = {
-  version: 13,
+  version: 14,
   size: 512,
   identityDomain: 'rmside-map-icon-render',
 } as const;
@@ -518,7 +522,8 @@ export type ApplicationMenuAction =
   | { type: 'reset-layout' }
   | { type: 'set-theme'; theme: ThemePreference }
   | { type: 'open-theme-settings' }
-  | { type: 'open-language-settings' };
+  | { type: 'open-language-settings' }
+  | { type: 'take-the-tour' };
 
 export interface NativeProcessStatus {
   name: NativeProcessName;
@@ -873,6 +878,7 @@ export interface PreviewGenerationResult {
   cliffOperationIndicesLe: Uint8Array;
   connectionOperationIndicesLe: Uint8Array;
   tileWriteRunsLe?: Uint8Array;
+  provenanceSectionStarts?: PreviewSectionStart[];
   semanticHash: string;
   requestHash: string;
   sourceCatalogRevision: number;
@@ -2136,6 +2142,8 @@ export interface RmsideDesktopApi {
   syncModalSurfaceOpen(open: boolean): Promise<void>;
   syncInsertSnippetAvailable(available: boolean): Promise<void>;
   syncSaveSnippetAvailable(available: boolean): Promise<void>;
+  getTourProgress(): Promise<TourProgress>;
+  saveTourProgress(progress: TourProgress): Promise<void>;
   listOwnSnippets(): Promise<OwnSnippet[]>;
   saveOwnSnippet(snippet: OwnSnippet, previousName: string | null): Promise<OwnSnippet[]>;
   deleteOwnSnippet(name: string): Promise<OwnSnippet[]>;

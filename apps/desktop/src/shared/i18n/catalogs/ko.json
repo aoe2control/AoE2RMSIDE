@@ -203,6 +203,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "전체 화면 전환"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "둘러보기 시작"
+    },
     "app-menu.help.documentation": {
       "message": "문서"
     },
@@ -217,6 +220,54 @@
     },
     "app-menu.help.about": {
       "message": "{product} 정보"
+    },
+    "tour.step": {
+      "message": "{step, number}/{total, number}"
+    },
+    "tour.got-it": {
+      "message": "확인"
+    },
+    "tour.skip": {
+      "message": "둘러보기 건너뛰기"
+    },
+    "tour.explorer.title": {
+      "message": "탐색기"
+    },
+    "tour.explorer.body.maps": {
+      "message": "`파일` 메뉴의 `폴더 열기…` 또는 위의 폴더 버튼으로 맵이 있는 폴더를 여세요. 폴더를 마우스 오른쪽 버튼으로 클릭하면 그 안에 스크립트와 폴더를 만들 수 있습니다."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "`파일` 메뉴의 `폴더 열기…` 또는 위의 폴더 버튼으로 스크립트가 있는 폴더를 여세요. 폴더를 마우스 오른쪽 버튼으로 클릭하면 그 안에 스크립트와 폴더를 만들 수 있습니다."
+    },
+    "tour.editor.title": {
+      "message": "편집기"
+    },
+    "tour.editor.body.snippets": {
+      "message": "`Ctrl+Space`를 누르면 제안이 표시되고, 단어를 가리키면 설명이 표시됩니다. `Ctrl+J`를 누르면 미리 만들어 둔 스크립트 조각이 담긴 `코드 조각 삽입…`이 열립니다."
+    },
+    "tour.editor.body": {
+      "message": "`Ctrl+Space`를 누르면 제안이 표시되고, 단어를 가리키면 설명이 표시됩니다."
+    },
+    "tour.run.title": {
+      "message": "맵 생성"
+    },
+    "tour.run.body": {
+      "message": "`F5` 키나 실행 버튼을 눌러 스크립트로 맵을 생성하세요. 실행 옆 메뉴에서 `시드`를, 맵 위의 구성 메뉴에서 플레이어 수를 설정합니다."
+    },
+    "tour.preview.title": {
+      "message": "맵 미리 보기"
+    },
+    "tour.preview.body": {
+      "message": "타일을 클릭하거나 맵 위를 드래그해 타일을 선택하세요. 그러면 목록에 그곳에 있는 항목이 표시됩니다. 항목을 가리키면 강조 표시되고, 클릭하면 해당 줄로 이동합니다. 맵 모서리의 도구로 보기와 모양을 바꿀 수 있습니다."
+    },
+    "tour.preview.tip": {
+      "message": "팁: 편집하는 동안 미리 보기를 다시 생성할 수도 있습니다(실행 옆 메뉴의 `편집 시 실행`)."
+    },
+    "tour.output.title": {
+      "message": "출력 및 문제"
+    },
+    "tour.output.body": {
+      "message": "`출력`에는 모든 실행과 그 보고 내용이 나열됩니다. `문제`에는 오류와 경고가 표시되며, 하나를 클릭하면 해당 줄로 이동합니다."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "연결된 게임 폴더를 열지 못했습니다"
@@ -555,22 +606,22 @@
       "message": "편집 시 실행"
     },
     "run-menu.preset.default-name": {
-      "message": "프리셋"
+      "message": "구성"
     },
     "run-menu.preset.numbered-name": {
-      "message": "프리셋 {number}"
+      "message": "구성 {number}"
     },
     "run-menu.preset.settings": {
-      "message": "미리 보기 프리셋 설정"
+      "message": "미리 보기 구성 설정"
     },
     "run-menu.preset.manage": {
-      "message": "미리 보기 프리셋 관리"
+      "message": "미리 보기 구성 관리"
     },
     "run-menu.preset.new": {
-      "message": "새 프리셋"
+      "message": "새 구성"
     },
     "run-menu.preset.new-name": {
-      "message": "새 미리 보기 프리셋 이름"
+      "message": "새 미리 보기 구성 이름"
     },
     "run-menu.preset.rename": {
       "message": "{name} 이름 바꾸기"
@@ -585,22 +636,22 @@
       "message": "{name} 삭제"
     },
     "run-menu.preset.delete.title": {
-      "message": "{name} 프리셋을 삭제할까요?"
+      "message": "{name} 구성을 삭제할까요?"
     },
     "run-menu.preset.delete.description": {
-      "message": "이 프리셋에 저장된 미리 보기 설정을 삭제합니다."
+      "message": "이 구성에 저장된 미리 보기 설정을 삭제합니다."
     },
     "run-menu.preset.delete.confirm": {
       "message": "삭제"
     },
     "run-menu.preset.name-length": {
-      "message": "프리셋 이름은 1~64자여야 합니다"
+      "message": "구성 이름은 1~64자여야 합니다"
     },
     "run-menu.preset.exists": {
-      "message": "{name} 이름의 프리셋이 이미 있습니다"
+      "message": "{name} 이름의 구성이 이미 있습니다"
     },
     "run-menu.preset.limit": {
-      "message": "프리셋은 최대 64개까지 저장할 수 있습니다"
+      "message": "구성은 최대 64개까지 저장할 수 있습니다"
     },
     "run-menu.map-size": {
       "message": "지도 크기"
@@ -3269,9 +3320,6 @@
     "code-editor.snippets.insert": {
       "message": "삽입"
     },
-    "code-editor.snippets.cancel": {
-      "message": "취소"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "코드 조각으로 저장…"
     },
@@ -3371,6 +3419,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "취소"
     },
+    "code-editor.section-header.present.title": {
+      "message": "기존 {section} 섹션으로 이동할까요?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "이 스크립트에는 이미 {section} 섹션이 있습니다. AoE2RMSIDE가 방금 추가한 헤더를 제거하고 커서를 기존 헤더로 옮길 수 있습니다."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "섹션으로 이동"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "{section} 섹션을 올바른 위치로 옮길까요?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} 섹션은 섹션 순서상 다른 위치에 있어야 합니다. AoE2RMSIDE가 헤더를 이 스크립트의 올바른 위치로 옮길 수 있습니다."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "올바른 위치로 이동"
+    },
+    "code-editor.section-header.here": {
+      "message": "여기에 삽입"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "취소"
+    },
     "code-editor.snippets.store-reset": {
       "message": "저장한 코드 조각을 읽지 못해 내 코드 조각이 비어 있는 상태로 시작합니다."
     },
@@ -3409,9 +3481,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "코드 조각 저장"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "취소"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "이름을 입력하세요."
@@ -4013,6 +4082,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "{name}의 소스 열기, {count}개 선택"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "식량: 총 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "목재: 총 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "금: 총 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "석재: 총 {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "보조 오브젝트 표시({count})"
     },
@@ -4270,6 +4351,9 @@
     },
     "profiler.row.name": {
       "message": "{step}({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter 키를 누르면 이 단계의 코드가 편집기에 표시됩니다"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

@@ -13,14 +13,25 @@ export function themePanelMenuItem(): ThemePanelMenuItem {
 }
 
 export type HelpMenuItem =
+  | { id: 'help.take-the-tour'; label: string; kind: 'tour' }
   | { id: string; label: string; kind: 'link'; target: ExternalLinkTarget }
   | { id: 'help.about'; label: string; kind: 'about' };
 
 export function helpMenuItems(
   capabilities: Pick<EditionCapabilities, 'documentation' | 'issueTracker'>,
   displayName: string,
+  tour = true,
 ): HelpMenuItem[] {
   return [
+    ...(tour
+      ? [
+          {
+            id: 'help.take-the-tour',
+            label: t('app-menu.help.take-the-tour'),
+            kind: 'tour',
+          } as const,
+        ]
+      : []),
     ...(capabilities.documentation
       ? [
           {

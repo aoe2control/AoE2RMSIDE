@@ -195,6 +195,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Volledig scherm wisselen"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Rondleiding starten"
+    },
     "app-menu.help.documentation": {
       "message": "Documentatie"
     },
@@ -209,6 +212,54 @@
     },
     "app-menu.help.about": {
       "message": "Over {product}"
+    },
+    "tour.step": {
+      "message": "{step, number} van {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Begrepen"
+    },
+    "tour.skip": {
+      "message": "Rondleiding overslaan"
+    },
+    "tour.explorer.title": {
+      "message": "Verkenner"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Gebruik `Map openen…` in het menu `Bestand`, of de mapknop hierboven, om de map met je kaarten te openen. Klik met de rechtermuisknop op een map om er scripts en mappen in te maken."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Gebruik `Map openen…` in het menu `Bestand`, of de mapknop hierboven, om de map met je scripts te openen. Klik met de rechtermuisknop op een map om er scripts en mappen in te maken."
+    },
+    "tour.editor.title": {
+      "message": "Editor"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Druk op `Ctrl+Space` voor suggesties en wijs een woord aan om de beschrijving te zien. `Ctrl+J` opent `Fragment invoegen…` met kant-en-klare stukken script."
+    },
+    "tour.editor.body": {
+      "message": "Druk op `Ctrl+Space` voor suggesties en wijs een woord aan om de beschrijving te zien."
+    },
+    "tour.run.title": {
+      "message": "Kaart genereren"
+    },
+    "tour.run.body": {
+      "message": "Druk op `F5` of klik op Uitvoeren om een kaart uit je script te genereren. Stel de `Startwaarde` in via het menu naast Uitvoeren, en het aantal spelers in het configuratiemenu boven de kaart."
+    },
+    "tour.preview.title": {
+      "message": "Kaartvoorbeeld"
+    },
+    "tour.preview.body": {
+      "message": "Klik op een vak of sleep over de kaart om vakken te selecteren. De lijst toont dan wat daar staat: wijs een item aan om het te markeren, of klik erop om naar de regel te gaan. De hulpmiddelen in de hoek van de kaart wisselen de weergave en het uiterlijk."
+    },
+    "tour.preview.tip": {
+      "message": "Tip: het voorbeeld kan ook opnieuw worden gegenereerd terwijl je bewerkt (`Bij bewerken` in het menu naast Uitvoeren)."
+    },
+    "tour.output.title": {
+      "message": "Uitvoer en problemen"
+    },
+    "tour.output.body": {
+      "message": "`Uitvoer` toont elke uitvoering en wat die meldde. `Problemen` toont fouten en waarschuwingen; klik op een item om naar de regel te gaan."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "De gekoppelde spelmap kon niet worden geopend"
@@ -547,22 +598,22 @@
       "message": "Bij bewerken"
     },
     "run-menu.preset.default-name": {
-      "message": "Voorinstelling"
+      "message": "Config"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Voorinstelling {number}"
+      "message": "Config {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Voorbeeldinstellingen van de voorinstelling"
+      "message": "Voorbeeldinstellingen van de configuratie"
     },
     "run-menu.preset.manage": {
-      "message": "Voorbeeldvoorinstellingen beheren"
+      "message": "Voorbeeldconfiguraties beheren"
     },
     "run-menu.preset.new": {
-      "message": "Nieuwe voorinstelling"
+      "message": "Nieuwe configuratie"
     },
     "run-menu.preset.new-name": {
-      "message": "Nieuwe voorbeeldvoorinstelling benoemen"
+      "message": "Nieuwe voorbeeldconfiguratie benoemen"
     },
     "run-menu.preset.rename": {
       "message": "{name} hernoemen"
@@ -577,22 +628,22 @@
       "message": "{name} verwijderen"
     },
     "run-menu.preset.delete.title": {
-      "message": "Voorinstelling {name} verwijderen?"
+      "message": "Configuratie {name} verwijderen?"
     },
     "run-menu.preset.delete.description": {
-      "message": "De opgeslagen voorbeeldinstellingen van deze voorinstelling worden verwijderd."
+      "message": "De opgeslagen voorbeeldinstellingen van deze configuratie worden verwijderd."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Verwijderen"
     },
     "run-menu.preset.name-length": {
-      "message": "Namen van voorinstellingen moeten 1 tot 64 tekens bevatten"
+      "message": "Namen van configuraties moeten 1 tot 64 tekens bevatten"
     },
     "run-menu.preset.exists": {
-      "message": "Er bestaat al een voorinstelling met de naam {name}"
+      "message": "Er bestaat al een configuratie met de naam {name}"
     },
     "run-menu.preset.limit": {
-      "message": "Er kunnen maximaal 64 voorinstellingen worden opgeslagen"
+      "message": "Er kunnen maximaal 64 configuraties worden opgeslagen"
     },
     "run-menu.map-size": {
       "message": "Kaartgrootte"
@@ -3261,9 +3312,6 @@
     "code-editor.snippets.insert": {
       "message": "Invoegen"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Annuleren"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Opslaan als fragment…"
     },
@@ -3363,6 +3411,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Annuleren"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Naar de bestaande sectie {section} gaan?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Dit script heeft {section} al. AoE2RMSIDE kan de kop die je net hebt toegevoegd verwijderen en de cursor naar de bestaande kop verplaatsen."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Naar sectie gaan"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "{section} naar de juiste plek verplaatsen?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} hoort elders in de volgorde van de secties. AoE2RMSIDE kan de kop naar de juiste plek in dit script verplaatsen."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Naar de juiste plek"
+    },
+    "code-editor.section-header.here": {
+      "message": "Hier invoegen"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Annuleren"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Je opgeslagen fragmenten konden niet worden gelezen, dus Mijn fragmenten begint leeg."
     },
@@ -3401,9 +3473,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Fragment opslaan"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Annuleren"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Voer een naam in."
@@ -4005,6 +4074,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Bron voor {name} openen, {count} geselecteerd"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Voedsel: {amount, number, integer} in totaal"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Hout: {amount, number, integer} in totaal"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Goud: {amount, number, integer} in totaal"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Steen: {amount, number, integer} in totaal"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Hulpobjecten tonen ({count})"
     },
@@ -4262,6 +4343,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter toont de code van deze stap in de editor"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

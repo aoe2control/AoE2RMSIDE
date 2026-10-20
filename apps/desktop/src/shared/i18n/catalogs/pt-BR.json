@@ -195,6 +195,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Alternar tela cheia"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Fazer o tour"
+    },
     "app-menu.help.documentation": {
       "message": "Documentação"
     },
@@ -209,6 +212,54 @@
     },
     "app-menu.help.about": {
       "message": "Sobre {product}"
+    },
+    "tour.step": {
+      "message": "{step, number} de {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Entendi"
+    },
+    "tour.skip": {
+      "message": "Pular tour"
+    },
+    "tour.explorer.title": {
+      "message": "Explorador"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Use `Abrir pasta…` no menu `Arquivo`, ou o botão de pasta acima, para abrir a pasta com seus mapas. Clique com o botão direito em uma pasta para criar scripts e pastas nela."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Use `Abrir pasta…` no menu `Arquivo`, ou o botão de pasta acima, para abrir a pasta com seus scripts. Clique com o botão direito em uma pasta para criar scripts e pastas nela."
+    },
+    "tour.editor.title": {
+      "message": "Editor"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Pressione `Ctrl+Space` para ver sugestões e passe o ponteiro sobre uma palavra para ver a descrição dela. `Ctrl+J` abre `Inserir trecho de código…` com partes de script prontas."
+    },
+    "tour.editor.body": {
+      "message": "Pressione `Ctrl+Space` para ver sugestões e passe o ponteiro sobre uma palavra para ver a descrição dela."
+    },
+    "tour.run.title": {
+      "message": "Gerar um mapa"
+    },
+    "tour.run.body": {
+      "message": "Pressione `F5` ou clique em Executar para gerar um mapa a partir do seu script. Defina a `Semente` no menu ao lado de Executar e o número de jogadores no menu de configuração acima do mapa."
+    },
+    "tour.preview.title": {
+      "message": "Prévia do mapa"
+    },
+    "tour.preview.body": {
+      "message": "Clique em um bloco ou arraste pelo mapa para selecionar blocos. A lista então mostra o que há ali: passe o ponteiro sobre um item para destacá-lo ou clique nele para ir até a linha dele. As ferramentas no canto do mapa alternam a visualização e a aparência."
+    },
+    "tour.preview.tip": {
+      "message": "Dica: a prévia também pode ser gerada de novo enquanto você edita (`Ao editar` no menu ao lado de Executar)."
+    },
+    "tour.output.title": {
+      "message": "Saída e problemas"
+    },
+    "tour.output.body": {
+      "message": "`Saída` lista cada execução e o que ela relatou. `Problemas` mostra erros e avisos; clique em um para ir até a linha dele."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "Não foi possível abrir a pasta do jogo vinculada"
@@ -547,22 +598,22 @@
       "message": "Ao editar"
     },
     "run-menu.preset.default-name": {
-      "message": "Predefinição"
+      "message": "Config"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Predefinição {number}"
+      "message": "Config {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Configurações da predefinição da prévia"
+      "message": "Ajustes da configuração da prévia"
     },
     "run-menu.preset.manage": {
-      "message": "Gerenciar predefinições da prévia"
+      "message": "Gerenciar configurações da prévia"
     },
     "run-menu.preset.new": {
-      "message": "Nova predefinição"
+      "message": "Nova configuração"
     },
     "run-menu.preset.new-name": {
-      "message": "Nomear nova predefinição da prévia"
+      "message": "Nomear nova configuração da prévia"
     },
     "run-menu.preset.rename": {
       "message": "Renomear {name}"
@@ -577,22 +628,22 @@
       "message": "Excluir {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "Excluir a predefinição {name}?"
+      "message": "Excluir a configuração {name}?"
     },
     "run-menu.preset.delete.description": {
-      "message": "As configurações da prévia salvas nesta predefinição serão removidas."
+      "message": "Os ajustes da prévia salvos nesta configuração serão removidos."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Excluir"
     },
     "run-menu.preset.name-length": {
-      "message": "Os nomes das predefinições devem ter de 1 a 64 caracteres"
+      "message": "Os nomes das configurações devem ter de 1 a 64 caracteres"
     },
     "run-menu.preset.exists": {
-      "message": "Já existe uma predefinição chamada {name}"
+      "message": "Já existe uma configuração chamada {name}"
     },
     "run-menu.preset.limit": {
-      "message": "É possível salvar até 64 predefinições"
+      "message": "É possível salvar até 64 configurações"
     },
     "run-menu.map-size": {
       "message": "Tamanho do mapa"
@@ -3261,9 +3312,6 @@
     "code-editor.snippets.insert": {
       "message": "Inserir"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Cancelar"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Salvar como trecho de código…"
     },
@@ -3363,6 +3411,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Cancelar"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Ir para a seção {section} existente?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Este script já tem {section}. O AoE2RMSIDE pode remover o cabeçalho que você acabou de adicionar e mover o cursor para o existente."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Ir para a seção"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "Mover {section} para o lugar certo?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} fica em outro lugar na ordem das seções. O AoE2RMSIDE pode mover o cabeçalho para o lugar certo neste script."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Mover para o lugar certo"
+    },
+    "code-editor.section-header.here": {
+      "message": "Inserir aqui"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Cancelar"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Não foi possível ler seus trechos de código salvos, então Meus trechos de código começa vazio."
     },
@@ -3401,9 +3473,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Salvar trecho"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Cancelar"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Digite um nome."
@@ -4005,6 +4074,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Abrir a origem de {name}, selecionados: {count}"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Comida: {amount, number, integer} no total"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Madeira: {amount, number, integer} no total"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Ouro: {amount, number, integer} no total"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Pedra: {amount, number, integer} no total"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Mostrar objetos auxiliares ({count})"
     },
@@ -4262,6 +4343,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter mostra o código desta etapa no editor"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

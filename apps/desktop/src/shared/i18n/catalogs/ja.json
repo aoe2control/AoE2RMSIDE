@@ -203,6 +203,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "全画面表示を切り替え"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "ツアーを開始"
+    },
     "app-menu.help.documentation": {
       "message": "ドキュメント"
     },
@@ -217,6 +220,54 @@
     },
     "app-menu.help.about": {
       "message": "{product} について"
+    },
+    "tour.step": {
+      "message": "{step, number} / {total, number}"
+    },
+    "tour.got-it": {
+      "message": "了解"
+    },
+    "tour.skip": {
+      "message": "ツアーをスキップ"
+    },
+    "tour.explorer.title": {
+      "message": "エクスプローラー"
+    },
+    "tour.explorer.body.maps": {
+      "message": "`ファイル`メニューの`フォルダーを開く…`か上のフォルダーボタンで、マップのあるフォルダーを開きます。フォルダーを右クリックすると、その中にスクリプトやフォルダーを作成できます。"
+    },
+    "tour.explorer.body.scripts": {
+      "message": "`ファイル`メニューの`フォルダーを開く…`か上のフォルダーボタンで、スクリプトのあるフォルダーを開きます。フォルダーを右クリックすると、その中にスクリプトやフォルダーを作成できます。"
+    },
+    "tour.editor.title": {
+      "message": "エディター"
+    },
+    "tour.editor.body.snippets": {
+      "message": "`Ctrl+Space` で候補が表示され、単語にポインターを合わせると説明が表示されます。`Ctrl+J` で`スニペットを挿入…`が開き、用意されたスクリプトの部品を挿入できます。"
+    },
+    "tour.editor.body": {
+      "message": "`Ctrl+Space` で候補が表示され、単語にポインターを合わせると説明が表示されます。"
+    },
+    "tour.run.title": {
+      "message": "マップを生成"
+    },
+    "tour.run.body": {
+      "message": "`F5` か「実行」ボタンを押すと、スクリプトからマップを生成します。「実行」の横のメニューで`シード`を、マップ上部の構成メニューでプレイヤー数を設定します。"
+    },
+    "tour.preview.title": {
+      "message": "マッププレビュー"
+    },
+    "tour.preview.body": {
+      "message": "タイルをクリックするか、マップ上をドラッグしてタイルを選択します。リストにそこにあるものが表示されます。項目にポインターを合わせると強調表示され、クリックするとその行に移動します。マップの隅にあるツールで表示方法と見た目を切り替えます。"
+    },
+    "tour.preview.tip": {
+      "message": "ヒント：編集中にプレビューを再生成することもできます（「実行」の横のメニューの`編集時に実行`）。"
+    },
+    "tour.output.title": {
+      "message": "出力と問題"
+    },
+    "tour.output.body": {
+      "message": "`出力`には各実行とその報告が一覧表示されます。`問題`にはエラーと警告が表示され、クリックするとその行に移動します。"
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "リンクされたゲームフォルダーを開けませんでした"
@@ -555,22 +606,22 @@
       "message": "編集時に実行"
     },
     "run-menu.preset.default-name": {
-      "message": "プリセット"
+      "message": "構成"
     },
     "run-menu.preset.numbered-name": {
-      "message": "プリセット {number}"
+      "message": "構成 {number}"
     },
     "run-menu.preset.settings": {
-      "message": "プレビューのプリセット設定"
+      "message": "プレビューの構成設定"
     },
     "run-menu.preset.manage": {
-      "message": "プレビューのプリセットを管理"
+      "message": "プレビューの構成を管理"
     },
     "run-menu.preset.new": {
-      "message": "新しいプリセット"
+      "message": "新しい構成"
     },
     "run-menu.preset.new-name": {
-      "message": "新しいプレビュープリセットの名前"
+      "message": "新しいプレビュー構成の名前"
     },
     "run-menu.preset.rename": {
       "message": "{name} の名前を変更"
@@ -585,22 +636,22 @@
       "message": "{name} を削除"
     },
     "run-menu.preset.delete.title": {
-      "message": "プリセット {name} を削除しますか？"
+      "message": "構成 {name} を削除しますか？"
     },
     "run-menu.preset.delete.description": {
-      "message": "このプリセットに保存されたプレビュー設定を削除します。"
+      "message": "この構成に保存されたプレビュー設定を削除します。"
     },
     "run-menu.preset.delete.confirm": {
       "message": "削除"
     },
     "run-menu.preset.name-length": {
-      "message": "プリセット名は 1～64 文字で入力してください"
+      "message": "構成名は 1～64 文字で入力してください"
     },
     "run-menu.preset.exists": {
-      "message": "{name} というプリセットは既に存在します"
+      "message": "{name} という構成は既に存在します"
     },
     "run-menu.preset.limit": {
-      "message": "保存できるプリセットは 64 個までです"
+      "message": "保存できる構成は 64 個までです"
     },
     "run-menu.map-size": {
       "message": "マップの大きさ"
@@ -3269,9 +3320,6 @@
     "code-editor.snippets.insert": {
       "message": "挿入"
     },
-    "code-editor.snippets.cancel": {
-      "message": "キャンセル"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "スニペットとして保存…"
     },
@@ -3371,6 +3419,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "キャンセル"
     },
+    "code-editor.section-header.present.title": {
+      "message": "既存の {section} セクションへ移動しますか？"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "このスクリプトにはすでに {section} があります。AoE2RMSIDE は追加したばかりのヘッダーを削除し、カーソルを既存のヘッダーへ移動できます。"
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "セクションへ移動"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "{section} を正しい位置へ移動しますか？"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} はセクションの順序では別の位置に属します。AoE2RMSIDE はヘッダーをこのスクリプト内の正しい位置へ移動できます。"
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "正しい位置へ移動"
+    },
+    "code-editor.section-header.here": {
+      "message": "ここに挿入"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "キャンセル"
+    },
     "code-editor.snippets.store-reset": {
       "message": "保存したスニペットを読み取れなかったため、「マイスニペット」は空の状態で始まります。"
     },
@@ -3409,9 +3481,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "スニペットを保存"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "キャンセル"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "名前を入力してください。"
@@ -4013,6 +4082,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "{name} の配置元を開く、{count} 個選択"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "食料：合計 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "木材：合計 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "黄金：合計 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "石材：合計 {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "補助オブジェクトを表示（{count}）"
     },
@@ -4270,6 +4351,9 @@
     },
     "profiler.row.name": {
       "message": "{step}（{group}）、{duration}、{percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter キーでこのステップのコードをエディターに表示します"
     },
     "profiler.row.work-join": {
       "message": "{first}。{second}"

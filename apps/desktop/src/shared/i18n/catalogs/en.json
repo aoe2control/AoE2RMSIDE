@@ -462,6 +462,13 @@
       "maxLength": 40,
       "meaning": "Switches full-screen mode on or off."
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Take the Tour",
+      "screen": "application-menu/help",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "First item of the Help menu: starts the short tour again from its first card. The tour lights up one part of the window at a time with a small card that explains it."
+    },
     "app-menu.help.documentation": {
       "message": "Documentation",
       "screen": "application-menu/help",
@@ -499,6 +506,114 @@
       "placeholders": {
         "product": "the product name, such as AoE2RMSIDE (not translated)"
       }
+    },
+    "tour.step": {
+      "message": "{step, number} of {total, number}",
+      "screen": "tour",
+      "control": "label",
+      "maxLength": 16,
+      "meaning": "Step count on a card of the tour, such as “2 of 5”.",
+      "placeholders": {
+        "step": "the number of the card shown, such as 2",
+        "total": "the number of cards in the tour, such as 5"
+      }
+    },
+    "tour.got-it": {
+      "message": "Got It",
+      "screen": "tour",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Button on a card of the tour: closes the card; the tour shows its next card when its moment comes. Escape does the same."
+    },
+    "tour.skip": {
+      "message": "Skip Tour",
+      "screen": "tour",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Button on a card of the tour: ends the tour for good (Help → Take the Tour starts it again)."
+    },
+    "tour.explorer.title": {
+      "message": "Explorer",
+      "screen": "tour/explorer",
+      "control": "dialog-title",
+      "maxLength": 32,
+      "meaning": "Title of the tour card that lights up the File Explorer, the panel at the left that lists the files of the open folder."
+    },
+    "tour.explorer.body.maps": {
+      "message": "Use `Open Folder…` in the `File` menu, or the folder button above, to open the folder with your maps. Right-click a folder to create scripts and folders in it.",
+      "screen": "tour/explorer",
+      "control": "dialog-text",
+      "meaning": "Text of the tour card that lights up the File Explorer. `Open Folder…` and `File` are the menu entry and menu as the app shows them; the folder button is the Explorer's own Open Folder button above the list. Text between backticks (`like this`) is the name of a control, menu entry, key, or panel as the app shows it; the card draws it as a small chip. Keep the backticks around the translated name."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Use `Open Folder…` in the `File` menu, or the folder button above, to open the folder with your scripts. Right-click a folder to create scripts and folders in it.",
+      "screen": "tour/explorer",
+      "control": "dialog-text",
+      "meaning": "Text of the tour card that lights up the File Explorer, in the XS editor preview (scripts, not maps). `Open Folder…` and `File` are the menu entry and menu as the app shows them. Text between backticks (`like this`) is the name of a control, menu entry, key, or panel as the app shows it; the card draws it as a small chip. Keep the backticks around the translated name."
+    },
+    "tour.editor.title": {
+      "message": "Editor",
+      "screen": "tour/editor",
+      "control": "dialog-title",
+      "maxLength": 32,
+      "meaning": "Title of the tour card that lights up the code editor."
+    },
+    "tour.editor.body.snippets": {
+      "message": "Press `Ctrl+Space` for suggestions, and point at a word to see its description. `Ctrl+J` opens `Insert Snippet…` with ready-made pieces of script.",
+      "screen": "tour/editor",
+      "control": "dialog-text",
+      "meaning": "Text of the tour card that lights up the code editor. `Ctrl+Space` and `Ctrl+J` are keys; `Insert Snippet…` is the Edit menu entry as the app shows it. Text between backticks (`like this`) is the name of a control, menu entry, key, or panel as the app shows it; the card draws it as a small chip. Keep the backticks around the translated name."
+    },
+    "tour.editor.body": {
+      "message": "Press `Ctrl+Space` for suggestions, and point at a word to see its description.",
+      "screen": "tour/editor",
+      "control": "dialog-text",
+      "meaning": "Text of the tour card that lights up the code editor, in the XS editor preview. `Ctrl+Space` is a key. Text between backticks (`like this`) is the name of a control, menu entry, key, or panel as the app shows it; the card draws it as a small chip. Keep the backticks around the translated name."
+    },
+    "tour.run.title": {
+      "message": "Generate a Map",
+      "screen": "tour/run",
+      "control": "dialog-title",
+      "maxLength": 32,
+      "meaning": "Title of the tour card that lights up the Run button and the menu beside it."
+    },
+    "tour.run.body": {
+      "message": "Press `F5` or the Run button to generate a map from your script. Set the `Seed` in the menu next to Run, and the number of players in the configuration menu above the map.",
+      "screen": "tour/run",
+      "control": "dialog-text",
+      "meaning": "Text of the tour card that lights up the Run button. `F5` is a key; `Seed` is the field of the menu beside Run; the run configuration is the button at the top of the map preview that holds the map size and the players. Text between backticks (`like this`) is the name of a control, menu entry, key, or panel as the app shows it; the card draws it as a small chip. Keep the backticks around the translated name."
+    },
+    "tour.preview.title": {
+      "message": "Map Preview",
+      "screen": "tour/preview",
+      "control": "dialog-title",
+      "maxLength": 32,
+      "meaning": "Title of the tour card that lights up the map preview after a map was generated."
+    },
+    "tour.preview.body": {
+      "message": "Click a tile or drag across the map to select tiles. The list then shows what is there: point at an entry to highlight it, or click it to go to its line. The tools in the map's corner switch the view and the look.",
+      "screen": "tour/preview",
+      "control": "dialog-text",
+      "meaning": "Text of the tour card that lights up the map preview: selecting tiles, the list of terrains and objects on them beside the map, and the map tools in the map's bottom corner (the perspective and the colors or textures)."
+    },
+    "tour.preview.tip": {
+      "message": "Tip: the preview can also regenerate as you edit (`Run on edit` in the menu next to Run).",
+      "screen": "tour/preview",
+      "control": "dialog-text",
+      "meaning": "Short hint below the text of the map preview card. `Run on edit` is the toggle of the menu beside the Run button as the app shows it (off by default). Text between backticks (`like this`) is the name of a control, menu entry, key, or panel as the app shows it; the card draws it as a small chip. Keep the backticks around the translated name."
+    },
+    "tour.output.title": {
+      "message": "Output and Problems",
+      "screen": "tour/output",
+      "control": "dialog-title",
+      "maxLength": 32,
+      "meaning": "Title of the tour card that lights up the bottom panel with its Output and Problems tabs."
+    },
+    "tour.output.body": {
+      "message": "`Output` lists every run and what it reported. `Problems` shows errors and warnings; click one to jump to its line.",
+      "screen": "tour/output",
+      "control": "dialog-text",
+      "meaning": "Text of the tour card that lights up the bottom panel. `Output` and `Problems` are the names of its tabs as the app shows them. Text between backticks (`like this`) is the name of a control, menu entry, key, or panel as the app shows it; the card draws it as a small chip. Keep the backticks around the translated name."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "The linked game folder could not be opened",
@@ -1311,125 +1426,125 @@
       "meaning": "Toggle in the run menu's first row, beside Run on save, off by default: while it is on, the preview runs shortly after the user stops typing. The two share one narrow row; a longer translation is clipped with a fade."
     },
     "run-menu.preset.default-name": {
-      "message": "Preset",
+      "message": "Config",
       "screen": "run-menu/presets",
       "control": "label",
       "maxLength": 24,
-      "meaning": "Name a new run settings preset gets when the user does not name it (the first preset of a fresh installation, and the suggested name of a new preset). The user can rename it."
+      "meaning": "Name a new configuration (a saved set of run settings) gets when the user does not name it (the first configuration of a fresh installation, and the suggested name of a new configuration). The user can rename it. It is the automatic name shown on the button above the map and in the configuration list, so keep it short: use the language's short, informal form of the configuration word if one is common (English \"Config\", German \"Konfig\"), otherwise the full word (maintainer decision 2026-10-20: not a word for preset)."
     },
     "run-menu.preset.numbered-name": {
-      "message": "Preset {number}",
+      "message": "Config {number}",
       "screen": "run-menu/presets",
       "control": "label",
       "maxLength": 28,
-      "meaning": "Suggested name of another new run settings preset when \"Preset\" is taken. Use the same word as the default preset name.",
+      "meaning": "Suggested name of another new configuration (a saved set of run settings) when \"Config\" is taken. Shown on the button above the map and in the configuration list. Use the same short word as the default configuration name.",
       "placeholders": {
         "number": "the first free number, 1 to 65"
       }
     },
     "run-menu.preset.settings": {
-      "message": "Preview preset settings",
+      "message": "Preview configuration settings",
       "screen": "run-menu/presets",
       "control": "accessible-name",
-      "meaning": "Accessible name of the button showing the active preset's name, which opens the preview settings menu (map size, players, game mode, resources, ages, positions)."
+      "meaning": "Accessible name of the button showing the active configuration's name, which opens the preview settings menu (map size, players, game mode, resources, ages, positions)."
     },
     "run-menu.preset.manage": {
-      "message": "Manage preview presets",
+      "message": "Manage preview configurations",
       "screen": "run-menu/presets",
       "control": "accessible-name",
-      "meaning": "Accessible name of the icon button that opens the list of saved preview presets (select, rename, delete, new)."
+      "meaning": "Accessible name of the icon button that opens the list of saved preview configurations (select, rename, delete, new)."
     },
     "run-menu.preset.new": {
-      "message": "New preset",
+      "message": "New Configuration",
       "screen": "run-menu/presets",
       "control": "menu-item",
       "maxLength": 24,
-      "meaning": "Last item of the preset list menu: creates a new preview settings preset."
+      "meaning": "Last item of the configuration list menu: creates a new configuration of the preview settings."
     },
     "run-menu.preset.new-name": {
-      "message": "Name new preview preset",
+      "message": "Name new preview configuration",
       "screen": "run-menu/presets",
       "control": "accessible-name",
-      "meaning": "Accessible name of the text field where a new preview preset is named."
+      "meaning": "Accessible name of the text field where a new preview configuration is named."
     },
     "run-menu.preset.rename": {
       "message": "Rename {name}",
       "screen": "run-menu/presets",
       "control": "accessible-name",
-      "meaning": "Accessible name of the text field that renames a preset in the preset list.",
+      "meaning": "Accessible name of the text field that renames a configuration in the configuration list.",
       "placeholders": {
-        "name": "the preset's current name, written by the user"
+        "name": "the configuration's current name, written by the user"
       }
     },
     "run-menu.preset.save": {
       "message": "Save {name}",
       "screen": "run-menu/presets",
       "control": "accessible-name",
-      "meaning": "Accessible name of the check button that saves a preset's new name.",
+      "meaning": "Accessible name of the check button that saves a configuration's new name.",
       "placeholders": {
-        "name": "the preset's current name"
+        "name": "the configuration's current name"
       }
     },
     "run-menu.preset.edit": {
       "message": "Edit {name}",
       "screen": "run-menu/presets",
       "control": "accessible-name",
-      "meaning": "Accessible name of the pencil button that starts renaming a preset.",
+      "meaning": "Accessible name of the pencil button that starts renaming a configuration.",
       "placeholders": {
-        "name": "the preset's name"
+        "name": "the configuration's name"
       }
     },
     "run-menu.preset.delete": {
       "message": "Delete {name}",
       "screen": "run-menu/presets",
       "control": "accessible-name",
-      "meaning": "Accessible name of the trash button that deletes a preset (after a confirmation).",
+      "meaning": "Accessible name of the trash button that deletes a configuration (after a confirmation).",
       "placeholders": {
-        "name": "the preset's name"
+        "name": "the configuration's name"
       }
     },
     "run-menu.preset.delete.title": {
-      "message": "Delete preset {name}?",
+      "message": "Delete configuration {name}?",
       "screen": "confirmation-dialog/delete-preset",
       "control": "dialog-title",
-      "meaning": "Title of the confirmation before a preview preset is deleted.",
+      "meaning": "Title of the confirmation before a preview configuration is deleted.",
       "placeholders": {
-        "name": "the preset's name"
+        "name": "the configuration's name"
       }
     },
     "run-menu.preset.delete.description": {
-      "message": "This removes the saved preview settings for this preset.",
+      "message": "This removes the saved preview settings for this configuration.",
       "screen": "confirmation-dialog/delete-preset",
       "control": "dialog-text",
-      "meaning": "Text of the confirmation before a preview preset is deleted."
+      "meaning": "Text of the confirmation before a preview configuration is deleted."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Delete",
       "screen": "confirmation-dialog/delete-preset",
       "control": "button",
       "maxLength": 20,
-      "meaning": "The confirmation's destructive button: deletes the preset."
+      "meaning": "The confirmation's destructive button: deletes the configuration."
     },
     "run-menu.preset.name-length": {
-      "message": "Preset names need 1 to 64 characters",
+      "message": "Configuration names need 1 to 64 characters",
       "screen": "output",
       "control": "message-headline",
-      "meaning": "Output warning when a preset is created or renamed with an empty name or one longer than 64 characters."
+      "meaning": "Output warning when a configuration is created or renamed with an empty name or one longer than 64 characters."
     },
     "run-menu.preset.exists": {
-      "message": "A preset named {name} already exists",
+      "message": "A configuration named {name} already exists",
       "screen": "output",
       "control": "message-headline",
-      "meaning": "Output warning when a new or renamed preset would take the name of another preset (names compare without case).",
+      "meaning": "Output warning when a new or renamed configuration would take the name of another configuration (names compare without case).",
       "placeholders": {
-        "name": "the requested preset name, written by the user"
+        "name": "the requested configuration name, written by the user"
       }
     },
     "run-menu.preset.limit": {
-      "message": "At most 64 presets can be stored",
+      "message": "At most 64 configurations can be stored",
       "screen": "output",
       "control": "message-headline",
-      "meaning": "Output warning when a new preset is refused because 64 presets exist."
+      "meaning": "Output warning when a new configuration is refused because 64 configurations exist."
     },
     "run-menu.map-size": {
       "message": "Map size",
@@ -1791,7 +1906,7 @@
       "message": "The run settings could not be loaded",
       "screen": "output",
       "control": "message-headline",
-      "meaning": "Output error when the run settings (presets, game versions) could not be read at start."
+      "meaning": "Output error when the run settings (configurations, game versions) could not be read at start."
     },
     "run-menu.settings.save-failed": {
       "message": "The run settings were not saved",
@@ -9623,13 +9738,6 @@
       "maxLength": 20,
       "meaning": "Inserts the highlighted snippet at the cursor and closes the dialog."
     },
-    "code-editor.snippets.cancel": {
-      "message": "Cancel",
-      "screen": "editor/insert-snippet",
-      "control": "button",
-      "maxLength": 20,
-      "meaning": "Closes the Insert Snippet dialog without inserting anything."
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Save as Snippet…",
       "screen": "editor/context-menu",
@@ -9872,6 +9980,70 @@
       "maxLength": 20,
       "meaning": "Closes the confirmation without inserting; the snippet list stays open."
     },
+    "code-editor.section-header.present.title": {
+      "message": "Go to the existing {section} section?",
+      "screen": "editor/section-header/placement",
+      "control": "dialog-title",
+      "meaning": "Title of the confirmation shown when the user picks a section header from the code suggestions that the script already has.",
+      "placeholders": {
+        "section": "an RMS section header as scripts write it, such as <OBJECTS_GENERATION> (kept as written)"
+      }
+    },
+    "code-editor.section-header.present.description": {
+      "message": "This script already has {section}. AoE2RMSIDE can remove the header you just added and move the cursor to the existing one.",
+      "screen": "editor/section-header/placement",
+      "control": "dialog-text",
+      "meaning": "Text of the confirmation shown when the user picks a section header from the code suggestions that the script already has; its buttons are Go to Section, Insert Here (keeps the second header), and Cancel.",
+      "placeholders": {
+        "section": "an RMS section header as scripts write it, such as <OBJECTS_GENERATION> (kept as written)"
+      }
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Go to Section",
+      "screen": "editor/section-header/placement",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Removes the section header just added from the suggestions and moves the cursor to the header of that section the script already has."
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "Move {section} to its place?",
+      "screen": "editor/section-header/placement",
+      "control": "dialog-title",
+      "meaning": "Title of the confirmation shown when the user picks a section header from the code suggestions at a spot that doesn't match the order of sections (for example above a section that should come before it).",
+      "placeholders": {
+        "section": "an RMS section header as scripts write it, such as <OBJECTS_GENERATION> (kept as written)"
+      }
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} belongs elsewhere in the order of sections. AoE2RMSIDE can move the header to its proper place in this script.",
+      "screen": "editor/section-header/placement",
+      "control": "dialog-text",
+      "meaning": "Text of the confirmation shown when the user picks a section header from the code suggestions at a spot that doesn't match the order of sections; its buttons are Move to Its Place, Insert Here (keeps it at the cursor), and Cancel.",
+      "placeholders": {
+        "section": "an RMS section header as scripts write it, such as <OBJECTS_GENERATION> (kept as written)"
+      }
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Move to Its Place",
+      "screen": "editor/section-header/placement",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Removes the section header just added at the cursor and writes it where the order of sections puts it in the script, with the cursor on the line under it."
+    },
+    "code-editor.section-header.here": {
+      "message": "Insert Here",
+      "screen": "editor/section-header/placement",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Keeps the section header just added from the suggestions where it is, at the cursor."
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Cancel",
+      "screen": "editor/section-header/placement",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Closes the confirmation and removes the section header just added from the suggestions, giving back what was typed before."
+    },
     "code-editor.snippets.store-reset": {
       "message": "Your saved snippets couldn't be read, so My snippets starts empty.",
       "screen": "output",
@@ -9959,13 +10131,6 @@
       "control": "button",
       "maxLength": 20,
       "meaning": "Saves the snippet and closes the dialog."
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Cancel",
-      "screen": "editor/save-snippet",
-      "control": "button",
-      "maxLength": 20,
-      "meaning": "Closes the dialog without saving."
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Enter a name.",
@@ -10994,7 +11159,7 @@
       "message": "Minimap objects",
       "screen": "preview/toolbar",
       "control": "button",
-      "meaning": "Accessible name and tooltip of the objects button in the map preview toolbar, which cycles how the objects on the map are drawn; this state shows every object as a small square in its class color and each Town Center as a castle mark, like the minimap of a spectator broadcast."
+      "meaning": "Accessible name and tooltip of the objects button in the map preview toolbar, which cycles how the objects on the map are drawn; this state shows every object as a small square in its class color and each Town Center as a small domed hall, like the minimap of a spectator broadcast."
     },
     "preview-panel.tool.objects.minimap.note": {
       "message": "Shows objects as small squares, like a spectator minimap.",
@@ -11428,6 +11593,42 @@
       "placeholders": {
         "name": "the terrain or object, such as Grass or Gold Mine",
         "count": "how many are selected"
+      }
+    },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Food: {amount, number, integer} in total",
+      "screen": "preview/legend",
+      "control": "tooltip",
+      "meaning": "A line of the tooltip of a row of the legend beside the map that lists the terrains and objects on the selected tiles: how much food the row's objects hold together, such as a row of berry bushes.",
+      "placeholders": {
+        "amount": "the food the row's objects hold together, a whole number"
+      }
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Wood: {amount, number, integer} in total",
+      "screen": "preview/legend",
+      "control": "tooltip",
+      "meaning": "A line of the tooltip of a row of the legend beside the map that lists the terrains and objects on the selected tiles: how much wood the row's objects hold together, such as a row of trees.",
+      "placeholders": {
+        "amount": "the wood the row's objects hold together, a whole number"
+      }
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Gold: {amount, number, integer} in total",
+      "screen": "preview/legend",
+      "control": "tooltip",
+      "meaning": "A line of the tooltip of a row of the legend beside the map that lists the terrains and objects on the selected tiles: how much gold the row's objects hold together, such as a row of gold mines.",
+      "placeholders": {
+        "amount": "the gold the row's objects hold together, a whole number"
+      }
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Stone: {amount, number, integer} in total",
+      "screen": "preview/legend",
+      "control": "tooltip",
+      "meaning": "A line of the tooltip of a row of the legend beside the map that lists the terrains and objects on the selected tiles: how much stone the row's objects hold together, such as a row of stone mines.",
+      "placeholders": {
+        "amount": "the stone the row's objects hold together, a whole number"
       }
     },
     "preview-panel.legend.helpers.show": {
@@ -12136,6 +12337,12 @@
         "duration": "its time, such as 5.99 ms",
         "percent": "its share in words, such as 60 percent"
       }
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter shows the code of this step in the editor",
+      "screen": "preview/profiler",
+      "control": "accessible-name",
+      "meaning": "Read by screen readers for a row of the execution profiler whose step comes from one section of the script (such as the land generation section): pressing Enter or clicking the row selects that section's first command in the code editor."
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}",

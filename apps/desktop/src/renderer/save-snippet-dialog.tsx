@@ -271,7 +271,6 @@ export function SaveSnippetDialog({
             </p>
           ) : null}
           <div className="save-snippet-actions">
-            <DialogClose variant="secondary">{t('code-editor.save-snippet.cancel')}</DialogClose>
             <Button disabled={saving} type="submit">
               {t('code-editor.save-snippet.save')}
             </Button>

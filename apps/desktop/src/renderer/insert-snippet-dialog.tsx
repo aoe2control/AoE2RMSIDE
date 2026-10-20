@@ -493,7 +493,6 @@ export function InsertSnippetDialog({
             {notice ? t(notice.id, notice.args) : null}
           </p>
           <div className="insert-snippet-actions">
-            <DialogClose variant="secondary">{t('code-editor.snippets.cancel')}</DialogClose>
             <Button disabled={!active} onClick={() => active && choose(active)}>
               {t('code-editor.snippets.insert')}
             </Button>

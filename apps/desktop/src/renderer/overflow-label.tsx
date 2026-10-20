@@ -31,6 +31,7 @@ export function OverflowingLabel({
   hoverArea,
   hoverAreaExcept,
   name,
+  slideWhenHoverOverflows = false,
   textClassName,
 }: {
   children?: ReactNode;
@@ -41,6 +42,7 @@ export function OverflowingLabel({
   hoverArea?: string;
   hoverAreaExcept?: string;
   name: string;
+  slideWhenHoverOverflows?: boolean;
   textClassName: string;
 }) {
   const effectiveMeasure = focusable || revealOnParentFocus ? 'observe' : measure;
@@ -58,6 +60,7 @@ export function OverflowingLabel({
     [],
   );
 
+  const revealing = useRef(false);
   const measureDistance = useCallback(() => {
     const element = label.current;
     const text = labelText.current;
@@ -65,9 +68,13 @@ export function OverflowingLabel({
     const overflow = Number.parseFloat(getComputedStyle(text).width) - element.clientWidth;
     const next = overflow > 1 ? Math.ceil(overflow) : 0;
     setDistance(next);
-    dispatch({ type: 'measured', distance: next });
+    const slides = slideWhenHoverOverflows && revealing.current;
+    if (slides && next > 0) {
+      setForwardSeconds(overflowForwardSeconds(next, currentOffset(text)));
+    }
+    dispatch({ type: 'measured', distance: next, revealing: slides });
     return next;
-  }, [dispatch]);
+  }, [dispatch, slideWhenHoverOverflows]);
 
   useEffect(() => {
     setPosition('start');
@@ -93,12 +100,14 @@ export function OverflowingLabel({
   } as CSSProperties;
 
   const reveal = useCallback(() => {
+    revealing.current = true;
     const current = effectiveMeasure === 'hover' ? measureDistance() : overflow;
     if (current <= 0) return;
     setForwardSeconds(overflowForwardSeconds(current, currentOffset(labelText.current)));
     dispatch({ type: 'enter', distance: current });
   }, [dispatch, effectiveMeasure, measureDistance, overflow]);
   const restore = useCallback(() => {
+    revealing.current = false;
     const offset = currentOffset(labelText.current);
     setReturnSeconds(overflowReturnSeconds(offset));
     dispatch({ type: 'leave', offset });

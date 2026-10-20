@@ -117,6 +117,7 @@ import {
 } from './insert-snippet';
 import { InsertSnippetDialog, type InsertSnippetDialogState } from './insert-snippet-dialog';
 import { SaveSnippetDialog, type SaveSnippetDialogState } from './save-snippet-dialog';
+import { SectionHeaderConfirmation } from './section-header-confirmation';
 import {
   snippetEdit,
   snippetPlacement,
@@ -2972,7 +2973,15 @@ export function EditorPanel({
             className="monaco-editor-mount"
             dir="ltr"
             onPointerEnter={() => setEditorPointerInside(true)}
-            onPointerLeave={() => setEditorPointerInside(false)}
+            onPointerLeave={(event) => {
+              const code = event.currentTarget.getBoundingClientRect();
+              setEditorPointerInside(false, {
+                clientX: event.clientX,
+                clientY: event.clientY,
+                buttons: event.buttons,
+                code: { left: code.left, top: code.top, right: code.right, bottom: code.bottom },
+              });
+            }}
             ref={container}
           />
           <EditorContextMenu />
@@ -2989,6 +2998,7 @@ export function EditorPanel({
             onSaved={closeSaveSnippetDialog}
             state={saveSnippetDialog}
           />
+          <SectionHeaderConfirmation editor={editor} />
           {editorNoticePresence.mounted &&
           shownEditorNotice === 'execution-failure' &&
           shownExecutionFailure ? (

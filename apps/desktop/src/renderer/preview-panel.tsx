@@ -73,6 +73,8 @@ import {
 import { type AnimatedIconHandle, useAnimatedIconHover } from './animated-icon';
 import { previewImageFileName } from '../shared/image-export';
 import { previewToolTooltipRoot, previewToolTooltipTrigger } from './preview-tool-tooltip';
+import { shownCodeHighlightTiles } from './editor-list-handoff';
+import { listSurfaceMode, useListSurfaceGeometry } from './selection-list-surface';
 import {
   capturePreviewImage,
   moveRightPress,
@@ -154,6 +156,7 @@ import {
 import {
   attachPreviewRenderScheduler,
   detachPreviewRenderScheduler,
+  framePixelBounds,
   framePixelHash,
   PreviewRenderScheduler,
   requestPreviewRender,
@@ -184,7 +187,13 @@ import {
 import { isPreviewLayout, previewLayoutSwitchGlides } from '../shared/preview-layout';
 import { documentTransitionEnvironment, watchSizeTransitions } from './layout-transition';
 import { ListMotion } from './list-motion';
-import { prefersReducedMotion, presenceProps, useHeld, usePresence } from './motion';
+import {
+  motionDuration,
+  prefersReducedMotion,
+  presenceProps,
+  useHeld,
+  usePresence,
+} from './motion';
 import { OverflowingLabel } from './overflow-label';
 import { SearchField } from './search-field';
 import {
@@ -290,14 +299,17 @@ import {
   cliffMaterial,
   connectionMaterial,
   isDrawnPreviewObject,
+  layerResourceTotals,
   legendHighlightKey,
   objectNameForId,
   operationTileIndices,
+  operationWrittenTiles,
   partitionHelperLayers,
   previewHelperObjectIds,
   previewLegendFilterMatches,
   previewLegendLabels,
   previewReadoutStacked,
+  previewResourceTotalMessages,
   terrainColorSourcesIdentity,
   terrainMaterial,
   resolveAggregatedLayerActivation,
@@ -315,14 +327,28 @@ import {
   type ElevationRange,
 } from './preview-terrain-mesh';
 import { buildTerrainTexels } from './preview-terrain-texture';
-import { OrderedMarkerLayer, zoomMarkerMeshes } from './preview-marker-mesh';
+import { MarkerCoverage } from './preview-marker-coverage';
+import { markerExtensionLabel, OrderedMarkerLayer, zoomMarkerMeshes } from './preview-marker-mesh';
 import {
   bindPreviewOverlayFades,
   overlayFadeOf,
   usePreviewOverlayFades,
   type OverlayFade,
 } from './preview-overlay-fade';
+import {
+  allCorners,
+  concaveCornerPolygon,
+  cornerArcSegments,
+  highlightCornerRadius,
+  highlightCorners,
+  roundedRectanglePolygon,
+} from './preview-highlight-corners';
 import { highlightTileRuns } from './preview-highlight-runs';
+import {
+  SelectionEase,
+  selectionEdges,
+  selectionFollowFallbackMilliseconds,
+} from './preview-selection-ease';
 import {
   applyPreviewResizeAnchor,
   previewLayoutSwitchAnchor,
@@ -337,7 +363,7 @@ import { drawObjects, objectHeightMapLight } from './preview-object-markers';
 import { chunkSpriteMatrix } from './game-art-terrain';
 import { litColor, raisedSurfaceFor, type ElevationSurface } from './preview-elevation';
 import {
-  minimapSquareCastlePolygon,
+  minimapSquareTownCenterPolygon,
   minimapSquareClassifier,
   minimapSquareColor,
   minimapSquareDrawLayer,
@@ -361,7 +387,8 @@ import {
 } from './preview-raised-terrain';
 import {
   raisedBoundaryLoop,
-  raisedSelectionOutline,
+  raisedRoundedRectangleOutline,
+  raisedRoundedTileFill,
   raisedTileFill,
 } from './preview-raised-overlays';
 import {
@@ -377,6 +404,7 @@ import {
 } from './preview-shown-picture';
 
 const previewPadding = 28;
+const noHighlightTiles: readonly number[] = [];
 const narrowPreviewWidth = 380;
 type PreviewPointerGesture =
   ({ kind: 'selection' } & PreviewSelectionDrag) | ({ kind: 'pan' } & PreviewPanDrag);
@@ -919,6 +947,16 @@ export function PreviewPanel() {
   const rightPress = useRef<RightPress | null>(null);
   const openImageMenu = useRef<(point: { x: number; y: number }) => void>(() => {});
   const overlayFades = usePreviewOverlayFades(renderScheduler, host);
+  const selectionEaseRedraw = useRef<() => void>(() => {});
+  const [selectionEase] = useState(
+    () =>
+      new SelectionEase({
+        timeConstant: () =>
+          motionDuration('--motion-duration-selection-follow', selectionFollowFallbackMilliseconds),
+        redraw: () => selectionEaseRedraw.current(),
+      }),
+  );
+  useEffect(() => () => selectionEase.destroy(), [selectionEase]);
   const shownPictureNow = useRef<() => ShownPicture>(() => ({ source: 'none', raised: null }));
   const shownRaisedSurface = useRef<() => ElevationSurface | null>(() => null);
   const followedSurface = useRef<ElevationSurface | null | undefined>(undefined);
@@ -1356,8 +1394,10 @@ export function PreviewPanel() {
       ? selection
       : null
     : selection;
+  const codeHighlightTiles = useRef<readonly number[]>(sourceHighlightTileIndices);
+  codeHighlightTiles.current = sourceHighlightTileIndices;
   const sourceHighlightTiles = useRef<readonly number[]>(sourceHighlightTileIndices);
-  sourceHighlightTiles.current = sourceHighlightTileIndices;
+  const legendListsCode = useRef(false);
   const connectionHover = useRef<ConnectionOverlayTarget | null>(null);
   const connectionFinal = useRef(connectionMapFinal);
   connectionFinal.current = connectionMapFinal;
@@ -1803,6 +1843,7 @@ export function PreviewPanel() {
     let scheduler: PreviewRenderScheduler | null = null;
     let transitions: PreviewMapTransitions | null = null;
     let blankTerrainFrames = 0;
+    let uncoveredMarkerFrames = 0;
     void pixi
       .init({
         antialias: false,
@@ -1926,6 +1967,20 @@ export function PreviewPanel() {
               container.dataset.previewRenders = String(current.statistics.renders);
               container.dataset.previewFrameChecks = String(current.statistics.checks);
               container.dataset.previewStaleFrames = String(current.statistics.staleFrames);
+              if (container.dataset.previewFrameBounds !== undefined) {
+                container.dataset.previewFrameBounds = previewFrameBounds(pixi);
+              }
+              const markerLayer = renderedMapLayer.current;
+              const markers = markerLayer ? markerCoverages.get(markerLayer) : undefined;
+              if (
+                markers &&
+                markerLayer?.visible &&
+                markers.viewport === viewportRef.current &&
+                !markers.coverage.covers(displayedCamera.current)
+              ) {
+                uncoveredMarkerFrames += 1;
+                container.dataset.markerUncoveredFrames = String(uncoveredMarkerFrames);
+              }
               const framedCache = terrainChunkCache.current;
               const framed = framedCache ? framedGameArtTerrain(framedCache) : 'none';
               container.dataset.framedTerrain = framed;
@@ -2540,35 +2595,45 @@ export function PreviewPanel() {
     const heightMapRange = elevationMode === 'height-map' ? terrainCache.elevationRange : null;
     const markerSkips = gameArtMarkerSkips(terrainCache);
     mapLayerAwaitsSprites.current = !minimapObjectsShown && markerSkips.awaitingPresentation;
-    const drawnObjects = minimapObjectsShown
-      ? drawMinimapObjects(
-          mapLayer,
-          scene,
-          camera,
-          viewport,
-          objectVisibility,
-          map?.playerColorIds,
-          map?.minimapPalette ?? null,
-          map?.mapIconArtObjects,
-          markerCullMargin(viewport),
-          surface,
-          heightMapRange,
-        )
-      : drawObjects(
-          mapLayer,
-          scene,
-          camera,
-          viewport,
-          objectVisibility,
-          map?.playerColorIds,
-          map?.minimapPalette ?? null,
-          Number.POSITIVE_INFINITY,
-          markerSkips.spriteObjects,
-          markerObjectColors,
-          markerCullMargin(viewport),
-          surface,
-          heightMapRange,
-        );
+    const coverage = new MarkerCoverage(scene, viewport, scene.objects.length);
+    const drawMarkers = (
+      target: Container,
+      markerCamera: PreviewCamera,
+      margin: { x: number; y: number },
+    ) =>
+      minimapObjectsShown
+        ? drawMinimapObjects(
+            target,
+            scene,
+            markerCamera,
+            viewport,
+            objectVisibility,
+            map?.playerColorIds,
+            map?.minimapPalette ?? null,
+            map?.mapIconArtObjects,
+            margin,
+            surface,
+            heightMapRange,
+            coverage.drawn,
+          )
+        : drawObjects(
+            target,
+            scene,
+            markerCamera,
+            viewport,
+            objectVisibility,
+            map?.playerColorIds,
+            map?.minimapPalette ?? null,
+            Number.POSITIVE_INFINITY,
+            markerSkips.spriteObjects,
+            markerObjectColors,
+            margin,
+            surface,
+            heightMapRange,
+            coverage.drawn,
+          );
+    const drawnObjects = drawMarkers(mapLayer, camera, markerCullMargin(viewport));
+    coverage.add({ camera, margin: markerCullMargin(viewport) }, drawnObjects.culled);
     container.dataset.drawnObjectCount = String(drawnObjects.objects);
     container.dataset.drawnHelperCount = String(drawnObjects.helpers);
     container.dataset.drawnWallJoins = String(
@@ -2577,6 +2642,31 @@ export function PreviewPanel() {
     container.dataset.objectMarkerRadiusRange = drawnObjects.radiusRange;
     const connectionHoverGraphics = new Graphics();
     mapLayer.addChild(connectionHoverGraphics);
+    markerCoverages.set(mapLayer, {
+      coverage,
+      viewport,
+      extend: (shown) => {
+        const margin = markerCullMargin(viewport);
+        const part = new Container({ label: markerExtensionLabel });
+        const started = performance.now();
+        const extension = drawMarkers(part, shown, margin);
+        coverage.add({ camera: shown, margin }, extension.culled);
+        const placed = previewScreenTransform(
+          scene.width,
+          scene.height,
+          shown,
+          viewport,
+          camera,
+          viewport,
+        );
+        part.scale.set(placed.scale);
+        part.position.set(placed.x, placed.y);
+        mapLayer.addChildAt(part, mapLayer.getChildIndex(connectionHoverGraphics));
+        container.dataset.markerParts = String(coverage.parts);
+        container.dataset.markerExtendMs = (performance.now() - started).toFixed(2);
+      },
+    });
+    container.dataset.markerParts = '1';
     const connectionMode = shownConnectionMode === 'off' ? null : shownConnectionMode;
     const connectionInteractive = () =>
       connectionMode !== null && connectionFinal.current && !candidateCoversScene;
@@ -2688,6 +2778,33 @@ export function PreviewPanel() {
       nextLegendHoverOutline,
     );
     selectionOutlineSurfaces.set(nextSelectionOutline, () => shownRaisedSurface.current());
+    selectionOutlineEases.set(nextSelectionOutline, selectionEase);
+    selectionOutlineReports.set(nextSelectionOutline, (edges) => {
+      if (edges) {
+        container.dataset.selectionDrawn = [
+          edges.minimumX,
+          edges.minimumY,
+          edges.maximumX,
+          edges.maximumY,
+        ]
+          .map((value) => String(Math.round(value * 1000) / 1000))
+          .join(',');
+      } else {
+        delete container.dataset.selectionDrawn;
+      }
+    });
+    const redrawEasedSelection = () => {
+      const drag = gesture.current;
+      if (drag?.kind !== 'selection' || drag.cancelled) return;
+      drawSelectionOutline(
+        selectionOutline.current,
+        scene,
+        displayedCamera.current,
+        viewport,
+        selectionDragRectangle(drag, scene),
+      );
+    };
+    selectionEaseRedraw.current = redrawEasedSelection;
     const raisedFills: ShownRaisedHighlight[] = [];
     for (const graphics of [
       nextSourceHighlightOutline,
@@ -2795,6 +2912,7 @@ export function PreviewPanel() {
       setSelectionPreview((current) =>
         samePreviewSelection(current, nextSelectionPreview) ? current : nextSelectionPreview,
       );
+      selectionEase.follow(nextSelectionPreview);
       return nextSelectionPreview;
     };
     const updatePointer = (
@@ -2923,6 +3041,7 @@ export function PreviewPanel() {
         };
         gesture.current = { kind: 'selection', ...drag };
         const pressedSelection = selectionDragRectangle(drag, scene);
+        selectionEase.begin(pressedSelection);
         setSelectionPreview(pressedSelection);
         drawSelectionOutline(
           selectionOutline.current,
@@ -2981,9 +3100,18 @@ export function PreviewPanel() {
           cameraAnimation.current !== null || wheelCommitTimer.current !== null,
         );
         if (releasedCamera) setCamera(releasedCamera);
+        selectionEase.end();
         if (commitSelection && !finishedGesture.cancelled && !connectionClick) {
+          const committed = selectionDragRectangle(finishedGesture, scene);
           selectionDimensions.current = `${scene.width}x${scene.height}`;
-          setSelection(selectionDragRectangle(finishedGesture, scene));
+          setSelection(committed);
+          drawSelectionOutline(
+            selectionOutline.current,
+            scene,
+            displayedCamera.current,
+            viewport,
+            committed,
+          );
         } else {
           drawSelectionOutline(
             selectionOutline.current,
@@ -3161,6 +3289,9 @@ export function PreviewPanel() {
       if (followSelectionDragCamera.current === followCameraDuringDrag) {
         followSelectionDragCamera.current = () => null;
       }
+      if (selectionEaseRedraw.current === redrawEasedSelection) {
+        selectionEaseRedraw.current = () => {};
+      }
       if (frozenCanvasTransform.current === transformFrozenCanvas) {
         frozenCanvasTransform.current = null;
       }
@@ -3269,17 +3400,6 @@ export function PreviewPanel() {
     frame = requestAnimationFrame(step);
     return () => cancelAnimationFrame(frame);
   }, [boundaryMotion]);
-
-  useEffect(() => {
-    if (!viewScene) return;
-    drawLegendHover(
-      sourceHighlightOutline.current,
-      viewScene,
-      displayedCamera.current,
-      viewport,
-      sourceHighlightTileIndices,
-    );
-  }, [viewScene, sourceHighlightTileIndices, viewport]);
 
   const candidatePresentation = useRef<CandidatePresentation | null>(null);
   const heightOverlayColor = useMemo(
@@ -3708,7 +3828,10 @@ export function PreviewPanel() {
         return;
       }
       case 'clear':
-        if (gesture.current?.kind === 'selection') gesture.current.cancelled = true;
+        if (gesture.current?.kind === 'selection') {
+          gesture.current.cancelled = true;
+          selectionEase.end();
+        }
         selectionDimensions.current = null;
         keyboardCursor.current = null;
         setSelection(null);
@@ -3891,18 +4014,21 @@ export function PreviewPanel() {
     [connectionRoutes, legendMap, objectVisibility, scene, selection, shownConnectionMode],
   );
   const sourceHighlightLayers = useMemo(() => {
-    if (!legendMap || !scene || sourceHighlightTileIndices.length === 0) return null;
+    if (!map || !legendMap || !scene || sourceHighlightTileIndices.length === 0) return null;
     const layers = aggregateTileIndexLayers(
       legendMap,
       scene,
       sourceHighlightTileIndices,
       objectVisibility,
       new Set(highlightedPreviewOperationIndices),
+      null,
+      operationWrittenTiles(map, scene, highlightedPreviewOperationIndices),
     );
     return layers.length > 0 ? layers : null;
   }, [
     highlightedPreviewOperationIndices,
     legendMap,
+    map,
     objectVisibility,
     scene,
     sourceHighlightTileIndices,
@@ -3974,6 +4100,26 @@ export function PreviewPanel() {
   );
   const shownLegendLayers = useHeld(legendLayers, holdLegend);
   const shownLegendContent = useHeld(legendContent ?? 'selection', holdLegend);
+  legendListsCode.current = shownLegendContent === 'source-highlight';
+  sourceHighlightTiles.current = shownCodeHighlightTiles(
+    sourceHighlightTileIndices,
+    legendHoverTileIndices.current,
+    legendListsCode.current,
+    noHighlightTiles,
+  );
+  useEffect(() => {
+    const shown = sourceHighlightTiles.current;
+    const container = host.current;
+    if (container) container.dataset.sourceHighlightShown = String(shown.length);
+    if (!viewScene) return;
+    drawLegendHover(
+      sourceHighlightOutline.current,
+      viewScene,
+      displayedCamera.current,
+      viewport,
+      shown,
+    );
+  }, [viewScene, sourceHighlightTileIndices, shownLegendContent, viewport]);
   const legendShown = legendPresence.mounted && shownLegendLayers !== null;
   const layerArtCivilizationKey = gameArtCivilizationKey(map?.playerCivilizationIds);
   const layerArtCivilizationFor = useMemo(
@@ -4005,9 +4151,28 @@ export function PreviewPanel() {
     shared: gameArtStore,
   });
   const legendEntersAlone = informationWasMounted.current;
+  const listSurface = listSurfaceMode({
+    listsCode: legendShown && shownLegendContent === 'source-highlight',
+    leaving: legendPresence.closing || information.closing,
+    layout: viewport.behindEditor ? 'behind-editor' : 'side-by-side',
+  });
+  const listSurfacePresence = usePresence(listSurface.shown);
+  const listSurfaceGeometryRef = useListSurfaceGeometry(
+    listSurface.shown,
+    `${information.mounted}|${legendShown}`,
+  );
+  const shownListSurfaceTone = useHeld(listSurface.tone, listSurfacePresence.closing);
+  const listSurfaceRef = useCallback(
+    (element: HTMLElement | null) => {
+      listSurfacePresence.ref(element);
+      listSurfaceGeometryRef(element);
+    },
+    [listSurfaceGeometryRef, listSurfacePresence.ref],
+  );
   const [legendFilter, setLegendFilter] = useState('');
-  const legendWidths = usePreviewLegendWidth(presentedMap?.objectNames, presentedMap?.terrainNames);
+  const legendWidths = usePreviewLegendWidth(presentedMap);
   const legendWidth = legendWidths?.panel ?? null;
+  const informationWidth = legendWidths?.information ?? null;
   const readoutStacked =
     legendWidths !== null &&
     previewReadoutStacked(legendWidths.readout, previewVisibleWidth(viewport));
@@ -4030,10 +4195,25 @@ export function PreviewPanel() {
     },
     [appendOutput, map, selectPreviewOperation],
   );
+  const openProfilerStepOperation = useCallback(
+    (operationIndex: number) => {
+      if (!map || candidateActiveRef.current || !map.provenanceOperations[operationIndex]) return;
+      selectPreviewOperation(operationIndex);
+    },
+    [map, selectPreviewOperation],
+  );
   const hoverSelectionLayer = useCallback(
     (layer: AggregatedSelectionLayer | null) => {
       const indices = layer ? aggregatedLayerTileIndices(layer) : [];
       legendHoverTileIndices.current = indices;
+      const shownSource = shownCodeHighlightTiles(
+        codeHighlightTiles.current,
+        indices,
+        legendListsCode.current,
+        noHighlightTiles,
+      );
+      const sourceChanged = shownSource !== sourceHighlightTiles.current;
+      sourceHighlightTiles.current = shownSource;
       if (viewScene) {
         drawLegendHover(
           legendHoverOutline.current,
@@ -4042,13 +4222,33 @@ export function PreviewPanel() {
           viewport,
           indices,
         );
+        if (sourceChanged) {
+          drawLegendHover(
+            sourceHighlightOutline.current,
+            viewScene,
+            displayedCamera.current,
+            viewport,
+            shownSource,
+          );
+        }
       }
       const container = host.current;
       if (container) {
+        container.dataset.sourceHighlightShown = String(shownSource.length);
         container.dataset.legendHoverCount = String(indices.length);
         container.dataset.legendHoverRuns = viewScene
           ? String(highlightTileRuns(indices, viewScene.width).length / 3)
           : '0';
+        if (viewScene) {
+          const corners = highlightCorners(indices, viewScene.width);
+          let outer = 0;
+          for (const bits of corners.convex) {
+            outer += (bits & 1) + ((bits >> 1) & 1) + ((bits >> 2) & 1) + ((bits >> 3) & 1);
+          }
+          container.dataset.legendHoverCorners = `${outer} ${corners.concave.length / 4}`;
+        } else {
+          container.dataset.legendHoverCorners = '0 0';
+        }
       }
     },
     [viewScene, viewport],
@@ -4347,13 +4547,17 @@ export function PreviewPanel() {
               <div
                 className="preview-map-information motion-surface motion-edge"
                 data-has-legend={legendShown}
+                data-list-surface={listSurface.shown || undefined}
                 data-motion-from="left"
                 data-readout-stacked={readoutStacked || undefined}
                 ref={information.ref}
                 style={
-                  legendWidth === null
+                  legendWidth === null || informationWidth === null
                     ? undefined
-                    : ({ '--preview-legend-width': `${legendWidth}px` } as React.CSSProperties)
+                    : ({
+                        '--preview-legend-width': `${legendWidth}px`,
+                        '--preview-information-width': `${informationWidth}px`,
+                      } as React.CSSProperties)
                 }
                 {...presenceProps(information.closing)}
               >
@@ -4419,6 +4623,16 @@ export function PreviewPanel() {
                   />
                 ) : null}
               </div>
+            ) : null}
+            {listSurfacePresence.mounted ? (
+              <div
+                aria-hidden="true"
+                className="preview-list-surface motion-backdrop"
+                data-testid="preview-list-surface"
+                data-tone={shownListSurfaceTone}
+                ref={listSurfaceRef}
+                {...presenceProps(listSurfacePresence.closing)}
+              />
             ) : null}
             {candidateView ? (
               <span
@@ -4501,6 +4715,7 @@ export function PreviewPanel() {
         expanded={previewExpanded}
         navbarHost={outputProfilerHost}
         onExpandPreview={expandPreview}
+        onNavigateToOperation={openProfilerStepOperation}
         onOpenChange={setProfilerOpen}
         open={profilerOpen}
         store={executionProfiler}
@@ -4774,6 +4989,7 @@ const SelectionLayerRow = memo(function SelectionLayerRow({
     () => !readOnly && resolveAggregatedLayerActivationForAvailability(layer),
     [layer, readOnly],
   );
+  const resources = useMemo(() => layerResourceTotals(layer), [layer]);
   return (
     <Tooltip disableHoverablePopup>
       <TooltipTrigger
@@ -4814,7 +5030,7 @@ const SelectionLayerRow = memo(function SelectionLayerRow({
         <span className="preview-layer-count">{layer.count}</span>
       </TooltipTrigger>
       <TooltipContent className="preview-layer-tooltip" side="right">
-        <LayerTooltip label={label} />
+        <LayerTooltip label={label} resources={resources} />
       </TooltipContent>
     </Tooltip>
   );
@@ -5011,6 +5227,11 @@ const connectionProbePoints = new WeakMap<
 >();
 const connectionProbeHosts = new WeakMap<Container, HTMLElement>();
 
+const markerCoverages = new WeakMap<
+  Container,
+  { coverage: MarkerCoverage; viewport: PreviewViewport; extend(camera: PreviewCamera): void }
+>();
+
 function writeConnectionProbes(container: HTMLElement, layer: Container): void {
   const probes = connectionProbePoints.get(layer) ?? {};
   for (const [key, point] of [
@@ -5042,6 +5263,21 @@ function previewFrameHash(pixi: Application): number | null {
   const pixels = new Uint8Array(width * height * 4);
   gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
   return framePixelHash(pixels);
+}
+
+function previewFrameBounds(pixi: Application): string {
+  const gl = (pixi.renderer as { gl?: WebGLRenderingContext }).gl;
+  if (!gl) return 'none';
+  const width = gl.drawingBufferWidth;
+  const height = gl.drawingBufferHeight;
+  const pixels = new Uint8Array(width * height * 4);
+  gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+  const bounds = framePixelBounds(pixels, width, height);
+  if (!bounds) return 'none';
+  const resolution = pixi.renderer.resolution;
+  return [bounds.left, bounds.top, bounds.right, bounds.bottom]
+    .map((value) => (value / resolution).toFixed(1))
+    .join(',');
 }
 
 interface CliffStyle {
@@ -5135,6 +5371,7 @@ function drawMinimapObjects(
   cullMargin: { x: number; y: number } = { x: 0, y: 0 },
   surface: ElevationSurface | null = null,
   heightMap: ElevationRange | null = null,
+  drawnMask: Uint8Array | null = null,
 ): { helpers: number; objects: number; radiusRange: string; culled: boolean } {
   const drawn = { helpers: 0, objects: 0, radiusRange: '', culled: false };
   if (!visibility.objects) return drawn;
@@ -5152,7 +5389,9 @@ function drawMinimapObjects(
     [],
     [],
   ];
-  for (const object of scene.objects) {
+  for (let objectIndex = 0; objectIndex < scene.objects.length; objectIndex += 1) {
+    if (drawnMask?.[objectIndex]) continue;
+    const object = scene.objects[objectIndex]!;
     const kind = classifier.classify(object);
     if (!kind) continue;
     const center = mapToScreen(object, scene.width, scene.height, camera, viewport);
@@ -5169,6 +5408,7 @@ function drawMinimapObjects(
     let color = minimapSquareColor(kind, object.owner, playerColorIds);
     if (heightMap) color = litColor(color, objectHeightMapLight(scene, object, heightMap));
     layers[minimapSquareDrawLayer(kind)]!.push({ kind, x: center.x, y: center.y, color });
+    if (drawnMask) drawnMask[objectIndex] = 1;
   }
   const layer = new OrderedMarkerLayer(stage);
   const laws = previewMinimapSquareSizeLaws(scene.width, scene.height, camera, viewport);
@@ -5183,9 +5423,9 @@ function drawMinimapObjects(
             : laws.object;
       layer.marks.anchor(entry.x, entry.y, entry.x, entry.y, law.base, law.minimum, law.maximum);
       if (entry.kind === 'town-center') {
-        const castle = minimapSquareCastlePolygon(entry.x, entry.y, sizes.townCenter);
-        layer.marks.polygon(castle, entry.color);
-        layer.marks.stroke(castle, true, {
+        const hall = minimapSquareTownCenterPolygon(entry.x, entry.y, sizes.townCenter);
+        layer.marks.polygon(hall, entry.color);
+        layer.marks.stroke(hall, true, {
           color: minimapSquareTownCenterBorderColor,
           width: 1.5,
           alpha: 1,
@@ -5251,8 +5491,47 @@ const selectionOutlineSurfaces = new WeakMap<Graphics, () => ElevationSurface | 
 
 const raisedOutlineCache = new WeakMap<
   ElevationSurface,
-  { key: string; runs: ReturnType<typeof raisedSelectionOutline> }
+  { key: string; runs: ReturnType<typeof raisedRoundedRectangleOutline> }
 >();
+
+const selectionOutlineEases = new WeakMap<Graphics, SelectionEase>();
+
+const selectionOutlineReports = new WeakMap<
+  Graphics,
+  (edges: { minimumX: number; minimumY: number; maximumX: number; maximumY: number } | null) => void
+>();
+
+function mapScreenBasis(
+  scene: Pick<TopDownScene, 'width' | 'height'>,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+) {
+  const origin = mapToScreen({ x: 0, y: 0 }, scene.width, scene.height, camera, viewport);
+  const unitX = mapToScreen({ x: 1, y: 0 }, scene.width, scene.height, camera, viewport);
+  const unitY = mapToScreen({ x: 0, y: 1 }, scene.width, scene.height, camera, viewport);
+  const xx = unitX.x - origin.x;
+  const xy = unitX.y - origin.y;
+  const yx = unitY.x - origin.x;
+  const yy = unitY.y - origin.y;
+  return {
+    origin,
+    xx,
+    xy,
+    yx,
+    yy,
+    edge: Math.min(Math.hypot(xx, xy), Math.hypot(yx, yy)),
+  };
+}
+
+function projectMapPoints(points: number[], basis: ReturnType<typeof mapScreenBasis>): number[] {
+  for (let index = 0; index < points.length; index += 2) {
+    const x = points[index]!;
+    const y = points[index + 1]!;
+    points[index] = basis.origin.x + x * basis.xx + y * basis.yx;
+    points[index + 1] = basis.origin.y + x * basis.xy + y * basis.yy;
+  }
+  return points;
+}
 
 function drawSelectionOutline(
   graphics: Graphics | null,
@@ -5268,13 +5547,22 @@ function drawSelectionOutline(
   const selection = fade
     ? fade.show(shownSelection, `${scene.width}x${scene.height}`)
     : shownSelection;
-  if (!selection) return;
+  const report = selectionOutlineReports.get(graphics);
+  if (!selection) {
+    report?.(null);
+    return;
+  }
+  const edges = selectionOutlineEases.get(graphics)?.drawn(selection) ?? selectionEdges(selection);
+  report?.(edges);
+  const basis = mapScreenBasis(scene, camera, viewport);
+  const radius = highlightCornerRadius(basis.edge);
+  const segments = cornerArcSegments(radius * basis.edge);
   const surface = selectionOutlineSurfaces.get(graphics)?.() ?? null;
   if (surface && surface.width === scene.width && surface.height === scene.height) {
-    const key = `${selection.minimumX},${selection.minimumY},${selection.maximumX},${selection.maximumY}`;
+    const key = `${edges.minimumX},${edges.minimumY},${edges.maximumX},${edges.maximumY},${radius.toFixed(5)},${segments}`;
     let cached = raisedOutlineCache.get(surface);
     if (!cached || cached.key !== key) {
-      cached = { key, runs: raisedSelectionOutline(surface, selection) };
+      cached = { key, runs: raisedRoundedRectangleOutline(surface, edges, radius, segments) };
       raisedOutlineCache.set(surface, cached);
     }
     const loop = !surface.hasSteps;
@@ -5302,13 +5590,17 @@ function drawSelectionOutline(
     graphics.stroke({ color: 0xffffff, width: 2, alpha: 1 });
     return;
   }
-  const polygon = mapRectangleScreenPolygon(
-    { x: selection.minimumX, y: selection.minimumY },
-    { x: selection.maximumX + 1, y: selection.maximumY + 1 },
-    scene.width,
-    scene.height,
-    camera,
-    viewport,
+  const polygon = projectMapPoints(
+    roundedRectanglePolygon(
+      edges.minimumX,
+      edges.minimumY,
+      edges.maximumX,
+      edges.maximumY,
+      allCorners,
+      radius,
+      segments,
+    ),
+    basis,
   );
   graphics.poly(polygon).stroke({ color: 0xffffff, width: 2, alpha: 1 });
 }
@@ -5346,33 +5638,75 @@ function drawHighlightFill(
     highlight?.clear();
     return;
   }
+  const basis = mapScreenBasis(scene, camera, viewport);
+  const radius = highlightCornerRadius(basis.edge);
+  const segments = cornerArcSegments(radius * basis.edge);
   const raised = highlight?.current(scene) ?? null;
   if (raised) {
     const { surface, fill } = raised;
     const level = previewLevelPixels(scene.width, scene.height, camera, viewport);
-    const origin = mapToScreen({ x: 0, y: 0 }, scene.width, scene.height, camera, viewport);
-    const unitX = mapToScreen({ x: 1, y: 0 }, scene.width, scene.height, camera, viewport);
-    const unitY = mapToScreen({ x: 0, y: 1 }, scene.width, scene.height, camera, viewport);
-    const geometry = raisedTileFill(surface, indices, (x, y, h) => ({
-      x: origin.x + x * (unitX.x - origin.x) + y * (unitY.x - origin.x),
-      y: origin.y + x * (unitX.y - origin.y) + y * (unitY.y - origin.y) - h * level,
-    }));
+    const project = (x: number, y: number, h: number) => ({
+      x: basis.origin.x + x * basis.xx + y * basis.yx,
+      y: basis.origin.y + x * basis.xy + y * basis.yy - h * level,
+    });
+    const geometry =
+      radius > 0
+        ? raisedRoundedTileFill(
+            surface,
+            highlightCorners(indices, scene.width),
+            radius,
+            segments,
+            project,
+          )
+        : raisedTileFill(surface, indices, project);
     fill.set(geometry.positions, geometry.depths, geometry.indices);
     return;
   }
-  const runs = highlightTileRuns(indices, scene.width);
-  for (let run = 0; run < runs.length; run += 3) {
-    const y = runs[run]!;
-    graphics.poly(
-      mapRectangleScreenPolygon(
-        { x: runs[run + 1]!, y },
-        { x: runs[run + 2]!, y: y + 1 },
-        scene.width,
-        scene.height,
-        camera,
-        viewport,
-      ),
-    );
+  if (radius > 0) {
+    const { runs, convex, concave } = highlightCorners(indices, scene.width);
+    for (let run = 0; run < runs.length / 3; run += 1) {
+      const y = runs[run * 3]!;
+      graphics.poly(
+        projectMapPoints(
+          roundedRectanglePolygon(
+            runs[run * 3 + 1]!,
+            y,
+            runs[run * 3 + 2]!,
+            y + 1,
+            convex[run]!,
+            radius,
+            segments,
+          ),
+          basis,
+        ),
+      );
+    }
+    for (let corner = 0; corner < concave.length; corner += 4) {
+      graphics.poly(
+        projectMapPoints(
+          concaveCornerPolygon(
+            concave[corner]!,
+            concave[corner + 1]!,
+            concave[corner + 2]!,
+            concave[corner + 3]!,
+            radius,
+            segments,
+          ),
+          basis,
+        ),
+      );
+    }
+  } else {
+    const runs = highlightTileRuns(indices, scene.width);
+    for (let run = 0; run < runs.length; run += 3) {
+      const y = runs[run]!;
+      graphics.poly(
+        projectMapPoints(
+          [runs[run + 1]!, y, runs[run + 2]!, y, runs[run + 2]!, y + 1, runs[run + 1]!, y + 1],
+          basis,
+        ),
+      );
+    }
   }
   graphics.fill({ color: 0xffffff, alpha: 0.6 });
 }
@@ -5502,6 +5836,7 @@ function LayerName({ label }: { label: PreviewLayerLabel }) {
     <OverflowingLabel
       className="preview-layer-name"
       name={text}
+      slideWhenHoverOverflows
       textClassName="preview-layer-name-text"
     >
       <span
@@ -5530,13 +5865,30 @@ function LayerName({ label }: { label: PreviewLayerLabel }) {
   );
 }
 
-function LayerTooltip({ label }: { label: PreviewLayerLabel }) {
+function LayerTooltip({
+  label,
+  resources,
+}: {
+  label: PreviewLayerLabel;
+  resources: ReturnType<typeof layerResourceTotals>;
+}) {
+  const { t } = useI18n();
   return (
     <div className="preview-layer-tooltip-body" data-testid="preview-layer-tooltip">
-      <span className="preview-layer-tooltip-name">{label.name}</span>
+      <span className="preview-layer-tooltip-name">{label.fullName}</span>
       {label.details.map((detail) => (
         <span className="preview-layer-tooltip-detail" key={detail}>
           {detail}
+        </span>
+      ))}
+      {resources.map(({ kind, amount }) => (
+        <span
+          className="preview-layer-tooltip-detail"
+          data-part="resource"
+          data-resource={kind}
+          key={kind}
+        >
+          {t(previewResourceTotalMessages[kind], { amount })}
         </span>
       ))}
     </div>
@@ -6123,6 +6475,10 @@ function transformMapLayer(
     targetCamera,
     viewport,
   );
+  const markers = markerCoverages.get(layer);
+  if (markers && markers.viewport === viewport && !markers.coverage.covers(targetCamera)) {
+    markers.extend(targetCamera);
+  }
   layer.scale.set(transform.scale);
   layer.position.set(transform.x, transform.y);
   zoomMarkerMeshes(layer, transform.scale);

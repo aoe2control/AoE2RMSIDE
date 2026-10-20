@@ -51,6 +51,8 @@ import {
   type MapTestResultsState,
   type SourceSelection,
 } from './app-context';
+import { AppTour } from './app-tour';
+import { isUntitledDocument } from './untitled-documents';
 import { mapTestReplayInput } from './map-test-replay';
 import { contentMatchStep, type ContentMatchGesture, type ContentMatchVisit } from './monaco-find';
 import { mapTestPreviewShown, type PreviewMapOrigin } from './map-test-preview';
@@ -120,6 +122,7 @@ import {
   type SourceHighlightRequest,
 } from './source-highlight';
 import { previewSourceContents } from './preview-source-content';
+import { useEditorListHandoff } from './editor-list-handoff';
 import { nextPaneIndex } from './keyboard-navigation';
 import { navigateToPreviewOperation } from './source-navigation';
 import { resolveTheme, type ThemePreference } from './theme';
@@ -181,7 +184,6 @@ export function App() {
   const [selection, setSelection] = useState<SourceSelection | null>(null);
   const [sourceHighlightRequest, setSourceHighlightRequest] =
     useState<SourceHighlightRequest | null>(null);
-  const [editorPointerInside, setEditorPointerInside] = useState(false);
   const [failedStatuses, setFailedStatuses] = useState<NativeProcessStatus[]>([]);
   const [restartingProcesses, setRestartingProcesses] = useState<Set<NativeProcessName>>(new Set());
   const [languageDiagnostics, setLanguageDiagnostics] = useState<
@@ -201,6 +203,7 @@ export function App() {
   const [explorerExpanded, setExplorerExpanded] = useState(true);
   const [explorerWidth, setExplorerWidth] = useState(explorerDefaultWidth);
   const [findInFilesRequest, setFindInFilesRequest] = useState(0);
+  const [tourRestartRequest, setTourRestartRequest] = useState(0);
   const [previewLayoutState, setPreviewLayoutState] = useState<{
     layout: PreviewLayout;
     from: PreviewLayout;
@@ -368,6 +371,15 @@ export function App() {
   }, [sessionLayoutShown]);
   const workspaceRef = useRef(workspace);
   workspaceRef.current = workspace;
+  const showTourEditorTab = useCallback(() => {
+    const current = workspaceRef.current;
+    const automatic = current.documents.find(
+      (document) => isUntitledDocument(document) && document.preview && !document.dirty,
+    );
+    if (automatic && automatic.id !== current.activeDocument.id) {
+      current.setActiveDocument(automatic.id);
+    }
+  }, []);
   const lastContentMatch = useRef<ContentMatchVisit | null>(null);
   const openContentSearchMatch = useCallback(
     async (path: string, gesture: ContentMatchGesture, find: EditorFindRequest) => {
@@ -539,9 +551,10 @@ export function App() {
     return next;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, sourceHighlightRequest]);
-  const highlightedPreviewOperationIndices = editorPointerInside
-    ? sourceHighlightOperationIndices
-    : noSourceHighlightOperations;
+  const {
+    operations: highlightedPreviewOperationIndices,
+    setPointerInside: setEditorPointerInside,
+  } = useEditorListHandoff(sourceHighlightOperationIndices, noSourceHighlightOperations, map);
 
   const commitPreview = useCallback(
     (result: PreviewGenerationResult, origin: PreviewMapOrigin = 'generation') => {
@@ -763,6 +776,7 @@ export function App() {
       editorColorScheme,
       selectPreviewOperation,
       selection,
+      setEditorPointerInside,
       sourceInvalid,
       workspace,
     ],
@@ -1121,7 +1135,8 @@ export function App() {
             }),
           );
         }
-      } else if (action.type === 'close-tab') void currentWorkspace.closeActive();
+      } else if (action.type === 'take-the-tour') setTourRestartRequest((request) => request + 1);
+      else if (action.type === 'close-tab') void currentWorkspace.closeActive();
       else void currentWorkspace.closeFolder();
     };
     return window.rmside.onApplicationMenuAction((action) => {
@@ -1891,6 +1906,23 @@ export function App() {
             open={update.dialogOpen}
           />
         ) : null}
+        <AppTour
+          onEditorCard={showTourEditorTab}
+          previewReady={map !== null && previewMapOrigin === 'generation'}
+          ready={layoutMotionReady}
+          restartRequest={tourRestartRequest}
+          runActive={
+            generationActivityKind !== null ||
+            (previewExecution !== null && previewExecution.executionState.phase !== 'idle')
+          }
+          targets={{
+            explorer: explorerExpanded ? 'shown' : 'absent',
+            editor: editorShown ? 'shown' : 'hidden',
+            run: 'shown',
+            preview: previewExpanded ? 'shown' : 'absent',
+            output: 'shown',
+          }}
+        />
       </main>
     </AppPanelContext.Provider>
   );

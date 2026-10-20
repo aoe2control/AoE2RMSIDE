@@ -1,3 +1,4 @@
+import { applicationShortcuts, shortcutLabel } from '../shared/application-shortcuts';
 import { insertSnippetActionId, saveSnippetActionId } from './insert-snippet';
 
 export interface MonacoMenuAction {
@@ -271,6 +272,11 @@ export function subscribeEditorMenu(listener: Listener): () => void {
   return () => listeners.delete(listener);
 }
 
+const applicationShortcutActions: ReadonlyMap<string, string> = new Map([
+  [insertSnippetActionId, shortcutLabel(applicationShortcuts.insertSnippet)],
+  [saveSnippetActionId, shortcutLabel(applicationShortcuts.saveSnippet)],
+]);
+
 export function editorMenuRequest(
   delegate: MonacoContextMenuDelegate,
   lookupKeybinding: (id: string) => ResolvedKeybinding | undefined,
@@ -283,7 +289,9 @@ export function editorMenuRequest(
   const entries = editorMenuEntries(
     actions,
     (action) =>
-      (delegate.getKeyBinding?.(action) ?? lookupKeybinding(action.id))?.getLabel() ?? null,
+      (delegate.getKeyBinding?.(action) ?? lookupKeybinding(action.id))?.getLabel() ??
+      applicationShortcutActions.get(reviewedMenuActionId(action.id)) ??
+      null,
     '',
     scope
       ? (action) => scope.actionIds.has(reviewedMenuActionId(action.id))

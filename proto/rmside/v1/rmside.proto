@@ -580,6 +580,12 @@ message ProvenanceColumns {
   bytes cliff_operation_indices_le = 9;
   bytes connection_operation_indices_le = 10;
   bytes tile_write_runs_le = 11;
+  repeated ProvenanceSectionStart section_starts = 12;
+}
+
+message ProvenanceSectionStart {
+  string section = 1;
+  uint32 first_operation_index = 2;
 }
 
 message ProvenanceOperation {

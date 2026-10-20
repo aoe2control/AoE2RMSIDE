@@ -45,7 +45,7 @@ import {
 } from './preview-terrain-mesh';
 import { litColor } from './preview-elevation';
 import {
-  minimapSquareCastlePolygon,
+  minimapSquareTownCenterPolygon,
   minimapSquareColor,
   minimapSquareDrawLayer,
   minimapSquareSide,
@@ -944,7 +944,7 @@ export class PreviewCandidateLayer {
     for (const entries of layers) {
       for (const entry of entries) {
         if (entry.kind === 'town-center') {
-          const outline = minimapSquareCastlePolygon(0, 0, sizes.townCenter);
+          const outline = minimapSquareTownCenterPolygon(0, 0, sizes.townCenter);
           const points = outline.map((value, index) =>
             index % 2 === 0 ? entry.x + value * units : entry.y + value * units * upright,
           );

@@ -174,3 +174,31 @@ export function framePixelHash(pixels: Uint8Array): number {
   }
   return hash;
 }
+
+export function framePixelBounds(
+  pixels: Uint8Array,
+  width: number,
+  height: number,
+): { left: number; top: number; right: number; bottom: number } | null {
+  let left = width;
+  let right = -1;
+  let low = height;
+  let high = -1;
+  for (let row = 0; row < height; row += 1) {
+    const start = row * width * 4 + 3;
+    let first = -1;
+    let last = -1;
+    for (let column = 0; column < width; column += 1) {
+      if (pixels[start + column * 4]! === 0) continue;
+      if (first < 0) first = column;
+      last = column;
+    }
+    if (first < 0) continue;
+    if (first < left) left = first;
+    if (last > right) right = last;
+    if (row < low) low = row;
+    high = row;
+  }
+  if (right < 0) return null;
+  return { left, top: height - 1 - high, right: right + 1, bottom: height - low };
+}

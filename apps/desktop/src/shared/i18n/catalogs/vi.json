@@ -203,6 +203,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Bật/tắt toàn màn hình"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Bắt đầu hướng dẫn"
+    },
     "app-menu.help.documentation": {
       "message": "Tài liệu"
     },
@@ -217,6 +220,54 @@
     },
     "app-menu.help.about": {
       "message": "Giới thiệu {product}"
+    },
+    "tour.step": {
+      "message": "{step, number}/{total, number}"
+    },
+    "tour.got-it": {
+      "message": "Đã hiểu"
+    },
+    "tour.skip": {
+      "message": "Bỏ qua hướng dẫn"
+    },
+    "tour.explorer.title": {
+      "message": "Trình duyệt tệp"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Dùng `Mở thư mục…` trong menu `Tệp`, hoặc nút thư mục ở trên, để mở thư mục chứa bản đồ của bạn. Nhấp chuột phải vào một thư mục để tạo kịch bản và thư mục trong đó."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Dùng `Mở thư mục…` trong menu `Tệp`, hoặc nút thư mục ở trên, để mở thư mục chứa kịch bản của bạn. Nhấp chuột phải vào một thư mục để tạo kịch bản và thư mục trong đó."
+    },
+    "tour.editor.title": {
+      "message": "Trình soạn thảo"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Nhấn `Ctrl+Space` để xem gợi ý, và trỏ vào một từ để xem mô tả của nó. `Ctrl+J` mở `Chèn đoạn mã…` với các đoạn kịch bản dựng sẵn."
+    },
+    "tour.editor.body": {
+      "message": "Nhấn `Ctrl+Space` để xem gợi ý, và trỏ vào một từ để xem mô tả của nó."
+    },
+    "tour.run.title": {
+      "message": "Tạo bản đồ"
+    },
+    "tour.run.body": {
+      "message": "Nhấn `F5` hoặc nút Chạy để tạo bản đồ từ kịch bản của bạn. Đặt `Hạt giống` trong menu cạnh nút Chạy, và số người chơi trong menu cấu hình phía trên bản đồ."
+    },
+    "tour.preview.title": {
+      "message": "Xem trước bản đồ"
+    },
+    "tour.preview.body": {
+      "message": "Nhấp vào một ô hoặc kéo qua bản đồ để chọn ô. Danh sách sẽ hiện những gì có ở đó: trỏ vào một mục để làm nổi bật nó, hoặc nhấp vào để đến dòng của nó. Các công cụ ở góc bản đồ chuyển đổi góc nhìn và kiểu hiển thị."
+    },
+    "tour.preview.tip": {
+      "message": "Mẹo: bản xem trước cũng có thể tự tạo lại khi bạn sửa (`Chạy khi sửa` trong menu cạnh nút Chạy)."
+    },
+    "tour.output.title": {
+      "message": "Đầu ra và vấn đề"
+    },
+    "tour.output.body": {
+      "message": "`Đầu ra` liệt kê mọi lần chạy và những gì nó báo cáo. `Vấn đề` hiện lỗi và cảnh báo; nhấp vào một mục để đến dòng của nó."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "Không mở được thư mục trò chơi đã liên kết"
@@ -555,10 +606,10 @@
       "message": "Chạy khi sửa"
     },
     "run-menu.preset.default-name": {
-      "message": "Cấu hình sẵn"
+      "message": "Cấu hình"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Cấu hình sẵn {number}"
+      "message": "Cấu hình {number}"
     },
     "run-menu.preset.settings": {
       "message": "Thiết lập cấu hình xem trước"
@@ -567,7 +618,7 @@
       "message": "Quản lý cấu hình xem trước"
     },
     "run-menu.preset.new": {
-      "message": "Cấu hình sẵn mới"
+      "message": "Cấu hình mới"
     },
     "run-menu.preset.new-name": {
       "message": "Đặt tên cấu hình xem trước mới"
@@ -585,7 +636,7 @@
       "message": "Xóa {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "Xóa cấu hình sẵn {name}?"
+      "message": "Xóa cấu hình {name}?"
     },
     "run-menu.preset.delete.description": {
       "message": "Thao tác này xóa các thiết lập xem trước đã lưu trong cấu hình này."
@@ -594,13 +645,13 @@
       "message": "Xóa"
     },
     "run-menu.preset.name-length": {
-      "message": "Tên cấu hình sẵn phải có từ 1 đến 64 ký tự"
+      "message": "Tên cấu hình phải có từ 1 đến 64 ký tự"
     },
     "run-menu.preset.exists": {
-      "message": "Đã có cấu hình sẵn mang tên {name}"
+      "message": "Đã có cấu hình mang tên {name}"
     },
     "run-menu.preset.limit": {
-      "message": "Chỉ lưu được tối đa 64 cấu hình sẵn"
+      "message": "Chỉ lưu được tối đa 64 cấu hình"
     },
     "run-menu.map-size": {
       "message": "Cỡ bản đồ"
@@ -3269,9 +3320,6 @@
     "code-editor.snippets.insert": {
       "message": "Chèn"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Hủy"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Lưu thành đoạn mã…"
     },
@@ -3371,6 +3419,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Hủy"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Đến phần {section} đã có?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Kịch bản này đã có {section}. AoE2RMSIDE có thể xóa tiêu đề bạn vừa thêm và chuyển con trỏ đến tiêu đề đã có."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Đến phần"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "Chuyển {section} về đúng vị trí?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "Theo thứ tự các phần, {section} phải nằm ở vị trí khác. AoE2RMSIDE có thể chuyển tiêu đề về đúng vị trí trong kịch bản này."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Chuyển về đúng vị trí"
+    },
+    "code-editor.section-header.here": {
+      "message": "Chèn tại đây"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Hủy"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Không đọc được các đoạn mã bạn đã lưu nên Đoạn mã của tôi bắt đầu trống."
     },
@@ -3409,9 +3481,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Lưu đoạn mã"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Hủy"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Nhập tên."
@@ -4013,6 +4082,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Mở mã nguồn cho {name}, đã chọn {count}"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Lương thực: tổng cộng {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Gỗ: tổng cộng {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Vàng: tổng cộng {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Đá: tổng cộng {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Hiện đối tượng hỗ trợ ({count})"
     },
@@ -4270,6 +4351,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter hiển thị mã của bước này trong trình soạn thảo"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

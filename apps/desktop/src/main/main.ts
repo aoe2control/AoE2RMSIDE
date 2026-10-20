@@ -79,6 +79,7 @@ import {
 } from '../shared/api';
 import {
   applicationShortcuts,
+  isBlockedDeveloperToolsKey,
   matchesShortcut,
   menuActionAllowed,
   menuShortcutItems,
@@ -178,6 +179,8 @@ import {
 } from './workspace-service';
 import { FileTooLargeError, readFileBounded } from './bounded-file';
 import { OwnSnippetStore, type OwnSnippetStoreReset } from './own-snippet-store';
+import { AppTourStore } from './app-tour-store';
+import { doneTourProgress, initialTourProgress, validateTourProgress } from '../shared/app-tour';
 import {
   SnippetFileError,
   ownSnippetLimits,
@@ -247,6 +250,14 @@ import {
   type AuthorizedControlLivePreview,
 } from './control-live-authorization';
 import { readDevelopmentOverrides, type DevelopmentOverrides } from './development-overrides';
+import {
+  nativeOcclusionFeature,
+  showWindowAtBack,
+  startWindowStacker,
+  windowStackerCommand,
+  withDisabledFeature,
+  type WindowStacker,
+} from './window-stacking';
 import {
   createExternalLanguageServers,
   externalLanguageMenuItems,
@@ -349,6 +360,7 @@ let mapTestPreviewShown = false;
 let insertSnippetAvailable = false;
 let saveSnippetAvailable = false;
 let ownSnippetStore: OwnSnippetStore | undefined;
+let appTourStore: AppTourStore | undefined;
 let publishedApplicationMenuModel = '';
 let windowCloseApproved = false;
 let rendererUnavailableForClose = false;
@@ -437,6 +449,19 @@ registerRendererScheme(protocol);
 const hasSingleInstanceLock = app.requestSingleInstanceLock(
   forwardedOpenRequest(launchOpenRequest) as unknown as Record<string, unknown>,
 );
+const windowStacker: WindowStacker | null =
+  hasSingleInstanceLock && developmentOverrides().windowsAtBack ? startTestWindowStacking() : null;
+
+function startTestWindowStacking(): WindowStacker {
+  app.commandLine.appendSwitch(
+    'disable-features',
+    withDisabledFeature(app.commandLine.getSwitchValue('disable-features'), nativeOcclusionFeature),
+  );
+  const { file, args } = windowStackerCommand(process.env.SystemRoot);
+  return startWindowStacker(() =>
+    spawn(file, args, { stdio: ['pipe', 'pipe', 'ignore'], windowsHide: true }),
+  );
+}
 if (!hasSingleInstanceLock) {
   app.quit();
 } else {
@@ -700,6 +725,10 @@ async function createApplication(): Promise<void> {
   ownSnippetStore = new OwnSnippetStore(userDataPath, (reset) =>
     publishWorkspaceDiagnostic(ownSnippetStoreResetNote(reset)),
   );
+  appTourStore = new AppTourStore(
+    userDataPath,
+    developmentOverrides().tourDone ? doneTourProgress : initialTourProgress,
+  );
   const installationSelectionStore = new InstallationSelectionStore(userDataPath);
   const controlLauncherPreference = new ControlLauncherPreferenceStore(userDataPath);
   controlSessionBridgeInstance = new ControlSessionBridge(
@@ -797,6 +826,7 @@ async function createApplication(): Promise<void> {
     icon: resolveWindowIconPath(),
     minHeight: defaultWindowSize.minimumHeight,
     minWidth: defaultWindowSize.minimumWidth,
+    ...(windowStacker ? { focusable: false } : {}),
     show: false,
     title: productIdentity.displayName,
     titleBarOverlay: {
@@ -806,6 +836,7 @@ async function createApplication(): Promise<void> {
     },
     titleBarStyle: 'hidden',
     webPreferences: {
+      ...(windowStacker ? { backgroundThrottling: false } : {}),
       contextIsolation: true,
       devTools: !app.isPackaged,
       nodeIntegration: false,
@@ -840,12 +871,7 @@ async function createApplication(): Promise<void> {
       event.preventDefault();
       return;
     }
-    if (!app.isPackaged) return;
-    const key = input.key.toLowerCase();
-    const isDeveloperToolsShortcut =
-      key === 'f12' ||
-      (input.control && input.shift && (key === 'i' || key === 'j' || key === 'c'));
-    if (isDeveloperToolsShortcut) event.preventDefault();
+    if (app.isPackaged && isBlockedDeveloperToolsKey(input)) event.preventDefault();
   });
   mainWindow.webContents.on('did-navigate', () => {
     modalSurfaceOpen = false;
@@ -864,6 +890,10 @@ async function createApplication(): Promise<void> {
     rendererUnavailableForClose = false;
   });
   mainWindow.once('ready-to-show', () => {
+    if (windowStacker && mainWindow) {
+      void showWindowAtBack(mainWindow, windowStacker, placement.maximized);
+      return;
+    }
     if (placement.maximized) mainWindow?.maximize();
     mainWindow?.show();
   });
@@ -1109,12 +1139,14 @@ function createApplicationMenu(): Menu {
         {
           id: 'edit.insert-snippet',
           label: t('app-menu.edit.insert-snippet'),
+          accelerator: applicationShortcuts.insertSnippet,
           enabled: insertSnippetAvailable,
           click: () => publishMenuAction({ type: 'insert-snippet' }),
         },
         {
           id: 'edit.save-snippet',
           label: t('app-menu.edit.save-snippet'),
+          accelerator: applicationShortcuts.saveSnippet,
           enabled: saveSnippetAvailable,
           click: () => publishMenuAction({ type: 'save-snippet' }),
         },
@@ -1321,27 +1353,36 @@ function createApplicationMenu(): Menu {
       label: t('app-menu.help.name'),
       submenu: helpMenuItems(editionCapabilities, productIdentity.displayName).flatMap(
         (item): MenuItemConstructorOptions[] =>
-          item.kind === 'link'
+          item.kind === 'tour'
             ? [
                 {
                   id: item.id,
                   label: item.label,
-                  click: () => {
-                    if (!modalSurfaceOpen) void openExternalLink(item.target).catch(console.error);
-                  },
+                  click: () => publishMenuAction({ type: 'take-the-tour' }),
                 },
               ]
-            : [
-                ...newVersionsMenuItems(),
-                {
-                  id: item.id,
-                  label: item.label,
-                  click: () => {
-                    if (!mainWindow || modalSurfaceOpen) return;
-                    void showAboutDialog(mainWindow).catch(console.error);
+            : item.kind === 'link'
+              ? [
+                  {
+                    id: item.id,
+                    label: item.label,
+                    click: () => {
+                      if (!modalSurfaceOpen)
+                        void openExternalLink(item.target).catch(console.error);
+                    },
                   },
-                },
-              ],
+                ]
+              : [
+                  ...newVersionsMenuItems(),
+                  {
+                    id: item.id,
+                    label: item.label,
+                    click: () => {
+                      if (!mainWindow || modalSurfaceOpen) return;
+                      void showAboutDialog(mainWindow).catch(console.error);
+                    },
+                  },
+                ],
       ),
     },
   ];
@@ -1389,7 +1430,7 @@ function dispatchMenuShortcut(input: Electron.Input): boolean {
   );
   const item = shortcut ? applicationMenu?.getMenuItemById(shortcut.id) : null;
   if (!item) return false;
-  if (!input.isAutoRepeat) {
+  if (!input.isAutoRepeat && item.enabled) {
     item.click();
     publishApplicationMenuModel();
   }
@@ -4148,6 +4189,16 @@ function registerIpc(
     if (item) item.enabled = available;
     publishApplicationMenuModel();
   });
+  ipcMain.handle(ipcChannels.tourProgress, async (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return requireAppTourStore().read();
+  });
+  ipcMain.handle(ipcChannels.tourProgressSave, async (event, progress: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    await requireAppTourStore().write(validateTourProgress(progress));
+  });
   ipcMain.handle(ipcChannels.ownSnippetsList, async (event) => {
     assertTrustedSender(event.senderFrame?.url);
     assertMainWindowSender(event.sender);
@@ -4898,6 +4949,11 @@ function validSelectedMinimapPalette(value: SelectedMinimapPalette | null): bool
         validColor(color.rightColor),
     )
   );
+}
+
+function requireAppTourStore(): AppTourStore {
+  if (!appTourStore) throw new Error('the tour store is unavailable');
+  return appTourStore;
 }
 
 function requireOwnSnippetStore(): OwnSnippetStore {

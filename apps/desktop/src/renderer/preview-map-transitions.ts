@@ -2,7 +2,6 @@ import {
   AlphaFilter,
   BufferImageSource,
   Rectangle,
-  RenderTarget,
   RenderTexture,
   Sprite,
   type Application,
@@ -111,6 +110,23 @@ function defaultMorphWorker(): Worker | null {
   }
 }
 
+export function snapshotFits(
+  texture: Pick<RenderTexture, 'width' | 'height'> & { source: { resolution: number } },
+  width: number,
+  height: number,
+  resolution: number,
+): boolean {
+  return (
+    Math.abs(texture.width - width) < 0.01 &&
+    Math.abs(texture.height - height) < 0.01 &&
+    texture.source.resolution === resolution
+  );
+}
+
+function destroySnapshot(snapshot: { texture: RenderTexture }): void {
+  snapshot.texture.destroy(true);
+}
+
 function morphTexelSource(texels: Uint8Array, width: number, height: number): BufferImageSource {
   return new BufferImageSource({
     resource: texels,
@@ -128,10 +144,7 @@ export class PreviewMapTransitions {
   private readonly timeline = new MapTransitionTimeline();
   private readonly now: () => number;
   private readonly reducedMotion: () => boolean;
-  private readonly snapshots: ({ texture: RenderTexture; target: RenderTarget } | null)[] = [
-    null,
-    null,
-  ];
+  private readonly snapshots: ({ texture: RenderTexture } | null)[] = [null, null];
   private capture: { index: number; renders: number } | null = null;
   private fadedCapture: { index: number; renders: number } | null = null;
   private overlay: Sprite | null = null;
@@ -233,20 +246,20 @@ export class PreviewMapTransitions {
     const { width, height } = pixi.renderer.screen;
     const resolution = pixi.renderer.resolution;
     let snapshot = this.snapshots[index];
+    if (snapshot && !snapshotFits(snapshot.texture, width, height, resolution)) {
+      destroySnapshot(snapshot);
+      snapshot = null;
+      this.snapshots[index] = null;
+    }
     if (!snapshot) {
       const texture = RenderTexture.create({ width, height, resolution });
-      snapshot = { texture, target: new RenderTarget({ colorTextures: [texture], depth: true }) };
+      pixi.renderer.renderTarget.getRenderTarget(texture).ensureDepthStencilTexture();
+      snapshot = { texture };
       this.snapshots[index] = snapshot;
-    } else if (
-      snapshot.texture.width !== width ||
-      snapshot.texture.height !== height ||
-      snapshot.texture.source.resolution !== resolution
-    ) {
-      snapshot.texture.source.resize(width, height, resolution);
     }
     pixi.renderer.render({
       container: pixi.stage,
-      target: snapshot.target,
+      target: snapshot.texture,
       clear: true,
       clearColor: [0, 0, 0, 0],
     });
@@ -441,10 +454,7 @@ export class PreviewMapTransitions {
     }
     this.overlay?.destroy();
     this.overlay = null;
-    for (const snapshot of this.snapshots) {
-      snapshot?.target.destroy();
-      snapshot?.texture.destroy(true);
-    }
+    for (const snapshot of this.snapshots) if (snapshot) destroySnapshot(snapshot);
     this.snapshots.fill(null);
     this.capture = null;
     this.worker?.terminate();

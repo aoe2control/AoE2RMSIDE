@@ -5,7 +5,7 @@ export type OverflowEvent =
   | { type: 'leave'; offset: number }
   | { type: 'arrived' }
   | { type: 'returned' }
-  | { type: 'measured'; distance: number };
+  | { type: 'measured'; distance: number; revealing?: boolean };
 
 export const overflowLabelScrollPixelsPerSecond = 24;
 
@@ -27,7 +27,8 @@ export function nextOverflowPosition(
     case 'returned':
       return position === 'returning' ? 'start' : position;
     case 'measured':
-      return event.distance <= 0 ? 'start' : position;
+      if (event.distance <= 0) return 'start';
+      return event.revealing && position === 'start' ? 'moving' : position;
   }
 }
 

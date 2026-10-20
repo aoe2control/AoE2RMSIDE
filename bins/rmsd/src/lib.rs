@@ -2550,6 +2550,7 @@ fn protocol_generation_response(
                 .tile_write_runs
                 .as_deref()
                 .map_or_else(Vec::new, encode_tile_write_runs),
+            section_starts: protocol_section_starts(program),
         }),
         semantic_hash: map.final_semantic_hash.to_vec(),
         committed: true,
@@ -2749,6 +2750,29 @@ fn protocol_provenance_operations(
             }
         })
         .collect()
+}
+
+fn protocol_section_starts(
+    program: &rms_semantics::SemanticProgram,
+) -> Vec<v1::ProvenanceSectionStart> {
+    let mut starts = Vec::<v1::ProvenanceSectionStart>::new();
+    for (index, operation) in program.operations.iter().enumerate() {
+        if operation.section.is_empty()
+            || starts
+                .iter()
+                .any(|start| start.section == operation.section)
+        {
+            continue;
+        }
+        let Ok(first_operation_index) = u32::try_from(index) else {
+            break;
+        };
+        starts.push(v1::ProvenanceSectionStart {
+            section: operation.section.clone(),
+            first_operation_index,
+        });
+    }
+    starts
 }
 
 #[cfg(feature = "internal-fixtures")]

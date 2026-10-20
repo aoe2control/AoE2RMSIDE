@@ -6,7 +6,7 @@ import type {
 } from '../shared/api';
 import type { PreviewLook } from '../shared/game-art';
 import { failedConnectionSearch, type ConnectionRouteSet } from '../shared/connection-routes';
-import { forEachWrittenTile } from '../shared/tile-write-runs';
+import { forEachWrittenTile, tileWriteRunBytes } from '../shared/tile-write-runs';
 import { t, type MessageId } from '../shared/i18n/translator';
 import type { PresentedPreviewResult } from './presentation-names';
 import { classifyTerrainFamily, terrainFamilyColor } from './terrain-families';
@@ -97,6 +97,7 @@ export type PreviewMaterialSubject =
 export interface PreviewMaterial {
   color: number;
   name: string | null;
+  label?: string;
   nameId?: MessageId;
   subject: PreviewMaterialSubject;
   identity: string;
@@ -173,6 +174,7 @@ export interface SelectedTileLayer {
   material: PreviewMaterial;
   operationIndex: number | null;
   renderOrder: number;
+  resource?: { type: number; quantityF32Bits: number };
 }
 
 export interface SelectedLayerInstance extends SelectedTileLayer {
@@ -230,6 +232,7 @@ export interface AggregatedLayerActivation {
 
 export interface PreviewLayerLabel {
   name: string;
+  fullName: string;
   nameMuted: boolean;
   owner: string | null;
   disambiguation: string | null;
@@ -248,6 +251,7 @@ export function previewLayerLabel(
   const idText = ids.join(', ');
   const presentedName = material.nameId ? t(material.nameId) : material.name;
   const named = presentedName !== null;
+  const shownName = material.nameId ? presentedName : (material.label ?? presentedName);
   const details: string[] = [];
   const objectNumber = () => t('preview-panel.name.object-number', { id: idText });
   const terrainNumber = () => t('preview-panel.name.terrain-number', { id: idText });
@@ -288,7 +292,8 @@ export function previewLayerLabel(
       break;
   }
   return {
-    name,
+    name: named && shownName !== null ? shownName : name,
+    fullName: name,
     nameMuted: !named && subject.kind !== 'cliff' && subject.kind !== 'connection',
     owner,
     disambiguation: disambiguate && ids.length > 0 ? idText : null,
@@ -357,7 +362,7 @@ export const previewLegendBoxMetrics = Object.freeze({
   legendPadding: 4,
 });
 
-export const previewLegendMaximumRowWidth = 224;
+export const previewLegendMaximumRowWidth = 154;
 const previewLegendCountDigits = 6;
 const previewLegendCoordinateDigits = 3;
 
@@ -365,6 +370,8 @@ export function previewLegendPanelWidth(
   catalog: {
     objectNames: readonly { objectId: number; name: string }[];
     terrainNames: readonly { terrainId: number; name: string }[];
+    objectLabels?: ReadonlyMap<number, string> | undefined;
+    terrainLabels?: ReadonlyMap<number, string> | undefined;
   },
   metrics: PreviewLegendTextMetrics,
 ): number {
@@ -377,7 +384,8 @@ export function previewLegendPanelWidth(
   for (const { objectId, name } of catalog.objectNames) {
     largestId = Math.max(largestId, objectId);
     if (placeholderObjectName.test(name)) continue;
-    idsByName.set(name, (idsByName.get(name) ?? 0) + 1);
+    const label = catalog.objectLabels?.get(objectId) ?? name;
+    idsByName.set(label, (idsByName.get(label) ?? 0) + 1);
   }
   for (const [name, count] of idsByName) {
     const suffix = Math.max(owner, count > 1 ? metrics.muted(String(largestId)) : 0);
@@ -385,7 +393,8 @@ export function previewLegendPanelWidth(
   }
   for (const { terrainId, name } of catalog.terrainNames) {
     largestId = Math.max(largestId, terrainId);
-    if (!placeholderTerrainName.test(name)) widest = Math.max(widest, metrics.name(name));
+    if (placeholderTerrainName.test(name)) continue;
+    widest = Math.max(widest, metrics.name(catalog.terrainLabels?.get(terrainId) ?? name));
   }
   const fixed = [
     ...terrainPalette.map((entry) => t(entry.nameId)),
@@ -407,7 +416,11 @@ export function previewLegendPanelWidth(
     previewLegendMaximumRowWidth,
     2 * box.rowPadding + box.iconColumn + 2 * box.columnGap + widest + count,
   );
-  return Math.ceil(Math.max(row + 2 * box.legendPadding, previewReadoutWidth(metrics)));
+  return Math.ceil(row + 2 * box.legendPadding);
+}
+
+export function previewInformationWidth(panelWidth: number, readoutWidth: number): number {
+  return Math.max(panelWidth, Math.ceil(readoutWidth));
 }
 
 export function previewReadoutWidth(metrics: Pick<PreviewLegendTextMetrics, 'readout'>): number {
@@ -472,6 +485,7 @@ export function terrainMaterial(
   localTerrainIds?: ReadonlySet<number>,
   localTerrainColors?: readonly TerrainMinimapColor[],
   lookTerrainColors?: ReadonlyMap<number, number>,
+  terrainLabels?: ReadonlyMap<number, string>,
 ): PreviewMaterial {
   const subject = { kind: 'terrain', id: terrainId } as const;
   if (backend === 'exact') {
@@ -479,10 +493,12 @@ export function terrainMaterial(
     const listedName = findById(terrainNames, 'terrainId', terrainId)?.name;
     const presentedName =
       listedName && !placeholderTerrainName.test(listedName) ? listedName : undefined;
+    const label = presentedName ? terrainLabels?.get(terrainId) : undefined;
     const named = presentedName
       ? {
           identity: `name:${presentedName}`,
           name: presentedName,
+          ...(label ? { label } : {}),
           ...(localTerrainIds?.has(terrainId)
             ? { nameSource: 'linked-installation' as const }
             : {}),
@@ -540,14 +556,18 @@ export function objectMaterial(
   localObjectIds?: ReadonlySet<number>,
   helperObjectIds?: ReadonlySet<number>,
   lookObjectColors?: ReadonlyMap<number, number>,
+  objectLabels?: ReadonlyMap<number, string>,
 ): PreviewMaterial {
   const listedName = objectNameForId(objectNames, object.objectId);
   const objectName =
     listedName !== null && !placeholderObjectName.test(listedName) ? listedName : null;
-  const nameSource =
-    objectName !== null && localObjectIds?.has(object.objectId)
+  const label = objectName !== null ? objectLabels?.get(object.objectId) : undefined;
+  const nameParts = {
+    ...(objectName !== null && localObjectIds?.has(object.objectId)
       ? { nameSource: 'linked-installation' as const }
-      : {};
+      : {}),
+    ...(label ? { label } : {}),
+  };
   const id = object.objectId;
   const nameIdentity = objectName === null ? `id:${id}` : `name:${objectName}`;
   const shape = objectCategoryShapes[previewObjectCategory(object)];
@@ -559,7 +579,7 @@ export function objectMaterial(
       name: objectName,
       shape,
       subject: { kind: 'helper', id },
-      ...nameSource,
+      ...nameParts,
     };
   }
   if (object.presentationKind === 'wall') {
@@ -569,7 +589,7 @@ export function objectMaterial(
       name: objectName,
       shape: 'wall',
       subject: { kind: 'wall', id },
-      ...nameSource,
+      ...nameParts,
     };
   }
   const neutralColor =
@@ -585,7 +605,7 @@ export function objectMaterial(
     name: objectName,
     shape,
     subject: { kind: 'object', id, owner },
-    ...nameSource,
+    ...nameParts,
   };
 }
 
@@ -668,6 +688,7 @@ function presentedTerrainMaterial(map: PresentedPreviewResult, terrainId: number
     map.presentationNameSources?.localTerrainIds,
     map.localTerrainColors,
     map.lookColors?.terrains,
+    map.terrainLabels,
   );
 }
 
@@ -701,6 +722,7 @@ function presentedObjectMaterial(
     map.presentationNameSources?.localObjectIds,
     visibility.helperObjectIds,
     map.lookColors?.gaiaObjects,
+    map.objectLabels,
   );
 }
 
@@ -751,6 +773,7 @@ export function selectedTileLayers(
       material: presentedObjectMaterial(map, object, visibility),
       operationIndex: operationIndex(map.objectOperationIndicesLe, index),
       renderOrder: 3_000 + object.index,
+      resource: objectResource(object),
     });
   });
   return layers.sort(
@@ -782,6 +805,7 @@ export function aggregateTileIndexLayers(
   visibility: PreviewObjectVisibility = defaultPreviewObjectVisibility,
   operations?: ReadonlySet<number>,
   routes: ConnectionRouteSet | null = null,
+  writtenBy?: ReadonlyMap<number, number>,
 ): AggregatedSelectionLayer[] {
   const selectedTiles = new Set(
     [...tileIndices].filter((index) => index >= 0 && index < scene.width * scene.height),
@@ -820,12 +844,17 @@ export function aggregateTileIndexLayers(
   for (const tileIndex of selectedTiles) {
     const x = tileIndex % scene.width;
     const y = Math.floor(tileIndex / scene.width);
+    const owner = operationIndex(map.tileOperationIndicesLe, tileIndex);
+    const writer =
+      operations && (owner === null || !operations.has(owner))
+        ? (writtenBy?.get(tileIndex) ?? owner)
+        : owner;
     add(
       {
         key: `terrain-${tileIndex}`,
         kind: 'terrain',
         material: presentedTerrainMaterial(map, scene.terrainIds[tileIndex]!),
-        operationIndex: operationIndex(map.tileOperationIndicesLe, tileIndex),
+        operationIndex: writer,
         renderOrder: 0,
       },
       tileIndex,
@@ -902,6 +931,7 @@ export function aggregateTileIndexLayers(
         material: presentedObjectMaterial(map, object, visibility),
         operationIndex: operationIndex(map.objectOperationIndicesLe, index),
         renderOrder: 3_000 + object.index,
+        resource: objectResource(object),
       },
       y * scene.width + x,
       x,
@@ -920,6 +950,56 @@ export function aggregateTileIndexLayers(
         left.renderOrder - right.renderOrder ||
         lexicalCompare(left.key, right.key),
     );
+}
+
+function objectResource(
+  object: Pick<TopDownObject, 'resourceType' | 'resourceQuantityF32Bits'>,
+): SelectedTileLayer['resource'] {
+  return { type: object.resourceType, quantityF32Bits: object.resourceQuantityF32Bits };
+}
+
+export type PreviewResourceKind = 'food' | 'wood' | 'gold' | 'stone';
+
+const previewResourceKinds: ReadonlyMap<number, PreviewResourceKind> = new Map([
+  [0, 'food'],
+  [1, 'wood'],
+  [3, 'gold'],
+  [2, 'stone'],
+]);
+
+const previewResourceOrder: readonly PreviewResourceKind[] = ['food', 'wood', 'gold', 'stone'];
+
+export const previewResourceTotalMessages: Readonly<Record<PreviewResourceKind, MessageId>> = {
+  food: 'preview-panel.legend.resource-total.food',
+  wood: 'preview-panel.legend.resource-total.wood',
+  gold: 'preview-panel.legend.resource-total.gold',
+  stone: 'preview-panel.legend.resource-total.stone',
+};
+
+export function float32FromBits(bits: number): number {
+  const view = new DataView(new ArrayBuffer(4));
+  view.setUint32(0, bits >>> 0);
+  return view.getFloat32(0);
+}
+
+export function layerResourceTotals(
+  layer: Pick<AggregatedSelectionLayer, 'instances'>,
+): { kind: PreviewResourceKind; amount: number }[] {
+  const totals = new Map<PreviewResourceKind, number>();
+  const counted = new Set<string>();
+  for (const instance of layer.instances) {
+    const resource = instance.resource;
+    if (!resource || counted.has(instance.key)) continue;
+    counted.add(instance.key);
+    const kind = previewResourceKinds.get(resource.type);
+    const quantity = float32FromBits(resource.quantityF32Bits);
+    if (!kind || !Number.isFinite(quantity) || quantity === 0) continue;
+    totals.set(kind, (totals.get(kind) ?? 0) + quantity);
+  }
+  return previewResourceOrder.flatMap((kind) => {
+    const amount = Math.round(totals.get(kind) ?? 0);
+    return amount === 0 ? [] : [{ kind, amount }];
+  });
 }
 
 export function operationTileIndices(
@@ -982,6 +1062,32 @@ export function operationTileIndices(
     }
   });
   return [...tiles].sort((left, right) => left - right);
+}
+
+export function operationWrittenTiles(
+  map: PreviewGenerationResult,
+  scene: TopDownScene,
+  operationIndices: Iterable<number>,
+): Map<number, number> {
+  const written = new Map<number, number>();
+  const operations = new Set(operationIndices);
+  if (!map.tileWriteRunsLe || map.width !== scene.width || map.height !== scene.height) {
+    return written;
+  }
+  const bytes = map.tileWriteRunsLe;
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  for (
+    let offset = 0;
+    offset + tileWriteRunBytes <= bytes.byteLength;
+    offset += tileWriteRunBytes
+  ) {
+    const operation = view.getUint32(offset, true);
+    if (!operations.has(operation)) continue;
+    const first = view.getUint32(offset + 4, true);
+    const end = first + view.getUint32(offset + 8, true);
+    for (let tile = first; tile < end; tile += 1) written.set(tile, operation);
+  }
+  return written;
 }
 
 export function resolveAggregatedLayerActivation(

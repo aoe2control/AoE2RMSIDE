@@ -203,6 +203,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "पूर्ण स्क्रीन चालू/बंद करें"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "टूर शुरू करें"
+    },
     "app-menu.help.documentation": {
       "message": "दस्तावेज़ीकरण"
     },
@@ -217,6 +220,54 @@
     },
     "app-menu.help.about": {
       "message": "{product} के बारे में"
+    },
+    "tour.step": {
+      "message": "{total, number} में से {step, number}"
+    },
+    "tour.got-it": {
+      "message": "ठीक है"
+    },
+    "tour.skip": {
+      "message": "टूर छोड़ें"
+    },
+    "tour.explorer.title": {
+      "message": "एक्सप्लोरर"
+    },
+    "tour.explorer.body.maps": {
+      "message": "अपने मानचित्रों वाला फ़ोल्डर खोलने के लिए `फ़ाइल` मेनू में `फ़ोल्डर खोलें…` या ऊपर दिए फ़ोल्डर बटन का उपयोग करें। किसी फ़ोल्डर में स्क्रिप्ट और फ़ोल्डर बनाने के लिए उस पर राइट-क्लिक करें।"
+    },
+    "tour.explorer.body.scripts": {
+      "message": "अपनी स्क्रिप्टों वाला फ़ोल्डर खोलने के लिए `फ़ाइल` मेनू में `फ़ोल्डर खोलें…` या ऊपर दिए फ़ोल्डर बटन का उपयोग करें। किसी फ़ोल्डर में स्क्रिप्ट और फ़ोल्डर बनाने के लिए उस पर राइट-क्लिक करें।"
+    },
+    "tour.editor.title": {
+      "message": "संपादक"
+    },
+    "tour.editor.body.snippets": {
+      "message": "सुझावों के लिए `Ctrl+Space` दबाएँ, और किसी शब्द का विवरण देखने के लिए उस पर पॉइंटर रखें। `Ctrl+J` तैयार स्क्रिप्ट हिस्सों के साथ `स्निपेट डालें…` खोलता है।"
+    },
+    "tour.editor.body": {
+      "message": "सुझावों के लिए `Ctrl+Space` दबाएँ, और किसी शब्द का विवरण देखने के लिए उस पर पॉइंटर रखें।"
+    },
+    "tour.run.title": {
+      "message": "मानचित्र बनाएँ"
+    },
+    "tour.run.body": {
+      "message": "अपनी स्क्रिप्ट से मानचित्र बनाने के लिए `F5` या ‘चलाएँ’ बटन दबाएँ। ‘चलाएँ’ के पास वाले मेनू में `सीड` सेट करें, और मानचित्र के ऊपर वाले कॉन्फ़िगरेशन मेनू में खिलाड़ियों की संख्या।"
+    },
+    "tour.preview.title": {
+      "message": "मानचित्र पूर्वावलोकन"
+    },
+    "tour.preview.body": {
+      "message": "टाइलें चुनने के लिए किसी टाइल पर क्लिक करें या मानचित्र पर खींचें। फिर सूची दिखाती है कि वहाँ क्या है: किसी प्रविष्टि को हाइलाइट करने के लिए उस पर पॉइंटर रखें, या उसकी पंक्ति पर जाने के लिए उस पर क्लिक करें। मानचित्र के कोने के टूल दृश्य और रूप बदलते हैं।"
+    },
+    "tour.preview.tip": {
+      "message": "सुझाव: पूर्वावलोकन संपादन के साथ-साथ फिर से भी बन सकता है (‘चलाएँ’ के पास वाले मेनू में `संपादन पर चलाएँ`)।"
+    },
+    "tour.output.title": {
+      "message": "आउटपुट और समस्याएँ"
+    },
+    "tour.output.body": {
+      "message": "`आउटपुट` हर रन और उसकी रिपोर्ट दिखाता है। `समस्याएँ` त्रुटियाँ और चेतावनियाँ दिखाता है; किसी एक पर क्लिक करके उसकी पंक्ति पर जाएँ।"
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "लिंक किया गया गेम फ़ोल्डर नहीं खुल सका"
@@ -555,22 +606,22 @@
       "message": "संपादन पर चलाएँ"
     },
     "run-menu.preset.default-name": {
-      "message": "प्रीसेट"
+      "message": "कॉन्फ़िग"
     },
     "run-menu.preset.numbered-name": {
-      "message": "प्रीसेट {number}"
+      "message": "कॉन्फ़िग {number}"
     },
     "run-menu.preset.settings": {
-      "message": "पूर्वावलोकन प्रीसेट की सेटिंग्स"
+      "message": "पूर्वावलोकन कॉन्फ़िगरेशन की सेटिंग्स"
     },
     "run-menu.preset.manage": {
-      "message": "पूर्वावलोकन प्रीसेट प्रबंधित करें"
+      "message": "पूर्वावलोकन कॉन्फ़िगरेशन प्रबंधित करें"
     },
     "run-menu.preset.new": {
-      "message": "नया प्रीसेट"
+      "message": "नया कॉन्फ़िगरेशन"
     },
     "run-menu.preset.new-name": {
-      "message": "नए पूर्वावलोकन प्रीसेट का नाम दें"
+      "message": "नए पूर्वावलोकन कॉन्फ़िगरेशन का नाम दें"
     },
     "run-menu.preset.rename": {
       "message": "{name} का नाम बदलें"
@@ -585,22 +636,22 @@
       "message": "{name} हटाएँ"
     },
     "run-menu.preset.delete.title": {
-      "message": "प्रीसेट {name} हटाएँ?"
+      "message": "कॉन्फ़िगरेशन {name} हटाएँ?"
     },
     "run-menu.preset.delete.description": {
-      "message": "इससे इस प्रीसेट की सहेजी गई पूर्वावलोकन सेटिंग्स हट जाएँगी।"
+      "message": "इससे इस कॉन्फ़िगरेशन की सहेजी गई पूर्वावलोकन सेटिंग्स हट जाएँगी।"
     },
     "run-menu.preset.delete.confirm": {
       "message": "हटाएँ"
     },
     "run-menu.preset.name-length": {
-      "message": "प्रीसेट के नाम में 1 से 64 वर्ण होने चाहिए"
+      "message": "कॉन्फ़िगरेशन के नाम में 1 से 64 वर्ण होने चाहिए"
     },
     "run-menu.preset.exists": {
-      "message": "{name} नाम का प्रीसेट पहले से मौजूद है"
+      "message": "{name} नाम का कॉन्फ़िगरेशन पहले से मौजूद है"
     },
     "run-menu.preset.limit": {
-      "message": "अधिकतम 64 प्रीसेट सहेजे जा सकते हैं"
+      "message": "अधिकतम 64 कॉन्फ़िगरेशन सहेजे जा सकते हैं"
     },
     "run-menu.map-size": {
       "message": "नक़्शे का आकार"
@@ -3269,9 +3320,6 @@
     "code-editor.snippets.insert": {
       "message": "डालें"
     },
-    "code-editor.snippets.cancel": {
-      "message": "रद्द करें"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "स्निपेट के रूप में सहेजें…"
     },
@@ -3371,6 +3419,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "रद्द करें"
     },
+    "code-editor.section-header.present.title": {
+      "message": "मौजूदा {section} अनुभाग पर जाएँ?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "इस स्क्रिप्ट में {section} पहले से है। AoE2RMSIDE आपका अभी जोड़ा गया हेडर हटाकर कर्सर को मौजूदा हेडर पर ले जा सकता है।"
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "अनुभाग पर जाएँ"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "{section} को उसकी सही जगह ले जाएँ?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "अनुभागों के क्रम में {section} की जगह कहीं और है। AoE2RMSIDE हेडर को इस स्क्रिप्ट में उसकी सही जगह ले जा सकता है।"
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "सही जगह ले जाएँ"
+    },
+    "code-editor.section-header.here": {
+      "message": "यहाँ डालें"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "रद्द करें"
+    },
     "code-editor.snippets.store-reset": {
       "message": "आपके सहेजे गए स्निपेट पढ़े नहीं जा सके, इसलिए ‘मेरे स्निपेट’ खाली है।"
     },
@@ -3409,9 +3481,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "स्निपेट सहेजें"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "रद्द करें"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "नाम दर्ज करें।"
@@ -4013,6 +4082,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "{name} का स्रोत खोलें, {count} चयनित"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "खाना: कुल {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "लकड़ी: कुल {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "सोना: कुल {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "पत्थर: कुल {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "सहायक वस्तुएँ दिखाएँ ({count})"
     },
@@ -4270,6 +4351,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter दबाने पर इस चरण का कोड संपादक में दिखता है"
     },
     "profiler.row.work-join": {
       "message": "{first}। {second}"

@@ -203,6 +203,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Togol Skrin Penuh"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Ikuti Lawatan"
+    },
     "app-menu.help.documentation": {
       "message": "Dokumentasi"
     },
@@ -217,6 +220,54 @@
     },
     "app-menu.help.about": {
       "message": "Perihal {product}"
+    },
+    "tour.step": {
+      "message": "{step, number} daripada {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Faham"
+    },
+    "tour.skip": {
+      "message": "Langkau Lawatan"
+    },
+    "tour.explorer.title": {
+      "message": "Penjelajah"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Gunakan `Buka Folder…` dalam menu `Fail`, atau butang folder di atas, untuk membuka folder yang mengandungi peta anda. Klik kanan pada folder untuk mencipta skrip dan folder di dalamnya."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Gunakan `Buka Folder…` dalam menu `Fail`, atau butang folder di atas, untuk membuka folder yang mengandungi skrip anda. Klik kanan pada folder untuk mencipta skrip dan folder di dalamnya."
+    },
+    "tour.editor.title": {
+      "message": "Penyunting"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Tekan `Ctrl+Space` untuk cadangan, dan tuding pada perkataan untuk melihat penerangannya. `Ctrl+J` membuka `Sisipkan Coretan Kod…` dengan cebisan skrip yang siap digunakan."
+    },
+    "tour.editor.body": {
+      "message": "Tekan `Ctrl+Space` untuk cadangan, dan tuding pada perkataan untuk melihat penerangannya."
+    },
+    "tour.run.title": {
+      "message": "Jana peta"
+    },
+    "tour.run.body": {
+      "message": "Tekan `F5` atau butang Jalankan untuk menjana peta daripada skrip anda. Tetapkan `Benih` dalam menu di sebelah Jalankan, dan bilangan pemain dalam menu konfigurasi di atas peta."
+    },
+    "tour.preview.title": {
+      "message": "Pratonton peta"
+    },
+    "tour.preview.body": {
+      "message": "Klik petak atau seret merentasi peta untuk memilih petak. Senarai kemudian menunjukkan apa yang ada di situ: tuding pada entri untuk menyerlahkannya, atau klik untuk pergi ke barisnya. Alat di penjuru peta menukar paparan dan rupa."
+    },
+    "tour.preview.tip": {
+      "message": "Petua: pratonton juga boleh dijana semula semasa anda menyunting (`Jalankan apabila disunting` dalam menu di sebelah Jalankan)."
+    },
+    "tour.output.title": {
+      "message": "Keluaran dan masalah"
+    },
+    "tour.output.body": {
+      "message": "`Keluaran` menyenaraikan setiap larian dan apa yang dilaporkannya. `Masalah` menunjukkan ralat dan amaran; klik salah satu untuk pergi ke barisnya."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "Folder permainan yang dipautkan tidak dapat dibuka"
@@ -555,22 +606,22 @@
       "message": "Jalankan apabila disunting"
     },
     "run-menu.preset.default-name": {
-      "message": "Pratetap"
+      "message": "Konfig"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Pratetap {number}"
+      "message": "Konfig {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Tetapan pratetap pratonton"
+      "message": "Tetapan konfigurasi pratonton"
     },
     "run-menu.preset.manage": {
-      "message": "Urus pratetap pratonton"
+      "message": "Urus konfigurasi pratonton"
     },
     "run-menu.preset.new": {
-      "message": "Pratetap baharu"
+      "message": "Konfigurasi baharu"
     },
     "run-menu.preset.new-name": {
-      "message": "Namakan pratetap pratonton baharu"
+      "message": "Namakan konfigurasi pratonton baharu"
     },
     "run-menu.preset.rename": {
       "message": "Namakan semula {name}"
@@ -585,22 +636,22 @@
       "message": "Padam {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "Padam pratetap {name}?"
+      "message": "Padam konfigurasi {name}?"
     },
     "run-menu.preset.delete.description": {
-      "message": "Ini membuang tetapan pratonton yang disimpan untuk pratetap ini."
+      "message": "Ini membuang tetapan pratonton yang disimpan untuk konfigurasi ini."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Padam"
     },
     "run-menu.preset.name-length": {
-      "message": "Nama pratetap memerlukan 1 hingga 64 aksara"
+      "message": "Nama konfigurasi memerlukan 1 hingga 64 aksara"
     },
     "run-menu.preset.exists": {
-      "message": "Pratetap bernama {name} sudah wujud"
+      "message": "Konfigurasi bernama {name} sudah wujud"
     },
     "run-menu.preset.limit": {
-      "message": "Maksimum 64 pratetap boleh disimpan"
+      "message": "Maksimum 64 konfigurasi boleh disimpan"
     },
     "run-menu.map-size": {
       "message": "Saiz peta"
@@ -3269,9 +3320,6 @@
     "code-editor.snippets.insert": {
       "message": "Sisipkan"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Batal"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Simpan Sebagai Coretan Kod…"
     },
@@ -3371,6 +3419,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Batal"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Pergi ke bahagian {section} yang sedia ada?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Skrip ini sudah mempunyai {section}. AoE2RMSIDE boleh membuang pengepala yang baru anda tambah dan mengalihkan kursor ke pengepala yang sedia ada."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Pergi ke Bahagian"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "Alihkan {section} ke tempatnya?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} sepatutnya berada di tempat lain dalam susunan bahagian. AoE2RMSIDE boleh mengalihkan pengepala ke tempat yang betul dalam skrip ini."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Alihkan ke Tempatnya"
+    },
+    "code-editor.section-header.here": {
+      "message": "Sisipkan di Sini"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Batal"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Coretan kod anda yang disimpan tidak dapat dibaca, jadi Coretan kod saya bermula kosong."
     },
@@ -3409,9 +3481,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Simpan Coretan Kod"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Batal"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Masukkan nama."
@@ -4013,6 +4082,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Buka sumber untuk {name}, {count} dipilih"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Makanan: {amount, number, integer} kesemuanya"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Kayu: {amount, number, integer} kesemuanya"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Emas: {amount, number, integer} kesemuanya"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Batu: {amount, number, integer} kesemuanya"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Tunjukkan objek pembantu ({count})"
     },
@@ -4270,6 +4351,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter menunjukkan kod langkah ini dalam penyunting"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

@@ -203,6 +203,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "切換全螢幕"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "開始導覽"
+    },
     "app-menu.help.documentation": {
       "message": "說明文件"
     },
@@ -217,6 +220,54 @@
     },
     "app-menu.help.about": {
       "message": "關於 {product}"
+    },
+    "tour.step": {
+      "message": "{step, number}/{total, number}"
+    },
+    "tour.got-it": {
+      "message": "我知道了"
+    },
+    "tour.skip": {
+      "message": "略過導覽"
+    },
+    "tour.explorer.title": {
+      "message": "檔案總管"
+    },
+    "tour.explorer.body.maps": {
+      "message": "使用`檔案`選單中的`開啟資料夾…`或上方的資料夾按鈕，開啟存放地圖的資料夾。在資料夾上按右鍵，即可在其中建立指令碼和資料夾。"
+    },
+    "tour.explorer.body.scripts": {
+      "message": "使用`檔案`選單中的`開啟資料夾…`或上方的資料夾按鈕，開啟存放指令碼的資料夾。在資料夾上按右鍵，即可在其中建立指令碼和資料夾。"
+    },
+    "tour.editor.title": {
+      "message": "編輯器"
+    },
+    "tour.editor.body.snippets": {
+      "message": "按 `Ctrl+Space` 取得建議，將指標停在字詞上即可查看說明。`Ctrl+J` 會開啟`插入程式碼片段…`，提供現成的指令碼片段。"
+    },
+    "tour.editor.body": {
+      "message": "按 `Ctrl+Space` 取得建議，將指標停在字詞上即可查看說明。"
+    },
+    "tour.run.title": {
+      "message": "產生地圖"
+    },
+    "tour.run.body": {
+      "message": "按 `F5` 或執行按鈕，即可從指令碼產生地圖。在執行旁的選單中設定`種子`，在地圖上方的組態選單中設定玩家人數。"
+    },
+    "tour.preview.title": {
+      "message": "地圖預覽"
+    },
+    "tour.preview.body": {
+      "message": "按一下地圖格或在地圖上拖曳，即可選取地圖格。清單隨即顯示該處有哪些內容：將指標停在項目上可醒目提示，按一下則跳到對應的行。地圖角落的工具可切換檢視方式與外觀。"
+    },
+    "tour.preview.tip": {
+      "message": "提示：預覽也能在編輯時重新產生（執行旁選單中的`編輯時執行`）。"
+    },
+    "tour.output.title": {
+      "message": "輸出與問題"
+    },
+    "tour.output.body": {
+      "message": "`輸出`列出每次執行及其回報內容。`問題`顯示錯誤與警告；按一下其中一項即可跳到對應的行。"
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "無法開啟已連結的遊戲資料夾"
@@ -555,22 +606,22 @@
       "message": "編輯時執行"
     },
     "run-menu.preset.default-name": {
-      "message": "預設集"
+      "message": "組態"
     },
     "run-menu.preset.numbered-name": {
-      "message": "預設集 {number}"
+      "message": "組態 {number}"
     },
     "run-menu.preset.settings": {
-      "message": "預覽預設集設定"
+      "message": "預覽組態設定"
     },
     "run-menu.preset.manage": {
-      "message": "管理預覽預設集"
+      "message": "管理預覽組態"
     },
     "run-menu.preset.new": {
-      "message": "新增預設集"
+      "message": "新增組態"
     },
     "run-menu.preset.new-name": {
-      "message": "為新的預覽預設集命名"
+      "message": "為新的預覽組態命名"
     },
     "run-menu.preset.rename": {
       "message": "重新命名 {name}"
@@ -585,22 +636,22 @@
       "message": "刪除 {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "刪除預設集 {name}？"
+      "message": "刪除組態 {name}？"
     },
     "run-menu.preset.delete.description": {
-      "message": "這會移除此預設集儲存的預覽設定。"
+      "message": "這會移除此組態儲存的預覽設定。"
     },
     "run-menu.preset.delete.confirm": {
       "message": "刪除"
     },
     "run-menu.preset.name-length": {
-      "message": "預設集名稱須包含 1 至 64 個字元"
+      "message": "組態名稱須包含 1 至 64 個字元"
     },
     "run-menu.preset.exists": {
-      "message": "名為 {name} 的預設集已存在"
+      "message": "名為 {name} 的組態已存在"
     },
     "run-menu.preset.limit": {
-      "message": "最多可儲存 64 個預設集"
+      "message": "最多可儲存 64 個組態"
     },
     "run-menu.map-size": {
       "message": "地圖尺寸"
@@ -3269,9 +3320,6 @@
     "code-editor.snippets.insert": {
       "message": "插入"
     },
-    "code-editor.snippets.cancel": {
-      "message": "取消"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "儲存為程式碼片段…"
     },
@@ -3371,6 +3419,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "取消"
     },
+    "code-editor.section-header.present.title": {
+      "message": "前往現有的 {section} 區段？"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "此指令碼已有 {section}。AoE2RMSIDE 可以移除你剛新增的標頭，並將游標移到現有的標頭。"
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "前往區段"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "將 {section} 移到正確位置？"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "依區段順序，{section} 應位於他處。AoE2RMSIDE 可以將該標頭移到此指令碼中的正確位置。"
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "移到正確位置"
+    },
+    "code-editor.section-header.here": {
+      "message": "插入到此處"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "取消"
+    },
     "code-editor.snippets.store-reset": {
       "message": "無法讀取你儲存的程式碼片段，因此「我的程式碼片段」為空。"
     },
@@ -3409,9 +3481,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "儲存程式碼片段"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "取消"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "請輸入名稱。"
@@ -4013,6 +4082,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "開啟 {name} 的原始碼，已選取 {count} 個"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "食物：總計 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "木材：總計 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "黃金：總計 {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "石料：總計 {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "顯示輔助物件（{count}）"
     },
@@ -4270,6 +4351,9 @@
     },
     "profiler.row.name": {
       "message": "{step}（{group}），{duration}，{percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "按 Enter 可在編輯器中顯示此步驟的程式碼"
     },
     "profiler.row.work-join": {
       "message": "{first}。{second}"

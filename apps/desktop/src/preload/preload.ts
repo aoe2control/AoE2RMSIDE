@@ -12,6 +12,7 @@ import {
 } from '../shared/image-export';
 import { isUpdateVersion, validateUpdateState, type UpdateState } from '../shared/update';
 import { ownSnippetLimits, validateOwnSnippet, type OwnSnippet } from '../shared/own-snippets';
+import { validateTourProgress, type TourProgress } from '../shared/app-tour';
 import {
   ipcChannels,
   isDeploymentProfileId,
@@ -1240,6 +1241,9 @@ const api: RmsideDesktopApi = Object.freeze({
     ipcRenderer.invoke(ipcChannels.syncInsertSnippetAvailable, assertBoolean(available)),
   syncSaveSnippetAvailable: (available: boolean) =>
     ipcRenderer.invoke(ipcChannels.syncSaveSnippetAvailable, assertBoolean(available)),
+  getTourProgress: () => ipcRenderer.invoke(ipcChannels.tourProgress),
+  saveTourProgress: (progress: TourProgress) =>
+    ipcRenderer.invoke(ipcChannels.tourProgressSave, validateTourProgress(progress)),
   listOwnSnippets: () => ipcRenderer.invoke(ipcChannels.ownSnippetsList),
   saveOwnSnippet: (snippet: OwnSnippet, previousName: string | null) =>
     ipcRenderer.invoke(

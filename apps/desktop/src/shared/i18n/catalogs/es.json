@@ -195,6 +195,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Alternar pantalla completa"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Hacer el recorrido"
+    },
     "app-menu.help.documentation": {
       "message": "Documentación"
     },
@@ -209,6 +212,54 @@
     },
     "app-menu.help.about": {
       "message": "Acerca de {product}"
+    },
+    "tour.step": {
+      "message": "{step, number} de {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Entendido"
+    },
+    "tour.skip": {
+      "message": "Saltar recorrido"
+    },
+    "tour.explorer.title": {
+      "message": "Explorador"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Usa `Abrir carpeta…` en el menú `Archivo`, o el botón de carpeta de arriba, para abrir la carpeta con tus mapas. Haz clic con el botón derecho en una carpeta para crear scripts y carpetas en ella."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Usa `Abrir carpeta…` en el menú `Archivo`, o el botón de carpeta de arriba, para abrir la carpeta con tus scripts. Haz clic con el botón derecho en una carpeta para crear scripts y carpetas en ella."
+    },
+    "tour.editor.title": {
+      "message": "Editor"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Pulsa `Ctrl+Space` para ver sugerencias y señala una palabra para ver su descripción. `Ctrl+J` abre `Insertar fragmento de código…` con partes de script listas para usar."
+    },
+    "tour.editor.body": {
+      "message": "Pulsa `Ctrl+Space` para ver sugerencias y señala una palabra para ver su descripción."
+    },
+    "tour.run.title": {
+      "message": "Generar un mapa"
+    },
+    "tour.run.body": {
+      "message": "Pulsa `F5` o el botón Ejecutar para generar un mapa a partir de tu script. Ajusta la `Semilla` en el menú junto a Ejecutar, y el número de jugadores en el menú de configuración sobre el mapa."
+    },
+    "tour.preview.title": {
+      "message": "Vista previa del mapa"
+    },
+    "tour.preview.body": {
+      "message": "Haz clic en una casilla o arrastra por el mapa para seleccionar casillas. La lista muestra entonces lo que hay: señala una entrada para resaltarla o haz clic en ella para ir a su línea. Las herramientas de la esquina del mapa cambian la vista y el aspecto."
+    },
+    "tour.preview.tip": {
+      "message": "Consejo: la vista previa también puede regenerarse mientras editas (`Al editar` en el menú junto a Ejecutar)."
+    },
+    "tour.output.title": {
+      "message": "Salida y problemas"
+    },
+    "tour.output.body": {
+      "message": "`Salida` muestra cada ejecución y lo que informó. `Problemas` muestra errores y advertencias; haz clic en uno para ir a su línea."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "No se pudo abrir la carpeta del juego vinculada"
@@ -547,22 +598,22 @@
       "message": "Al editar"
     },
     "run-menu.preset.default-name": {
-      "message": "Preajuste"
+      "message": "Config"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Preajuste {number}"
+      "message": "Config {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Configuración del preajuste de vista previa"
+      "message": "Ajustes de la configuración de vista previa"
     },
     "run-menu.preset.manage": {
-      "message": "Gestionar preajustes de vista previa"
+      "message": "Gestionar configuraciones de vista previa"
     },
     "run-menu.preset.new": {
-      "message": "Nuevo preajuste"
+      "message": "Nueva configuración"
     },
     "run-menu.preset.new-name": {
-      "message": "Nombrar nuevo preajuste de vista previa"
+      "message": "Nombrar nueva configuración de vista previa"
     },
     "run-menu.preset.rename": {
       "message": "Cambiar nombre de {name}"
@@ -577,22 +628,22 @@
       "message": "Eliminar {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "¿Eliminar el preajuste {name}?"
+      "message": "¿Eliminar la configuración {name}?"
     },
     "run-menu.preset.delete.description": {
-      "message": "Se eliminará la configuración de vista previa guardada en este preajuste."
+      "message": "Se eliminarán los ajustes de vista previa guardados en esta configuración."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Eliminar"
     },
     "run-menu.preset.name-length": {
-      "message": "Los nombres de preajustes deben tener entre 1 y 64 caracteres"
+      "message": "Los nombres de configuraciones deben tener entre 1 y 64 caracteres"
     },
     "run-menu.preset.exists": {
-      "message": "Ya existe un preajuste llamado {name}"
+      "message": "Ya existe una configuración llamada {name}"
     },
     "run-menu.preset.limit": {
-      "message": "Se pueden guardar hasta 64 preajustes"
+      "message": "Se pueden guardar hasta 64 configuraciones"
     },
     "run-menu.map-size": {
       "message": "Tamaño del mapa"
@@ -3261,9 +3312,6 @@
     "code-editor.snippets.insert": {
       "message": "Insertar"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Cancelar"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Guardar como fragmento…"
     },
@@ -3363,6 +3411,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Cancelar"
     },
+    "code-editor.section-header.present.title": {
+      "message": "¿Ir a la sección {section} existente?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Este script ya tiene {section}. AoE2RMSIDE puede quitar el encabezado que acabas de añadir y mover el cursor al existente."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Ir a la sección"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "¿Mover {section} a su lugar?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} va en otro lugar según el orden de las secciones. AoE2RMSIDE puede mover el encabezado a su lugar correcto en este script."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Mover a su lugar"
+    },
+    "code-editor.section-header.here": {
+      "message": "Insertar aquí"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Cancelar"
+    },
     "code-editor.snippets.store-reset": {
       "message": "No se han podido leer tus fragmentos guardados, así que Mis fragmentos de código empieza vacío."
     },
@@ -3401,9 +3473,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Guardar fragmento"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Cancelar"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Introduce un nombre."
@@ -4005,6 +4074,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Abrir el origen de {name}, seleccionados: {count}"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Comida: {amount, number, integer} en total"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Madera: {amount, number, integer} en total"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Oro: {amount, number, integer} en total"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Piedra: {amount, number, integer} en total"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Mostrar objetos auxiliares ({count})"
     },
@@ -4262,6 +4343,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Intro muestra el código de este paso en el editor"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

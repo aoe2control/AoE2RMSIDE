@@ -751,11 +751,7 @@ body.rmside-monaco-056 {
   .fixed-workspace[data-preview-overlay='true']
   .monaco-editor-mount
   > .monaco-editor {
-  background-color: color-mix(
-    in srgb,
-    var(--vscode-editor-background) calc(var(--editor-surface-alpha, 1) * 100%),
-    transparent
-  );
+  background-color: transparent;
 }
 
 .rmside-monaco-056

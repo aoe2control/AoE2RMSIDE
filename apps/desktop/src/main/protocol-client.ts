@@ -113,6 +113,7 @@ import {
 } from '../shared/map-icon-art-objects';
 import { isObjectClassList, objectClassesFor } from '../shared/object-classes';
 import { decodeAppearanceObjectColumn } from '../shared/terrain-appearances';
+import { validSectionStarts } from '../shared/section-starts';
 import { validTileWriteRuns } from '../shared/tile-write-runs';
 import { constantNamesFor } from './constant-names-provider';
 import {
@@ -158,7 +159,7 @@ interface PendingRequest {
   reject(error: Error): void;
 }
 
-const protocolVersion = { major: 2, minor: 22, patch: 0 } as const;
+const protocolVersion = { major: 2, minor: 23, patch: 0 } as const;
 
 export class ProtocolResponseError extends Error {
   constructor(
@@ -1283,6 +1284,7 @@ function toPreviewResult(
     )
       ? { tileWriteRunsLe: Uint8Array.from(provenance.tileWriteRunsLe) }
       : {}),
+    ...sectionStartsField(provenance.sectionStarts, provenance.operations.length),
     semanticHash: toHex(response.semanticHash),
     requestHash: toHex(response.requestHash),
     sourceCatalogRevision: sourceCatalog.revision,
@@ -1335,6 +1337,15 @@ export function toPreviewConnectionRoutes(
     recordsLe: Uint8Array.from(routes.recordsLe),
     verticesLe: Uint8Array.from(routes.verticesLe),
   };
+}
+
+function sectionStartsField(
+  starts: readonly { section: string; firstOperationIndex: number }[],
+  operationCount: number,
+): Pick<PreviewGenerationResult, 'provenanceSectionStarts'> {
+  if (starts.length === 0) return {};
+  const valid = validSectionStarts(starts, operationCount);
+  return valid ? { provenanceSectionStarts: valid } : {};
 }
 
 function connectionRoutesField(

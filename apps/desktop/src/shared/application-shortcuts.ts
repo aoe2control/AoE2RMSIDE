@@ -6,6 +6,8 @@ export const applicationShortcuts = {
   deployManagedMod: 'CmdOrCtrl+Shift+B',
   browseInstalledSources: 'CmdOrCtrl+Shift+G',
   findInFiles: 'CmdOrCtrl+Shift+F',
+  insertSnippet: 'CmdOrCtrl+J',
+  saveSnippet: 'CmdOrCtrl+Shift+J',
 } as const;
 
 export type ApplicationShortcutName = keyof typeof applicationShortcuts;
@@ -78,7 +80,20 @@ export const menuShortcutItems = [
   { id: 'file.deploy-managed-mod', accelerator: applicationShortcuts.deployManagedMod },
   { id: 'file.browse-installed-sources', accelerator: applicationShortcuts.browseInstalledSources },
   { id: 'file.find-in-files', accelerator: applicationShortcuts.findInFiles },
+  { id: 'edit.insert-snippet', accelerator: applicationShortcuts.insertSnippet },
+  { id: 'edit.save-snippet', accelerator: applicationShortcuts.saveSnippet },
 ] as const;
+
+export interface DeveloperToolsKeyInput {
+  key: string;
+  control: boolean;
+  shift: boolean;
+}
+
+export function isBlockedDeveloperToolsKey(input: DeveloperToolsKeyInput): boolean {
+  const key = input.key.toLowerCase();
+  return key === 'f12' || (input.control && input.shift && (key === 'i' || key === 'c'));
+}
 
 export const modalSafeMenuActions: ReadonlySet<ApplicationMenuAction['type']> = new Set<
   ApplicationMenuAction['type']

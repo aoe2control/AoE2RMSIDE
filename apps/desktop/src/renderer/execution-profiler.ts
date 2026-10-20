@@ -12,6 +12,7 @@ import {
   type ExecutionStepId,
 } from '../shared/execution-cost';
 import type { PreviewGenerationResult } from '../shared/api';
+import type { RmsSectionName } from '../shared/section-starts';
 import { activeTranslator, t, type MessageId } from '../shared/i18n/translator';
 
 const groupLabelIds: Readonly<Record<ExecutionGroupId, MessageId>> = {
@@ -555,6 +556,36 @@ export function rankedProfilerRows(summary: ExecutionCostSummary): ProfilerRow[]
         left.durationUs - right.durationUs ||
         executionStepIds.indexOf(left.step) - executionStepIds.indexOf(right.step),
     );
+}
+
+export const profilerStepSections: Readonly<Partial<Record<ExecutionStepId, RmsSectionName>>> = {
+  'setup.players': 'player_setup',
+  'land.generate': 'land_generation',
+  'elevation.generate': 'elevation_generation',
+  'cliffs.generate': 'cliff_generation',
+  'terrain.generate': 'terrain_generation',
+  'connections.generate': 'connection_generation',
+  'objects.generate': 'objects_generation',
+};
+
+export function profilerStepOperations(
+  phase: ProfilerPhase | null,
+  committed: Pick<
+    PreviewGenerationResult,
+    'provenanceOperations' | 'provenanceSectionStarts'
+  > | null,
+): ReadonlyMap<ExecutionStepId, number> {
+  const targets = new Map<ExecutionStepId, number>();
+  if ((phase !== 'committed' && phase !== 'cached') || !committed) return targets;
+  const starts = committed.provenanceSectionStarts ?? [];
+  for (const step of executionStepIds) {
+    const section = profilerStepSections[step];
+    const start = section ? starts.find((entry) => entry.section === section) : undefined;
+    if (start && committed.provenanceOperations[start.operationIndex]) {
+      targets.set(step, start.operationIndex);
+    }
+  }
+  return targets;
 }
 
 export interface ProfilerSegment {

@@ -195,6 +195,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Przełącz pełny ekran"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Rozpocznij przewodnik"
+    },
     "app-menu.help.documentation": {
       "message": "Dokumentacja"
     },
@@ -209,6 +212,54 @@
     },
     "app-menu.help.about": {
       "message": "O programie {product}"
+    },
+    "tour.step": {
+      "message": "{step, number} z {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Rozumiem"
+    },
+    "tour.skip": {
+      "message": "Pomiń przewodnik"
+    },
+    "tour.explorer.title": {
+      "message": "Eksplorator"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Użyj `Otwórz folder…` w menu `Plik` lub przycisku folderu powyżej, aby otworzyć folder z mapami. Kliknij folder prawym przyciskiem myszy, aby utworzyć w nim skrypty i foldery."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Użyj `Otwórz folder…` w menu `Plik` lub przycisku folderu powyżej, aby otworzyć folder ze skryptami. Kliknij folder prawym przyciskiem myszy, aby utworzyć w nim skrypty i foldery."
+    },
+    "tour.editor.title": {
+      "message": "Edytor"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Naciśnij `Ctrl+Space`, aby zobaczyć podpowiedzi, i wskaż słowo, aby zobaczyć jego opis. `Ctrl+J` otwiera `Wstaw fragment kodu…` z gotowymi fragmentami skryptu."
+    },
+    "tour.editor.body": {
+      "message": "Naciśnij `Ctrl+Space`, aby zobaczyć podpowiedzi, i wskaż słowo, aby zobaczyć jego opis."
+    },
+    "tour.run.title": {
+      "message": "Wygeneruj mapę"
+    },
+    "tour.run.body": {
+      "message": "Naciśnij `F5` lub przycisk Uruchom, aby wygenerować mapę ze skryptu. `Ziarno` ustawisz w menu obok przycisku Uruchom, a liczbę graczy w menu konfiguracji nad mapą."
+    },
+    "tour.preview.title": {
+      "message": "Podgląd mapy"
+    },
+    "tour.preview.body": {
+      "message": "Kliknij pole lub przeciągnij po mapie, aby zaznaczyć pola. Lista pokaże wtedy, co się na nich znajduje: wskaż pozycję, aby ją wyróżnić, lub kliknij ją, aby przejść do jej wiersza. Narzędzia w rogu mapy przełączają widok i wygląd."
+    },
+    "tour.preview.tip": {
+      "message": "Wskazówka: podgląd może też generować się na nowo podczas edycji (`Przy edycji` w menu obok przycisku Uruchom)."
+    },
+    "tour.output.title": {
+      "message": "Wyjście i problemy"
+    },
+    "tour.output.body": {
+      "message": "`Wyjście` pokazuje każde uruchomienie i jego komunikaty. `Problemy` pokazują błędy i ostrzeżenia; kliknij jeden z nich, aby przejść do jego wiersza."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "Nie udało się otworzyć połączonego folderu gry"
@@ -547,22 +598,22 @@
       "message": "Przy edycji"
     },
     "run-menu.preset.default-name": {
-      "message": "Zestaw ustawień"
+      "message": "Konfig"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Zestaw ustawień {number}"
+      "message": "Konfig {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Ustawienia zestawu podglądu"
+      "message": "Ustawienia konfiguracji podglądu"
     },
     "run-menu.preset.manage": {
-      "message": "Zarządzaj zestawami podglądu"
+      "message": "Zarządzaj konfiguracjami podglądu"
     },
     "run-menu.preset.new": {
-      "message": "Nowy zestaw ustawień"
+      "message": "Nowa konfiguracja"
     },
     "run-menu.preset.new-name": {
-      "message": "Nazwa nowego zestawu podglądu"
+      "message": "Nazwa nowej konfiguracji podglądu"
     },
     "run-menu.preset.rename": {
       "message": "Zmień nazwę {name}"
@@ -577,22 +628,22 @@
       "message": "Usuń {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "Usunąć zestaw ustawień {name}?"
+      "message": "Usunąć konfigurację {name}?"
     },
     "run-menu.preset.delete.description": {
-      "message": "Spowoduje to usunięcie zapisanych ustawień podglądu tego zestawu."
+      "message": "Spowoduje to usunięcie zapisanych ustawień podglądu tej konfiguracji."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Usuń"
     },
     "run-menu.preset.name-length": {
-      "message": "Nazwa zestawu musi mieć od 1 do 64 znaków"
+      "message": "Nazwa konfiguracji musi mieć od 1 do 64 znaków"
     },
     "run-menu.preset.exists": {
-      "message": "Zestaw o nazwie {name} już istnieje"
+      "message": "Konfiguracja o nazwie {name} już istnieje"
     },
     "run-menu.preset.limit": {
-      "message": "Można zapisać najwyżej 64 zestawy ustawień"
+      "message": "Można zapisać najwyżej 64 konfiguracje"
     },
     "run-menu.map-size": {
       "message": "Rozmiar mapy"
@@ -3261,9 +3312,6 @@
     "code-editor.snippets.insert": {
       "message": "Wstaw"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Anuluj"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Zapisz jako fragment kodu…"
     },
@@ -3363,6 +3411,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Anuluj"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Przejść do istniejącej sekcji {section}?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Ten skrypt ma już sekcję {section}. AoE2RMSIDE może usunąć dodany przed chwilą nagłówek i przenieść kursor do istniejącego."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Przejdź do sekcji"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "Przenieść {section} na właściwe miejsce?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "Sekcja {section} powinna być w innym miejscu w kolejności sekcji. AoE2RMSIDE może przenieść nagłówek na właściwe miejsce w tym skrypcie."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Przenieś na miejsce"
+    },
+    "code-editor.section-header.here": {
+      "message": "Wstaw tutaj"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Anuluj"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Nie udało się odczytać zapisanych fragmentów kodu, więc lista Moje fragmenty kodu jest pusta."
     },
@@ -3401,9 +3473,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Zapisz fragment"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Anuluj"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Wpisz nazwę."
@@ -4005,6 +4074,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Otwórz źródło: {name}, zaznaczono: {count}"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Żywność: łącznie {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Drewno: łącznie {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Złoto: łącznie {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Kamienie: łącznie {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Pokaż obiekty pomocnicze ({count})"
     },
@@ -4262,6 +4343,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter pokazuje kod tego kroku w edytorze"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

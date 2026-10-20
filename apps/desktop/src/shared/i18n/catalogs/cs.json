@@ -195,6 +195,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Přepnout režim celé obrazovky"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Spustit prohlídku"
+    },
     "app-menu.help.documentation": {
       "message": "Dokumentace"
     },
@@ -209,6 +212,54 @@
     },
     "app-menu.help.about": {
       "message": "O aplikaci {product}"
+    },
+    "tour.step": {
+      "message": "{step, number} z {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Rozumím"
+    },
+    "tour.skip": {
+      "message": "Přeskočit prohlídku"
+    },
+    "tour.explorer.title": {
+      "message": "Průzkumník"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Složku s mapami otevřete pomocí `Otevřít složku…` v nabídce `Soubor` nebo tlačítkem složky nahoře. Kliknutím pravým tlačítkem na složku v ní vytvoříte skripty a složky."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Složku se skripty otevřete pomocí `Otevřít složku…` v nabídce `Soubor` nebo tlačítkem složky nahoře. Kliknutím pravým tlačítkem na složku v ní vytvoříte skripty a složky."
+    },
+    "tour.editor.title": {
+      "message": "Editor"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Stisknutím `Ctrl+Space` zobrazíte návrhy a po najetí myší na slovo uvidíte jeho popis. `Ctrl+J` otevře `Vložit fragment…` s hotovými částmi skriptu."
+    },
+    "tour.editor.body": {
+      "message": "Stisknutím `Ctrl+Space` zobrazíte návrhy a po najetí myší na slovo uvidíte jeho popis."
+    },
+    "tour.run.title": {
+      "message": "Vygenerovat mapu"
+    },
+    "tour.run.body": {
+      "message": "Stisknutím `F5` nebo tlačítka Spustit vygenerujete ze skriptu mapu. `Semínko` nastavíte v nabídce vedle tlačítka Spustit a počet hráčů v nabídce konfigurace nad mapou."
+    },
+    "tour.preview.title": {
+      "message": "Náhled mapy"
+    },
+    "tour.preview.body": {
+      "message": "Kliknutím na políčko nebo tažením přes mapu vyberete políčka. Seznam pak ukáže, co na nich je: najetím myší na položku ji zvýrazníte, kliknutím přejdete na její řádek. Nástroje v rohu mapy přepínají pohled a vzhled."
+    },
+    "tour.preview.tip": {
+      "message": "Tip: náhled se může generovat znovu i během úprav (`Při úpravě` v nabídce vedle tlačítka Spustit)."
+    },
+    "tour.output.title": {
+      "message": "Výstup a problémy"
+    },
+    "tour.output.body": {
+      "message": "`Výstup` vypisuje každé spuštění a jeho hlášení. `Problémy` ukazují chyby a varování; kliknutím na položku přejdete na její řádek."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "Propojenou složku hry se nepodařilo otevřít"
@@ -547,22 +598,22 @@
       "message": "Při úpravě"
     },
     "run-menu.preset.default-name": {
-      "message": "Předvolba"
+      "message": "Konfig"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Předvolba {number}"
+      "message": "Konfig {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Nastavení předvolby náhledu"
+      "message": "Nastavení konfigurace náhledu"
     },
     "run-menu.preset.manage": {
-      "message": "Spravovat předvolby náhledu"
+      "message": "Spravovat konfigurace náhledu"
     },
     "run-menu.preset.new": {
-      "message": "Nová předvolba"
+      "message": "Nová konfigurace"
     },
     "run-menu.preset.new-name": {
-      "message": "Pojmenovat novou předvolbu náhledu"
+      "message": "Pojmenovat novou konfiguraci náhledu"
     },
     "run-menu.preset.rename": {
       "message": "Přejmenovat {name}"
@@ -577,22 +628,22 @@
       "message": "Smazat {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "Smazat předvolbu {name}?"
+      "message": "Smazat konfiguraci {name}?"
     },
     "run-menu.preset.delete.description": {
-      "message": "Tím se odstraní uložená nastavení náhledu této předvolby."
+      "message": "Tím se odstraní uložená nastavení náhledu této konfigurace."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Smazat"
     },
     "run-menu.preset.name-length": {
-      "message": "Názvy předvoleb musí mít 1 až 64 znaků"
+      "message": "Názvy konfigurací musí mít 1 až 64 znaků"
     },
     "run-menu.preset.exists": {
-      "message": "Předvolba s názvem {name} již existuje"
+      "message": "Konfigurace s názvem {name} již existuje"
     },
     "run-menu.preset.limit": {
-      "message": "Lze uložit nejvýše 64 předvoleb"
+      "message": "Lze uložit nejvýše 64 konfigurací"
     },
     "run-menu.map-size": {
       "message": "Velikost mapy"
@@ -3261,9 +3312,6 @@
     "code-editor.snippets.insert": {
       "message": "Vložit"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Zrušit"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Uložit jako fragment…"
     },
@@ -3363,6 +3411,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Zrušit"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Přejít na existující oddíl {section}?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Tento skript už oddíl {section} má. AoE2RMSIDE může právě přidanou hlavičku odstranit a přesunout kurzor na tu existující."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Přejít na oddíl"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "Přesunout {section} na správné místo?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} patří v pořadí oddílů jinam. AoE2RMSIDE může hlavičku přesunout na správné místo v tomto skriptu."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Přesunout na místo"
+    },
+    "code-editor.section-header.here": {
+      "message": "Vložit sem"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Zrušit"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Uložené fragmenty se nepodařilo přečíst, proto je seznam Moje fragmenty prázdný."
     },
@@ -3401,9 +3473,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Uložit fragment"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Zrušit"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Zadejte název."
@@ -4005,6 +4074,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Otevřít zdroj pro {name}, vybráno: {count}"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Jídlo: celkem {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Dřevo: celkem {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Zlato: celkem {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Kámen: celkem {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Zobrazit pomocné objekty ({count})"
     },
@@ -4262,6 +4343,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter zobrazí kód tohoto kroku v editoru"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

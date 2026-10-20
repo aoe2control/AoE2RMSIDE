@@ -151,7 +151,10 @@ export function provisionalLegendLayers(
   map: PresentedPreviewResult | null,
   visibility: PreviewObjectVisibility,
   candidate:
-    | (Pick<PresentedPreviewResult, 'minimapPalette' | 'terrainNames' | 'localTerrainColors'> & {
+    | (Pick<
+        PresentedPreviewResult,
+        'minimapPalette' | 'terrainNames' | 'localTerrainColors' | 'terrainLabels'
+      > & {
         objectClasses?: ReadonlyMap<number, number> | undefined;
       })
     | null = null,
@@ -183,6 +186,8 @@ export function provisionalLegendLayers(
               candidate?.terrainNames ?? map?.terrainNames ?? [],
               map?.presentationNameSources?.localTerrainIds,
               candidate ? candidate.localTerrainColors : map?.localTerrainColors,
+              undefined,
+              candidate ? candidate.terrainLabels : map?.terrainLabels,
             )
           : objectMaterial(
               {
@@ -196,6 +201,8 @@ export function provisionalLegendLayers(
               palette,
               map?.presentationNameSources?.localObjectIds,
               visibility.helperObjectIds,
+              undefined,
+              map?.objectLabels,
             ),
       renderOrder: entry.kind === 'terrain' ? 0 : entry.kind === 'object' ? 3 : 4,
     }));

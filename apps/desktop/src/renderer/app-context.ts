@@ -8,6 +8,7 @@ import type {
 import type { EditorColorSchemeId } from '../shared/editor-color-scheme';
 import type { PreviewLook, PreviewPerspective } from '../shared/game-art';
 import type { OutputMessage } from '../shared/output-message';
+import type { EditorPointerLeave } from './editor-list-handoff';
 import type { ExecutionProfilerStore } from './execution-profiler';
 import type { MapTestProgressStore } from './map-test-progress';
 import type { PreviewMapOrigin } from './map-test-preview';
@@ -39,7 +40,7 @@ export interface AppPanelContextValue {
   selection: SourceSelection | null;
   highlightedPreviewOperationIndices: readonly number[];
   highlightPreviewSource(request: SourceHighlightRequest | null): void;
-  setEditorPointerInside(inside: boolean): void;
+  setEditorPointerInside(inside: boolean, leave?: EditorPointerLeave): void;
   selectPreviewOperation(operationIndex: number): void;
   commitPreview(map: PreviewGenerationResult, origin?: PreviewMapOrigin): void;
   previewMapOrigin: PreviewMapOrigin;

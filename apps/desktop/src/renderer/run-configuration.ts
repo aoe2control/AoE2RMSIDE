@@ -408,6 +408,41 @@ export function nextRunPresetName(presets: readonly Pick<RunPreset, 'name'>[]): 
   return t('run-menu.preset.numbered-name', { number: 65 });
 }
 
+const earlierAutomaticNames: readonly (readonly [string, string])[] = [
+  ['Configuration', 'Configuration {number}'],
+  ['Konfigurace', 'Konfigurace {number}'],
+  ['Konfiguration', 'Konfiguration {number}'],
+  ['Configuración', 'Configuración {number}'],
+  ['कॉन्फ़िगरेशन', 'कॉन्फ़िगरेशन {number}'],
+  ['Configurazione', 'Configurazione {number}'],
+  ['Konfigurasi', 'Konfigurasi {number}'],
+  ['Configuratie', 'Configuratie {number}'],
+  ['Konfiguracja', 'Konfiguracja {number}'],
+  ['Configuração', 'Configuração {number}'],
+  ['Конфигурация', 'Конфигурация {number}'],
+  ['Yapılandırma', 'Yapılandırma {number}'],
+  ['Конфігурація', 'Конфігурація {number}'],
+  ['Preset', 'Preset {number}'],
+  ['Předvolba', 'Předvolba {number}'],
+  ['Voreinstellung', 'Voreinstellung {number}'],
+  ['Preajuste', 'Preajuste {number}'],
+  ['Préréglage', 'Préréglage {number}'],
+  ['प्रीसेट', 'प्रीसेट {number}'],
+  ['Preimpostazione', 'Preimpostazione {number}'],
+  ['プリセット', 'プリセット {number}'],
+  ['프리셋', '프리셋 {number}'],
+  ['Pratetap', 'Pratetap {number}'],
+  ['Voorinstelling', 'Voorinstelling {number}'],
+  ['Zestaw ustawień', 'Zestaw ustawień {number}'],
+  ['Predefinição', 'Predefinição {number}'],
+  ['Набор настроек', 'Набор настроек {number}'],
+  ['Ön ayar', 'Ön ayar {number}'],
+  ['Набір налаштувань', 'Набір налаштувань {number}'],
+  ['Cấu hình sẵn', 'Cấu hình sẵn {number}'],
+  ['预设', '预设 {number}'],
+  ['預設集', '預設集 {number}'],
+];
+
 function automaticPresetNames(): Map<string, number> {
   const names = new Map<string, number>();
   for (const { tag } of availableLanguages({ pseudo: true })) {
@@ -418,6 +453,13 @@ function automaticPresetNames(): Map<string, number> {
     }
     for (let number = 1; number <= 65; number += 1) {
       const name = translator.t('run-menu.preset.numbered-name', { number });
+      if (!names.has(name)) names.set(name, number);
+    }
+  }
+  for (const [defaultName, numberedName] of earlierAutomaticNames) {
+    if (!names.has(defaultName)) names.set(defaultName, 0);
+    for (let number = 1; number <= 65; number += 1) {
+      const name = numberedName.replace('{number}', String(number));
       if (!names.has(name)) names.set(name, number);
     }
   }

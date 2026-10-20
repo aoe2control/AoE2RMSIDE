@@ -58,6 +58,7 @@ export function drawObjects(
   cullMargin: { x: number; y: number } = { x: 0, y: 0 },
   surface: ElevationSurface | null = null,
   heightMap: ElevationRange | null = null,
+  drawnMask: Uint8Array | null = null,
 ): DrawnObjectMarkers {
   const drawn: DrawnObjectMarkers = {
     helpers: 0,
@@ -102,6 +103,7 @@ export function drawObjects(
       colocatedOrdinal = strayOrdinals.get(tileKey) ?? 0;
       strayOrdinals.set(tileKey, colocatedOrdinal + 1);
     }
+    if (drawnMask?.[objectIndex]) continue;
     const relativeX = object.x - camera.centerX;
     const relativeY = object.y - camera.centerY;
     let centerX = halfWidth + (relativeX + relativeY) * component;
@@ -163,6 +165,7 @@ export function drawObjects(
         : material.color;
       if (material.helper) drawn.helpers += 1;
       else drawn.objects += 1;
+      if (drawnMask) drawnMask[objectIndex] = 1;
       drawn.wallJoins += drawWallPiece(
         marks,
         wallPieceGeometry(
@@ -200,6 +203,7 @@ export function drawObjects(
         : material.color;
       if (material.helper) drawn.helpers += 1;
       else drawn.objects += 1;
+      if (drawnMask) drawnMask[objectIndex] = 1;
       marks.anchor(
         mapX,
         mapY,
@@ -244,6 +248,7 @@ export function drawObjects(
     maximumRadius = Math.max(maximumRadius, radius);
     if (material.helper) drawn.helpers += 1;
     else drawn.objects += 1;
+    if (drawnMask) drawnMask[objectIndex] = 1;
     marks.anchor(mapX, mapY, centerX, centerY, radiusBase, minimum, maximum);
     drawMarker(marks, centerX, centerY, radius, material, color, style, verticalScale);
   }

@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import { motionDuration, motionEasing, prefersReducedMotion } from './motion';
 import {
+  previewInformationWidth,
   previewLegendPanelWidth,
   previewReadoutWidth,
   type PreviewLegendTextMetrics,
@@ -18,6 +19,13 @@ export function rectContainsPoint(rect: OverlayRect, x: number, y: number): bool
 }
 
 export const previewInformationSelector = '.preview-map-information';
+
+export function previewInformationHitRects(information: Element): OverlayRect[] {
+  const parts = [
+    ...information.querySelectorAll(':scope > .preview-map-readout, :scope > .preview-map-legend'),
+  ];
+  return (parts.length > 0 ? parts : [information]).map((part) => part.getBoundingClientRect());
+}
 
 export function useOverlayPointerHover(host: RefObject<HTMLElement | null>): void {
   useEffect(() => {
@@ -37,7 +45,9 @@ export function useOverlayPointerHover(host: RefObject<HTMLElement | null>): voi
         return;
       }
       set(
-        rectContainsPoint(information.getBoundingClientRect(), event.clientX, event.clientY)
+        previewInformationHitRects(information).some((rect) =>
+          rectContainsPoint(rect, event.clientX, event.clientY),
+        )
           ? information
           : null,
       );
@@ -298,17 +308,23 @@ export function useCanvasKeyboardFocus(host: RefObject<HTMLElement | null>): voi
 export interface PreviewLegendCatalog {
   objectNames: readonly { objectId: number; name: string }[];
   terrainNames: readonly { terrainId: number; name: string }[];
+  objectLabels?: ReadonlyMap<number, string> | undefined;
+  terrainLabels?: ReadonlyMap<number, string> | undefined;
 }
 
 export interface PreviewLegendWidths {
   panel: number;
   readout: number;
+  information: number;
 }
 
 export function usePreviewLegendWidth(
-  objectNames: PreviewLegendCatalog['objectNames'] | undefined,
-  terrainNames: PreviewLegendCatalog['terrainNames'] | undefined,
+  catalog: PreviewLegendCatalog | null | undefined,
 ): PreviewLegendWidths | null {
+  const objectNames = catalog?.objectNames;
+  const terrainNames = catalog?.terrainNames;
+  const objectLabels = catalog?.objectLabels;
+  const terrainLabels = catalog?.terrainLabels;
   const [fontRevision, setFontRevision] = useState(0);
   useEffect(() => {
     let active = true;
@@ -342,11 +358,13 @@ export function usePreviewLegendWidth(
       count: measure(`650 12px ${family}`, true),
       readout: measure(`600 10px ${family}`, true),
     };
-    return {
-      panel: previewLegendPanelWidth({ objectNames, terrainNames }, metrics),
-      readout: previewReadoutWidth(metrics),
-    };
-  }, [fontRevision, objectNames, terrainNames]);
+    const panel = previewLegendPanelWidth(
+      { objectNames, terrainNames, objectLabels, terrainLabels },
+      metrics,
+    );
+    const readout = previewReadoutWidth(metrics);
+    return { panel, readout, information: previewInformationWidth(panel, readout) };
+  }, [fontRevision, objectLabels, objectNames, terrainLabels, terrainNames]);
 }
 
 export function previewLegendMaxHeight(

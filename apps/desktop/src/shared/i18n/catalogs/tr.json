@@ -195,6 +195,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Tam ekranı aç/kapat"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Turu başlat"
+    },
     "app-menu.help.documentation": {
       "message": "Belgeler"
     },
@@ -209,6 +212,54 @@
     },
     "app-menu.help.about": {
       "message": "{product} hakkında"
+    },
+    "tour.step": {
+      "message": "{step, number} / {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Anladım"
+    },
+    "tour.skip": {
+      "message": "Turu atla"
+    },
+    "tour.explorer.title": {
+      "message": "Gezgin"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Haritalarınızın bulunduğu klasörü açmak için `Dosya` menüsündeki `Klasör aç…` komutunu veya yukarıdaki klasör düğmesini kullanın. Bir klasörün içinde betik ve klasör oluşturmak için klasöre sağ tıklayın."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Betiklerinizin bulunduğu klasörü açmak için `Dosya` menüsündeki `Klasör aç…` komutunu veya yukarıdaki klasör düğmesini kullanın. Bir klasörün içinde betik ve klasör oluşturmak için klasöre sağ tıklayın."
+    },
+    "tour.editor.title": {
+      "message": "Editör"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Öneriler için `Ctrl+Space` tuşlarına basın, açıklamasını görmek için bir kelimenin üzerine gelin. `Ctrl+J`, hazır betik parçalarıyla `Kod parçacığı ekle…` penceresini açar."
+    },
+    "tour.editor.body": {
+      "message": "Öneriler için `Ctrl+Space` tuşlarına basın, açıklamasını görmek için bir kelimenin üzerine gelin."
+    },
+    "tour.run.title": {
+      "message": "Harita üret"
+    },
+    "tour.run.body": {
+      "message": "Betiğinizden harita üretmek için `F5` tuşuna veya Çalıştır düğmesine basın. `Tohum` değerini Çalıştır düğmesinin yanındaki menüden, oyuncu sayısını haritanın üstündeki yapılandırma menüsünden ayarlayın."
+    },
+    "tour.preview.title": {
+      "message": "Harita önizlemesi"
+    },
+    "tour.preview.body": {
+      "message": "Kareleri seçmek için bir kareye tıklayın veya harita üzerinde sürükleyin. Liste orada ne olduğunu gösterir: vurgulamak için bir girdinin üzerine gelin, satırına gitmek için girdiye tıklayın. Haritanın köşesindeki araçlar bakış açısını ve görünümü değiştirir."
+    },
+    "tour.preview.tip": {
+      "message": "İpucu: önizleme siz düzenlerken de yeniden üretilebilir (Çalıştır düğmesinin yanındaki menüde `Düzenleyince`)."
+    },
+    "tour.output.title": {
+      "message": "Çıktı ve sorunlar"
+    },
+    "tour.output.body": {
+      "message": "`Çıktı` her çalıştırmayı ve bildirdiklerini listeler. `Sorunlar` hataları ve uyarıları gösterir; satırına gitmek için birine tıklayın."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "Bağlı oyun klasörü açılamadı"
@@ -547,22 +598,22 @@
       "message": "Düzenleyince"
     },
     "run-menu.preset.default-name": {
-      "message": "Ön ayar"
+      "message": "Konfig"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Ön ayar {number}"
+      "message": "Konfig {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Ön ayarın önizleme ayarları"
+      "message": "Yapılandırmanın önizleme ayarları"
     },
     "run-menu.preset.manage": {
-      "message": "Önizleme ön ayarlarını yönet"
+      "message": "Önizleme yapılandırmalarını yönet"
     },
     "run-menu.preset.new": {
-      "message": "Yeni ön ayar"
+      "message": "Yeni yapılandırma"
     },
     "run-menu.preset.new-name": {
-      "message": "Yeni önizleme ön ayarını adlandır"
+      "message": "Yeni önizleme yapılandırmasını adlandır"
     },
     "run-menu.preset.rename": {
       "message": "Ön ayarı yeniden adlandır: {name}"
@@ -577,22 +628,22 @@
       "message": "Ön ayarı sil: {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "{name} ön ayarı silinsin mi?"
+      "message": "{name} yapılandırması silinsin mi?"
     },
     "run-menu.preset.delete.description": {
-      "message": "Bu ön ayar için kaydedilmiş önizleme ayarları kaldırılır."
+      "message": "Bu yapılandırma için kaydedilmiş önizleme ayarları kaldırılır."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Sil"
     },
     "run-menu.preset.name-length": {
-      "message": "Ön ayar adları 1 ile 64 karakter arasında olmalıdır"
+      "message": "Yapılandırma adları 1 ile 64 karakter arasında olmalıdır"
     },
     "run-menu.preset.exists": {
-      "message": "{name} adlı bir ön ayar zaten var"
+      "message": "{name} adlı bir yapılandırma zaten var"
     },
     "run-menu.preset.limit": {
-      "message": "En fazla 64 ön ayar saklanabilir"
+      "message": "En fazla 64 yapılandırma saklanabilir"
     },
     "run-menu.map-size": {
       "message": "Harita boyutu"
@@ -3261,9 +3312,6 @@
     "code-editor.snippets.insert": {
       "message": "Ekle"
     },
-    "code-editor.snippets.cancel": {
-      "message": "İptal"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Kod parçacığı olarak kaydet…"
     },
@@ -3363,6 +3411,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "İptal"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Mevcut {section} bölümüne gidilsin mi?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Bu betikte {section} zaten var. AoE2RMSIDE az önce eklediğiniz başlığı kaldırıp imleci mevcut başlığa taşıyabilir."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Bölüme git"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "{section} doğru yerine taşınsın mı?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section}, bölüm sırasına göre başka bir yerde olmalıdır. AoE2RMSIDE başlığı bu betikteki doğru yerine taşıyabilir."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Doğru yerine taşı"
+    },
+    "code-editor.section-header.here": {
+      "message": "Buraya ekle"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "İptal"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Kaydedilmiş kod parçacıklarınız okunamadığından Kod parçacıklarım boş başlıyor."
     },
@@ -3401,9 +3473,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Kaydet"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "İptal"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Bir ad girin."
@@ -4005,6 +4074,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Kaynağı aç: {name}, {count} seçili"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Yiyecek: toplam {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Odun: toplam {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Altın: toplam {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Taş: toplam {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Yardımcı nesneleri göster ({count})"
     },
@@ -4262,6 +4343,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter bu adımın kodunu düzenleyicide gösterir"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

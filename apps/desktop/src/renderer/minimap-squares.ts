@@ -288,48 +288,42 @@ export function minimapSquareSide(kind: MinimapSquareClass, sizes: MinimapSquare
   return kind === 'tree' ? sizes.tree : sizes.object;
 }
 
-export const minimapSquareCastleOutline: readonly (readonly [number, number])[] = Object.freeze([
-  [1, 22],
-  [1, 8],
-  [5, 8],
-  [5, 2],
-  [7, 2],
-  [7, 4],
-  [9, 4],
-  [9, 2],
-  [11, 2],
-  [11, 4],
-  [13, 4],
-  [13, 2],
-  [15, 2],
-  [15, 4],
-  [17, 4],
-  [17, 2],
-  [19, 2],
-  [19, 8],
-  [23, 8],
-  [23, 22],
-  [14, 22],
-  [14, 18],
-  [13.4, 16.6],
-  [12, 16],
-  [10.6, 16.6],
-  [10, 18],
-  [10, 22],
-]);
+const townCenterDomeSegments = 16;
 
-const castleBounds = { left: 1, right: 23, top: 2, bottom: 22 };
+export const minimapSquareTownCenterOutline: readonly (readonly [number, number])[] = Object.freeze(
+  [
+    [1, 20],
+    [1, 10],
+    ...Array.from({ length: townCenterDomeSegments + 1 }, (_, index) => {
+      const angle = (Math.PI * index) / townCenterDomeSegments;
+      const round = (value: number) => Math.round(value * 1e6) / 1e6;
+      return [round(12 - 6 * Math.cos(angle)), round(10 - 6 * Math.sin(angle))];
+    }),
+    [23, 10],
+    [23, 20],
+    [19, 20],
+    [19, 16],
+    [16, 16],
+    [16, 20],
+    [8, 20],
+    [8, 16],
+    [5, 16],
+    [5, 20],
+  ].map((point) => Object.freeze(point as [number, number])),
+);
 
-export function minimapSquareCastlePolygon(
+const townCenterBounds = { left: 1, right: 23, top: 4, bottom: 20 };
+
+export function minimapSquareTownCenterPolygon(
   centerX: number,
   centerY: number,
   width: number,
 ): number[] {
-  const scale = width / (castleBounds.right - castleBounds.left);
-  const middleX = (castleBounds.left + castleBounds.right) / 2;
-  const middleY = (castleBounds.top + castleBounds.bottom) / 2;
+  const scale = width / (townCenterBounds.right - townCenterBounds.left);
+  const middleX = (townCenterBounds.left + townCenterBounds.right) / 2;
+  const middleY = (townCenterBounds.top + townCenterBounds.bottom) / 2;
   const points: number[] = [];
-  for (const [x, y] of minimapSquareCastleOutline) {
+  for (const [x, y] of minimapSquareTownCenterOutline) {
     points.push(centerX + (x - middleX) * scale, centerY + (y - middleY) * scale);
   }
   return points;

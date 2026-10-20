@@ -10,6 +10,7 @@ import {
   type CSSProperties,
   type FocusEvent as ReactFocusEvent,
   type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { Gauge } from 'lucide-react';
@@ -54,6 +55,7 @@ import {
   profilerPanelDescription,
   profilerRowName,
   profilerSegments,
+  profilerStepOperations,
   profilerTimeFrame,
   profilerTimeText,
   profilerTooltip,
@@ -70,6 +72,7 @@ export function ExecutionProfiler({
   expanded,
   navbarHost,
   onExpandPreview,
+  onNavigateToOperation,
   onOpenChange,
   open,
   store,
@@ -77,6 +80,7 @@ export function ExecutionProfiler({
   expanded: boolean;
   navbarHost: HTMLElement | null;
   onExpandPreview(): void;
+  onNavigateToOperation(operationIndex: number): void;
   onOpenChange(open: boolean): void;
   open: boolean;
   store: ExecutionProfilerStore;
@@ -91,6 +95,10 @@ export function ExecutionProfiler({
     snapshot.committed,
     isCachedPreview(snapshot.committed),
     performance.now(),
+  );
+  const stepOperations = useMemo(
+    () => profilerStepOperations(display.phase, snapshot.committed),
+    [display.phase, snapshot.committed],
   );
   const panelId = useId();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -209,6 +217,7 @@ export function ExecutionProfiler({
           chartKey={profilerChartKey(snapshot)}
           closing={panelPresence.closing}
           id={panelId}
+          onNavigateToOperation={onNavigateToOperation}
           onClose={() => {
             onOpenChange(false);
             buttonRef.current?.focus({ focusVisible: false });
@@ -219,6 +228,7 @@ export function ExecutionProfiler({
           pendingStep={display.pendingStep}
           phase={display.phase}
           reducedMotion={reducedMotion}
+          stepOperations={stepOperations}
           summary={display.summary}
           surfaceRef={panelPresence.ref}
         />
@@ -232,17 +242,24 @@ interface HighlightHandlers {
   focus(group: ExecutionGroupId | null): void;
 }
 
+interface StepNavigation {
+  operations: ReadonlyMap<ExecutionStepId, number>;
+  open(operationIndex: number): void;
+}
+
 function ExecutionProfilerPanel({
   chartKey,
   closing,
   id,
   onClose,
+  onNavigateToOperation,
   pending,
   pendingGroup,
   pendingStartMs,
   pendingStep,
   phase,
   reducedMotion,
+  stepOperations,
   summary,
   surfaceRef,
 }: {
@@ -250,12 +267,14 @@ function ExecutionProfilerPanel({
   closing: boolean;
   id: string;
   onClose(): void;
+  onNavigateToOperation(operationIndex: number): void;
   pending: boolean;
   pendingGroup: ExecutionGroupId | null;
   pendingStartMs: number | null;
   pendingStep: ExecutionStepId | null;
   phase: ReturnType<typeof profilerDisplay>['phase'];
   reducedMotion: boolean;
+  stepOperations: ReadonlyMap<ExecutionStepId, number>;
   summary: ExecutionCostSummary | null;
   surfaceRef(element: HTMLElement | null): void;
 }) {
@@ -317,6 +336,10 @@ function ExecutionProfilerPanel({
     () => ({ hover: setHoveredGroup, focus: setFocusedGroup }),
     [],
   );
+  const navigation = useMemo<StepNavigation>(
+    () => ({ operations: stepOperations, open: onNavigateToOperation }),
+    [onNavigateToOperation, stepOperations],
+  );
   const onKeyDownCapture = (event: ReactKeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'Escape') return;
     event.preventDefault();
@@ -375,13 +398,19 @@ function ExecutionProfilerPanel({
               <TableBody>
                 {[
                   ...rows.map((row) => (
-                    <StepRow highlightHandlers={highlightHandlers} key={row.step} row={row} />
+                    <StepRow
+                      highlightHandlers={highlightHandlers}
+                      key={row.step}
+                      navigation={navigation}
+                      row={row}
+                    />
                   )),
                   ...(pendingRow
                     ? [
                         <StepRow
                           highlightHandlers={highlightHandlers}
                           key={pendingRowKeyFor(pendingStep)}
+                          navigation={navigation}
                           pending={{
                             group: pendingGroup,
                             startMs: pendingStartMs,
@@ -561,10 +590,12 @@ function LiveDuration({ startMs }: { startMs: number }) {
 
 function StepRow({
   highlightHandlers,
+  navigation,
   pending,
   row,
 }: {
   highlightHandlers: HighlightHandlers;
+  navigation: StepNavigation;
   pending?: {
     group: ExecutionGroupId | null;
     startMs: number | null;
@@ -574,7 +605,10 @@ function StepRow({
 }) {
   const { t } = useI18n();
   const workId = useId();
+  const opensId = useId();
   const work = row && row.counters.length > 0 ? describeStepCounters(row.step, row.counters) : null;
+  const operationIndex = row ? navigation.operations.get(row.step) : undefined;
+  const opensCode = operationIndex !== undefined;
   const workLines = work
     ? [work.specific, work.generic, work.explanation].filter(
         (line): line is string => line !== null,
@@ -612,15 +646,22 @@ function StepRow({
           </span>
         )}
         {row ? (
-          workLines.length > 0 ? (
-            <span className="sr-only" id={workId}>
-              {t('message.format.sentence', {
-                text: workLines.reduce((first, second) =>
-                  t('profiler.row.work-join', { first, second }),
-                ),
-              })}
-            </span>
-          ) : null
+          <>
+            {workLines.length > 0 ? (
+              <span className="sr-only" id={workId}>
+                {t('message.format.sentence', {
+                  text: workLines.reduce((first, second) =>
+                    t('profiler.row.work-join', { first, second }),
+                  ),
+                })}
+              </span>
+            ) : null}
+            {opensCode ? (
+              <span className="sr-only" id={opensId}>
+                {t('message.format.sentence', { text: t('profiler.row.opens-code') })}
+              </span>
+            ) : null}
+          </>
         ) : step !== null ? (
           <span className="sr-only">{t('profiler.pending.step', { step: stepLabel(step) })}</span>
         ) : null}
@@ -641,18 +682,34 @@ function StepRow({
       </TableCell>
     </>
   );
+  const openCode = () => {
+    if (operationIndex !== undefined) navigation.open(operationIndex);
+  };
+  const describedBy = [work ? workId : null, opensCode ? opensId : null].filter(Boolean).join(' ');
   const rowProps = row
     ? ({
-        'aria-describedby': work ? workId : undefined,
+        'aria-describedby': describedBy || undefined,
         'aria-label': profilerRowName(row),
         className: 'execution-profiler-row',
         'data-group': row.group,
+        'data-opens-code': opensCode ? 'true' : undefined,
         'data-row-key': row.step,
         'data-step': row.step,
         onBlur: () => highlightHandlers.focus(null),
+        onClick: opensCode ? openCode : undefined,
         onFocus: (event: ReactFocusEvent<HTMLTableRowElement>) => {
           if (event.currentTarget.matches(':focus-visible')) highlightHandlers.focus(row.group);
         },
+        onKeyDown: opensCode
+          ? (event: ReactKeyboardEvent<HTMLTableRowElement>) => {
+              if (event.key !== 'Enter' && event.key !== ' ') return;
+              event.preventDefault();
+              openCode();
+            }
+          : undefined,
+        onMouseDown: opensCode
+          ? (event: ReactMouseEvent<HTMLTableRowElement>) => event.preventDefault()
+          : undefined,
         onPointerEnter: () => highlightHandlers.hover(row.group),
         onPointerLeave: () => highlightHandlers.hover(null),
         tabIndex: 0,
@@ -666,7 +723,7 @@ function StepRow({
       } as const);
   return (
     <Tooltip>
-      <TooltipTrigger delay={tooltipDelay} render={<TableRow {...rowProps} />}>
+      <TooltipTrigger closeOnClick={false} delay={tooltipDelay} render={<TableRow {...rowProps} />}>
         {cells}
       </TooltipTrigger>
       <TooltipContent side="left">

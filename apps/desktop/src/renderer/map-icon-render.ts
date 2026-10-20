@@ -41,7 +41,7 @@ import {
   mapIconSpawnMarkerWidthPixels,
 } from './map-icon-player-markers';
 import {
-  minimapSquareCastlePolygon,
+  minimapSquareTownCenterPolygon,
   minimapSquareClassifier,
   minimapSquareColor,
   minimapSquareDrawLayer,
@@ -368,7 +368,7 @@ function drawMinimapObjects(
   mapIconMinimapObjectDraws(scene, style, projection).forEach((draw, index) => {
     if (index % cancellationItemStride === 0) canvas.checkCancelled();
     if (draw.kind === 'town-center') {
-      const polygon = minimapSquareCastlePolygon(draw.x, draw.y, sizes.townCenter);
+      const polygon = minimapSquareTownCenterPolygon(draw.x, draw.y, sizes.townCenter);
       canvas.fillPolygon(polygon, draw.color);
       canvas.strokePolygon(
         polygon,

@@ -195,6 +195,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Перемкнути повноекранний режим"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Пройти огляд"
+    },
     "app-menu.help.documentation": {
       "message": "Документація"
     },
@@ -209,6 +212,54 @@
     },
     "app-menu.help.about": {
       "message": "Про {product}"
+    },
+    "tour.step": {
+      "message": "{step, number} з {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Зрозуміло"
+    },
+    "tour.skip": {
+      "message": "Пропустити огляд"
+    },
+    "tour.explorer.title": {
+      "message": "Провідник"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Відкрийте папку з мапами командою `Відкрити папку…` у меню `Файл` або кнопкою папки вгорі. Клацніть папку правою кнопкою миші, щоб створити в ній скрипти й папки."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Відкрийте папку зі скриптами командою `Відкрити папку…` у меню `Файл` або кнопкою папки вгорі. Клацніть папку правою кнопкою миші, щоб створити в ній скрипти й папки."
+    },
+    "tour.editor.title": {
+      "message": "Редактор"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Натисніть `Ctrl+Space`, щоб побачити підказки, і наведіть вказівник на слово, щоб побачити його опис. `Ctrl+J` відкриває `Вставити фрагмент…` з готовими частинами скрипту."
+    },
+    "tour.editor.body": {
+      "message": "Натисніть `Ctrl+Space`, щоб побачити підказки, і наведіть вказівник на слово, щоб побачити його опис."
+    },
+    "tour.run.title": {
+      "message": "Створення мапи"
+    },
+    "tour.run.body": {
+      "message": "Натисніть `F5` або кнопку «Запустити», щоб створити мапу за вашим скриптом. `Зерно` задається в меню поруч із кнопкою «Запустити», а кількість гравців — у меню конфігурації над мапою."
+    },
+    "tour.preview.title": {
+      "message": "Перегляд мапи"
+    },
+    "tour.preview.body": {
+      "message": "Клацніть клітинку або протягніть вказівник по мапі, щоб вибрати клітинки. Список покаже, що там є: наведіть вказівник на запис, щоб підсвітити його, або клацніть його, щоб перейти до його рядка. Інструменти в куті мапи перемикають вигляд і оформлення."
+    },
+    "tour.preview.tip": {
+      "message": "Порада: перегляд може оновлюватися й під час редагування (`При редагуванні` в меню поруч із кнопкою «Запустити»)."
+    },
+    "tour.output.title": {
+      "message": "Вивід і проблеми"
+    },
+    "tour.output.body": {
+      "message": "`Вивід` показує кожен запуск і його повідомлення. `Проблеми` показує помилки й попередження; клацніть запис, щоб перейти до його рядка."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "Не вдалося відкрити під’єднану папку гри"
@@ -547,22 +598,22 @@
       "message": "При редагуванні"
     },
     "run-menu.preset.default-name": {
-      "message": "Набір налаштувань"
+      "message": "Конфіг"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Набір налаштувань {number}"
+      "message": "Конфіг {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Налаштування набору перегляду"
+      "message": "Налаштування конфігурації перегляду"
     },
     "run-menu.preset.manage": {
-      "message": "Керувати наборами перегляду"
+      "message": "Керувати конфігураціями перегляду"
     },
     "run-menu.preset.new": {
-      "message": "Новий набір налаштувань"
+      "message": "Нова конфігурація"
     },
     "run-menu.preset.new-name": {
-      "message": "Назвати новий набір перегляду"
+      "message": "Назвати нову конфігурацію перегляду"
     },
     "run-menu.preset.rename": {
       "message": "Перейменувати {name}"
@@ -577,22 +628,22 @@
       "message": "Видалити {name}"
     },
     "run-menu.preset.delete.title": {
-      "message": "Видалити набір налаштувань {name}?"
+      "message": "Видалити конфігурацію {name}?"
     },
     "run-menu.preset.delete.description": {
-      "message": "Це видалить збережені налаштування перегляду цього набору."
+      "message": "Це видалить збережені налаштування перегляду цієї конфігурації."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Видалити"
     },
     "run-menu.preset.name-length": {
-      "message": "Назва набору має містити від 1 до 64 символів"
+      "message": "Назва конфігурації має містити від 1 до 64 символів"
     },
     "run-menu.preset.exists": {
-      "message": "Набір з назвою {name} уже існує"
+      "message": "Конфігурація з назвою {name} уже існує"
     },
     "run-menu.preset.limit": {
-      "message": "Можна зберегти щонайбільше 64 набори"
+      "message": "Можна зберегти щонайбільше 64 конфігурації"
     },
     "run-menu.map-size": {
       "message": "Розмір мапи"
@@ -3261,9 +3312,6 @@
     "code-editor.snippets.insert": {
       "message": "Вставити"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Скасувати"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Зберегти як фрагмент…"
     },
@@ -3363,6 +3411,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Скасувати"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Перейти до наявного розділу {section}?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "У цьому скрипті вже є {section}. AoE2RMSIDE може видалити щойно доданий заголовок і перемістити курсор до наявного."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Перейти до розділу"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "Перемістити {section} у правильне місце?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "За порядком розділів {section} має стояти в іншому місці. AoE2RMSIDE може перемістити заголовок у правильне місце в цьому скрипті."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "Перемістити на місце"
+    },
+    "code-editor.section-header.here": {
+      "message": "Вставити тут"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Скасувати"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Не вдалося прочитати збережені фрагменти, тому список «Мої фрагменти» порожній."
     },
@@ -3401,9 +3473,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Зберегти фрагмент"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Скасувати"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Введіть назву."
@@ -4005,6 +4074,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Відкрити код: {name}, вибрано {count}"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Їжа: усього {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Деревина: усього {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Золото: усього {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Камінь: усього {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Показати допоміжні об’єкти ({count})"
     },
@@ -4262,6 +4343,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Enter показує код цього кроку в редакторі"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"

@@ -34,6 +34,61 @@ export function snippetPlacement(
   return missing ? { kind: 'missing', section: missing } : { kind: 'caret' };
 }
 
+export function sectionOfHeader(header: string): SnippetSection | null {
+  const match = /^<([A-Za-z_]+)>$/u.exec(header);
+  const section = match?.[1]?.toLowerCase();
+  return section && isKnownSection(section) ? section : null;
+}
+
+export type SectionHeaderPlacement =
+  | { kind: 'fine' }
+  | { kind: 'present'; section: SnippetSection; existing: DocumentSection }
+  | { kind: 'misplaced'; section: SnippetSection };
+
+function writtenHeader(
+  section: SnippetSection,
+  line: number,
+  documentSections: readonly DocumentSection[],
+): DocumentSection | undefined {
+  return documentSections.find((entry) => entry.header === line && entry.name === section);
+}
+
+export function sectionHeaderPlacement(
+  section: SnippetSection,
+  line: number,
+  documentSections: readonly DocumentSection[],
+): SectionHeaderPlacement {
+  const written = writtenHeader(section, line, documentSections);
+  if (!written) return { kind: 'fine' };
+  const others = documentSections.filter((entry) => entry !== written);
+  const existing = others.find((entry) => entry.name === section);
+  if (existing) return { kind: 'present', section, existing };
+  const rank = sectionRank(section);
+  const misplaced = others.some((entry) => {
+    const entryRank = sectionRank(entry.name);
+    if (entryRank < 0) return false;
+    return entryRank > rank ? entry.header < line : entry.header > line;
+  });
+  return misplaced ? { kind: 'misplaced', section } : { kind: 'fine' };
+}
+
+export function sectionsWithoutHeader(
+  section: SnippetSection,
+  line: number,
+  documentSections: readonly DocumentSection[],
+): DocumentSection[] {
+  const written = writtenHeader(section, line, documentSections);
+  if (!written) return [...documentSections];
+  const index = documentSections.indexOf(written);
+  return documentSections.flatMap((entry, entryIndex) => {
+    if (entryIndex === index) return [];
+    if (entryIndex === index - 1 && written.end > written.header) {
+      return [{ ...entry, end: Math.max(entry.end, written.end) }];
+    }
+    return [entry];
+  });
+}
+
 export interface SnippetEdit {
   lineNumber: number;
   column: number;

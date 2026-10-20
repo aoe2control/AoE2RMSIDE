@@ -195,6 +195,9 @@
     "app-menu.view.toggle-full-screen": {
       "message": "Vollbild umschalten"
     },
+    "app-menu.help.take-the-tour": {
+      "message": "Rundgang starten"
+    },
     "app-menu.help.documentation": {
       "message": "Dokumentation"
     },
@@ -209,6 +212,54 @@
     },
     "app-menu.help.about": {
       "message": "Über {product}"
+    },
+    "tour.step": {
+      "message": "{step, number} von {total, number}"
+    },
+    "tour.got-it": {
+      "message": "Verstanden"
+    },
+    "tour.skip": {
+      "message": "Rundgang überspringen"
+    },
+    "tour.explorer.title": {
+      "message": "Explorer"
+    },
+    "tour.explorer.body.maps": {
+      "message": "Öffne mit `Ordner öffnen…` im Menü `Datei` oder mit der Ordnerschaltfläche oben den Ordner mit deinen Karten. Klicke mit der rechten Maustaste auf einen Ordner, um darin Skripte und Ordner anzulegen."
+    },
+    "tour.explorer.body.scripts": {
+      "message": "Öffne mit `Ordner öffnen…` im Menü `Datei` oder mit der Ordnerschaltfläche oben den Ordner mit deinen Skripten. Klicke mit der rechten Maustaste auf einen Ordner, um darin Skripte und Ordner anzulegen."
+    },
+    "tour.editor.title": {
+      "message": "Editor"
+    },
+    "tour.editor.body.snippets": {
+      "message": "Drücke `Strg+Leertaste` für Vorschläge und zeige auf ein Wort, um seine Beschreibung zu sehen. `Strg+J` öffnet `Codeausschnitt einfügen…` mit fertigen Skriptbausteinen."
+    },
+    "tour.editor.body": {
+      "message": "Drücke `Strg+Leertaste` für Vorschläge und zeige auf ein Wort, um seine Beschreibung zu sehen."
+    },
+    "tour.run.title": {
+      "message": "Karte erzeugen"
+    },
+    "tour.run.body": {
+      "message": "Drücke `F5` oder klicke auf „Ausführen“, um aus deinem Skript eine Karte zu erzeugen. Den `Startwert` legst du im Menü neben „Ausführen“ fest, die Spielerzahl im Konfigurationsmenü über der Karte."
+    },
+    "tour.preview.title": {
+      "message": "Kartenvorschau"
+    },
+    "tour.preview.body": {
+      "message": "Klicke auf ein Feld oder ziehe über die Karte, um Felder auszuwählen. Die Liste zeigt dann, was dort ist: Zeige auf einen Eintrag, um ihn hervorzuheben, oder klicke darauf, um zu seiner Zeile zu springen. Die Werkzeuge in der Ecke der Karte wechseln Ansicht und Darstellung."
+    },
+    "tour.preview.tip": {
+      "message": "Tipp: Die Vorschau kann sich auch beim Bearbeiten neu erzeugen (`Beim Bearbeiten` im Menü neben „Ausführen“)."
+    },
+    "tour.output.title": {
+      "message": "Ausgabe und Probleme"
+    },
+    "tour.output.body": {
+      "message": "`Ausgabe` listet jeden Lauf und seine Meldungen auf. `Probleme` zeigt Fehler und Warnungen; klicke auf einen Eintrag, um zu seiner Zeile zu springen."
     },
     "app-menu.file.open-linked-game-folder.failed": {
       "message": "Der verknüpfte Spielordner konnte nicht geöffnet werden"
@@ -547,22 +598,22 @@
       "message": "Beim Bearbeiten"
     },
     "run-menu.preset.default-name": {
-      "message": "Voreinstellung"
+      "message": "Konfig"
     },
     "run-menu.preset.numbered-name": {
-      "message": "Voreinstellung {number}"
+      "message": "Konfig {number}"
     },
     "run-menu.preset.settings": {
-      "message": "Vorschaueinstellungen der Voreinstellung"
+      "message": "Vorschaueinstellungen der Konfiguration"
     },
     "run-menu.preset.manage": {
-      "message": "Voreinstellungen für die Vorschau verwalten"
+      "message": "Konfigurationen für die Vorschau verwalten"
     },
     "run-menu.preset.new": {
-      "message": "Neue Voreinstellung"
+      "message": "Neue Konfiguration"
     },
     "run-menu.preset.new-name": {
-      "message": "Neue Voreinstellung für die Vorschau benennen"
+      "message": "Neue Konfiguration für die Vorschau benennen"
     },
     "run-menu.preset.rename": {
       "message": "{name} umbenennen"
@@ -577,22 +628,22 @@
       "message": "{name} löschen"
     },
     "run-menu.preset.delete.title": {
-      "message": "Voreinstellung {name} löschen?"
+      "message": "Konfiguration {name} löschen?"
     },
     "run-menu.preset.delete.description": {
-      "message": "Die gespeicherten Vorschaueinstellungen dieser Voreinstellung werden entfernt."
+      "message": "Die gespeicherten Vorschaueinstellungen dieser Konfiguration werden entfernt."
     },
     "run-menu.preset.delete.confirm": {
       "message": "Löschen"
     },
     "run-menu.preset.name-length": {
-      "message": "Namen von Voreinstellungen müssen 1 bis 64 Zeichen lang sein"
+      "message": "Namen von Konfigurationen müssen 1 bis 64 Zeichen lang sein"
     },
     "run-menu.preset.exists": {
-      "message": "Eine Voreinstellung namens {name} existiert bereits"
+      "message": "Eine Konfiguration namens {name} existiert bereits"
     },
     "run-menu.preset.limit": {
-      "message": "Höchstens 64 Voreinstellungen können gespeichert werden"
+      "message": "Höchstens 64 Konfigurationen können gespeichert werden"
     },
     "run-menu.map-size": {
       "message": "Kartengröße"
@@ -3261,9 +3312,6 @@
     "code-editor.snippets.insert": {
       "message": "Einfügen"
     },
-    "code-editor.snippets.cancel": {
-      "message": "Abbrechen"
-    },
     "code-editor.context-menu.save-snippet": {
       "message": "Als Codeausschnitt speichern…"
     },
@@ -3363,6 +3411,30 @@
     "code-editor.snippets.place.cancel": {
       "message": "Abbrechen"
     },
+    "code-editor.section-header.present.title": {
+      "message": "Zum vorhandenen Abschnitt {section} wechseln?"
+    },
+    "code-editor.section-header.present.description": {
+      "message": "Dieses Skript hat {section} bereits. AoE2RMSIDE kann die eben hinzugefügte Überschrift entfernen und den Cursor auf die vorhandene setzen."
+    },
+    "code-editor.section-header.present.confirm": {
+      "message": "Zu Abschnitt wechseln"
+    },
+    "code-editor.section-header.misplaced.title": {
+      "message": "{section} an die richtige Stelle verschieben?"
+    },
+    "code-editor.section-header.misplaced.description": {
+      "message": "{section} gehört in der Reihenfolge der Abschnitte an eine andere Stelle. AoE2RMSIDE kann die Überschrift an die richtige Stelle in diesem Skript verschieben."
+    },
+    "code-editor.section-header.misplaced.confirm": {
+      "message": "An die richtige Stelle"
+    },
+    "code-editor.section-header.here": {
+      "message": "Hier einfügen"
+    },
+    "code-editor.section-header.cancel": {
+      "message": "Abbrechen"
+    },
     "code-editor.snippets.store-reset": {
       "message": "Deine gespeicherten Codeausschnitte konnten nicht gelesen werden, daher ist „Meine Codeausschnitte“ leer."
     },
@@ -3401,9 +3473,6 @@
     },
     "code-editor.save-snippet.save": {
       "message": "Speichern"
-    },
-    "code-editor.save-snippet.cancel": {
-      "message": "Abbrechen"
     },
     "code-editor.save-snippet.problem.name-required": {
       "message": "Gib einen Namen ein."
@@ -4005,6 +4074,18 @@
     "preview-panel.legend.row.open-source": {
       "message": "Quelle für {name} öffnen, {count} ausgewählt"
     },
+    "preview-panel.legend.resource-total.food": {
+      "message": "Nahrung: insgesamt {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.wood": {
+      "message": "Holz: insgesamt {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.gold": {
+      "message": "Gold: insgesamt {amount, number, integer}"
+    },
+    "preview-panel.legend.resource-total.stone": {
+      "message": "Steine: insgesamt {amount, number, integer}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Hilfsobjekte anzeigen ({count})"
     },
@@ -4262,6 +4343,9 @@
     },
     "profiler.row.name": {
       "message": "{step} ({group}), {duration}, {percent}"
+    },
+    "profiler.row.opens-code": {
+      "message": "Die Eingabetaste zeigt den Code dieses Schritts im Editor"
     },
     "profiler.row.work-join": {
       "message": "{first}. {second}"
