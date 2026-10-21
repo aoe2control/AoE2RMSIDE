@@ -78,6 +78,7 @@ import {
   type PreviewCamera,
   type PreviewViewport,
 } from './top-down-preview';
+import { destroyPixiTree } from './pixi-destroy';
 
 export interface CandidatePresentation {
   elevationMode: ElevationDisplayMode;
@@ -1010,7 +1011,7 @@ export class PreviewCandidateLayer {
     this.clear();
     if (this.picture) this.destroyPicture(this.picture);
     this.picture = null;
-    this.container.destroy({ children: true });
+    destroyPixiTree(this.container);
   }
 
   private clear(): void {
@@ -1027,7 +1028,7 @@ export class PreviewCandidateLayer {
 }
 
 function destroyChunkParts(chunk: CandidateChunk): void {
-  chunk.terrain.destroy({ children: true });
+  destroyPixiTree(chunk.terrain);
   chunk.vectors?.destroy();
   chunk.texture?.destroy(true);
   chunk.raised?.geometry.destroy(true);

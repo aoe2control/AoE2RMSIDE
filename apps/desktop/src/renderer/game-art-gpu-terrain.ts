@@ -50,6 +50,7 @@ import {
 } from './preview-raised-terrain';
 import { requestPreviewRender } from './preview-render-scheduler';
 import type { VisibleChunk } from './top-down-preview';
+import { destroyPixiTree } from './pixi-destroy';
 
 export type GpuTerrainDraw =
   | { kind: 'solid'; color: number; mesh: TerrainMesh }
@@ -946,7 +947,7 @@ export class GameArtGpuTerrainLayer {
     this.destroyed = true;
     if (this.frame !== null) cancelAnimationFrame(this.frame);
     this.frame = null;
-    this.container.destroy({ children: true });
+    destroyPixiTree(this.container);
     for (const geometry of this.geometries) geometry.destroy(true);
     for (const shader of this.shaders) shader.destroy(false);
     for (const source of this.sources.values()) source.destroy();

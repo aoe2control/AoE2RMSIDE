@@ -10,6 +10,7 @@ import {
 import { gameArtTextureRepeatTiles } from '../shared/game-art';
 import { requestPreviewRender } from './preview-render-scheduler';
 import type { VisibleChunk } from './top-down-preview';
+import { destroyPixiTree } from './pixi-destroy';
 
 export interface GameArtTerrainSource extends BlendTerrain {
   texture: CanvasImageSource | null;
@@ -536,7 +537,7 @@ export class GameArtTerrainLayer {
     if (this.frame !== null) cancelAnimationFrame(this.frame);
     this.frame = null;
     for (const chunk of [...this.chunks.values()]) this.release(chunk);
-    this.container.destroy({ children: true });
+    destroyPixiTree(this.container);
   }
 }
 

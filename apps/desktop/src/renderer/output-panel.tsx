@@ -234,6 +234,8 @@ function OutputRunStatusIcon({ header }: { header: OutputRunHeader }) {
   );
 }
 
+const openOutputDetails = new WeakSet<OutputMessage>();
+
 const OutputRowView = memo(function OutputRowView({
   child = false,
   row,
@@ -252,17 +254,19 @@ const OutputRowView = memo(function OutputRowView({
       data-source={message.source}
     >
       <OutputSeverityIcon severity={message.severity} source={outputSourceLabel(message.source)} />
-      <OutputMessageText message={message} repeat={row.repeat} />
+      <OutputMessageText detailsMemory={openOutputDetails} message={message} repeat={row.repeat} />
       {child ? null : <OutputTime time={row.time} />}
     </div>
   );
 });
 
 export function OutputMessageText({
+  detailsMemory,
   message: shown,
   noteDetails = false,
   repeat,
 }: {
+  detailsMemory?: WeakSet<OutputMessage>;
   message: OutputMessage;
   noteDetails?: boolean;
   repeat: number;
@@ -271,7 +275,7 @@ export function OutputMessageText({
   const message = rewordOutputMessage(shown);
   const partTranslator = (part: 'cause' | 'action') =>
     outputPartWording(shown, part) === 'interface' ? translator : englishTranslator;
-  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(() => detailsMemory?.has(shown) ?? false);
   const detailsId = useId();
   const hasDetails =
     message.severity === 'info'
@@ -315,7 +319,12 @@ export function OutputMessageText({
             aria-controls={detailsId}
             aria-expanded={detailsOpen}
             className="output-details-toggle"
-            onClick={() => setDetailsOpen((current) => !current)}
+            onClick={() => {
+              const next = !detailsOpen;
+              if (next) detailsMemory?.add(shown);
+              else detailsMemory?.delete(shown);
+              setDetailsOpen(next);
+            }}
             size="xs"
             variant="ghost"
           >
@@ -464,18 +473,22 @@ const OutputGroupView = memo(function OutputGroupView({
       />
       {expandable ? (
         <div className="output-group-rows" hidden={!open} id={rowsId}>
-          {shownOpen ? <OutputRunFactTable header={header} /> : null}
-          {constructs ? (
-            <OutputRunConstructList constructs={constructs} onNavigate={onNavigateOperation} />
+          {shownOpen ? (
+            <>
+              <OutputRunFactTable header={header} />
+              {constructs ? (
+                <OutputRunConstructList constructs={constructs} onNavigate={onNavigateOperation} />
+              ) : null}
+              {group.droppedRows > 0 ? (
+                <p className="output-dropped">
+                  {t('output.run.dropped', { count: group.droppedRows })}
+                </p>
+              ) : null}
+              {group.rows.map((row) => (
+                <OutputRowView child key={row.id} row={row} />
+              ))}
+            </>
           ) : null}
-          {group.droppedRows > 0 ? (
-            <p className="output-dropped">
-              {t('output.run.dropped', { count: group.droppedRows })}
-            </p>
-          ) : null}
-          {group.rows.map((row) => (
-            <OutputRowView child key={row.id} row={row} />
-          ))}
         </div>
       ) : null}
     </div>

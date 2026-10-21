@@ -36,9 +36,7 @@ impl ExactRestrictionZones {
         let allowed = &mut values[..length];
         if let Some(anchor) = anchor {
             if anchor.x >= dimensions.width || anchor.y >= dimensions.height {
-                return Err(zone_error(
-                    "an object descriptor targets a land whose anchor lies outside the map; the game reads a missing tile there and crashes, so this map cannot be generated",
-                ));
+                return Err(off_map_land_anchor_error());
             }
             let index =
                 usize::from(anchor.y) * usize::from(dimensions.width) + usize::from(anchor.x);
@@ -252,6 +250,12 @@ pub(crate) fn refuse_terrain_past_restriction_tables(
 
 fn zone_error(message: &str) -> GenerationError {
     invalid_request("RMSGEN7101", message)
+}
+
+pub(crate) fn off_map_land_anchor_error() -> GenerationError {
+    zone_error(
+        "an object descriptor targets a land whose anchor lies outside the map; the game reads a missing tile there and crashes, so this map cannot be generated",
+    )
 }
 
 pub(crate) fn anchor_matches(labels: &[u16], anchor: usize, candidate: usize) -> bool {

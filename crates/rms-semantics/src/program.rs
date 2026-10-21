@@ -158,8 +158,16 @@ impl SemanticProgram {
     }
 
     pub fn executed_constructs(&self) -> BTreeMap<ExecutedConstruct, usize> {
-        let mut blocks = BTreeMap::<&str, &str>::new();
         let mut constructs = BTreeMap::new();
+        for (index, construct) in self.executed_construct_operations() {
+            constructs.entry(construct).or_insert(index);
+        }
+        constructs
+    }
+
+    pub fn executed_construct_operations(&self) -> Vec<(usize, ExecutedConstruct)> {
+        let mut blocks = BTreeMap::<&str, &str>::new();
+        let mut constructs = Vec::new();
         for (index, operation) in self.operations.iter().enumerate() {
             let section = operation.section.as_str();
             if operation.depth == 0 && operation.name.starts_with("create_") {
@@ -172,12 +180,13 @@ impl SemanticProgram {
                 Some(block) if operation.depth > 0 => (*block).to_owned(),
                 _ => ExecutedConstruct::section_context(section),
             };
-            constructs
-                .entry(ExecutedConstruct {
+            constructs.push((
+                index,
+                ExecutedConstruct {
                     context,
                     name: operation.name.clone(),
-                })
-                .or_insert(index);
+                },
+            ));
         }
         constructs
     }

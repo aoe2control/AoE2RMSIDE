@@ -18,6 +18,7 @@ import type { TopDownScene } from './top-down-preview';
 import type { ElevationSurface } from './preview-elevation';
 import type { RaisedTerrainUniforms } from './preview-raised-terrain';
 import type { GameArtCliffView, GameArtSpriteView, GameArtTerrainView } from './use-game-art';
+import { destroyPixiTree } from './pixi-destroy';
 
 export type GameArtTerrainPicture = GameArtTerrainLayer | GameArtGpuTerrainLayer;
 
@@ -131,7 +132,7 @@ function destroyOutgoing(state: GameArtPresentationState): void {
   if (!outgoing) return;
   state.outgoing = null;
   for (const layer of outgoing.layers) layer.destroy();
-  outgoing.root.destroy({ children: true });
+  destroyPixiTree(outgoing.root);
 }
 
 function parkedLayers(parked: ParkedPicture): PictureLayer[] {

@@ -1208,6 +1208,7 @@ fn collect_descriptors(
     content: CompatibleContentView<'_>,
 ) -> Result<Vec<ExactElevationDescriptor>, GenerationError> {
     let default_terrain = native_generation_bindings(content)?.default_terrain_id;
+    let sizes = ParserMapSizes::for_stage(semantic_program, dimensions)?;
     let mut descriptors = Vec::<ExactElevationDescriptor>::new();
     let mut range: Option<(usize, usize)> = None;
     for (operation_index, operation) in semantic_program.operations.iter().enumerate() {
@@ -1241,7 +1242,7 @@ fn collect_descriptors(
                     ));
                 }
                 descriptors.push(ExactElevationDescriptor {
-                    target_tiles: u32::from(dimensions.width),
+                    target_tiles: u32::from(sizes.at(operation_index).width),
                     height: layer.min(i32::from(MAXIMUM_ELEVATION_LAYER_HEIGHT)) as u8,
                     clumps: 1,
                     spacing: if layer == 1 { 2 } else { 1 },

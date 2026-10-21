@@ -451,8 +451,51 @@ fn collect_descriptors(
     content: CompatibleContentView<'_>,
 ) -> Result<Vec<ExactConnectionDescriptor>, GenerationError> {
     let mut descriptors = raw_connection_descriptors(semantic_program, content)?;
-    preprocess_connection_descriptors(&mut descriptors, setup, land)?;
+    preprocess_connection_descriptors(&mut descriptors, setup, &land.descriptors)?;
     Ok(descriptors)
+}
+
+pub(crate) fn refuse_off_map_connection_endpoints(
+    semantic_program: &SemanticProgram,
+    setup: &ExactSetupState,
+    lands: &[ExactLandDescriptor],
+    content: CompatibleContentView<'_>,
+    off_map: &dyn Fn(MapCoordinate) -> bool,
+) -> Result<(), GenerationError> {
+    if !semantic_program.has_section("connection_generation") {
+        return Ok(());
+    }
+    let mut descriptors = raw_connection_descriptors(semantic_program, content)?;
+    preprocess_connection_descriptors(&mut descriptors, setup, lands)?;
+    for descriptor in &descriptors {
+        let Some((first, rest)) = descriptor.endpoints.split_first() else {
+            continue;
+        };
+        if rest.is_empty() {
+            continue;
+        }
+        if off_map(*first) {
+            return Err(off_map_connection_start_error());
+        }
+        if rest.iter().any(|endpoint| off_map(*endpoint)) {
+            return Err(off_map_connection_target_error());
+        }
+    }
+    Ok(())
+}
+
+fn off_map_connection_start_error() -> GenerationError {
+    invalid_request(
+        "RMSGEN7001",
+        "a connection starts at a land position outside the map, where the game writes outside its map data; the preview cannot generate this map",
+    )
+}
+
+fn off_map_connection_target_error() -> GenerationError {
+    invalid_request(
+        "RMSGEN7001",
+        "a connection targets a land position outside the map; the game reads a missing tile there and crashes, so this map cannot be generated",
+    )
 }
 
 fn raw_connection_descriptors(
@@ -530,11 +573,10 @@ fn raw_connection_descriptor(
 fn preprocess_connection_descriptors(
     descriptors: &mut Vec<ExactConnectionDescriptor>,
     setup: &ExactSetupState,
-    land: &ExactLandState,
+    lands: &[ExactLandDescriptor],
 ) -> Result<(), GenerationError> {
     let (team_by_slot, team_count) = connection_team_ordinals(setup);
-    let retained_lands = land
-        .descriptors
+    let retained_lands = lands
         .iter()
         .map(|descriptor| {
             (
@@ -872,18 +914,12 @@ fn find_path(
     cancellation: &dyn CancellationToken,
 ) -> Result<(bool, Vec<ExactConnectionPathTile>, u64), GenerationError> {
     let tile_count = dimensions.tile_count()?;
-    let start_index = start.index(dimensions).ok_or_else(|| {
-        invalid_request(
-            "RMSGEN7001",
-            "a connection starts at a land position outside the map, where the game writes outside its map data; the preview cannot generate this map",
-        )
-    })?;
-    let target_index = target.index(dimensions).ok_or_else(|| {
-        invalid_request(
-            "RMSGEN7001",
-            "a connection targets a land position outside the map; the game reads a missing tile there and crashes, so this map cannot be generated",
-        )
-    })?;
+    let start_index = start
+        .index(dimensions)
+        .ok_or_else(off_map_connection_start_error)?;
+    let target_index = target
+        .index(dimensions)
+        .ok_or_else(off_map_connection_target_error)?;
     if terrain.len() != tile_count || rules.len() != TERRAIN_SLOT_COUNT {
         return Err(invalid_request(
             "RMSGEN7001",

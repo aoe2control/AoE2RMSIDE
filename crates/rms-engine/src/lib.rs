@@ -1700,25 +1700,106 @@ pub fn exact_effective_dimensions(
     semantic_program: &SemanticProgram,
     request: &GenerationRequest,
 ) -> Result<MapDimensions, GenerationError> {
-    let mut dimensions = request.dimensions;
-    for operation in semantic_program.executable_operations() {
-        if operation.name == "override_map_size" {
-            let side = setup_i32_argument(operation, 0)?.clamp(36, 480) as u16;
-            dimensions = MapDimensions {
-                width: side,
-                height: side,
-            };
-        }
-    }
+    let dimensions =
+        ParserMapSizes::from_program(semantic_program, request.dimensions)?.final_dimensions();
     dimensions.tile_count()?;
     Ok(dimensions)
+}
+
+#[derive(Clone, Debug)]
+pub(crate) struct ParserMapSizes {
+    initial: MapDimensions,
+    overrides: Vec<(usize, MapDimensions)>,
+}
+
+impl ParserMapSizes {
+    pub(crate) fn from_program(
+        semantic_program: &SemanticProgram,
+        lobby: MapDimensions,
+    ) -> Result<Self, GenerationError> {
+        let mut overrides = Vec::new();
+        for (operation_index, operation) in semantic_program.operations.iter().enumerate() {
+            if operation.accepted_by_target_parser() && operation.name == "override_map_size" {
+                let side = setup_i32_argument(operation, 0)?.clamp(36, 480) as u16;
+                overrides.push((
+                    operation_index,
+                    MapDimensions {
+                        width: side,
+                        height: side,
+                    },
+                ));
+            }
+        }
+        Ok(Self {
+            initial: lobby,
+            overrides,
+        })
+    }
+
+    pub(crate) fn for_setup(
+        semantic_program: &SemanticProgram,
+        setup: &ExactSetupState,
+    ) -> Result<Self, GenerationError> {
+        let sizes = Self::from_program(semantic_program, setup.requested_dimensions)?;
+        if sizes.overrides.is_empty() {
+            return Ok(Self {
+                initial: setup.effective_dimensions,
+                overrides: Vec::new(),
+            });
+        }
+        Ok(sizes)
+    }
+
+    pub(crate) fn for_stage(
+        semantic_program: &SemanticProgram,
+        dimensions: MapDimensions,
+    ) -> Result<Self, GenerationError> {
+        let context = &semantic_program.execution_context;
+        let sizes = Self::from_program(
+            semantic_program,
+            MapDimensions {
+                width: context.map_width,
+                height: context.map_height,
+            },
+        )?;
+        if sizes.overrides.is_empty() {
+            return Ok(Self {
+                initial: dimensions,
+                overrides: Vec::new(),
+            });
+        }
+        Ok(sizes)
+    }
+
+    pub(crate) fn at(&self, operation_index: usize) -> MapDimensions {
+        self.overrides
+            .iter()
+            .take_while(|(index, _)| *index < operation_index)
+            .last()
+            .map_or(self.initial, |(_, dimensions)| *dimensions)
+    }
+
+    pub(crate) fn final_dimensions(&self) -> MapDimensions {
+        self.overrides
+            .last()
+            .map_or(self.initial, |(_, dimensions)| *dimensions)
+    }
 }
 
 pub fn resolve_exact_setup_state(
     semantic_program: &SemanticProgram,
     request: &GenerationRequest,
 ) -> Result<ExactSetupState, GenerationError> {
+    resolve_exact_setup_state_keeping_off_map_starts(semantic_program, request)
+        .map(|(state, _)| state)
+}
+
+fn resolve_exact_setup_state_keeping_off_map_starts(
+    semantic_program: &SemanticProgram,
+    request: &GenerationRequest,
+) -> Result<(ExactSetupState, bool), GenerationError> {
     request.validate()?;
+    let sizes = ParserMapSizes::from_program(semantic_program, request.dimensions)?;
     let mut players = request
         .players
         .iter()
@@ -1729,11 +1810,13 @@ pub fn resolve_exact_setup_state(
         })
         .collect::<Vec<_>>();
     players.sort_by_key(|player| player.slot);
+    let effective_dimensions = sizes.final_dimensions();
+    effective_dimensions.tile_count()?;
     let mut state = ExactSetupState {
         contract_version: request.setup_context.contract_version,
         map_size: request.map_size.clone(),
         requested_dimensions: request.dimensions,
-        effective_dimensions: exact_effective_dimensions(semantic_program, request)?,
+        effective_dimensions,
         game_mode: request.setup_context.game_mode,
         starting_resources: request.setup_context.starting_resources,
         starting_age: request.setup_context.starting_age,
@@ -1778,24 +1861,39 @@ pub fn resolve_exact_setup_state(
             _ => {}
         }
     }
-    state.circle_placement = resolve_player_circle_placement(
-        semantic_program,
-        &state.players,
-        state.effective_dimensions.width,
-    )?;
-    state.player_positions = resolve_exact_player_positions(semantic_program, request, &state)?;
-    Ok(state)
+    state.circle_placement =
+        resolve_player_circle_placement(semantic_program, &state.players, &sizes)?;
+    state.player_positions =
+        resolve_exact_player_positions(semantic_program, request, &state, &sizes)?;
+    let off_map_start = state.placement_style != PlayerPlacementStyle::Direct
+        && state
+            .player_positions
+            .iter()
+            .any(|position| is_off_map_player_start(position.coordinate, effective_dimensions));
+    Ok((state, off_map_start))
 }
 
 #[derive(Clone, Copy, Debug)]
 struct PlayerLandSetup {
     slot: u8,
     base_size: i32,
-    left_border: f32,
-    right_border: f32,
-    top_border: f32,
-    bottom_border: f32,
-    direct_position_percent: Option<(f32, f32)>,
+    left_border: PlayerLandBorder,
+    right_border: PlayerLandBorder,
+    top_border: PlayerLandBorder,
+    bottom_border: PlayerLandBorder,
+    direct_position_percent: Option<(f32, f32, MapDimensions)>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+struct PlayerLandBorder {
+    percent: f32,
+    side: u16,
+}
+
+impl PlayerLandBorder {
+    fn tile(self, from_far_edge: bool) -> Result<i32, GenerationError> {
+        player_border_tile(self.percent, self.side, from_far_edge)
+    }
 }
 
 #[derive(Clone, Debug, Default)]
@@ -1815,15 +1913,16 @@ fn resolve_exact_player_positions(
     semantic_program: &SemanticProgram,
     request: &GenerationRequest,
     state: &ExactSetupState,
+    sizes: &ParserMapSizes,
 ) -> Result<Vec<ExactPlayerPosition>, GenerationError> {
-    let layout = collect_player_land_setup(semantic_program, &state.players)?;
+    let layout = collect_player_land_setup(semantic_program, &state.players, sizes)?;
     let lands = &layout.lands;
 
     if state.placement_style == PlayerPlacementStyle::Direct {
         let positions = lands
             .iter()
             .map(|land| {
-                let Some((x_percent, y_percent)) = land.direct_position_percent else {
+                let Some((x_percent, y_percent, parsed)) = land.direct_position_percent else {
                     return Ok(ExactPlayerPosition {
                         slot: land.slot,
                         coordinate: MapCoordinate {
@@ -1835,8 +1934,8 @@ fn resolve_exact_player_positions(
                 Ok(ExactPlayerPosition {
                     slot: land.slot,
                     coordinate: MapCoordinate {
-                        x: percent_coordinate(x_percent, state.effective_dimensions.width)?,
-                        y: percent_coordinate(y_percent, state.effective_dimensions.height)?,
+                        x: percent_coordinate(x_percent, parsed.width)?,
+                        y: percent_coordinate(y_percent, parsed.height)?,
                     },
                 })
             })
@@ -1924,14 +2023,15 @@ fn undefined_object_warning(
 fn resolve_player_circle_placement(
     semantic_program: &SemanticProgram,
     players: &[ExactSetupPlayer],
-    map_width: u16,
+    sizes: &ParserMapSizes,
 ) -> Result<Option<PlayerCirclePlacement>, GenerationError> {
     let mut placement = None;
     let blocks = exact_land::interpret_land_blocks(semantic_program, players)?;
-    for operation in blocks.controller_commands {
+    for (operation_index, operation) in blocks.controller_commands {
         if operation.name != "circle_radius" {
             continue;
         }
+        let map_width = sizes.at(operation_index).width;
         let radius_percent = setup_f32_argument(operation, 0)?;
         let jitter_tiles = operation
             .arguments
@@ -2321,10 +2421,10 @@ fn player_position_geometry(
     let mut minimum_x = 0_i32;
     let mut minimum_y = 0_i32;
     for land in lands {
-        let left = player_border_tile(land.left_border, dimensions.width, false)?;
-        let right = player_border_tile(land.right_border, dimensions.width, true)?;
-        let top = player_border_tile(land.top_border, dimensions.height, false)?;
-        let bottom = player_border_tile(land.bottom_border, dimensions.height, true)?;
+        let left = land.left_border.tile(false)?;
+        let right = land.right_border.tile(true)?;
+        let top = land.top_border.tile(false)?;
+        let bottom = land.bottom_border.tile(true)?;
         available_width = available_width.min(
             right
                 .wrapping_sub(left)
@@ -2473,7 +2573,7 @@ fn circle_player_coordinate(
 }
 
 fn checked_player_coordinate(
-    state: &ExactSetupState,
+    _state: &ExactSetupState,
     _land: &PlayerLandSetup,
     x: i32,
     y: i32,
@@ -2484,19 +2584,44 @@ fn checked_player_coordinate(
             native_signed_land_coordinate(y),
         ));
     }
-    let x = u16::try_from(x).ok();
-    let y = u16::try_from(y).ok();
+    let x = i16::try_from(x).ok();
+    let y = i16::try_from(y).ok();
     match (x, y) {
-        (Some(x), Some(y))
-            if x < state.effective_dimensions.width && y < state.effective_dimensions.height =>
-        {
-            Ok((x, y))
-        }
-        _ => Err(invalid_request(
-            "RMSGEN2002",
-            "player positioning put a player start beyond the map edge; the preview cannot place player lands outside the map",
-        )),
+        (Some(x), Some(y)) => Ok((x as u16, y as u16)),
+        _ => Err(off_map_player_start_error()),
     }
+}
+
+fn is_off_map_player_start(coordinate: MapCoordinate, dimensions: MapDimensions) -> bool {
+    coordinate.x as i16 >= 0
+        && coordinate.y as i16 >= 0
+        && (coordinate.x >= dimensions.width || coordinate.y >= dimensions.height)
+}
+
+fn off_map_player_start_error() -> GenerationError {
+    invalid_request(
+        "RMSGEN2002",
+        "player positioning put a player start beyond the map edge; the preview cannot place player lands outside the map",
+    )
+}
+
+fn refuse_off_map_player_starts(
+    semantic_program: &SemanticProgram,
+    setup: &ExactSetupState,
+    content: CompatibleContentView<'_>,
+) -> Result<(), GenerationError> {
+    let dimensions = setup.effective_dimensions;
+    let off_map = |coordinate: MapCoordinate| is_off_map_player_start(coordinate, dimensions);
+    let lands = exact_land::collect_land_descriptors(semantic_program, setup, content)?;
+    exact_connection::refuse_off_map_connection_endpoints(
+        semantic_program,
+        setup,
+        &lands,
+        content,
+        &off_map,
+    )?;
+    exact_object::refuse_off_map_land_anchors(semantic_program, setup, &lands, content, &off_map)?;
+    Err(off_map_player_start_error())
 }
 
 fn native_signed_land_coordinate(value: i32) -> u16 {
@@ -2519,16 +2644,19 @@ fn player_border_tile(
 fn collect_player_land_setup(
     semantic_program: &SemanticProgram,
     players: &[ExactSetupPlayer],
+    sizes: &ParserMapSizes,
 ) -> Result<PlayerLandLayout, GenerationError> {
     let blocks = exact_land::interpret_land_blocks(semantic_program, players)?;
     let mut lands = Vec::new();
     let mut first_descriptor = None;
     for record in &blocks.records {
+        let created = sizes.at(record.create_operation_index);
+        let border = |percent, side| PlayerLandBorder { percent, side };
         let mut base_size = 3;
-        let mut left_border = 0.0;
-        let mut right_border = 0.0;
-        let mut top_border = 0.0;
-        let mut bottom_border = 0.0;
+        let mut left_border = border(0.0, created.width);
+        let mut right_border = border(0.0, created.width);
+        let mut top_border = border(0.0, created.height);
+        let mut bottom_border = border(0.0, created.height);
         let mut assigned_slot = record.player_slot;
         let mut direct_position_percent = None;
         for command in &record.commands {
@@ -2537,16 +2665,26 @@ fn collect_player_land_setup(
                 continue;
             }
             let property = command.operation;
+            let parsed = sizes.at(command.operation_index);
             match property.name.as_str() {
                 "base_size" => base_size = setup_i32_argument(property, 0)?,
-                "left_border" => left_border = setup_border_percent(property)?,
-                "right_border" => right_border = setup_border_percent(property)?,
-                "top_border" => top_border = setup_border_percent(property)?,
-                "bottom_border" => bottom_border = setup_border_percent(property)?,
+                "left_border" => {
+                    left_border = border(setup_border_percent(property)?, parsed.width);
+                }
+                "right_border" => {
+                    right_border = border(setup_border_percent(property)?, parsed.width);
+                }
+                "top_border" => {
+                    top_border = border(setup_border_percent(property)?, parsed.height);
+                }
+                "bottom_border" => {
+                    bottom_border = border(setup_border_percent(property)?, parsed.height);
+                }
                 "land_position" => {
                     direct_position_percent = Some((
                         setup_f32_argument(property, 0)?,
                         setup_f32_argument(property, 1)?,
+                        parsed,
                     ));
                 }
                 _ => {}
@@ -2730,7 +2868,13 @@ impl ExactRmsGenerationBackend {
             false,
         )?;
         observer.step_started(ExecutionStep::SetupPlayers);
-        let setup = resolve_exact_setup_state(input.semantic_program, input.request)?;
+        let (setup, off_map_start) = resolve_exact_setup_state_keeping_off_map_starts(
+            input.semantic_program,
+            input.request,
+        )?;
+        if off_map_start {
+            refuse_off_map_player_starts(input.semantic_program, &setup, input.content)?;
+        }
         let tile_count = setup.effective_dimensions.tile_count()?;
         let setup_rng =
             resolve_exact_setup_generator_rng(input.request.seed, &setup, input.semantic_program)?;
@@ -4622,7 +4766,8 @@ pub fn resolve_exact_setup_generator_rng(
     setup: &ExactSetupState,
     semantic_program: &SemanticProgram,
 ) -> Result<RmsRandom, GenerationError> {
-    let layout = collect_player_land_setup(semantic_program, &setup.players)?;
+    let sizes = ParserMapSizes::for_setup(semantic_program, setup)?;
+    let layout = collect_player_land_setup(semantic_program, &setup.players, &sizes)?;
     let (_, rng) = native_random_player_positions(seed, semantic_program, setup, &layout)?;
     Ok(rng)
 }

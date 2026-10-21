@@ -1393,6 +1393,7 @@ fn collect_descriptors(
         })
         .collect::<Vec<_>>();
     let native = native_generation_bindings(content)?;
+    let sizes = ParserMapSizes::for_stage(semantic_program, dimensions)?;
     let mut descriptors = Vec::<ExactTerrainDescriptor>::new();
     for (operation_index, create) in operations {
         if create.depth != 0 {
@@ -1406,7 +1407,7 @@ fn collect_descriptors(
         }
         let terrain_id = exact_terrain_argument(create, 0, content, "RMSGEN3301")?;
         descriptors.push(ExactTerrainDescriptor {
-            target_tiles: u32::from(dimensions.width),
+            target_tiles: u32::from(sizes.at(operation_index).width),
             percent_of_land: 0,
             terrain_id,
             clumps: 1,

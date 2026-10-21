@@ -2160,6 +2160,27 @@ fn surviving_cliff_pieces(
         .collect()
 }
 
+pub(crate) fn refuse_off_map_land_anchors(
+    semantic_program: &SemanticProgram,
+    setup: &ExactSetupState,
+    lands: &[ExactLandDescriptor],
+    content: CompatibleContentView<'_>,
+    off_map: &dyn Fn(MapCoordinate) -> bool,
+) -> Result<(), GenerationError> {
+    let (_, _, _, descriptors) = collect_object_program(semantic_program, setup, content)?;
+    for descriptor in &descriptors {
+        let (placements, _) = descriptor_dispatch_placements(descriptor, lands);
+        if placements
+            .iter()
+            .flatten()
+            .any(|(_, anchor)| off_map(*anchor))
+        {
+            return Err(super::exact_zone::off_map_land_anchor_error());
+        }
+    }
+    Ok(())
+}
+
 fn descriptor_dispatch_placements(
     descriptor: &ExactObjectDescriptor,
     land_descriptors: &[ExactLandDescriptor],
@@ -2929,43 +2950,51 @@ fn place_descriptor(
                 Some(definition) if descriptor.override_actor_radius_if_required => {
                     let ignore_restriction =
                         outer_master_ignores_terrain_restrictions(descriptor, player);
-                    override_actor_radius_tile(anchor, definition, |position| {
-                        Ok(master_terrain_rejection_at_position(
-                            position,
-                            definition,
-                            connection.dimensions,
-                            foundation_map.terrain,
-                            content,
-                            ignore_restriction,
-                            master_restriction_id,
-                        )
-                        .is_none()
-                            && master_slope_allows_position(
+                    let roster = foundation_map.restriction_zones.objects.as_ref();
+                    let tile_holds_objects = |tile: MapCoordinate| !roster.members(tile).is_empty();
+                    override_actor_radius_tile(
+                        anchor,
+                        definition,
+                        connection.dimensions,
+                        tile_holds_objects,
+                        |position| {
+                            Ok(master_terrain_rejection_at_position(
                                 position,
                                 definition,
-                                owner,
                                 connection.dimensions,
-                                &connection.elevation,
-                                runtime_attributes,
-                            )
-                            && master_obstruction_allows_position_with_positions(
-                                position,
-                                definition,
-                                owner,
-                                appearance_objects,
-                                objects,
-                                &foundation_map.construction_positions,
                                 foundation_map.terrain,
                                 content,
-                                runtime_attributes,
-                                Some(Class39PlacementContext {
-                                    setup,
-                                    roster: foundation_map.restriction_zones.objects.as_ref(),
-                                    master_restriction: master_restriction_id,
-                                }),
-                                Some(&foundation_map.obstruction_index),
-                            )?)
-                    })?
+                                ignore_restriction,
+                                master_restriction_id,
+                            )
+                            .is_none()
+                                && master_slope_allows_position(
+                                    position,
+                                    definition,
+                                    owner,
+                                    connection.dimensions,
+                                    &connection.elevation,
+                                    runtime_attributes,
+                                )
+                                && master_obstruction_allows_position_with_positions(
+                                    position,
+                                    definition,
+                                    owner,
+                                    appearance_objects,
+                                    objects,
+                                    &foundation_map.construction_positions,
+                                    foundation_map.terrain,
+                                    content,
+                                    runtime_attributes,
+                                    Some(Class39PlacementContext {
+                                        setup,
+                                        roster: foundation_map.restriction_zones.objects.as_ref(),
+                                        master_restriction: master_restriction_id,
+                                    }),
+                                    Some(&foundation_map.obstruction_index),
+                                )?)
+                        },
+                    )?
                 }
                 _ => None,
             };
@@ -4221,19 +4250,87 @@ fn group_entry_for_sample(
 fn override_actor_radius_tile(
     anchor: MapCoordinate,
     definition: &ObjectDefinition,
+    dimensions: MapDimensions,
+    tile_holds_objects: impl Fn(MapCoordinate) -> bool,
     mut master_fits: impl FnMut([f32; 2]) -> Result<bool, GenerationError>,
 ) -> Result<Option<MapCoordinate>, GenerationError> {
     let [half_x, half_y] = definition.collision_half_extents();
-    let window = 4 * (((half_y + 0.5_f32) * (half_x + 0.5_f32)) as i32);
-    if master_fits([f32::from(anchor.x) + 0.5, f32::from(anchor.y) + 0.5])? {
-        return Ok(Some(anchor));
-    }
-    if window / 2 - 1 > 0 {
+    let product = (half_y + 0.5_f32) * (half_x + 0.5_f32);
+    if !product.is_finite() || product.abs() > OVERRIDE_ACTOR_RADIUS_PRODUCT_LIMIT {
         return Err(invalid_object(
-            "the preview does not support override_actor_radius_if_required when the object does not fit on its first tile",
+            "override_actor_radius_if_required searches around an object whose collision size is out of range",
         ));
     }
+    let window = 4 * (product as i32);
+    if window == 0 {
+        return Err(invalid_request(
+            "RMSGEN7103",
+            "override_actor_radius_if_required moves an object that does not fit where it was placed, and the object is too small for the game's search for a free tile; the game crashes there, so this map cannot be previewed",
+        ));
+    }
+    let tiles = override_actor_radius_candidates(anchor, window, dimensions, tile_holds_objects);
+    for tile in tiles {
+        if master_fits([tile[0] as f32 + 0.5, tile[1] as f32 + 0.5])? {
+            return Ok(Some(MapCoordinate {
+                x: tile[0] as u16,
+                y: tile[1] as u16,
+            }));
+        }
+    }
     Ok(None)
+}
+
+const OVERRIDE_ACTOR_RADIUS_PRODUCT_LIMIT: f32 = 1024.0;
+
+fn override_actor_radius_candidates(
+    anchor: MapCoordinate,
+    window: i32,
+    dimensions: MapDimensions,
+    tile_holds_objects: impl Fn(MapCoordinate) -> bool,
+) -> Vec<[i32; 2]> {
+    let [anchor_x, anchor_y] = [i32::from(anchor.x), i32::from(anchor.y)];
+    let half = window / 2;
+    let limit = half - 1;
+    let mut tiles = vec![[anchor_x, anchor_y]];
+    if limit <= 0 {
+        return tiles;
+    }
+    let side = window as usize;
+    let mut seen = vec![false; side * side];
+    let cell =
+        |[x, y]: [i32; 2]| ((x - anchor_x + half) as usize) * side + (y - anchor_y + half) as usize;
+    seen[cell([anchor_x, anchor_y])] = true;
+    let mut next = 0;
+    while next < tiles.len() {
+        let [x, y] = tiles[next];
+        next += 1;
+        if (x - anchor_x).abs() >= limit || (y - anchor_y).abs() >= limit {
+            continue;
+        }
+        for neighbor in [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]] {
+            let index = cell(neighbor);
+            if seen[index] {
+                continue;
+            }
+            seen[index] = true;
+            let [nx, ny] = neighbor;
+            if nx < 0
+                || ny < 0
+                || nx >= i32::from(dimensions.width)
+                || ny >= i32::from(dimensions.height)
+            {
+                continue;
+            }
+            let tile = MapCoordinate {
+                x: nx as u16,
+                y: ny as u16,
+            };
+            if !tile_holds_objects(tile) {
+                tiles.push(neighbor);
+            }
+        }
+    }
+    tiles
 }
 
 fn tile_center_position_256(

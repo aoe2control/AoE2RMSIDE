@@ -1234,12 +1234,11 @@ fn ignored_operations(
     let id = document.source.id();
     for ignored in program.native_ignored_operations() {
         let operation = &program.operations[ignored.operation_index];
-        if operation.source_id != *id {
+        if operation.source_id != *id || !ignored.is_unconditional(program) {
             continue;
         }
         let name = operation.name.as_str();
         let message = match ignored.context {
-            NativeIgnoredContext::ObjectBlock if name == "add_object" => continue,
             NativeIgnoredContext::ObjectBlock => {
                 format!("{name} has no effect inside create_object braces; the game ignores it there")
             }
@@ -1258,7 +1257,7 @@ fn ignored_operations(
             NativeIgnoredContext::PlayerLandsPosition => {
                 "land_position has no effect inside create_player_lands; only create_land takes a position".to_owned()
             }
-            NativeIgnoredContext::CircleRadiusOutsideLandBlock if operation.depth == 0 => {
+            NativeIgnoredContext::CircleRadiusOutsideLandBlock => {
                 "circle_radius has no effect outside the braces of a land".to_owned()
             }
             NativeIgnoredContext::AccumulateConnectionsInsideBraces => {
@@ -1267,8 +1266,7 @@ fn ignored_operations(
             NativeIgnoredContext::PlayerSetupCommandOutsidePlayerSetup => {
                 format!("{name} only has an effect in <PLAYER_SETUP>")
             }
-            NativeIgnoredContext::ObjectBlockWithoutDescriptor
-            | NativeIgnoredContext::CircleRadiusOutsideLandBlock => continue,
+            NativeIgnoredContext::ObjectBlockWithoutDescriptor => continue,
         };
         let Some(line) = document.line_starting_at(operation.source_range.start) else {
             continue;

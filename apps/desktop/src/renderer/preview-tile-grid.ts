@@ -8,6 +8,7 @@ import {
   type PreviewCamera,
   type PreviewViewport,
 } from './top-down-preview';
+import { destroyPixiTree } from './pixi-destroy';
 
 export interface TileGridLine {
   from: MapPoint;
@@ -123,7 +124,7 @@ export class TileGridLayer {
   }
 
   destroy(): void {
-    this.container.destroy({ children: true });
+    destroyPixiTree(this.container);
   }
 
   private apply(): void {

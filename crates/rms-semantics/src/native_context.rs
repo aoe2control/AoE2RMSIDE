@@ -1,4 +1,6 @@
-use crate::SemanticProgram;
+use std::collections::{BTreeMap, BTreeSet};
+
+use crate::{ExecutedConstruct, SemanticProgram};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum ObjectBlockCommandEffect {
@@ -132,7 +134,46 @@ pub struct NativeIgnoredOperation {
     pub context: NativeIgnoredContext,
 }
 
+impl NativeIgnoredOperation {
+    pub fn is_unconditional(&self, program: &SemanticProgram) -> bool {
+        let operation = &program.operations[self.operation_index];
+        match self.context {
+            NativeIgnoredContext::ObjectBlock => operation.name != "add_object",
+            NativeIgnoredContext::CircleRadiusOutsideLandBlock => operation.depth == 0,
+            NativeIgnoredContext::ObjectBlockWithoutDescriptor => false,
+            NativeIgnoredContext::AccumulateConnectionsInsideBraces
+            | NativeIgnoredContext::ObjectCreateInsideBraces
+            | NativeIgnoredContext::ObjectGroupEntryOutsideBraces
+            | NativeIgnoredContext::TerrainPercentOfLand
+            | NativeIgnoredContext::ElevationLandId
+            | NativeIgnoredContext::PlayerLandsPosition
+            | NativeIgnoredContext::PlayerSetupCommandOutsidePlayerSetup => true,
+        }
+    }
+}
+
 impl SemanticProgram {
+    pub fn executed_constructs_without_native_effect(&self) -> BTreeSet<ExecutedConstruct> {
+        let ignored = self
+            .native_ignored_operations()
+            .into_iter()
+            .filter(|ignored| ignored.is_unconditional(self))
+            .map(|ignored| ignored.operation_index)
+            .collect::<BTreeSet<_>>();
+        let mut constructs = BTreeMap::<ExecutedConstruct, bool>::new();
+        for (index, construct) in self.executed_construct_operations() {
+            let without_effect = ignored.contains(&index);
+            constructs
+                .entry(construct)
+                .and_modify(|all| *all &= without_effect)
+                .or_insert(without_effect);
+        }
+        constructs
+            .into_iter()
+            .filter_map(|(construct, without_effect)| without_effect.then_some(construct))
+            .collect()
+    }
+
     pub fn native_ignored_operations(&self) -> Vec<NativeIgnoredOperation> {
         let mut ignored = Vec::new();
         let mut section = None::<&str>;

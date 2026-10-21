@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "crates/rms-analysis/data/rms-documentation-v1.json",
-      "sha256": "45acd7862255d0869956a193428ccdc201f0b961728b3b8fdc50727bf8d78503",
+      "sha256": "3e3e05f2ebb6336baf49e22bd5c4f158c3f8825186c246473a805b9c4a59c40f",
       "authorship": "Independently written documentation of the RMS sections, commands, attributes, control terms, the rnd value form, the built-in name families, and editor snippets of the shipped behavior profiles. Behavior claims follow the project's own strict parser and exact generation engine; terms the engine does not model are described briefly from reviewed community documentation, chiefly Zetnus' Definitive Random Map Scripting Guide (the main community research source), in the project's own words.",
       "license": "Independent text under the repository license; command, constant, and label names are factual identifiers",
       "sourceClassification": "independent",

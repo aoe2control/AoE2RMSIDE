@@ -1,6 +1,7 @@
 import { Container, Graphics } from 'pixi.js';
 import type { CliffPieceRecord, GameArtSpriteSet } from '../shared/game-art';
 import type { MapPoint } from './top-down-preview';
+import { destroyPixiTree } from './pixi-destroy';
 
 export const cliffLegDirections: readonly (readonly [number, number])[] = [
   [1, 0],
@@ -200,6 +201,6 @@ export class GameArtCliffBandLayer {
   }
 
   destroy(): void {
-    this.container.destroy({ children: true });
+    destroyPixiTree(this.container);
   }
 }

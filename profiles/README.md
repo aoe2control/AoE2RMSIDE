@@ -71,7 +71,9 @@ build and input file hash it was derived from, and the date.
 `schemas/certified-constructs.schema.json`) lists, for that game version, the
 commands and block attributes (each in the place where it ran) that at least
 one recorded game map that matched the preview has used. A preview whose
-script uses others says so ("3 commands not compared against the game").
+script uses others says so ("3 commands not compared against the game"); a
+command the editor marks as having no effect where it is written counts as
+compared and is not named. The documents list only what recorded maps used.
 The documents hold only names and places, never script text, are bound to
 their profile by `profileId`, and each entry records its derivation tool, the
 game build of the recorded maps, how many maps it merged, and the date. A

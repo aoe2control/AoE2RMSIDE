@@ -670,7 +670,9 @@
           "range": "36 to 480; other values are clamped"
         }
       ],
-      "details": ["It runs in any section, the last one wins, and every stage uses the new size."],
+      "details": [
+        "It takes effect where it stands, in any section. Commands before it keep what they took from the earlier map size: a land's size, edges and `land_position`, `circle_radius`, and the default tile count of `create_elevation` and `create_terrain`. The last one sets the size of the generated map."
+      ],
       "example": ["override_map_size 144"],
       "related": ["set_scaling_to_map_size"],
       "evidence": {
@@ -3937,20 +3939,21 @@
     {
       "name": "override_actor_radius_if_required",
       "kind": "attribute",
-      "summary": "When per-land placement runs out of spots, moves the last candidate to the nearest tile where the object fits.",
+      "summary": "When per-land placement runs out of spots and the object does not fit on the last one, moves it to the nearest free tile where it fits.",
       "usages": [
         {
           "where": ["objects_generation/create_object"],
-          "summary": "When per-land placement runs out of spots, moves the last candidate to the nearest tile where the object fits."
+          "summary": "When per-land placement runs out of spots and the object does not fit on the last one, moves it to the nearest free tile where it fits."
         }
       ],
       "evidence": {
-        "status": "uncertain",
-        "sources": ["exact-engine", "strict-parser", "community-guide"],
-        "note": "Our engine ties it only to the exhausted per-land fallback; a community guide links it to actor areas and buildings."
+        "status": "engine-verified",
+        "sources": ["exact-engine", "strict-parser"]
       },
       "details": [
-        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`."
+        "It only applies when the objects are placed per land, with `set_place_for_every_player` or `place_on_specific_land_id`.",
+        "The game searches outward from the last spot through tiles without objects, within a distance that grows with the object's size, and keeps the object on the last spot when no tile fits.",
+        "Very small objects, such as sheep, crash the game when they need this move."
       ],
       "related": ["force_placement", "actor_area"]
     }

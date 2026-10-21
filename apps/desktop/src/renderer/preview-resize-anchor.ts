@@ -122,6 +122,11 @@ export function composePreviewTransforms(
   };
 }
 
+export function invertPreviewTransform(transform: PreviewScreenTransform): PreviewScreenTransform {
+  const scale = Math.abs(transform.scale) < 1e-12 ? 1 : transform.scale;
+  return { scale: 1 / scale, x: -transform.x / scale, y: -transform.y / scale };
+}
+
 export function partialPreviewTransform(
   transform: PreviewScreenTransform,
   share: number,
@@ -206,6 +211,67 @@ export function previewLayoutSwitchCamera(
     height,
     viewport,
   );
+}
+
+export interface PreviewSwitchRestore {
+  before: PreviewCamera;
+  fitted: boolean;
+  after: PreviewCamera;
+  behindEditor: boolean;
+}
+
+export function previewSwitchRestoreCamera(
+  scene: { width: number; height: number },
+  restore: PreviewSwitchRestore | null,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+): { camera: PreviewCamera; fitted: boolean } | null {
+  if (
+    !restore ||
+    (viewport.behindEditor ?? false) !== restore.behindEditor ||
+    camera.centerX !== restore.after.centerX ||
+    camera.centerY !== restore.after.centerY ||
+    camera.zoom !== restore.after.zoom
+  ) {
+    return null;
+  }
+  const { width, height } = scene;
+  return {
+    fitted: restore.fitted,
+    camera: restore.fitted
+      ? fitPreviewCamera(width, height)
+      : clampPreviewCamera(restore.before, width, height, viewport),
+  };
+}
+
+export function previewFocusShownShare(
+  viewport: Pick<
+    PreviewViewport,
+    'focusInsetLeft' | 'focusInsetRight' | 'editorInsetLeft' | 'editorInsetRight'
+  >,
+): number {
+  const covered = (viewport.editorInsetLeft ?? 0) + (viewport.editorInsetRight ?? 0);
+  if (covered <= 0) return 0;
+  const focus = (viewport.focusInsetLeft ?? 0) + (viewport.focusInsetRight ?? 0);
+  return Math.min(1, Math.max(0, focus / covered));
+}
+
+export function previewMotionFocus(
+  covered: { insetLeft: number; insetRight: number },
+  shown: number,
+): Required<
+  Pick<
+    PreviewViewport,
+    'focusInsetLeft' | 'focusInsetRight' | 'editorInsetLeft' | 'editorInsetRight'
+  >
+> {
+  const share = Math.min(1, Math.max(0, shown));
+  return {
+    focusInsetLeft: covered.insetLeft * share,
+    focusInsetRight: covered.insetRight * share,
+    editorInsetLeft: covered.insetLeft,
+    editorInsetRight: covered.insetRight,
+  };
 }
 
 export function previewCameraForPlacement(

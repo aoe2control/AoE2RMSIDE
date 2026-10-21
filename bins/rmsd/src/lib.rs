@@ -2165,10 +2165,14 @@ fn construct_verification(
         .get(&profile.profile_id)?
         .entry(product_version)?;
     let executed = program.executed_constructs();
-    let uncertified = executed
+    let mut uncertified = executed
         .iter()
         .filter(|(construct, _)| !entry.contains(&construct.context, &construct.name))
         .collect::<Vec<_>>();
+    if !uncertified.is_empty() {
+        let without_effect = program.executed_constructs_without_native_effect();
+        uncertified.retain(|(construct, _)| !without_effect.contains(*construct));
+    }
     let status = if uncertified.is_empty() {
         v1::ConstructVerificationStatus::AllCertified
     } else {

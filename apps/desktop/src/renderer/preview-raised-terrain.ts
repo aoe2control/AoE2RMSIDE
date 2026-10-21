@@ -32,6 +32,7 @@ import {
   type TileGridColor,
 } from './preview-tile-grid';
 import type { PreviewCamera, PreviewViewport } from './top-down-preview';
+import { destroyPixiTree } from './pixi-destroy';
 
 export const raisedDepthBiasStep = 2 ** -20;
 
@@ -491,7 +492,7 @@ export class RaisedColorTerrainLayer {
   }
 
   destroy(): void {
-    this.container.destroy({ children: true });
+    destroyPixiTree(this.container);
     this.geometry.destroy(true);
     this.shader.destroy(false);
   }
@@ -650,7 +651,7 @@ export class RaisedOverlayFill {
   destroy(): void {
     if (this.destroyed) return;
     this.destroyed = true;
-    this.container.destroy({ children: true });
+    destroyPixiTree(this.container);
     this.mesh = null;
     this.geometry?.destroy(true);
     this.geometry = null;

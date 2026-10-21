@@ -182,7 +182,7 @@ pub(super) struct NativeLandRecord<'a> {
 pub(super) struct NativeLandBlocks<'a> {
     pub records: Vec<NativeLandRecord<'a>>,
     pub ignored: Vec<(usize, &'a SemanticOperation)>,
-    pub controller_commands: Vec<&'a SemanticOperation>,
+    pub controller_commands: Vec<(usize, &'a SemanticOperation)>,
 }
 
 pub(super) fn interpret_land_blocks<'a>(
@@ -269,7 +269,9 @@ pub(super) fn interpret_land_blocks<'a>(
                     single_land = false;
                 }
             },
-            "circle_radius" => blocks.controller_commands.push(operation),
+            "circle_radius" => blocks
+                .controller_commands
+                .push((operation_index, operation)),
             _ => {
                 let range_len = end - start;
                 if range_len == 0 {
@@ -1257,6 +1259,14 @@ fn bounded_work(
     Ok(work)
 }
 
+pub(crate) fn collect_land_descriptors(
+    semantic_program: &SemanticProgram,
+    setup: &ExactSetupState,
+    content: CompatibleContentView<'_>,
+) -> Result<Vec<ExactLandDescriptor>, GenerationError> {
+    collect_descriptors(semantic_program, setup, content).map(|(_, descriptors)| descriptors)
+}
+
 fn collect_descriptors(
     semantic_program: &SemanticProgram,
     setup: &ExactSetupState,
@@ -1264,6 +1274,7 @@ fn collect_descriptors(
 ) -> Result<(TerrainId, Vec<ExactLandDescriptor>), GenerationError> {
     let pre_position_randomization =
         resolve_pre_position_land_randomization(semantic_program, setup.players.len())?;
+    let sizes = ParserMapSizes::for_setup(semantic_program, setup)?;
     let operations = semantic_program
         .operations
         .iter()
@@ -1299,7 +1310,7 @@ fn collect_descriptors(
     for record in &blocks.records {
         let mut template = DescriptorTemplate::new(
             default_terrain,
-            setup.effective_dimensions,
+            sizes.at(record.create_operation_index),
             u32::try_from(record.create_operation_index).map_err(|_| {
                 invalid_request(
                     "RMSGEN3001",
@@ -1339,7 +1350,7 @@ fn collect_descriptors(
                 .transpose()?;
             template.apply(
                 command.operation,
-                setup.effective_dimensions,
+                sizes.at(command.operation_index),
                 content,
                 random_zone_value,
                 command.range_len,
@@ -1367,17 +1378,18 @@ fn collect_descriptors(
             player_position_index += 1;
             (Some(slot), position.coordinate)
         } else {
-            let position = if let Some((x_percent, y_percent)) = template.direct_position_percent {
-                MapCoordinate {
-                    x: percent_coordinate(x_percent, setup.effective_dimensions.width)?,
-                    y: percent_coordinate(y_percent, setup.effective_dimensions.height)?,
-                }
-            } else {
-                MapCoordinate {
-                    x: u16::MAX,
-                    y: u16::MAX,
-                }
-            };
+            let position =
+                if let Some((x_percent, y_percent, parsed)) = template.direct_position_percent {
+                    MapCoordinate {
+                        x: percent_coordinate(x_percent, parsed.width)?,
+                        y: percent_coordinate(y_percent, parsed.height)?,
+                    }
+                } else {
+                    MapCoordinate {
+                        x: u16::MAX,
+                        y: u16::MAX,
+                    }
+                };
             (None, position)
         };
         descriptors.push(template.finish(
@@ -1433,7 +1445,7 @@ struct DescriptorTemplate {
     conformity: i32,
     generate_mode: i32,
     assigned_slot: Option<u8>,
-    direct_position_percent: Option<(f32, f32)>,
+    direct_position_percent: Option<(f32, f32, MapDimensions)>,
     operation_index: u32,
 }
 
@@ -1576,6 +1588,7 @@ impl DescriptorTemplate {
                 self.direct_position_percent = Some((
                     numeric_argument(operation, 0)?,
                     numeric_argument(operation, 1)?,
+                    dimensions,
                 ));
             }
             _ => {}

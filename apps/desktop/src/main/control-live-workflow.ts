@@ -1222,18 +1222,21 @@ function safeErrorMessage(error: unknown): string {
   return message.replace(/[A-Za-z]:[\\/][^\s]*/gu, '[local path]').slice(0, 512);
 }
 
+export function waitOrCancel(milliseconds: number, signal?: AbortSignal): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    const cancelled = () => {
+      clearTimeout(timer);
+      reject(new LiveWorkflowError('cancelled', 'Live test cancelled.'));
+    };
+    const timer = setTimeout(() => {
+      signal?.removeEventListener('abort', cancelled);
+      resolve();
+    }, milliseconds);
+    signal?.addEventListener('abort', cancelled, { once: true });
+  });
+}
+
 const systemClock: LiveWorkflowClock = {
   now: () => Date.now(),
-  wait: (milliseconds, signal) =>
-    new Promise<void>((resolve, reject) => {
-      const timer = setTimeout(resolve, milliseconds);
-      signal?.addEventListener(
-        'abort',
-        () => {
-          clearTimeout(timer);
-          reject(new LiveWorkflowError('cancelled', 'Live test cancelled.'));
-        },
-        { once: true },
-      );
-    }),
+  wait: waitOrCancel,
 };

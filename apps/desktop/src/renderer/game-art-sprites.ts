@@ -30,6 +30,7 @@ import { spritePartPlacement } from './game-art-small-trees';
 import { hasWallFrames, isGateObject, wallFacingIndex, wallFramesFor } from './game-art-walls';
 import { isDecorationPreviewObject } from './preview-materials';
 import { previewChunkSize, type TopDownObject } from './top-down-preview';
+import { destroyPixiTree } from './pixi-destroy';
 
 export const spriteUnitsPerPixelX = 2 / 96;
 export const spriteUnitsPerPixelY = 4 / 96;
@@ -833,7 +834,7 @@ export class GameArtSpriteLayer {
   }
 
   destroy(): void {
-    this.container.destroy({ children: true });
+    destroyPixiTree(this.container);
     const atlas = this.atlas;
     this.atlas = null;
     for (const entry of this.textures.values()) {

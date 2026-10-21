@@ -184,7 +184,11 @@ import {
   nextBoundaryMotion,
   visibleMapBoundary,
 } from './preview-boundary';
-import { isPreviewLayout, previewLayoutSwitchGlides } from '../shared/preview-layout';
+import {
+  isPreviewLayout,
+  previewLayoutShowsPreview,
+  previewLayoutSwitchGlides,
+} from '../shared/preview-layout';
 import { documentTransitionEnvironment, watchSizeTransitions } from './layout-transition';
 import { ListMotion } from './list-motion';
 import {
@@ -351,13 +355,19 @@ import {
 } from './preview-selection-ease';
 import {
   applyPreviewResizeAnchor,
+  composePreviewTransforms,
+  invertPreviewTransform,
+  previewFocusShownShare,
   previewLayoutSwitchAnchor,
   previewLayoutSwitchCamera,
   previewLayoutSwitchPlan,
   previewLayoutSwitchSettles,
+  previewMotionFocus,
   previewResizeAnchor,
+  previewSwitchRestoreCamera,
   type PreviewCanvasSize,
   type PreviewLayoutSwitchPlan,
+  type PreviewSwitchRestore,
 } from './preview-resize-anchor';
 import { drawObjects, objectHeightMapLight } from './preview-object-markers';
 import { chunkSpriteMatrix } from './game-art-terrain';
@@ -402,6 +412,8 @@ import {
   type ShownPicture,
   type ShownRaisedPicture,
 } from './preview-shown-picture';
+import { destroyPixiTree, trackRenderGroupBatchers } from './pixi-destroy';
+import { holdPixiSystemTicker } from './pixi-system-ticker';
 
 const previewPadding = 28;
 const noHighlightTiles: readonly number[] = [];
@@ -1001,12 +1013,7 @@ export function PreviewPanel() {
   const staleLayerCamera = useRef<{ camera: PreviewCamera; viewport: PreviewViewport } | null>(
     null,
   );
-  const switchRestore = useRef<{
-    before: PreviewCamera;
-    fitted: boolean;
-    after: PreviewCamera;
-    behindEditor: boolean;
-  } | null>(null);
+  const switchRestore = useRef<PreviewSwitchRestore | null>(null);
   const frozenCanvasTransform = useRef<
     ((size: PreviewCanvasSize) => PreviewScreenTransform | null) | null
   >(null);
@@ -1678,6 +1685,15 @@ export function PreviewPanel() {
     let nextCamera: PreviewCamera;
     let restoresSwitch = false;
     const switchPlan = layoutSwitchPlan.current;
+    const restored =
+      !dimensionsChanged && transitionTarget === null && !previewViewportIsCollapsed(viewport)
+        ? previewSwitchRestoreCamera(
+            viewScene,
+            switchRestore.current,
+            displayedCamera.current,
+            viewport,
+          )
+        : null;
     const adoptsSwitch =
       !dimensionsChanged &&
       switchPlan !== null &&
@@ -1705,21 +1721,11 @@ export function PreviewPanel() {
         after: nextCamera,
         behindEditor: !(viewport.behindEditor ?? false),
       };
-    } else if (
-      !dimensionsChanged &&
-      transitionTarget === null &&
-      switchRestore.current !== null &&
-      !previewViewportIsCollapsed(viewport) &&
-      (viewport.behindEditor ?? false) === switchRestore.current.behindEditor &&
-      samePreviewCamera(displayedCamera.current, switchRestore.current.after)
-    ) {
-      const restore = switchRestore.current;
+    } else if (restored) {
       switchRestore.current = null;
       restoresSwitch = true;
-      cameraIsFitted.current = restore.fitted;
-      nextCamera = restore.fitted
-        ? fitPreviewCamera(viewScene.width, viewScene.height)
-        : clampPreviewCamera(restore.before, viewScene.width, viewScene.height, viewport);
+      cameraIsFitted.current = restored.fitted;
+      nextCamera = restored.camera;
       cameraViewport.current = viewport;
     } else if (!dimensionsChanged) {
       nextCamera = clampPreviewCamera(
@@ -1834,9 +1840,11 @@ export function PreviewPanel() {
     const container = host.current;
     if (!container || !viewAvailable) return undefined;
     const pixi = new Application();
+    const systemTicker = holdPixiSystemTicker();
     let disposed = false;
     let initialized = false;
     let stopContextWatch: (() => void) | null = null;
+    let stopBatcherTracking: (() => void) | null = null;
     setPixiReady(false);
     const initialWidth = Math.max(1, container.clientWidth);
     const initialHeight = Math.max(1, container.clientHeight);
@@ -1877,6 +1885,7 @@ export function PreviewPanel() {
           setGpuUnavailable('context-lost'),
         );
         application.current = pixi;
+        stopBatcherTracking = trackRenderGroupBatchers(pixi.renderer);
         scheduler = new PreviewRenderScheduler(
           () => {
             if (layoutGlide && frozenSize === null) {
@@ -1900,7 +1909,9 @@ export function PreviewPanel() {
             const behindEditor = previewLaidOutBehindEditor(container);
             const focus = behindEditor
               ? previewFocusInsets(container, screen.width, true)
-              : noPreviewFocus;
+              : previewRegionShowsPreview(container)
+                ? noPreviewFocus
+                : laidOutPreviewFocus(viewportRef.current);
             shownFocus = focus;
             drawnRegionReach = behindEditor || layoutGlide ? previewRegionReach(container) : 0;
             const size: PreviewCanvasSize = {
@@ -1958,7 +1969,9 @@ export function PreviewPanel() {
               );
             }
             applyPreviewResizeAnchor(pixi.stage, anchor, container);
+            systemTicker.advance();
             pixi.render();
+            if (frozenSize !== null) showFrozenCanvas();
           },
           {
             verify: () => container.dataset.previewFrameCheck === 'on',
@@ -2025,6 +2038,21 @@ export function PreviewPanel() {
         height: Math.max(1, container.clientHeight),
         behindEditor,
         ...(behindEditor ? previewFocusInsets(container, width, false) : noPreviewFocus),
+      };
+    };
+    const measureMotionSize = (): PreviewCanvasSize => {
+      const width = Math.max(1, container.clientWidth);
+      const behindEditor = previewLaidOutBehindEditor(container);
+      return {
+        width,
+        height: Math.max(1, container.clientHeight),
+        behindEditor,
+        ...(behindEditor
+          ? previewFocusInsets(container, width, true)
+          : previewMotionFocus(
+              previewEditorInsets(container, width),
+              previewFocusShownShare(viewportRef.current),
+            )),
       };
     };
     let shownFocus: ReturnType<typeof previewFocusInsets> = noPreviewFocus;
@@ -2137,7 +2165,20 @@ export function PreviewPanel() {
     const showFrozenCanvas = () => {
       if (!frozenSize || !initialized || disposed) return;
       const transform = frozenCanvasTransform.current?.(frozenSize);
-      applyFrozenCanvas(pixi.canvas, transform ?? null);
+      const stage = pixi.stage;
+      applyFrozenCanvas(
+        pixi.canvas,
+        transform
+          ? composePreviewTransforms(
+              transform,
+              invertPreviewTransform({
+                scale: stage.scale.x,
+                x: stage.position.x,
+                y: stage.position.y,
+              }),
+            )
+          : null,
+      );
     };
     refreshFrozenCanvas.current = showFrozenCanvas;
     const transitionWatch = watchSizeTransitions(
@@ -2170,12 +2211,12 @@ export function PreviewPanel() {
       documentTransitionEnvironment(container.ownerDocument),
     );
     const resizeObserver = new ResizeObserver(() => {
-      const size = measureSize();
       if (transitionWatch.active && frozenCanvasTransform.current && !layoutGlide) {
-        frozenSize = size;
+        frozenSize = measureMotionSize();
         showFrozenCanvas();
         return;
       }
+      const size = measureSize();
       if (keptCollapsed && previewViewportIsCollapsed({ ...viewportRef.current, ...size })) return;
       keptCollapsed = false;
       commitViewport(size, false);
@@ -2251,6 +2292,7 @@ export function PreviewPanel() {
         destroyTerrainChunkCache(keptTerrainCache.current);
         keptTerrainCache.current = null;
       }
+      stopBatcherTracking?.();
       if (initialized) pixi.destroy(true, { children: true });
     };
   }, [viewAvailable]);
@@ -3244,23 +3286,31 @@ export function PreviewPanel() {
       const shownViewport = { ...drawnViewport, ...size };
       const drawnCamera = displayedCamera.current;
       const switchPlan = layoutSwitchPlan.current;
+      const restored =
+        pendingCamera.current === null &&
+        previewRegionShowsPreview(container) &&
+        !(switchPlan && !switchPlan.committed)
+          ? previewSwitchRestoreCamera(scene, switchRestore.current, drawnCamera, shownViewport)
+          : null;
       const shownCamera =
         switchPlan && !switchPlan.committed
           ? previewLayoutSwitchCamera(scene, switchPlan, shownViewport)
-          : cameraIsFitted.current
-            ? fitPreviewCamera(scene.width, scene.height)
-            : clampPreviewCamera(
-                previewCameraForCentre(
-                  pendingCamera.current ?? drawnCamera,
+          : restored
+            ? restored.camera
+            : cameraIsFitted.current
+              ? fitPreviewCamera(scene.width, scene.height)
+              : clampPreviewCamera(
+                  previewCameraForCentre(
+                    pendingCamera.current ?? drawnCamera,
+                    scene.width,
+                    scene.height,
+                    drawnViewport,
+                    shownViewport,
+                  ),
                   scene.width,
                   scene.height,
-                  drawnViewport,
                   shownViewport,
-                ),
-                scene.width,
-                scene.height,
-                shownViewport,
-              );
+                );
       return previewScreenTransform(
         scene.width,
         scene.height,
@@ -6305,7 +6355,7 @@ function destroyTerrainChunkCache(cache: TerrainChunkCache): void {
     cache.raised.layer = null;
     cache.chunks.delete(raisedChunkKey);
   }
-  cache.container.destroy({ children: true });
+  destroyPixiTree(cache.container);
   for (const chunk of cache.chunks.values()) chunk.texture.destroy(false);
   cache.chunks.clear();
   cache.terrainSource?.destroy();
@@ -6433,7 +6483,7 @@ function writeRaisedDataset(host: HTMLElement, cache: TerrainChunkCache): void {
 }
 
 function destroyStageChildren(children: ContainerChild[]): void {
-  for (const child of children) child.destroy({ children: true });
+  for (const child of children) destroyPixiTree(child);
 }
 
 function sameMapCoordinate(
@@ -6601,6 +6651,25 @@ function previewEditorInsets(
 function previewLaidOutBehindEditor(container: HTMLElement): boolean {
   const layout = container.closest<HTMLElement>('.workspace-preview-region')?.dataset.layout;
   return layout === 'behind-editor';
+}
+
+function laidOutPreviewFocus(viewport: PreviewViewport): {
+  focusInsetLeft: number;
+  focusInsetRight: number;
+  editorInsetLeft: number;
+  editorInsetRight: number;
+} {
+  return {
+    focusInsetLeft: viewport.focusInsetLeft ?? 0,
+    focusInsetRight: viewport.focusInsetRight ?? 0,
+    editorInsetLeft: viewport.editorInsetLeft ?? 0,
+    editorInsetRight: viewport.editorInsetRight ?? 0,
+  };
+}
+
+function previewRegionShowsPreview(container: HTMLElement): boolean {
+  const layout = container.closest<HTMLElement>('.workspace-preview-region')?.dataset.layout;
+  return !isPreviewLayout(layout) || previewLayoutShowsPreview(layout);
 }
 
 function workspaceEditorRegion(container: HTMLElement): HTMLElement | null {
