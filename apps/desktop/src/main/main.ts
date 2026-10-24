@@ -1,6 +1,6 @@
 import { removeHarnessStartupGuard, underTestHarness } from './harness-startup-guard';
 import { DesktopError } from '../shared/desktop-error';
-import { createHash, randomUUID } from 'node:crypto';
+import { createHash, randomInt, randomUUID } from 'node:crypto';
 import { lstat, readdir, realpath, stat, writeFile } from 'node:fs/promises';
 import { release as windowsRelease } from 'node:os';
 import { basename, delimiter, dirname, extname, join, resolve } from 'node:path';
@@ -102,6 +102,7 @@ import {
   helpMenuItems,
   languageMenuItemVisible,
   liveGenerationStagesMenuState,
+  mcpSettingsMenuItem,
   themePanelMenuItem,
 } from './menu-items';
 import { LocaleService } from './locale-service';
@@ -116,7 +117,10 @@ import {
 } from '../shared/preview-candidate';
 import { validateManualDeploymentMapIconRequest } from '../shared/map-icon-deployment';
 import { isSelectedTexturePaletteOrAbsent } from '../shared/texture-palette';
-import { settlePreviewGeneration } from '../shared/preview-generation-settlement';
+import {
+  previewGenerationCancellation,
+  settlePreviewGeneration,
+} from '../shared/preview-generation-settlement';
 import { isMapTestWorkerSetting } from '../shared/map-test-contract';
 import { validMapIconSourceRequestId } from '../shared/map-icon-source';
 import { presentMessage } from '../shared/message-catalog';
@@ -153,8 +157,9 @@ import {
 } from './installation-discovery';
 import { NativeSupervisor, type NativePaths } from './native-supervisor';
 import { XsEnvironmentSource, type XsEnvironmentState } from './xs-environment';
+import { xsStartCheckRequest, xsStartCheckWanted } from './xs-start-report';
 import * as latencyProbe from './latency-probe';
-import { ExecutionLease } from './execution-lease';
+import { ExecutionLease, type ExecutionLeaseOptions } from './execution-lease';
 import {
   handleRendererProtocol,
   isRendererDocumentUrl,
@@ -167,7 +172,9 @@ import { PreviewPresentationArbiter } from './preview-presentation-arbiter';
 import { admitPreviewTraceLevel } from './preview-trace-policy';
 import {
   currentMapTestReplaySourceInput,
+  mapTestFindingSettings,
   mapTestReplayGenerationInput,
+  mapTestReplayModeContext,
   maximumMapTestReportBytes,
   validateMapTestReportJson,
 } from './map-test-report';
@@ -311,6 +318,37 @@ import {
 } from './windows-integration';
 import { constantNamesField } from './content-constant-names';
 import { provideConstantNames } from './constant-names-provider';
+import { LatestValuePublisher } from './latest-value-publisher';
+import { bundledConnectorCatalog } from './connector/catalog';
+import { ConnectorService } from './connector/connector-service';
+import { connectorSetupFor, registerConnectorIpc } from './connector/ipc';
+import { registerGuideTools } from './connector/tools/guide-tools';
+import { ConnectorDiagnosticsStore } from './connector/diagnostics-store';
+import { registerWorkspaceTools } from './connector/tools/workspace-tools';
+import { validateAppQualityRun } from '../shared/connector-run-api';
+import { qualityScriptName } from '../shared/quality-check';
+import {
+  AppLane,
+  AppRunTickets,
+  appExecutionLabel,
+  busyError,
+  isAppRunReference,
+  type AppRunTicket,
+} from './connector/lane';
+import { resolveRunScript, workspaceRelativePath } from './connector/run-paths';
+import { registerRunTools } from './connector/tools/run-tools';
+import { registerPictureTools, type PictureSheetHost } from './connector/tools/picture-tools';
+import { ShownPreviewMaps } from './connector/shown-preview-maps';
+import { pictureMapFromPreviewResult } from './pictures/picture-map';
+import {
+  createBundledPictureWorker,
+  createPictureService,
+  type PictureService,
+} from './pictures/picture-service';
+import { createPictureStore } from './pictures/picture-store';
+import { GameSession, registerGameTools } from './connector/tools/game-tools';
+import type { IdeStatusPart } from './connector/tools/workspace-tools';
+import type { ConnectorState } from '../shared/connector-api';
 
 provideConstantNames(constantNamesField);
 
@@ -336,6 +374,7 @@ let indentConditionalsPreference = true;
 let liveGenerationStagesPreference = true;
 let gpuMapRenderingPreference = true;
 let mapTransitionsPreference = true;
+let xsStartCheckPreference = true;
 let inlayHintsPreference = true;
 let outlineRowPreference = true;
 let deletePermanentlyPreference = false;
@@ -361,10 +400,136 @@ let insertSnippetAvailable = false;
 let saveSnippetAvailable = false;
 let ownSnippetStore: OwnSnippetStore | undefined;
 let appTourStore: AppTourStore | undefined;
+let connectorService: ConnectorService | undefined;
+let connectorDiagnostics: ConnectorDiagnosticsStore | undefined;
 let publishedApplicationMenuModel = '';
 let windowCloseApproved = false;
 let rendererUnavailableForClose = false;
 const executionLease = new ExecutionLease(publishExecutionState);
+const appRunTickets = new AppRunTickets();
+let pictureService: PictureService | undefined;
+const shownPreviewMaps = new ShownPreviewMaps(pictureMapFromPreviewResult);
+let appPictureSheets: PictureSheetHost | undefined;
+function registerAppRunTools(service: ConnectorService, userDataPath: string): void {
+  let catalog: ReturnType<typeof bundledConnectorCatalog>;
+  try {
+    catalog = bundledConnectorCatalog();
+  } catch {
+    return;
+  }
+  const root = () => workspaceServiceInstance?.workspaceRoot() ?? null;
+  const guardWorkspace = {
+    root,
+    isProtected: (path: string) => workspaceServiceInstance?.isProtectedPath(path) ?? true,
+  };
+  const lane = new AppLane(executionLease, catalog.limits.busyWaitSeconds * 1000);
+  const source = (sourceId: string) => {
+    const document = supervisor?.languageDocument(sourceId);
+    let file: string | null = null;
+    try {
+      const absolute = fileURLToPath(sourceId);
+      file = workspaceRelativePath(root(), absolute) ?? basename(absolute);
+    } catch {
+      file = null;
+    }
+    return { file, text: document?.text ?? null };
+  };
+  registerRunTools(service.registry, {
+    bridge: service.bridge,
+    lane,
+    tickets: appRunTickets,
+    leaseState: () => executionLease.state(),
+    resolveScript: (path, kind) => resolveRunScript(guardWorkspace, path, kind),
+    relativePath: (absolute) => workspaceRelativePath(root(), absolute),
+    source,
+    pictureMap: pictureMapFromPreviewResult,
+    stopExecution: (executionId) => {
+      if (executionLease.state().executionId === executionId) void executionLease.stop();
+    },
+    qualityAvailable: () => supervisor?.mapTestQualitySupported() ?? false,
+    qualityCases: catalog.qualityCases,
+    freshSeed: () => randomInt(0, 0x1_0000_0000),
+    now: () => Date.now(),
+  });
+  pictureService ??= createPictureService({
+    createWorker: () => createBundledPictureWorker(__dirname),
+  });
+  const pictures = pictureService;
+  const pictureStore = createPictureStore({ userData: userDataPath });
+  const unavailable = () => Promise.reject(new Error('contact sheets are not available'));
+  registerPictureTools(service.registry, {
+    pictures,
+    savePicture: (png) => pictureStore.save(png),
+    bridge: service.bridge,
+    lane,
+    leaseState: () => executionLease.state(),
+    sheets: {
+      withLease: (label, app, stop, work) =>
+        appPictureSheets ? appPictureSheets.withLease(label, app, stop, work) : unavailable(),
+      generate: (input, seed, id) =>
+        appPictureSheets ? appPictureSheets.generate(input, seed, id) : unavailable(),
+      cancel: (id) => appPictureSheets?.cancel(id) ?? Promise.resolve(),
+      stopAutomatic: () => appPictureSheets?.stopAutomatic(),
+    },
+    shownMap: (requestHash) =>
+      connectorService?.currentSettings().enabled
+        ? shownPreviewMaps.picture(requestHash)
+        : undefined,
+    resolveScript: (path, kind) => resolveRunScript(guardWorkspace, path, kind),
+    relativePath: (absolute) => workspaceRelativePath(root(), absolute),
+    source,
+    pictureMap: pictureMapFromPreviewResult,
+    now: () => Date.now(),
+  });
+}
+
+const appGameSession = new GameSession();
+
+function registerAppGameTools(
+  service: ConnectorService,
+  addStatusPart: ((part: IdeStatusPart) => () => void) | undefined,
+  controlReady: () => Promise<boolean>,
+): void {
+  let catalog: ReturnType<typeof bundledConnectorCatalog>;
+  try {
+    catalog = bundledConnectorCatalog();
+  } catch {
+    return;
+  }
+  const root = () => workspaceServiceInstance?.workspaceRoot() ?? null;
+  registerGameTools(
+    service.registry,
+    {
+      bridge: service.bridge,
+      lane: new AppLane(executionLease, catalog.limits.busyWaitSeconds * 1000),
+      tickets: appRunTickets,
+      leaseState: () => executionLease.state(),
+      resolveScript: (path, kind) =>
+        resolveRunScript(
+          {
+            root,
+            isProtected: (candidate: string) =>
+              workspaceServiceInstance?.isProtectedPath(candidate) ?? true,
+          },
+          path,
+          kind,
+        ),
+      relativePath: (absolute) => workspaceRelativePath(root(), absolute),
+      stopExecution: (executionId) => {
+        if (executionLease.state().executionId === executionId) void executionLease.stop();
+      },
+      session: appGameSession,
+      allowedSince: (app) =>
+        service.state().allowedApps.find((entry) => entry.name === app)?.firstAllowed ?? null,
+      controlReady,
+      gameFolderLinked: () => gameFolderLinked,
+      freshSeed: () => randomInt(0, 0x1_0000_0000),
+      now: () => Date.now(),
+    },
+    addStatusPart,
+  );
+}
+
 function sourceFileDialogFilter(): Electron.FileFilter {
   return editionCapabilities.mapTests
     ? {
@@ -754,6 +919,7 @@ async function createApplication(): Promise<void> {
   liveGenerationStagesPreference = initialSession.liveGenerationStages;
   gpuMapRenderingPreference = initialSession.gpuMapRendering;
   mapTransitionsPreference = developmentOverrides().mapTransitions ?? initialSession.mapTransitions;
+  xsStartCheckPreference = initialSession.xsStartCheck;
   inlayHintsPreference = initialSession.inlayHints;
   outlineRowPreference = initialSession.outlineRow;
   deletePermanentlyPreference = initialSession.deletePermanently;
@@ -925,12 +1091,95 @@ async function createApplication(): Promise<void> {
     rendererUnavailableForClose = false;
     mainWindow = undefined;
   });
+  registerConnectorIpc(ipcMain, {
+    service: () => connectorService,
+    assertSender: (event) => {
+      const invoke = event as Electron.IpcMainInvokeEvent;
+      assertTrustedSender(invoke.senderFrame?.url);
+      assertMainWindowSender(invoke.sender);
+    },
+  });
+  if (editionCapabilities.mcp) {
+    const sendToRenderer = (channel: string, value: unknown): boolean => {
+      if (!mainWindow || mainWindow.isDestroyed() || rendererUnavailableForClose) return false;
+      mainWindow.webContents.send(channel, value);
+      return true;
+    };
+    const connectorStatePublisher = new LatestValuePublisher<ConnectorState>(
+      (state) => sendToRenderer(ipcChannels.connectorStateEvent, state),
+      100,
+    );
+    connectorService = new ConnectorService({
+      userDataPath,
+      ideVersion: productIdentity.version,
+      catalog: bundledConnectorCatalog,
+      publishState: (state) => connectorStatePublisher.offer(state),
+      publishRow: (row) => sendToRenderer(ipcChannels.connectorOutputEvent, row),
+      sendRequest: (request) => sendToRenderer(ipcChannels.connectorRequestEvent, request),
+      setup: () =>
+        connectorSetupFor({
+          packaged: app.isPackaged,
+          resourcesPath: process.resourcesPath,
+          appPath: app.getAppPath(),
+          appDataPath: app.getPath('appData'),
+          userDataPath,
+        }),
+      onPairingRequested: () => {
+        if (mainWindow && !mainWindow.isDestroyed() && !mainWindow.isFocused()) {
+          mainWindow.flashFrame(true);
+        }
+      },
+      log: (message, error) =>
+        error === undefined ? console.error(message) : console.error(message, error),
+    });
+    registerGuideTools(connectorService.registry, {
+      lookupReference: (params) =>
+        supervisor
+          ? supervisor.referenceLookup(params)
+          : Promise.reject(new Error('rms-ls is not running')),
+    });
+    connectorDiagnostics = new ConnectorDiagnosticsStore();
+    const toolWorkspace = workspaceServiceInstance;
+    const toolNatives = supervisor;
+    let workspaceTools: ReturnType<typeof registerWorkspaceTools> | undefined;
+    if (toolWorkspace && toolNatives) {
+      workspaceTools = registerWorkspaceTools(connectorService.registry, {
+        workspace: {
+          root: () => toolWorkspace.workspaceRoot(),
+          isProtected: (path) => toolWorkspace.isProtectedPath(path),
+          isReservedName: (name) => toolWorkspace.standardResources.isReservedFileName(name),
+          grantFolder: (path) => toolWorkspace.grantWorkspaceFolder(path),
+          createEntry: (request) => toolWorkspace.createEntry(request),
+        },
+        documents: { document: (uri) => toolNatives.languageDocument(uri) },
+        diagnostics: connectorDiagnostics,
+        bridge: connectorService.bridge,
+        lane: () => executionLease.state(),
+        gameFolderLinked: () => gameFolderLinked,
+      });
+    }
+    registerAppRunTools(connectorService, userDataPath);
+    registerAppGameTools(connectorService, workspaceTools?.addStatusPart, async () => {
+      const status = await controlLauncherPreference.status().catch(() => null);
+      return status?.state === 'ready';
+    });
+    mainWindow.webContents.on('did-navigate', () => connectorService?.rendererReset());
+    mainWindow.webContents.on('render-process-gone', () => connectorService?.rendererReset());
+    void connectorService
+      .initialize()
+      .catch((error: unknown) => console.error('the MCP connector did not start', error));
+  }
   const nativesStarted = supervisor.startAll();
   await mainWindow.loadURL(rendererDocumentUrl);
   latencyProbe.startup('renderer-loaded');
   await nativesStarted;
   latencyProbe.startup('natives-ready');
   void externalLanguageServers?.start().catch((error: unknown) => console.error(error));
+}
+
+function mcpMenuItems(): MenuItemConstructorOptions[] {
+  const item = mcpSettingsMenuItem(editionCapabilities);
+  return item ? [{ ...item, click: () => publishMenuAction({ type: 'open-mcp-settings' }) }] : [];
 }
 
 function createApplicationMenu(): Menu {
@@ -1269,6 +1518,22 @@ function createApplicationMenu(): Menu {
                   publishMenuAction({ type: 'set-map-transitions', enabled });
                 },
               },
+              {
+                id: 'view.xs-start-check',
+                label: t('app-menu.view.xs-start-check'),
+                type: 'checkbox',
+                checked: xsStartCheckPreference,
+                click: (item) => {
+                  const enabled =
+                    item.checked === xsStartCheckPreference
+                      ? !xsStartCheckPreference
+                      : item.checked;
+                  item.checked = enabled;
+                  xsStartCheckPreference = enabled;
+                  void desktopSessionStore?.updateXsStartCheck(enabled);
+                  publishMenuAction({ type: 'set-xs-start-check', enabled });
+                },
+              },
               { type: 'separator' },
             ] satisfies MenuItemConstructorOptions[])
           : []),
@@ -1340,6 +1605,7 @@ function createApplicationMenu(): Menu {
           ...themePanelMenuItem(),
           click: () => publishMenuAction({ type: 'open-theme-settings' }),
         },
+        ...mcpMenuItems(),
         { type: 'separator' },
         { label: t('app-menu.view.actual-size'), role: 'resetZoom' },
         { label: t('app-menu.view.zoom-in'), role: 'zoomIn' },
@@ -1688,8 +1954,16 @@ function registerIpc(
     cooperativeStop: () => Promise<void>,
     forceStop: () => Promise<void>,
     operation: () => Promise<T>,
+    options: ExecutionLeaseOptions = {},
   ): Promise<T> => {
-    const token = executionLease.acquire(executionId, kind, label, cooperativeStop, forceStop);
+    const token = executionLease.acquire(
+      executionId,
+      kind,
+      label,
+      cooperativeStop,
+      forceStop,
+      options,
+    );
     try {
       return await operation();
     } finally {
@@ -2520,6 +2794,14 @@ function registerIpc(
     if (previousContext !== nativeSupervisor.languageEditorContextEpoch())
       invalidateEditorInventory();
   };
+  const linkedXsConstantsText = async (): Promise<string | null> => {
+    const selection = await installationSelectionStore.read().catch(() => null);
+    if (!selection?.installationRoot) return null;
+    const state = await xsEnvironmentSource
+      .current(selection.installationRoot, languageContentSelection?.profileId ?? null)
+      .catch(() => null);
+    return state?.payload.constants?.text ?? null;
+  };
   const refreshOpenLanguageCatalog = async () => {
     await refreshXsEnvironment().catch(() => undefined);
     const entries = nativeSupervisor
@@ -2588,6 +2870,7 @@ function registerIpc(
     fixtureId?: DevelopmentFixtureDescriptor['id'],
     onExecutionProgress?: (event: ExecutionProgressEvent) => void,
     onPreviewCandidate?: (candidate: PreviewCandidate) => void,
+    { previewBound = true }: { previewBound?: boolean } = {},
   ) => {
     const executionSource = captureSourceExecution({
       nativeEpoch: () => nativeSupervisor.languageIdentityEpoch(),
@@ -2601,6 +2884,17 @@ function registerIpc(
       : '';
     executionSource.assertCurrent();
     latencyProbe.step(probeId, 'source-graph');
+    const xsStartOptions = {
+      capability: !fixtureId && nativeSupervisor.xsStartCheckSupported(),
+      enabled: xsStartCheckPreference && input.xsStartCheck !== false,
+      backend: input.backend,
+      hasExternalXs: sourceCatalog.sources.some((source) => source.role === 'external-xs'),
+    };
+    const xsStart = xsStartCheckRequest({
+      ...xsStartOptions,
+      constantsText: xsStartCheckWanted(xsStartOptions) ? await linkedXsConstantsText() : null,
+    });
+    executionSource.assertCurrent();
     let current = sourceCatalog;
     const result = await executionSource.run(
       () =>
@@ -2613,6 +2907,7 @@ function registerIpc(
           onExecutionProgress,
           localContentService.sourceFor(input.contentPack),
           onPreviewCandidate,
+          xsStart,
         ),
       async () => {
         const latestDocument = nativeSupervisor.languageDocument(input.documentUri);
@@ -2634,7 +2929,14 @@ function registerIpc(
       },
     );
     executionSource.assertCurrent();
+    if (!previewBound) {
+      latencyProbe.step(probeId, 'post-check');
+      return result;
+    }
+    connectorDiagnostics?.recordXsStart(input.documentUri, result.xsStart);
     if (!fixtureId && result.backend === 'exact') {
+      if (connectorService?.currentSettings().enabled) shownPreviewMaps.remember(result);
+      else shownPreviewMaps.clear();
       const graph = sourceCatalogService.authorizeExactDeployment(current, result);
       mapIconSourceGeneration.remember(graph, input, localProductVersion, result);
       latestAuthorizedControlLivePreview = {
@@ -2667,6 +2969,60 @@ function registerIpc(
     latencyProbe.step(probeId, 'post-check');
     return result;
   };
+  appPictureSheets = {
+    withLease: async (label, app, stop, work) => {
+      let started = false;
+      try {
+        return await withExecutionLease(
+          `pictures-${randomUUID()}`,
+          'pictures',
+          label,
+          stop,
+          () =>
+            shuttingDown
+              ? nativeSupervisor.forceTerminateRmsd()
+              : nativeSupervisor.forceTerminateRmsdAndRestart(),
+          () => {
+            started = true;
+            return work();
+          },
+          { origin: { kind: 'app', app } },
+        );
+      } catch (error) {
+        if (!started && error instanceof DesktopError && error.code === 'execution.busy') {
+          throw busyError(executionLease.state(), Date.now());
+        }
+        throw error;
+      }
+    },
+    generate: async (template, seed, clientRequestId) => {
+      const documentUri = typeof template.documentUri === 'string' ? template.documentUri : '';
+      const document = nativeSupervisor.languageDocument(documentUri);
+      if (!document) throw new Error('the script is not open in the language server');
+      const input = validateGenerationInput({
+        ...(template as unknown as PreviewGenerationInput),
+        source: document.text,
+        documentRevision: document.version,
+        seed,
+        clientRequestId,
+        progressivePreview: false,
+        xsStartCheck: false,
+      });
+      delete input.appRun;
+      delete input.automatic;
+      return generateWithCatalog(input, () => undefined, undefined, undefined, undefined, {
+        previewBound: false,
+      });
+    },
+    cancel: (clientRequestId) =>
+      nativeSupervisor.cancelPreview(clientRequestId).then(() => undefined),
+    stopAutomatic: () => {
+      const state = executionLease.state();
+      if (state.phase === 'running' && state.kind === 'rms' && state.automatic === true) {
+        void executionLease.stop();
+      }
+    },
+  };
   ipcMain.handle(ipcChannels.getDesktopSession, async (event) => {
     assertTrustedSender(event.senderFrame?.url);
     await discoverInstalledSources();
@@ -2683,6 +3039,7 @@ function registerIpc(
         dialogLocations: { ...cloneDefaultDesktopSession().dialogLocations },
         rmsLintRules: [],
         mapTransitions: mapTransitionsPreference,
+        xsStartCheck: xsStartCheckPreference,
       },
     };
   });
@@ -2728,6 +3085,7 @@ function registerIpc(
       rmsLintRules: current.rmsLintRules,
       languagePreference: current.languagePreference,
       checkForNewVersions: current.checkForNewVersions,
+      xsStartCheck: current.xsStartCheck,
       mapIconReliefMode: current.mapIconReliefMode,
       mapIconTerrainSmoothing: current.mapIconTerrainSmoothing,
       mapIconSpawnMarkerStyle: current.mapIconSpawnMarkerStyle,
@@ -2768,10 +3126,27 @@ function registerIpc(
     assertMainWindowSender(event.sender);
     return executionLease.stop();
   });
+  ipcMain.handle(ipcChannels.mapTestQualityAvailable, async (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return nativeSupervisor.mapTestQualitySupported();
+  });
   ipcMain.handle(ipcChannels.mapTestRun, async (event, input: MapTestRunInput) => {
     assertTrustedSender(event.senderFrame?.url);
     assertMainWindowSender(event.sender);
     const validated = validateMapTestRunInput(input);
+    const { appRun } = validated;
+    delete validated.appRun;
+    let appTicket: AppRunTicket | undefined;
+    if (appRun) {
+      const claimed = appRunTickets.claim(appRun.token, [
+        validated.quality ? 'quality-check' : 'map-test',
+      ]);
+      if (claimed === undefined) throw new Error('map-test app run is unknown');
+      if (claimed === 'cancelled') throw new Error('the AI app stopped the map test');
+      appTicket = claimed;
+      appTicket.executionId = validated.executionId;
+    }
     const snapshot = await prepareRootExecution(() => sourceCatalogsForMapTest(validated)).catch(
       (error: unknown) => {
         if (error instanceof SourceCatalogBatchError)
@@ -2784,10 +3159,14 @@ function registerIpc(
       workspaceName: snapshot.workspaceName,
       defaultSourcePath: snapshot.defaultSourcePath,
     };
+    const qualityCheck = request.quality !== undefined;
+    const mapTestLabel = qualityCheck
+      ? `Quality check · ${qualityCheckMapName(request.scriptUri)}`
+      : `Map test · ${request.scriptName}`;
     return withExecutionLease(
       request.executionId,
       'map-test',
-      `Map test · ${request.scriptName}`,
+      appTicket ? appExecutionLabel(appTicket.app, mapTestLabel) : mapTestLabel,
       () => nativeSupervisor.cancelMapTest(request.executionId).then(() => undefined),
       () => nativeSupervisor.forceTerminateMapTest(),
       async () => {
@@ -2795,7 +3174,7 @@ function registerIpc(
         event.sender.send(ipcChannels.mapTestEvent, {
           kind: 'started',
           executionId: request.executionId,
-          text: `Map test started: ${request.scriptName}`,
+          text: `${mapTestLabel} started`,
         });
         try {
           const result = await nativeSupervisor.runMapTest(
@@ -2807,15 +3186,19 @@ function registerIpc(
                 if (!event.sender.isDestroyed()) {
                   event.sender.send(ipcChannels.mapTestEvent, mapTestEvent);
                 }
+                appTicket?.onProgress?.(mapTestEvent.completed, mapTestEvent.requested);
               } else {
                 presentationArbiter.endFinals();
                 event.sender.send(ipcChannels.mapTestEvent, mapTestEvent);
               }
             },
             localContentService.sourceFor(request.contentPack),
+            await linkedXsConstantsText(),
           );
           presentationArbiter.endFinals();
-          const currentScript = nativeSupervisor.languageDocument(request.scriptUri);
+          const currentScript = qualityCheck
+            ? undefined
+            : nativeSupervisor.languageDocument(request.scriptUri);
           if (currentScript && currentScript.text !== request.scriptSource) {
             throw new Error('map-test script changed while execution was in flight');
           }
@@ -2835,13 +3218,15 @@ function registerIpc(
           event.sender.send(ipcChannels.mapTestEvent, {
             kind: 'completed',
             executionId: request.executionId,
-            text: `Map test ${result.status} in ${result.elapsedMilliseconds} ms`,
+            text: `${mapTestLabel} ${result.status} in ${result.elapsedMilliseconds} ms`,
           });
+          if (appTicket) appRunTickets.capture(appTicket, result, Date.now());
           return result;
         } finally {
           presentationArbiter.endFinals();
         }
       },
+      appTicket ? { origin: { kind: 'app', app: appTicket.app } } : {},
     );
   });
   ipcMain.handle(ipcChannels.mapTestReplay, async (event, input: MapTestReplayInput) => {
@@ -2871,12 +3256,16 @@ function registerIpc(
           (candidate) => candidate.findingId === input.findingId,
         );
         if (!finding) throw new Error('the selected map-test finding is unavailable');
+        const qualityReport =
+          report.script.name === qualityScriptName && report.quality !== undefined;
         const currentScriptHash = createHash('sha256')
           .update(input.scriptSource.replaceAll('\r\n', '\n').replaceAll('\r', '\n'))
           .digest('hex');
-        if (currentScriptHash !== report.script.semanticHash) {
+        if (!qualityReport && currentScriptHash !== report.script.semanticHash) {
           throw new Error('the current map-test script identity differs from the report');
         }
+        const settings = mapTestFindingSettings(report, finding);
+        if (!settings) throw new Error('the finding settings are unavailable in the report');
         if (report.engineVersion !== 'exact-rms-v1') {
           throw new Error('the map-test report engine identity is unsupported');
         }
@@ -2912,16 +3301,16 @@ function registerIpc(
           contentPack,
           versionOrigin: input.versionOrigin,
           backend: 'exact',
-          width: report.settings.width,
-          height: report.settings.height,
-          mapSize: report.settings.mapSize,
+          width: settings.width,
+          height: settings.height,
+          mapSize: settings.mapSize,
           seed: finding.seed,
-          players: report.settings.players.map(({ slot, team, civilizationId }) => ({
+          players: settings.players.map(({ slot, team, civilizationId }) => ({
             slot,
             team,
             civilizationId,
           })),
-          modeContext: reportModeContext(report),
+          modeContext: mapTestReplayModeContext(report, settings),
           traceLevel: 'off',
           minimapPalette: input.minimapPalette,
           texturePalette: input.texturePalette ?? null,
@@ -3207,8 +3596,25 @@ function registerIpc(
     if (validated.backend !== 'exact') {
       throw new Error('normal preview generation does not accept the synthetic backend');
     }
+    const { appRun, automatic } = validated;
+    delete validated.appRun;
+    delete validated.automatic;
+    let appTicket: AppRunTicket | undefined;
+    if (appRun) {
+      const claimed = appRunTickets.claim(appRun.token, ['generate']);
+      if (claimed === undefined) throw new Error('generation app run is unknown');
+      if (claimed === 'cancelled') {
+        return {
+          status: 'cancelled',
+          cancellation: previewGenerationCancellation('the AI app stopped the run'),
+        };
+      }
+      appTicket = claimed;
+    }
     const executionId = validated.clientRequestId ?? `preview-${randomUUID()}`;
     validated.clientRequestId = executionId;
+    if (appTicket) appTicket.executionId = executionId;
+    const leaseLabel = `RMS · ${basename(validated.documentUri)}`;
     latencyProbe.openRequest(executionId, 'generation');
     latencyProbe.stepUntil(executionId, 'validate', probeStarted);
     latencyProbe.step(executionId, 'validate');
@@ -3216,7 +3622,7 @@ function registerIpc(
       withExecutionLease(
         executionId,
         'rms',
-        `RMS · ${basename(validated.documentUri)}`,
+        appTicket ? appExecutionLabel(appTicket.app, leaseLabel) : leaseLabel,
         () => nativeSupervisor.cancelPreview(executionId).then(() => undefined),
         () =>
           shuttingDown
@@ -3227,7 +3633,7 @@ function registerIpc(
           const progressive = validated.progressivePreview === true;
           if (progressive) presentationArbiter.beginCandidates(executionId);
           try {
-            return await generateWithCatalog(
+            const result = await generateWithCatalog(
               validated,
               (generationEvent) => {
                 if (generationEvent.kind !== 'delta-batch') {
@@ -3244,10 +3650,22 @@ function registerIpc(
                 ? (candidate) => presentationArbiter.offerCandidate(candidate)
                 : undefined,
             );
+            if (appTicket) {
+              appRunTickets.capture(appTicket, result, Date.now(), {
+                uri: validated.documentUri,
+                text: validated.source,
+              });
+            }
+            return result;
           } finally {
             presentationArbiter.revokeCandidates(executionId);
           }
         },
+        appTicket
+          ? { origin: { kind: 'app', app: appTicket.app } }
+          : automatic === true
+            ? { automatic: true }
+            : {},
       ),
     );
     return settled.then(
@@ -4033,6 +4451,17 @@ function registerIpc(
     async (event, request: ControlLiveSynchronizationRequest) => {
       assertTrustedSender(event.senderFrame?.url);
       assertMainWindowSender(event.sender);
+      const { appRun } = request;
+      delete request.appRun;
+      let appTicket: AppRunTicket | undefined;
+      if (appRun !== undefined) {
+        if (!isAppRunReference(appRun)) throw new Error('live-test app run is invalid');
+        const claimed = appRunTickets.claim(appRun.token, ['live-test']);
+        if (claimed === undefined) throw new Error('live-test app run is unknown');
+        if (claimed === 'cancelled') throw new Error('the AI app stopped the live test');
+        appTicket = claimed;
+        appTicket.executionId = request.requestId;
+      }
       const liveDocument = nativeSupervisor.languageDocument(request.preview.documentUri);
       assertAuthorizedControlLivePreview(
         request,
@@ -4056,7 +4485,9 @@ function registerIpc(
         return await withExecutionLease(
           request.requestId,
           'control-live',
-          'AoE2Control live run',
+          appTicket
+            ? appExecutionLabel(appTicket.app, 'AoE2Control live run')
+            : 'AoE2Control live run',
           async () => controller.abort(),
           async () => {
             controller.abort();
@@ -4066,6 +4497,7 @@ function registerIpc(
             await managedDeploymentTarget();
             return controlLiveWorkflow.synchronize(request, controller.signal);
           },
+          appTicket ? { origin: { kind: 'app', app: appTicket.app } } : {},
         );
       } finally {
         controlLiveAbortControllers.delete(request.requestId);
@@ -4708,8 +5140,31 @@ function extractMapTestSourcePaths(script: string): Set<string> {
   return paths;
 }
 
+function qualityCheckMapName(uri: string): string {
+  try {
+    return basename(fileURLToPath(uri));
+  } catch {
+    return qualityScriptName;
+  }
+}
+
 function validateMapTestRunInput(input: MapTestRunInput): MapTestRunInput {
   const scriptBytes = Buffer.byteLength(input?.scriptSource ?? '', 'utf8');
+  const quality = input?.quality;
+  if (quality !== undefined) {
+    try {
+      validateAppQualityRun(quality, 'quality');
+    } catch {
+      throw new Error('map-test run input is invalid');
+    }
+  }
+  const scriptShape =
+    quality === undefined
+      ? /\.rmstest$/iu.test(input?.scriptName ?? '') && scriptBytes >= 1
+      : input?.scriptName === qualityScriptName &&
+        scriptBytes === 0 &&
+        typeof input.defaultSourceUri === 'string' &&
+        input.defaultSourceUri.length >= 1;
   if (
     !input ||
     typeof input !== 'object' ||
@@ -4722,8 +5177,7 @@ function validateMapTestRunInput(input: MapTestRunInput): MapTestRunInput {
     typeof input.scriptName !== 'string' ||
     input.scriptName.length < 1 ||
     input.scriptName.length > 512 ||
-    !/\.rmstest$/iu.test(input.scriptName) ||
-    scriptBytes < 1 ||
+    !scriptShape ||
     scriptBytes > 1024 * 1024 ||
     (input.defaultSourceUri !== undefined &&
       (typeof input.defaultSourceUri !== 'string' || input.defaultSourceUri.length > 4096)) ||
@@ -4740,47 +5194,12 @@ function validateMapTestRunInput(input: MapTestRunInput): MapTestRunInput {
     !input.profile ||
     !input.contentPack ||
     (input.versionOrigin !== 'packaged' && input.versionOrigin !== 'local') ||
-    (input.progressivePreview !== undefined && typeof input.progressivePreview !== 'boolean')
+    (input.progressivePreview !== undefined && typeof input.progressivePreview !== 'boolean') ||
+    (input.appRun !== undefined && !isAppRunReference(input.appRun))
   ) {
     throw new Error('map-test run input is invalid');
   }
   return structuredClone(input);
-}
-
-function reportModeContext(report: ReturnType<typeof validateMapTestReportJson>): string {
-  const setup = report.settings.setupContext;
-  const gameMode: Record<string, number> = {
-    'random-map': 0,
-    regicide: 1,
-    'death-match': 2,
-    'king-of-the-hill': 5,
-    'wonder-race': 6,
-    'defend-the-wonder': 7,
-    'turbo-random-map': 8,
-    'capture-the-relic': 10,
-    'sudden-death': 11,
-    'battle-royale': 12,
-    'empire-wars': 13,
-  };
-  const resources: Record<string, number> = {
-    standard: 0,
-    low: 1,
-    medium: 2,
-    high: 3,
-    'ultra-high': 4,
-    infinite: 5,
-    random: 6,
-  };
-  const age: Record<string, number> = {
-    standard: 0,
-    'dark-age': 2,
-    'feudal-age': 3,
-    'castle-age': 4,
-    'imperial-age': 5,
-    'post-imperial-age': 6,
-  };
-  const position: Record<string, number> = { random: 0, fixed: 1, 'team-together': 2 };
-  return `aoe2:gm=${gameMode[setup.gameMode]};r=${resources[setup.startingResources]};a=${age[setup.startingAge]};p=${position[setup.positionPolicy]};c=${report.settings.players.map((player) => player.color).join(',')}`;
 }
 
 function installRendererPermissionPolicy(): void {
@@ -4828,11 +5247,10 @@ function publishLanguageServerNotification(method: string, params: unknown): voi
 }
 
 function sendLanguageServerEvent(method: string, params: unknown): void {
+  const shown = editionLanguageNotificationParams(method, params, editionCapabilities);
+  if (method === 'textDocument/publishDiagnostics') connectorDiagnostics?.accept(shown);
   if (mainWindow && !mainWindow.isDestroyed()) {
-    mainWindow.webContents.send(ipcChannels.languageServerEvent, {
-      method,
-      params: editionLanguageNotificationParams(method, params, editionCapabilities),
-    });
+    mainWindow.webContents.send(ipcChannels.languageServerEvent, { method, params: shown });
   }
 }
 
@@ -4881,7 +5299,11 @@ function validateGenerationInput(input: PreviewGenerationInput): PreviewGenerati
     !/^[0-9a-f]{64}$/.test(input.contentPack?.sourceFingerprint ?? '') ||
     !validSelectedMinimapPalette(input.minimapPalette) ||
     !isSelectedTexturePaletteOrAbsent(input.texturePalette) ||
-    (input.progressivePreview !== undefined && typeof input.progressivePreview !== 'boolean')
+    (input.progressivePreview !== undefined && typeof input.progressivePreview !== 'boolean') ||
+    (input.xsStartCheck !== undefined && typeof input.xsStartCheck !== 'boolean') ||
+    (input.appRun !== undefined && !isAppRunReference(input.appRun)) ||
+    (input.automatic !== undefined && typeof input.automatic !== 'boolean') ||
+    (input.appRun !== undefined && input.automatic === true)
   ) {
     throw new Error('generation input is invalid or exceeds its bounds');
   }
@@ -5022,10 +5444,19 @@ app.on('before-quit', (event) => {
     error === undefined ? console.error(message) : console.error(message, error);
   guardShutdownErrors(process, logShutdown);
   for (const controller of controlLiveAbortControllers.values()) controller.abort();
+  const connectorStopped =
+    connectorService
+      ?.stop(updateService?.state().phase === 'installing' ? 'ide-updating' : 'ide-closing')
+      .catch((error: unknown) => logShutdown('stopping the MCP connector failed', error)) ??
+    Promise.resolve();
   void shutdownApplication({
     stopExecution: () => executionLease.stop(),
     stopServices: () =>
-      (controlSessionBridgeInstance?.shutdown() ?? Promise.resolve())
+      Promise.all([
+        connectorStopped,
+        controlSessionBridgeInstance?.shutdown(),
+        pictureService?.dispose(),
+      ])
         .catch((error: unknown) =>
           logShutdown('detaching AoE2Control failed while quitting', error),
         )

@@ -106,6 +106,7 @@ export function attachSeparatorPill(
   };
 
   const update = () => {
+    pill.dataset.dragging = String(dragging);
     const next = hovered || dragging;
     if (next === visible) return;
     if (next) snap = true;
@@ -149,6 +150,7 @@ export function attachSeparatorPill(
     update();
   };
   pill.dataset.visible = 'false';
+  pill.dataset.dragging = 'false';
   separator.addEventListener('pointerenter', onEnter);
   separator.addEventListener('pointermove', onMove);
   separator.addEventListener('pointerleave', onLeave);

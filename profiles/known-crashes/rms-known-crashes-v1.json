@@ -1,0 +1,414 @@
+{
+  "$schema": "https://rmside.invalid/schemas/known-crashes/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "catalogId": "aoe2de-rms-known-crashes-v1",
+  "profiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+  "entries": [
+    {
+      "id": "actor-radius-search-too-small",
+      "title": "override_actor_radius_if_required on an object too small for the search",
+      "cause": "override_actor_radius_if_required moves an object that does not fit where it was placed, and the object is too small for the game's search for a free tile.",
+      "fix": "Remove override_actor_radius_if_required from that object.",
+      "dependsOn": ["seed", "lobby"],
+      "timing": "generation",
+      "detectors": [{ "stage": "generation", "code": "RMSGEN7103" }],
+      "docTerms": [
+        {
+          "terms": ["override_actor_radius_if_required"],
+          "places": ["objects_generation/create_object"],
+          "note": "On an object too small for the game's search for a free tile, such as a sheep, the game crashes when the object has to move."
+        }
+      ],
+      "evidence": {
+        "quality": "live",
+        "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "connection-block-missing-terrain",
+      "title": "A line in a connection block has no terrain",
+      "cause": "Inside the braces of a connection command the game reads a terrain from every line, and {word} has none.",
+      "fix": "Move the line out of the connection block, before the connection commands.",
+      "dependsOn": ["path"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["accumulate_connections"],
+          "places": [
+            "connection_generation/create_connect_all_lands",
+            "connection_generation/create_connect_all_players_land",
+            "connection_generation/create_connect_land_zones",
+            "connection_generation/create_connect_same_land_zones",
+            "connection_generation/create_connect_teams_lands",
+            "connection_generation/create_connect_to_nonplayer_land"
+          ],
+          "note": "Inside the braces of a connection command the game crashes on this line. Write it once before the connection commands, outside braces."
+        }
+      ],
+      "evidence": {
+        "quality": "live",
+        "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "connection-to-land-outside-map",
+      "title": "A connection reaches a land outside the map",
+      "cause": "A connection starts or ends at a land whose position lies outside the map at this map size.",
+      "fix": "Keep land_position inside the map for every map size.",
+      "dependsOn": ["mapSize", "positions"],
+      "timing": "generation",
+      "detectors": [{ "stage": "generation", "code": "RMSGEN7001" }],
+      "docTerms": [],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "defined-name-runs-as-cliff-type",
+      "title": "A defined name runs as cliff_type in <CLIFF_GENERATION>",
+      "cause": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "fix": "Remove the defined name, or write the command it was meant to be.",
+      "dependsOn": ["path"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["cliff_type"],
+          "places": ["cliff_generation"],
+          "note": "The game crashes when a defined name stands where a command can and the game runs it as this command with no value."
+        }
+      ],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "defined-name-runs-as-elevation-terrain",
+      "title": "A defined name runs as base_terrain or base_layer in create_elevation braces",
+      "cause": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "fix": "Remove the defined name, or write the command it was meant to be.",
+      "dependsOn": ["path"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["base_layer", "base_terrain"],
+          "places": ["elevation_generation/create_elevation"],
+          "note": "The game crashes when a defined name stands where a command can and the game runs it as this command with no value."
+        }
+      ],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "defined-name-runs-as-global-command",
+      "title": "A defined name runs as ai_info_map_type, effect_amount or effect_percent",
+      "cause": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "fix": "Remove the defined name, or write the command it was meant to be.",
+      "dependsOn": ["path"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["ai_info_map_type", "effect_amount", "effect_percent"],
+          "places": [],
+          "note": "The game crashes when a defined name stands where a command can and the game runs it as this command with no value."
+        }
+      ],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "defined-name-runs-as-guard-state",
+      "title": "A defined name runs as guard_state in <PLAYER_SETUP>",
+      "cause": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "fix": "Remove the defined name, or write the command it was meant to be.",
+      "dependsOn": ["path"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["guard_state"],
+          "places": ["player_setup"],
+          "note": "The game crashes when a defined name stands where a command can and the game runs it as this command with no value."
+        }
+      ],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "defined-name-runs-as-land-base-terrain",
+      "title": "A defined name runs as base_terrain or base_layer in <LAND_GENERATION>",
+      "cause": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "fix": "Remove the defined name, or write the command it was meant to be.",
+      "dependsOn": ["path"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["base_layer", "base_terrain"],
+          "places": ["land_generation"],
+          "note": "The game crashes when a defined name stands where a command can and the game runs it as this command with no value."
+        }
+      ],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "defined-name-runs-as-land-terrain",
+      "title": "A defined name runs as terrain_type or assign_to in a land's braces",
+      "cause": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "fix": "Remove the defined name, or write the command it was meant to be.",
+      "dependsOn": ["path", "players"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["assign_to", "terrain_type"],
+          "places": ["land_generation/create_land", "land_generation/create_player_lands"],
+          "note": "The game crashes when a defined name stands where a command can and the game runs it as this command with no value."
+        }
+      ],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "defined-name-runs-as-object-terrain",
+      "title": "A defined name runs as terrain_to_place_on, layer_to_place_on or second_object in an object's braces",
+      "cause": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "fix": "Remove the defined name, or write the command it was meant to be.",
+      "dependsOn": ["path"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["layer_to_place_on", "second_object", "terrain_to_place_on"],
+          "places": ["objects_generation/create_object"],
+          "note": "The game crashes when a defined name stands where a command can and the game runs it as this command with no value."
+        }
+      ],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "defined-name-runs-as-terrain-command",
+      "title": "A defined name runs as create_terrain or color_correction in <TERRAIN_GENERATION>",
+      "cause": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "fix": "Remove the defined name, or write the command it was meant to be.",
+      "dependsOn": ["path"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "parser", "code": "RMS2042" },
+        { "stage": "lint", "code": "RMS4012" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["color_correction", "create_terrain"],
+          "places": ["terrain_generation"],
+          "note": "The game crashes when a defined name stands where a command can and the game runs it as this command with no value."
+        }
+      ],
+      "evidence": {
+        "quality": "static",
+        "liveProfiles": [],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "grouped-placement-zero-perimeter",
+      "title": "Grouped player placement around a circle of length zero",
+      "cause": "Players are placed in team groups around a circle of length zero, so the game divides by zero.",
+      "fix": null,
+      "dependsOn": ["lobby"],
+      "timing": "generation",
+      "detectors": [{ "stage": "generation", "code": "RMSGEN2002" }],
+      "docTerms": [],
+      "evidence": {
+        "quality": "inferred",
+        "liveProfiles": [],
+        "staticProfiles": [],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "object-group-entry-without-object",
+      "title": "add_object without an object in a named group",
+      "cause": "add_object has no object while a group is named, so the game crashes when that entry is chosen.",
+      "fix": "Give add_object an object.",
+      "dependsOn": ["seed"],
+      "timing": "generation",
+      "detectors": [{ "stage": "parser", "code": "RMS2043" }],
+      "docTerms": [],
+      "evidence": {
+        "quality": "inferred",
+        "liveProfiles": [],
+        "staticProfiles": [],
+        "inferredProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"]
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "object-on-land-outside-map",
+      "title": "An object is placed on a land outside the map",
+      "cause": "An object is placed per land on a land whose position lies outside the map at this map size.",
+      "fix": "Keep land_position inside the map for every map size.",
+      "dependsOn": ["mapSize", "positions"],
+      "timing": "generation",
+      "detectors": [{ "stage": "generation", "code": "RMSGEN7101" }],
+      "docTerms": [
+        {
+          "terms": ["land_position"],
+          "places": ["land_generation/create_land"],
+          "note": "The game crashes when a connection or an object placed per land reaches a land whose position lies outside the map, as a large position can on a small map."
+        }
+      ],
+      "evidence": {
+        "quality": "live",
+        "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "override-map-size-shrinks-after-lands",
+      "title": "override_map_size makes the map smaller after the player lands",
+      "cause": "override_map_size makes the map smaller after the player lands were made, so a player can start outside the map.",
+      "fix": "Move override_map_size before create_player_lands.",
+      "dependsOn": ["seed", "mapSize", "players", "positions"],
+      "timing": "generation",
+      "detectors": [
+        { "stage": "lint", "code": "RMS4012" },
+        { "stage": "generation", "code": "RMSGEN7001" },
+        { "stage": "generation", "code": "RMSGEN7101" }
+      ],
+      "docTerms": [
+        {
+          "terms": ["override_map_size"],
+          "places": [
+            "land_generation",
+            "land_generation/create_land",
+            "land_generation/create_player_lands"
+          ],
+          "note": "When this makes the map smaller after create_player_lands, a player can start outside the map and the game crashes with some seeds. Write it before the player lands."
+        }
+      ],
+      "evidence": {
+        "quality": "live",
+        "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    },
+    {
+      "id": "terrain-without-movement-data",
+      "title": "The map paints a terrain without movement data",
+      "cause": "The map paints terrain {terrain}, which the game's movement data does not cover, so the game crashes during the match.",
+      "fix": "Use a terrain that the game's movement data covers.",
+      "dependsOn": ["path", "content"],
+      "timing": "match",
+      "detectors": [{ "stage": "generation", "code": "RMSGEN7103" }],
+      "docTerms": [],
+      "evidence": {
+        "quality": "live",
+        "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "inferredProfiles": []
+      },
+      "status": "active",
+      "retiredIn": null
+    }
+  ]
+}

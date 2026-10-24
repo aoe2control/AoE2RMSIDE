@@ -1,5 +1,15 @@
-import type { MapTestReplayInput } from '../shared/api';
+import type { MapTestReplayInput, MapTestReport } from '../shared/api';
 import type { MapTestResultsState } from './app-context';
+
+export function replayedRunSeed(
+  report: Pick<MapTestReport, 'findings'>,
+  findingId: string,
+): number | null {
+  const seed = report.findings.find((entry) => entry.findingId === findingId)?.seed;
+  return typeof seed === 'number' && Number.isSafeInteger(seed) && seed >= 0 && seed <= 0xffff_ffff
+    ? seed
+    : null;
+}
 
 export function mapTestReplayInput(options: {
   executionId: string;

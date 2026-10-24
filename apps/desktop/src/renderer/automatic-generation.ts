@@ -41,6 +41,7 @@ export interface AutomaticGenerationChange {
   execution: Pick<RootExecutionState, 'phase' | 'kind'>;
   ownPreviewExecution: boolean;
   documentRunnable?: boolean;
+  appRunActive?: boolean;
 }
 
 export function automaticRunApplies(input: {
@@ -63,10 +64,11 @@ export function automaticGenerationAction(
   if (change.documentRunnable === false) return 'none';
   if (contentChanged && !change.runOnEdit) return 'none';
   if (!change.previewActive) return 'none';
+  if (change.appRunActive === true) return 'defer';
   if (execution.phase === 'idle') return 'schedule';
   if (change.ownPreviewExecution) {
     return execution.phase === 'running' ? 'supersede' : 'defer';
   }
-  if (execution.kind === 'map-icon') return 'defer';
+  if (execution.kind === 'map-icon' || execution.kind === 'pictures') return 'defer';
   return 'none';
 }

@@ -1,0 +1,1312 @@
+{
+  "schemaVersion": "1.0.0",
+  "compatibility": { "minimumMajor": 1, "maximumMajor": 1 },
+  "limits": {
+    "frameBytes": 4194304,
+    "argumentsJsonBytes": 524288,
+    "textItemBytes": 65536,
+    "pngBytes": 1572864,
+    "imageMaxSide": 1024,
+    "imageMinLongSide": 256,
+    "connections": 4,
+    "callsInFlight": 4,
+    "callsPerMinute": 120,
+    "picturesPerMinute": 30,
+    "handshakeSeconds": 5,
+    "pairingWaitSeconds": 3,
+    "busyWaitSeconds": 3,
+    "defaultWaitSeconds": 50,
+    "maxWaitSeconds": 110,
+    "promptAnswerSeconds": 110,
+    "progressPerSecond": 2,
+    "stdinLineBytes": 1048576,
+    "qualityCheckMaps": 1600
+  },
+  "errorCodes": [
+    "ide_not_running",
+    "version_mismatch",
+    "not_approved_yet",
+    "not_allowed",
+    "invalid_arguments",
+    "no_folder_open",
+    "outside_workspace",
+    "file_type_not_allowed",
+    "not_found",
+    "already_exists",
+    "too_large",
+    "binary_file",
+    "edit_conflict",
+    "saving_off",
+    "busy",
+    "map_expired",
+    "run_expired",
+    "stopped",
+    "cancelled",
+    "user_declined",
+    "needs_user_at_pc",
+    "blocked_known_crash",
+    "game_not_ready",
+    "rate_limited",
+    "too_many_calls",
+    "internal"
+  ],
+  "qualityCases": [
+    "generation",
+    "start-resources",
+    "resource-distances",
+    "shared-resources",
+    "wood",
+    "trapped",
+    "paths",
+    "building-space",
+    "hills",
+    "water",
+    "spacing",
+    "chokepoints",
+    "variation",
+    "looks"
+  ],
+  "tools": [
+    {
+      "name": "ide_status",
+      "title": "IDE status",
+      "description": "The open folder, open tabs (unsaved, edited by you), the current Run settings, whether the IDE is busy, the selected quality-check cases, and which game actions are available. Call it first to orient yourself.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": { "type": "object", "properties": {}, "additionalProperties": false },
+      "output": {
+        "maxChars": 1500,
+        "image": false,
+        "shape": "{folder,active,open:[{path,unsaved,app_edits}] (at most 12, then more),run:{version,map_size,players,teams,seed,mode},lane:{state},saving,quality_cases:[id],game_folder,live_test}"
+      }
+    },
+    {
+      "name": "list_files",
+      "title": "List files",
+      "description": "List script files in the open folder or one of its subfolders: RMS scripts, includes, XS, map tests, and text. Sorted by path and paged with cursor.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dir": {
+            "type": "string",
+            "description": "Subfolder relative to the open folder; the folder itself when omitted.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "pattern": {
+            "type": "string",
+            "description": "Glob filter on the file name, for example *.rms.",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[^\\\\:\"<>|\\u0000-\\u001f]+$"
+          },
+          "cursor": {
+            "type": "string",
+            "description": "The cursor from the previous page's more.",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 200, "default": 100 }
+        },
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 4000,
+        "image": false,
+        "shape": "{dir,files:[{p,kb,unsaved}],dirs:[path],more}"
+      }
+    },
+    {
+      "name": "read_file",
+      "title": "Read file",
+      "description": "Read a file in the open folder. An open tab is read with its unsaved text. Returns a version token for edit_file's base_version. Pages of up to 800 lines.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path relative to the open folder.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "start_line": { "type": "integer", "minimum": 1, "maximum": 1048576, "default": 1 },
+          "lines": { "type": "integer", "minimum": 1, "maximum": 800, "default": 400 },
+          "numbers": {
+            "type": "boolean",
+            "description": "Prefix each line with its number; costs tokens.",
+            "default": false
+          }
+        },
+        "required": ["path"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 24000,
+        "image": false,
+        "shape": "{path,version,lines:'1-400',total_lines,unsaved,text,more}"
+      }
+    },
+    {
+      "name": "edit_file",
+      "title": "Edit file",
+      "description": "Replace text in a file: copy each old_text literally from the file; it must occur once, or set all. All edits apply as one undoable step in the user's editor and stay unsaved. Returns the new version and the file's first errors.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path relative to the open folder.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "edits": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "type": "object",
+              "properties": {
+                "old_text": { "type": "string", "minLength": 1, "maxLength": 20000 },
+                "new_text": { "type": "string", "minLength": 0, "maxLength": 100000 },
+                "all": {
+                  "type": "boolean",
+                  "description": "Replace every occurrence (at most 200).",
+                  "default": false
+                }
+              },
+              "required": ["old_text", "new_text"],
+              "additionalProperties": false
+            }
+          },
+          "base_version": {
+            "type": "string",
+            "description": "The version from read_file; the edit fails if the file changed since.",
+            "minLength": 2,
+            "maxLength": 65,
+            "pattern": "^(v[0-9]{1,16}|d[0-9a-f]{8,64})$"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why, in a few words; shown to the user on the tab.",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "required": ["path", "edits"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 2000,
+        "image": false,
+        "shape": "{path,version,changed,problems:{errors,warnings,first:[{line,code,msg}]}|'pending'}; edit_conflict lists up to 3 nearest lines"
+      }
+    },
+    {
+      "name": "create_file",
+      "title": "Create file",
+      "description": "Create a new file in the open folder with this content. It opens in a background tab with the content unsaved; the user saves it, or you call save_file when saving is allowed.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "New file path relative to the open folder.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "content": { "type": "string", "minLength": 0, "maxLength": 524288 },
+          "open": { "type": "boolean", "default": true }
+        },
+        "required": ["path", "content"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 2000,
+        "image": false,
+        "shape": "{path,version,problems:{errors,warnings,first:[{line,code,msg}]}|'pending'}"
+      }
+    },
+    {
+      "name": "save_file",
+      "title": "Save file",
+      "description": "Save a file's tab. Works only when the user turned on Let AI apps save files; otherwise ask the user to save.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "setting",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path relative to the open folder.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          }
+        },
+        "required": ["path"],
+        "additionalProperties": false
+      },
+      "output": { "maxChars": 2000, "image": false, "shape": "{path,saved}" }
+    },
+    {
+      "name": "get_problems",
+      "title": "Problems",
+      "description": "Errors and warnings of a file as the Problems panel shows them, with fix hints. Info notes are only counted.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path relative to the open folder.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "severity": {
+            "type": "string",
+            "description": "errors: errors only; warnings: errors and warnings; all: also info.",
+            "enum": ["errors", "warnings", "all"],
+            "default": "warnings"
+          },
+          "code": {
+            "type": "string",
+            "description": "Only problems with this code, for example RMS2042.",
+            "minLength": 1,
+            "maxLength": 32,
+            "pattern": "^[A-Za-z][A-Za-z0-9-]{0,31}$"
+          },
+          "cursor": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 50, "default": 20 }
+        },
+        "required": ["path"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 4000,
+        "image": false,
+        "shape": "{path,version,counts:{errors,warnings,info},items:[{sev,code,line,col,msg,fix}],includes:[{path,errors}],xs:{errors,note},more}"
+      }
+    },
+    {
+      "name": "generate_map",
+      "title": "Generate map",
+      "description": "Generate a map from the script's current, unsaved text; the IDE shows it in its preview. Returns a compact summary: players and starts, start objects per player, neutral resources, terrain shares, warnings. Settings given here apply to this run only. compare_to adds a one-line difference to an earlier map.",
+      "servedBy": "ide",
+      "lane": "always",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Script path relative to the open folder; the active script tab when omitted.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "The game's seed; negative values are the game's signed form.",
+            "minimum": -2147483648,
+            "maximum": 4294967295
+          },
+          "settings": {
+            "type": "object",
+            "description": "Lobby settings for this run only; the user's Run settings fill the rest.",
+            "properties": {
+              "map_size": {
+                "type": "string",
+                "description": "tiny, small, medium, normal, large, huge, ludicrous, or a size in tiles.",
+                "minLength": 2,
+                "maxLength": 9,
+                "pattern": "^(tiny|small|medium|normal|large|huge|ludicrous|[1-9][0-9]{1,2})$"
+              },
+              "players": { "type": "integer", "minimum": 1, "maximum": 8 },
+              "teams": {
+                "type": "string",
+                "description": "ffa or team sizes such as 1v1, 2v2, 4v4, 2v2v2v2.",
+                "minLength": 3,
+                "maxLength": 15,
+                "pattern": "^(ffa|[1-8](v[1-8]){1,7})$"
+              },
+              "civs": {
+                "type": "array",
+                "maxItems": 8,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "pattern": "^[a-z][a-z0-9_-]{0,31}$"
+                }
+              },
+              "game_mode": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "age": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "resources": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "from_run": {
+            "type": "object",
+            "description": "Regenerate a seed and setting of a map test or quality check.",
+            "properties": {
+              "run": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 7,
+                "pattern": "^[qr][1-9][0-9]{0,5}$"
+              },
+              "seed": { "type": "integer", "minimum": -2147483648, "maximum": 4294967295 },
+              "setting": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "pattern": "^s[1-8]$"
+              }
+            },
+            "required": ["run", "seed"],
+            "additionalProperties": false
+          },
+          "compare_to": {
+            "type": "string",
+            "description": "An earlier map id, for example m3.",
+            "minLength": 2,
+            "maxLength": 9,
+            "pattern": "^(m[1-9][0-9]{0,5}|s[1-9][0-9]{0,5}\\.[1-9])$"
+          },
+          "wait_seconds": { "type": "integer", "minimum": 1, "maximum": 110, "default": 50 }
+        },
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 3000,
+        "image": false,
+        "shape": "{map,path,seed,settings,status:'ok'|'failed'|'running',time_s,players:[{p,team,start:[x,y]}],start_objects:{same,differs:[{what,per_player,note}]},neutral,terrain,warnings:[{code,msg}],warning_count,xs,known_crash,compare,more}; failed lists the first 5 errors with lines; running gives {status,run,progress}"
+      }
+    },
+    {
+      "name": "show_map",
+      "title": "Show map",
+      "description": "Show the user a map in the IDE's preview, as the user's own Run does. Without seed and settings it uses the user's Run settings; given ones are set in the Run menu and named in Output. Opens the preview when it is closed; the IDE window does not come to the front.",
+      "servedBy": "ide",
+      "lane": "always",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Script path relative to the open folder; the active script tab when omitted.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "The game's seed; negative values are the game's signed form.",
+            "minimum": -2147483648,
+            "maximum": 4294967295
+          },
+          "settings": {
+            "type": "object",
+            "description": "Lobby settings to set in the user's Run menu; the user's Run settings fill the rest.",
+            "properties": {
+              "map_size": {
+                "type": "string",
+                "description": "tiny, small, medium, normal, large, huge, ludicrous, or a size in tiles.",
+                "minLength": 2,
+                "maxLength": 9,
+                "pattern": "^(tiny|small|medium|normal|large|huge|ludicrous|[1-9][0-9]{1,2})$"
+              },
+              "players": { "type": "integer", "minimum": 1, "maximum": 8 },
+              "teams": {
+                "type": "string",
+                "description": "ffa or team sizes such as 1v1, 2v2, 4v4, 2v2v2v2.",
+                "minLength": 3,
+                "maxLength": 15,
+                "pattern": "^(ffa|[1-8](v[1-8]){1,7})$"
+              },
+              "civs": {
+                "type": "array",
+                "maxItems": 8,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "pattern": "^[a-z][a-z0-9_-]{0,31}$"
+                }
+              },
+              "game_mode": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "age": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "resources": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "wait_seconds": { "type": "integer", "minimum": 1, "maximum": 110, "default": 50 }
+        },
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 1000,
+        "image": false,
+        "shape": "{map,shown,seed,settings,status:'ok'|'failed'|'running',warnings,known_crash,changed_run_settings:[name],more}; failed lists the first 5 errors with lines; running gives {status,run,progress}"
+      }
+    },
+    {
+      "name": "inspect_map",
+      "title": "Inspect map",
+      "description": "Terrain and objects in an area of a generated map, or around a player's start. sources: true groups objects by the script line that created them.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "map": {
+            "type": "string",
+            "description": "A map id, for example m4.",
+            "minLength": 2,
+            "maxLength": 9,
+            "pattern": "^(m[1-9][0-9]{0,5}|s[1-9][0-9]{0,5}\\.[1-9])$"
+          },
+          "area": {
+            "type": "object",
+            "description": "A tile rectangle; x and y are 0-based.",
+            "properties": {
+              "x": { "type": "integer", "minimum": 0, "maximum": 479 },
+              "y": { "type": "integer", "minimum": 0, "maximum": 479 },
+              "w": { "type": "integer", "minimum": 1, "maximum": 480 },
+              "h": { "type": "integer", "minimum": 1, "maximum": 480 }
+            },
+            "required": ["x", "y", "w", "h"],
+            "additionalProperties": false
+          },
+          "player": {
+            "type": "integer",
+            "description": "Look around this player's start instead of an area.",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "radius": { "type": "integer", "minimum": 1, "maximum": 60, "default": 20 },
+          "what": {
+            "type": "string",
+            "enum": ["objects", "terrain", "both"],
+            "default": "both"
+          },
+          "objects": {
+            "type": "array",
+            "description": "Only these objects: kinds such as gold, stone, relic, or object names and constants.",
+            "maxItems": 16,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9_ ()-]+$"
+            }
+          },
+          "list": {
+            "type": "boolean",
+            "description": "List single objects with positions.",
+            "default": false
+          },
+          "sources": {
+            "type": "boolean",
+            "description": "Group objects by the script line that created them.",
+            "default": false
+          },
+          "cursor": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 100, "default": 40 }
+        },
+        "required": ["map"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 5000,
+        "image": false,
+        "shape": "{map,area,tiles,terrain,elevation,cliffs,objects:[{name,n,nearest}],by_source:[{file,line,cmd,n}],list:[{name,at:[x,y],d}],more}"
+      }
+    },
+    {
+      "name": "get_picture",
+      "title": "Get picture",
+      "description": "A picture of a generated map: the whole map, an area, one player's base, all bases at one scale, two maps side by side, or the IDE preview as the user sees it. A square grid with tile ticks by default. Look preview shows the preview's terrain textures when the IDE has them, so blending can be judged; the other looks average colours.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "map": {
+            "type": "string",
+            "description": "A map id; your latest map when omitted.",
+            "minLength": 2,
+            "maxLength": 9,
+            "pattern": "^(m[1-9][0-9]{0,5}|s[1-9][0-9]{0,5}\\.[1-9])$"
+          },
+          "view": {
+            "type": "string",
+            "description": "whole map, a tile area, one player's base, every base at one scale, a side-by-side comparison, or as_shown: the IDE preview's map, look and framing.",
+            "enum": ["whole", "area", "base", "bases", "compare", "as_shown"]
+          },
+          "area": {
+            "type": "object",
+            "properties": {
+              "x": { "type": "integer", "minimum": 0, "maximum": 479 },
+              "y": { "type": "integer", "minimum": 0, "maximum": 479 },
+              "w": { "type": "integer", "minimum": 1, "maximum": 480 },
+              "h": { "type": "integer", "minimum": 1, "maximum": 480 }
+            },
+            "required": ["x", "y", "w", "h"],
+            "additionalProperties": false
+          },
+          "player": { "type": "integer", "minimum": 1, "maximum": 8 },
+          "radius": { "type": "integer", "minimum": 8, "maximum": 60, "default": 20 },
+          "compare_to": {
+            "type": "string",
+            "description": "For view compare: the other map id.",
+            "minLength": 2,
+            "maxLength": 9,
+            "pattern": "^(m[1-9][0-9]{0,5}|s[1-9][0-9]{0,5}\\.[1-9])$"
+          },
+          "look": {
+            "type": "string",
+            "description": "texture: Texture colors; minimap: Minimap colors; preview: the IDE preview's own look, with terrain textures when the IDE has them (else Texture colors, and the note says so).",
+            "enum": ["texture", "minimap", "preview"],
+            "default": "texture"
+          },
+          "objects": {
+            "type": "string",
+            "enum": ["markers", "minimap", "none"],
+            "default": "markers"
+          },
+          "relief": { "type": "boolean", "default": true },
+          "perspective": {
+            "type": "string",
+            "description": "grid: axis-aligned square, x right, y down; top_down: the IDE preview's Top-down view, turned 45 degrees; diamond: the IDE preview's Diamond view, flattened like the minimap.",
+            "enum": ["grid", "top_down", "diamond"],
+            "default": "grid"
+          },
+          "compare": {
+            "type": "object",
+            "description": "A second picture of the same view beside the first, in another look or perspective.",
+            "properties": {
+              "look": { "type": "string", "enum": ["texture", "minimap", "preview"] },
+              "perspective": { "type": "string", "enum": ["grid", "top_down", "diamond"] }
+            },
+            "additionalProperties": false
+          },
+          "overlays": {
+            "type": "array",
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": { "type": "string", "enum": ["grid", "players", "findings"] },
+            "default": ["grid", "players"]
+          },
+          "findings_of": {
+            "type": "object",
+            "description": "Mark the findings of a map test or quality check.",
+            "properties": {
+              "run": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 7,
+                "pattern": "^[qr][1-9][0-9]{0,5}$"
+              },
+              "case": {
+                "type": "string",
+                "enum": [
+                  "generation",
+                  "start-resources",
+                  "resource-distances",
+                  "shared-resources",
+                  "wood",
+                  "trapped",
+                  "paths",
+                  "building-space",
+                  "hills",
+                  "water",
+                  "spacing",
+                  "chokepoints",
+                  "variation",
+                  "looks"
+                ]
+              },
+              "seed": { "type": "integer", "minimum": -2147483648, "maximum": 4294967295 }
+            },
+            "required": ["run"],
+            "additionalProperties": false
+          },
+          "size": {
+            "type": "integer",
+            "description": "Pixels on the long side.",
+            "minimum": 256,
+            "maximum": 1024,
+            "default": 768
+          },
+          "save": {
+            "type": "boolean",
+            "description": "Also save the PNG in the IDE's pictures folder and return its path.",
+            "default": false
+          }
+        },
+        "required": ["view"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 1500,
+        "image": true,
+        "shape": "text {map,view,look,perspective,px_per_tile,size,shows,note,saved} then one PNG"
+      }
+    },
+    {
+      "name": "contact_sheet",
+      "title": "Contact sheet",
+      "description": "Generate several seeds of a script and return one picture grid, to see how the layout varies between seeds. Each seed's map can then be inspected by its id.",
+      "servedBy": "ide",
+      "lane": "always",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Script path relative to the open folder; the active script tab when omitted.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "seeds": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 9,
+            "uniqueItems": true,
+            "items": { "type": "integer", "minimum": -2147483648, "maximum": 4294967295 }
+          },
+          "count": {
+            "type": "integer",
+            "description": "How many seeds when seeds is omitted, from first_seed upward.",
+            "minimum": 2,
+            "maximum": 9,
+            "default": 6
+          },
+          "first_seed": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 4294967295,
+            "default": 1
+          },
+          "settings": {
+            "type": "object",
+            "properties": {
+              "map_size": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 9,
+                "pattern": "^(tiny|small|medium|normal|large|huge|ludicrous|[1-9][0-9]{1,2})$"
+              },
+              "players": { "type": "integer", "minimum": 1, "maximum": 8 },
+              "teams": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 15,
+                "pattern": "^(ffa|[1-8](v[1-8]){1,7})$"
+              },
+              "civs": {
+                "type": "array",
+                "maxItems": 8,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "pattern": "^[a-z][a-z0-9_-]{0,31}$"
+                }
+              },
+              "game_mode": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "age": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "resources": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 32,
+                "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "look": {
+            "type": "string",
+            "description": "As get_picture: texture, minimap, or preview (terrain textures when the IDE has them).",
+            "enum": ["texture", "minimap", "preview"],
+            "default": "texture"
+          },
+          "perspective": {
+            "type": "string",
+            "enum": ["grid", "top_down", "diamond"],
+            "default": "grid"
+          },
+          "size": { "type": "integer", "minimum": 512, "maximum": 1024, "default": 960 },
+          "save": { "type": "boolean", "default": false },
+          "wait_seconds": { "type": "integer", "minimum": 1, "maximum": 110, "default": 50 }
+        },
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 1500,
+        "image": true,
+        "shape": "text {sheet,seeds:[{id,seed,status,note}]} then one PNG grid"
+      }
+    },
+    {
+      "name": "run_map_test",
+      "title": "Run map test",
+      "description": "Run a .rmstest map test over its seeds. Returns failed assertions grouped with their first seeds, and crashes.",
+      "servedBy": "ide",
+      "lane": "always",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The .rmstest file relative to the open folder.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "seeds": {
+            "type": "integer",
+            "description": "Seed count, when the test lets the caller choose it.",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "wait_seconds": { "type": "integer", "minimum": 1, "maximum": 110, "default": 50 }
+        },
+        "required": ["path"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 3000,
+        "image": false,
+        "shape": "{run,status,maps,assertions,time_s,failed:[{id,line,msg,maps,seeds:[first 5]}],crashes:[{id,maps,seeds}],passed,quality:{result,failures,warnings,advice,items:[{case,code,level,maps,msg}]} (only when the test loads @rmside/quality),print_lines,more}"
+      }
+    },
+    {
+      "name": "run_quality_check",
+      "title": "Run quality check",
+      "description": "Check a script over many seeds and settings for generation problems, fairness, playability, and looks. Returns failing cases with their worst seeds; passing cases only by id. cases runs only the listed cases; generation always runs.",
+      "servedBy": "ide",
+      "lane": "always",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Script path relative to the open folder; the active script tab when omitted.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "seeds": { "type": "integer", "minimum": 1, "maximum": 200, "default": 50 },
+          "first_seed": {
+            "type": "integer",
+            "description": "The first seed; when omitted, a fresh start seed is picked and the answer's seeds field names it.",
+            "minimum": -2147483648,
+            "maximum": 4294967295
+          },
+          "settings": {
+            "type": "array",
+            "description": "Settings to test; seeds times settings is at most 1600 maps.",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "properties": {
+                "map_size": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 9,
+                  "pattern": "^(tiny|small|medium|normal|large|huge|ludicrous|[1-9][0-9]{1,2})$"
+                },
+                "players": { "type": "integer", "minimum": 1, "maximum": 8 },
+                "teams": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 15,
+                  "pattern": "^(ffa|[1-8](v[1-8]){1,7})$"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "cases": {
+            "type": "array",
+            "description": "Run only these cases; the user's selection when omitted.",
+            "minItems": 1,
+            "maxItems": 14,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "generation",
+                "start-resources",
+                "resource-distances",
+                "shared-resources",
+                "wood",
+                "trapped",
+                "paths",
+                "building-space",
+                "hills",
+                "water",
+                "spacing",
+                "chokepoints",
+                "variation",
+                "looks"
+              ]
+            }
+          },
+          "wait_seconds": { "type": "integer", "minimum": 1, "maximum": 110, "default": 50 }
+        },
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 4000,
+        "image": false,
+        "shape": "{run,status,maps,seeds,settings:[{id,is}],time_s,failed:[{case,code,maps,msg,worst:[{seed,set,what}] (at most 3),spread}],warnings:[as failed],advice:[{case,msg}],crashes:[{id,maps,seeds}],passed:[case],off:[case],not_applicable:[case],more}"
+      }
+    },
+    {
+      "name": "run_status",
+      "title": "Run status",
+      "description": "Wait for a run that answered status running and get its result, or stop it with stop: true.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "run": {
+            "type": "string",
+            "description": "The run id, for example q1.",
+            "minLength": 2,
+            "maxLength": 7,
+            "pattern": "^[dglqrs][1-9][0-9]{0,5}$"
+          },
+          "wait_seconds": { "type": "integer", "minimum": 0, "maximum": 110, "default": 50 },
+          "stop": { "type": "boolean", "default": false }
+        },
+        "required": ["run"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 4000,
+        "image": false,
+        "shape": "running: {run,status,done,total,elapsed_s}; finished: the starting tool's result"
+      }
+    },
+    {
+      "name": "get_details",
+      "title": "Get details",
+      "description": "More of a result that was cut short: the part its more.ask names, paged.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "A map, run, quality check, or contact sheet id.",
+            "minLength": 2,
+            "maxLength": 9,
+            "pattern": "^([mqrs][1-9][0-9]{0,5}|s[1-9][0-9]{0,5}\\.[1-9])$"
+          },
+          "part": {
+            "type": "string",
+            "description": "Maps: warnings, players, terrain, xs, objects. Map tests: findings, output, crashes. Quality checks: findings, case, crashes.",
+            "enum": [
+              "warnings",
+              "players",
+              "terrain",
+              "xs",
+              "objects",
+              "findings",
+              "output",
+              "crashes",
+              "case"
+            ]
+          },
+          "assertion": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 5,
+            "pattern": "^a[1-9][0-9]{0,3}$"
+          },
+          "case": {
+            "type": "string",
+            "enum": [
+              "generation",
+              "start-resources",
+              "resource-distances",
+              "shared-resources",
+              "wood",
+              "trapped",
+              "paths",
+              "building-space",
+              "hills",
+              "water",
+              "spacing",
+              "chokepoints",
+              "variation",
+              "looks"
+            ]
+          },
+          "seed": { "type": "integer", "minimum": -2147483648, "maximum": 4294967295 },
+          "setting": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "pattern": "^s[1-8]$"
+          },
+          "cursor": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 100, "default": 25 }
+        },
+        "required": ["id", "part"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 6000,
+        "image": false,
+        "shape": "{id,part,items:[...],more}"
+      }
+    },
+    {
+      "name": "deploy_mod",
+      "title": "Deploy as mod",
+      "description": "Deploy the script as a local mod for the game. Only when the user asks for it. The IDE asks the user before it replaces a mod you did not deploy in this session.",
+      "servedBy": "ide",
+      "lane": "when-generating",
+      "confirmation": "when-replacing",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Script path relative to the open folder; the active script tab when omitted.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "mod_name": {
+            "type": "string",
+            "description": "The mod's name; the script's name when omitted.",
+            "minLength": 1,
+            "maxLength": 120,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f]+$"
+          },
+          "enable": {
+            "type": "boolean",
+            "description": "Enable the mod; the user's last choice when omitted."
+          }
+        },
+        "additionalProperties": false
+      },
+      "output": { "maxChars": 1500, "image": false, "shape": "{mod,files,enabled,note}" }
+    },
+    {
+      "name": "live_test",
+      "title": "Live test",
+      "description": "Start the script in the running game for a live test. The user confirms in the IDE, and the running match ends. You cannot see the game; ask the user what they see.",
+      "servedBy": "ide",
+      "lane": "always",
+      "confirmation": "always",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Script path relative to the open folder; the active script tab when omitted.",
+            "minLength": 1,
+            "maxLength": 260,
+            "pattern": "^[^\\\\/:*?\"<>|\\u0000-\\u001f][^:*?\"<>|\\u0000-\\u001f]*$"
+          },
+          "seed": { "type": "integer", "minimum": -2147483648, "maximum": 4294967295 }
+        },
+        "additionalProperties": false
+      },
+      "output": { "maxChars": 1500, "image": false, "shape": "{status,seed,verified,note}" }
+    },
+    {
+      "name": "read_guide",
+      "title": "Read guide",
+      "description": "Guidance for making good maps. Start with workflow; topics lists every topic. Works without the IDE.",
+      "servedBy": "connector",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "enum": [
+              "topics",
+              "workflow",
+              "teaching",
+              "skeleton",
+              "player-base",
+              "fairness",
+              "woodlines",
+              "map-open",
+              "map-closed",
+              "map-water",
+              "map-nomad",
+              "team-games",
+              "visuals",
+              "special-objects",
+              "xs-scripting",
+              "quality-check",
+              "pictures",
+              "map-tests",
+              "anti-patterns",
+              "known-crashes",
+              "reference-numbers"
+            ]
+          },
+          "page": { "type": "integer", "minimum": 1, "maximum": 50, "default": 1 }
+        },
+        "required": ["topic"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 8000,
+        "image": false,
+        "shape": "markdown text of one page, split at headings; a last line names the next page"
+      }
+    },
+    {
+      "name": "lookup_reference",
+      "title": "Look up reference",
+      "description": "Documentation of an RMS command, attribute, constant, XS function, or map-test API name, as the editor's hover shows it. An unknown name returns close names.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[#<]?[A-Za-z_][A-Za-z0-9_.]*>?$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["command", "attribute", "constant", "xs", "test-api"]
+          }
+        },
+        "required": ["name"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 2500,
+        "image": false,
+        "shape": "plain text: syntax, arguments, defaults, notes; unknown names: up to 5 close names"
+      }
+    }
+  ]
+}

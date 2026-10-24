@@ -146,6 +146,9 @@
     "app-menu.view.map-transitions": {
       "message": "Animasikan Peralihan Peta"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "Semak XS Semasa Menjalankan Peta"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Tunjukkan Peringkat Penjanaan Langsung"
     },
@@ -178,6 +181,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "Tema…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "Tema"
@@ -407,6 +413,9 @@
     "output.source.map-test": {
       "message": "Ujian peta"
     },
+    "output.source.quality-check": {
+      "message": "Semakan kualiti"
+    },
     "output.source.deploy": {
       "message": "Pasang mod"
     },
@@ -428,8 +437,14 @@
     "output.source.game-textures": {
       "message": "Tekstur permainan"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "Aplikasi"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, other {{count} mesej keluaran}}"
@@ -499,6 +514,162 @@
     },
     "output.constructs.go-to": {
       "message": "Pergi ke penggunaan pertama"
+    },
+    "output.xs-start.summary": {
+      "message": "Semakan permulaan XS: {files, list} menjalankan main() dan {rules, plural, other {# peraturan}} ({steps, plural, other {# langkah}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "Semakan permulaan XS: {files, list} tiada main() dan menjalankan {rules, plural, =0 {tiada peraturan} other {# peraturan}} ({steps, plural, other {# langkah}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "Tidak dibandingkan dengan permainan"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "Tidak dibandingkan dengan permainan. Menggunakan: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "aritmetik nombor bulat"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "campuran nombor bulat dan perpuluhan"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "teks nombor"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "fungsi teks"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "nilai lalai tatasusunan"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "susunan peraturan"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "label dan goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "nilai permulaan"
+    },
+    "output.xs-start.chat": {
+      "message": "Sembang: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Gaia} other {Pemain {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "makanan"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "kayu"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "batu"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "emas"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "atribut {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource} ditetapkan kepada {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "objek {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "teknologi {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: menyelidik {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}: pendirian diplomatik terhadap {other} ditetapkan kepada {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: nama ditetapkan kepada “{text}”"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: nama tamadun ditetapkan kepada “{text}”"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: warna ditetapkan kepada {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: mencipta {count} {object} berhampiran ({x}, {y}); penempatan tidak disemak"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: mencipta {count} {object}; penempatan tidak disemak"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: membuang {count} {object}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: mengalihkan {count} {object} ke ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: mengalihkan {count} {object}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: menerima {count} {object} daripada {previous}"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: mengubah nilai {count} {object}"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: mengubah nama atau kapsyen {count} {object}"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: mengubah data {object}; direkodkan, tidak diterapkan"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: mengubah data {technology}; direkodkan, tidak diterapkan"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, other {# panggilan}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Suasana pencahayaan ditetapkan kepada {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Perubahan selepas baris ini tidak disenaraikan."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Perubahan selepas titik henti tidak disenaraikan."
+    },
+    "output.xs-start.skipped": {
+      "message": "Semakan permulaan XS dilangkau: {file} mempunyai {count, plural, other {# ralat}} (lihat Masalah)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "Pautkan folder permainan anda untuk menjalankan semakan permulaan XS"
+    },
+    "output.xs-start.omitted": {
+      "message": "Tidak semua hasil semakan permulaan XS disenaraikan"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Ditinggalkan: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, other {# dapatan}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, other {# baris sembang}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, other {# perubahan}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, other {# panggilan yang direkodkan}}"
     },
     "output.constructs.more": {
       "message": "dan {count} lagi"
@@ -605,11 +776,95 @@
     "run-menu.run-on-edit": {
       "message": "Jalankan apabila disunting"
     },
+    "run-menu.quality-check": {
+      "message": "Semakan kualiti"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Benih untuk disemak"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Kes"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Pilih perkara yang disemak oleh semakan kualiti"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Tetapan lobi lain"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Semak juga Sangat Kecil 1v1, Sederhana 2v2, Amat besar 4v4, 10 benih setiap satu"
+    },
+    "quality.case.generation": {
+      "message": "Penjanaan"
+    },
+    "quality.case.start-resources": {
+      "message": "Sumber awal"
+    },
+    "quality.case.resource-distances": {
+      "message": "Jarak sumber"
+    },
+    "quality.case.shared-resources": {
+      "message": "Sumber dikongsi"
+    },
+    "quality.case.wood": {
+      "message": "Kayu"
+    },
+    "quality.case.trapped": {
+      "message": "Sumber terkepung"
+    },
+    "quality.case.paths": {
+      "message": "Laluan"
+    },
+    "quality.case.building-space": {
+      "message": "Ruang bina"
+    },
+    "quality.case.hills": {
+      "message": "Bukit"
+    },
+    "quality.case.water": {
+      "message": "Air"
+    },
+    "quality.case.spacing": {
+      "message": "Penjarakan"
+    },
+    "quality.case.chokepoints": {
+      "message": "Laluan sempit"
+    },
+    "quality.case.variation": {
+      "message": "Variasi"
+    },
+    "quality.case.looks": {
+      "message": "Rupa"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "{bad} daripada {of} peta{metric, select, yes { · median {p50}, persentil ke-95 {p95}, tertinggi {max} {unit}} other {}}{worst, select, yes { · {count, plural, other {benih terburuk}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "Lulus: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, other {# lagi dapatan tidak disenaraikan}}"
+    },
+    "quality.failed": {
+      "message": "Semakan kualiti tidak dapat dijalankan"
+    },
     "run-menu.preset.default-name": {
       "message": "Konfig"
     },
     "run-menu.preset.numbered-name": {
       "message": "Konfig {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Konfig Ujian"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Kembali ke {name}"
     },
     "run-menu.preset.settings": {
       "message": "Tetapan konfigurasi pratonton"
@@ -634,6 +889,9 @@
     },
     "run-menu.preset.delete": {
       "message": "Padam {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "Duplikasi {name}"
     },
     "run-menu.preset.delete.title": {
       "message": "Padam konfigurasi {name}?"
@@ -821,6 +1079,9 @@
     "run-menu.fixture.needs-source": {
       "message": "Data ujian pembangunan memerlukan skrip .rms atau .rms2 yang tidak kosong"
     },
+    "mcp.run.settings-applied": {
+      "message": "{settings, list, unit} ditetapkan oleh {app}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Tamadun rawak untuk pratonton ini: {players, list, unit}"
     },
@@ -838,6 +1099,9 @@
     },
     "run-menu.result.failed": {
       "message": "Gagal"
+    },
+    "run-menu.result.warnings": {
+      "message": "Amaran"
     },
     "run-menu.result.passed": {
       "message": "Lulus"
@@ -2702,6 +2966,9 @@
     "lint-rule.RMS4011.title": {
       "message": "Nama mungkin tidak ditakrifkan"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "Permainan boleh ranap di sini"
+    },
     "map-icon.generate": {
       "message": "Jana ikon peta"
     },
@@ -3068,6 +3335,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "Dapatan dijana semula dengan benih {seed} yang direkodkan"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Dapatan dijana semula dengan benih {seed} yang direkodkan, kini dikunci untuk larian seterusnya"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Dapatan dijana semula dengan benih {seed} yang direkodkan, kini dikunci dalam konfigurasi sementara {name}"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "Pautan folder permainan tidak dapat dibuang"
     },
@@ -3100,6 +3373,336 @@
     },
     "code-editor.tab.close": {
       "message": "Tutup {name}"
+    },
+    "mcp.tab.edited-by": {
+      "message": "Disunting oleh {app}, belum disimpan"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "Tutup tetapan MCP"
+    },
+    "mcp.dialog.description": {
+      "message": "Benarkan aplikasi AI pada komputer ini membaca, menyunting dan menyemak skrip dalam folder yang terbuka, menjana peta dan menjalankan ujian peta."
+    },
+    "mcp.enable.label": {
+      "message": "Dayakan MCP"
+    },
+    "mcp.save.label": {
+      "message": "Benarkan aplikasi AI menyimpan fail"
+    },
+    "mcp.save.note": {
+      "message": "Apabila dimatikan, perubahan AI kekal belum disimpan sehingga anda menyimpannya."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "MCP tidak dapat dimulakan kerana program lain menggunakan nama sambungannya."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "MCP tidak dapat dimulakan kerana fail kuncinya tidak dapat ditulis."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "MCP tidak dapat dimulakan kerana senarai alatnya tidak sepadan dengan versi AoE2RMSIDE ini. Pasang semula AoE2RMSIDE."
+    },
+    "mcp.unavailable.internal": {
+      "message": "MCP tidak dapat dimulakan kerana ralat yang tidak dijangka."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Matikan dan hidupkan semula Dayakan MCP untuk mencuba lagi."
+    },
+    "mcp.apps.title": {
+      "message": "Aplikasi dibenarkan"
+    },
+    "mcp.apps.empty": {
+      "message": "Belum ada aplikasi. Aplikasi akan bertanya kali pertama ia menyambung."
+    },
+    "mcp.apps.connected": {
+      "message": "Disambungkan"
+    },
+    "mcp.apps.last-used": {
+      "message": "Terakhir digunakan {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "Buang"
+    },
+    "mcp.apps.remove-label": {
+      "message": "Buang {app}"
+    },
+    "mcp.setup.app": {
+      "message": "Aplikasi AI"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "Aplikasi lain"
+    },
+    "mcp.setup.text-label": {
+      "message": "Teks persediaan"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Tambahkan ini pada konfigurasi Claude Desktop (Settings > Developer > Edit Config), kemudian mulakan semula aplikasi itu."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Jalankan perintah ini dalam terminal."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Jalankan perintah ini dalam terminal."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Tambahkan program ini sebagai pelayan MCP setempat."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Hidupkan Dayakan MCP dahulu."
+    },
+    "mcp.setup.copy": {
+      "message": "Salin Persediaan"
+    },
+    "mcp.setup.copied": {
+      "message": "Persediaan disalin"
+    },
+    "mcp.connect.row": {
+      "message": "Sambungkan aplikasi AI…"
+    },
+    "mcp.connect.title": {
+      "message": "Sambungkan aplikasi AI"
+    },
+    "mcp.connect.close-label": {
+      "message": "Tutup"
+    },
+    "mcp.connect.description": {
+      "message": "Tampalkan gesaan ini ke dalam aplikasi AI anda. Ia akan menyediakan dirinya sendiri dan memberitahu anda jika ada yang menghalang."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Gesaan untuk aplikasi AI"
+    },
+    "mcp.connect.copy": {
+      "message": "Salin Gesaan"
+    },
+    "mcp.connect.copied": {
+      "message": "Gesaan disalin"
+    },
+    "mcp.connect.by-hand": {
+      "message": "Sediakan secara manual"
+    },
+    "mcp.pairing.title": {
+      "message": "Benarkan {app} menggunakan AoE2RMSIDE?"
+    },
+    "mcp.pairing.description": {
+      "message": "Ia boleh menyunting skrip dalam folder yang terbuka, menjana peta, menjalankan ujian dan memasang mod. Dimulakan oleh {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "Ia boleh menyunting skrip dalam folder yang terbuka, menjana peta, menjalankan ujian dan memasang mod."
+    },
+    "mcp.pairing.name-note": {
+      "message": "Nama ini diberikan oleh aplikasi itu sendiri: benarkan hanya jika anda yang menyediakannya. Menggantikan mod atau ujian langsung tetap akan bertanya kepada anda."
+    },
+    "mcp.pairing.allow": {
+      "message": "Benarkan"
+    },
+    "mcp.pairing.deny": {
+      "message": "Jangan Benarkan"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "Gantikan mod “{mod}”?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} mahu memasang {file} ke dalam mod ini. {app} tidak memasang mod ini dalam sesi ini, maka failnya akan digantikan."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Gantikan"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} meminta untuk memasang {file} sebagai mod “{mod}”."
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} memasang {file} sebagai mod “{mod}”."
+    },
+    "mcp.live.title": {
+      "message": "Mulakan ujian langsung untuk {app}?"
+    },
+    "mcp.live.description": {
+      "message": "{app} mahu menguji {file} dengan benih {seed} dalam permainan yang sedang berjalan. Perlawanan semasa akan tamat."
+    },
+    "mcp.live.session": {
+      "message": "Benarkan untuk sesi ini"
+    },
+    "mcp.live.start": {
+      "message": "Mulakan Ujian Langsung"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, other {# aplikasi AI}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} disambungkan"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, other {# aplikasi AI disambungkan}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} sedang bekerja"
+    },
+    "mcp.status.tooltip": {
+      "message": "Disambungkan melalui MCP. Klik untuk tetapan MCP."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "Ralat ditemui dan dihantar kepada aplikasi AI."
+    },
+    "mcp.output.connected": {
+      "message": "{app} disambungkan"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} diputuskan"
+    },
+    "mcp.output.denied": {
+      "message": "{app} tidak dibenarkan menyambung"
+    },
+    "mcp.output.busy": {
+      "message": "{app} diminta menunggu: {running} sedang berjalan"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} ditolak"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} dibatalkan"
+    },
+    "mcp.action.status": {
+      "message": "membaca status IDE"
+    },
+    "mcp.action.list-files": {
+      "message": "menyenaraikan fail"
+    },
+    "mcp.action.read-file": {
+      "message": "membaca {file}"
+    },
+    "mcp.action.edit-file": {
+      "message": "menyunting {file}"
+    },
+    "mcp.action.create-file": {
+      "message": "mencipta {file}"
+    },
+    "mcp.action.save-file": {
+      "message": "menyimpan {file}"
+    },
+    "mcp.action.problems": {
+      "message": "menyemak {file}"
+    },
+    "mcp.action.generate": {
+      "message": "menjana {file}, benih {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "menunjukkan {file} dalam pratonton"
+    },
+    "mcp.action.inspect": {
+      "message": "meneliti peta yang dijana"
+    },
+    "mcp.action.picture": {
+      "message": "mendapatkan gambar {file}"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, other {mendapatkan gambar # benih bagi {file}}}"
+    },
+    "mcp.action.map-test": {
+      "message": "menjalankan ujian peta {file}"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, other {menjalankan semakan kualiti pada {file} (# benih)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "menyemak ujian yang sedang berjalan"
+    },
+    "mcp.action.details": {
+      "message": "membaca butiran hasil"
+    },
+    "mcp.action.deploy": {
+      "message": "memasang {file} sebagai mod “{mod}”"
+    },
+    "mcp.action.live-test": {
+      "message": "memulakan ujian langsung bagi {file}"
+    },
+    "mcp.action.guide": {
+      "message": "membaca panduan"
+    },
+    "mcp.action.reference": {
+      "message": "mencari {name}"
+    },
+    "mcp.action.tool": {
+      "message": "menggunakan {tool}"
+    },
+    "mcp.refusal.waiting": {
+      "message": "Ia menunggu jawapan anda dalam AoE2RMSIDE."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "Anda tidak membenarkan aplikasi ini."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "Permintaan itu tidak sah."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "Tiada folder dibuka."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "Fail berada di luar folder yang terbuka, atau dilindungi oleh AoE2RMSIDE."
+    },
+    "mcp.refusal.file-type": {
+      "message": "Aplikasi AI tidak boleh menggunakan jenis fail ini."
+    },
+    "mcp.refusal.not-found": {
+      "message": "Fail tidak ditemui."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "Fail sudah wujud."
+    },
+    "mcp.refusal.too-large": {
+      "message": "Fail terlalu besar."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "Fail bukan fail teks."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "Teks yang hendak diubah tiada atau ditemui lebih daripada sekali."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "Benarkan aplikasi AI menyimpan fail dimatikan."
+    },
+    "mcp.refusal.busy": {
+      "message": "Ada perkara lain sedang berjalan."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "Peta yang dijana tidak lagi disimpan."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "Ujian itu tidak lagi disimpan."
+    },
+    "mcp.refusal.stopped": {
+      "message": "Anda menghentikannya."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "Aplikasi AI membatalkannya."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "Anda menjawab tidak."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "Permainan boleh ranap pada peta ini."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "Permainan belum sedia untuk ujian langsung."
+    },
+    "mcp.refusal.too-many": {
+      "message": "Aplikasi menghantar terlalu banyak permintaan."
+    },
+    "mcp.refusal.internal": {
+      "message": "Berlaku ralat dalam AoE2RMSIDE."
     },
     "code-editor.tab.unsaved": {
       "message": "Perubahan belum disimpan"
@@ -5135,6 +5738,9 @@
     "app-update.dialog.unsaved": {
       "message": "Jika dokumen mempunyai perubahan yang belum disimpan, anda akan ditanya tentangnya dahulu."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Aplikasi AI yang disambungkan akan terputus semasa kemas kini. Mulakan semula aplikasi itu selepas itu."
+    },
     "app-update.dialog.release-notes": {
       "message": "Nota Keluaran"
     },
@@ -5272,6 +5878,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "Analisis terbina dalam digunakan untuk fail {language}"
+    },
+    "known-crash.headline": {
+      "message": "Permainan ranap pada peta ini"
+    },
+    "known-crash.headline.possible": {
+      "message": "Permainan boleh ranap di sini"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "override_actor_radius_if_required pada objek yang terlalu kecil untuk carian"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required mengalihkan objek yang tidak muat di tempat ia diletakkan, dan objek itu terlalu kecil untuk carian petak kosong oleh permainan."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "Buang override_actor_radius_if_required daripada objek itu."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "Satu baris dalam blok sambungan tiada rupa bumi"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Di dalam kurungan kerinting perintah sambungan, permainan membaca rupa bumi daripada setiap baris, dan {word} tiada rupa bumi."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Alihkan baris itu keluar dari blok sambungan, ke sebelum perintah sambungan."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "Satu sambungan sampai ke kawasan darat di luar peta"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "Satu sambungan bermula atau berakhir pada kawasan darat yang kedudukannya berada di luar peta pada saiz peta ini."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "Pastikan land_position berada di dalam peta bagi setiap saiz peta."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "Nama yang ditakrifkan dijalankan sebagai cliff_type dalam <CLIFF_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} ialah nama yang ditakrifkan di tempat yang boleh diisi perintah, maka permainan menjalankannya sebagai {command} tanpa nilai."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Buang nama yang ditakrifkan itu, atau tulis perintah yang sepatutnya."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "Nama yang ditakrifkan dijalankan sebagai base_terrain atau base_layer dalam kurungan kerinting create_elevation"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} ialah nama yang ditakrifkan di tempat yang boleh diisi perintah, maka permainan menjalankannya sebagai {command} tanpa nilai."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Buang nama yang ditakrifkan itu, atau tulis perintah yang sepatutnya."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "Nama yang ditakrifkan dijalankan sebagai ai_info_map_type, effect_amount atau effect_percent"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} ialah nama yang ditakrifkan di tempat yang boleh diisi perintah, maka permainan menjalankannya sebagai {command} tanpa nilai."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Buang nama yang ditakrifkan itu, atau tulis perintah yang sepatutnya."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "Nama yang ditakrifkan dijalankan sebagai guard_state dalam <PLAYER_SETUP>"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} ialah nama yang ditakrifkan di tempat yang boleh diisi perintah, maka permainan menjalankannya sebagai {command} tanpa nilai."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Buang nama yang ditakrifkan itu, atau tulis perintah yang sepatutnya."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "Nama yang ditakrifkan dijalankan sebagai base_terrain atau base_layer dalam <LAND_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} ialah nama yang ditakrifkan di tempat yang boleh diisi perintah, maka permainan menjalankannya sebagai {command} tanpa nilai."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Buang nama yang ditakrifkan itu, atau tulis perintah yang sepatutnya."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "Nama yang ditakrifkan dijalankan sebagai terrain_type atau assign_to dalam kurungan kerinting kawasan darat"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} ialah nama yang ditakrifkan di tempat yang boleh diisi perintah, maka permainan menjalankannya sebagai {command} tanpa nilai."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Buang nama yang ditakrifkan itu, atau tulis perintah yang sepatutnya."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "Nama yang ditakrifkan dijalankan sebagai terrain_to_place_on, layer_to_place_on atau second_object dalam kurungan kerinting objek"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} ialah nama yang ditakrifkan di tempat yang boleh diisi perintah, maka permainan menjalankannya sebagai {command} tanpa nilai."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Buang nama yang ditakrifkan itu, atau tulis perintah yang sepatutnya."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "Nama yang ditakrifkan dijalankan sebagai create_terrain atau color_correction dalam <TERRAIN_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} ialah nama yang ditakrifkan di tempat yang boleh diisi perintah, maka permainan menjalankannya sebagai {command} tanpa nilai."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Buang nama yang ditakrifkan itu, atau tulis perintah yang sepatutnya."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Penempatan pemain berkumpulan di sekeliling bulatan berpanjang sifar"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Pemain diletakkan dalam kumpulan pasukan di sekeliling bulatan berpanjang sifar, maka permainan membahagi dengan sifar."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "add_object tanpa objek dalam kumpulan bernama"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "add_object tiada objek sedangkan kumpulan dinamakan, maka permainan ranap apabila entri itu dipilih."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "Berikan objek kepada add_object."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "Satu objek diletakkan pada kawasan darat di luar peta"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "Satu objek diletakkan bagi setiap kawasan darat pada kawasan darat yang kedudukannya berada di luar peta pada saiz peta ini."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "Pastikan land_position berada di dalam peta bagi setiap saiz peta."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size mengecilkan peta selepas kawasan darat pemain"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size mengecilkan peta selepas kawasan darat pemain dicipta, maka seorang pemain boleh bermula di luar peta."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "Alihkan override_map_size ke sebelum create_player_lands."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "Peta mewarnakan rupa bumi tanpa data pergerakan"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "Peta mewarnakan rupa bumi {terrain}, yang tidak diliputi oleh data pergerakan permainan, maka permainan ranap semasa perlawanan."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Gunakan rupa bumi yang diliputi oleh data pergerakan permainan."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "Dengan benih lain atau tetapan lobi lain, permainan boleh ranap pada peta ini. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Pasang Juga"
+    },
+    "live-test.crash-warning.title": {
+      "message": "Permainan boleh ranap pada peta ini"
+    },
+    "live-test.crash-warning.description": {
+      "message": "Benih ini berfungsi, tetapi dengan benih lain atau tetapan lobi lain, permainan boleh ranap pada peta ini. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Mulakan Juga"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "Permainan boleh ranap pada peta ini, maka ujian langsung tidak dimulakan."
+    },
+    "test-results.crashes.title": {
+      "message": "Ranap permainan"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, other {# peta}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "Permainan ranap pada {maps, number} daripada {sampled, plural, other {# peta}}"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{maps, plural, other {# peta}} daripada {sampled, number} tidak dapat dijana"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, other {Benih}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, other {Benih}} {seeds, list, unit} dan {omitted, number} lagi"
+    },
+    "test-results.crashes.source": {
+      "message": "Ranap permainan"
+    },
+    "test-results.crashes.show": {
+      "message": "Tunjukkan ranap permainan"
+    },
+    "test-results.crashes.hide": {
+      "message": "Sembunyikan ranap permainan"
+    },
+    "test-results.quality.summary": {
+      "message": "· Semakan kualiti {map} · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, other {# peta}} · {failures, plural, other {# kegagalan}} · {warnings, plural, other {# amaran}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, other {# dapatan}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "Tunjukkan dapatan {case}"
+    },
+    "test-results.quality.hide-case": {
+      "message": "Sembunyikan dapatan {case}"
+    },
+    "test-results.quality.case-findings": {
+      "message": "Dapatan {case}"
+    },
+    "test-results.quality.no-findings": {
+      "message": "Setiap kes lulus pada {maps, plural, other {# peta}}"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, other {# dapatan semakan kualiti}}"
     }
   }
 }

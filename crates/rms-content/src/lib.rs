@@ -18,7 +18,7 @@ pub use presentation_names::{
     DatMinimapIndices, DatObjectMinimapIndex, DatPresentationStringIds, DatTerrainMinimapIndices,
     MAXIMUM_PRESENTATION_STRING_ID, PresentationObjectSlot, PresentationStringId,
     PresentationTerrainMinimapIndices, read_aoe2de_dat_minimap_indices,
-    read_aoe2de_dat_presentation_string_ids,
+    read_aoe2de_dat_presentation_string_ids, read_aoe2de_dat_technology_count,
 };
 pub use resource::{ObjectResourceSlot, ObjectResourceState};
 pub use standard_resource::{

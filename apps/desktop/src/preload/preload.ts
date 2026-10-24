@@ -13,6 +13,23 @@ import {
 import { isUpdateVersion, validateUpdateState, type UpdateState } from '../shared/update';
 import { ownSnippetLimits, validateOwnSnippet, type OwnSnippet } from '../shared/own-snippets';
 import { validateTourProgress, type TourProgress } from '../shared/app-tour';
+import { validateAppQualityRun } from '../shared/connector-run-api';
+import { qualityScriptName } from '../shared/quality-check';
+import {
+  validateConnectorAppName,
+  validateConnectorOutputRow,
+  validateConnectorPairingAnswer,
+  validateConnectorRendererReply,
+  validateConnectorRendererRequest,
+  validateConnectorSettingsPatch,
+  validateConnectorSetup,
+  validateConnectorState,
+  type ConnectorOutputRow,
+  type ConnectorRendererReply,
+  type ConnectorRendererRequest,
+  type ConnectorSettingsPatch,
+  type ConnectorState,
+} from '../shared/connector-api';
 import {
   ipcChannels,
   isDeploymentProfileId,
@@ -554,7 +571,8 @@ function assertPreviewGenerationInput(value: PreviewGenerationInput): PreviewGen
     !Array.isArray(value.players) ||
     value.players.length < 1 ||
     value.players.length > 8 ||
-    (value.progressivePreview !== undefined && typeof value.progressivePreview !== 'boolean')
+    (value.progressivePreview !== undefined && typeof value.progressivePreview !== 'boolean') ||
+    (value.xsStartCheck !== undefined && typeof value.xsStartCheck !== 'boolean')
   ) {
     throw new Error('preview generation input is invalid');
   }
@@ -566,6 +584,18 @@ function assertPreviewGenerationInput(value: PreviewGenerationInput): PreviewGen
 }
 
 function assertMapTestRunInput(value: MapTestRunInput): MapTestRunInput {
+  const quality = value?.quality !== undefined;
+  if (quality) {
+    validateAppQualityRun(value.quality, 'map-test run quality');
+    if (
+      value.scriptName !== qualityScriptName ||
+      value.scriptSource !== '' ||
+      typeof value.defaultSourceUri !== 'string' ||
+      value.defaultSourceUri.length < 1
+    ) {
+      throw new Error('map-test run input is invalid');
+    }
+  }
   if (
     !value ||
     typeof value !== 'object' ||
@@ -578,7 +608,7 @@ function assertMapTestRunInput(value: MapTestRunInput): MapTestRunInput {
     !Number.isSafeInteger(value.scriptRevision) ||
     value.scriptRevision < 0 ||
     typeof value.scriptName !== 'string' ||
-    !/\.rmstest$/iu.test(value.scriptName) ||
+    (!quality && !/\.rmstest$/iu.test(value.scriptName)) ||
     typeof value.scriptSource !== 'string' ||
     new TextEncoder().encode(value.scriptSource).byteLength > 1024 * 1024 ||
     typeof value.workspaceName !== 'string' ||
@@ -884,6 +914,8 @@ const api: RmsideDesktopApi = Object.freeze({
   stopExecution: () => ipcRenderer.invoke(ipcChannels.executionStop),
   runMapTest: (input: MapTestRunInput) =>
     ipcRenderer.invoke(ipcChannels.mapTestRun, assertMapTestRunInput(input)),
+  mapTestQualityAvailable: async () =>
+    (await ipcRenderer.invoke(ipcChannels.mapTestQualityAvailable)) === true,
   replayMapTestFinding: (input: MapTestReplayInput) =>
     ipcRenderer
       .invoke(ipcChannels.mapTestReplay, assertMapTestReplayInput(input))
@@ -1413,6 +1445,66 @@ const api: RmsideDesktopApi = Object.freeze({
   },
   openUpdateReleaseNotes: async () => {
     await ipcRenderer.invoke(ipcChannels.updateReleaseNotes);
+  },
+  getConnectorState: async () =>
+    validateConnectorState(await ipcRenderer.invoke(ipcChannels.connectorState)),
+  onConnectorState: (listener: (state: ConnectorState) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, state: unknown) => {
+      let validated: ConnectorState;
+      try {
+        validated = validateConnectorState(state);
+      } catch {
+        return;
+      }
+      listener(validated);
+    };
+    ipcRenderer.on(ipcChannels.connectorStateEvent, handler);
+    return () => ipcRenderer.removeListener(ipcChannels.connectorStateEvent, handler);
+  },
+  onConnectorOutput: (listener: (row: ConnectorOutputRow) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, row: unknown) => {
+      let validated: ConnectorOutputRow;
+      try {
+        validated = validateConnectorOutputRow(row);
+      } catch {
+        return;
+      }
+      listener(validated);
+    };
+    ipcRenderer.on(ipcChannels.connectorOutputEvent, handler);
+    return () => ipcRenderer.removeListener(ipcChannels.connectorOutputEvent, handler);
+  },
+  setConnectorSettings: async (patch: ConnectorSettingsPatch) =>
+    validateConnectorState(
+      await ipcRenderer.invoke(
+        ipcChannels.connectorSettingsSet,
+        validateConnectorSettingsPatch(patch),
+      ),
+    ),
+  removeConnectorApp: async (name: string) => {
+    await ipcRenderer.invoke(ipcChannels.connectorAppRemove, validateConnectorAppName(name));
+  },
+  decideConnectorPairing: async (requestId: string, decision: 'allow' | 'deny') => {
+    const answer = validateConnectorPairingAnswer(requestId, decision);
+    await ipcRenderer.invoke(ipcChannels.connectorPairingDecide, answer.requestId, answer.decision);
+  },
+  getConnectorSetup: async () =>
+    validateConnectorSetup(await ipcRenderer.invoke(ipcChannels.connectorSetup)),
+  onConnectorRequest: (listener: (request: ConnectorRendererRequest) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, request: unknown) => {
+      let validated: ConnectorRendererRequest;
+      try {
+        validated = validateConnectorRendererRequest(request);
+      } catch {
+        return;
+      }
+      listener(validated);
+    };
+    ipcRenderer.on(ipcChannels.connectorRequestEvent, handler);
+    return () => ipcRenderer.removeListener(ipcChannels.connectorRequestEvent, handler);
+  },
+  replyToConnectorRequest: async (reply: ConnectorRendererReply) => {
+    await ipcRenderer.invoke(ipcChannels.connectorReply, validateConnectorRendererReply(reply));
   },
 });
 

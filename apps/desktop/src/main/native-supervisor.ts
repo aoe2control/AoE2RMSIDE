@@ -37,6 +37,7 @@ import type {
 import type { LanguageDocumentOverlay, MainSourceCatalog } from './source-catalog-service';
 import { nativeSourceCatalogDiscovery } from './source-catalog-discovery';
 import { sameXsEnvironment, type XsEnvironmentPayload } from './xs-environment';
+import type { XsStartCheckRequest } from './xs-start-report';
 
 export interface XsSyntaxCheckFile {
   uri: string;
@@ -68,6 +69,7 @@ export class NativeSupervisor {
   private languageServer: LanguageServerClient | undefined;
   private mapTestLanguageServer: LanguageServerClient | undefined;
   private mapTest: MapTestClient | undefined;
+  private mapTestStart: Promise<void> | undefined;
   private languageSourceCatalog: MainSourceCatalog | undefined;
   private languageGeneration = 0;
   private languageDocumentRevision = 0;
@@ -219,6 +221,7 @@ export class NativeSupervisor {
     onExecutionProgress?: (event: ExecutionProgressEvent) => void,
     localContent?: LocalContentSource,
     onPreviewCandidate?: (candidate: PreviewCandidate) => void,
+    xsStart?: XsStartCheckRequest,
   ): Promise<PreviewGenerationResult> {
     if (!this.rmsd) throw rmsdUnavailable();
     return this.rmsd.generatePreview(
@@ -230,7 +233,12 @@ export class NativeSupervisor {
       onExecutionProgress,
       localContent,
       onPreviewCandidate,
+      xsStart,
     );
+  }
+
+  xsStartCheckSupported(): boolean {
+    return this.rmsd?.xsStartCheckSupported ?? false;
   }
 
   async importLocalContent(source: LocalContentSource): Promise<LocalContentImportResult> {
@@ -280,12 +288,22 @@ export class NativeSupervisor {
     sourceCatalogs: readonly MainSourceCatalog[],
     onEvent?: (event: MapTestEvent) => void,
     localContent?: LocalContentSource,
+    xsConstantsText?: string | null,
   ): Promise<MapTestRunResult> {
     await this.ensureMapTest();
     if (!this.mapTest) {
       throw new DesktopError('native.unavailable', 'rms-test is unavailable', { name: 'rms-test' });
     }
-    return this.mapTest.run(input, sourceCatalogs, onEvent, localContent);
+    return this.mapTest.run(input, sourceCatalogs, onEvent, localContent, xsConstantsText);
+  }
+
+  async mapTestQualitySupported(): Promise<boolean> {
+    try {
+      await this.ensureMapTest();
+    } catch {
+      return false;
+    }
+    return this.mapTest?.qualitySupported ?? false;
   }
 
   async cancelMapTest(requestId: string): Promise<boolean> {
@@ -392,6 +410,17 @@ export class NativeSupervisor {
         }),
       };
     });
+  }
+
+  async referenceLookup(params: { name: string; kind?: string }): Promise<unknown> {
+    if (!this.languageServer) {
+      throw new DesktopError(
+        'native.unavailable',
+        'the reference lookup is unavailable because rms-ls is not running',
+        { name: 'rms-ls' },
+      );
+    }
+    return this.languageServer.request('rms/referenceLookup', params);
   }
 
   async cancelPreview(clientRequestId: string): Promise<boolean> {
@@ -599,7 +628,10 @@ export class NativeSupervisor {
   }
 
   private async ensureMapTest(): Promise<void> {
-    if (this.mapTest) return;
+    if (this.mapTest) {
+      await this.mapTestStart;
+      return;
+    }
     this.assertExecutable('rms-test');
     const executablePath = this.paths['rms-test'];
     if (!executablePath) throw new Error('rms-test executable is unavailable');
@@ -610,11 +642,15 @@ export class NativeSupervisor {
       this.updateStatus(status);
     });
     this.mapTest = client;
+    const start = client.start();
+    this.mapTestStart = start;
     try {
-      await client.start();
+      await start;
     } catch (error) {
       if (this.mapTest === client) this.mapTest = undefined;
       throw error;
+    } finally {
+      if (this.mapTestStart === start) this.mapTestStart = undefined;
     }
   }
 

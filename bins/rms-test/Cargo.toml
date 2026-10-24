@@ -27,6 +27,9 @@ serde_json.workspace = true
 sha2.workspace = true
 starlark.workspace = true
 starlark_lsp.workspace = true
+xs-analysis.workspace = true
+xs-eval.workspace = true
+xs-start.workspace = true
 
 [target.'cfg(windows)'.dependencies]
 windows-sys = { workspace = true, features = [

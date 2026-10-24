@@ -84,6 +84,44 @@ If AoE2RMSIDE shows a different map than the game on a verified version,
 please [report it](https://github.com/aoe2control/AoE2RMSIDE/issues/new/choose)
 with the script, the seed, and the lobby settings.
 
+### Known game crashes
+
+Some scripts make the game itself crash, while it generates the map or later
+in the match. AoE2RMSIDE knows these crashes from a reviewed list and words
+each one the same way in Output, Problems, and the deployment panel: "The game
+crashes on this map", followed by the cause and the change to the script that
+avoids it. Where only another seed or other lobby settings lead to such a
+crash, the editor warns "The game can crash here", and deploying the map or
+starting a live test shows the warning first and stays possible. Map tests
+and the quality check count the maps the game would crash on, for each cause,
+and list seeds to try again.
+
+## XS at game start
+
+With a linked game folder, a preview of a script that includes XS files also
+runs what those files do when the game starts: `main()` and the rules that are
+active at the start. Output lists the chat lines, the changes per player, and
+the errors it found, and Problems lists the findings that point to a line.
+This XS start check is
+AoE2RMSIDE's own and is not compared against the game:
+
+- it never changes the preview map;
+- its random numbers are AoE2RMSIDE's own, not the game's;
+- rules that run later in the match are not run;
+- a call that needs a running match or game data ends the run with a note
+  that names the call.
+
+It can be turned off under **View → Check XS When Running a Map**.
+
+## Quality check
+
+The quality check generates a map on many seeds, optionally with other lobby
+settings, and measures what experienced reviewers check by hand: whether
+every player gets the same resources, whether anything is out of reach, and
+whether there is room to build. It measures AoE2RMSIDE's generated maps, not
+the game: walking distances are an approximation, and it cannot judge how a
+map plays, civilization balance, or how terrain blending looks in the game.
+
 ## Game files
 
 AoE2RMSIDE never ships game files. For each supported game version it
@@ -94,7 +132,8 @@ scripts. Standard includes are read only from your own linked game folder.
 
 You do not need the game installed to write, preview, and test scripts.
 Linking your game folder adds the game's standard includes and installed
-maps, the game version you have installed, deployment, and live testing.
+maps, the game version you have installed, the XS start check (it reads the
+game's `Constants.xs`), deployment, and live testing.
 Installations from the Xbox app or the Microsoft Store can be linked by
 selecting their game folder; they are untested.
 
@@ -104,8 +143,9 @@ AoE2RMSIDE never bundles, ships, uploads, or redistributes game art. The
 **Minimap colors** and **Texture colors** looks of the preview and the map
 icon are drawn from numbers only: minimap colors and one averaged color per
 terrain or object. Graphics from your own game installation are only read
-locally, and the application never uploads or sends them anywhere; only a
-picture you copy or save yourself can contain them.
+locally, and the application never uploads them. Only a picture you copy or
+save yourself, or a map picture that an AI app you allowed asks for, can
+contain them; such a picture goes only where you send it or to that app.
 
 The project's own artwork (the application icon and the map icon sprites) is
 original and has a provenance record in

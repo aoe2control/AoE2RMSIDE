@@ -60,6 +60,7 @@ export class SelectionEase {
   private current: MapRectangleEdges | null = null;
   private frame: number | null = null;
   private lastStep = 0;
+  private lastFrame: number | null = null;
 
   constructor(private readonly options: SelectionEaseOptions) {}
 
@@ -88,8 +89,13 @@ export class SelectionEase {
     }
     if (this.frame === null) {
       this.lastStep = this.now();
+      this.lastFrame = null;
       this.frame = this.requestFrame();
     }
+  }
+
+  release(target: PreviewSelection): void {
+    this.follow(target);
   }
 
   end(): void {
@@ -117,12 +123,18 @@ export class SelectionEase {
     this.end();
   }
 
-  private step = (): void => {
+  private step = (time?: number): void => {
     this.frame = null;
     if (!this.target || !this.current) return;
     const now = this.now();
-    const elapsed = Math.min(Math.max(0, now - this.lastStep), selectionFollowMaxStepMilliseconds);
+    const frameTime = typeof time === 'number' && Number.isFinite(time) ? time : null;
+    const raw =
+      frameTime !== null && this.lastFrame !== null
+        ? frameTime - this.lastFrame
+        : now - this.lastStep;
+    const elapsed = Math.min(Math.max(0, raw), selectionFollowMaxStepMilliseconds);
     this.lastStep = now;
+    this.lastFrame = frameTime;
     const goal = selectionEdges(this.target);
     this.current = easeSelectionEdges(this.current, goal, elapsed, this.options.timeConstant());
     if (!sameEdges(this.current, goal)) this.frame = this.requestFrame();

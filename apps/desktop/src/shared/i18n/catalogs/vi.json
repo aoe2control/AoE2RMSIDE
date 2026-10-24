@@ -146,6 +146,9 @@
     "app-menu.view.map-transitions": {
       "message": "Tạo hiệu ứng chuyển cảnh bản đồ"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "Kiểm tra XS khi chạy bản đồ"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Hiện các giai đoạn tạo trực tiếp"
     },
@@ -178,6 +181,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "Giao diện…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "Giao diện"
@@ -407,6 +413,9 @@
     "output.source.map-test": {
       "message": "Thử bản đồ"
     },
+    "output.source.quality-check": {
+      "message": "Chất lượng"
+    },
     "output.source.deploy": {
       "message": "Triển khai"
     },
@@ -428,8 +437,14 @@
     "output.source.game-textures": {
       "message": "Họa tiết trò chơi"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "Ứng dụng"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, other {{count} thông báo đầu ra}}"
@@ -499,6 +514,162 @@
     },
     "output.constructs.go-to": {
       "message": "Đến lần dùng đầu tiên"
+    },
+    "output.xs-start.summary": {
+      "message": "Kiểm tra khởi đầu XS: {files, list} đã chạy main() và {rules, plural, other {# quy tắc}} ({steps, plural, other {# bước}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "Kiểm tra khởi đầu XS: {files, list} không có main() và đã chạy {rules, plural, =0 {không quy tắc nào} other {# quy tắc}} ({steps, plural, other {# bước}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "Không được đối chiếu với trò chơi"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "Không được đối chiếu với trò chơi. Có dùng: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "phép tính số nguyên"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "số nguyên lẫn số thập phân"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "văn bản của số"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "hàm văn bản"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "giá trị mặc định của mảng"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "thứ tự quy tắc"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "nhãn và goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "giá trị khởi đầu"
+    },
+    "output.xs-start.chat": {
+      "message": "Trò chuyện: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Gaia} other {Người chơi {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "lương thực"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "gỗ"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "đá"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "vàng"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "thuộc tính {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource} đặt thành {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "đối tượng {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "công nghệ {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: nghiên cứu {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}: quan hệ ngoại giao với {other} đặt thành {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: tên đặt thành “{text}”"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: tên nền văn minh đặt thành “{text}”"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: màu đặt thành {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: tạo {count} {object} gần ({x}, {y}); chưa kiểm tra vị trí đặt"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: tạo {count} {object}; chưa kiểm tra vị trí đặt"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: xóa {count} {object}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: di chuyển {count} {object} tới ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: di chuyển {count} {object}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: nhận {count} {object} từ {previous}"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: thay đổi giá trị của {count} {object}"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: thay đổi tên hoặc chú thích của {count} {object}"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: thay đổi dữ liệu của {object}; đã ghi nhận, chưa áp dụng"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: thay đổi dữ liệu của {technology}; đã ghi nhận, chưa áp dụng"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, other {# lần gọi}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Kiểu chiếu sáng đặt thành {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Các thay đổi sau dòng này không được liệt kê."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Các thay đổi sau điểm dừng không được liệt kê."
+    },
+    "output.xs-start.skipped": {
+      "message": "Đã bỏ qua kiểm tra khởi đầu XS: {file} có {count, plural, other {# lỗi}} (xem Vấn đề)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "Liên kết thư mục trò chơi để chạy kiểm tra khởi đầu XS"
+    },
+    "output.xs-start.omitted": {
+      "message": "Không phải mọi kết quả của kiểm tra khởi đầu XS đều được liệt kê"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Bị bỏ qua: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, other {# phát hiện}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, other {# dòng trò chuyện}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, other {# thay đổi}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, other {# lần gọi đã ghi nhận}}"
     },
     "output.constructs.more": {
       "message": "và {count} mục khác"
@@ -605,11 +776,95 @@
     "run-menu.run-on-edit": {
       "message": "Chạy khi sửa"
     },
+    "run-menu.quality-check": {
+      "message": "Kiểm tra chất lượng"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Số hạt giống cần kiểm tra"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Hạng mục"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Chọn các hạng mục mà kiểm tra chất lượng xem xét"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Tùy chọn phòng chờ khác"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Kiểm tra thêm Rất nhỏ 1v1, Trung bình 2v2 và Rất lớn 4v4, mỗi loại 10 hạt giống"
+    },
+    "quality.case.generation": {
+      "message": "Tạo bản đồ"
+    },
+    "quality.case.start-resources": {
+      "message": "Tài nguyên ban đầu"
+    },
+    "quality.case.resource-distances": {
+      "message": "Khoảng cách tài nguyên"
+    },
+    "quality.case.shared-resources": {
+      "message": "Tài nguyên chung"
+    },
+    "quality.case.wood": {
+      "message": "Gỗ"
+    },
+    "quality.case.trapped": {
+      "message": "Tài nguyên bị chặn"
+    },
+    "quality.case.paths": {
+      "message": "Đường đi"
+    },
+    "quality.case.building-space": {
+      "message": "Chỗ xây dựng"
+    },
+    "quality.case.hills": {
+      "message": "Đồi"
+    },
+    "quality.case.water": {
+      "message": "Nước"
+    },
+    "quality.case.spacing": {
+      "message": "Giãn cách"
+    },
+    "quality.case.chokepoints": {
+      "message": "Lối hẹp"
+    },
+    "quality.case.variation": {
+      "message": "Độ đa dạng"
+    },
+    "quality.case.looks": {
+      "message": "Diện mạo"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "{bad} trên {of} bản đồ{metric, select, yes { · trung vị {p50}, phân vị 95 {p95}, cao nhất {max} {unit}} other {}}{worst, select, yes { · {count, plural, other {hạt giống tệ nhất}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "Đạt: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, other {Còn # phát hiện không được liệt kê}}"
+    },
+    "quality.failed": {
+      "message": "Không chạy được kiểm tra chất lượng"
+    },
     "run-menu.preset.default-name": {
       "message": "Cấu hình"
     },
     "run-menu.preset.numbered-name": {
       "message": "Cấu hình {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Cấu hình thử"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Quay lại {name}"
     },
     "run-menu.preset.settings": {
       "message": "Thiết lập cấu hình xem trước"
@@ -634,6 +889,9 @@
     },
     "run-menu.preset.delete": {
       "message": "Xóa {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "Nhân bản {name}"
     },
     "run-menu.preset.delete.title": {
       "message": "Xóa cấu hình {name}?"
@@ -821,6 +1079,9 @@
     "run-menu.fixture.needs-source": {
       "message": "Dữ liệu thử nghiệm phát triển cần kịch bản .rms hoặc .rms2 không trống"
     },
+    "mcp.run.settings-applied": {
+      "message": "{app} đã đặt {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Nền văn minh ngẫu nhiên cho bản xem trước này: {players, list, unit}"
     },
@@ -838,6 +1099,9 @@
     },
     "run-menu.result.failed": {
       "message": "Thất bại"
+    },
+    "run-menu.result.warnings": {
+      "message": "Cảnh báo"
     },
     "run-menu.result.passed": {
       "message": "Đạt"
@@ -2702,6 +2966,9 @@
     "lint-rule.RMS4011.title": {
       "message": "Tên có thể chưa được định nghĩa"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "Trò chơi có thể bị sập ở đây"
+    },
     "map-icon.generate": {
       "message": "Tạo biểu tượng bản đồ"
     },
@@ -3068,6 +3335,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "Đã tái hiện phát hiện bằng hạt giống {seed} đã ghi nhận"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Đã tái hiện phát hiện bằng hạt giống {seed} đã ghi nhận, nay được khóa cho các lượt chạy tiếp theo"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Đã tái hiện phát hiện bằng hạt giống {seed} đã ghi nhận, nay được khóa trong cấu hình tạm thời {name}"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "Không bỏ liên kết được thư mục trò chơi"
     },
@@ -3100,6 +3373,336 @@
     },
     "code-editor.tab.close": {
       "message": "Đóng {name}"
+    },
+    "mcp.tab.edited-by": {
+      "message": "Đã được {app} chỉnh sửa, chưa lưu"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "Đóng thiết lập MCP"
+    },
+    "mcp.dialog.description": {
+      "message": "Cho phép ứng dụng AI trên máy tính này đọc, sửa và kiểm tra kịch bản trong thư mục đang mở, tạo bản đồ và chạy kiểm thử bản đồ."
+    },
+    "mcp.enable.label": {
+      "message": "Bật MCP"
+    },
+    "mcp.save.label": {
+      "message": "Cho phép ứng dụng AI lưu tệp"
+    },
+    "mcp.save.note": {
+      "message": "Khi tắt, thay đổi của AI vẫn chưa được lưu cho đến khi bạn lưu."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "Không khởi động được MCP vì một chương trình khác đang dùng tên kết nối của nó."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "Không khởi động được MCP vì không ghi được tệp khóa."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "Không khởi động được MCP vì danh sách công cụ không khớp với phiên bản AoE2RMSIDE này. Hãy cài đặt lại AoE2RMSIDE."
+    },
+    "mcp.unavailable.internal": {
+      "message": "Không khởi động được MCP do lỗi không mong muốn."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Hãy tắt rồi bật lại Bật MCP để thử lại."
+    },
+    "mcp.apps.title": {
+      "message": "Ứng dụng được phép"
+    },
+    "mcp.apps.empty": {
+      "message": "Chưa có ứng dụng nào. Ứng dụng sẽ hỏi vào lần kết nối đầu tiên."
+    },
+    "mcp.apps.connected": {
+      "message": "Đã kết nối"
+    },
+    "mcp.apps.last-used": {
+      "message": "Dùng lần cuối {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "Gỡ bỏ"
+    },
+    "mcp.apps.remove-label": {
+      "message": "Gỡ bỏ {app}"
+    },
+    "mcp.setup.app": {
+      "message": "Ứng dụng AI"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "Ứng dụng khác"
+    },
+    "mcp.setup.text-label": {
+      "message": "Nội dung thiết lập"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Thêm nội dung này vào cấu hình của Claude Desktop (Settings > Developer > Edit Config), rồi khởi động lại ứng dụng."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Chạy lệnh này trong cửa sổ dòng lệnh."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Chạy lệnh này trong cửa sổ dòng lệnh."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Thêm chương trình này làm máy chủ MCP cục bộ."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Hãy bật tùy chọn Bật MCP trước."
+    },
+    "mcp.setup.copy": {
+      "message": "Sao chép thiết lập"
+    },
+    "mcp.setup.copied": {
+      "message": "Đã sao chép thiết lập"
+    },
+    "mcp.connect.row": {
+      "message": "Kết nối ứng dụng AI…"
+    },
+    "mcp.connect.title": {
+      "message": "Kết nối ứng dụng AI"
+    },
+    "mcp.connect.close-label": {
+      "message": "Đóng"
+    },
+    "mcp.connect.description": {
+      "message": "Dán lời nhắc này vào ứng dụng AI của bạn. Ứng dụng sẽ tự thiết lập và báo cho bạn nếu có gì cản trở."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Lời nhắc cho ứng dụng AI"
+    },
+    "mcp.connect.copy": {
+      "message": "Sao chép lời nhắc"
+    },
+    "mcp.connect.copied": {
+      "message": "Đã sao chép lời nhắc"
+    },
+    "mcp.connect.by-hand": {
+      "message": "Thiết lập thủ công"
+    },
+    "mcp.pairing.title": {
+      "message": "Cho phép {app} dùng AoE2RMSIDE?"
+    },
+    "mcp.pairing.description": {
+      "message": "Ứng dụng có thể sửa kịch bản trong thư mục đang mở, tạo bản đồ, chạy kiểm thử và triển khai mod. Được khởi chạy bởi {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "Ứng dụng có thể sửa kịch bản trong thư mục đang mở, tạo bản đồ, chạy kiểm thử và triển khai mod."
+    },
+    "mcp.pairing.name-note": {
+      "message": "Tên này do ứng dụng tự khai: chỉ cho phép nếu chính bạn đã thiết lập nó. Thay thế mod hoặc thử trong trò chơi vẫn sẽ hỏi bạn."
+    },
+    "mcp.pairing.allow": {
+      "message": "Cho phép"
+    },
+    "mcp.pairing.deny": {
+      "message": "Không cho phép"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "Thay thế mod “{mod}”?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} muốn triển khai {file} vào mod này. {app} chưa triển khai mod này trong phiên hiện tại, nên các tệp của mod sẽ bị thay thế."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Thay thế"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} đã yêu cầu triển khai {file} thành mod “{mod}”."
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} đã triển khai {file} thành mod “{mod}”."
+    },
+    "mcp.live.title": {
+      "message": "Bắt đầu thử trong trò chơi cho {app}?"
+    },
+    "mcp.live.description": {
+      "message": "{app} muốn thử {file} với hạt giống {seed} trong trò chơi đang chạy. Trận đang diễn ra sẽ kết thúc."
+    },
+    "mcp.live.session": {
+      "message": "Cho phép trong phiên này"
+    },
+    "mcp.live.start": {
+      "message": "Thử trong trò chơi"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, other {# ứng dụng AI}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} đã kết nối"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, other {Đã kết nối # ứng dụng AI}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} đang làm việc"
+    },
+    "mcp.status.tooltip": {
+      "message": "Đã kết nối qua MCP. Nhấp để mở thiết lập MCP."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "Đã tìm thấy lỗi và gửi cho ứng dụng AI."
+    },
+    "mcp.output.connected": {
+      "message": "{app} đã kết nối"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} đã ngắt kết nối"
+    },
+    "mcp.output.denied": {
+      "message": "{app} không được phép kết nối"
+    },
+    "mcp.output.busy": {
+      "message": "{app} được yêu cầu chờ: {running} đang chạy"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} bị từ chối"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} đã bị hủy"
+    },
+    "mcp.action.status": {
+      "message": "đã đọc trạng thái IDE"
+    },
+    "mcp.action.list-files": {
+      "message": "đã liệt kê tệp"
+    },
+    "mcp.action.read-file": {
+      "message": "đã đọc {file}"
+    },
+    "mcp.action.edit-file": {
+      "message": "đã sửa {file}"
+    },
+    "mcp.action.create-file": {
+      "message": "đã tạo {file}"
+    },
+    "mcp.action.save-file": {
+      "message": "đã lưu {file}"
+    },
+    "mcp.action.problems": {
+      "message": "đã kiểm tra {file}"
+    },
+    "mcp.action.generate": {
+      "message": "đã tạo bản đồ từ {file}, hạt giống {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "đã hiện {file} trong bản xem trước"
+    },
+    "mcp.action.inspect": {
+      "message": "đã xem một bản đồ đã tạo"
+    },
+    "mcp.action.picture": {
+      "message": "đã lấy ảnh của {file}"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, other {đã lấy ảnh # hạt giống của {file}}}"
+    },
+    "mcp.action.map-test": {
+      "message": "đã chạy kiểm thử bản đồ {file}"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, other {đã chạy kiểm tra chất lượng {file} (# hạt giống)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "đã xem tiến độ một kiểm thử đang chạy"
+    },
+    "mcp.action.details": {
+      "message": "đã đọc chi tiết một kết quả"
+    },
+    "mcp.action.deploy": {
+      "message": "đã triển khai {file} thành mod “{mod}”"
+    },
+    "mcp.action.live-test": {
+      "message": "đã bắt đầu thử {file} trong trò chơi"
+    },
+    "mcp.action.guide": {
+      "message": "đã đọc hướng dẫn"
+    },
+    "mcp.action.reference": {
+      "message": "đã tra cứu {name}"
+    },
+    "mcp.action.tool": {
+      "message": "đã dùng {tool}"
+    },
+    "mcp.refusal.waiting": {
+      "message": "Đang chờ câu trả lời của bạn trong AoE2RMSIDE."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "Bạn đã không cho phép ứng dụng này."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "Yêu cầu không hợp lệ."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "Chưa mở thư mục nào."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "Tệp nằm ngoài thư mục đang mở, hoặc được AoE2RMSIDE bảo vệ."
+    },
+    "mcp.refusal.file-type": {
+      "message": "Ứng dụng AI không dùng được loại tệp này."
+    },
+    "mcp.refusal.not-found": {
+      "message": "Không tìm thấy tệp."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "Tệp đã tồn tại."
+    },
+    "mcp.refusal.too-large": {
+      "message": "Tệp quá lớn."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "Tệp không phải tệp văn bản."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "Không tìm thấy đoạn văn bản cần sửa, hoặc tìm thấy nhiều lần."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "Tùy chọn Cho phép ứng dụng AI lưu tệp đang tắt."
+    },
+    "mcp.refusal.busy": {
+      "message": "Có tác vụ khác đang chạy."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "Bản đồ đã tạo không còn được lưu giữ."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "Kiểm thử không còn được lưu giữ."
+    },
+    "mcp.refusal.stopped": {
+      "message": "Bạn đã dừng nó."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "Ứng dụng AI đã hủy yêu cầu."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "Bạn đã từ chối."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "Trò chơi có thể bị sập trên bản đồ này."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "Trò chơi chưa sẵn sàng để thử."
+    },
+    "mcp.refusal.too-many": {
+      "message": "Ứng dụng đã gửi quá nhiều yêu cầu."
+    },
+    "mcp.refusal.internal": {
+      "message": "Đã xảy ra lỗi trong AoE2RMSIDE."
     },
     "code-editor.tab.unsaved": {
       "message": "Thay đổi chưa lưu"
@@ -5135,6 +5738,9 @@
     "app-update.dialog.unsaved": {
       "message": "Nếu tài liệu có thay đổi chưa lưu, bạn sẽ được hỏi về chúng trước."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Các ứng dụng AI đang kết nối sẽ mất kết nối trong khi cập nhật. Hãy khởi động lại chúng sau đó."
+    },
     "app-update.dialog.release-notes": {
       "message": "Ghi chú phát hành"
     },
@@ -5272,6 +5878,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "Tệp {language} dùng phân tích có sẵn"
+    },
+    "known-crash.headline": {
+      "message": "Trò chơi bị sập trên bản đồ này"
+    },
+    "known-crash.headline.possible": {
+      "message": "Trò chơi có thể bị sập ở đây"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "override_actor_radius_if_required trên đối tượng quá nhỏ cho việc tìm kiếm"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required di chuyển một đối tượng không vừa chỗ được đặt, và đối tượng này quá nhỏ cho việc trò chơi tìm ô trống."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "Bỏ override_actor_radius_if_required khỏi đối tượng đó."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "Một dòng trong khối kết nối không có địa hình"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Bên trong cặp ngoặc nhọn của lệnh kết nối, trò chơi đọc một địa hình từ mỗi dòng, và {word} không có địa hình nào."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Chuyển dòng đó ra khỏi khối kết nối, lên trước các lệnh kết nối."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "Một kết nối đi tới vùng đất nằm ngoài bản đồ"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "Một kết nối bắt đầu hoặc kết thúc tại vùng đất có vị trí nằm ngoài bản đồ ở cỡ bản đồ này."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "Giữ land_position trong bản đồ với mọi cỡ bản đồ."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "Một tên đã định nghĩa chạy như cliff_type trong <CLIFF_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} là tên đã định nghĩa nằm ở chỗ có thể đặt lệnh, nên trò chơi chạy nó như {command} mà không có giá trị."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Bỏ tên đã định nghĩa, hoặc viết lệnh mà nó lẽ ra phải là."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "Một tên đã định nghĩa chạy như base_terrain hoặc base_layer trong ngoặc nhọn của create_elevation"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} là tên đã định nghĩa nằm ở chỗ có thể đặt lệnh, nên trò chơi chạy nó như {command} mà không có giá trị."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Bỏ tên đã định nghĩa, hoặc viết lệnh mà nó lẽ ra phải là."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "Một tên đã định nghĩa chạy như ai_info_map_type, effect_amount hoặc effect_percent"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} là tên đã định nghĩa nằm ở chỗ có thể đặt lệnh, nên trò chơi chạy nó như {command} mà không có giá trị."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Bỏ tên đã định nghĩa, hoặc viết lệnh mà nó lẽ ra phải là."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "Một tên đã định nghĩa chạy như guard_state trong <PLAYER_SETUP>"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} là tên đã định nghĩa nằm ở chỗ có thể đặt lệnh, nên trò chơi chạy nó như {command} mà không có giá trị."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Bỏ tên đã định nghĩa, hoặc viết lệnh mà nó lẽ ra phải là."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "Một tên đã định nghĩa chạy như base_terrain hoặc base_layer trong <LAND_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} là tên đã định nghĩa nằm ở chỗ có thể đặt lệnh, nên trò chơi chạy nó như {command} mà không có giá trị."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Bỏ tên đã định nghĩa, hoặc viết lệnh mà nó lẽ ra phải là."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "Một tên đã định nghĩa chạy như terrain_type hoặc assign_to trong ngoặc nhọn của một vùng đất"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} là tên đã định nghĩa nằm ở chỗ có thể đặt lệnh, nên trò chơi chạy nó như {command} mà không có giá trị."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Bỏ tên đã định nghĩa, hoặc viết lệnh mà nó lẽ ra phải là."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "Một tên đã định nghĩa chạy như terrain_to_place_on, layer_to_place_on hoặc second_object trong ngoặc nhọn của một đối tượng"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} là tên đã định nghĩa nằm ở chỗ có thể đặt lệnh, nên trò chơi chạy nó như {command} mà không có giá trị."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Bỏ tên đã định nghĩa, hoặc viết lệnh mà nó lẽ ra phải là."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "Một tên đã định nghĩa chạy như create_terrain hoặc color_correction trong <TERRAIN_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} là tên đã định nghĩa nằm ở chỗ có thể đặt lệnh, nên trò chơi chạy nó như {command} mà không có giá trị."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Bỏ tên đã định nghĩa, hoặc viết lệnh mà nó lẽ ra phải là."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Xếp người chơi theo nhóm quanh vòng tròn có chu vi bằng không"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Người chơi được xếp theo nhóm đội quanh một vòng tròn có chu vi bằng không, nên trò chơi chia cho số không."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "add_object không có đối tượng trong một nhóm có tên"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "add_object không có đối tượng trong khi nhóm đã được đặt tên, nên trò chơi bị sập khi mục đó được chọn."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "Thêm một đối tượng cho add_object."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "Một đối tượng được đặt trên vùng đất nằm ngoài bản đồ"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "Một đối tượng được đặt theo từng vùng đất lên một vùng đất có vị trí nằm ngoài bản đồ ở cỡ bản đồ này."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "Giữ land_position trong bản đồ với mọi cỡ bản đồ."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size thu nhỏ bản đồ sau khi tạo vùng đất người chơi"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size thu nhỏ bản đồ sau khi vùng đất người chơi đã được tạo, nên một người chơi có thể bắt đầu ở ngoài bản đồ."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "Chuyển override_map_size lên trước create_player_lands."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "Bản đồ phủ một địa hình không có dữ liệu di chuyển"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "Bản đồ phủ địa hình {terrain}, vốn không có trong dữ liệu di chuyển của trò chơi, nên trò chơi bị sập trong trận đấu."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Dùng địa hình có trong dữ liệu di chuyển của trò chơi."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "Với hạt giống khác hoặc thiết lập phòng chờ khác, trò chơi có thể bị sập trên bản đồ này. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Vẫn triển khai"
+    },
+    "live-test.crash-warning.title": {
+      "message": "Trò chơi có thể bị sập trên bản đồ này"
+    },
+    "live-test.crash-warning.description": {
+      "message": "Hạt giống này chạy được, nhưng với hạt giống khác hoặc thiết lập phòng chờ khác, trò chơi có thể bị sập trên bản đồ này. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Vẫn bắt đầu"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "Trò chơi có thể bị sập trên bản đồ này nên lượt thử trong trò chơi chưa được bắt đầu."
+    },
+    "test-results.crashes.title": {
+      "message": "Trò chơi bị sập"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, other {# bản đồ}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "Trò chơi bị sập trên {maps, number} trong số {sampled, plural, other {# bản đồ}}"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "Không tạo được {maps, plural, other {# bản đồ}} trong số {sampled, number}"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, other {Hạt giống}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, other {Hạt giống}} {seeds, list, unit} và {omitted, number} hạt giống khác"
+    },
+    "test-results.crashes.source": {
+      "message": "Trò chơi bị sập"
+    },
+    "test-results.crashes.show": {
+      "message": "Hiện các lần trò chơi bị sập"
+    },
+    "test-results.crashes.hide": {
+      "message": "Ẩn các lần trò chơi bị sập"
+    },
+    "test-results.quality.summary": {
+      "message": "· Kiểm tra chất lượng {map} · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, other {# bản đồ}} · {failures, plural, other {# thất bại}} · {warnings, plural, other {# cảnh báo}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, other {# phát hiện}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "Hiện phát hiện của {case}"
+    },
+    "test-results.quality.hide-case": {
+      "message": "Ẩn phát hiện của {case}"
+    },
+    "test-results.quality.case-findings": {
+      "message": "Phát hiện của {case}"
+    },
+    "test-results.quality.no-findings": {
+      "message": "Mọi hạng mục đều đạt trên {maps, plural, other {# bản đồ}}"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, other {# phát hiện từ kiểm tra chất lượng}}"
     }
   }
 }

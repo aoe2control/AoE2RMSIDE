@@ -138,6 +138,9 @@
     "app-menu.view.map-transitions": {
       "message": "Kaartovergangen animeren"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "XS controleren bij uitvoeren van kaart"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Generatiestappen live tonen"
     },
@@ -170,6 +173,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "Thema…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "Thema"
@@ -399,6 +405,9 @@
     "output.source.map-test": {
       "message": "Kaarttest"
     },
+    "output.source.quality-check": {
+      "message": "Kwaliteitscontrole"
+    },
     "output.source.deploy": {
       "message": "Installatie"
     },
@@ -420,8 +429,14 @@
     "output.source.game-textures": {
       "message": "Speltexturen"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "App"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, one {{count} uitvoerbericht} other {{count} uitvoerberichten}}"
@@ -491,6 +506,162 @@
     },
     "output.constructs.go-to": {
       "message": "Naar het eerste gebruik gaan"
+    },
+    "output.xs-start.summary": {
+      "message": "XS-startcontrole: main() en {rules, plural, one {# rule} other {# rules}} uitgevoerd in {files, list} ({steps, plural, one {# stap} other {# stappen}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "XS-startcontrole: geen main() in {files, list}; {rules, plural, =0 {geen rules} one {# rule} other {# rules}} uitgevoerd ({steps, plural, one {# stap} other {# stappen}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "Niet vergeleken met het spel"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "Niet vergeleken met het spel. Gebruikt: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "rekenen met gehele getallen"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "gemengde gehele en decimale getallen"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "getallen als tekst"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "tekstfuncties"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "standaardwaarden van arrays"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "volgorde van rules"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "labels en goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "beginwaarden"
+    },
+    "output.xs-start.chat": {
+      "message": "Chat: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Gaia} one {Speler {player}} other {Speler {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "voedsel"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "hout"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "steen"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "goud"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "attribuut {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource} ingesteld op {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "object {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "technologie {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: onderzoekt {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}: houding tegenover {other} ingesteld op {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: naam ingesteld op ‘{text}’"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: naam van de beschaving ingesteld op ‘{text}’"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: kleur ingesteld op {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: maakt {count} {object} bij ({x}, {y}); plaatsing niet gecontroleerd"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: maakt {count} {object}; plaatsing niet gecontroleerd"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: verwijdert {count} {object}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: verplaatst {count} {object} naar ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: verplaatst {count} {object}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: krijgt {count} {object} van {previous}"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: wijzigt waarden van {count} {object}"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: wijzigt namen of bijschriften van {count} {object}"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: wijzigt de gegevens van {object}; vastgelegd, niet toegepast"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: wijzigt de gegevens van {technology}; vastgelegd, niet toegepast"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, one {# aanroep} other {# aanroepen}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Lichtsfeer ingesteld op {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Wijzigingen na deze regel worden niet vermeld."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Wijzigingen na de stop worden niet vermeld."
+    },
+    "output.xs-start.skipped": {
+      "message": "XS-startcontrole overgeslagen: {file} heeft {count, plural, one {# fout} other {# fouten}} (zie Problemen)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "Koppel je spelmap om de XS-startcontrole uit te voeren"
+    },
+    "output.xs-start.omitted": {
+      "message": "Niet alle resultaten van de XS-startcontrole worden vermeld"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Weggelaten: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, one {# bevinding} other {# bevindingen}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, one {# chatregel} other {# chatregels}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, one {# wijziging} other {# wijzigingen}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, one {# vastgelegde aanroep} other {# vastgelegde aanroepen}}"
     },
     "output.constructs.more": {
       "message": "en nog {count}"
@@ -597,11 +768,95 @@
     "run-menu.run-on-edit": {
       "message": "Bij bewerken"
     },
+    "run-menu.quality-check": {
+      "message": "Kwaliteitscontrole"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Te controleren startwaarden"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Controlepunten"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Kiezen wat de kwaliteitscontrole bekijkt"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Andere lobbyinstellingen"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Ook Piepklein 1v1, Middelgroot 2v2 en Enorm 4v4 controleren, elk 10 startwaarden"
+    },
+    "quality.case.generation": {
+      "message": "Kaartgeneratie"
+    },
+    "quality.case.start-resources": {
+      "message": "Grondstoffen bij de start"
+    },
+    "quality.case.resource-distances": {
+      "message": "Afstand tot grondstoffen"
+    },
+    "quality.case.shared-resources": {
+      "message": "Gedeelde grondstoffen"
+    },
+    "quality.case.wood": {
+      "message": "Hout"
+    },
+    "quality.case.trapped": {
+      "message": "Ingesloten grondstoffen"
+    },
+    "quality.case.paths": {
+      "message": "Paden"
+    },
+    "quality.case.building-space": {
+      "message": "Bouwruimte"
+    },
+    "quality.case.hills": {
+      "message": "Heuvels"
+    },
+    "quality.case.water": {
+      "message": "Water"
+    },
+    "quality.case.spacing": {
+      "message": "Onderlinge afstand"
+    },
+    "quality.case.chokepoints": {
+      "message": "Nauwe doorgangen"
+    },
+    "quality.case.variation": {
+      "message": "Variatie"
+    },
+    "quality.case.looks": {
+      "message": "Uiterlijk"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "{bad} van {of} kaarten{metric, select, yes { · mediaan {p50}, 95e percentiel {p95}, hoogste {max} {unit}} other {}}{worst, select, yes { · {count, plural, one {slechtste startwaarde} other {slechtste startwaarden}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "Geslaagd: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, one {Nog # bevinding wordt niet vermeld} other {Nog # bevindingen worden niet vermeld}}"
+    },
+    "quality.failed": {
+      "message": "De kwaliteitscontrole kon niet worden uitgevoerd"
+    },
     "run-menu.preset.default-name": {
       "message": "Config"
     },
     "run-menu.preset.numbered-name": {
       "message": "Config {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Testconfig"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Terug naar {name}"
     },
     "run-menu.preset.settings": {
       "message": "Voorbeeldinstellingen van de configuratie"
@@ -626,6 +881,9 @@
     },
     "run-menu.preset.delete": {
       "message": "{name} verwijderen"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "{name} dupliceren"
     },
     "run-menu.preset.delete.title": {
       "message": "Configuratie {name} verwijderen?"
@@ -813,6 +1071,9 @@
     "run-menu.fixture.needs-source": {
       "message": "Ontwikkeltestgegevens vereisen een niet-leeg .rms- of .rms2-script"
     },
+    "mcp.run.settings-applied": {
+      "message": "Ingesteld door {app}: {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Willekeurige beschavingen voor dit voorbeeld: {players, list, unit}"
     },
@@ -830,6 +1091,9 @@
     },
     "run-menu.result.failed": {
       "message": "Mislukt"
+    },
+    "run-menu.result.warnings": {
+      "message": "Waarschuwingen"
     },
     "run-menu.result.passed": {
       "message": "Geslaagd"
@@ -2694,6 +2958,9 @@
     "lint-rule.RMS4011.title": {
       "message": "Naam mogelijk niet gedefinieerd"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "Het spel kan hier crashen"
+    },
     "map-icon.generate": {
       "message": "Kaartpictogram genereren"
     },
@@ -3060,6 +3327,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "Kaart bij de bevinding opnieuw gegenereerd met de vastgelegde startwaarde {seed}"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Kaart bij de bevinding opnieuw gegenereerd met de vastgelegde startwaarde {seed}, nu vergrendeld voor de volgende uitvoeringen"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Kaart bij de bevinding opnieuw gegenereerd met de vastgelegde startwaarde {seed}, nu vergrendeld in de tijdelijke configuratie {name}"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "De spelmap kon niet worden ontkoppeld"
     },
@@ -3092,6 +3365,336 @@
     },
     "code-editor.tab.close": {
       "message": "{name} sluiten"
+    },
+    "mcp.tab.edited-by": {
+      "message": "Bewerkt door {app}, niet opgeslagen"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "MCP-instellingen sluiten"
+    },
+    "mcp.dialog.description": {
+      "message": "Laat AI-apps op deze computer scripts in de geopende map lezen, bewerken en controleren, kaarten genereren en kaarttests uitvoeren."
+    },
+    "mcp.enable.label": {
+      "message": "MCP inschakelen"
+    },
+    "mcp.save.label": {
+      "message": "AI-apps bestanden laten opslaan"
+    },
+    "mcp.save.note": {
+      "message": "Als dit uit staat, blijven AI-wijzigingen niet opgeslagen tot je ze opslaat."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "MCP kon niet starten omdat een ander programma de verbindingsnaam ervan gebruikt."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "MCP kon niet starten omdat het zijn sleutelbestand niet kon schrijven."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "MCP kon niet starten omdat de lijst met tools niet bij deze versie van AoE2RMSIDE past. Installeer AoE2RMSIDE opnieuw."
+    },
+    "mcp.unavailable.internal": {
+      "message": "MCP kon niet starten door een onverwachte fout."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Zet MCP inschakelen uit en weer aan om het opnieuw te proberen."
+    },
+    "mcp.apps.title": {
+      "message": "Toegestane apps"
+    },
+    "mcp.apps.empty": {
+      "message": "Nog geen apps. Een app vraagt het de eerste keer dat hij verbinding maakt."
+    },
+    "mcp.apps.connected": {
+      "message": "Verbonden"
+    },
+    "mcp.apps.last-used": {
+      "message": "Laatst gebruikt op {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "Verwijderen"
+    },
+    "mcp.apps.remove-label": {
+      "message": "{app} verwijderen"
+    },
+    "mcp.setup.app": {
+      "message": "AI-app"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "Andere app"
+    },
+    "mcp.setup.text-label": {
+      "message": "Instellingstekst"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Voeg dit toe aan de configuratie van Claude Desktop (Settings > Developer > Edit Config) en start Claude Desktop daarna opnieuw."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Voer deze opdracht uit in een terminal."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Voer deze opdracht uit in een terminal."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Voeg dit programma toe als lokale MCP-server."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Zet eerst MCP inschakelen aan."
+    },
+    "mcp.setup.copy": {
+      "message": "Instelling kopiëren"
+    },
+    "mcp.setup.copied": {
+      "message": "Instelling gekopieerd"
+    },
+    "mcp.connect.row": {
+      "message": "AI-app verbinden…"
+    },
+    "mcp.connect.title": {
+      "message": "AI-app verbinden"
+    },
+    "mcp.connect.close-label": {
+      "message": "Sluiten"
+    },
+    "mcp.connect.description": {
+      "message": "Plak deze prompt in je AI-app. De app stelt zichzelf in en laat het je weten als iets dat blokkeert."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Prompt voor de AI-app"
+    },
+    "mcp.connect.copy": {
+      "message": "Prompt kopiëren"
+    },
+    "mcp.connect.copied": {
+      "message": "Prompt gekopieerd"
+    },
+    "mcp.connect.by-hand": {
+      "message": "Handmatig instellen"
+    },
+    "mcp.pairing.title": {
+      "message": "{app} toestaan AoE2RMSIDE te gebruiken?"
+    },
+    "mcp.pairing.description": {
+      "message": "De app zou scripts in de geopende map kunnen bewerken, kaarten genereren, tests uitvoeren en mods installeren. Gestart door {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "De app zou scripts in de geopende map kunnen bewerken, kaarten genereren, tests uitvoeren en mods installeren."
+    },
+    "mcp.pairing.name-note": {
+      "message": "De app geeft zichzelf deze naam: sta hem alleen toe als je hem zelf hebt ingesteld. Een mod vervangen of een livetest starten vraagt nog steeds eerst om je toestemming."
+    },
+    "mcp.pairing.allow": {
+      "message": "Toestaan"
+    },
+    "mcp.pairing.deny": {
+      "message": "Niet toestaan"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "De mod ‘{mod}’ vervangen?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} wil {file} in deze mod installeren. {app} heeft deze mod in deze sessie niet geïnstalleerd, dus de bestanden ervan zouden worden vervangen."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Vervangen"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} heeft gevraagd {file} te installeren als de mod ‘{mod}’."
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} heeft {file} geïnstalleerd als de mod ‘{mod}’."
+    },
+    "mcp.live.title": {
+      "message": "Livetest voor {app} starten?"
+    },
+    "mcp.live.description": {
+      "message": "{app} wil {file} met startwaarde {seed} testen in het draaiende spel. De huidige partij wordt beëindigd."
+    },
+    "mcp.live.session": {
+      "message": "Toestaan voor deze sessie"
+    },
+    "mcp.live.start": {
+      "message": "Livetest starten"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, one {# AI-app} other {# AI-apps}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} verbonden"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, one {# AI-app verbonden} other {# AI-apps verbonden}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} is bezig"
+    },
+    "mcp.status.tooltip": {
+      "message": "Verbonden via MCP. Klik voor de MCP-instellingen."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "Er zijn fouten gevonden en naar de AI-app gestuurd."
+    },
+    "mcp.output.connected": {
+      "message": "{app} heeft verbinding gemaakt"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} heeft de verbinding verbroken"
+    },
+    "mcp.output.denied": {
+      "message": "{app} mocht geen verbinding maken"
+    },
+    "mcp.output.busy": {
+      "message": "{app} is gevraagd te wachten: {running} wordt uitgevoerd"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} is geweigerd"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} is geannuleerd"
+    },
+    "mcp.action.status": {
+      "message": "IDE-status gelezen"
+    },
+    "mcp.action.list-files": {
+      "message": "bestanden weergegeven"
+    },
+    "mcp.action.read-file": {
+      "message": "{file} gelezen"
+    },
+    "mcp.action.edit-file": {
+      "message": "{file} bewerkt"
+    },
+    "mcp.action.create-file": {
+      "message": "{file} aangemaakt"
+    },
+    "mcp.action.save-file": {
+      "message": "{file} opgeslagen"
+    },
+    "mcp.action.problems": {
+      "message": "{file} gecontroleerd"
+    },
+    "mcp.action.generate": {
+      "message": "{file} gegenereerd, startwaarde {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "{file} in het voorbeeld getoond"
+    },
+    "mcp.action.inspect": {
+      "message": "een gegenereerde kaart bekeken"
+    },
+    "mcp.action.picture": {
+      "message": "een afbeelding van {file} opgehaald"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, one {afbeelding van {file} voor # startwaarde opgehaald} other {afbeeldingen van {file} voor # startwaarden opgehaald}}"
+    },
+    "mcp.action.map-test": {
+      "message": "kaarttest {file} uitgevoerd"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, one {kwaliteitscontrole van {file} uitgevoerd (# startwaarde)} other {kwaliteitscontrole van {file} uitgevoerd (# startwaarden)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "voortgang van een lopende test opgevraagd"
+    },
+    "mcp.action.details": {
+      "message": "details van een resultaat gelezen"
+    },
+    "mcp.action.deploy": {
+      "message": "{file} geïnstalleerd als de mod ‘{mod}’"
+    },
+    "mcp.action.live-test": {
+      "message": "livetest van {file} gestart"
+    },
+    "mcp.action.guide": {
+      "message": "de handleiding gelezen"
+    },
+    "mcp.action.reference": {
+      "message": "{name} opgezocht"
+    },
+    "mcp.action.tool": {
+      "message": "{tool} gebruikt"
+    },
+    "mcp.refusal.waiting": {
+      "message": "AoE2RMSIDE wacht op je antwoord."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "Je hebt deze app niet toegestaan."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "Het verzoek was ongeldig."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "Er is geen map geopend."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "Het bestand ligt buiten de geopende map, of AoE2RMSIDE beschermt het."
+    },
+    "mcp.refusal.file-type": {
+      "message": "AI-apps kunnen dit bestandstype niet gebruiken."
+    },
+    "mcp.refusal.not-found": {
+      "message": "Het bestand is niet gevonden."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "Het bestand bestaat al."
+    },
+    "mcp.refusal.too-large": {
+      "message": "Het bestand is te groot."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "Het bestand is geen tekstbestand."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "De te wijzigen tekst ontbrak of kwam vaker voor."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "AI-apps bestanden laten opslaan staat uit."
+    },
+    "mcp.refusal.busy": {
+      "message": "Er wordt al iets anders uitgevoerd."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "De gegenereerde kaart wordt niet meer bewaard."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "De test wordt niet meer bewaard."
+    },
+    "mcp.refusal.stopped": {
+      "message": "Je hebt het gestopt."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "De AI-app heeft het geannuleerd."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "Je hebt nee gezegd."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "Het spel kan op deze kaart crashen."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "Het spel is niet klaar voor een livetest."
+    },
+    "mcp.refusal.too-many": {
+      "message": "De app heeft te veel verzoeken gestuurd."
+    },
+    "mcp.refusal.internal": {
+      "message": "Er is iets misgegaan in AoE2RMSIDE."
     },
     "code-editor.tab.unsaved": {
       "message": "Niet-opgeslagen wijzigingen"
@@ -5127,6 +5730,9 @@
     "app-update.dialog.unsaved": {
       "message": "Als documenten niet-opgeslagen wijzigingen hebben, wordt je daar eerst naar gevraagd."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Verbonden AI-apps verliezen hun verbinding tijdens de update. Start ze daarna opnieuw."
+    },
     "app-update.dialog.release-notes": {
       "message": "Releaseopmerkingen"
     },
@@ -5264,6 +5870,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "Voor {language}-bestanden wordt de ingebouwde analyse gebruikt"
+    },
+    "known-crash.headline": {
+      "message": "Het spel crasht op deze kaart"
+    },
+    "known-crash.headline.possible": {
+      "message": "Het spel kan hier crashen"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "override_actor_radius_if_required bij een object dat te klein is voor de zoektocht"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required verplaatst een object dat niet past waar het is geplaatst, en het object is te klein voor de zoektocht van het spel naar een vrij vak."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "Verwijder override_actor_radius_if_required bij dat object."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "Een regel in een verbindingsblok heeft geen terrein"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Binnen de accolades van een verbindingsopdracht leest het spel uit elke regel een terrein, en {word} heeft er geen."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Verplaats de regel uit het verbindingsblok naar vóór de verbindingsopdrachten."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "Een verbinding reikt tot een land buiten de kaart"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "Een verbinding begint of eindigt bij een land waarvan de positie bij deze kaartgrootte buiten de kaart ligt."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "Houd land_position bij elke kaartgrootte binnen de kaart."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "Een gedefinieerde naam wordt in <CLIFF_GENERATION> uitgevoerd als cliff_type"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} is een gedefinieerde naam op een plek waar een opdracht kan staan, dus het spel voert die uit als {command} zonder waarde."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Verwijder de gedefinieerde naam of schrijf de opdracht die bedoeld was."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "Een gedefinieerde naam wordt binnen de accolades van create_elevation uitgevoerd als base_terrain of base_layer"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} is een gedefinieerde naam op een plek waar een opdracht kan staan, dus het spel voert die uit als {command} zonder waarde."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Verwijder de gedefinieerde naam of schrijf de opdracht die bedoeld was."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "Een gedefinieerde naam wordt uitgevoerd als ai_info_map_type, effect_amount of effect_percent"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} is een gedefinieerde naam op een plek waar een opdracht kan staan, dus het spel voert die uit als {command} zonder waarde."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Verwijder de gedefinieerde naam of schrijf de opdracht die bedoeld was."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "Een gedefinieerde naam wordt in <PLAYER_SETUP> uitgevoerd als guard_state"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} is een gedefinieerde naam op een plek waar een opdracht kan staan, dus het spel voert die uit als {command} zonder waarde."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Verwijder de gedefinieerde naam of schrijf de opdracht die bedoeld was."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "Een gedefinieerde naam wordt in <LAND_GENERATION> uitgevoerd als base_terrain of base_layer"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} is een gedefinieerde naam op een plek waar een opdracht kan staan, dus het spel voert die uit als {command} zonder waarde."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Verwijder de gedefinieerde naam of schrijf de opdracht die bedoeld was."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "Een gedefinieerde naam wordt binnen de accolades van een land uitgevoerd als terrain_type of assign_to"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} is een gedefinieerde naam op een plek waar een opdracht kan staan, dus het spel voert die uit als {command} zonder waarde."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Verwijder de gedefinieerde naam of schrijf de opdracht die bedoeld was."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "Een gedefinieerde naam wordt binnen de accolades van een object uitgevoerd als terrain_to_place_on, layer_to_place_on of second_object"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} is een gedefinieerde naam op een plek waar een opdracht kan staan, dus het spel voert die uit als {command} zonder waarde."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Verwijder de gedefinieerde naam of schrijf de opdracht die bedoeld was."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "Een gedefinieerde naam wordt in <TERRAIN_GENERATION> uitgevoerd als create_terrain of color_correction"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} is een gedefinieerde naam op een plek waar een opdracht kan staan, dus het spel voert die uit als {command} zonder waarde."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Verwijder de gedefinieerde naam of schrijf de opdracht die bedoeld was."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Gegroepeerde spelersplaatsing rond een cirkel met lengte nul"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Spelers worden in teamgroepen rond een cirkel met lengte nul geplaatst, dus het spel deelt door nul."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "add_object zonder object in een benoemde groep"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "add_object heeft geen object terwijl een groep is benoemd, dus het spel crasht wanneer die vermelding wordt gekozen."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "Geef add_object een object."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "Een object wordt op een land buiten de kaart geplaatst"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "Een object wordt per land geplaatst op een land waarvan de positie bij deze kaartgrootte buiten de kaart ligt."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "Houd land_position bij elke kaartgrootte binnen de kaart."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size maakt de kaart kleiner na de spelerslanden"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size maakt de kaart kleiner nadat de spelerslanden zijn gemaakt, dus een speler kan buiten de kaart beginnen."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "Zet override_map_size vóór create_player_lands."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "De kaart gebruikt een terrein zonder bewegingsgegevens"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "De kaart gebruikt terrein {terrain}, dat niet in de bewegingsgegevens van het spel staat, dus het spel crasht tijdens de partij."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Gebruik een terrein dat in de bewegingsgegevens van het spel staat."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "Met een andere startwaarde of andere lobbyinstellingen kan het spel op deze kaart crashen. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Toch installeren"
+    },
+    "live-test.crash-warning.title": {
+      "message": "Het spel kan op deze kaart crashen"
+    },
+    "live-test.crash-warning.description": {
+      "message": "Deze startwaarde werkt, maar met een andere startwaarde of andere lobbyinstellingen kan het spel op deze kaart crashen. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Toch starten"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "Het spel kan op deze kaart crashen, dus de livetest is niet gestart."
+    },
+    "test-results.crashes.title": {
+      "message": "Spelcrashes"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, one {# kaart} other {# kaarten}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "Het spel crasht op {maps, number} van {sampled, plural, one {# kaart} other {# kaarten}}"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{maps, plural, one {# kaart van {sampled, number} kon} other {# kaarten van {sampled, number} konden}} niet worden gegenereerd"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, one {Startwaarde} other {Startwaarden}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, one {Startwaarde} other {Startwaarden}} {seeds, list, unit} en nog {omitted, number}"
+    },
+    "test-results.crashes.source": {
+      "message": "Spelcrash"
+    },
+    "test-results.crashes.show": {
+      "message": "Spelcrashes tonen"
+    },
+    "test-results.crashes.hide": {
+      "message": "Spelcrashes verbergen"
+    },
+    "test-results.quality.summary": {
+      "message": "· Kwaliteitscontrole van {map} · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, one {# kaart} other {# kaarten}} · {failures, plural, one {# mislukking} other {# mislukkingen}} · {warnings, plural, one {# waarschuwing} other {# waarschuwingen}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, one {# bevinding} other {# bevindingen}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "Bevindingen voor {case} tonen"
+    },
+    "test-results.quality.hide-case": {
+      "message": "Bevindingen voor {case} verbergen"
+    },
+    "test-results.quality.case-findings": {
+      "message": "Bevindingen voor {case}"
+    },
+    "test-results.quality.no-findings": {
+      "message": "Alle controlepunten geslaagd op {maps, plural, one {# kaart} other {# kaarten}}"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, one {# bevinding van de kwaliteitscontrole} other {# bevindingen van de kwaliteitscontrole}}"
     }
   }
 }

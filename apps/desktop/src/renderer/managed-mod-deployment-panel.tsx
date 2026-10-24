@@ -174,8 +174,8 @@ import {
   copyPathAlignment,
   deploymentCertificationNote,
   deploymentConstructNote,
+  deploymentCrashWarning,
   deploymentModStatusLines,
-  deploymentOutputMessages,
   deploymentPanelError,
   deploymentTargetDirectory,
   deploymentPreviewPhase,
@@ -195,6 +195,11 @@ import {
   type DeploymentPreviewOutcome,
   type ModNameField,
 } from './managed-mod-deployment-state';
+import {
+  applyManualDeploymentWithOutput,
+  deploymentRequest,
+  prepareManualDeployment,
+} from './managed-mod-deployment-actions';
 import { useEasedHeight } from './eased-height';
 import { useI18n } from './i18n';
 import type { Translator } from '../shared/i18n/translator';
@@ -408,6 +413,7 @@ export function ManagedModDeploymentPanel({
   const installationRequired = contextLoaded && context === null;
   const certificationNote = deploymentCertificationNote(exactResult?.certification);
   const constructNote = deploymentConstructNote(exactResult);
+  const crashWarning = deploymentCrashWarning(exactResult?.warnings);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -805,20 +811,17 @@ export function ManagedModDeploymentPanel({
     setActionBusy(true);
     setActionError(null);
     try {
-      const result = await window.rmside.applyManualDeployment({
+      const result = await applyManualDeploymentWithOutput(window.rmside, appendOutput, {
         token: fresh.token,
         confirmReplaceExisting: confirmed,
         enableMod,
       });
-      for (const message of deploymentOutputMessages(result)) appendOutput(message);
       setConfirmation(null);
       setSuccessfulDeployment({ targetPath: fresh.targetPath, modStatus: result.modStatus });
       onOpenChange(false);
     } catch (applyError) {
       setConfirmation(null);
-      const raw = errorMessage(applyError);
-      setActionError({ kind: 'deployment', raw });
-      appendOutput(presentDeploymentFailure(raw));
+      setActionError({ kind: 'deployment', raw: errorMessage(applyError) });
     } finally {
       setActionBusy(false);
     }
@@ -831,15 +834,12 @@ export function ManagedModDeploymentPanel({
     setActionBusy(true);
     setActionError(null);
     try {
-      const fresh = await window.rmside.previewManualDeployment({
+      const fresh = await prepareManualDeployment(window.rmside, {
         deployment,
         profileId,
         modName,
         mapIcon,
       });
-      if (!previewMatchesMapIconRequest(fresh.mapIcon, mapIcon)) {
-        throw new Error('The map icon option changed while the deployment was being prepared.');
-      }
       setPreviewOutcome({ inputs, preview: fresh, error: null });
       if (fresh.targetExists) {
         setConfirmation({ modName, preview: fresh });
@@ -1434,6 +1434,15 @@ export function ManagedModDeploymentPanel({
               {error}
             </p>
           ) : null}
+          {!installationRequired && crashWarning && !error ? (
+            <p
+              className="managed-mod-crash-warning"
+              data-testid="managed-mod-crash-warning"
+              role="status"
+            >
+              {crashWarning}
+            </p>
+          ) : null}
           {!installationRequired ? (
             <div className="managed-mod-actions">
               {certificationNote ? (
@@ -1488,7 +1497,7 @@ export function ManagedModDeploymentPanel({
                 disabled={actionBusy || treeLoading || !currentPreview || !profileId || !mapIcon}
                 onClick={() => void submit()}
               >
-                {t('deploy-panel.deploy')}
+                {crashWarning ? t('deploy-panel.deploy-anyway') : t('deploy-panel.deploy')}
               </Button>
             </div>
           ) : null}
@@ -2701,24 +2710,6 @@ function preferredSource(
     sources[0] ??
     null
   );
-}
-
-function deploymentRequest(
-  result: PreviewGenerationResult,
-  includePreviewImage: boolean,
-): ManagedDeploymentRequest {
-  return {
-    contractVersion: { major: 1, minor: 0, patch: 0 },
-    documentUri: result.documentUri,
-    documentRevision: result.documentRevision,
-    sourceCatalogRevision: result.sourceCatalogRevision,
-    sourceCatalogHash: result.sourceCatalogHash,
-    sourceGraphHash: result.sourceGraphHash,
-    externalAssetHash: result.externalAssetHash,
-    resolvedRmsSourceIds: [...result.resolvedRmsSourceIds],
-    externalAssetSourceIds: [...result.externalAssetSourceIds],
-    includePreviewImage,
-  };
 }
 
 function errorMessage(error: unknown): string {

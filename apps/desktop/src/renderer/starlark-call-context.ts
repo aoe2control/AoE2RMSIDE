@@ -1,3 +1,13 @@
+import {
+  mapTestFieldSignatures,
+  mapTestMapSignatures,
+  mapTestQualityModule,
+  mapTestQualitySignatures,
+  mapTestQualityValues,
+  mapTestRmsSignatures,
+  mapTestSampleSignatures,
+} from '../shared/map-test-api-reference';
+
 export type StarlarkTextKind = 'code' | 'string' | 'comment';
 
 export const stringLiteralReceiver = '""';
@@ -279,6 +289,36 @@ export function starlarkCodeOnly(source: string): string {
 export interface StarlarkAliases {
   samples: ReadonlySet<string>;
   maps: ReadonlySet<string>;
+  fields: ReadonlySet<string>;
+  quality: ReadonlyMap<string, string>;
+}
+
+const qualityExports = new Set([
+  ...mapTestQualitySignatures.keys(),
+  ...mapTestQualityValues.keys(),
+]);
+
+function qualityLoads(source: string, code: string): Map<string, string> {
+  const loaded = new Map<string, string>();
+  for (const match of code.matchAll(/(?<![\w.])load\s*\(/gu)) {
+    const start = match.index + match[0].length;
+    const end = code.indexOf(')', start);
+    if (end < 0) continue;
+    const parts = [
+      ...source
+        .slice(start, end)
+        .matchAll(/(?:([A-Za-z_]\w*)\s*=\s*)?(?:"([^"\\\n]*)"|'([^'\\\n]*)')/gu),
+    ];
+    const [module, ...names] = parts;
+    if (!module || module[1] !== undefined || (module[2] ?? module[3]) !== mapTestQualityModule) {
+      continue;
+    }
+    for (const name of names) {
+      const exported = (name[2] ?? name[3])!;
+      if (qualityExports.has(exported)) loaded.set(name[1] ?? exported, exported);
+    }
+  }
+  return loaded;
 }
 
 export function starlarkAliases(source: string): StarlarkAliases {
@@ -308,7 +348,16 @@ export function starlarkAliases(source: string): StarlarkAliases {
       .filter((match) => samples.has(match[2]!))
       .map((match) => match[1]!),
   );
-  return { samples, maps };
+  const fields = new Set(
+    [
+      ...code.matchAll(
+        /\b([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)\s*\.\s*(map\s*\.\s*)?distance_field\s*\(/gu,
+      ),
+    ]
+      .filter((match) => (match[3] === undefined ? maps.has(match[2]!) : samples.has(match[2]!)))
+      .map((match) => match[1]!),
+  );
+  return { samples, maps, fields, quality: qualityLoads(source, code) };
 }
 
 export interface StarlarkSignatureParameter {
@@ -332,79 +381,6 @@ interface SignatureDefinition {
   documentation?: string;
 }
 
-const tileFilters = [
-  'terrain_ids = None',
-  'land_zone_ids = None',
-  'terrain_zone_ids = None',
-  'layer_ids = None',
-];
-const coordinates = ['x1', 'y1', 'x2', 'y2'];
-
-const rmsSignatures = new Map<string, SignatureDefinition>([
-  [
-    'source',
-    {
-      parameters: ['path = None'],
-      documentation: 'Selects the default/pinned or explicit authorized RMS source.',
-    },
-  ],
-  [
-    'seeds',
-    {
-      parameters: ['start', 'count = 1', 'step = 1'],
-      documentation: 'Creates a checked deterministic uint32 sequence.',
-    },
-  ],
-  [
-    'generate',
-    {
-      parameters: ['target', 'seeds', 'preview = True'],
-      documentation: 'Generates immutable samples in seed order.',
-    },
-  ],
-  [
-    'id',
-    {
-      parameters: ['name'],
-      documentation: 'Returns the ID of a game constant in the selected game version.',
-    },
-  ],
-]);
-
-const sampleSignatures = new Map<string, SignatureDefinition>([
-  [
-    'expect',
-    {
-      parameters: ['condition', 'message', 'values = None', 'code = None'],
-      documentation: 'Records a failed assertion and continues.',
-    },
-  ],
-  [
-    'report',
-    {
-      parameters: ['message', 'values = None', 'code = None'],
-      documentation: 'Records an unconditional finding.',
-    },
-  ],
-]);
-
-const mapSignatures = new Map<string, SignatureDefinition>([
-  ['tile', { parameters: ['x', 'y'] }],
-  ['tiles', { parameters: tileFilters }],
-  ['count_tiles', { parameters: tileFilters }],
-  ['objects', { parameters: ['object_ids = None', 'owner = None'] }],
-  ['walls', { parameters: ['object_ids = None', 'owner = None'] }],
-  ['cliffs', { parameters: ['cliff_types = None'] }],
-  ['connections', { parameters: ['kinds = None'] }],
-  ['neighbors', { parameters: ['x', 'y', 'diagonal = False'] }],
-  ['manhattan_distance', { parameters: coordinates }],
-  ['chebyshev_distance', { parameters: coordinates }],
-  ['squared_distance', { parameters: coordinates }],
-  ['boundaries', { parameters: tileFilters }],
-  ['components', { parameters: tileFilters }],
-  ['connected', { parameters: [...coordinates, ...tileFilters] }],
-]);
-
 const stringSignatures = new Map<string, SignatureDefinition>([
   [
     'format',
@@ -416,11 +392,11 @@ const stringSignatures = new Map<string, SignatureDefinition>([
 ]);
 
 function signatureOf(
-  prefix: string,
+  prefix: string | null,
   name: string,
   definition: SignatureDefinition,
 ): StarlarkSignature {
-  let label = `${prefix}.${name}(`;
+  let label = `${prefix === null ? '' : `${prefix}.`}${name}(`;
   const parameters: StarlarkSignatureParameter[] = [];
   definition.parameters.forEach((parameter, index) => {
     if (index > 0) label += ', ';
@@ -443,13 +419,21 @@ export function starlarkCalleeSignature(
   aliases: StarlarkAliases,
 ): StarlarkSignature | null {
   const [receiver, method] = callee;
+  if (callee.length === 1 && aliases.quality.has(receiver!)) {
+    const definition = mapTestQualitySignatures.get(aliases.quality.get(receiver!)!);
+    return definition ? signatureOf(null, receiver!, definition) : null;
+  }
   if (callee.length === 2 && receiver === 'rms') {
-    const definition = rmsSignatures.get(method!);
+    const definition = mapTestRmsSignatures.get(method!);
     return definition ? signatureOf('rms', method!, definition) : null;
   }
   if (callee.length === 2 && aliases.samples.has(receiver!)) {
-    const definition = sampleSignatures.get(method!);
+    const definition = mapTestSampleSignatures.get(method!);
     return definition ? signatureOf('sample', method!, definition) : null;
+  }
+  if (callee.length === 2 && aliases.fields.has(receiver!)) {
+    const definition = mapTestFieldSignatures.get(method!);
+    return definition ? signatureOf('field', method!, definition) : null;
   }
   const mapMethod =
     callee.length === 3 && aliases.samples.has(receiver!) && method === 'map'
@@ -458,7 +442,7 @@ export function starlarkCalleeSignature(
         ? method!
         : null;
   if (mapMethod !== null) {
-    const definition = mapSignatures.get(mapMethod);
+    const definition = mapTestMapSignatures.get(mapMethod);
     return definition ? signatureOf('map', mapMethod, definition) : null;
   }
   if (callee.length >= 2) {

@@ -146,6 +146,9 @@
     "app-menu.view.map-transitions": {
       "message": "मानचित्र बदलते समय एनिमेशन दिखाएँ"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "मानचित्र चलाते समय XS जाँचें"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "निर्माण के चरण साथ-साथ दिखाएँ"
     },
@@ -178,6 +181,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "थीम…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "थीम"
@@ -407,6 +413,9 @@
     "output.source.map-test": {
       "message": "मानचित्र परीक्षण"
     },
+    "output.source.quality-check": {
+      "message": "गुणवत्ता जाँच"
+    },
     "output.source.deploy": {
       "message": "तैनाती"
     },
@@ -428,8 +437,14 @@
     "output.source.game-textures": {
       "message": "गेम टेक्सचर"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "ऐप"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, one {{count} आउटपुट संदेश} other {{count} आउटपुट संदेश}}"
@@ -499,6 +514,162 @@
     },
     "output.constructs.go-to": {
       "message": "इसके पहले उपयोग पर जाएँ"
+    },
+    "output.xs-start.summary": {
+      "message": "XS प्रारंभ जाँच: {files, list} ने main() और {rules, plural, one {# नियम} other {# नियम}} चलाए ({steps, plural, one {# चरण} other {# चरण}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "XS प्रारंभ जाँच: {files, list} में main() नहीं है; चलाए गए नियम: {rules, plural, =0 {कोई नहीं} one {#} other {#}} ({steps, plural, one {# चरण} other {# चरण}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "गेम से तुलना नहीं हुई"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "गेम से तुलना नहीं हुई। इस्तेमाल: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "पूर्णांक अंकगणित"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "पूर्णांक और दशमलव संख्याओं का मेल"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "संख्याओं का टेक्स्ट"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "टेक्स्ट फ़ंक्शन"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "array के डिफ़ॉल्ट मान"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "नियमों का क्रम"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "लेबल और goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "शुरुआती मान"
+    },
+    "output.xs-start.chat": {
+      "message": "चैट: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {गैया} one {खिलाड़ी {player}} other {खिलाड़ी {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "खाना"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "लकड़ी"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "पत्थर"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "सोना"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "विशेषता {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource} को {amount, number} किया गया"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "वस्तु {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "तकनीक {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: {technology} का शोध करता है"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}: {other} के प्रति कूटनीतिक रुख {stance} किया गया"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: नाम “{text}” किया गया"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: सभ्यता का नाम “{text}” किया गया"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: रंग {value} किया गया"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: ({x}, {y}) के पास {count} {object} बनाता है; स्थान की जाँच नहीं हुई"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: {count} {object} बनाता है; स्थान की जाँच नहीं हुई"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: {count} {object} हटाता है"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: {count} {object} को ({x}, {y}) पर ले जाता है"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: {count} {object} को खिसकाता है"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: {previous} से {count} {object} पाता है"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: {count} {object} के मान बदलता है"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: {count} {object} के नाम या कैप्शन बदलता है"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: {object} का डेटा बदलता है; दर्ज किया गया, लागू नहीं किया गया"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: {technology} का डेटा बदलता है; दर्ज किया गया, लागू नहीं किया गया"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, one {# कॉल} other {# कॉल}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "प्रकाश का मूड {value} किया गया"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}। इस पंक्ति के बाद के बदलाव सूची में नहीं हैं।"
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "रुकने के बाद के बदलाव सूची में नहीं हैं।"
+    },
+    "output.xs-start.skipped": {
+      "message": "XS प्रारंभ जाँच छोड़ी गई: {file} में {count, plural, one {# त्रुटि} other {# त्रुटियाँ}} हैं (समस्याएँ देखें)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "XS प्रारंभ जाँच चलाने के लिए अपना गेम फ़ोल्डर लिंक करें"
+    },
+    "output.xs-start.omitted": {
+      "message": "XS प्रारंभ जाँच के सभी नतीजे सूची में नहीं हैं"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "छोड़े गए: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, one {# निष्कर्ष} other {# निष्कर्ष}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, one {# चैट पंक्ति} other {# चैट पंक्तियाँ}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, one {# बदलाव} other {# बदलाव}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, one {# दर्ज कॉल} other {# दर्ज कॉल}}"
     },
     "output.constructs.more": {
       "message": "और {count}"
@@ -605,11 +776,95 @@
     "run-menu.run-on-edit": {
       "message": "संपादन पर चलाएँ"
     },
+    "run-menu.quality-check": {
+      "message": "गुणवत्ता जाँच"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "जाँचे जाने वाले सीड"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "जाँच बिंदु"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "चुनें कि गुणवत्ता जाँच किन बातों को देखे"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "अन्य लॉबी सेटिंग्स"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "बहुत छोटा 1v1, मध्यम 2v2 और विशाल 4v4 भी जाँचें, हर एक पर 10 सीड"
+    },
+    "quality.case.generation": {
+      "message": "निर्माण"
+    },
+    "quality.case.start-resources": {
+      "message": "आरंभ के संसाधन"
+    },
+    "quality.case.resource-distances": {
+      "message": "संसाधनों की दूरी"
+    },
+    "quality.case.shared-resources": {
+      "message": "साझा संसाधन"
+    },
+    "quality.case.wood": {
+      "message": "लकड़ी"
+    },
+    "quality.case.trapped": {
+      "message": "घिरे हुए संसाधन"
+    },
+    "quality.case.paths": {
+      "message": "रास्ते"
+    },
+    "quality.case.building-space": {
+      "message": "निर्माण की जगह"
+    },
+    "quality.case.hills": {
+      "message": "पहाड़ियाँ"
+    },
+    "quality.case.water": {
+      "message": "पानी"
+    },
+    "quality.case.spacing": {
+      "message": "अंतराल"
+    },
+    "quality.case.chokepoints": {
+      "message": "संकरे रास्ते"
+    },
+    "quality.case.variation": {
+      "message": "विविधता"
+    },
+    "quality.case.looks": {
+      "message": "रूप-रंग"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "{of} में से {bad} मानचित्र{metric, select, yes { · माध्यिका {p50}, 95वाँ पर्सेंटाइल {p95}, अधिकतम {max} {unit}} other {}}{worst, select, yes { · सबसे खराब {count, plural, one {सीड} other {सीड}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "सफल: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, one {# और निष्कर्ष सूची में नहीं है} other {# और निष्कर्ष सूची में नहीं हैं}}"
+    },
+    "quality.failed": {
+      "message": "गुणवत्ता जाँच नहीं चल सकी"
+    },
     "run-menu.preset.default-name": {
       "message": "कॉन्फ़िग"
     },
     "run-menu.preset.numbered-name": {
       "message": "कॉन्फ़िग {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "परीक्षण कॉन्फ़िग"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "{name} पर वापस जाएँ"
     },
     "run-menu.preset.settings": {
       "message": "पूर्वावलोकन कॉन्फ़िगरेशन की सेटिंग्स"
@@ -634,6 +889,9 @@
     },
     "run-menu.preset.delete": {
       "message": "{name} हटाएँ"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "{name} डुप्लिकेट करें"
     },
     "run-menu.preset.delete.title": {
       "message": "कॉन्फ़िगरेशन {name} हटाएँ?"
@@ -821,6 +1079,9 @@
     "run-menu.fixture.needs-source": {
       "message": "डेवलपमेंट परीक्षण डेटा के लिए .rms या .rms2 स्क्रिप्ट चाहिए जो खाली न हो"
     },
+    "mcp.run.settings-applied": {
+      "message": "{app} ने सेट किया: {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "इस पूर्वावलोकन के लिए रैंडम सभ्यताएँ: {players, list, unit}"
     },
@@ -838,6 +1099,9 @@
     },
     "run-menu.result.failed": {
       "message": "विफल"
+    },
+    "run-menu.result.warnings": {
+      "message": "चेतावनियाँ"
     },
     "run-menu.result.passed": {
       "message": "सफल"
@@ -2702,6 +2966,9 @@
     "lint-rule.RMS4011.title": {
       "message": "नाम अपरिभाषित हो सकता है"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "यहाँ गेम क्रैश हो सकता है"
+    },
     "map-icon.generate": {
       "message": "मानचित्र का आइकन बनाएँ"
     },
@@ -3068,6 +3335,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "निष्कर्ष का मानचित्र उसके रिकॉर्ड किए सीड {seed} से फिर बनाया गया"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "निष्कर्ष का मानचित्र उसके रिकॉर्ड किए सीड {seed} से फिर बनाया गया, अब यह सीड अगले रन के लिए लॉक है"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "निष्कर्ष का मानचित्र उसके रिकॉर्ड किए सीड {seed} से फिर बनाया गया, अब यह सीड अस्थायी कॉन्फ़िगरेशन {name} में लॉक है"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "गेम फ़ोल्डर का लिंक नहीं हटाया जा सका"
     },
@@ -3100,6 +3373,336 @@
     },
     "code-editor.tab.close": {
       "message": "{name} बंद करें"
+    },
+    "mcp.tab.edited-by": {
+      "message": "{app} द्वारा संपादित, सहेजा नहीं गया"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "MCP सेटिंग्स बंद करें"
+    },
+    "mcp.dialog.description": {
+      "message": "इस कंप्यूटर के AI ऐप्स को खुले फ़ोल्डर की स्क्रिप्ट पढ़ने, संपादित करने और जाँचने, मानचित्र बनाने और मानचित्र परीक्षण चलाने दें।"
+    },
+    "mcp.enable.label": {
+      "message": "MCP सक्षम करें"
+    },
+    "mcp.save.label": {
+      "message": "AI ऐप्स को फ़ाइलें सहेजने दें"
+    },
+    "mcp.save.note": {
+      "message": "बंद होने पर AI के बदलाव तब तक बिना सहेजे रहते हैं, जब तक आप उन्हें न सहेजें।"
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "MCP शुरू नहीं हो सका, क्योंकि कोई दूसरा प्रोग्राम इसके कनेक्शन का नाम इस्तेमाल कर रहा है।"
+    },
+    "mcp.unavailable.key-file": {
+      "message": "MCP शुरू नहीं हो सका, क्योंकि यह अपनी कुंजी फ़ाइल नहीं लिख सका।"
+    },
+    "mcp.unavailable.catalog": {
+      "message": "MCP शुरू नहीं हो सका, क्योंकि इसकी टूल सूची AoE2RMSIDE के इस संस्करण से मेल नहीं खाती। AoE2RMSIDE फिर से इंस्टॉल करें।"
+    },
+    "mcp.unavailable.internal": {
+      "message": "एक अनपेक्षित त्रुटि के कारण MCP शुरू नहीं हो सका।"
+    },
+    "mcp.unavailable.retry": {
+      "message": "फिर कोशिश करने के लिए ‘MCP सक्षम करें’ को बंद करके फिर चालू करें।"
+    },
+    "mcp.apps.title": {
+      "message": "अनुमति वाले ऐप्स"
+    },
+    "mcp.apps.empty": {
+      "message": "अभी कोई ऐप नहीं है। कोई ऐप पहली बार कनेक्ट होने पर अनुमति माँगता है।"
+    },
+    "mcp.apps.connected": {
+      "message": "कनेक्टेड"
+    },
+    "mcp.apps.last-used": {
+      "message": "पिछला इस्तेमाल: {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "हटाएँ"
+    },
+    "mcp.apps.remove-label": {
+      "message": "{app} हटाएँ"
+    },
+    "mcp.setup.app": {
+      "message": "AI ऐप"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "अन्य ऐप"
+    },
+    "mcp.setup.text-label": {
+      "message": "सेटअप टेक्स्ट"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "इसे Claude Desktop के कॉन्फ़िग में जोड़ें (Settings > Developer > Edit Config), फिर Claude Desktop दोबारा शुरू करें।"
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "यह कमांड टर्मिनल में चलाएँ।"
+    },
+    "mcp.setup.hint.codex": {
+      "message": "यह कमांड टर्मिनल में चलाएँ।"
+    },
+    "mcp.setup.hint.other": {
+      "message": "इस प्रोग्राम को स्थानीय MCP सर्वर के रूप में जोड़ें।"
+    },
+    "mcp.setup.needs-enable": {
+      "message": "पहले ‘MCP सक्षम करें’ चालू करें।"
+    },
+    "mcp.setup.copy": {
+      "message": "सेटअप कॉपी करें"
+    },
+    "mcp.setup.copied": {
+      "message": "सेटअप कॉपी हुआ"
+    },
+    "mcp.connect.row": {
+      "message": "AI ऐप कनेक्ट करें…"
+    },
+    "mcp.connect.title": {
+      "message": "AI ऐप कनेक्ट करें"
+    },
+    "mcp.connect.close-label": {
+      "message": "बंद करें"
+    },
+    "mcp.connect.description": {
+      "message": "यह प्रॉम्प्ट अपने AI ऐप में पेस्ट करें। ऐप खुद को सेट कर लेता है और कोई रुकावट हो तो आपको बताता है।"
+    },
+    "mcp.connect.prompt-label": {
+      "message": "AI ऐप के लिए प्रॉम्प्ट"
+    },
+    "mcp.connect.copy": {
+      "message": "प्रॉम्प्ट कॉपी करें"
+    },
+    "mcp.connect.copied": {
+      "message": "प्रॉम्प्ट कॉपी हुआ"
+    },
+    "mcp.connect.by-hand": {
+      "message": "मैन्युअल रूप से सेट करें"
+    },
+    "mcp.pairing.title": {
+      "message": "{app} को AoE2RMSIDE इस्तेमाल करने दें?"
+    },
+    "mcp.pairing.description": {
+      "message": "यह खुले फ़ोल्डर की स्क्रिप्ट संपादित कर सकेगा, मानचित्र बना सकेगा, परीक्षण चला सकेगा और मॉड तैनात कर सकेगा। {program} ने शुरू किया।"
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "यह खुले फ़ोल्डर की स्क्रिप्ट संपादित कर सकेगा, मानचित्र बना सकेगा, परीक्षण चला सकेगा और मॉड तैनात कर सकेगा।"
+    },
+    "mcp.pairing.name-note": {
+      "message": "यह नाम ऐप खुद बताता है: अनुमति तभी दें जब इसे आपने सेट किया हो। मॉड बदलने या लाइव परीक्षण से पहले फिर भी आपसे पूछा जाएगा।"
+    },
+    "mcp.pairing.allow": {
+      "message": "अनुमति दें"
+    },
+    "mcp.pairing.deny": {
+      "message": "अनुमति न दें"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "मॉड “{mod}” बदलें?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} इस मॉड में {file} तैनात करना चाहता है। {app} ने इस सत्र में यह मॉड तैनात नहीं किया, इसलिए इसकी फ़ाइलें बदल दी जाएँगी।"
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "बदलें"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} ने {file} को मॉड “{mod}” के रूप में तैनात करने को कहा।"
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} ने {file} को मॉड “{mod}” के रूप में तैनात किया।"
+    },
+    "mcp.live.title": {
+      "message": "{app} के लिए लाइव परीक्षण शुरू करें?"
+    },
+    "mcp.live.description": {
+      "message": "{app} चल रहे गेम में {file} को सीड {seed} के साथ परखना चाहता है। अभी चल रहा मैच समाप्त हो जाएगा।"
+    },
+    "mcp.live.session": {
+      "message": "इस सत्र के लिए अनुमति दें"
+    },
+    "mcp.live.start": {
+      "message": "लाइव परीक्षण शुरू करें"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, one {# AI ऐप} other {# AI ऐप्स}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} कनेक्टेड"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, one {# AI ऐप कनेक्टेड} other {# AI ऐप्स कनेक्टेड}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} काम कर रहा है"
+    },
+    "mcp.status.tooltip": {
+      "message": "MCP के ज़रिए कनेक्टेड। MCP सेटिंग्स के लिए क्लिक करें।"
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "इसमें त्रुटियाँ मिलीं और वे AI ऐप को भेजी गईं।"
+    },
+    "mcp.output.connected": {
+      "message": "{app} कनेक्ट हुआ"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} डिस्कनेक्ट हुआ"
+    },
+    "mcp.output.denied": {
+      "message": "{app} को कनेक्ट करने की अनुमति नहीं मिली"
+    },
+    "mcp.output.busy": {
+      "message": "{app} से प्रतीक्षा करने को कहा गया: {running} चल रहा है"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} अस्वीकार हुआ"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} रद्द हुआ"
+    },
+    "mcp.action.status": {
+      "message": "IDE की स्थिति पढ़ी"
+    },
+    "mcp.action.list-files": {
+      "message": "फ़ाइलों की सूची देखी"
+    },
+    "mcp.action.read-file": {
+      "message": "{file} पढ़ी"
+    },
+    "mcp.action.edit-file": {
+      "message": "{file} संपादित की"
+    },
+    "mcp.action.create-file": {
+      "message": "{file} बनाई"
+    },
+    "mcp.action.save-file": {
+      "message": "{file} सहेजी"
+    },
+    "mcp.action.problems": {
+      "message": "{file} जाँची"
+    },
+    "mcp.action.generate": {
+      "message": "{file} से मानचित्र बनाया, सीड {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "{file} पूर्वावलोकन में दिखाई"
+    },
+    "mcp.action.inspect": {
+      "message": "बना हुआ एक मानचित्र देखा"
+    },
+    "mcp.action.picture": {
+      "message": "{file} का चित्र लिया"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, one {{file} के # सीड के चित्र लिए} other {{file} के # सीड के चित्र लिए}}"
+    },
+    "mcp.action.map-test": {
+      "message": "मानचित्र परीक्षण {file} चलाया"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, one {{file} पर गुणवत्ता जाँच चलाई (# सीड)} other {{file} पर गुणवत्ता जाँच चलाई (# सीड)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "चल रहे परीक्षण की स्थिति देखी"
+    },
+    "mcp.action.details": {
+      "message": "एक नतीजे का विवरण पढ़ा"
+    },
+    "mcp.action.deploy": {
+      "message": "{file} को मॉड “{mod}” के रूप में तैनात किया"
+    },
+    "mcp.action.live-test": {
+      "message": "{file} का लाइव परीक्षण शुरू किया"
+    },
+    "mcp.action.guide": {
+      "message": "गाइड पढ़ी"
+    },
+    "mcp.action.reference": {
+      "message": "{name} का विवरण देखा"
+    },
+    "mcp.action.tool": {
+      "message": "{tool} इस्तेमाल किया"
+    },
+    "mcp.refusal.waiting": {
+      "message": "यह AoE2RMSIDE में आपके जवाब की प्रतीक्षा कर रहा है।"
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "आपने इस ऐप को अनुमति नहीं दी।"
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "अनुरोध मान्य नहीं था।"
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "कोई फ़ोल्डर खुला नहीं है।"
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "फ़ाइल खुले फ़ोल्डर से बाहर है, या AoE2RMSIDE उसे सुरक्षित रखता है।"
+    },
+    "mcp.refusal.file-type": {
+      "message": "AI ऐप्स इस प्रकार की फ़ाइल इस्तेमाल नहीं कर सकते।"
+    },
+    "mcp.refusal.not-found": {
+      "message": "फ़ाइल नहीं मिली।"
+    },
+    "mcp.refusal.already-exists": {
+      "message": "फ़ाइल पहले से मौजूद है।"
+    },
+    "mcp.refusal.too-large": {
+      "message": "फ़ाइल बहुत बड़ी है।"
+    },
+    "mcp.refusal.binary-file": {
+      "message": "फ़ाइल टेक्स्ट फ़ाइल नहीं है।"
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "बदला जाने वाला टेक्स्ट नहीं मिला, या एक से अधिक बार मिला।"
+    },
+    "mcp.refusal.saving-off": {
+      "message": "‘AI ऐप्स को फ़ाइलें सहेजने दें’ बंद है।"
+    },
+    "mcp.refusal.busy": {
+      "message": "कुछ और चल रहा है।"
+    },
+    "mcp.refusal.map-expired": {
+      "message": "बना हुआ मानचित्र अब रखा नहीं गया है।"
+    },
+    "mcp.refusal.run-expired": {
+      "message": "परीक्षण अब रखा नहीं गया है।"
+    },
+    "mcp.refusal.stopped": {
+      "message": "आपने इसे रोका।"
+    },
+    "mcp.refusal.cancelled": {
+      "message": "AI ऐप ने इसे रद्द किया।"
+    },
+    "mcp.refusal.user-declined": {
+      "message": "आपने मना किया।"
+    },
+    "mcp.refusal.known-crash": {
+      "message": "इस मानचित्र पर गेम क्रैश हो सकता है।"
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "गेम लाइव परीक्षण के लिए तैयार नहीं है।"
+    },
+    "mcp.refusal.too-many": {
+      "message": "ऐप ने बहुत अधिक अनुरोध भेजे।"
+    },
+    "mcp.refusal.internal": {
+      "message": "AoE2RMSIDE में कुछ गड़बड़ हुई।"
     },
     "code-editor.tab.unsaved": {
       "message": "बिना सहेजे बदलाव"
@@ -5135,6 +5738,9 @@
     "app-update.dialog.unsaved": {
       "message": "अगर दस्तावेज़ों में बिना सहेजे बदलाव हैं, तो पहले आपसे उनके बारे में पूछा जाता है।"
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "अपडेट के दौरान कनेक्टेड AI ऐप्स का कनेक्शन टूट जाता है। बाद में उन्हें फिर शुरू करें।"
+    },
     "app-update.dialog.release-notes": {
       "message": "रिलीज़ नोट्स"
     },
@@ -5272,6 +5878,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "{language} फ़ाइलों के लिए अंतर्निहित विश्लेषण इस्तेमाल होता है"
+    },
+    "known-crash.headline": {
+      "message": "इस मानचित्र पर गेम क्रैश होता है"
+    },
+    "known-crash.headline.possible": {
+      "message": "यहाँ गेम क्रैश हो सकता है"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "खोज के लिए बहुत छोटी वस्तु पर override_actor_radius_if_required"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required ऐसी वस्तु को खिसकाता है जो रखी गई जगह पर फ़िट नहीं होती, और वह वस्तु खाली टाइल के लिए गेम की खोज के हिसाब से बहुत छोटी है।"
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "उस वस्तु से override_actor_radius_if_required हटाएँ।"
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "संपर्क ब्लॉक की एक पंक्ति में कोई भूभाग नहीं है"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "संपर्क कमांड के कोष्ठकों के अंदर गेम हर पंक्ति से एक भूभाग पढ़ता है, और {word} में कोई भूभाग नहीं है।"
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "पंक्ति को संपर्क ब्लॉक से बाहर, संपर्क कमांड से पहले ले जाएँ।"
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "एक संपर्क मानचित्र के बाहर की भूमि तक जाता है"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "एक संपर्क ऐसी भूमि पर शुरू या खत्म होता है जिसकी स्थिति इस नक़्शे के आकार पर मानचित्र के बाहर है।"
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "हर नक़्शे के आकार के लिए land_position को मानचित्र के अंदर रखें।"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "<CLIFF_GENERATION> में एक परिभाषित नाम cliff_type के रूप में चलता है"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} एक परिभाषित नाम है जो ऐसी जगह है जहाँ कमांड आ सकता है, इसलिए गेम इसे बिना मान के {command} के रूप में चलाता है।"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "परिभाषित नाम हटाएँ, या वह कमांड लिखें जो वह होना था।"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "create_elevation के कोष्ठकों में एक परिभाषित नाम base_terrain या base_layer के रूप में चलता है"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} एक परिभाषित नाम है जो ऐसी जगह है जहाँ कमांड आ सकता है, इसलिए गेम इसे बिना मान के {command} के रूप में चलाता है।"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "परिभाषित नाम हटाएँ, या वह कमांड लिखें जो वह होना था।"
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "एक परिभाषित नाम ai_info_map_type, effect_amount या effect_percent के रूप में चलता है"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} एक परिभाषित नाम है जो ऐसी जगह है जहाँ कमांड आ सकता है, इसलिए गेम इसे बिना मान के {command} के रूप में चलाता है।"
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "परिभाषित नाम हटाएँ, या वह कमांड लिखें जो वह होना था।"
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "<PLAYER_SETUP> में एक परिभाषित नाम guard_state के रूप में चलता है"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} एक परिभाषित नाम है जो ऐसी जगह है जहाँ कमांड आ सकता है, इसलिए गेम इसे बिना मान के {command} के रूप में चलाता है।"
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "परिभाषित नाम हटाएँ, या वह कमांड लिखें जो वह होना था।"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "<LAND_GENERATION> में एक परिभाषित नाम base_terrain या base_layer के रूप में चलता है"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} एक परिभाषित नाम है जो ऐसी जगह है जहाँ कमांड आ सकता है, इसलिए गेम इसे बिना मान के {command} के रूप में चलाता है।"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "परिभाषित नाम हटाएँ, या वह कमांड लिखें जो वह होना था।"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "किसी भूमि के कोष्ठकों में एक परिभाषित नाम terrain_type या assign_to के रूप में चलता है"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} एक परिभाषित नाम है जो ऐसी जगह है जहाँ कमांड आ सकता है, इसलिए गेम इसे बिना मान के {command} के रूप में चलाता है।"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "परिभाषित नाम हटाएँ, या वह कमांड लिखें जो वह होना था।"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "किसी वस्तु के कोष्ठकों में एक परिभाषित नाम terrain_to_place_on, layer_to_place_on या second_object के रूप में चलता है"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} एक परिभाषित नाम है जो ऐसी जगह है जहाँ कमांड आ सकता है, इसलिए गेम इसे बिना मान के {command} के रूप में चलाता है।"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "परिभाषित नाम हटाएँ, या वह कमांड लिखें जो वह होना था।"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "<TERRAIN_GENERATION> में एक परिभाषित नाम create_terrain या color_correction के रूप में चलता है"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} एक परिभाषित नाम है जो ऐसी जगह है जहाँ कमांड आ सकता है, इसलिए गेम इसे बिना मान के {command} के रूप में चलाता है।"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "परिभाषित नाम हटाएँ, या वह कमांड लिखें जो वह होना था।"
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "शून्य लंबाई वाले वृत्त के चारों ओर समूहों में खिलाड़ियों की स्थिति"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "खिलाड़ियों को टीम के समूहों में शून्य लंबाई वाले वृत्त के चारों ओर रखा जाता है, इसलिए गेम शून्य से भाग देता है।"
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "नामित समूह में बिना वस्तु के add_object"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "समूह का नाम दिया गया है लेकिन add_object में कोई वस्तु नहीं है, इसलिए वह प्रविष्टि चुने जाने पर गेम क्रैश होता है।"
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "add_object को एक वस्तु दें।"
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "एक वस्तु मानचित्र के बाहर की भूमि पर रखी जाती है"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "एक वस्तु हर भूमि पर रखी जाती है, और एक भूमि की स्थिति इस नक़्शे के आकार पर मानचित्र के बाहर है।"
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "हर नक़्शे के आकार के लिए land_position को मानचित्र के अंदर रखें।"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size खिलाड़ियों की भूमि के बाद मानचित्र छोटा करता है"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size खिलाड़ियों की भूमि बनने के बाद मानचित्र छोटा करता है, इसलिए कोई खिलाड़ी मानचित्र के बाहर शुरू कर सकता है।"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "override_map_size को create_player_lands से पहले ले जाएँ।"
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "मानचित्र बिना गति डेटा वाला भूभाग बनाता है"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "मानचित्र भूभाग {terrain} बनाता है, जो गेम के गति डेटा में शामिल नहीं है, इसलिए मैच के दौरान गेम क्रैश होता है।"
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "ऐसा भूभाग इस्तेमाल करें जो गेम के गति डेटा में शामिल हो।"
+    },
+    "deploy-panel.crash-warning": {
+      "message": "किसी दूसरे सीड या दूसरी लॉबी सेटिंग्स के साथ इस मानचित्र पर गेम क्रैश हो सकता है। {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "फिर भी तैनात करें"
+    },
+    "live-test.crash-warning.title": {
+      "message": "इस मानचित्र पर गेम क्रैश हो सकता है"
+    },
+    "live-test.crash-warning.description": {
+      "message": "यह सीड काम करता है, लेकिन किसी दूसरे सीड या दूसरी लॉबी सेटिंग्स के साथ इस मानचित्र पर गेम क्रैश हो सकता है। {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "फिर भी शुरू करें"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "इस मानचित्र पर गेम क्रैश हो सकता है, इसलिए लाइव परीक्षण शुरू नहीं किया गया।"
+    },
+    "test-results.crashes.title": {
+      "message": "गेम क्रैश"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, one {# मानचित्र} other {# मानचित्र}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "{sampled, plural, one {# मानचित्र} other {# मानचित्रों}} में से {maps, number} पर गेम क्रैश होता है"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{sampled, number} में से {maps, plural, one {# मानचित्र नहीं बन सका} other {# मानचित्र नहीं बन सके}}"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, one {सीड} other {सीड}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, one {सीड} other {सीड}} {seeds, list, unit} और {omitted, number} अन्य"
+    },
+    "test-results.crashes.source": {
+      "message": "गेम क्रैश"
+    },
+    "test-results.crashes.show": {
+      "message": "गेम क्रैश दिखाएँ"
+    },
+    "test-results.crashes.hide": {
+      "message": "गेम क्रैश छिपाएँ"
+    },
+    "test-results.quality.summary": {
+      "message": "· {map} की गुणवत्ता जाँच · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, one {# मानचित्र} other {# मानचित्र}} · {failures, plural, one {# विफलता} other {# विफलताएँ}} · {warnings, plural, one {# चेतावनी} other {# चेतावनियाँ}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, one {# निष्कर्ष} other {# निष्कर्ष}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "{case} के निष्कर्ष दिखाएँ"
+    },
+    "test-results.quality.hide-case": {
+      "message": "{case} के निष्कर्ष छिपाएँ"
+    },
+    "test-results.quality.case-findings": {
+      "message": "{case} के निष्कर्ष"
+    },
+    "test-results.quality.no-findings": {
+      "message": "{maps, plural, one {# मानचित्र पर} other {# मानचित्रों पर}} हर जाँच बिंदु सफल रहा"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, one {गुणवत्ता जाँच का # निष्कर्ष} other {गुणवत्ता जाँच के # निष्कर्ष}}"
     }
   }
 }

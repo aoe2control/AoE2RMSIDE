@@ -6,6 +6,12 @@ import {
 import type { LanguageServerDiagnostic, LocalPresentationNames } from '../shared/api';
 import { editionCapabilities } from '../shared/edition';
 import { t } from '../shared/i18n/translator';
+import {
+  mapTestHostDocumentation,
+  mapTestMembers,
+  mapTestQualityDocumentation,
+  type MapTestReceiver,
+} from '../shared/map-test-api-reference';
 import { inlineErrorText } from '../shared/message-catalog';
 import type { OutputText } from '../shared/output-message';
 import { disableRmsLintRuleCommandId, isRmsLintCode } from '../shared/rms-lint-rules';
@@ -542,6 +548,16 @@ export function runEditorHistoryCommand(command: 'undo' | 'redo'): void {
 
 export function canonicalLanguageDocumentUri(uri: string): string {
   return monaco.Uri.parse(uri).toString();
+}
+
+export function attachedLanguageDocumentVersion(uri: string): number | null {
+  const document = attachedDocuments.get(monaco.Uri.parse(uri).toString());
+  return document && !document.model.isDisposed() ? document.version : null;
+}
+
+export function isLanguageDocumentAttached(uri: string): boolean {
+  const document = attachedDocuments.get(monaco.Uri.parse(uri).toString());
+  return document !== undefined && !document.model.isDisposed();
 }
 
 export async function waitForRmsLanguageDocument(uri: string): Promise<string> {
@@ -1430,34 +1446,6 @@ function conservativeStarlarkFormattingEdits(model: monaco.editor.ITextModel): L
   ];
 }
 
-const mapTestHostDocumentation = new Map<string, string>([
-  ['rms', 'The map-test namespace: the map to test, seeds, generation, and game constant IDs.'],
-  [
-    'source',
-    'rms.source(path = None) returns the map pinned in the Run options, or the .rms/.rms2 map at path in the open folder.',
-  ],
-  [
-    'id',
-    'rms.id(name) returns the ID of a game constant, such as "GOLD" or "DEEP_WATER", in the selected game version. ID filters (object_ids, terrain_ids, cliff_types) also accept these names.',
-  ],
-  [
-    'seeds',
-    'rms.seeds(start, count = 1, step = 1) returns a checked uint32 seed sequence without wrapping.',
-  ],
-  [
-    'generate',
-    'rms.generate(target, seeds, preview = True) yields immutable samples in seed order. While the test runs, the preview shows the latest finished map, at most twice a second; afterwards it keeps the last map the script generated with preview on. preview = False leaves the preview as it is.',
-  ],
-  [
-    'expect',
-    'sample.expect(condition, message, values = None, code = None) records a finding when condition is false and continues.',
-  ],
-  [
-    'report',
-    'sample.report(message, values = None, code = None) records an unconditional reproducible finding.',
-  ],
-]);
-
 interface StarlarkNativeCompletion {
   label: string;
   detail: string;
@@ -1872,44 +1860,45 @@ function registerMapTestHostProviders(): void {
       const sourceBeforeCursor = model.getValueInRange(
         new monaco.Range(1, 1, position.lineNumber, position.column),
       );
-      const { samples: sampleAliases, maps: mapAliases } = starlarkAliases(source);
+      const aliases = starlarkAliases(source);
       const native = inferredNativeMethods(prefix, source, receiver);
-      const hostLabels =
+      const hostReceiver: MapTestReceiver | null =
         receiver === 'rms'
-          ? ['source', 'seeds', 'generate', 'id']
-          : receiver && sampleAliases.has(receiver)
-            ? ['seed', 'map', 'request_hash', 'map_hash', 'warnings', 'metrics', 'expect', 'report']
-            : receiver && mapAliases.has(receiver)
-              ? [
-                  'width',
-                  'height',
-                  'hash',
-                  'tile',
-                  'tiles',
-                  'count_tiles',
-                  'objects',
-                  'walls',
-                  'cliffs',
-                  'connections',
-                  'neighbors',
-                  'manhattan_distance',
-                  'chebyshev_distance',
-                  'squared_distance',
-                  'boundaries',
-                  'components',
-                  'connected',
-                ]
-              : null;
+          ? 'rms'
+          : receiver && aliases.samples.has(receiver)
+            ? 'sample'
+            : receiver && aliases.maps.has(receiver)
+              ? 'map'
+              : receiver && aliases.fields.has(receiver)
+                ? 'field'
+                : null;
+      const hostMembers = hostReceiver ? mapTestMembers(hostReceiver) : null;
       const nativeCompletions =
-        native ?? (receiver && !hostLabels ? starlarkFallbackNativeMethods : null);
-      const completions: StarlarkNativeCompletion[] = hostLabels
-        ? hostLabels.map((label) => ({
-            label,
+        native ?? (receiver && !hostMembers ? starlarkFallbackNativeMethods : null);
+      const qualityMembers = new Map(
+        mapTestMembers('quality').map((member) => [member.label, member]),
+      );
+      const loadedQuality = [...aliases.quality].map(([label, exported]) => ({
+        label,
+        detail: t('code-editor.completion.map-test'),
+        documentation: qualityMembers.get(exported)?.documentation,
+        kind: qualityMembers.get(exported)?.method
+          ? monaco.languages.CompletionItemKind.Function
+          : monaco.languages.CompletionItemKind.Constant,
+        sortText: `1_${label}`,
+      }));
+      const completions: StarlarkNativeCompletion[] = hostMembers
+        ? hostMembers.map((member) => ({
+            label: member.label,
             detail: t('code-editor.completion.map-test'),
-            documentation: mapTestHostDocumentation.get(label),
+            documentation: member.documentation,
+            kind: member.method
+              ? monaco.languages.CompletionItemKind.Method
+              : monaco.languages.CompletionItemKind.Property,
           }))
         : (nativeCompletions ??
           [
+            ...loadedQuality,
             ...starlarkVisibleBindings(sourceBeforeCursor),
             ...starlarkGlobalCompletions.map((label) => ({
               label,
@@ -1934,32 +1923,7 @@ function registerMapTestHostProviders(): void {
               ? monaco.languages.CompletionItemKind.Module
               : nativeCompletions
                 ? monaco.languages.CompletionItemKind.Method
-                : [
-                      'source',
-                      'seeds',
-                      'generate',
-                      'id',
-                      'expect',
-                      'report',
-                      'tile',
-                      'tiles',
-                      'count_tiles',
-                      'objects',
-                      'walls',
-                      'cliffs',
-                      'connections',
-                      'neighbors',
-                      'manhattan_distance',
-                      'chebyshev_distance',
-                      'squared_distance',
-                      'boundaries',
-                      'components',
-                      'connected',
-                    ].includes(completion.label)
-                  ? monaco.languages.CompletionItemKind.Method
-                  : hostLabels
-                    ? monaco.languages.CompletionItemKind.Property
-                    : monaco.languages.CompletionItemKind.Function),
+                : monaco.languages.CompletionItemKind.Function),
           detail: completion.detail,
           documentation: completion.documentation,
           insertText: completion.label,
@@ -1972,9 +1936,20 @@ function registerMapTestHostProviders(): void {
   monaco.languages.registerHoverProvider('starlark', {
     provideHover: (model, position) => {
       const word = model.getWordAtPosition(position);
-      const value = word
-        ? (mapTestHostDocumentation.get(word.word) ?? starlarkNativeDocumentation.get(word.word))
-        : undefined;
+      const source = model.getValue();
+      const inCode =
+        word !== null &&
+        starlarkCursorContext(
+          source,
+          model.getOffsetAt({ lineNumber: position.lineNumber, column: word.startColumn }),
+        ).kind !== 'string';
+      const loaded = inCode ? starlarkAliases(source).quality.get(word.word) : undefined;
+      const value =
+        word && inCode
+          ? ((loaded === undefined ? undefined : mapTestQualityDocumentation.get(loaded)) ??
+            mapTestHostDocumentation.get(word.word) ??
+            starlarkNativeDocumentation.get(word.word))
+          : undefined;
       return value && word
         ? {
             range: new monaco.Range(

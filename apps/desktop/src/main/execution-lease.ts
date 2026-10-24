@@ -1,4 +1,4 @@
-import type { RootExecutionKind, RootExecutionState } from '../shared/api';
+import type { RootExecutionKind, RootExecutionOrigin, RootExecutionState } from '../shared/api';
 import { DesktopError } from '../shared/desktop-error';
 
 export const executionStopGraceMilliseconds = 2_000;
@@ -8,11 +8,18 @@ export interface ExecutionLeaseToken {
   readonly generation: number;
 }
 
+export interface ExecutionLeaseOptions {
+  origin?: RootExecutionOrigin;
+  automatic?: boolean;
+}
+
 interface ExecutionOwner {
   token: ExecutionLeaseToken;
   kind: RootExecutionKind;
   label: string;
   startedAt: number;
+  origin: RootExecutionOrigin | undefined;
+  automatic: boolean;
   cooperativeStop(): Promise<void>;
   forceStop(): Promise<void>;
   released: Promise<void>;
@@ -23,8 +30,25 @@ export class ExecutionLease {
   private owner: ExecutionOwner | null = null;
   private generation = 0;
   private stopping: Promise<boolean> | null = null;
+  private readonly listeners = new Set<(state: RootExecutionState) => void>();
 
-  constructor(private readonly publish: (state: RootExecutionState) => void = () => {}) {}
+  constructor(private readonly publishState: (state: RootExecutionState) => void = () => {}) {}
+
+  subscribe(listener: (state: RootExecutionState) => void): () => void {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  private publish(state: RootExecutionState): void {
+    this.publishState(state);
+    for (const listener of [...this.listeners]) {
+      try {
+        listener(state);
+      } catch {}
+    }
+  }
 
   state(): RootExecutionState {
     const owner = this.owner;
@@ -35,6 +59,8 @@ export class ExecutionLease {
       kind: owner.kind,
       label: owner.label,
       startedAt: owner.startedAt,
+      ...(owner.origin ? { origin: { ...owner.origin } } : {}),
+      ...(owner.automatic ? { automatic: true } : {}),
     };
   }
 
@@ -44,6 +70,7 @@ export class ExecutionLease {
     label: string,
     cooperativeStop: () => Promise<void>,
     forceStop: () => Promise<void>,
+    options: ExecutionLeaseOptions = {},
   ): ExecutionLeaseToken {
     if (this.owner) {
       throw new DesktopError(
@@ -62,6 +89,8 @@ export class ExecutionLease {
       kind,
       label,
       startedAt: Date.now(),
+      origin: options.origin ? { kind: 'app', app: options.origin.app } : undefined,
+      automatic: options.automatic === true,
       cooperativeStop,
       forceStop,
       released,

@@ -1,0 +1,442 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/known-crashes/v1",
+  "title": "Shipped known-crash catalogue",
+  "description": "The conditions under which the game itself reliably crashes on a random map script: stable ids that parser, engine, lint, hover, map-test, and protocol surfaces name, each with a plain cause and fix, what the crash depends on, where the IDE detects it, and the evidence quality per behavior profile. Hand-written and reviewed; publishable conclusions only: no address, dump, session, case, or script name. Presentation only: outside every behavior, palette, and generation identity.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "compatibility", "catalogId", "profiles", "entries"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "compatibility": {
+      "$ref": "#/definitions/compatibility"
+    },
+    "catalogId": {
+      "const": "aoe2de-rms-known-crashes-v1"
+    },
+    "profiles": {
+      "description": "The behavior profiles the catalogue covers, sorted.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/profileId"
+      }
+    },
+    "entries": {
+      "description": "Sorted by id.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/definitions/entry"
+      }
+    }
+  },
+  "definitions": {
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": {
+          "const": 1
+        },
+        "maximumMajor": {
+          "const": 1
+        }
+      }
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "profileList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/profileId"
+      }
+    },
+    "crashId": {
+      "description": "Stable and never reused: lower-case words of letters and digits joined by hyphens.",
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "text": {
+      "description": "Plain English; never the word exact, a game version, or an address.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 400,
+      "pattern": "^[^\\u0000-\\u001f]+$",
+      "not": {
+        "pattern": "(?:[Ee][Xx][Aa][Cc][Tt]|\\b[0-9]+[xX]\\b|\\b0x[0-9A-Fa-f]|[0-9]+\\.[0-9]+\\.[0-9]+)"
+      }
+    },
+    "plainText": {
+      "description": "Text without placeholders.",
+      "type": "string",
+      "allOf": [
+        {
+          "$ref": "#/definitions/text"
+        },
+        {
+          "not": {
+            "pattern": "[{}]"
+          }
+        }
+      ]
+    },
+    "place": {
+      "description": "A documentation place: a section, or a section and the create command whose braces hold the term.",
+      "type": "string",
+      "pattern": "^(?:cliff_generation|connection_generation|elevation_generation|land_generation|objects_generation|player_setup|terrain_generation)(?:/create_[a-z_]+)?$"
+    },
+    "detector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage", "code"],
+      "properties": {
+        "stage": {
+          "enum": ["parser", "lint", "generation"]
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^(?:RMS2[0-9]{3}|RMS4012|RMSGEN[0-9]{4})$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "parser"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^RMS2[0-9]{3}$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "lint"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "code": {
+                "const": "RMS4012"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "const": "generation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^RMSGEN[0-9]{4}$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "docTerms": {
+      "description": "A hover note for documented terms where the crash happens; no places means every documented place.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["terms", "places", "note"],
+      "properties": {
+        "terms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]{0,63}$"
+          }
+        },
+        "places": {
+          "type": "array",
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/place"
+          }
+        },
+        "note": {
+          "$ref": "#/definitions/plainText"
+        }
+      }
+    },
+    "evidence": {
+      "description": "The strongest evidence quality, and per quality the profiles whose game build it covers.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quality", "liveProfiles", "staticProfiles", "inferredProfiles"],
+      "properties": {
+        "quality": {
+          "enum": ["live", "static", "inferred"]
+        },
+        "liveProfiles": {
+          "$ref": "#/definitions/profileList"
+        },
+        "staticProfiles": {
+          "$ref": "#/definitions/profileList"
+        },
+        "inferredProfiles": {
+          "$ref": "#/definitions/profileList"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "quality": {
+                "const": "live"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "liveProfiles": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "quality": {
+                "const": "static"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "liveProfiles": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "staticProfiles": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "quality": {
+                "const": "inferred"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "liveProfiles": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "staticProfiles": {
+                "type": "array",
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "cause",
+        "fix",
+        "dependsOn",
+        "timing",
+        "detectors",
+        "docTerms",
+        "evidence",
+        "status",
+        "retiredIn"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/crashId"
+        },
+        "title": {
+          "type": "string",
+          "allOf": [
+            {
+              "$ref": "#/definitions/plainText"
+            },
+            {
+              "type": "string",
+              "maxLength": 160
+            }
+          ]
+        },
+        "cause": {
+          "description": "One plain sentence; may name the placeholders {word}, {command}, and {terrain}.",
+          "type": "string",
+          "allOf": [
+            {
+              "$ref": "#/definitions/text"
+            },
+            {
+              "not": {
+                "pattern": "\\{(?!(?:word|command|terrain)\\})"
+              }
+            }
+          ]
+        },
+        "fix": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/plainText"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dependsOn": {
+          "description": "In this order: path, seed, mapSize, players, positions, lobby, content.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["path", "seed", "mapSize", "players", "positions", "lobby", "content"]
+          }
+        },
+        "timing": {
+          "enum": ["generation", "match"]
+        },
+        "detectors": {
+          "description": "Sorted by stage (parser, lint, generation), then code.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/detector"
+          }
+        },
+        "docTerms": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/definitions/docTerms"
+          }
+        },
+        "evidence": {
+          "$ref": "#/definitions/evidence"
+        },
+        "status": {
+          "enum": ["active", "retired"]
+        },
+        "retiredIn": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9]+(?:\\.[0-9]+)*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "active"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "retiredIn": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "retiredIn": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidence": {
+                "type": "object",
+                "properties": {
+                  "quality": {
+                    "const": "inferred"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "docTerms": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "detectors": {
+                "type": "array",
+                "not": {
+                  "contains": {
+                    "type": "object",
+                    "properties": {
+                      "stage": {
+                        "const": "lint"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

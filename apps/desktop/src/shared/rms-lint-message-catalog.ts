@@ -1,4 +1,4 @@
-import { sentence } from './output-message';
+import { engineSentence, sentence } from './output-message';
 import { step, type CatalogAction, type CatalogHeadline, type CatalogText } from './catalog-text';
 import { t } from './i18n/translator';
 
@@ -147,5 +147,14 @@ export const rmsLintCatalog: Record<string, RmsLintCatalogEntry> = {
     },
     action: (facts) =>
       step(undefinedWordForAName(facts) ? 'message.RMS2034.action' : 'message.RMS4010.action'),
+  },
+  RMS4012: {
+    severity: 'warning',
+    headline: 'message.RMS4012.headline',
+    cause: (facts) => {
+      const [before, after] = clauses(facts, 'The game can crash here: ');
+      const text = (after ?? before).trim();
+      return text ? engineSentence(text) : null;
+    },
   },
 };

@@ -1,0 +1,16 @@
+[package]
+name = "xs-start"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+prost.workspace = true
+rms-content.workspace = true
+rms-engine.workspace = true
+rms-protocol.workspace = true
+rms-source.workspace = true
+sha2.workspace = true
+xs-analysis.workspace = true
+xs-eval.workspace = true

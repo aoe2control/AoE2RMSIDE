@@ -78,3 +78,17 @@ The documents hold only names and places, never script text, are bound to
 their profile by `profileId`, and each entry records its derivation tool, the
 game build of the recorded maps, how many maps it merged, and the date. A
 version that is not verified makes no such claim.
+
+## Known crashes
+
+`known-crashes/rms-known-crashes-v1.json` (schema
+`schemas/known-crashes.schema.json`) lists the conditions under which the game
+itself crashes on a map script, each under a stable id that the editor, the
+preview, map tests, and deployment name: the cause and the fix in plain
+words, what the crash depends on, whether the game crashes while it generates
+the map or during the match, the codes that detect it, and how well the crash
+is known for each game version. The file holds only conclusions in the
+project's own words, never game files, scripts, or crash records, and
+`rms-known-crashes-v1.json.provenance.json` beside it records its provenance.
+The app refuses a catalogue of an unknown major or with an unknown field as a
+whole.

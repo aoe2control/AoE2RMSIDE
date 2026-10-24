@@ -146,6 +146,9 @@
     "app-menu.view.map-transitions": {
       "message": "マップの切り替えをアニメーション表示"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "マップ実行時に XS をチェック"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "生成途中のマップを表示"
     },
@@ -178,6 +181,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "テーマ…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "テーマ"
@@ -407,6 +413,9 @@
     "output.source.map-test": {
       "message": "マップテスト"
     },
+    "output.source.quality-check": {
+      "message": "品質チェック"
+    },
     "output.source.deploy": {
       "message": "配置"
     },
@@ -428,8 +437,14 @@
     "output.source.game-textures": {
       "message": "ゲームのテクスチャ"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "アプリ"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, other {出力メッセージ {count} 件}}"
@@ -499,6 +514,162 @@
     },
     "output.constructs.go-to": {
       "message": "最初の使用箇所へ移動"
+    },
+    "output.xs-start.summary": {
+      "message": "XS 開始時チェック：{files, list} が main() と {rules, plural, other {# 個のルール}}を実行しました（{steps, plural, other {# ステップ}}）"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "XS 開始時チェック：{files, list} には main() がなく、{rules, plural, =0 {ルールは実行されませんでした} other {# 個のルールを実行しました}}（{steps, plural, other {# ステップ}}）"
+    },
+    "output.xs-start.not-compared": {
+      "message": "ゲームと比較されていません"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "ゲームと比較されていません。利用した動作：{topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "整数演算"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "整数と小数の混在"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "数値の文字列化"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "テキスト関数"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "配列の既定値"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "ルールの実行順"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "ラベルと goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "開始時の値"
+    },
+    "output.xs-start.chat": {
+      "message": "チャット：{text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {ガイア} other {プレイヤー {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "食料"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "木材"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "石材"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "黄金"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "属性 {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource} を {amount, number} に設定"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}：{changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "オブジェクト {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "テクノロジー {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}：{technology} を研究"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}：{other} への外交姿勢を {stance} に設定"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}：名前を「{text}」に設定"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}：文明名を「{text}」に設定"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}：色を {value} に設定"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}：({x}, {y}) 付近に {object} を {count} 個作成、配置は未確認"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}：{object} を {count} 個作成、配置は未確認"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}：{object} を {count} 個削除"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}：{object} {count} 個を ({x}, {y}) に移動"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}：{object} を {count} 個移動"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}：{previous} から {object} を {count} 個受け取る"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}：{object} {count} 個の値を変更"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}：{object} {count} 個の名前または表示テキストを変更"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}：{object} のデータを変更（記録のみ、未適用）"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}：{technology} のデータを変更（記録のみ、未適用）"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}：{call}（{calls, plural, other {# 回の呼び出し}}）"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "色調を {value} に設定"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}。この行以降の変更は一覧に表示されません。"
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "停止後の変更は一覧に表示されません。"
+    },
+    "output.xs-start.skipped": {
+      "message": "XS 開始時チェックをスキップしました：{file} に {count, plural, other {# 件のエラー}}があります（「問題」を参照）"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "XS 開始時チェックを実行するには、ゲームフォルダーをリンクしてください"
+    },
+    "output.xs-start.omitted": {
+      "message": "XS 開始時チェックの結果の一部は一覧に表示されていません"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "省略：{items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, other {検出結果 # 件}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, other {チャット # 行}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, other {変更 # 件}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, other {記録された呼び出し # 件}}"
     },
     "output.constructs.more": {
       "message": "ほか {count} 件"
@@ -605,11 +776,95 @@
     "run-menu.run-on-edit": {
       "message": "編集時に実行"
     },
+    "run-menu.quality-check": {
+      "message": "品質チェック"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "チェックするシード数"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "チェック項目"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "品質チェックの対象を選択"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "その他のロビー設定"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "極小 1v1、中 2v2、広大 4v4 でもそれぞれ 10 シードずつチェック"
+    },
+    "quality.case.generation": {
+      "message": "生成"
+    },
+    "quality.case.start-resources": {
+      "message": "開始時の資源"
+    },
+    "quality.case.resource-distances": {
+      "message": "資源までの距離"
+    },
+    "quality.case.shared-resources": {
+      "message": "共有資源"
+    },
+    "quality.case.wood": {
+      "message": "木材"
+    },
+    "quality.case.trapped": {
+      "message": "閉じ込められた資源"
+    },
+    "quality.case.paths": {
+      "message": "経路"
+    },
+    "quality.case.building-space": {
+      "message": "建設用地"
+    },
+    "quality.case.hills": {
+      "message": "高台"
+    },
+    "quality.case.water": {
+      "message": "水域"
+    },
+    "quality.case.spacing": {
+      "message": "間隔"
+    },
+    "quality.case.chokepoints": {
+      "message": "狭い通路"
+    },
+    "quality.case.variation": {
+      "message": "変化"
+    },
+    "quality.case.looks": {
+      "message": "見た目"
+    },
+    "quality.item.headline": {
+      "message": "{case}：{message}"
+    },
+    "quality.item.cause": {
+      "message": "{of} 個中 {bad} 個のマップ{metric, select, yes { · 中央値 {p50}、95 パーセンタイル {p95}、最大 {max} {unit}} other {}}{worst, select, yes { · 最悪の{count, plural, other {シード}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "成功：{cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, other {ほか # 件の検出結果は省略しました}}"
+    },
+    "quality.failed": {
+      "message": "品質チェックを実行できませんでした"
+    },
     "run-menu.preset.default-name": {
       "message": "構成"
     },
     "run-menu.preset.numbered-name": {
       "message": "構成 {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "テスト構成"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "{name} に戻る"
     },
     "run-menu.preset.settings": {
       "message": "プレビューの構成設定"
@@ -634,6 +889,9 @@
     },
     "run-menu.preset.delete": {
       "message": "{name} を削除"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "{name} を複製"
     },
     "run-menu.preset.delete.title": {
       "message": "構成 {name} を削除しますか？"
@@ -821,6 +1079,9 @@
     "run-menu.fixture.needs-source": {
       "message": "開発用テストデータには、内容のある .rms または .rms2 スクリプトが必要です"
     },
+    "mcp.run.settings-applied": {
+      "message": "{app} が {settings, list, unit} を設定しました"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "このプレビューでランダムに選ばれた文明：{players, list, unit}"
     },
@@ -838,6 +1099,9 @@
     },
     "run-menu.result.failed": {
       "message": "失敗"
+    },
+    "run-menu.result.warnings": {
+      "message": "警告"
     },
     "run-menu.result.passed": {
       "message": "成功"
@@ -2702,6 +2966,9 @@
     "lint-rule.RMS4011.title": {
       "message": "名前が未定義の可能性"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "ここでゲームがクラッシュする可能性"
+    },
     "map-icon.generate": {
       "message": "マップアイコンを生成"
     },
@@ -3068,6 +3335,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "記録されたシード {seed} で検出結果のマップを再現しました"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "記録されたシード {seed} で検出結果のマップを再現し、以降の実行用にシードを固定しました"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "記録されたシード {seed} で検出結果のマップを再現し、一時的な構成 {name} でシードを固定しました"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "ゲームフォルダーのリンクを解除できませんでした"
     },
@@ -3100,6 +3373,336 @@
     },
     "code-editor.tab.close": {
       "message": "{name} を閉じる"
+    },
+    "mcp.tab.edited-by": {
+      "message": "{app} が編集（未保存）"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "MCP 設定を閉じる"
+    },
+    "mcp.dialog.description": {
+      "message": "このコンピューター上の AI アプリが、開いているフォルダーのスクリプトを読み取り、編集、チェックし、マップの生成やマップテストの実行を行えるようにします。"
+    },
+    "mcp.enable.label": {
+      "message": "MCP を有効にする"
+    },
+    "mcp.save.label": {
+      "message": "AI アプリにファイルの保存を許可"
+    },
+    "mcp.save.note": {
+      "message": "オフのときは、AI による変更は保存するまで未保存のままです。"
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "別のプログラムが接続名を使用しているため、MCP を開始できませんでした。"
+    },
+    "mcp.unavailable.key-file": {
+      "message": "キーファイルを書き込めなかったため、MCP を開始できませんでした。"
+    },
+    "mcp.unavailable.catalog": {
+      "message": "ツール一覧がこのバージョンの AoE2RMSIDE と一致しないため、MCP を開始できませんでした。AoE2RMSIDE を再インストールしてください。"
+    },
+    "mcp.unavailable.internal": {
+      "message": "予期しないエラーのため、MCP を開始できませんでした。"
+    },
+    "mcp.unavailable.retry": {
+      "message": "「MCP を有効にする」をオフにしてから再びオンにすると、もう一度試せます。"
+    },
+    "mcp.apps.title": {
+      "message": "許可したアプリ"
+    },
+    "mcp.apps.empty": {
+      "message": "まだアプリはありません。アプリは最初の接続時に許可を求めます。"
+    },
+    "mcp.apps.connected": {
+      "message": "接続中"
+    },
+    "mcp.apps.last-used": {
+      "message": "最終使用日 {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "削除"
+    },
+    "mcp.apps.remove-label": {
+      "message": "{app} を削除"
+    },
+    "mcp.setup.app": {
+      "message": "AI アプリ"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "その他のアプリ"
+    },
+    "mcp.setup.text-label": {
+      "message": "セットアップ用テキスト"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "これを Claude Desktop の設定ファイル（Settings > Developer > Edit Config）に追加し、Claude Desktop を再起動してください。"
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "このコマンドをターミナルで実行してください。"
+    },
+    "mcp.setup.hint.codex": {
+      "message": "このコマンドをターミナルで実行してください。"
+    },
+    "mcp.setup.hint.other": {
+      "message": "このプログラムをローカル MCP サーバーとして追加してください。"
+    },
+    "mcp.setup.needs-enable": {
+      "message": "先に「MCP を有効にする」をオンにしてください。"
+    },
+    "mcp.setup.copy": {
+      "message": "セットアップをコピー"
+    },
+    "mcp.setup.copied": {
+      "message": "セットアップをコピーしました"
+    },
+    "mcp.connect.row": {
+      "message": "AI アプリを接続…"
+    },
+    "mcp.connect.title": {
+      "message": "AI アプリを接続"
+    },
+    "mcp.connect.close-label": {
+      "message": "閉じる"
+    },
+    "mcp.connect.description": {
+      "message": "このプロンプトを AI アプリに貼り付けてください。AI アプリが自分で設定を行い、妨げになることがあれば知らせます。"
+    },
+    "mcp.connect.prompt-label": {
+      "message": "AI アプリ用のプロンプト"
+    },
+    "mcp.connect.copy": {
+      "message": "プロンプトをコピー"
+    },
+    "mcp.connect.copied": {
+      "message": "プロンプトをコピーしました"
+    },
+    "mcp.connect.by-hand": {
+      "message": "手動で設定"
+    },
+    "mcp.pairing.title": {
+      "message": "{app} に AoE2RMSIDE の使用を許可しますか？"
+    },
+    "mcp.pairing.description": {
+      "message": "開いているフォルダーのスクリプトの編集、マップの生成、テストの実行、MOD の配置ができるようになります。起動元：{program}。"
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "開いているフォルダーのスクリプトの編集、マップの生成、テストの実行、MOD の配置ができるようになります。"
+    },
+    "mcp.pairing.name-note": {
+      "message": "この名前はアプリ自身が名乗ったものです。自分で設定したアプリだけを許可してください。MOD の置き換えとゲーム内テストは、引き続き確認を求めます。"
+    },
+    "mcp.pairing.allow": {
+      "message": "許可"
+    },
+    "mcp.pairing.deny": {
+      "message": "許可しない"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "MOD「{mod}」を置き換えますか？"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} が {file} をこの MOD に配置しようとしています。{app} はこのセッションでこの MOD を配置していないため、MOD のファイルが置き換えられます。"
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "置き換え"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} が {file} を MOD「{mod}」として配置するよう求めました。"
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} が {file} を MOD「{mod}」として配置しました。"
+    },
+    "mcp.live.title": {
+      "message": "{app} のゲーム内テストを開始しますか？"
+    },
+    "mcp.live.description": {
+      "message": "{app} が実行中のゲームで {file} をシード {seed} でテストしようとしています。進行中の対戦は終了します。"
+    },
+    "mcp.live.session": {
+      "message": "このセッション中は許可"
+    },
+    "mcp.live.start": {
+      "message": "ゲーム内テストを開始"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, other {AI アプリ # 個}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} が接続中"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, other {AI アプリ # 個が接続中}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} が作業中"
+    },
+    "mcp.status.tooltip": {
+      "message": "MCP で接続中です。クリックすると MCP 設定を開きます。"
+    },
+    "mcp.output.call": {
+      "message": "{app}：{action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "エラーが見つかったため、AI アプリに送信しました。"
+    },
+    "mcp.output.connected": {
+      "message": "{app} が接続しました"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} が切断しました"
+    },
+    "mcp.output.denied": {
+      "message": "{app} の接続は許可されませんでした"
+    },
+    "mcp.output.busy": {
+      "message": "{app} に待機を求めました：{running} を実行中です"
+    },
+    "mcp.output.refused": {
+      "message": "{app}：{tool} は拒否されました"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}：{tool} はキャンセルされました"
+    },
+    "mcp.action.status": {
+      "message": "IDE の状態を読み取りました"
+    },
+    "mcp.action.list-files": {
+      "message": "ファイルを一覧表示しました"
+    },
+    "mcp.action.read-file": {
+      "message": "{file} を読み取りました"
+    },
+    "mcp.action.edit-file": {
+      "message": "{file} を編集しました"
+    },
+    "mcp.action.create-file": {
+      "message": "{file} を作成しました"
+    },
+    "mcp.action.save-file": {
+      "message": "{file} を保存しました"
+    },
+    "mcp.action.problems": {
+      "message": "{file} をチェックしました"
+    },
+    "mcp.action.generate": {
+      "message": "{file} を生成しました（シード {seed}）"
+    },
+    "mcp.action.show-map": {
+      "message": "{file} をプレビューに表示しました"
+    },
+    "mcp.action.inspect": {
+      "message": "生成したマップを調べました"
+    },
+    "mcp.action.picture": {
+      "message": "{file} の画像を取得しました"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, other {{file} の # 個のシードの画像を取得しました}}"
+    },
+    "mcp.action.map-test": {
+      "message": "マップテスト {file} を実行しました"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, other {{file} の品質チェックを実行しました（# シード）}}"
+    },
+    "mcp.action.run-status": {
+      "message": "実行中のテストの状況を確認しました"
+    },
+    "mcp.action.details": {
+      "message": "結果の詳細を読み取りました"
+    },
+    "mcp.action.deploy": {
+      "message": "{file} を MOD「{mod}」として配置しました"
+    },
+    "mcp.action.live-test": {
+      "message": "{file} のゲーム内テストを開始しました"
+    },
+    "mcp.action.guide": {
+      "message": "ガイドを読みました"
+    },
+    "mcp.action.reference": {
+      "message": "{name} を調べました"
+    },
+    "mcp.action.tool": {
+      "message": "{tool} を使用しました"
+    },
+    "mcp.refusal.waiting": {
+      "message": "AoE2RMSIDE で応答を待っています。"
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "このアプリを許可していません。"
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "要求が無効でした。"
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "フォルダーが開かれていません。"
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "ファイルが開いているフォルダーの外にあるか、AoE2RMSIDE によって保護されています。"
+    },
+    "mcp.refusal.file-type": {
+      "message": "AI アプリはこの種類のファイルを使用できません。"
+    },
+    "mcp.refusal.not-found": {
+      "message": "ファイルが見つかりませんでした。"
+    },
+    "mcp.refusal.already-exists": {
+      "message": "ファイルは既に存在します。"
+    },
+    "mcp.refusal.too-large": {
+      "message": "ファイルが大きすぎます。"
+    },
+    "mcp.refusal.binary-file": {
+      "message": "テキストファイルではありません。"
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "変更するテキストが見つからないか、複数見つかりました。"
+    },
+    "mcp.refusal.saving-off": {
+      "message": "「AI アプリにファイルの保存を許可」がオフです。"
+    },
+    "mcp.refusal.busy": {
+      "message": "別の処理を実行中です。"
+    },
+    "mcp.refusal.map-expired": {
+      "message": "生成したマップはもう保持されていません。"
+    },
+    "mcp.refusal.run-expired": {
+      "message": "テストはもう保持されていません。"
+    },
+    "mcp.refusal.stopped": {
+      "message": "停止操作で中止しました。"
+    },
+    "mcp.refusal.cancelled": {
+      "message": "AI アプリがキャンセルしました。"
+    },
+    "mcp.refusal.user-declined": {
+      "message": "確認で拒否しました。"
+    },
+    "mcp.refusal.known-crash": {
+      "message": "このマップではゲームがクラッシュする可能性があります。"
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "ゲームがゲーム内テストの準備ができていません。"
+    },
+    "mcp.refusal.too-many": {
+      "message": "アプリからの要求が多すぎます。"
+    },
+    "mcp.refusal.internal": {
+      "message": "AoE2RMSIDE で問題が発生しました。"
     },
     "code-editor.tab.unsaved": {
       "message": "未保存の変更"
@@ -5135,6 +5738,9 @@
     "app-update.dialog.unsaved": {
       "message": "保存していない変更があるドキュメントがある場合は、先にその確認が表示されます。"
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "接続中の AI アプリは、更新中に接続が切れます。更新後に AI アプリを再起動してください。"
+    },
     "app-update.dialog.release-notes": {
       "message": "リリースノート"
     },
@@ -5272,6 +5878,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "{language} ファイルには組み込みの解析を使用します"
+    },
+    "known-crash.headline": {
+      "message": "このマップでゲームがクラッシュします"
+    },
+    "known-crash.headline.possible": {
+      "message": "ここでゲームがクラッシュする可能性"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "空きタイルの探索には小さすぎるオブジェクトでの override_actor_radius_if_required"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required は配置された場所に収まらないオブジェクトを移動しますが、このオブジェクトはゲームによる空きタイルの探索には小さすぎます。"
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "そのオブジェクトから override_actor_radius_if_required を削除してください。"
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "接続ブロック内の行に地形がない"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "接続コマンドの波括弧内では、ゲームはすべての行から地形を読み取りますが、{word} には地形がありません。"
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "その行を接続ブロックの外、接続コマンドの前に移動してください。"
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "接続がマップ外の陸地に達する"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "接続の始点または終点の陸地が、このマップの大きさではマップの外に位置しています。"
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "どのマップの大きさでも land_position がマップ内に収まるようにしてください。"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "<CLIFF_GENERATION> で定義済みの名前が cliff_type として実行される"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} はコマンドを置ける位置にある定義済みの名前のため、ゲームはこれを値のない {command} として実行します。"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "定義済みの名前を削除するか、本来意図したコマンドを書いてください。"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "create_elevation の波括弧内で定義済みの名前が base_terrain または base_layer として実行される"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} はコマンドを置ける位置にある定義済みの名前のため、ゲームはこれを値のない {command} として実行します。"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "定義済みの名前を削除するか、本来意図したコマンドを書いてください。"
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "定義済みの名前が ai_info_map_type、effect_amount、または effect_percent として実行される"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} はコマンドを置ける位置にある定義済みの名前のため、ゲームはこれを値のない {command} として実行します。"
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "定義済みの名前を削除するか、本来意図したコマンドを書いてください。"
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "<PLAYER_SETUP> で定義済みの名前が guard_state として実行される"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} はコマンドを置ける位置にある定義済みの名前のため、ゲームはこれを値のない {command} として実行します。"
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "定義済みの名前を削除するか、本来意図したコマンドを書いてください。"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "<LAND_GENERATION> で定義済みの名前が base_terrain または base_layer として実行される"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} はコマンドを置ける位置にある定義済みの名前のため、ゲームはこれを値のない {command} として実行します。"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "定義済みの名前を削除するか、本来意図したコマンドを書いてください。"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "陸地の波括弧内で定義済みの名前が terrain_type または assign_to として実行される"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} はコマンドを置ける位置にある定義済みの名前のため、ゲームはこれを値のない {command} として実行します。"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "定義済みの名前を削除するか、本来意図したコマンドを書いてください。"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "オブジェクトの波括弧内で定義済みの名前が terrain_to_place_on、layer_to_place_on、または second_object として実行される"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} はコマンドを置ける位置にある定義済みの名前のため、ゲームはこれを値のない {command} として実行します。"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "定義済みの名前を削除するか、本来意図したコマンドを書いてください。"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "<TERRAIN_GENERATION> で定義済みの名前が create_terrain または color_correction として実行される"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} はコマンドを置ける位置にある定義済みの名前のため、ゲームはこれを値のない {command} として実行します。"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "定義済みの名前を削除するか、本来意図したコマンドを書いてください。"
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "長さゼロの円周上でのチームごとのプレイヤー配置"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "プレイヤーが長さゼロの円周上にチームごとにまとめて配置されるため、ゲームがゼロで除算します。"
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "名前付きグループ内のオブジェクトのない add_object"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "グループ名が指定されているのに add_object にオブジェクトがないため、そのエントリーが選ばれるとゲームがクラッシュします。"
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "add_object にオブジェクトを指定してください。"
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "マップ外の陸地にオブジェクトが配置される"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "陸地ごとに配置されるオブジェクトが、このマップの大きさではマップの外に位置する陸地に配置されます。"
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "どのマップの大きさでも land_position がマップ内に収まるようにしてください。"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size がプレイヤーの陸地の作成後にマップを小さくする"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size がプレイヤーの陸地の作成後にマップを小さくするため、プレイヤーがマップの外で開始することがあります。"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "override_map_size を create_player_lands の前に移動してください。"
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "マップが移動データのない地形を塗る"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "マップがゲームの移動データに含まれない地形 {terrain} を塗るため、対戦中にゲームがクラッシュします。"
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "ゲームの移動データに含まれる地形を使用してください。"
+    },
+    "deploy-panel.crash-warning": {
+      "message": "別のシードやロビー設定では、このマップでゲームがクラッシュする可能性があります。{details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "それでも配置"
+    },
+    "live-test.crash-warning.title": {
+      "message": "このマップでゲームがクラッシュする可能性があります"
+    },
+    "live-test.crash-warning.description": {
+      "message": "このシードでは問題ありませんが、別のシードやロビー設定では、このマップでゲームがクラッシュする可能性があります。{details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "それでも開始"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "このマップでゲームがクラッシュする可能性があるため、ゲーム内テストを開始しませんでした。"
+    },
+    "test-results.crashes.title": {
+      "message": "ゲームのクラッシュ"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, other {マップ # 個}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "{sampled, plural, other {# 個のマップ}}のうち {maps, number} 個でゲームがクラッシュします"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{sampled, number} 個中 {maps, plural, other {# 個のマップ}}を生成できませんでした"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, other {シード}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, other {シード}} {seeds, list, unit} ほか {omitted, number} 件"
+    },
+    "test-results.crashes.source": {
+      "message": "ゲームのクラッシュ"
+    },
+    "test-results.crashes.show": {
+      "message": "ゲームのクラッシュを表示"
+    },
+    "test-results.crashes.hide": {
+      "message": "ゲームのクラッシュを非表示"
+    },
+    "test-results.quality.summary": {
+      "message": "· {map} の品質チェック · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, other {マップ # 個}} · {failures, plural, other {失敗 # 件}} · {warnings, plural, other {警告 # 件}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, other {検出結果 # 件}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "{case} の検出結果を表示"
+    },
+    "test-results.quality.hide-case": {
+      "message": "{case} の検出結果を非表示"
+    },
+    "test-results.quality.case-findings": {
+      "message": "{case} の検出結果"
+    },
+    "test-results.quality.no-findings": {
+      "message": "{maps, plural, other {# 個のマップ}}で、すべてのチェック項目に成功しました"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, other {品質チェックの検出結果 # 件}}"
     }
   }
 }

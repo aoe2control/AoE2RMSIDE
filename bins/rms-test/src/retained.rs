@@ -8,6 +8,10 @@ use rms_engine::{
     ExecutionCostSummary, GeneratedMap, GenerationMetrics, GenerationWarning, MapDimensions,
     TileFlags,
 };
+use rms_source::SourceId;
+
+use crate::analysis::Prewarmed;
+use crate::records::{PlayerRecord, SampleFailure};
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 enum Column<T> {
@@ -85,6 +89,7 @@ pub(crate) struct CompactMap {
     flags: Column<u32>,
     tile_operation_indices: Column<u32>,
     rest: GeneratedMap,
+    prewarmed: Option<Arc<Prewarmed>>,
 }
 
 impl CompactMap {
@@ -112,9 +117,15 @@ impl CompactMap {
             flags: Column::encode(flags),
             tile_operation_indices: Column::encode(std::mem::take(&mut map.tile_operation_indices)),
             rest: shrink(map),
+            prewarmed: None,
         };
         debug_assert_eq!(compact.dimensions, compact.rest.dimensions);
         compact
+    }
+
+    pub(crate) fn with_prewarmed(mut self, prewarmed: Prewarmed) -> Self {
+        self.prewarmed = Some(Arc::new(prewarmed));
+        self
     }
 
     pub(crate) fn decode(&self) -> GeneratedMap {
@@ -150,6 +161,10 @@ impl CompactMap {
             + self.layer.heap_bytes()
             + self.elevation.heap_bytes()
             + map_heap_bytes(&self.rest)
+            + self
+                .prewarmed
+                .as_ref()
+                .map_or(0, |prewarmed| prewarmed.heap_bytes())
     }
 }
 
@@ -166,6 +181,8 @@ fn shrink(mut map: GeneratedMap) -> GeneratedMap {
     map.stage_hashes.shrink_to_fit();
     map.warnings.shrink_to_fit();
     map.provenance.shrink_to_fit();
+    map.player_starts.shrink_to_fit();
+    map.placement_records.shrink_to_fit();
     map
 }
 
@@ -204,6 +221,8 @@ pub(crate) fn map_heap_bytes(map: &GeneratedMap) -> u64 {
             .iter()
             .map(|reference| reference.source_id.capacity() as u64)
             .sum::<u64>()
+        + vector_bytes(&map.player_starts)
+        + vector_bytes(&map.placement_records)
 }
 
 fn warnings_bytes(warnings: &Vec<GenerationWarning>) -> u64 {
@@ -235,6 +254,11 @@ pub(crate) struct SampleRecord {
     pub metrics: GenerationMetrics,
     pub preview_requested: bool,
     pub execution_cost: Option<ExecutionCostSummary>,
+    pub xs_roots: Arc<[SourceId]>,
+    pub failure: Option<Arc<SampleFailure>>,
+    pub players: Arc<[PlayerRecord]>,
+    pub walk_hash: Option<[u8; 32]>,
+    pub settings_index: Option<u8>,
 }
 
 impl SampleRecord {
@@ -242,6 +266,16 @@ impl SampleRecord {
         (size_of::<Self>() + self.source_path.len()) as u64
             + warnings_bytes(&self.warnings)
             + metrics_bytes(&self.metrics)
+            + self
+                .xs_roots
+                .iter()
+                .map(|root| (size_of::<SourceId>() + root.as_str().len()) as u64)
+                .sum::<u64>()
+            + self
+                .failure
+                .as_ref()
+                .map_or(0, |failure| failure.heap_bytes())
+            + (self.players.len() * size_of::<PlayerRecord>()) as u64
     }
 }
 
@@ -314,6 +348,26 @@ impl RetainedStore {
         self.record_bytes += record.heap_bytes();
         self.records[handle as usize] = Some(record);
         self.store_body(handle, body, None);
+    }
+
+    pub(crate) fn insert_failed(&mut self, handle: u32, record: SampleRecord) {
+        debug_assert!(record.failure.is_some());
+        self.record_bytes += record.heap_bytes();
+        self.records[handle as usize] = Some(record);
+    }
+
+    pub(crate) fn set_walk_hash(&mut self, handle: u32, hash: [u8; 32]) {
+        if let Some(Some(record)) = self.records.get_mut(handle as usize) {
+            record.walk_hash.get_or_insert(hash);
+        }
+    }
+
+    pub(crate) fn prewarmed(&self, handle: u32) -> Option<Arc<Prewarmed>> {
+        self.bodies
+            .get(handle as usize)?
+            .as_ref()?
+            .prewarmed
+            .clone()
     }
 
     pub(crate) fn restore(&mut self, handle: u32, body: CompactMap, protected: Range<u32>) {
@@ -437,7 +491,9 @@ impl RetainedStore {
         (handle..batch.end)
             .filter(|candidate| {
                 self.bodies[*candidate as usize].is_none()
-                    && self.records[*candidate as usize].is_some()
+                    && self.records[*candidate as usize]
+                        .as_ref()
+                        .is_some_and(|record| record.failure.is_none())
             })
             .take(count.max(1))
             .collect()

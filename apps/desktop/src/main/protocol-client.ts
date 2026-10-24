@@ -65,6 +65,8 @@ import {
   VisualCheckpointStage,
   type VisualCheckpointEvent,
 } from '../generated/rmside/v1/rmside_pb';
+import { withKnownCrashMarker, type KnownCrashReference } from '../shared/known-crashes';
+import { fromProtocolKnownCrash } from './known-crash-protocol';
 import {
   maximumPreviewCandidateChunks,
   previewCandidateContractMajor,
@@ -127,6 +129,11 @@ import {
   parseConstructVerification,
 } from '../shared/construct-verification';
 import { isTexturePaletteDescriptor } from '../shared/texture-palette';
+import {
+  toXsStartOutcome,
+  xsStartRequestFields,
+  type XsStartCheckRequest,
+} from './xs-start-report';
 import { guardChildStreams, isClosedPipeError } from './child-streams';
 import { InstallationReadQueue } from './installation-read-queue';
 import { editionCapabilities, rmsdRequestAllowed } from '../shared/edition';
@@ -159,15 +166,20 @@ interface PendingRequest {
   reject(error: Error): void;
 }
 
-const protocolVersion = { major: 2, minor: 23, patch: 0 } as const;
+const protocolVersion = { major: 2, minor: 25, patch: 0 } as const;
 
 export class ProtocolResponseError extends Error {
   constructor(
     readonly code: ErrorCode,
     readonly protocolMessage: string,
     readonly retryable = false,
+    readonly knownCrash: KnownCrashReference | null = null,
   ) {
-    super(`${code}: ${protocolMessage}`);
+    super(
+      knownCrash
+        ? withKnownCrashMarker(`${code}: ${protocolMessage}`, knownCrash)
+        : `${code}: ${protocolMessage}`,
+    );
     this.name = 'ProtocolResponseError';
   }
 }
@@ -193,6 +205,8 @@ export class RmsdClient {
   private gameArt = false;
   private connectionRoutes = false;
   private controlPipeExchangeSupported = false;
+  private knownCrashIds = false;
+  private xsStartCheck = false;
   private readonly installationReads = new InstallationReadQueue({
     isBusy: isInstallationReadersBusy,
   });
@@ -273,7 +287,13 @@ export class RmsdClient {
     this.gameArt = negotiated.capabilities.gameArt;
     this.connectionRoutes = negotiated.capabilities.connectionRoutes;
     this.controlPipeExchangeSupported = negotiated.capabilities.controlPipeExchange;
+    this.knownCrashIds = negotiated.capabilities.knownCrashIds;
+    this.xsStartCheck = negotiated.capabilities.xsStartCheck;
     this.onStatus({ name: 'rmsd', state: 'running' });
+  }
+
+  get xsStartCheckSupported(): boolean {
+    return this.xsStartCheck;
   }
 
   async getConfigurationCatalog(): Promise<ConfigurationCatalog> {
@@ -453,6 +473,7 @@ export class RmsdClient {
     onExecutionProgress?: (event: ExecutionProgressEvent) => void,
     localContent?: LocalContentSource,
     onPreviewCandidate?: (candidate: PreviewCandidate) => void,
+    xsStart?: XsStartCheckRequest,
   ): Promise<PreviewGenerationResult> {
     const requestId = input.clientRequestId ?? `generation-${randomUUID()}`;
     const catalogEntry = sourceCatalog.sources.find(
@@ -517,6 +538,7 @@ export class RmsdClient {
         ...(localContent ? { localContent: protocolLocalContentSource(localContent) } : {}),
         progressivePreview: onPreviewCandidate !== undefined && this.progressivePreview,
         connectionRoutes: this.connectionRoutes,
+        ...xsStartRequestFields(this.xsStartCheck, xsStart),
       }),
     });
     latencyProbe.step(requestId, 'request-build');
@@ -551,6 +573,8 @@ export class RmsdClient {
       sourceCatalog,
       generationEvents.events,
       setup.colors,
+      this.knownCrashIds,
+      this.xsStartCheck ? xsStart : undefined,
     );
     latencyProbe.step(requestId, 'response-convert');
     return result;
@@ -708,11 +732,13 @@ export class RmsdClient {
         }
         this.pending.delete(message.requestId);
         if (message.payload.case === 'error') {
+          const refusal = message.payload.value;
           pending.reject(
             new ProtocolResponseError(
-              message.payload.value.code,
-              message.payload.value.message,
-              message.payload.value.retryable,
+              refusal.code,
+              refusal.message,
+              refusal.retryable,
+              this.knownCrashIds ? fromProtocolKnownCrash(refusal.knownCrash) : null,
             ),
           );
         } else if (message.payload.case !== pending.expectedCase) {
@@ -1082,12 +1108,26 @@ function protocolSourceRole(role: MainSourceCatalogRole): SourceCatalogRole {
   }[role];
 }
 
+export function toGenerationWarning(
+  warning: GenerationResponse['warnings'][number],
+  knownCrashIds: boolean,
+): PreviewGenerationResult['warnings'][number] {
+  const knownCrash = knownCrashIds ? fromProtocolKnownCrash(warning.knownCrash) : null;
+  return {
+    code: warning.code,
+    message: warning.message,
+    ...(knownCrash ? { knownCrash } : {}),
+  };
+}
+
 function toPreviewResult(
   response: GenerationResponse,
   input: PreviewGenerationInput,
   sourceCatalog: MainSourceCatalog,
   generationEvents: PreviewGenerationEvent[] = [],
   playerColors: readonly number[] = [],
+  knownCrashIds = false,
+  xsStartRequest?: XsStartCheckRequest,
 ): PreviewGenerationResult {
   const map = response.mapState;
   const provenance = response.provenance;
@@ -1189,10 +1229,19 @@ function toPreviewResult(
     response.constructVerification,
     provenance.operations.length,
   );
+  const xsStart =
+    input.backend === 'exact'
+      ? toXsStartOutcome(response.xsStart, {
+          request: xsStartRequest,
+          activeXsSourceIds: response.externalAssetSourceIds,
+          catalogSourceIds: new Set(sourceCatalog.sources.map((source) => source.sourceId)),
+        })
+      : undefined;
   return {
     backend: input.backend,
     certification,
     ...(constructVerification ? { constructVerification } : {}),
+    ...(xsStart ? { xsStart } : {}),
     ...(executionCost ? { executionCost } : {}),
     backendIdentity: input.backend === 'synthetic' ? 'synthetic-generation-v1' : 'exact-rms-v1',
     playerColorIds,
@@ -1297,7 +1346,7 @@ function toPreviewResult(
       stage: stage.stage,
       hash: toHex(stage.hash),
     })),
-    warnings: response.warnings.map((warning) => ({ ...warning })),
+    warnings: response.warnings.map((warning) => toGenerationWarning(warning, knownCrashIds)),
     metrics: Object.fromEntries(
       Object.entries(response.metrics).map(([name, value]) => [name, Number(value)]),
     ),

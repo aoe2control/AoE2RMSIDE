@@ -1,7 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { MenuIcon } from './hover-scale-icon';
-import { Bot, Check, Pencil, Plus, SlidersHorizontal, Trash2, UserRound } from 'lucide-react';
+import {
+  Bot,
+  Check,
+  CopyPlus,
+  Pencil,
+  Plus,
+  SlidersHorizontal,
+  Trash2,
+  Undo2,
+  UserRound,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -54,7 +64,18 @@ import {
   presentMessage,
   type SourceLocator,
 } from '../shared/message-catalog';
+import {
+  generationWarningCrashes,
+  knownCrashDetails,
+  knownCrashReference,
+  withKnownCrashMarker,
+} from '../shared/known-crashes';
 import { uncertifiedConstructKey } from '../shared/construct-verification';
+import {
+  xsStartChangesListed,
+  xsStartOutputMessages,
+  xsStartProblemDiagnostics,
+} from './xs-start-output';
 import {
   constructVerificationMessage,
   outputRunConstructs,
@@ -70,6 +91,14 @@ import {
   automaticGenerationIdentity,
   automaticRunApplies,
 } from './automatic-generation';
+import {
+  replayedRunChange,
+  revertTemporaryRun,
+  testConfigName,
+  userRunConfiguration,
+  type ReplayedLobbySettings,
+  type TemporaryRunConfiguration,
+} from './replay-run-preset';
 import {
   controlPresentation,
   initialLiveOutputGate,
@@ -117,9 +146,38 @@ import {
 } from './live-test-preferences';
 import {
   canonicalLanguageDocumentUri,
+  isLanguageDocumentAttached,
   notifyLanguageContextChanged,
   waitForRmsLanguageDocument,
 } from './monaco-language';
+import {
+  AppRunRefusal,
+  appSettingsLabel,
+  applyAppRunSettings,
+  useAppRunBridge,
+  type AppRunDocument,
+  type AppRunHost,
+  type AppRunWorkspace,
+} from './app-runs';
+import { useAppPictureInputBridge, type AppPictureInputHost } from './app-pictures';
+import type { AppQualityRun, AppRunReply } from '../shared/connector-run-api';
+import { editionCapabilities } from '../shared/edition';
+import {
+  ideQualityRun,
+  qualityCasesNarrowed,
+  boundedQualitySeedCount,
+  normalizeQualityCasesOff,
+  qualityScriptName,
+} from '../shared/quality-check';
+import {
+  isQualityReport,
+  mapTestOutcome,
+  qualityCheckOutputMessages,
+  qualityCheckResult,
+} from './quality-check-output';
+import { useAppGameBridge, type AppExactResult, type AppGameHost } from './app-game-actions';
+import type { AppLiveTestReply } from '../shared/connector-game-api';
+import { desktopErrorFacts } from '../shared/desktop-error';
 import {
   availableCivilizationIds,
   packedCivilizationOptions,
@@ -154,7 +212,9 @@ import {
 import {
   activeGameModeModifiers,
   buildPreviewGenerationInput,
+  computerRunSettings,
   defaultRunPresetName,
+  duplicateRunPreset,
   effectiveProfileSelection,
   generatedResultLabel,
   generationCertificationLabel,
@@ -165,6 +225,7 @@ import {
   languageServerPreviewContext,
   localProductVersionLabel,
   localizeAutomaticPresetNames,
+  maximumRunPresets,
   nextRunPresetName,
   livePreviewEditDebounceMilliseconds,
   profileGameVersion,
@@ -186,6 +247,7 @@ import {
   validateRunConfiguration,
   withGameModeModifier,
   withLiveComputerPlayers,
+  withLockedSeed,
   withMapSize,
   withRandomMapTurbo,
   withPlayerCount,
@@ -202,6 +264,44 @@ interface PreviewGenerationWork {
   input: PreviewGenerationInput;
   previewContext: LanguageServerPreviewContext;
   outputRun: PreviewOutputRun;
+  appRun?: AppPreviewRun;
+}
+
+interface AppPreviewRun {
+  token: string;
+  app: string;
+  settle(reply: AppRunReply): void;
+}
+
+type AppMapTestRun = AppPreviewRun & { document: AppRunDocument };
+
+type AppQualityCheckRun = AppMapTestRun & { quality: AppQualityRun };
+
+interface PendingQualityCheck {
+  outputRunId: string | null;
+  configuration: RunConfiguration;
+  document: { uri: string; name: string; content: string; revision: number };
+  due: boolean;
+}
+
+interface QualityCheckPlan {
+  configuration: RunConfiguration;
+  document: { uri: string; name: string; content: string; revision: number };
+  appRun?: AppQualityCheckRun;
+}
+
+interface AppLiveRun {
+  liveToken: string;
+  acceptedCrashes: readonly string[];
+  path: string | null;
+  name: string;
+  taken: boolean;
+  settle(reply: AppLiveTestReply): void;
+}
+
+function appLiveFailure(error: unknown): string {
+  const raw = errorMessage(error);
+  return (desktopErrorFacts(raw)?.english ?? raw).trim().slice(0, 600) || 'The live test failed.';
 }
 
 interface PreviewOutputRun {
@@ -225,12 +325,15 @@ export function RunConfigurationPanel({
     clearMapTestResults,
     commitPreview,
     executionProfiler,
+    expandPreview,
     liveGenerationStages,
     mapTestProgress,
     markMapTestRun,
+    xsStartCheck,
     pinnedPreviewSource,
     previewCandidates,
     publishMapTestResult,
+    publishXsStartFindings,
     setPreviewExecution,
     settleOutputRun,
     settleRunOutcome,
@@ -240,12 +343,15 @@ export function RunConfigurationPanel({
   const { t, state: localeState } = useI18n();
   const liveGenerationStagesRef = useRef(liveGenerationStages);
   liveGenerationStagesRef.current = liveGenerationStages;
+  const xsStartCheckRef = useRef(xsStartCheck);
+  xsStartCheckRef.current = xsStartCheck;
   const previewCandidatesRef = useRef(previewCandidates);
   previewCandidatesRef.current = previewCandidates;
   const [catalog, setCatalog] = useState<ConfigurationCatalog | null>(null);
   const [configuration, setConfiguration] = useState<RunConfiguration | null>(null);
   const [presets, setPresets] = useState<RunPreset[]>([]);
   const [activePresetName, setActivePresetName] = useState(defaultRunPresetName);
+  const [temporaryRun, setTemporaryRun] = useState<TemporaryRunConfiguration | null>(null);
   const [runState, setRunState] = useState<PreviewRunState>('idle');
   const [completedRunSequence, setCompletedRunSequence] = useState(0);
   const [executionState, setExecutionState] = useState<RootExecutionState>({ phase: 'idle' });
@@ -286,6 +392,7 @@ export function RunConfigurationPanel({
   const settledOutputRuns = useRef(new Map<string, 'shown' | 'discarded'>());
   const outputRunSequence = useRef(0);
   const suppressNextAutomaticGeneration = useRef(false);
+  const [appRunActive, setAppRunActive] = useState(false);
   const automaticGenerationDeferred = useRef(false);
   const installationDiscoveryStarted = useRef(false);
   const pickManualInstallationRef = useRef<() => void>(() => undefined);
@@ -297,9 +404,14 @@ export function RunConfigurationPanel({
     documentRevision: number;
     generationSettingsKey: string;
     outputRunId: string | null;
+    appRun?: AppLiveRun;
   } | null>(null);
   const activeLiveRequestId = useRef<string | null>(null);
   const committedLivePreviewHandler = useRef<(result: PreviewGenerationResult) => void>(() => {});
+  const [qualityCheckAvailable, setQualityCheckAvailable] = useState(false);
+  const qualityAvailabilityRequest = useRef<Promise<boolean> | null>(null);
+  const pendingQualityCheck = useRef<PendingQualityCheck | null>(null);
+  const [qualityCheckDue, setQualityCheckDue] = useState(0);
   const lastReportedBlockingReason = useRef<string | null>(null);
   const lastReportedStandardIncludeCause = useRef<string | null>(null);
   const pendingVersionRecoveryRun = useRef(false);
@@ -527,7 +639,7 @@ export function RunConfigurationPanel({
     if (!catalog || !configuration) return;
     const stored: StoredRunConfiguration = {
       version: 2,
-      current: configuration,
+      current: userRunConfiguration({ configuration, temporary: temporaryRun }),
       presets,
       activePresetName,
     };
@@ -546,7 +658,7 @@ export function RunConfigurationPanel({
       }
     }, 150);
     return () => window.clearTimeout(timer);
-  }, [activePresetName, appendOutput, catalog, configuration, presets]);
+  }, [activePresetName, appendOutput, catalog, configuration, presets, temporaryRun]);
 
   const presetNamesLocale = useRef(localeState.locale);
   useEffect(() => {
@@ -560,7 +672,7 @@ export function RunConfigurationPanel({
   }, [activePresetName, localeState.locale, presets]);
 
   useEffect(() => {
-    if (!configuration) return;
+    if (!configuration || temporaryRun) return;
     const nextActivePreset = runPreset(activePresetName, configuration);
     setPresets((current) => {
       const active = current.find((preset) => preset.name === activePresetName);
@@ -572,7 +684,7 @@ export function RunConfigurationPanel({
         preset.name === activePresetName ? nextActivePreset : preset,
       );
     });
-  }, [activePresetName, configuration]);
+  }, [activePresetName, configuration, temporaryRun]);
 
   const detectedProductVersion = selectedInstallation?.evidence.productVersion?.value ?? null;
   const detectedContentFingerprint = installationContentFingerprint(selectedInstallation);
@@ -703,6 +815,8 @@ export function RunConfigurationPanel({
   appendRunOutputRef.current = appendRunOutput;
   const settleRunOutputRef = useRef(settleRunOutput);
   settleRunOutputRef.current = settleRunOutput;
+  const publishXsStartFindingsRef = useRef(publishXsStartFindings);
+  publishXsStartFindingsRef.current = publishXsStartFindings;
   const documentsRef = useRef(workspace.documents);
   documentsRef.current = workspace.documents;
   const locateSource = useRef<SourceLocator>((uri, byteOffset) =>
@@ -881,18 +995,34 @@ export function RunConfigurationPanel({
           setCommittedCertification(result.backend === 'exact' ? result.certification : undefined);
           const run = job.configuration.outputRun;
           const durationMs = runDuration(runStartTimes.current.get(job));
+          const xsStart =
+            job.configuration.input.xsStartCheck === false ? undefined : result.xsStart;
+          publishXsStartFindingsRef.current(xsStartProblemDiagnostics(xsStart));
           if (kind === 'generated') {
+            const xsStartListed = xsStartChangesListed(xsStart);
             for (const warning of result.warnings) {
+              const crash = knownCrashReference(warning.knownCrash);
               appendRunOutputRef.current(
                 run.id,
                 presentMessage({
                   source: 'Run',
                   code: warning.code,
-                  raw: warning.message,
+                  raw: crash ? withKnownCrashMarker(warning.message, crash) : warning.message,
                   severity: 'warning',
                   fallbackHeadline: 'run-menu.run.warning',
+                  ...(xsStartListed && warning.code === 'RMSXS0001'
+                    ? { params: { xsStartListed: 1 } }
+                    : {}),
                 }),
               );
+            }
+            const objectNames = new Map(
+              result.objectNames.map((entry) => [entry.objectId, entry.name]),
+            );
+            for (const message of xsStartOutputMessages(xsStart, {
+              objectName: (objectId) => objectNames.get(objectId) ?? null,
+            })) {
+              appendRunOutputRef.current(run.id, message);
             }
             const constructs = outputRunConstructs(result);
             const constructNote = uncertifiedConstructKey(
@@ -944,11 +1074,20 @@ export function RunConfigurationPanel({
             );
           }
           committedLivePreviewHandler.current(result);
+          const pendingQuality = pendingQualityCheck.current;
+          if (pendingQuality && kind !== 'historical' && pendingQuality.outputRunId === run.id) {
+            pendingQuality.due = true;
+            setQualityCheckDue((current) => current + 1);
+          }
+          if (kind !== 'historical') job.configuration.appRun?.settle(appDoneReply(job));
         },
         reject: (rejected, job) => {
           latencyProbe.runMark(job, 'rejected');
           const runKey = runKeys.current.get(job);
           const run = job.configuration.outputRun;
+          if (pendingQualityCheck.current?.outputRunId === run.id) {
+            pendingQualityCheck.current = null;
+          }
           const durationMs = runDuration(runStartTimes.current.get(job));
           let outcome: RunOutcome = rejected;
           if (rejected.kind === 'failed') {
@@ -985,8 +1124,10 @@ export function RunConfigurationPanel({
           }
           if (runOutcomeEffects(outcome, job.trigger).clearMap) {
             lastCommittedResult.current = null;
+            publishXsStartFindingsRef.current(new Map());
           }
           settleRunOutcomeRef.current(outcome, job.trigger, runKey);
+          job.configuration.appRun?.settle(appRejectedReply(rejected, job));
         },
         status: (status) => {
           setLiveStatus(status);
@@ -1241,6 +1382,7 @@ export function RunConfigurationPanel({
       deduplicate = false,
       explicitSource?: PinnedPreviewSource,
       supersedeOwnPreview = false,
+      appRun?: AppPreviewRun,
     ): string | null => {
       if (!catalog) return null;
       if (executionState.phase !== 'idle' && !supersedeOwnPreview) return null;
@@ -1262,6 +1404,7 @@ export function RunConfigurationPanel({
           currentVersionOrigin.current,
           currentPreferredContentFingerprint.current,
           detectedProductVersion,
+          xsStartCheckRef.current,
         );
       } catch (error) {
         setRunState('error');
@@ -1274,9 +1417,10 @@ export function RunConfigurationPanel({
       const backendIdentity = fixtureId
         ? `synthetic:development-fixture-v1:${fixtureId}`
         : `exact:${input.profile.profileHash}:${input.contentPack.contentHash}`;
+      const scriptName = explicitSource?.name ?? executionDocumentName.current;
       const outputRun: PreviewOutputRun = {
         id: `preview-${++outputRunSequence.current}`,
-        script: explicitSource?.name ?? executionDocumentName.current,
+        script: appRun ? `${appRun.app} · ${scriptName}` : scriptName,
         seed: input.seed,
         size: `${input.width}×${input.height}`,
         players: input.players.length,
@@ -1301,8 +1445,15 @@ export function RunConfigurationPanel({
         },
         configurationKey: generationSettingsKey(input),
         document,
+        ...(appRun ? { bypassCache: true } : {}),
       };
-      input = { ...input, progressivePreview: liveGenerationStagesRef.current };
+      if (appRun) job.configuration.appRun = appRun;
+      input = {
+        ...input,
+        progressivePreview: liveGenerationStagesRef.current,
+        ...(appRun ? { appRun: { token: appRun.token } } : {}),
+        ...(!appRun && trigger === 'automatic' && !fixtureId ? { automatic: true } : {}),
+      };
       job.configuration.input = input;
       const jobIdentity = JSON.stringify({
         backendIdentity,
@@ -1317,6 +1468,7 @@ export function RunConfigurationPanel({
       lastScheduledJobIdentity.current = jobIdentity;
       if (debounceMs <= 0) admitRun(job);
       clearMapTestResults();
+      pendingQualityCheck.current = null;
       lastScheduledOutputRunId.current = outputRun.id;
       const randomCivilizations = randomCivilizationResolutions(requestedConfiguration);
       if (randomCivilizations.length > 0) {
@@ -1352,14 +1504,26 @@ export function RunConfigurationPanel({
   );
 
   const runMapTest = useCallback(
-    async (trigger: RunTrigger) => {
-      if (
-        blockingReason ||
-        executionState.phase !== 'idle' ||
-        !catalog ||
-        !effectiveConfiguration ||
-        !isMapTestScriptName(executionDocument.name)
-      ) {
+    async (trigger: RunTrigger, appRun?: AppMapTestRun) => {
+      if (!appRun) {
+        if (blockingReason || executionState.phase !== 'idle') return;
+      }
+      const script = appRun?.document ?? {
+        uri: executionDocument.uri,
+        name: executionDocument.name,
+        content: executionDocument.content,
+      };
+      const scriptRevision = appRun
+        ? ++explicitSourceRevision.current
+        : currentDocument.current.revision;
+      if (!catalog || !effectiveConfiguration || !isMapTestScriptName(script.name)) {
+        appRun?.settle({
+          outcome: 'failed',
+          path: appRun.document.path,
+          name: appRun.document.name,
+          stage: 'request',
+          message: 'The Run menu cannot run this map test now.',
+        });
         return;
       }
       let generationTemplate: PreviewGenerationInput;
@@ -1367,8 +1531,8 @@ export function RunConfigurationPanel({
         generationTemplate = buildPreviewGenerationInput(
           effectiveConfiguration,
           catalog,
-          { uri: executionDocument.uri, content: executionDocument.content },
-          currentDocument.current.revision,
+          { uri: script.uri, content: script.content },
+          scriptRevision,
           currentVersionOrigin.current,
           currentPreferredContentFingerprint.current,
           detectedProductVersion,
@@ -1378,14 +1542,21 @@ export function RunConfigurationPanel({
         const presentation = runFailureMessage(failure);
         appendOutput(presentation);
         settleRunOutcomeRef.current({ kind: 'failed', ...failure, presentation }, trigger);
+        appRun?.settle({
+          outcome: 'failed',
+          path: appRun.document.path,
+          name: appRun.document.name,
+          stage: 'request',
+          message: failure.message.slice(0, 2_000) || 'The map test could not start.',
+        });
         return;
       }
       const input: MapTestRunInput = {
         executionId: `map-test-${crypto.randomUUID()}`,
-        scriptUri: executionDocument.uri,
-        scriptRevision: currentDocument.current.revision,
-        scriptName: executionDocument.name,
-        scriptSource: executionDocument.content,
+        scriptUri: script.uri,
+        scriptRevision,
+        scriptName: script.name,
+        scriptSource: script.content,
         workspaceName: '',
         ...(pinnedPreviewSource && isPreviewScriptName(pinnedPreviewSource.name)
           ? { defaultSourceUri: pinnedPreviewSource.uri }
@@ -1402,6 +1573,7 @@ export function RunConfigurationPanel({
         minimapPalette: generationTemplate.minimapPalette,
         texturePalette: generationTemplate.texturePalette ?? null,
         progressivePreview: mapTestProgressivePreview,
+        ...(appRun ? { appRun: { token: appRun.token } } : {}),
       };
       setRunState('running');
       markMapTestRun('running');
@@ -1420,7 +1592,7 @@ export function RunConfigurationPanel({
         extra: Partial<OutputRunHeader> = {},
       ): OutputRunHeader => ({
         kind: 'map-test',
-        script: input.scriptName,
+        script: appRun ? `${appRun.app} · ${input.scriptName}` : input.scriptName,
         durationMs: runDuration(startedAt),
         result,
         resultLabel: { id: resultLabel },
@@ -1432,7 +1604,7 @@ export function RunConfigurationPanel({
           kind: result.status === 'passed' || result.status === 'failed' ? 'finished' : 'ended',
           executionId: input.executionId,
         });
-        publishMapTestResult(executionDocument.uri, input, result);
+        publishMapTestResult(script.uri, input, result);
         setRunState(
           result.status === 'passed' || result.status === 'failed'
             ? 'success'
@@ -1456,14 +1628,34 @@ export function RunConfigurationPanel({
             { kind: 'failed', stage: 'map-test', message, presentation },
             trigger,
           );
+          appRun?.settle({
+            outcome: 'failed',
+            path: appRun.document.path,
+            name: appRun.document.name,
+            stage: 'map-test',
+            message: message.slice(0, 2_000) || 'unknown error',
+          });
         } else {
+          const quality = result.report?.quality;
+          if (quality && result.status !== 'cancelled') {
+            for (const message of qualityCheckOutputMessages(quality)) {
+              appendRunOutput(input.executionId, message);
+            }
+          }
+          const outcome =
+            result.status === 'passed' || result.status === 'failed'
+              ? mapTestOutcome(result.status, quality)
+              : null;
           settleRunOutput(
             input.executionId,
-            result.status === 'passed'
-              ? mapTestHeader('passed', 'run-menu.result.passed', facts)
-              : result.status === 'failed'
-                ? mapTestHeader('test-failed', 'run-menu.result.failed', facts)
-                : mapTestHeader('stopped', 'run-menu.result.stopped', facts),
+            outcome
+              ? mapTestHeader(outcome.result, outcome.label, facts)
+              : mapTestHeader('stopped', 'run-menu.result.stopped', facts),
+          );
+          appRun?.settle(
+            result.status === 'cancelled'
+              ? { outcome: 'cancelled' }
+              : appMapTestDone(appRun.document, generationTemplate, effectiveConfiguration),
           );
         }
       } catch (error) {
@@ -1489,6 +1681,23 @@ export function RunConfigurationPanel({
           setRunState('idle');
         }
         settleRunOutcomeRef.current(outcome, trigger);
+        if (appRun) {
+          appRun.settle(
+            outcome.kind === 'failed'
+              ? {
+                  outcome: 'failed',
+                  path: appRun.document.path,
+                  name: appRun.document.name,
+                  stage: outcome.stage,
+                  message: outcome.message.slice(0, 2_000) || 'unknown error',
+                }
+              : outcome.kind === 'cancelled'
+                ? { outcome: 'cancelled' }
+                : outcome.reason === 'other-execution'
+                  ? { outcome: 'busy' }
+                  : { outcome: 'superseded', reason: outcome.reason },
+          );
+        }
       } finally {
         previewCandidatesRef.current.end(input.executionId);
       }
@@ -1511,6 +1720,615 @@ export function RunConfigurationPanel({
       settleRunOutput,
     ],
   );
+
+  const refreshQualityCheckAvailability = useCallback(async (): Promise<boolean> => {
+    if (!editionCapabilities.mapTests) return false;
+    qualityAvailabilityRequest.current ??= window.rmside
+      .mapTestQualityAvailable()
+      .catch(() => false)
+      .finally(() => {
+        qualityAvailabilityRequest.current = null;
+      });
+    const available = await qualityAvailabilityRequest.current;
+    setQualityCheckAvailable(available);
+    return available;
+  }, []);
+
+  const runQualityCheck = useCallback(
+    async ({ configuration: requested, document, appRun }: QualityCheckPlan) => {
+      const appFailed = (stage: string, message: string) =>
+        appRun?.settle({
+          outcome: 'failed',
+          path: appRun.document.path,
+          name: appRun.document.name,
+          stage,
+          message: message.slice(0, 2_000) || 'The quality check could not run.',
+        });
+      if (!catalog) {
+        appFailed('request', 'The Run menu is still loading.');
+        return;
+      }
+      if (!appRun && !(await refreshQualityCheckAvailability())) return;
+      const scriptRevision = appRun ? ++explicitSourceRevision.current : document.revision;
+      let template: PreviewGenerationInput;
+      try {
+        template = buildPreviewGenerationInput(
+          requested,
+          catalog,
+          { uri: document.uri, content: document.content || ' ' },
+          scriptRevision,
+          currentVersionOrigin.current,
+          currentPreferredContentFingerprint.current,
+          detectedProductVersion,
+        );
+      } catch (error) {
+        const message = errorMessage(error);
+        appendOutput(
+          presentMessage({
+            source: 'Quality check',
+            raw: message,
+            fallbackHeadline: 'quality.failed',
+          }),
+        );
+        appFailed('request', message);
+        return;
+      }
+      const quality =
+        appRun?.quality ??
+        ideQualityRun({
+          casesOff: requested.qualityCheckCasesOff,
+          seedStart: requested.seed,
+          seedCount: requested.qualityCheckSeeds,
+          multiSetting: requested.qualityCheckMultiSettings
+            ? {
+                mapSize: template.mapSize,
+                width: template.width,
+                height: template.height,
+                players: template.players.map((player, index) => ({
+                  slot: player.slot,
+                  team: player.team,
+                  civilizationId: player.civilizationId,
+                  color: requested.playerColors[index] ?? index,
+                })),
+              }
+            : null,
+        });
+      const input: MapTestRunInput = {
+        executionId: `quality-check-${crypto.randomUUID()}`,
+        scriptUri: document.uri,
+        scriptRevision,
+        scriptName: qualityScriptName,
+        scriptSource: '',
+        workspaceName: '',
+        defaultSourceUri: document.uri,
+        profile: template.profile,
+        contentPack: template.contentPack,
+        versionOrigin: template.versionOrigin,
+        width: template.width,
+        height: template.height,
+        mapSize: template.mapSize,
+        players: template.players,
+        modeContext: template.modeContext,
+        workers: requested.mapTestWorkers,
+        minimapPalette: template.minimapPalette,
+        texturePalette: template.texturePalette ?? null,
+        progressivePreview: false,
+        quality,
+        ...(appRun ? { appRun: { token: appRun.token } } : {}),
+      };
+      const startedAt = performance.now();
+      const header = (
+        result: OutputRunResult,
+        resultLabel: MessageId,
+        extra: Partial<OutputRunHeader> = {},
+      ): OutputRunHeader => ({
+        kind: 'quality-check',
+        script: appRun ? `${appRun.app} · ${document.name}` : document.name,
+        durationMs: runDuration(startedAt),
+        result,
+        resultLabel: { id: resultLabel },
+        ...extra,
+      });
+      mapTestProgress.advance({ kind: 'started', executionId: input.executionId });
+      try {
+        const result = await window.rmside.runMapTest(input);
+        mapTestProgress.advance({
+          kind: result.status === 'passed' || result.status === 'failed' ? 'finished' : 'ended',
+          executionId: input.executionId,
+        });
+        publishMapTestResult(document.uri, input, result);
+        const report = result.report && isQualityReport(result.report) ? result.report : null;
+        const facts = {
+          ...(report ? { maps: report.quality.samples } : {}),
+          durationMs: result.elapsedMilliseconds,
+        };
+        if (result.status === 'cancelled') {
+          settleRunOutput(input.executionId, header('stopped', 'run-menu.result.stopped', facts));
+          appRun?.settle({ outcome: 'cancelled' });
+        } else if (result.status === 'error' || !report) {
+          const message = result.diagnostics[0]?.message ?? 'unknown error';
+          appendRunOutput(
+            input.executionId,
+            presentMessage({
+              source: 'Quality check',
+              raw: message,
+              fallbackHeadline: 'quality.failed',
+            }),
+          );
+          settleRunOutput(input.executionId, header('failed', 'run-menu.result.error', facts));
+          appFailed('quality-check', message);
+        } else {
+          for (const message of qualityCheckOutputMessages(report.quality)) {
+            appendRunOutput(input.executionId, message);
+          }
+          const outcome = qualityCheckResult(report.quality);
+          settleRunOutput(input.executionId, header(outcome.result, outcome.label, facts));
+          if (appRun) appRun.settle(appMapTestDone(appRun.document, template, requested));
+        }
+      } catch (error) {
+        const message = errorMessage(error);
+        const outcome = classifyMapTestRejection(message);
+        mapTestProgress.advance({ kind: 'ended', executionId: input.executionId });
+        if (outcome.kind === 'failed') {
+          const presentation = presentMessage({
+            source: 'Quality check',
+            raw: message,
+            fallbackHeadline: 'quality.failed',
+          });
+          if (!failureReportedByMain(presentation, 'map-test')) {
+            appendRunOutput(input.executionId, presentation);
+          }
+          settleRunOutput(input.executionId, header('failed', 'run-menu.result.error'));
+        } else {
+          settleRunOutput(
+            input.executionId,
+            outcome.kind === 'cancelled' ? header('stopped', 'run-menu.result.stopped') : null,
+          );
+        }
+        if (appRun) {
+          appRun.settle(
+            outcome.kind === 'failed'
+              ? {
+                  outcome: 'failed',
+                  path: appRun.document.path,
+                  name: appRun.document.name,
+                  stage: 'quality-check',
+                  message: outcome.message.slice(0, 2_000) || 'unknown error',
+                }
+              : outcome.kind === 'cancelled'
+                ? { outcome: 'cancelled' }
+                : outcome.reason === 'other-execution'
+                  ? { outcome: 'busy' }
+                  : { outcome: 'superseded', reason: outcome.reason },
+          );
+        }
+      }
+    },
+    [
+      appendOutput,
+      appendRunOutput,
+      catalog,
+      detectedProductVersion,
+      mapTestProgress,
+      publishMapTestResult,
+      refreshQualityCheckAvailability,
+      settleRunOutput,
+    ],
+  );
+
+  useEffect(() => {
+    const pending = pendingQualityCheck.current;
+    if (!pending?.due || executionState.phase !== 'idle' || appRunActive) return;
+    pendingQualityCheck.current = null;
+    void runQualityCheck({ configuration: pending.configuration, document: pending.document });
+  }, [appRunActive, executionState.phase, qualityCheckDue, runQualityCheck]);
+
+  const appRunHost = useRef<AppRunHost | null>(null);
+  appRunHost.current = {
+    run: async (request, document) => {
+      const failed = (stage: string, message: string): AppRunReply => ({
+        outcome: 'failed',
+        path: document.path,
+        name: document.name,
+        stage,
+        message,
+      });
+      const state = await window.rmside.getExecutionState();
+      const replaceable =
+        state.phase === 'running' &&
+        state.kind === 'rms' &&
+        state.automatic === true &&
+        state.executionId === activePreviewExecutionId.current;
+      if (state.phase !== 'idle' && !replaceable) return { outcome: 'busy' };
+      if (replaceable && (request.kind === 'map-test' || request.kind === 'quality-check')) {
+        cancelLiveCoordinator();
+        if (!(await executionTurnsIdle(3_000))) return { outcome: 'busy' };
+      }
+      if (!catalog || !configuration || !effectiveConfiguration) {
+        return failed('request', 'The Run menu is still loading.');
+      }
+      if (!document.content) return failed('request', 'The script is empty.');
+      if (request.kind === 'quality-check') {
+        const plannedQuality = request.quality;
+        if (!plannedQuality) return failed('request', 'The quality check has no plan.');
+        return new Promise<AppRunReply>((resolve) => {
+          let settled = false;
+          const settle = (reply: AppRunReply) => {
+            if (settled) return;
+            settled = true;
+            setAppRunActive(false);
+            resolve(reply);
+          };
+          setAppRunActive(true);
+          runQualityCheck({
+            configuration: effectiveConfiguration,
+            document: {
+              uri: document.uri,
+              name: document.name,
+              content: document.content,
+              revision: 0,
+            },
+            appRun: {
+              token: request.token,
+              app: request.app,
+              document,
+              quality: plannedQuality,
+              settle,
+            },
+          }).catch(() => settle(failed('quality-check', 'The quality check could not run.')));
+        });
+      }
+      if (request.kind === 'map-test') {
+        return new Promise<AppRunReply>((resolve) => {
+          let settled = false;
+          const settle = (reply: AppRunReply) => {
+            if (settled) return;
+            settled = true;
+            setAppRunActive(false);
+            resolve(reply);
+          };
+          setAppRunActive(true);
+          runMapTest('explicit', {
+            token: request.token,
+            app: request.app,
+            document,
+            settle,
+          }).catch(() => settle(failed('map-test', 'The map test could not run.')));
+        });
+      }
+      const applied = applyAppRunSettings(
+        effectiveConfiguration,
+        request.seed ??
+          (effectiveConfiguration.seedLocked ? effectiveConfiguration.seed : randomSeed()),
+        request.settings,
+        packedCivilizationOptions(effectiveConfiguration.profileId, civilizationProductVersion),
+      );
+      const requested = applied.configuration;
+      const errors = validateRunConfiguration(requested);
+      if (errors.length > 0) return failed('request', errors[0]!);
+      const changed = request.kind === 'show' ? applied.changed : [];
+      return new Promise<AppRunReply>((resolve) => {
+        let settled = false;
+        const settle = (reply: AppRunReply) => {
+          if (settled) return;
+          settled = true;
+          setAppRunActive(false);
+          resolve(reply);
+        };
+        setAppRunActive(true);
+        if (request.kind === 'show') {
+          if (
+            automaticGenerationIdentity(requested) !==
+            automaticGenerationIdentity(effectiveConfiguration)
+          ) {
+            suppressNextAutomaticGeneration.current = true;
+            setConfiguration((current) =>
+              current
+                ? {
+                    ...requested,
+                    profileId: current.profileId,
+                    profileInstallation: current.profileInstallation,
+                    computerPlayers: current.computerPlayers,
+                  }
+                : current,
+            );
+          }
+          activeLiveBackend.current = {};
+          expandPreview();
+          if (applied.words.length > 0) {
+            appendOutput(
+              outputNote('Run', 'mcp.run.settings-applied', {
+                id: 'mcp.run.settings-applied',
+                args: { app: request.app, settings: applied.words },
+              }),
+            );
+          }
+        }
+        const scheduled = scheduleGeneration(
+          'explicit',
+          requested,
+          undefined,
+          0,
+          false,
+          { id: document.id, uri: document.uri, name: document.name, content: document.content },
+          true,
+          {
+            token: request.token,
+            app: request.app,
+            settle: (reply) =>
+              settle(
+                reply.outcome === 'done'
+                  ? {
+                      ...reply,
+                      path: document.path,
+                      name: document.name,
+                      settings: appSettingsLabel(requested),
+                      changed,
+                    }
+                  : reply.outcome === 'failed'
+                    ? { ...reply, path: document.path, name: document.name }
+                    : reply,
+              ),
+          },
+        );
+        if (!scheduled) settle(failed('request', 'The run could not start.'));
+      });
+    },
+    context: (document) => {
+      if (!catalog || !effectiveConfiguration) {
+        throw new AppRunRefusal('internal', 'The Run menu is still loading.');
+      }
+      const target = document ?? executionDocument;
+      const input = buildPreviewGenerationInput(
+        effectiveConfiguration,
+        catalog,
+        { uri: target.uri, content: target.content || ' ' },
+        currentDocument.current.revision,
+        currentVersionOrigin.current,
+        currentPreferredContentFingerprint.current,
+        detectedProductVersion,
+      );
+      return {
+        path: document?.path ?? null,
+        name: target.name,
+        mapSize: effectiveConfiguration.mapSize,
+        width: input.width,
+        height: input.height,
+        players: input.players.map((player, index) => ({
+          slot: player.slot,
+          team: player.team,
+          civilizationId: player.civilizationId,
+          color: effectiveConfiguration.playerColors[index] ?? index,
+        })),
+        qualityCases: qualityCasesNarrowed(effectiveConfiguration.qualityCheckCasesOff),
+      };
+    },
+  };
+  const appRunWorkspace = useRef<AppRunWorkspace>(null!);
+  appRunWorkspace.current = {
+    documents: () => workspace.documents,
+    activeDocument: () => workspace.activeDocument,
+    latest: (id) => workspace.latestDocument(id),
+    openInBackground: (path) => workspace.openWorkspaceFile(path, true, { background: true }),
+    attached: isLanguageDocumentAttached,
+  };
+  useAppRunBridge(appRunHost, appRunWorkspace);
+  const appPictureHost = useRef<AppPictureInputHost | null>(null);
+  appPictureHost.current = {
+    input: (request, document) => {
+      if (!catalog || !effectiveConfiguration) {
+        throw new AppRunRefusal('internal', 'The Run menu is still loading.');
+      }
+      const applied = applyAppRunSettings(
+        effectiveConfiguration,
+        effectiveConfiguration.seed,
+        request.settings,
+        packedCivilizationOptions(effectiveConfiguration.profileId, civilizationProductVersion),
+      );
+      const requested = applied.configuration;
+      const errors = validateRunConfiguration(requested);
+      if (errors.length > 0) throw new AppRunRefusal('invalid_arguments', errors[0]!);
+      const input = buildPreviewGenerationInput(
+        requested,
+        catalog,
+        { uri: document.uri, content: document.content },
+        currentDocument.current.revision,
+        currentVersionOrigin.current,
+        currentPreferredContentFingerprint.current,
+        detectedProductVersion,
+        false,
+      );
+      const players = [...input.players].sort((left, right) => left.slot - right.slot);
+      return {
+        input: { ...input, source: '' },
+        path: document.path,
+        name: document.name,
+        settings: appSettingsLabel(requested),
+        teams: players.map((player) => player.team),
+      };
+    },
+  };
+  useAppPictureInputBridge(appPictureHost, appRunWorkspace);
+
+  const appLaneFree = async (): Promise<boolean> => {
+    const state = await window.rmside.getExecutionState();
+    return (
+      state.phase === 'idle' ||
+      (state.phase === 'running' &&
+        state.kind === 'rms' &&
+        state.automatic === true &&
+        state.executionId === activePreviewExecutionId.current)
+    );
+  };
+  const appGameHost = useRef<AppGameHost | null>(null);
+  appGameHost.current = {
+    exactResult: async (document, token, app, reuse) => {
+      if (!catalog || !configuration || !effectiveConfiguration) {
+        return { outcome: 'not-ready', missing: 'run-menu' };
+      }
+      const failed = (stage: string, message: string): AppExactResult => ({
+        outcome: 'failed',
+        path: document.path,
+        name: document.name,
+        stage,
+        message,
+      });
+      const source = {
+        id: document.id,
+        uri: document.uri,
+        name: document.name,
+        content: document.content,
+      };
+      const reusable = reuse ? reusableCommittedResult(source) : null;
+      if (reusable) return { outcome: 'result', result: reusable.result, reused: true };
+      if (!(await appLaneFree())) return { outcome: 'busy' };
+      if (!document.content) return failed('request', 'The script is empty.');
+      const errors = validateRunConfiguration(effectiveConfiguration);
+      if (errors.length > 0) return failed('request', errors[0]!);
+      return new Promise<AppExactResult>((resolve) => {
+        let settled = false;
+        const settle = (reply: AppRunReply) => {
+          if (settled) return;
+          settled = true;
+          setAppRunActive(false);
+          if (reply.outcome === 'done') {
+            const result = lastCommittedResult.current;
+            resolve(
+              result && result.backend === 'exact' && result.documentUri === document.uri
+                ? { outcome: 'result', result }
+                : failed('generation', 'The map was replaced before it could be deployed.'),
+            );
+          } else if (reply.outcome === 'failed') {
+            resolve({ ...reply, path: document.path, name: document.name });
+          } else if (reply.outcome === 'superseded') resolve({ outcome: 'cancelled' });
+          else resolve(reply);
+        };
+        setAppRunActive(true);
+        activeLiveBackend.current = {};
+        const scheduled = scheduleGeneration(
+          'explicit',
+          effectiveConfiguration,
+          undefined,
+          0,
+          false,
+          source,
+          true,
+          { token, app, settle },
+        );
+        if (!scheduled) {
+          settle({
+            outcome: 'failed',
+            path: document.path,
+            name: document.name,
+            stage: 'request',
+            message: 'The run could not start.',
+          });
+        }
+      });
+    },
+    liveTest: async (request, document) => {
+      if (!selectedInstallation) return { outcome: 'not-ready', missing: 'game-folder' };
+      if (controlLauncher.state !== 'ready') return { outcome: 'not-ready', missing: 'control' };
+      if (!catalog || !configuration || !effectiveConfiguration) {
+        return { outcome: 'not-ready', missing: 'run-menu' };
+      }
+      if (controlBusyRef.current || pendingLiveRun.current) return { outcome: 'busy' };
+      if (!(await appLaneFree())) return { outcome: 'busy' };
+      const failed = (stage: string, message: string): AppLiveTestReply => ({
+        outcome: 'failed',
+        path: document.path,
+        name: document.name,
+        stage,
+        message,
+      });
+      if (!document.content) return failed('request', 'The script is empty.');
+      const requested = withSeed(
+        withLiveComputerPlayers(effectiveConfiguration),
+        request.seed ??
+          (effectiveConfiguration.seedLocked ? effectiveConfiguration.seed : randomSeed()),
+      );
+      const errors = validateRunConfiguration(requested);
+      if (errors.length > 0) return failed('request', errors[0]!);
+      return new Promise<AppLiveTestReply>((resolve) => {
+        let settled = false;
+        const appRun: AppLiveRun = {
+          liveToken: request.liveToken,
+          acceptedCrashes: [...request.acceptedCrashes],
+          path: document.path,
+          name: document.name,
+          taken: false,
+          settle: (reply) => {
+            if (settled) return;
+            settled = true;
+            setAppRunActive(false);
+            resolve(reply);
+          },
+        };
+        const endWithoutMap = (reply: AppLiveTestReply) => {
+          if (pendingLiveRun.current?.appRun === appRun) {
+            pendingLiveRun.current = null;
+            liveOutputRunId.current = null;
+            advanceLiveTestProgress({ kind: 'ended' });
+          }
+          appRun.settle(reply);
+        };
+        setAppRunActive(true);
+        activeLiveBackend.current = {};
+        liveCoordinator.current?.clearCache();
+        const source = {
+          id: document.id,
+          uri: document.uri,
+          name: document.name,
+          content: document.content,
+        };
+        const generationSettingsKey = scheduleGeneration(
+          'explicit',
+          requested,
+          undefined,
+          0,
+          false,
+          source,
+          true,
+          {
+            token: request.token,
+            app: request.app,
+            settle: (reply) => {
+              if (reply.outcome === 'done') {
+                if (!appRun.taken) {
+                  endWithoutMap({
+                    outcome: 'live-failed',
+                    message: 'The live test stopped before it started.',
+                  });
+                }
+              } else if (reply.outcome === 'failed') {
+                endWithoutMap({ ...reply, path: document.path, name: document.name });
+              } else if (reply.outcome === 'busy') endWithoutMap({ outcome: 'busy' });
+              else endWithoutMap({ outcome: 'cancelled' });
+            },
+          },
+        );
+        if (!generationSettingsKey) {
+          appRun.settle(failed('request', 'The live test could not start.'));
+          return;
+        }
+        const outputRunId = lastScheduledOutputRunId.current;
+        liveOutputRunId.current = outputRunId;
+        pendingLiveRun.current = {
+          outputRunId,
+          requestId: `live-${Date.now()}-${crypto.randomUUID()}`,
+          configuration: structuredClone(requested),
+          documentUri: document.uri,
+          documentRevision: explicitSourceRevision.current,
+          generationSettingsKey,
+          appRun,
+        };
+        advanceLiveTestProgress({ kind: 'initiated' });
+      });
+    },
+  };
+  const appGameOutput = useRef(appendOutput);
+  appGameOutput.current = appendOutput;
+  useAppGameBridge(appGameHost, appRunWorkspace, appGameOutput);
 
   const runPreview = useCallback(
     (trigger: RunTrigger, forceGeneration = false) => {
@@ -1538,7 +2356,22 @@ export function RunConfigurationPanel({
       }
       activeLiveBackend.current = {};
       if (forceGeneration) liveCoordinator.current?.clearCache();
-      scheduleGeneration(trigger, requestedConfiguration);
+      const document = { ...currentDocument.current, name: executionDocumentName.current };
+      const scheduled = scheduleGeneration(trigger, requestedConfiguration);
+      if (
+        scheduled &&
+        requestedConfiguration.qualityCheck &&
+        editionCapabilities.mapTests &&
+        isPreviewScriptName(document.name) &&
+        document.uri.startsWith('file:')
+      ) {
+        pendingQualityCheck.current = {
+          outputRunId: lastScheduledOutputRunId.current,
+          configuration: structuredClone(requestedConfiguration),
+          document,
+          due: false,
+        };
+      }
     },
     [blockingReason, effectiveConfiguration, executionState.phase, runState, scheduleGeneration],
   );
@@ -1680,6 +2513,7 @@ export function RunConfigurationPanel({
           currentVersionOrigin.current,
           currentPreferredContentFingerprint.current,
           detectedProductVersion,
+          xsStartCheckRef.current,
         );
         if (generationSettingsKey(current) !== facts.configurationKey) return null;
       } catch {
@@ -1728,6 +2562,32 @@ export function RunConfigurationPanel({
     if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffff_ffff) return;
     setConfiguration((current) => (current ? withSeed(current, seed) : current));
   }, []);
+
+  const replayStateRef = useRef<{
+    configuration: RunConfiguration | null;
+    temporary: TemporaryRunConfiguration | null;
+  }>({ configuration, temporary: temporaryRun });
+  replayStateRef.current = { configuration, temporary: temporaryRun };
+  const lockReplayedSeed = useCallback(
+    (
+      seed: number,
+      lobby: ReplayedLobbySettings | null,
+    ): { temporaryName: string | null } | null => {
+      const { configuration: current, temporary } = replayStateRef.current;
+      if (!current || !Number.isSafeInteger(seed) || seed < 0 || seed > 0xffff_ffff) return null;
+      const next = replayedRunChange({ state: { configuration: current, temporary }, lobby, seed });
+      if (
+        automaticGenerationIdentity(next.configuration) !== automaticGenerationIdentity(current)
+      ) {
+        suppressNextAutomaticGeneration.current = true;
+      }
+      replayStateRef.current = next;
+      setConfiguration(next.configuration);
+      setTemporaryRun(next.temporary);
+      return { temporaryName: next.temporary ? testConfigName() : null };
+    },
+    [],
+  );
 
   const selectControl = useCallback(async () => {
     if (controlBusyRef.current || !selectedInstallation) return;
@@ -1832,7 +2692,7 @@ export function RunConfigurationPanel({
       setConfiguration((current) => {
         if (!current) return current;
         if (current.seed !== seed) suppressNextAutomaticGeneration.current = true;
-        return { ...withSeed(current, seed), seedLocked: true };
+        return withLockedSeed(current, seed);
       });
       appendControlOutput(
         presentMessage({ source: 'Live test', code: 'live.seed-imported', params: { seed } }),
@@ -1852,6 +2712,8 @@ export function RunConfigurationPanel({
       if (!pending) return;
       pendingLiveRun.current = null;
       liveOutputRunId.current = pending.outputRunId;
+      const appRun = pending.appRun;
+      if (appRun) appRun.taken = true;
       let request: ControlLiveSynchronizationRequest;
       try {
         request = buildControlLiveRequest(result, pending.configuration, {
@@ -1870,12 +2732,44 @@ export function RunConfigurationPanel({
         );
         liveOutputRunId.current = null;
         advanceLiveTestProgress({ kind: 'ended' });
+        appRun?.settle({
+          outcome: 'live-failed',
+          message: 'The map changed before the live test could start.',
+        });
         return;
+      }
+
+      const crashes = generationWarningCrashes(result.warnings);
+      if (appRun && crashes.some((crash) => !appRun.acceptedCrashes.includes(crash.crashId))) {
+        liveOutputRunId.current = null;
+        advanceLiveTestProgress({ kind: 'ended' });
+        appRun.settle({ outcome: 'crash-warning', path: appRun.path, name: appRun.name, crashes });
+        return;
+      }
+      if (crashes.length > 0 && !appRun) {
+        const choice = await workspace.requestConfirmation({
+          title: t('live-test.crash-warning.title'),
+          description: t('live-test.crash-warning.description', {
+            details: knownCrashDetails(crashes),
+          }),
+          primaryLabel: t('live-test.crash-warning.confirm'),
+          primaryVariant: 'warning',
+          initialFocus: 'primary',
+        });
+        if (choice !== 'primary') {
+          appendControlOutput(
+            presentMessage({ source: 'Live test', code: 'live.crash-warning-declined' }),
+          );
+          liveOutputRunId.current = null;
+          advanceLiveTestProgress({ kind: 'ended' });
+          return;
+        }
       }
 
       controlBusyRef.current = true;
       setControlBusy(true);
       advanceLiveTestProgress({ kind: 'control' });
+      let appReply: AppLiveTestReply | null = null;
       try {
         const session = await window.rmside.connectControlSession('live-run');
         setControlLauncher(session.launcher);
@@ -1888,6 +2782,10 @@ export function RunConfigurationPanel({
               raw: `Lobby options need AoE2Control 1.1.1 or newer; the selected AoE2Control is ${session.capabilities?.identity.control.productVersion ?? 'unknown'} (control-lobby-options-unsupported).`,
             }),
           );
+          appReply = {
+            outcome: 'live-failed',
+            message: 'These lobby settings need AoE2Control 1.1.1 or newer.',
+          };
           return;
         }
         const unverifiedProductVersion = unverifiedLiveGameVersion(session);
@@ -1896,7 +2794,7 @@ export function RunConfigurationPanel({
         }
         let replaceActiveMatch = false;
         if (session.endpoint?.match.active) {
-          if (!hasAcceptedActiveMatchReplacement(window.localStorage)) {
+          if (!appRun && !hasAcceptedActiveMatchReplacement(window.localStorage)) {
             const choice = await workspace.requestConfirmation({
               title: t('live-test.replace-match.title'),
               description: t('live-test.replace-match.description'),
@@ -1921,9 +2819,15 @@ export function RunConfigurationPanel({
         request = {
           ...request,
           replaceActiveMatch,
+          ...(appRun ? { appRun: { token: appRun.liveToken } } : {}),
         };
         activeLiveRequestId.current = request.requestId;
         const synchronized = await window.rmside.runControlLiveTest(request);
+        appReply = {
+          outcome: 'started',
+          seed: synchronized.seed,
+          unverifiedVersion: Boolean(unverifiedProductVersion),
+        };
         advanceLiveTestProgress({ kind: 'verified' });
         appendControlOutput(
           liveWorkflowMessage({
@@ -1935,6 +2839,9 @@ export function RunConfigurationPanel({
         );
         setControlSession(await window.rmside.getControlSessionStatus());
       } catch (error) {
+        if (appReply?.outcome !== 'started') {
+          appReply = { outcome: 'live-failed', message: appLiveFailure(error) };
+        }
         appendControlOutput(liveFailureMessage(error));
         await refreshControlStatus().catch(() => undefined);
       } finally {
@@ -1943,6 +2850,9 @@ export function RunConfigurationPanel({
         controlBusyRef.current = false;
         setControlBusy(false);
         advanceLiveTestProgress({ kind: 'ended' });
+        appRun?.settle(
+          appReply ?? { outcome: 'live-failed', message: 'The live test did not start.' },
+        );
       }
     },
     [advanceLiveTestProgress, appendControlOutput, refreshControlStatus, t, workspace],
@@ -2071,6 +2981,46 @@ export function RunConfigurationPanel({
     setConfiguration((current) => (current ? { ...current, mapTestWorkers } : current));
   }, []);
 
+  const toggleQualityCheck = useCallback(() => {
+    setConfiguration((current) =>
+      current ? { ...current, qualityCheck: !current.qualityCheck } : current,
+    );
+  }, []);
+
+  const setQualityCheckSeeds = useCallback((seeds: number) => {
+    const qualityCheckSeeds = boundedQualitySeedCount(seeds);
+    if (qualityCheckSeeds === null) return;
+    setConfiguration((current) => (current ? { ...current, qualityCheckSeeds } : current));
+  }, []);
+
+  const toggleQualityMultiSettings = useCallback(() => {
+    setConfiguration((current) =>
+      current
+        ? { ...current, qualityCheckMultiSettings: !current.qualityCheckMultiSettings }
+        : current,
+    );
+  }, []);
+
+  const setQualityCaseSelected = useCallback((caseId: string, selected: boolean) => {
+    setConfiguration((current) => {
+      if (!current) return current;
+      const off = new Set(current.qualityCheckCasesOff);
+      if (selected) off.delete(caseId);
+      else off.add(caseId);
+      return { ...current, qualityCheckCasesOff: normalizeQualityCasesOff([...off]) };
+    });
+  }, []);
+
+  useEffect(
+    () =>
+      window.rmside.onNativeEvent((status) => {
+        if (status.name === 'rms-test' && status.state === 'running' && !status.detail) {
+          void refreshQualityCheckAvailability();
+        }
+      }),
+    [refreshQualityCheckAvailability],
+  );
+
   const clearPreviewCache = useCallback(() => {
     liveCoordinator.current?.clearCache();
     setCacheDiagnostics(previewCache.current.diagnostics());
@@ -2105,6 +3055,7 @@ export function RunConfigurationPanel({
         executionState.phase !== 'idle' &&
         executionState.executionId === activePreviewExecutionId.current,
       documentRunnable: automaticRunAllowed.current(Boolean(active?.fixtureId)),
+      appRunActive,
     });
     if (action === 'none' || !active || !effectiveConfiguration) return;
     if (action === 'defer') {
@@ -2131,6 +3082,7 @@ export function RunConfigurationPanel({
       );
     }
   }, [
+    appRunActive,
     automaticConfigurationIdentity,
     configuration?.runOnEdit,
     effectiveConfiguration,
@@ -2142,7 +3094,9 @@ export function RunConfigurationPanel({
   ]);
 
   useEffect(() => {
-    if (!automaticGenerationDeferred.current || executionState.phase !== 'idle') return;
+    if (!automaticGenerationDeferred.current || executionState.phase !== 'idle' || appRunActive) {
+      return;
+    }
     automaticGenerationDeferred.current = false;
     const active = activeLiveBackend.current;
     if (!active || !effectiveConfiguration) return;
@@ -2154,7 +3108,7 @@ export function RunConfigurationPanel({
       livePreviewEditDebounceMilliseconds,
       true,
     );
-  }, [effectiveConfiguration, executionState.phase, scheduleGeneration]);
+  }, [appRunActive, effectiveConfiguration, executionState.phase, scheduleGeneration]);
 
   useEffect(() => {
     if (!effectiveConfiguration) return undefined;
@@ -2293,6 +3247,21 @@ export function RunConfigurationPanel({
       runOnSave: configuration?.runOnSave ?? false,
       mapTestWorkers: configuration?.mapTestWorkers ?? 'auto',
       setMapTestWorkers,
+      ...(qualityCheckAvailable && configuration
+        ? {
+            qualityCheck: {
+              enabled: configuration.qualityCheck,
+              seeds: configuration.qualityCheckSeeds,
+              casesOff: configuration.qualityCheckCasesOff,
+              multiSettings: configuration.qualityCheckMultiSettings,
+              toggle: toggleQualityCheck,
+              setSeeds: setQualityCheckSeeds,
+              setCaseSelected: setQualityCaseSelected,
+              toggleMultiSettings: toggleQualityMultiSettings,
+            },
+          }
+        : {}),
+      refreshQualityCheck: () => void refreshQualityCheckAvailability(),
       run: () => runSelectedMode('explicit'),
       explainBlockedRun,
       runSource,
@@ -2324,6 +3293,7 @@ export function RunConfigurationPanel({
       unverifiedVersionDescription,
       useLocalVersion,
       setSeed,
+      lockReplayedSeed,
       runDevelopmentFixture,
       toggleLiveTestOnRun,
       toggleRunOnEdit,
@@ -2339,6 +3309,10 @@ export function RunConfigurationPanel({
     canAdoptMatchSeed,
     clearPreviewCache,
     configuration?.mapTestWorkers,
+    configuration?.qualityCheck,
+    configuration?.qualityCheckCasesOff,
+    configuration?.qualityCheckMultiSettings,
+    configuration?.qualityCheckSeeds,
     configuration?.runOnEdit,
     configuration?.runOnSave,
     configuration?.seed,
@@ -2358,6 +3332,9 @@ export function RunConfigurationPanel({
     installationBusy,
     installationSelectionBusy,
     liveTestOnRun,
+    lockReplayedSeed,
+    qualityCheckAvailable,
+    refreshQualityCheckAvailability,
     runDevelopmentFixture,
     reusableCommittedResult,
     runSelectedMode,
@@ -2367,10 +3344,14 @@ export function RunConfigurationPanel({
     selectControl,
     selectedInstallation,
     setMapTestWorkers,
+    setQualityCaseSelected,
+    setQualityCheckSeeds,
     setSeed,
     settingsLoaded,
     status,
     stopExecution,
+    toggleQualityCheck,
+    toggleQualityMultiSettings,
     toggleLiveTestOnRun,
     toggleRunOnEdit,
     toggleRunOnSave,
@@ -2456,15 +3437,46 @@ export function RunConfigurationPanel({
 
   const update = (changes: Partial<RunConfiguration>) =>
     setConfiguration((current) => (current ? { ...current, ...changes } : current));
-  const selectPreset = (name: string) => {
-    const preset = presets.find((candidate) => candidate.name === name);
-    if (!preset) return;
-    setActivePresetName(name);
+  const applyPreset = (preset: RunPreset) => {
+    setActivePresetName(preset.name);
+    setTemporaryRun(null);
     setConfiguration((current) => ({
       ...preset.configuration,
       recentSeeds: current?.recentSeeds ?? [preset.configuration.seed],
-      mapTestWorkers: current?.mapTestWorkers ?? preset.configuration.mapTestWorkers,
+      ...computerRunSettings(current ?? preset.configuration),
     }));
+  };
+  const selectPreset = (name: string) => {
+    const preset = presets.find((candidate) => candidate.name === name);
+    if (preset) applyPreset(preset);
+  };
+  const duplicatePreset = (name: string): string | null => {
+    const duplicated = duplicateRunPreset(presets, name);
+    if (!duplicated) {
+      if (presets.length >= maximumRunPresets) {
+        appendOutput(
+          outputNote(
+            'Preview',
+            'preview.preset-limit',
+            { id: 'run-menu.preset.limit' },
+            { severity: 'warning' },
+          ),
+        );
+      }
+      return null;
+    }
+    setPresets(duplicated.presets);
+    applyPreset(duplicated.preset);
+    return duplicated.preset.name;
+  };
+  const revertTemporary = () => {
+    if (!temporaryRun) return;
+    setConfiguration((current) =>
+      current
+        ? revertTemporaryRun({ configuration: current, temporary: temporaryRun }).configuration
+        : current,
+    );
+    setTemporaryRun(null);
   };
   const createPreset = (requestedName: string): boolean => {
     const nextName = requestedName.trim();
@@ -2507,6 +3519,7 @@ export function RunConfigurationPanel({
     }
     setPresets((current) => [...current, runPreset(nextName, configuration)]);
     setActivePresetName(nextName);
+    setTemporaryRun(null);
     return true;
   };
   const renamePreset = (name: string, requestedName: string): boolean => {
@@ -2555,6 +3568,25 @@ export function RunConfigurationPanel({
     });
     if (choice !== 'primary') return;
     const remaining = presets.filter((preset) => preset.name !== name);
+    const { configuration: shown, temporary } = replayStateRef.current;
+    if (temporary && shown) {
+      const user = userRunConfiguration({ configuration: shown, temporary });
+      if (remaining.length === 0) {
+        const defaultName = defaultRunPresetName();
+        setPresets([runPreset(defaultName, user)]);
+        setActivePresetName(defaultName);
+      } else {
+        setPresets(remaining);
+        if (activePresetName === name) {
+          const nextPreset = remaining[0]!;
+          setActivePresetName(nextPreset.name);
+          setTemporaryRun({
+            previous: { ...nextPreset.configuration, recentSeeds: [...shown.recentSeeds] },
+          });
+        }
+      }
+      return;
+    }
     if (remaining.length === 0) {
       const defaultName = defaultRunPresetName();
       setPresets([runPreset(defaultName, configuration)]);
@@ -2567,6 +3599,7 @@ export function RunConfigurationPanel({
         setConfiguration((current) => ({
           ...nextPreset.configuration,
           recentSeeds: current?.recentSeeds ?? [nextPreset.configuration.seed],
+          ...computerRunSettings(current ?? nextPreset.configuration),
         }));
       }
     }
@@ -2586,13 +3619,16 @@ export function RunConfigurationPanel({
               liveTestOnRun={liveTestOnRun}
               onCreatePreset={createPreset}
               onDeletePreset={(name) => deletePreset(name)}
+              onDuplicatePreset={duplicatePreset}
               onRenamePreset={renamePreset}
               onSelectMapSize={(mapSize) =>
                 setConfiguration((current) => (current ? withMapSize(current, mapSize) : current))
               }
+              onRevertTemporary={revertTemporary}
               onSelectPreset={selectPreset}
               onUpdate={update}
               presets={presets}
+              temporaryName={temporaryRun ? testConfigName() : null}
             />,
             presetControlHost,
           )
@@ -2630,11 +3666,14 @@ function PreviewPresetControls({
   liveTestOnRun,
   onCreatePreset,
   onDeletePreset,
+  onDuplicatePreset,
   onRenamePreset,
+  onRevertTemporary,
   onSelectMapSize,
   onSelectPreset,
   onUpdate,
   presets,
+  temporaryName,
 }: {
   activePresetName: string;
   civilizationOptions: readonly PackedCivilizationOption[];
@@ -2642,11 +3681,14 @@ function PreviewPresetControls({
   liveTestOnRun: boolean;
   onCreatePreset(name: string): boolean;
   onDeletePreset(name: string): void;
+  onDuplicatePreset(name: string): string | null;
   onRenamePreset(name: string, nextName: string): boolean;
+  onRevertTemporary(): void;
   onSelectMapSize(mapSize: RunConfiguration['mapSize']): void;
   onSelectPreset(name: string): void;
   onUpdate(changes: Partial<RunConfiguration>): void;
   presets: RunPreset[];
+  temporaryName: string | null;
 }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [playersOpen, setPlayersOpen] = useState(false);
@@ -2657,12 +3699,17 @@ function PreviewPresetControls({
   const newPresetNameInput = useRef<HTMLInputElement | null>(null);
   const newPresetFinalized = useRef(false);
   const presetMenuIcon = useAnimatedIconHover();
+  const presetLimitId = useId();
+  const renameEnded = useRef(true);
+  const presetListFull = presets.length >= maximumRunPresets;
   const { t } = useI18n();
-  const commitRename = () => {
-    if (!editingPresetName) return;
+  const commitRename = ({ focusPreset = true }: { focusPreset?: boolean } = {}) => {
+    if (!editingPresetName || renameEnded.current) return;
     if (onRenamePreset(editingPresetName, presetNameDraft)) {
       const focusKey = presetNameDraft.trim().toLowerCase();
+      renameEnded.current = true;
       setEditingPresetName(null);
+      if (!focusPreset) return;
       window.setTimeout(() => {
         const presetButton = Array.from(
           document.querySelectorAll<HTMLButtonElement>('.preview-preset-select'),
@@ -2670,6 +3717,13 @@ function PreviewPresetControls({
         presetButton?.focus({ preventScroll: true });
       }, 0);
     }
+  };
+  const duplicatePreset = (name: string) => {
+    const copyName = onDuplicatePreset(name);
+    if (copyName === null) return;
+    renameEnded.current = false;
+    setEditingPresetName(copyName);
+    setPresetNameDraft(copyName);
   };
   const beginPresetCreation = () => {
     newPresetFinalized.current = false;
@@ -2711,6 +3765,26 @@ function PreviewPresetControls({
   };
   return (
     <>
+      {temporaryName !== null ? (
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <Button
+                aria-label={t('run-menu.preset.revert-temporary', { name: activePresetName })}
+                className="preview-preset-revert"
+                onClick={onRevertTemporary}
+                size="icon"
+                variant="ghost"
+              />
+            }
+          >
+            <Undo2 aria-hidden="true" />
+          </TooltipTrigger>
+          <TooltipContent>
+            {t('run-menu.preset.revert-temporary', { name: activePresetName })}
+          </TooltipContent>
+        </Tooltip>
+      ) : null}
       {newPresetNameDraft === null ? (
         <DropdownMenu
           modal={false}
@@ -2725,11 +3799,12 @@ function PreviewPresetControls({
               <Button
                 aria-label={t('run-menu.preset.settings')}
                 className="preview-preset-trigger"
-                variant="ghost"
+                data-temporary={temporaryName !== null || undefined}
+                variant={temporaryName !== null ? 'dotted' : 'ghost'}
               />
             }
           >
-            <span>{activePresetName}</span>
+            <span>{temporaryName ?? activePresetName}</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
@@ -3017,7 +4092,10 @@ function PreviewPresetControls({
         modal={false}
         onOpenChange={(open) => {
           setManagerOpen(open);
-          if (!open) setEditingPresetName(null);
+          if (open) return;
+          commitRename({ focusPreset: false });
+          renameEnded.current = true;
+          setEditingPresetName(null);
         }}
         open={managerOpen}
       >
@@ -3041,7 +4119,7 @@ function PreviewPresetControls({
           surface="popup"
         >
           {presets.map((preset) => {
-            const active = preset.name === activePresetName;
+            const active = temporaryName === null && preset.name === activePresetName;
             const editing = preset.name === editingPresetName;
             return (
               <div
@@ -3055,6 +4133,16 @@ function PreviewPresetControls({
                     autoFocus
                     className="preview-preset-name-input"
                     maxLength={64}
+                    onBlur={(event) => {
+                      const row = event.currentTarget.closest('.preview-preset-list-row');
+                      if (
+                        event.relatedTarget instanceof Node &&
+                        row?.contains(event.relatedTarget)
+                      ) {
+                        return;
+                      }
+                      commitRename({ focusPreset: false });
+                    }}
                     onChange={(event) => setPresetNameDraft(event.target.value)}
                     onFocus={(event) => event.currentTarget.select()}
                     onKeyDown={(event) => {
@@ -3064,6 +4152,7 @@ function PreviewPresetControls({
                         commitRename();
                       } else if (event.key === 'Escape') {
                         event.preventDefault();
+                        renameEnded.current = true;
                         setEditingPresetName(null);
                       }
                     }}
@@ -3100,6 +4189,7 @@ function PreviewPresetControls({
                     if (editing) {
                       commitRename();
                     } else {
+                      renameEnded.current = false;
                       setEditingPresetName(preset.name);
                       setPresetNameDraft(preset.name);
                     }
@@ -3109,6 +4199,29 @@ function PreviewPresetControls({
                 >
                   {editing ? <Check aria-hidden="true" /> : <Pencil aria-hidden="true" />}
                 </Button>
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        aria-describedby={presetListFull ? presetLimitId : undefined}
+                        aria-label={t('run-menu.preset.duplicate', { name: preset.name })}
+                        className="preview-preset-row-action preview-preset-duplicate"
+                        disabled={presetListFull}
+                        focusableWhenDisabled
+                        onClick={() => duplicatePreset(preset.name)}
+                        size="icon-sm"
+                        variant="ghost"
+                      />
+                    }
+                  >
+                    <CopyPlus aria-hidden="true" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {presetListFull
+                      ? t('run-menu.preset.limit')
+                      : t('run-menu.preset.duplicate', { name: preset.name })}
+                  </TooltipContent>
+                </Tooltip>
                 <Button
                   aria-label={t('run-menu.preset.delete', { name: preset.name })}
                   className="preview-preset-row-action"
@@ -3124,6 +4237,11 @@ function PreviewPresetControls({
               </div>
             );
           })}
+          {presetListFull ? (
+            <span className="sr-only" id={presetLimitId}>
+              {t('run-menu.preset.limit')}
+            </span>
+          ) : null}
           <DropdownMenuItem className="preview-preset-new" onClick={beginPresetCreation}>
             <Plus aria-hidden="true" />
             {t('run-menu.preset.new')}
@@ -3559,6 +4677,70 @@ function standardIncludeAccessHint(
     access === 'missing-gamedata'
     ? access
     : null;
+}
+
+async function executionTurnsIdle(milliseconds: number): Promise<boolean> {
+  const deadline = performance.now() + milliseconds;
+  for (;;) {
+    if ((await window.rmside.getExecutionState()).phase === 'idle') return true;
+    if (performance.now() >= deadline) return false;
+    await new Promise((resolve) => window.setTimeout(resolve, 50));
+  }
+}
+
+function appDoneReply(job: LivePreviewJob<PreviewGenerationWork>): AppRunReply {
+  const players = [...job.configuration.input.players].sort(
+    (left, right) => left.slot - right.slot,
+  );
+  return {
+    outcome: 'done',
+    path: null,
+    name: job.configuration.outputRun.script,
+    seed: job.configuration.input.seed,
+    settings: job.configuration.outputRun.size,
+    players: players.map((player) => ({ team: player.team })),
+    changed: [],
+  };
+}
+
+function appRejectedReply(
+  outcome: RunOutcome,
+  job: LivePreviewJob<PreviewGenerationWork>,
+): AppRunReply {
+  switch (outcome.kind) {
+    case 'failed':
+      if (/already active/iu.test(outcome.message)) return { outcome: 'busy' };
+      return {
+        outcome: 'failed',
+        path: null,
+        name: job.configuration.outputRun.script,
+        stage: outcome.stage,
+        message: outcome.message.slice(0, 2_000) || 'unknown error',
+      };
+    case 'cancelled':
+      return { outcome: 'cancelled' };
+    case 'superseded':
+      return outcome.reason === 'other-execution'
+        ? { outcome: 'busy' }
+        : { outcome: 'superseded', reason: outcome.reason };
+  }
+}
+
+function appMapTestDone(
+  document: AppRunDocument,
+  input: PreviewGenerationInput,
+  configuration: RunConfiguration,
+): AppRunReply {
+  const players = [...input.players].sort((left, right) => left.slot - right.slot);
+  return {
+    outcome: 'done',
+    path: document.path,
+    name: document.name,
+    seed: input.seed,
+    settings: appSettingsLabel(configuration),
+    players: players.map((player) => ({ team: player.team })),
+    changed: [],
+  };
 }
 
 function previewRunHeader(

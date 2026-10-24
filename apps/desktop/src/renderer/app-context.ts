@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import type {
+  LanguageServerDiagnostic,
   MapTestReport,
   MapTestRunInput,
   MapTestRunResult,
@@ -51,6 +52,7 @@ export interface AppPanelContextValue {
   mapTestResults: MapTestResultsState | null;
   clearMapTestResults(): void;
   publishMapTestResult(scriptUri: string, input: MapTestRunInput, result: MapTestRunResult): void;
+  publishXsStartFindings(findings: ReadonlyMap<string, LanguageServerDiagnostic[]>): void;
   markMapTestRun(activity: 'running' | 'error' | 'cancelled'): void;
   mapTestProgress: MapTestProgressStore;
   sourceInvalid(uri: string): boolean;
@@ -67,6 +69,7 @@ export interface AppPanelContextValue {
   liveGenerationStages: boolean;
   gpuMapRendering: boolean;
   mapTransitions: boolean;
+  xsStartCheck: boolean;
   previewPerspective: PreviewPerspective;
   setPreviewPerspective(perspective: PreviewPerspective): void;
   previewLook: PreviewLook;

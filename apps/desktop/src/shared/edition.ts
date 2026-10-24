@@ -20,6 +20,7 @@ export interface EditionCapabilities {
   documentation: boolean;
   windowsRegistration: boolean;
   releaseCheck: boolean;
+  mcp: boolean;
   nativeProcesses: readonly NativeProcessName[];
 }
 
@@ -39,6 +40,7 @@ const fullCapabilities: EditionCapabilities = Object.freeze({
   documentation: true,
   windowsRegistration: true,
   releaseCheck: true,
+  mcp: true,
   nativeProcesses: Object.freeze(['rmsd', 'rms-ls', 'rms-test', 'rms-test-lsp'] as const),
 });
 
@@ -58,6 +60,7 @@ const xsPreviewCapabilities: EditionCapabilities = Object.freeze({
   documentation: false,
   windowsRegistration: false,
   releaseCheck: false,
+  mcp: false,
   nativeProcesses: Object.freeze(['rms-ls'] as const),
 });
 
@@ -77,6 +80,7 @@ const rmsPreviewCapabilities: EditionCapabilities = Object.freeze({
   documentation: false,
   windowsRegistration: false,
   releaseCheck: false,
+  mcp: false,
   nativeProcesses: Object.freeze(['rmsd', 'rms-ls'] as const),
 });
 
@@ -256,6 +260,7 @@ const featureChannels: Record<
   sourceCatalog: ['localPresentationNames', 'definitionFilePrepare', 'definitionFileGenerate'],
   mapTests: [
     'mapTestRun',
+    'mapTestQualityAvailable',
     'mapTestReplay',
     'mapTestReportExport',
     'mapTestReportImport',
@@ -311,6 +316,17 @@ const featureChannels: Record<
     'updateStart',
     'updateCancel',
     'updateReleaseNotes',
+  ],
+  mcp: [
+    'connectorState',
+    'connectorStateEvent',
+    'connectorOutputEvent',
+    'connectorSettingsSet',
+    'connectorAppRemove',
+    'connectorPairingDecide',
+    'connectorSetup',
+    'connectorRequestEvent',
+    'connectorReply',
   ],
 };
 

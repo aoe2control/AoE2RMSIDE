@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::{Arc, Mutex};
 
-use rms_profile::ProfileIdentity;
+use rms_profile::{KnownCrashHit, ProfileIdentity, crash_ids};
 use rms_source::{
     ByteOffset, ByteRange, IncludePath, ResolutionDiagnostic, ResolutionDiagnosticKind, SourceId,
     SourceText, VirtualSource, VirtualSourceResolver,
@@ -13,7 +13,7 @@ mod dependency_discovery;
 pub use dependency_discovery::{PotentialInclude, discover_include_requests};
 
 use crate::native_dispatch::{
-    GAME_CRASH_CODE, HandlerState, NullSlot, UNSUPPORTED_DISPATCH_CODE,
+    CONNECTION_BLOCK_REASON, GAME_CRASH_CODE, HandlerState, NullSlot, UNSUPPORTED_DISPATCH_CODE,
     crashes_in_connection_block, first_slot_is_not_a_token, native_command_id, null_token_slot,
 };
 use crate::strict_commands::{strict_command_by_id, strict_command_id};
@@ -238,6 +238,7 @@ pub struct StrictParseError {
     pub message: String,
     pub source_chain: Vec<SourceId>,
     pub range: Option<ByteRange>,
+    pub crash: Option<KnownCrashHit>,
 }
 
 #[derive(Debug, Error)]
@@ -1150,12 +1151,13 @@ impl Parser<'_> {
                 && let Some(id) = strict_command_id(&significant[0].1)
             {
                 match null_token_slot(id as i32, &self.handler_state()) {
-                    NullSlot::Crash(reason) => {
+                    NullSlot::Crash(reason, crash) => {
                         return Err(self.dispatched_crash(
                             source,
                             line.range,
                             &significant[0].1,
                             reason,
+                            crash,
                         ));
                     }
                     NullSlot::Nothing => return Ok(()),
@@ -1230,13 +1232,13 @@ impl Parser<'_> {
                 &self.handler_state(),
             )
         {
-            return Err(self.error(
-                StrictParseErrorKind::Syntax,
-                GAME_CRASH_CODE,
+            return Err(self.crash_error(
                 format!(
                     "The game crashes on this script: inside a connection block it reads a terrain from every command, and {name} has none. Move {name} out of the block."
                 ),
                 Some(line.range),
+                KnownCrashHit::new(crash_ids::CONNECTION_BLOCK_MISSING_TERRAIN)
+                    .with("word", name.clone()),
             ));
         }
         if line.dispatched
@@ -1913,6 +1915,8 @@ impl Parser<'_> {
                 ));
             }
             *last = last.trim_end_matches(')').to_owned();
+            let later = parts.split_off(1);
+            parts.extend(later.into_iter().filter(|part| !part.is_empty()));
         }
         if parts.is_empty() || parts.len().is_multiple_of(2) {
             return Err(self.error(
@@ -2393,16 +2397,37 @@ impl Parser<'_> {
         range: ByteRange,
         command: &str,
         reason: &str,
+        crash: &'static str,
     ) -> StrictParseError {
         let word = Self::source_words(source, range);
-        self.error(
-            StrictParseErrorKind::Syntax,
-            GAME_CRASH_CODE,
+        let mut hit = KnownCrashHit::new(crash).with("word", word.clone());
+        if crash != crash_ids::CONNECTION_BLOCK_MISSING_TERRAIN {
+            hit = hit.with("command", command);
+        }
+        self.crash_error(
             format!(
                 "The game crashes on this script: {word} is a defined name where a command can stand, so the game runs it as the command {command} with no values, and {reason}. Remove {word} or write the command it was meant to be."
             ),
             Some(range),
+            hit,
         )
+    }
+
+    fn crash_error(
+        &self,
+        message: String,
+        range: Option<ByteRange>,
+        crash: KnownCrashHit,
+    ) -> StrictParseError {
+        StrictParseError {
+            crash: Some(crash),
+            ..self.error(
+                StrictParseErrorKind::Syntax,
+                GAME_CRASH_CODE,
+                message,
+                range,
+            )
+        }
     }
 
     fn process_dispatch_marker(
@@ -2418,13 +2443,13 @@ impl Parser<'_> {
         if let Some(id) = marker.strip_prefix(DISPATCH_ID_MARKER) {
             let id = id.parse::<i32>().unwrap_or(i32::MIN);
             if crashes_in_connection_block(id, true, &self.handler_state()) {
-                return Err(self.error(
-                    StrictParseErrorKind::Syntax,
-                    GAME_CRASH_CODE,
+                return Err(self.crash_error(
                     format!(
                         "The game crashes on this script: {word} is a defined name where a command can stand, and inside a connection block the game reads a terrain from it that it does not have. Remove {word}."
                     ),
                     Some(range),
+                    KnownCrashHit::new(crash_ids::CONNECTION_BLOCK_MISSING_TERRAIN)
+                        .with("word", word.clone()),
                 ));
             }
             return Ok(());
@@ -2433,6 +2458,7 @@ impl Parser<'_> {
             return Ok(());
         };
         let state = self.handler_state();
+        let mut crash = None;
         let unsupported = match what {
             "147" | "148" => {
                 let id = what.parse::<i32>().unwrap_or_default();
@@ -2442,27 +2468,36 @@ impl Parser<'_> {
                         source,
                         range,
                         command,
-                        "the connection block reads the missing terrain",
+                        CONNECTION_BLOCK_REASON,
+                        crash_ids::CONNECTION_BLOCK_MISSING_TERRAIN,
                     ));
                 }
-                state.section == "objects_generation"
-                    && if id == 147 {
-                        !state.brace_open
-                    } else {
-                        state.brace_open && !self.object_group_names.is_empty()
-                    }
+                let group_entry = id == 148
+                    && state.section == "objects_generation"
+                    && state.brace_open
+                    && !self.object_group_names.is_empty();
+                if group_entry {
+                    crash = Some(KnownCrashHit::new(
+                        crash_ids::OBJECT_GROUP_ENTRY_WITHOUT_OBJECT,
+                    ));
+                }
+                group_entry
+                    || (id == 147 && state.section == "objects_generation" && !state.brace_open)
             }
             _ => true,
         };
         if unsupported {
-            return Err(self.error(
-                StrictParseErrorKind::Syntax,
-                UNSUPPORTED_DISPATCH_CODE,
-                format!(
-                    "The preview cannot show this script: {word} is a defined name where a command can stand, and the game runs it here as a command whose effect the preview does not reproduce. Remove {word} or write the command it was meant to be."
-                ),
-                Some(range),
-            ));
+            return Err(StrictParseError {
+                crash,
+                ..self.error(
+                    StrictParseErrorKind::Syntax,
+                    UNSUPPORTED_DISPATCH_CODE,
+                    format!(
+                        "The preview cannot show this script: {word} is a defined name where a command can stand, and the game runs it here as a command whose effect the preview does not reproduce. Remove {word} or write the command it was meant to be."
+                    ),
+                    Some(range),
+                )
+            });
         }
         Ok(())
     }
@@ -2480,6 +2515,7 @@ impl Parser<'_> {
             message: message.into(),
             source_chain: self.source_chain.clone(),
             range,
+            crash: None,
         }
     }
 
@@ -2494,6 +2530,7 @@ impl Parser<'_> {
             message: diagnostic.message,
             source_chain: diagnostic.source_chain,
             range,
+            crash: None,
         }
     }
 }
@@ -2612,10 +2649,10 @@ fn take_operands_from_following_lines(lines: &mut Vec<Line>) {
     }
 }
 
-fn ends_before_required_operand(tokens: &[(TokenKind, String, ByteRange)]) -> bool {
+fn ends_before_required_operand<S: AsRef<str>>(tokens: &[(TokenKind, S, ByteRange)]) -> bool {
     let Some(command) = tokens
         .first()
-        .and_then(|(_, value, _)| find_strict_command(value))
+        .and_then(|(_, value, _)| find_strict_command(value.as_ref()))
     else {
         return false;
     };
@@ -2630,7 +2667,7 @@ fn ends_before_required_operand(tokens: &[(TokenKind, String, ByteRange)]) -> bo
                 StrictArgumentKind::Number | StrictArgumentKind::Condition
             );
         }
-        if is_statement_start(&tokens[count].1) {
+        if is_statement_start(tokens[count].1.as_ref()) {
             return false;
         }
         count += match argument {
@@ -2655,47 +2692,52 @@ fn split_line_into_statements(
 }
 
 pub(crate) fn word_statements(words: &[&str]) -> (Vec<std::ops::Range<usize>>, bool) {
-    let at = |index: usize| ByteRange {
-        start: ByteOffset(index as u32),
-        end: ByteOffset(index as u32 + 1),
-    };
-    let significant = words
+    let significant = borrowed_significant(words);
+    let ranges = statement_ranges(&significant);
+    let waits = ranges
+        .last()
+        .is_some_and(|range| ends_before_required_operand(&significant[range.clone()]));
+    (ranges, waits)
+}
+
+pub(crate) fn word_statement_ranges(words: &[&str]) -> Vec<std::ops::Range<usize>> {
+    statement_ranges(&borrowed_significant(words))
+}
+
+fn borrowed_significant<'w>(words: &[&'w str]) -> Vec<(TokenKind, &'w str, ByteRange)> {
+    words
         .iter()
         .enumerate()
-        .map(|(index, word)| (TokenKind::Identifier, (*word).to_owned(), at(index)))
-        .collect();
-    let mut lines = Vec::new();
-    split_significant_into_statements(significant, &mut lines);
-    let waits = lines
-        .last()
-        .is_some_and(|line| ends_before_required_operand(&line.significant));
-    let ranges = lines
-        .iter()
-        .map(|line| line.range.start.0 as usize..line.range.end.0 as usize)
-        .collect();
-    (ranges, waits)
+        .map(|(index, word)| {
+            let at = ByteRange {
+                start: ByteOffset(index as u32),
+                end: ByteOffset(index as u32 + 1),
+            };
+            (TokenKind::Identifier, *word, at)
+        })
+        .collect()
+}
+
+fn statement_ranges(significant: &[(TokenKind, &str, ByteRange)]) -> Vec<std::ops::Range<usize>> {
+    let mut start = 0;
+    statement_word_counts(significant)
+        .into_iter()
+        .map(|(count, _)| {
+            let range = start..start + count;
+            start += count;
+            range
+        })
+        .collect()
 }
 
 fn split_significant_into_statements(
     significant: Vec<(TokenKind, String, ByteRange)>,
     result: &mut Vec<Line>,
 ) {
-    let mut statements = Vec::new();
-    let mut index = 0;
-    while index < significant.len() {
-        let statement_start = index;
-        let value = significant[index].1.as_str();
-        let (count, advance) = statement_token_count(&significant[index..]);
-        let pending_numeric_command =
-            (count > advance).then(|| significant[index + advance].clone());
-        index = index.saturating_add(advance.max(1)).min(significant.len());
-        if !is_statement_start(value) {
-            while index < significant.len() && !is_statement_start(&significant[index].1) {
-                index += 1;
-            }
-        }
-        statements.push((index - statement_start, pending_numeric_command));
-    }
+    let statements = statement_word_counts(&significant)
+        .into_iter()
+        .map(|(count, pending)| (count, pending.map(|index| significant[index].clone())))
+        .collect::<Vec<_>>();
     let single = statements.len() == 1;
     let mut whole = Some(significant);
     let mut words = if single {
@@ -2724,11 +2766,32 @@ fn split_significant_into_statements(
     }
 }
 
-fn statement_token_count(tokens: &[(TokenKind, String, ByteRange)]) -> (usize, usize) {
+fn statement_word_counts<S: AsRef<str>>(
+    significant: &[(TokenKind, S, ByteRange)],
+) -> Vec<(usize, Option<usize>)> {
+    let mut statements = Vec::new();
+    let mut index = 0;
+    while index < significant.len() {
+        let statement_start = index;
+        let value = significant[index].1.as_ref();
+        let (count, advance) = statement_token_count(&significant[index..]);
+        let pending_numeric_command = (count > advance).then_some(index + advance);
+        index = index.saturating_add(advance.max(1)).min(significant.len());
+        if !is_statement_start(value) {
+            while index < significant.len() && !is_statement_start(significant[index].1.as_ref()) {
+                index += 1;
+            }
+        }
+        statements.push((index - statement_start, pending_numeric_command));
+    }
+    statements
+}
+
+fn statement_token_count<S: AsRef<str>>(tokens: &[(TokenKind, S, ByteRange)]) -> (usize, usize) {
     let Some((_, value, _)) = tokens.first() else {
         return (0, 0);
     };
-    let Some(command) = find_strict_command(value) else {
+    let Some(command) = find_strict_command(value.as_ref()) else {
         return (1, 1);
     };
     let mut count = 1;
@@ -2736,7 +2799,7 @@ fn statement_token_count(tokens: &[(TokenKind, String, ByteRange)]) -> (usize, u
         if count >= tokens.len() {
             break;
         }
-        if is_statement_start(&tokens[count].1) {
+        if is_statement_start(tokens[count].1.as_ref()) {
             match argument {
                 StrictArgumentKind::Number | StrictArgumentKind::Condition => {
                     return (count + 1, count);
@@ -2763,8 +2826,10 @@ fn statement_token_count(tokens: &[(TokenKind, String, ByteRange)]) -> (usize, u
     (count.min(tokens.len()), count.min(tokens.len()))
 }
 
-fn include_filename_words(tokens: &[(TokenKind, String, ByteRange)]) -> (usize, Option<String>) {
-    include_filename_word_values(tokens.iter().map(|(_, word, _)| word.as_str()))
+fn include_filename_words<S: AsRef<str>>(
+    tokens: &[(TokenKind, S, ByteRange)],
+) -> (usize, Option<String>) {
+    include_filename_word_values(tokens.iter().map(|(_, word, _)| word.as_ref()))
 }
 
 fn include_filename_word_values<'a>(
@@ -2843,16 +2908,16 @@ fn take_quoted_include_names_from_following_lines(lines: &mut Vec<Line>) {
     }
 }
 
-fn numeric_token_count(tokens: &[(TokenKind, String, ByteRange)]) -> usize {
+fn numeric_token_count<S: AsRef<str>>(tokens: &[(TokenKind, S, ByteRange)]) -> usize {
     let Some((_, first, _)) = tokens.first() else {
         return 0;
     };
-    if !first.starts_with('(') {
+    if !first.as_ref().starts_with('(') {
         return 1;
     }
     tokens
         .iter()
-        .position(|(_, value, _)| value.ends_with(')'))
+        .position(|(_, value, _)| value.as_ref().ends_with(')'))
         .map_or(tokens.len(), |index| index + 1)
 }
 

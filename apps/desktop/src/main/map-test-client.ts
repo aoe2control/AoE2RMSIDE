@@ -8,6 +8,7 @@ import {
   CompatibilityRangeSchema,
   EnvelopeSchema,
   HandshakeRequestSchema,
+  MapTestBuiltin,
   MapTestRunRequestSchema,
   MapTestStatus,
   PlayerConfigurationSchema,
@@ -20,6 +21,7 @@ import {
 import type {
   LanguageServerDiagnostic,
   MapTestEvent,
+  MapTestReport,
   MapTestRunInput,
   MapTestRunResult,
   NativeProcessStatus,
@@ -28,6 +30,7 @@ import type {
 import { DesktopError, desktopErrorMessage } from '../shared/desktop-error';
 import { mapIconArtObjectDescriptors } from '../shared/map-icon-art-objects';
 import { objectClassesFor } from '../shared/object-classes';
+import { scriptLoadsQualityLibrary } from '../shared/quality-check';
 import {
   isMapTestProgressCounts,
   mapTestWorkerRequest,
@@ -36,9 +39,11 @@ import {
 import { guardChildStreams, isClosedPipeError } from './child-streams';
 import { constantNamesFor } from './constant-names-provider';
 import { encodeFrame, FrameDecoder } from './framing';
+import { fromProtocolKnownCrash, protocolTextWithKnownCrash } from './known-crash-protocol';
 import type { LocalContentSource } from './local-content-service';
 import { protocolLocalContentSource, toExecutionCostSummary } from './protocol-client';
 import { validateMapTestReportJson } from './map-test-report';
+import { qualityCheckOptions } from './quality-check-options';
 import {
   createEnvelope,
   decodeRendererSetupContext,
@@ -47,6 +52,7 @@ import {
   toHex,
 } from './protocol-client';
 import type { MainSourceCatalog } from './source-catalog-service';
+import { mapTestXsConstantsField } from './xs-start-report';
 
 interface PendingRequest {
   expectedCase: string;
@@ -118,6 +124,10 @@ export class MapTestClient {
   private automaticWorkers = false;
   private reportRequestRevision = false;
   private completionOrderPreview = false;
+  private knownCrashIds = false;
+  private gameCrashReports = false;
+  private xsHostFunctions = false;
+  private qualityCheck = false;
   private stderrTail = '';
 
   constructor(
@@ -173,7 +183,7 @@ export class MapTestClient {
       createEnvelope(`map-test-handshake-${randomUUID()}`, {
         case: 'handshakeRequest',
         value: create(HandshakeRequestSchema, {
-          protocolVersion: create(ArtifactVersionSchema, { major: 2, minor: 20, patch: 0 }),
+          protocolVersion: create(ArtifactVersionSchema, { major: 2, minor: 25, patch: 0 }),
           supportedProtocol: create(CompatibilityRangeSchema, {
             minimumMajor: 2,
             maximumMajor: 2,
@@ -194,7 +204,19 @@ export class MapTestClient {
     this.automaticWorkers = response.payload.value.capabilities.mapTestAutomaticWorkers;
     this.reportRequestRevision = response.payload.value.capabilities.mapTestReportRequestRevision;
     this.completionOrderPreview = response.payload.value.capabilities.mapTestCompletionOrderPreview;
+    this.knownCrashIds = response.payload.value.capabilities.knownCrashIds;
+    this.gameCrashReports =
+      this.reportRequestRevision && response.payload.value.capabilities.mapTestGameCrashes;
+    this.xsHostFunctions = response.payload.value.capabilities.mapTestXs;
+    this.qualityCheck = mapTestQualityCapability(
+      response.payload.value.capabilities.mapTestQuality,
+      this.gameCrashReports,
+    );
     this.onStatus({ name: 'rms-test', state: 'running' });
+  }
+
+  get qualitySupported(): boolean {
+    return this.child !== undefined && this.qualityCheck;
   }
 
   async run(
@@ -202,16 +224,31 @@ export class MapTestClient {
     sourceCatalogs: readonly MainSourceCatalog[],
     onEvent?: (event: MapTestEvent) => void,
     localContent?: LocalContentSource,
+    xsConstantsText?: string | null,
   ): Promise<MapTestRunResult> {
     if (!this.child) {
       throw new DesktopError('native.unavailable', 'rms-test is unavailable', { name: 'rms-test' });
+    }
+    const quality = input.quality;
+    if (quality && !this.qualityCheck) {
+      throw new DesktopError('native.unavailable', 'rms-test does not offer the quality check', {
+        name: 'rms-test',
+      });
     }
     const startedAt = Date.now();
     const setup = decodeRendererSetupContext(input.modeContext, input.players.length);
     const displayStreams = mapTestRunDisplayStreams(
       onEvent !== undefined,
       this.sampleProgress,
-      this.completionOrderPreview,
+      this.completionOrderPreview && !quality,
+    );
+    const xsConstants = mapTestXsConstantsField(
+      this.xsHostFunctions && this.gameCrashReports,
+      xsConstantsText,
+    );
+    const scriptQuality = mapTestScriptQualityReports(
+      this.qualityCheck,
+      quality === undefined ? input.scriptSource : '',
     );
     const response = await this.sendAndWait(
       createEnvelope(input.executionId, {
@@ -223,6 +260,7 @@ export class MapTestClient {
           }),
           semanticApiMajor: 2,
           reportRequestRevision: this.reportRequestRevision,
+          reportGameCrashes: this.gameCrashReports,
           script: Buffer.from(input.scriptSource, 'utf8'),
           scriptName: input.scriptName,
           workspaceName: input.workspaceName,
@@ -253,6 +291,16 @@ export class MapTestClient {
           contentSourceFingerprint: input.contentPack.sourceFingerprint,
           ...(localContent ? { localContent: protocolLocalContentSource(localContent) } : {}),
           ...displayStreams,
+          ...xsConstants,
+          ...(quality
+            ? {
+                builtin: MapTestBuiltin.QUALITY_CHECK_V1,
+                quality: qualityCheckOptions(quality),
+                reportQuality: true,
+              }
+            : scriptQuality
+              ? { reportQuality: true }
+              : {}),
         }),
       }),
       'mapTestRunResponse',
@@ -269,7 +317,14 @@ export class MapTestClient {
       sourceCatalogs,
       setup.colors,
       startedAt,
-      this.reportRequestRevision,
+      quality
+        ? qualityReportFormats
+        : mapTestReportFormats(
+            mapTestReportVersion(this.reportRequestRevision, this.gameCrashReports),
+            xsConstants.xsConstants !== undefined,
+            scriptQuality,
+          ),
+      this.knownCrashIds,
     );
   }
 
@@ -432,8 +487,15 @@ export class MapTestClient {
         }
         this.pending.delete(message.requestId);
         if (message.payload.case === 'error') {
+          const refusal = message.payload.value;
           pending.reject(
-            new Error(`${message.payload.value.code}: ${message.payload.value.message}`),
+            new Error(
+              protocolTextWithKnownCrash(
+                `${refusal.code}: ${refusal.message}`,
+                refusal.knownCrash,
+                this.knownCrashIds,
+              ),
+            ),
           );
         } else if (message.payload.case !== pending.expectedCase) {
           pending.reject(
@@ -466,7 +528,8 @@ function toRunResult(
   sourceCatalogs: readonly MainSourceCatalog[],
   playerColors: readonly number[],
   startedAt: number,
-  reportRequestRevision: boolean,
+  reportFormats: readonly MapTestReport['schemaVersion'][],
+  knownCrashIds: boolean,
 ): MapTestRunResult {
   if (
     response.identity?.requestId !== input.executionId ||
@@ -479,8 +542,11 @@ function toRunResult(
     ? new TextDecoder('utf-8', { fatal: true }).decode(response.reportJson)
     : null;
   const report = reportJson ? validateMapTestReportJson(reportJson) : null;
-  if (report && report.schemaVersion !== (reportRequestRevision ? '1.1.0' : '1.0.0')) {
+  if (report && !reportFormats.includes(report.schemaVersion)) {
     throw new Error('rms-test report format differs from its negotiated capability');
+  }
+  if (report && input.quality && report.quality === undefined) {
+    throw new Error('rms-test quality check report lacks its quality block');
   }
   if (report && response.reportIdentity.byteLength !== 32) {
     throw new Error('rms-test report identity is invalid');
@@ -492,7 +558,7 @@ function toRunResult(
     status,
     report,
     reportJson,
-    diagnostics: response.diagnostics.map(toDiagnostic),
+    diagnostics: response.diagnostics.map((diagnostic) => toDiagnostic(diagnostic, knownCrashIds)),
     preview: response.preview
       ? toPreviewResult(response.preview, input, sourceCatalogs, playerColors)
       : null,
@@ -688,7 +754,42 @@ function catalogRelativePath(catalog: MainSourceCatalog): string {
   return catalog.entryPath;
 }
 
-function toDiagnostic(value: MapTestRunResponse['diagnostics'][number]): LanguageServerDiagnostic {
+export function mapTestReportVersion(
+  reportRequestRevision: boolean,
+  gameCrashReports: boolean,
+): MapTestReport['schemaVersion'] {
+  if (!reportRequestRevision) return '1.0.0';
+  return gameCrashReports ? '1.2.0' : '1.1.0';
+}
+
+export function mapTestReportFormats(
+  requested: MapTestReport['schemaVersion'],
+  sendsXsConstants: boolean,
+  qualityReports = false,
+): readonly MapTestReport['schemaVersion'][] {
+  const formats: MapTestReport['schemaVersion'][] =
+    sendsXsConstants && requested === '1.2.0' ? ['1.2.0', '1.3.0'] : [requested];
+  return qualityReports ? [...formats, '1.4.0'] : formats;
+}
+
+export function mapTestScriptQualityReports(qualityOffered: boolean, script: string): boolean {
+  return qualityOffered && script.length > 0 && scriptLoadsQualityLibrary(script);
+}
+
+export function mapTestQualityCapability(
+  mapTestQuality: boolean,
+  gameCrashReports: boolean,
+): boolean {
+  return mapTestQuality && gameCrashReports;
+}
+
+export const qualityReportFormats: readonly MapTestReport['schemaVersion'][] = ['1.4.0'];
+
+function toDiagnostic(
+  value: MapTestRunResponse['diagnostics'][number],
+  knownCrashIds: boolean,
+): LanguageServerDiagnostic {
+  const knownCrash = knownCrashIds ? fromProtocolKnownCrash(value.knownCrash) : null;
   return {
     range: {
       start: {
@@ -703,6 +804,7 @@ function toDiagnostic(value: MapTestRunResponse['diagnostics'][number]): Languag
     severity: value.severity,
     code: value.code,
     message: value.message,
+    ...(knownCrash ? { data: { rmsKnownCrash: knownCrash } } : {}),
   };
 }
 

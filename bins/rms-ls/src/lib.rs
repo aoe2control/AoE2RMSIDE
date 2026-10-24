@@ -4,6 +4,7 @@ mod facts;
 mod formatter;
 mod generation_diagnostics;
 mod latency;
+mod reference;
 mod rms_completion;
 mod rms_docs;
 mod rms_lint;
@@ -589,24 +590,14 @@ impl Default for PreviewContext {
 impl PreviewContext {
     fn strict_options(&self, catalog: Option<&SourceCatalog>) -> RequestResult<StrictParseOptions> {
         let (profile_id, vocabulary) = match catalog {
-            Some(catalog) => (
-                catalog.profile_id().to_owned(),
-                catalog.implicit_definitions().clone(),
-            ),
+            Some(catalog) => (catalog.profile_id(), catalog.implicit_definitions()),
             None => {
-                let bundle = packaged_support_bundles()
-                    .map_err(|error| RequestError::invalid(error.to_string()))?
-                    .first()
-                    .ok_or_else(|| RequestError::invalid("no packaged support bundle"))?;
-                (
-                    bundle.manifest.behavior_profile_id.clone(),
-                    bundle
-                        .vocabulary()
-                        .map_err(|error| RequestError::invalid(error.to_string()))?,
-                )
+                let (profile_id, vocabulary) =
+                    packaged_profile_vocabulary().map_err(RequestError::invalid)?;
+                (profile_id.as_str(), vocabulary)
             }
         };
-        let mut options = product_strict_options_for_profile(&profile_id, &vocabulary)
+        let mut options = product_strict_options_for_profile(profile_id, vocabulary)
             .map_err(RequestError::invalid)?;
         self.setup
             .configure_strict_parser(
@@ -619,6 +610,24 @@ impl PreviewContext {
             .map_err(|error| RequestError::invalid(error.to_string()))?;
         Ok(options)
     }
+}
+
+type ProfileVocabulary = (String, BTreeMap<String, String>);
+
+fn packaged_profile_vocabulary() -> Result<&'static ProfileVocabulary, &'static str> {
+    static VOCABULARY: std::sync::OnceLock<Result<ProfileVocabulary, String>> =
+        std::sync::OnceLock::new();
+    VOCABULARY
+        .get_or_init(|| {
+            let bundle = packaged_support_bundles()
+                .map_err(|error| error.to_string())?
+                .first()
+                .ok_or_else(|| "no packaged support bundle".to_owned())?;
+            let vocabulary = bundle.vocabulary().map_err(|error| error.to_string())?;
+            Ok((bundle.manifest.behavior_profile_id.clone(), vocabulary))
+        })
+        .as_ref()
+        .map_err(String::as_str)
 }
 
 #[derive(Debug)]
@@ -666,6 +675,7 @@ impl Server {
             "rms/xsSyntaxCheck" => xs::syntax_check(params),
             "rms/sourceCatalogDiscovery" => source_discovery::request(params),
             "rms/editorInventory" => self.editor_inventory_request(params),
+            "rms/referenceLookup" => self.reference_lookup(params),
             "completionItem/resolve" => rms_docs::resolve(params)
                 .map_or_else(|| xs::resolve_completion(params, self.xs_build()), Ok),
             _ if self.is_xs_request(params) => self.xs_request(method, params),
@@ -1168,9 +1178,20 @@ impl Server {
                     }
                 }
                 Err(error) => {
-                    lint = Some(self.lint_findings(uri, document, None, Some(options)));
                     let error_source = error.source_chain.last().map(SourceId::as_str);
                     let error_is_in_document = error_source.is_none_or(|source| source == uri);
+                    let mut findings = self.lint_findings(uri, document, None, Some(options));
+                    if error.crash.is_some()
+                        && error_is_in_document
+                        && let Some(range) = error.range
+                    {
+                        findings.retain(|finding| {
+                            finding.code != rms_analysis::GAME_CAN_CRASH
+                                || finding.range.end <= range.start
+                                || finding.range.start >= range.end
+                        });
+                    }
+                    lint = Some(findings);
                     let duplicates_tolerant_diagnostic = error_is_in_document
                         && error.range.is_some_and(|range| {
                             document.analysis.diagnostics.iter().any(|diagnostic| {
@@ -1180,7 +1201,7 @@ impl Server {
                             })
                         });
                     if !duplicates_tolerant_diagnostic {
-                        diagnostics.push(json!({
+                        let mut diagnostic = json!({
                             "range": if error_is_in_document {
                                 error.range.and_then(|range| lsp_range(&document.source, range)).unwrap_or_else(empty_range)
                             } else {
@@ -1193,7 +1214,12 @@ impl Server {
                                 || error.message.clone(),
                                 |source| format!("{} in {source}", error.message),
                             ),
-                        }));
+                        });
+                        if let Some(crash) = &error.crash {
+                            diagnostic["data"] =
+                                json!({ "rmsKnownCrash": rms_lint::known_crash_json(crash) });
+                        }
+                        diagnostics.push(diagnostic);
                     }
                 }
             }
@@ -3060,7 +3086,7 @@ fn initialize_result() -> Value {
                 },
                 "full": true
             },
-            "experimental": { "sourceCatalogV1": true, "sourceCatalogDiscoveryV1": true, "sourceCatalogDiagnosticsV1": true, "editorInventoryV1": true, "xsLanguageV1": true }
+            "experimental": { "sourceCatalogV1": true, "sourceCatalogDiscoveryV1": true, "sourceCatalogDiagnosticsV1": true, "editorInventoryV1": true, "xsLanguageV1": true, "knownCrashesV1": true }
         },
         "serverInfo": {
             "name": "rms-ls",

@@ -7,6 +7,7 @@ use thiserror::Error;
 
 mod certified_constructs;
 mod constant_kinds;
+mod known_crashes;
 
 pub use certified_constructs::{
     CERTIFIED_CONSTRUCTS_DERIVATION_CONTRACT, CERTIFIED_CONSTRUCTS_SCHEMA_MAJOR,
@@ -19,6 +20,15 @@ pub use constant_kinds::{
     CONSTANT_KINDS_DERIVATION_CONTRACT, CONSTANT_KINDS_SCHEMA_VERSION, ConstantKind, ConstantKinds,
     ConstantKindsEntry, ConstantKindsProvenance, ConstantKindsSource, MAXIMUM_CONSTANT_KIND_NAMES,
     NamedConstantKind, frozen_constant_kinds,
+};
+
+pub use known_crashes::{
+    KNOWN_CRASH_IDS, KNOWN_CRASH_LINT_CODE, KNOWN_CRASH_PLACEHOLDERS, KNOWN_CRASHES_CATALOG_ID,
+    KNOWN_CRASHES_SCHEMA_MAJOR, KNOWN_CRASHES_SCHEMA_VERSION, KnownCrash, KnownCrashDependence,
+    KnownCrashDetector, KnownCrashDocTerms, KnownCrashEvidence, KnownCrashEvidenceQuality,
+    KnownCrashHit, KnownCrashStage, KnownCrashStatus, KnownCrashTiming, KnownCrashes,
+    MAXIMUM_KNOWN_CRASH_ARGUMENT_BYTES, MAXIMUM_KNOWN_CRASHES, crash_ids, is_known_crash_id,
+    parse_known_crashes, shipped_known_crash, shipped_known_crash_catalogue, shipped_known_crashes,
 };
 
 pub const PROFILE_SCHEMA_MAJOR: u32 = 1;
@@ -1082,6 +1092,8 @@ pub enum ProfileError {
     UnsupportedConstantKindsSchema(String),
     #[error("unsupported construct verification table schema version {0}")]
     UnsupportedCertifiedConstructsSchema(String),
+    #[error("unsupported known-crash catalogue schema version {0}")]
+    UnsupportedKnownCrashesSchema(String),
     #[error("profile field {0} is invalid")]
     InvalidField(&'static str),
     #[error("profile resource limit exceeded for {0}")]

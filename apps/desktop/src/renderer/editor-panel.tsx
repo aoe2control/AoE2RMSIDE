@@ -8,6 +8,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
@@ -23,6 +24,8 @@ import {
   FilePen,
   FolderOpen,
   Gamepad2,
+  Layers,
+  ListChecks,
   LockKeyhole,
   LockKeyholeOpen,
   MonitorPlay,
@@ -30,6 +33,8 @@ import {
   Play,
   RotateCcw,
   Save,
+  ShieldCheck,
+  Sparkles,
   Square,
   Unplug,
   X,
@@ -55,7 +60,11 @@ import {
 } from '@/components/ui/context-menu';
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -86,6 +95,7 @@ import { containEditorPopupWheel } from './monaco-popup-wheel';
 import { editorModelSyncAction } from './editor-model-sync';
 import {
   attachLanguageDocument,
+  attachedLanguageDocumentVersion,
   configureRmsLanguage,
   includeLinkAtPosition,
   openIncludedFile,
@@ -97,7 +107,10 @@ import {
   rmsConditionalIndentation,
   setIncludedFileOpener,
   setLanguageEditGuard,
+  waitForLanguageDocument,
 } from './monaco-language';
+import { AppEditBridge, type AppEditModel } from './app-edits';
+import type { ConnectorDeployNotice } from './mcp-connector-model';
 import { cursorOnIncludeContextKey, joinConcurrentOpens } from './include-navigation';
 import { readOnlyMessage, saveAsFromReadOnlyMessageCommandId } from './read-only-message';
 import {
@@ -194,6 +207,13 @@ import {
   mapTestWorkerSettingFromDraft,
 } from '../shared/map-test-contract';
 import { mapTestWorkerFieldWords } from '../shared/message-catalog';
+import {
+  qualityAlwaysOnCase,
+  qualityCaseIds,
+  qualityCheckSeeds,
+  qualitySeedCountFromDraft,
+} from '../shared/quality-check';
+import { qualityCaseTitleId } from './quality-check-output';
 import {
   applicationKeyAllowed,
   applicationShortcuts,
@@ -402,6 +422,164 @@ function MapTestWorkersField({
           <TooltipContent>{words.useAutomatic}</TooltipContent>
         </Tooltip>
       ) : null}
+    </div>
+  );
+}
+
+function QualityCheckRow({ previewExecution }: { previewExecution: PreviewExecutionController }) {
+  const { t } = useI18n();
+  const quality = previewExecution.qualityCheck!;
+  const [draft, setDraft] = useState(() => String(quality.seeds));
+  const focused = useRef(false);
+  useEffect(() => {
+    if (focused.current) return;
+    setDraft(String(quality.seeds));
+  }, [quality.seeds]);
+  const seedsLabel = t('run-menu.quality-check.seeds');
+  const casesLabel = t('run-menu.quality-check.cases');
+  const casesTooltip = t('run-menu.quality-check.cases-tooltip');
+  const multiSettingsLabel = t('run-menu.quality-check.multi-settings');
+  return (
+    <div className="preview-run-quality-row">
+      <ToggleButton
+        check={false}
+        checked={quality.enabled}
+        className="preview-run-automation preview-run-quality-toggle"
+        onClick={(event) => {
+          event.stopPropagation();
+          quality.toggle();
+        }}
+      >
+        <span className="preview-run-automation-label">
+          <ShieldCheck aria-hidden="true" />
+          <OverflowingLabel
+            className="preview-run-automation-text"
+            name={t('run-menu.quality-check')}
+            revealOnParentFocus
+            textClassName="preview-run-automation-text-inner"
+          />
+        </span>
+      </ToggleButton>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Input
+              aria-label={seedsLabel}
+              className="preview-run-quality-seeds"
+              inputMode="numeric"
+              max={qualityCheckSeeds.maximum}
+              min={qualityCheckSeeds.minimum}
+              onBlur={() => {
+                focused.current = false;
+                setDraft(String(qualitySeedCountFromDraft(draft) ?? quality.seeds));
+              }}
+              onChange={(event) => {
+                const next = event.target.value;
+                setDraft(next);
+                const seeds = qualitySeedCountFromDraft(next);
+                if (seeds !== null) quality.setSeeds(seeds);
+              }}
+              onFocus={() => {
+                focused.current = true;
+              }}
+              onKeyDown={(event) => {
+                if (event.key !== 'Escape' && event.key !== 'Tab') event.stopPropagation();
+              }}
+              step={1}
+              type="number"
+              value={draft}
+            />
+          }
+        />
+        <TooltipContent>{seedsLabel}</TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <IconToggleButton
+              aria-label={multiSettingsLabel}
+              className="preview-run-quality-settings"
+              onClick={(event) => {
+                event.stopPropagation();
+                quality.toggleMultiSettings();
+              }}
+              pressed={quality.multiSettings}
+              size="icon-compact"
+            />
+          }
+        >
+          <Layers aria-hidden="true" />
+        </TooltipTrigger>
+        <TooltipContent>{t('run-menu.quality-check.multi-settings-tooltip')}</TooltipContent>
+      </Tooltip>
+      <DropdownMenuSub>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <DropdownMenuSubTrigger
+                aria-label={casesLabel}
+                className="preview-run-quality-cases"
+                openOnHover={false}
+                render={<Button size="icon-compact" type="button" variant="ghost" />}
+              />
+            }
+          >
+            <ListChecks aria-hidden="true" />
+          </TooltipTrigger>
+          <TooltipContent>{casesTooltip}</TooltipContent>
+        </Tooltip>
+        <DropdownMenuSubContent
+          align="end"
+          aria-label={casesLabel}
+          className="preview-run-quality-cases-menu"
+          side="bottom"
+          sideOffset={4}
+        >
+          {qualityCaseIds.map((caseId) => {
+            const alwaysOn = caseId === qualityAlwaysOnCase;
+            return (
+              <DropdownMenuCheckboxItem
+                checked={alwaysOn || !quality.casesOff.includes(caseId)}
+                closeOnClick={false}
+                data-case={caseId}
+                disabled={alwaysOn}
+                key={caseId}
+                onCheckedChange={(checked) => {
+                  if (!alwaysOn) quality.setCaseSelected(caseId, checked);
+                }}
+              >
+                {t(qualityCaseTitleId(caseId))}
+              </DropdownMenuCheckboxItem>
+            );
+          })}
+        </DropdownMenuSubContent>
+      </DropdownMenuSub>
+    </div>
+  );
+}
+
+function QualityCheckRowReserve() {
+  const { t } = useI18n();
+  return (
+    <div aria-hidden="true" className="preview-run-quality-reserve" inert>
+      <ToggleButton
+        check={false}
+        checked={false}
+        className="preview-run-automation preview-run-quality-toggle"
+        tabIndex={-1}
+      >
+        <span className="preview-run-automation-label">
+          <ShieldCheck aria-hidden="true" />
+          <OverflowingLabel
+            className="preview-run-automation-text"
+            name={t('run-menu.quality-check')}
+            textClassName="preview-run-automation-text-inner"
+          />
+        </span>
+      </ToggleButton>
+      <span className="preview-run-quality-seeds" />
+      <span className="preview-run-quality-settings" />
+      <span className="preview-run-quality-cases" />
     </div>
   );
 }
@@ -711,6 +889,8 @@ export function EditorPanel({
   onShowEditor,
   recoveryNotice,
   onDismissRecoveryNotice,
+  appDeployNotice,
+  onDismissAppDeployNotice,
   onCyclePreviewLayout,
 }: {
   inlayHints: boolean;
@@ -725,6 +905,8 @@ export function EditorPanel({
   onShowEditor(): void;
   recoveryNotice: string | null;
   onDismissRecoveryNotice(): void;
+  appDeployNotice: ConnectorDeployNotice | null;
+  onDismissAppDeployNotice(): void;
   onCyclePreviewLayout(): void;
 }) {
   const { t } = useI18n();
@@ -810,12 +992,15 @@ export function EditorPanel({
     ? 'execution-failure'
     : recoveryNotice
       ? 'recovery'
-      : gameTexturesNoticeOpen
-        ? 'game-textures'
-        : null;
+      : appDeployNotice
+        ? 'app-deploy'
+        : gameTexturesNoticeOpen
+          ? 'game-textures'
+          : null;
   const editorNoticePresence = usePresence(editorNotice !== null);
   const shownEditorNotice = useHeld(editorNotice, editorNoticePresence.closing);
   const heldExecutionFailure = useHeld(executionFailureNotice, editorNoticePresence.closing);
+  const heldAppDeploy = useHeld(appDeployNotice, editorNoticePresence.closing);
   const shownExecutionFailure = heldExecutionFailure
     ? rewordExecutionFailureNotice(heldExecutionFailure)
     : null;
@@ -829,6 +1014,19 @@ export function EditorPanel({
     ),
   );
   const recoveryNoticeHold = useNoticeAutoDismiss(recoveryNotice, onDismissRecoveryNotice);
+  const appDeployNoticeHold = useNoticeAutoDismiss(
+    appDeployNotice,
+    onDismissAppDeployNotice,
+    editorNoticeDurationFor(
+      appDeployNotice
+        ? t('mcp.deploy.notice', {
+            app: appDeployNotice.app,
+            file: appDeployNotice.file,
+            mod: appDeployNotice.mod,
+          })
+        : '',
+    ),
+  );
   const gameTexturesNoticeHold = useNoticeAutoDismiss(
     gameTexturesNoticeOpen || null,
     closeGameTexturesNotice,
@@ -838,6 +1036,40 @@ export function EditorPanel({
   const openSourceLocationRef = useRef(openSourceLocation);
   openSourceLocationRef.current = openSourceLocation;
   workspaceRef.current = workspace;
+  const [appEdits] = useState(
+    () =>
+      new AppEditBridge({
+        documents: () =>
+          workspaceRef.current.documents.map(
+            (document) => workspaceRef.current.latestDocument(document.id) ?? document,
+          ),
+        activeDocumentId: () => workspaceRef.current.activeDocumentId,
+        openBackground: async (path) =>
+          (await workspaceRef.current.openWorkspaceFile(path, true, { background: true }))?.id ??
+          null,
+        model: (id) => (models.current.get(id) as AppEditModel | undefined) ?? null,
+        languageVersion: (id) => {
+          const model = models.current.get(id);
+          return model ? attachedLanguageDocumentVersion(model.uri.toString()) : null;
+        },
+        waitForSync: async (id) => {
+          const model = models.current.get(id);
+          if (model) await waitForLanguageDocument(model.uri.toString());
+        },
+        save: (id) => workspaceRef.current.saveDocumentById(id),
+      }),
+  );
+  const appMarks = useSyncExternalStore(appEdits.subscribe, appEdits.marks);
+  useEffect(() => {
+    if (!editionCapabilities.mcp) return undefined;
+    return window.rmside.onConnectorRequest((request) => {
+      void appEdits
+        .handle(request)
+        .then((reply) => (reply ? window.rmside.replyToConnectorRequest(reply) : undefined))
+        .catch(() => undefined);
+    });
+  }, [appEdits]);
+  useEffect(() => appEdits.syncDocuments(workspace.documents), [appEdits, workspace.documents]);
   const highlightPreviewSourceRef = useRef(highlightPreviewSource);
   highlightPreviewSourceRef.current = highlightPreviewSource;
   const documentOrder = workspace.documents.map((document) => document.id).join('\u0000');
@@ -1849,8 +2081,9 @@ export function EditorPanel({
         models.current.set(document.id, model);
         modelSubscriptions.current.set(
           document.id,
-          model.onDidChangeContent(() => {
+          model.onDidChangeContent((event) => {
             if (programmaticUpdates.current.has(document.id)) return;
+            appEdits.contentChanged(document.id, event);
             locallyEditedDocuments.current.add(document.id);
             const currentWorkspace = workspaceRef.current;
             if (
@@ -2422,7 +2655,18 @@ export function EditorPanel({
                     <TooltipTrigger
                       render={
                         <Button
-                          aria-description={editorTabDescription(document) ?? undefined}
+                          aria-description={
+                            [
+                              editorTabDescription(document),
+                              appMarks.has(document.id)
+                                ? t('mcp.tab.edited-by', {
+                                    app: appMarks.get(document.id)!.app,
+                                  })
+                                : null,
+                            ]
+                              .filter(Boolean)
+                              .join(', ') || undefined
+                          }
                           aria-selected={editorShown && document.id === workspace.activeDocumentId}
                           className="editor-tab-trigger"
                           onClick={() => pressEditorTabTrigger(document.id)}
@@ -2460,9 +2704,20 @@ export function EditorPanel({
                         <Play aria-hidden="true" className="editor-tab-pinned-preview" />
                       ) : null}
                       <EditorTabTitle name={document.name} />
+                      {appMarks.has(document.id) ? (
+                        <Sparkles aria-hidden="true" className="editor-tab-app-mark" />
+                      ) : null}
                     </TooltipTrigger>
                     <TooltipContent className="path-tooltip">
                       {document.path ?? document.name}
+                      {appMarks.has(document.id) ? (
+                        <span className="editor-tab-app-note">
+                          {t('mcp.tab.edited-by', { app: appMarks.get(document.id)!.app })}
+                          {appMarks.get(document.id)!.reason
+                            ? ` · ${appMarks.get(document.id)!.reason}`
+                            : ''}
+                        </span>
+                      ) : null}
                     </TooltipContent>
                   </Tooltip>
                   <EditorTabCloseButton
@@ -2590,7 +2845,15 @@ export function EditorPanel({
                 </TooltipTrigger>
                 <TooltipContent side="bottom">{runActionTooltip}</TooltipContent>
               </Tooltip>
-              <DropdownMenu key={workspace.activeDocument.id} modal={false}>
+              <DropdownMenu
+                key={workspace.activeDocument.id}
+                modal={false}
+                onOpenChange={(open) => {
+                  if (open && !isMapTestScriptName(workspace.activeDocument.name)) {
+                    previewExecution?.refreshQualityCheck?.();
+                  }
+                }}
+              >
                 <DropdownMenuTrigger
                   render={
                     <Button
@@ -2756,6 +3019,12 @@ export function EditorPanel({
                       </Tooltip>
                     ) : null}
                   </div>
+                  {!isMapTestScriptName(workspace.activeDocument.name) &&
+                    (previewExecution?.qualityCheck ? (
+                      <QualityCheckRow previewExecution={previewExecution} />
+                    ) : editionCapabilities.mapTests ? (
+                      <QualityCheckRowReserve />
+                    ) : null)}
                   {isMapTestScriptName(workspace.activeDocument.name) ? (
                     previewExecution?.setMapTestWorkers ? (
                       <MapTestWorkersField previewExecution={previewExecution} />
@@ -3025,6 +3294,25 @@ export function EditorPanel({
               >
                 <X />
               </Button>
+            </Alert>
+          ) : editorNoticePresence.mounted &&
+            shownEditorNotice === 'app-deploy' &&
+            heldAppDeploy ? (
+            <Alert
+              className="recovery-notice motion-surface"
+              data-motion-from="bottom"
+              data-testid="app-deploy-notice"
+              ref={editorNoticePresence.ref}
+              {...appDeployNoticeHold}
+              {...presenceProps(editorNoticePresence.closing)}
+            >
+              <AlertTitle>
+                {t('mcp.deploy.notice', {
+                  app: heldAppDeploy.app,
+                  file: heldAppDeploy.file,
+                  mod: heldAppDeploy.mod,
+                })}
+              </AlertTitle>
             </Alert>
           ) : editorNoticePresence.mounted && shownEditorNotice === 'game-textures' ? (
             <Alert

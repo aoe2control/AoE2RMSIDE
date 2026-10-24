@@ -36,6 +36,7 @@ export interface LivePreviewJob<TConfiguration> {
   configuration: TConfiguration;
   configurationKey: string;
   document: LivePreviewDocument;
+  bypassCache?: boolean;
 }
 
 export interface LivePreviewAdapter<TResult, TConfiguration> {
@@ -291,9 +292,10 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
     );
     let generation: ActiveGeneration<TResult> | undefined;
     if (
-      !this.knownConfigurations.has(
-        configurationIdentity(job.backendIdentity, job.configurationKey),
-      ) &&
+      (job.bypassCache === true ||
+        !this.knownConfigurations.has(
+          configurationIdentity(job.backendIdentity, job.configurationKey),
+        )) &&
       (this.adapter.speculate?.(job) ?? true)
     ) {
       generation = await this.startGeneration(job, pendingAnalysis, requestId);
@@ -338,10 +340,11 @@ export class LivePreviewCoordinator<TResult, TConfiguration> {
       analysis.semanticHash,
       job.configurationKey,
     );
-    const cached = generation
-      ? undefined
-      : (this.cache?.get(key) ??
-        (this.lastCompleted?.key === key ? this.lastCompleted.result : undefined));
+    const cached =
+      generation || job.bypassCache === true
+        ? undefined
+        : (this.cache?.get(key) ??
+          (this.lastCompleted?.key === key ? this.lastCompleted.result : undefined));
     if (cached) {
       latencyProbe.runMark(job, 'reuse');
       this.adapter.status({

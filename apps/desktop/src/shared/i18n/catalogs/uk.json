@@ -138,6 +138,9 @@
     "app-menu.view.map-transitions": {
       "message": "Анімувати зміну мапи"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "Перевіряти XS під час запуску мапи"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Показувати етапи під час створення"
     },
@@ -170,6 +173,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "Тема…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "Тема"
@@ -399,6 +405,9 @@
     "output.source.map-test": {
       "message": "Тест мапи"
     },
+    "output.source.quality-check": {
+      "message": "Перевірка якості"
+    },
     "output.source.deploy": {
       "message": "Розгортання"
     },
@@ -420,8 +429,14 @@
     "output.source.game-textures": {
       "message": "Текстури гри"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "Програма"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, one {{count} повідомлення виводу} few {{count} повідомлення виводу} many {{count} повідомлень виводу} other {{count} повідомлення виводу}}"
@@ -491,6 +506,162 @@
     },
     "output.constructs.go-to": {
       "message": "Перейти до першого використання"
+    },
+    "output.xs-start.summary": {
+      "message": "Стартова перевірка XS: {files, list} — виконано main() і {rules, plural, one {# правило} few {# правила} many {# правил} other {# правила}} ({steps, plural, one {# крок} few {# кроки} many {# кроків} other {# кроку}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "Стартова перевірка XS: у {files, list} немає main(); {rules, plural, =0 {правила не виконано} one {виконано # правило} few {виконано # правила} many {виконано # правил} other {виконано # правила}} ({steps, plural, one {# крок} few {# кроки} many {# кроків} other {# кроку}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "Не порівняно з грою"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "Не порівняно з грою. Використовує: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "цілочисельна арифметика"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "змішування цілих і дробових чисел"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "числа у вигляді тексту"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "текстові функції"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "типові значення масивів"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "порядок правил"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "мітки та goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "початкові значення"
+    },
+    "output.xs-start.chat": {
+      "message": "Чат: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Гея} one {Гравець {player}} few {Гравець {player}} many {Гравець {player}} other {Гравець {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "їжа"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "деревина"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "камінь"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "золото"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "атрибут {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource}: встановлено {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "об’єкт {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "технологія {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: досліджує {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player} → {other}: встановлено стосунки {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: ім’я змінено на «{text}»"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: назву цивілізації змінено на «{text}»"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: колір змінено на {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: створює {object} × {count} поблизу ({x}, {y}); розміщення не перевірено"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: створює {object} × {count}; розміщення не перевірено"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: видаляє {object} × {count}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: переміщує {object} × {count} до ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: переміщує {object} × {count}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: отримує {object} × {count} (попередній власник: {previous})"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: змінює значення: {object} × {count}"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: змінює назви або підписи: {object} × {count}"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: змінює дані: {object}; записано, але не застосовано"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: змінює дані: {technology}; записано, але не застосовано"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, one {# виклик} few {# виклики} many {# викликів} other {# виклику}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Режим освітлення: {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Зміни після цього рядка не показано."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Зміни після зупинки не показано."
+    },
+    "output.xs-start.skipped": {
+      "message": "Стартову перевірку XS пропущено: у {file} {count, plural, one {# помилка} few {# помилки} many {# помилок} other {# помилки}} (див. панель «Проблеми»)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "Під’єднайте папку гри, щоб виконати стартову перевірку XS"
+    },
+    "output.xs-start.omitted": {
+      "message": "Показано не всі результати стартової перевірки XS"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Не показано: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, one {# зауваження} few {# зауваження} many {# зауважень} other {# зауваження}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, one {# рядок чату} few {# рядки чату} many {# рядків чату} other {# рядка чату}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, one {# зміна} few {# зміни} many {# змін} other {# зміни}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, one {# записаний виклик} few {# записані виклики} many {# записаних викликів} other {# записаного виклику}}"
     },
     "output.constructs.more": {
       "message": "і ще {count}"
@@ -597,11 +768,95 @@
     "run-menu.run-on-edit": {
       "message": "При редагуванні"
     },
+    "run-menu.quality-check": {
+      "message": "Перевірка якості"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Зерна для перевірки"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Критерії"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Вибрати, що оцінює перевірка якості"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Інші налаштування лобі"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Також перевірити Крихітний 1v1, Середній 2v2 і Величезний 4v4, по 10 зерен"
+    },
+    "quality.case.generation": {
+      "message": "Генерування"
+    },
+    "quality.case.start-resources": {
+      "message": "Ресурси на старті"
+    },
+    "quality.case.resource-distances": {
+      "message": "Відстані до ресурсів"
+    },
+    "quality.case.shared-resources": {
+      "message": "Спільні ресурси"
+    },
+    "quality.case.wood": {
+      "message": "Деревина"
+    },
+    "quality.case.trapped": {
+      "message": "Заблоковані ресурси"
+    },
+    "quality.case.paths": {
+      "message": "Шляхи"
+    },
+    "quality.case.building-space": {
+      "message": "Місце для будівництва"
+    },
+    "quality.case.hills": {
+      "message": "Пагорби"
+    },
+    "quality.case.water": {
+      "message": "Вода"
+    },
+    "quality.case.spacing": {
+      "message": "Відступи"
+    },
+    "quality.case.chokepoints": {
+      "message": "Вузькі проходи"
+    },
+    "quality.case.variation": {
+      "message": "Різноманітність"
+    },
+    "quality.case.looks": {
+      "message": "Вигляд"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "{bad} з {of} мап{metric, select, yes { · медіана {p50}, 95-й процентиль {p95}, найбільше {max} {unit}} other {}}{worst, select, yes { · {count, plural, one {найгірше зерно} few {найгірші зерна} many {найгірші зерна} other {найгірші зерна}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "Пройдено: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, one {Ще # зауваження не показано} few {Ще # зауваження не показано} many {Ще # зауважень не показано} other {Ще # зауваження не показано}}"
+    },
+    "quality.failed": {
+      "message": "Не вдалося виконати перевірку якості"
+    },
     "run-menu.preset.default-name": {
       "message": "Конфіг"
     },
     "run-menu.preset.numbered-name": {
       "message": "Конфіг {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Тестовий конфіг"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Повернутися до конфігурації {name}"
     },
     "run-menu.preset.settings": {
       "message": "Налаштування конфігурації перегляду"
@@ -626,6 +881,9 @@
     },
     "run-menu.preset.delete": {
       "message": "Видалити {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "Дублювати {name}"
     },
     "run-menu.preset.delete.title": {
       "message": "Видалити конфігурацію {name}?"
@@ -813,6 +1071,9 @@
     "run-menu.fixture.needs-source": {
       "message": "Тестові зразки для розробки потребують непорожнього скрипту .rms або .rms2"
     },
+    "mcp.run.settings-applied": {
+      "message": "Задано в {app}: {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Випадкові цивілізації для цього перегляду: {players, list, unit}"
     },
@@ -830,6 +1091,9 @@
     },
     "run-menu.result.failed": {
       "message": "Неуспішно"
+    },
+    "run-menu.result.warnings": {
+      "message": "Попередження"
     },
     "run-menu.result.passed": {
       "message": "Успішно"
@@ -2694,6 +2958,9 @@
     "lint-rule.RMS4011.title": {
       "message": "Назва може бути не визначена"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "Тут гра може аварійно завершитися"
+    },
     "map-icon.generate": {
       "message": "Створити піктограму мапи"
     },
@@ -3060,6 +3327,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "Відтворено зауваження зі збереженим зерном {seed}"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Відтворено зауваження зі збереженим зерном {seed}, тепер його зафіксовано для наступних запусків"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Відтворено зауваження зі збереженим зерном {seed}, тепер його зафіксовано в тимчасовій конфігурації {name}"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "Не вдалося від’єднати папку гри"
     },
@@ -3092,6 +3365,336 @@
     },
     "code-editor.tab.close": {
       "message": "Закрити {name}"
+    },
+    "mcp.tab.edited-by": {
+      "message": "Змінено в {app}, не збережено"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "Закрити налаштування MCP"
+    },
+    "mcp.dialog.description": {
+      "message": "Дозвольте застосункам ШІ на цьому комп’ютері читати, редагувати й перевіряти скрипти у відкритій папці, створювати мапи й запускати тести мап."
+    },
+    "mcp.enable.label": {
+      "message": "Увімкнути MCP"
+    },
+    "mcp.save.label": {
+      "message": "Дозволити застосункам ШІ зберігати файли"
+    },
+    "mcp.save.note": {
+      "message": "Коли вимкнено, зміни ШІ лишаються незбереженими, доки ви їх не збережете."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "MCP не запустився, бо інша програма використовує його назву з’єднання."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "MCP не запустився, бо не зміг записати свій файл ключа."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "MCP не запустився, бо його список інструментів не відповідає цій версії AoE2RMSIDE. Перевстановіть AoE2RMSIDE."
+    },
+    "mcp.unavailable.internal": {
+      "message": "MCP не запустився через неочікувану помилку."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Щоб спробувати ще раз, вимкніть і знову ввімкніть «Увімкнути MCP»."
+    },
+    "mcp.apps.title": {
+      "message": "Дозволені застосунки"
+    },
+    "mcp.apps.empty": {
+      "message": "Застосунків ще немає. Застосунок запитає дозвіл під час першого під’єднання."
+    },
+    "mcp.apps.connected": {
+      "message": "Під’єднано"
+    },
+    "mcp.apps.last-used": {
+      "message": "Востаннє використано {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "Прибрати"
+    },
+    "mcp.apps.remove-label": {
+      "message": "Прибрати {app}"
+    },
+    "mcp.setup.app": {
+      "message": "Застосунок ШІ"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "Інший застосунок"
+    },
+    "mcp.setup.text-label": {
+      "message": "Текст налаштування"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Додайте це до конфігурації Claude Desktop (Settings > Developer > Edit Config), а потім перезапустіть Claude Desktop."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Виконайте цю команду в терміналі."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Виконайте цю команду в терміналі."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Додайте цю програму як локальний сервер MCP."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Спершу ввімкніть «Увімкнути MCP»."
+    },
+    "mcp.setup.copy": {
+      "message": "Копіювати налаштування"
+    },
+    "mcp.setup.copied": {
+      "message": "Налаштування скопійовано"
+    },
+    "mcp.connect.row": {
+      "message": "Під’єднати застосунок ШІ…"
+    },
+    "mcp.connect.title": {
+      "message": "Під’єднати застосунок ШІ"
+    },
+    "mcp.connect.close-label": {
+      "message": "Закрити"
+    },
+    "mcp.connect.description": {
+      "message": "Вставте цей промпт у свій застосунок ШІ. Він сам налаштується й повідомить, якщо щось йому заважає."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Промпт для застосунку ШІ"
+    },
+    "mcp.connect.copy": {
+      "message": "Копіювати промпт"
+    },
+    "mcp.connect.copied": {
+      "message": "Промпт скопійовано"
+    },
+    "mcp.connect.by-hand": {
+      "message": "Налаштувати вручну"
+    },
+    "mcp.pairing.title": {
+      "message": "Дозволити {app} використовувати AoE2RMSIDE?"
+    },
+    "mcp.pairing.description": {
+      "message": "Застосунок міг би редагувати скрипти у відкритій папці, створювати мапи, запускати тести й розгортати моди. Запущено програмою {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "Застосунок міг би редагувати скрипти у відкритій папці, створювати мапи, запускати тести й розгортати моди."
+    },
+    "mcp.pairing.name-note": {
+      "message": "Цю назву застосунок указує сам: дозвольте його, лише якщо ви самі його налаштували. Заміна моду або тест у грі все одно потребують вашої згоди."
+    },
+    "mcp.pairing.allow": {
+      "message": "Дозволити"
+    },
+    "mcp.pairing.deny": {
+      "message": "Не дозволяти"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "Замінити мод «{mod}»?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "Застосунок {app} хоче розгорнути {file} у цьому моді. У цьому сеансі він не розгортав цей мод, тому файли моду буде замінено."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Замінити"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "Застосунок {app} попросив розгорнути {file} як мод «{mod}»."
+    },
+    "mcp.deploy.notice": {
+      "message": "Застосунок {app} розгорнув {file} як мод «{mod}»."
+    },
+    "mcp.live.title": {
+      "message": "Запустити тест у грі для {app}?"
+    },
+    "mcp.live.description": {
+      "message": "Застосунок {app} хоче протестувати {file} із зерном {seed} у запущеній грі. Поточний матч завершиться."
+    },
+    "mcp.live.session": {
+      "message": "Дозволити на цей сеанс"
+    },
+    "mcp.live.start": {
+      "message": "Запустити тест у грі"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, one {# застосунок ШІ} few {# застосунки ШІ} many {# застосунків ШІ} other {# застосунку ШІ}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app}: під’єднано"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, one {Під’єднано # застосунок ШІ} few {Під’єднано # застосунки ШІ} many {Під’єднано # застосунків ШІ} other {Під’єднано # застосунку ШІ}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} працює"
+    },
+    "mcp.status.tooltip": {
+      "message": "Під’єднано через MCP. Клацніть, щоб відкрити налаштування MCP."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "Знайдено помилки, їх надіслано застосунку ШІ."
+    },
+    "mcp.output.connected": {
+      "message": "{app}: під’єднано"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app}: від’єднано"
+    },
+    "mcp.output.denied": {
+      "message": "{app}: під’єднання не дозволено"
+    },
+    "mcp.output.busy": {
+      "message": "{app}: попрошено зачекати, виконується {running}"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} відхилено"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} скасовано"
+    },
+    "mcp.action.status": {
+      "message": "прочитано стан IDE"
+    },
+    "mcp.action.list-files": {
+      "message": "отримано список файлів"
+    },
+    "mcp.action.read-file": {
+      "message": "прочитано {file}"
+    },
+    "mcp.action.edit-file": {
+      "message": "змінено {file}"
+    },
+    "mcp.action.create-file": {
+      "message": "створено {file}"
+    },
+    "mcp.action.save-file": {
+      "message": "збережено {file}"
+    },
+    "mcp.action.problems": {
+      "message": "перевірено {file}"
+    },
+    "mcp.action.generate": {
+      "message": "створено мапу з {file}, зерно {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "показано {file} у перегляді"
+    },
+    "mcp.action.inspect": {
+      "message": "переглянуто створену мапу"
+    },
+    "mcp.action.picture": {
+      "message": "отримано зображення {file}"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, one {отримано зображення {file} для # зерна} few {отримано зображення {file} для # зерен} many {отримано зображення {file} для # зерен} other {отримано зображення {file} для # зерна}}"
+    },
+    "mcp.action.map-test": {
+      "message": "запущено тест мапи {file}"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, one {виконано перевірку якості {file} (# зерно)} few {виконано перевірку якості {file} (# зерна)} many {виконано перевірку якості {file} (# зерен)} other {виконано перевірку якості {file} (# зерна)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "перевірено стан поточного тесту"
+    },
+    "mcp.action.details": {
+      "message": "прочитано подробиці результату"
+    },
+    "mcp.action.deploy": {
+      "message": "розгорнуто {file} як мод «{mod}»"
+    },
+    "mcp.action.live-test": {
+      "message": "запущено тест у грі для {file}"
+    },
+    "mcp.action.guide": {
+      "message": "прочитано посібник"
+    },
+    "mcp.action.reference": {
+      "message": "переглянуто довідку для {name}"
+    },
+    "mcp.action.tool": {
+      "message": "використано {tool}"
+    },
+    "mcp.refusal.waiting": {
+      "message": "AoE2RMSIDE чекає на вашу відповідь."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "Ви не дали дозволу цьому застосунку."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "Запит був некоректним."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "Жодну папку не відкрито."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "Файл поза відкритою папкою, або AoE2RMSIDE його захищає."
+    },
+    "mcp.refusal.file-type": {
+      "message": "Застосунки ШІ не можуть використовувати цей тип файлів."
+    },
+    "mcp.refusal.not-found": {
+      "message": "Файл не знайдено."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "Файл уже існує."
+    },
+    "mcp.refusal.too-large": {
+      "message": "Файл завеликий."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "Файл не є текстовим."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "Текст для зміни не знайдено або він трапляється кілька разів."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "Параметр «Дозволити застосункам ШІ зберігати файли» вимкнено."
+    },
+    "mcp.refusal.busy": {
+      "message": "Уже виконується щось інше."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "Створена мапа більше не зберігається."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "Тест більше не зберігається."
+    },
+    "mcp.refusal.stopped": {
+      "message": "Ви це зупинили."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "Застосунок ШІ скасував запит."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "Ви відмовили."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "Гра може аварійно завершитися на цій мапі."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "Гра не готова до тесту в грі."
+    },
+    "mcp.refusal.too-many": {
+      "message": "Застосунок надіслав забагато запитів."
+    },
+    "mcp.refusal.internal": {
+      "message": "В AoE2RMSIDE щось пішло не так."
     },
     "code-editor.tab.unsaved": {
       "message": "Незбережені зміни"
@@ -5127,6 +5730,9 @@
     "app-update.dialog.unsaved": {
       "message": "Якщо документи мають незбережені зміни, спершу з’явиться запитання про них."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Під’єднані застосунки ШІ втратять з’єднання під час оновлення. Потім перезапустіть їх."
+    },
     "app-update.dialog.release-notes": {
       "message": "Нотатки до випуску"
     },
@@ -5264,6 +5870,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "Для файлів {language} використовується вбудований аналіз"
+    },
+    "known-crash.headline": {
+      "message": "Гра аварійно завершується на цій мапі"
+    },
+    "known-crash.headline.possible": {
+      "message": "Тут гра може аварійно завершитися"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "override_actor_radius_if_required для об’єкта, замалого для пошуку"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required зсуває об’єкт, який не вміщається там, де його розміщено, а об’єкт замалий для пошуку вільної клітинки в грі."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "Видалити override_actor_radius_if_required з цього об’єкта."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "Рядок у блоці сполучення не має місцевості"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Усередині фігурних дужок команди сполучення гра читає місцевість із кожного рядка, а {word} її не має."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Перенести рядок із блоку сполучення перед командами сполучення."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "Сполучення доходить до ділянки поза мапою"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "Сполучення починається або закінчується на ділянці, позиція якої за цього розміру мапи лежить поза мапою."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "Тримати land_position у межах мапи за будь-якого розміру мапи."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "Визначена назва виконується як cliff_type у <CLIFF_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} — визначена назва там, де може стояти команда, тому гра виконує її як {command} без значення."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Видалити визначену назву або написати команду, яку малося на увазі."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "Визначена назва виконується як base_terrain або base_layer у фігурних дужках create_elevation"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} — визначена назва там, де може стояти команда, тому гра виконує її як {command} без значення."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Видалити визначену назву або написати команду, яку малося на увазі."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "Визначена назва виконується як ai_info_map_type, effect_amount або effect_percent"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} — визначена назва там, де може стояти команда, тому гра виконує її як {command} без значення."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Видалити визначену назву або написати команду, яку малося на увазі."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "Визначена назва виконується як guard_state у <PLAYER_SETUP>"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} — визначена назва там, де може стояти команда, тому гра виконує її як {command} без значення."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Видалити визначену назву або написати команду, яку малося на увазі."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "Визначена назва виконується як base_terrain або base_layer у <LAND_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} — визначена назва там, де може стояти команда, тому гра виконує її як {command} без значення."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Видалити визначену назву або написати команду, яку малося на увазі."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "Визначена назва виконується як terrain_type або assign_to у фігурних дужках ділянки"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} — визначена назва там, де може стояти команда, тому гра виконує її як {command} без значення."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Видалити визначену назву або написати команду, яку малося на увазі."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "Визначена назва виконується як terrain_to_place_on, layer_to_place_on або second_object у фігурних дужках об’єкта"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} — визначена назва там, де може стояти команда, тому гра виконує її як {command} без значення."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Видалити визначену назву або написати команду, яку малося на увазі."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "Визначена назва виконується як create_terrain або color_correction у <TERRAIN_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} — визначена назва там, де може стояти команда, тому гра виконує її як {command} без значення."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Видалити визначену назву або написати команду, яку малося на увазі."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Розміщення гравців групами по колу нульової довжини"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Гравців розміщено командними групами по колу нульової довжини, тому гра ділить на нуль."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "add_object без об’єкта в іменованій групі"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "add_object не має об’єкта, хоча групу названо, тому гра аварійно завершується, коли вибрано цей запис."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "Указати об’єкт для add_object."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "Об’єкт розміщено на ділянці поза мапою"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "Об’єкт розміщується для кожної ділянки на ділянці, позиція якої за цього розміру мапи лежить поза мапою."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "Тримати land_position у межах мапи за будь-якого розміру мапи."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size зменшує мапу після ділянок гравців"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size зменшує мапу після створення ділянок гравців, тому гравець може почати поза мапою."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "Перенести override_map_size перед create_player_lands."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "Мапа малює місцевість без даних про пересування"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "Мапа малює місцевість {terrain}, якої не охоплюють дані гри про пересування, тому гра аварійно завершується під час матчу."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Використати місцевість, яку охоплюють дані гри про пересування."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "З іншим зерном або іншими налаштуваннями лобі гра може аварійно завершитися на цій мапі. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Усе одно розгорнути"
+    },
+    "live-test.crash-warning.title": {
+      "message": "Гра може аварійно завершитися на цій мапі"
+    },
+    "live-test.crash-warning.description": {
+      "message": "З цим зерном усе працює, але з іншим зерном або іншими налаштуваннями лобі гра може аварійно завершитися на цій мапі. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Усе одно запустити"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "Гра може аварійно завершитися на цій мапі, тому тест у грі не запущено."
+    },
+    "test-results.crashes.title": {
+      "message": "Аварійні завершення гри"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, one {# мапа} few {# мапи} many {# мап} other {# мапи}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "Гра аварійно завершується на {maps, number} з {sampled, plural, one {# мапи} few {# мап} many {# мап} other {# мапи}}"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "Не вдалося створити {maps, plural, one {# мапу} few {# мапи} many {# мап} other {# мапи}} з {sampled, number}"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, one {Зерно} few {Зерна} many {Зерна} other {Зерна}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, one {Зерно} few {Зерна} many {Зерна} other {Зерна}} {seeds, list, unit} і ще {omitted, number}"
+    },
+    "test-results.crashes.source": {
+      "message": "Аварійне завершення гри"
+    },
+    "test-results.crashes.show": {
+      "message": "Показати аварійні завершення гри"
+    },
+    "test-results.crashes.hide": {
+      "message": "Приховати аварійні завершення гри"
+    },
+    "test-results.quality.summary": {
+      "message": "· Перевірка якості {map} · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, one {# мапа} few {# мапи} many {# мап} other {# мапи}} · {failures, plural, one {# невдача} few {# невдачі} many {# невдач} other {# невдачі}} · {warnings, plural, one {# попередження} few {# попередження} many {# попереджень} other {# попередження}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, one {# зауваження} few {# зауваження} many {# зауважень} other {# зауваження}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "Показати зауваження критерію {case}"
+    },
+    "test-results.quality.hide-case": {
+      "message": "Приховати зауваження критерію {case}"
+    },
+    "test-results.quality.case-findings": {
+      "message": "Зауваження критерію {case}"
+    },
+    "test-results.quality.no-findings": {
+      "message": "Усі критерії пройдено на {maps, plural, one {# мапі} few {# мапах} many {# мапах} other {# мапи}}"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, one {# зауваження перевірки якості} few {# зауваження перевірки якості} many {# зауважень перевірки якості} other {# зауваження перевірки якості}}"
     }
   }
 }

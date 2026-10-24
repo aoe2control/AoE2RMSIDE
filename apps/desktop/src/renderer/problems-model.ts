@@ -41,6 +41,7 @@ export interface ProblemFileGroup {
 
 export interface ProblemsModelOptions {
   isProtected(uri: string): boolean;
+  present?(diagnostic: LanguageServerDiagnostic, severity: OutputSeverity): OutputMessage | null;
 }
 
 interface Position {
@@ -57,6 +58,11 @@ function validPosition(value: unknown): Position | null {
     Number(character) >= 0
     ? { line: Number(line), character: Number(character) }
     : null;
+}
+
+function knownCrashData(data: unknown): unknown {
+  if (!data || typeof data !== 'object') return undefined;
+  return (data as Record<string, unknown>).rmsKnownCrash;
 }
 
 function diagnosticAnchor(
@@ -178,7 +184,14 @@ export function problemGroups(
       const entry: ProblemEntry = {
         key,
         severity,
-        message: presentDiagnostic({ code, message: anchor.message, severity }),
+        message:
+          options.present?.(diagnostic, severity) ??
+          presentDiagnostic({
+            code,
+            message: anchor.message,
+            severity,
+            knownCrash: knownCrashData(diagnostic.data),
+          }),
         position: `${target.line + 1}:${target.character + 1}`,
         location: t('message.format.file-line', { name: group.name, line: target.line + 1 }),
         target,

@@ -10,6 +10,14 @@ import { desktopErrorFacts, type DesktopErrorFacts } from './desktop-error';
 import { xsCatalog } from './xs-message-catalog';
 import { rmsLintCatalog } from './rms-lint-message-catalog';
 import {
+  knownCrashFromText,
+  knownCrashHeadlineText,
+  knownCrashReference,
+  knownCrashText,
+  withoutKnownCrashMarker,
+  type KnownCrashText,
+} from './known-crashes';
+import {
   linkStep,
   resolveCatalogAction,
   resolveCatalogText,
@@ -343,8 +351,11 @@ const generationCatalog: Record<string, CatalogEntry> = {
   },
   RMSXS0001: {
     severity: 'info',
-    headline: 'message.RMSXS0001.headline',
-    cause: 'message.RMSXS0001.cause',
+    headline: (facts) =>
+      facts.params.xsStartListed === 1
+        ? t('message.RMSXS0001.headline.listed')
+        : t('message.RMSXS0001.headline'),
+    cause: (facts) => (facts.params.xsStartListed === 1 ? null : t('message.RMSXS0001.cause')),
   },
   RMSXS: {
     severity: 'warning',
@@ -1052,6 +1063,11 @@ const liveCatalog: Record<string, CatalogEntry> = {
   'live.permission-not-saved': {
     headline: 'message.live.cancelled.headline',
     cause: 'message.live.permission-not-saved.cause',
+  },
+  'live.crash-warning-declined': {
+    severity: 'info',
+    headline: 'message.live.cancelled.headline',
+    cause: 'message.live.crash-warning-declined.cause',
   },
   'live.control-selected': { severity: 'info', headline: 'message.live.control-selected.headline' },
   'live.control-rejected': {
@@ -2007,7 +2023,7 @@ export function catalogKeyFor(code: string): string | null {
 }
 
 export function stripTransport(raw: string): string {
-  let text = raw.replace(/\s+/gu, ' ').trim();
+  let text = withoutKnownCrashMarker(raw).replace(/\s+/gu, ' ').trim();
   for (;;) {
     const next = text
       .replace(/^Error invoking remote method '[^']*':\s*/u, '')
@@ -2176,6 +2192,7 @@ const fallbackHeadlines: Record<OutputSource, MessageId> = {
   Script: 'message.fallback.script',
   Preview: 'message.fallback.preview',
   'Map test': 'message.fallback.map-test',
+  'Quality check': 'message.fallback.map-test',
   Deploy: 'message.deploy.headline',
   'Live test': 'message.control.headline',
   Recovery: 'message.fallback.recovery',
@@ -2183,13 +2200,15 @@ const fallbackHeadlines: Record<OutputSource, MessageId> = {
   Files: 'message.fallback.files',
   'Game folder': 'message.fallback.game-folder',
   'Game textures': 'message.game-textures.failed.headline',
+  XS: 'message.fallback.run',
   App: 'message.fallback.app',
+  MCP: 'message.fallback.app',
 };
 
 export function presentMessage(input: MessageInput): OutputMessage {
   const code = input.code ?? (input.raw ? messageCode(input.raw) : null);
   const key = code ? catalogKeyFor(code) : null;
-  if (key && engineCatalogKeys.has(key)) {
+  if (key && engineCatalogKeys.has(key) && !crashWordsOf(input.raw)) {
     return withTranslator(englishTranslator, () => wordMessage(input));
   }
   const message = wordMessage(input);
@@ -2223,10 +2242,41 @@ export function outputPartWording(
   const wording = message.wording;
   if (!wording) return 'as-written';
   if (wording.kind === 'text') return wording[part] ? 'interface' : 'as-written';
+  if (crashWordsOf(wording.raw)) return 'interface';
   const code = wording.code ?? (wording.raw ? messageCode(wording.raw) : null);
   const key = code ? catalogKeyFor(code) : null;
   if (part === 'cause' && (!key || !messageCatalog[key])) return 'as-written';
   return 'interface';
+}
+
+function crashWordsOf(raw: string | undefined): KnownCrashText | null {
+  const reference = knownCrashFromText(raw);
+  return reference ? knownCrashText(reference) : null;
+}
+
+function crashMessage(
+  crash: KnownCrashText,
+  code: string | null,
+  location: string | null,
+  base: Pick<OutputMessage, 'severity' | 'source'> & { detail?: string },
+): OutputMessage {
+  const headline = knownCrashHeadlineText(code);
+  const cause: OutputText = location
+    ? { id: 'message.format.located', args: { location, text: crash.cause } }
+    : crash.cause;
+  return {
+    code: code ?? 'unknown',
+    ...base,
+    headline: wordOutputText(headline),
+    cause: wordOutputText(cause),
+    ...(crash.fix ? { action: { label: wordOutputText(crash.fix) } } : {}),
+    wording: {
+      kind: 'text',
+      headline,
+      cause,
+      ...(crash.fix ? { action: crash.fix } : {}),
+    },
+  };
 }
 
 export function rewordOutputMessage(message: OutputMessage): OutputMessage {
@@ -2264,8 +2314,16 @@ function wordMessage(input: MessageInput): OutputMessage {
   const facts = messageFacts(input);
   const key = facts.code ? catalogKeyFor(facts.code) : null;
   const entry = key ? messageCatalog[key] : undefined;
-  const raw = input.raw?.trim();
+  const raw = input.raw ? withoutKnownCrashMarker(input.raw).trim() : undefined;
   const detail = raw ? raw : undefined;
+  const crash = crashWordsOf(input.raw);
+  if (crash) {
+    return crashMessage(crash, facts.code, facts.location, {
+      severity: entry?.severity ?? input.severity ?? 'error',
+      source: entry?.source ?? input.source,
+      ...(detail ? { detail } : {}),
+    });
+  }
   if (!entry) {
     const cause = engineCause(facts);
     return {
@@ -2350,6 +2408,7 @@ export interface DiagnosticInput {
   code?: string | number | null;
   message: string;
   severity: OutputSeverity;
+  knownCrash?: unknown;
 }
 
 const familyKeys = new Set([
@@ -2385,6 +2444,16 @@ export function skippedIncludeNote(message: string): { include: string; file: st
 }
 
 export function presentDiagnostic(input: DiagnosticInput): OutputMessage {
+  const reference = knownCrashReference(input.knownCrash);
+  const crash = reference ? knownCrashText(reference) : null;
+  if (crash) {
+    const code = input.code === undefined || input.code === null ? 'RMS' : String(input.code);
+    return crashMessage(crash, code, null, {
+      severity: input.severity,
+      source: 'Script',
+      detail: input.message,
+    });
+  }
   return withTranslator(englishTranslator, () => wordDiagnostic(input));
 }
 

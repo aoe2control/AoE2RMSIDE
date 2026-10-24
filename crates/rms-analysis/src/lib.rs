@@ -10,7 +10,7 @@ pub use inlay::{
     operand_names,
 };
 pub use lint::{
-    BRANCH_NEVER_CHOSEN, CLAMPED_VALUE, IGNORED_REDEFINITION, LINT_RULES, LintEdit,
+    BRANCH_NEVER_CHOSEN, CLAMPED_VALUE, GAME_CAN_CRASH, IGNORED_REDEFINITION, LINT_RULES, LintEdit,
     LintEnvironment, LintFinding, LintFix, LintRelated, LintRule, LintSeverity,
     MAXIMUM_LINT_RELATED, NO_EFFECT_HERE, NUMBER_FOR_A_NAME, OVERWRITTEN_ATTRIBUTE,
     POSSIBLY_UNDEFINED_NAME, Predefined, ProgramView, UNKNOWN_COMMAND, UNUSED_DEFINITION,
@@ -313,6 +313,7 @@ pub fn require_catalog_vocabulary(
                 .to_owned(),
         source_chain: Vec::new(),
         range: None,
+        crash: None,
     })
 }
 
@@ -389,6 +390,7 @@ fn catalog_strict_inputs(
         message: error.to_string(),
         source_chain: Vec::new(),
         range: None,
+        crash: None,
     })?;
     let entry = catalog.entry_source().map_err(|error| StrictParseError {
         kind: rms_semantics::StrictParseErrorKind::Resolution,
@@ -396,6 +398,7 @@ fn catalog_strict_inputs(
         message: error.to_string(),
         source_chain: Vec::new(),
         range: None,
+        crash: None,
     })?;
     Ok((resolver, entry, options))
 }

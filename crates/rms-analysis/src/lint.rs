@@ -1,9 +1,10 @@
 use std::collections::{BTreeMap, BTreeSet};
 
+use rms_profile::{KnownCrashHit, crash_ids};
 use rms_semantics::{
-    ArgumentResolution, Braces, NativeIgnoredContext, ParsedDecisionKind, SemanticProgram,
-    WordAction, WordDefinitions, WordPlace, first_word_action, strict_command_arity,
-    strict_command_names,
+    ArgumentResolution, Braces, CrashingWords, NativeIgnoredContext, ParsedDecisionKind,
+    SemanticProgram, WordAction, WordDefinitions, WordPlace, first_word_action,
+    strict_command_arity, strict_command_names,
 };
 use rms_source::{ByteOffset, ByteRange, SourceId, SourceText};
 use rms_syntax::{CstKind, Token, TokenKind};
@@ -36,6 +37,7 @@ pub const IGNORED_REDEFINITION: &str = "RMS4008";
 pub const NOT_A_COMMENT: &str = "RMS4009";
 pub const NUMBER_FOR_A_NAME: &str = "RMS4010";
 pub const POSSIBLY_UNDEFINED_NAME: &str = "RMS4011";
+pub const GAME_CAN_CRASH: &str = "RMS4012";
 
 pub const LINT_RULES: &[LintRule] = &[
     LintRule {
@@ -104,6 +106,12 @@ pub const LINT_RULES: &[LintRule] = &[
         title: "Name may be undefined",
         rationale: "The game reads a script once from top to bottom, runs only the branch of an if or a random block that applies, and knows a #define or #const only from its line on. A name that only some branches define is missing on the other paths: a command that reads it as a name is then ignored, and a number it reads counts as 0. Paths that depend on lobby settings or on included files are not judged.",
     },
+    LintRule {
+        code: GAME_CAN_CRASH,
+        severity: LintSeverity::Warning,
+        title: "The game can crash here",
+        rationale: "The game itself crashes on some lines: a defined name it runs as a command that then reads a missing value, a line without a terrain inside the braces of a connection command, or override_map_size making the map smaller after the player lands. The preview refuses the map when the selected settings reach such a crash; this warning marks the line when another branch, seed or lobby setting can reach it.",
+    },
 ];
 
 pub fn lint_rule(code: &str) -> Option<&'static LintRule> {
@@ -141,6 +149,7 @@ pub struct LintFinding {
     pub unnecessary: bool,
     pub fix: Option<LintFix>,
     pub related: Vec<LintRelated>,
+    pub known_crash: Option<KnownCrashHit>,
 }
 
 pub struct ProgramView<'a> {
@@ -201,7 +210,13 @@ pub fn lint_document(
     if environment.enabled(POSSIBLY_UNDEFINED_NAME) {
         crate::undefined_paths::possibly_undefined_names(&document, environment, &mut findings);
     }
+    if environment.enabled(GAME_CAN_CRASH) {
+        crashing_lines(&document, environment, &mut findings);
+    }
     if let Some(view) = &environment.program {
+        if environment.enabled(GAME_CAN_CRASH) {
+            map_shrinking_after_player_lands(&document, view, &mut findings);
+        }
         if environment.enabled(NO_EFFECT_HERE) {
             ignored_operations(&document, view, &mut findings);
         }
@@ -561,6 +576,7 @@ fn unknown_commands(
             None => format!("'{text}' is not an RMS command, so the game skips it"),
         };
         findings.push(LintFinding {
+            known_crash: None,
             related: Vec::new(),
             code: UNKNOWN_COMMAND,
             severity: LintSeverity::Warning,
@@ -693,6 +709,7 @@ fn unused_definitions(
         let name_token = line.tokens[1];
         let removable = document.line_is_only_statement(line);
         findings.push(LintFinding {
+            known_crash: None,
             related: Vec::new(),
             code: UNUSED_DEFINITION,
             severity: LintSeverity::Hint,
@@ -987,6 +1004,7 @@ fn track_overwrite<'d>(
     {
         let later_line = document.line_number(line.full.start);
         findings.push(LintFinding {
+            known_crash: None,
             related: vec![LintRelated {
                 source_id: None,
                 range: ByteRange {
@@ -1050,6 +1068,7 @@ fn clamped(
         return;
     }
     findings.push(LintFinding {
+        known_crash: None,
         related: Vec::new(),
         code: CLAMPED_VALUE,
         severity: LintSeverity::Warning,
@@ -1203,6 +1222,7 @@ fn report_branches(
                     .to_owned()
             };
             findings.push(LintFinding {
+                known_crash: None,
                 related: Vec::new(),
                 code: BRANCH_NEVER_CHOSEN,
                 severity: LintSeverity::Warning,
@@ -1213,6 +1233,7 @@ fn report_branches(
             });
         } else if index == 0 && weight == 0 && environment.enabled(ZERO_CHANCE_FIRST_BRANCH) {
             findings.push(LintFinding {
+                known_crash: None,
                 related: Vec::new(),
                 code: ZERO_CHANCE_FIRST_BRANCH,
                 severity: LintSeverity::Information,
@@ -1286,6 +1307,7 @@ fn ignored_operations(
             .last()
             .is_some_and(|last| last.range.end == operation.source_range.end);
         findings.push(LintFinding {
+            known_crash: None,
             related: Vec::new(),
             code: NO_EFFECT_HERE,
             severity: LintSeverity::Warning,
@@ -1321,6 +1343,7 @@ fn undefine_lines(document: &Document<'_>, findings: &mut Vec<LintFinding>) {
             None => "#undefine has no effect".to_owned(),
         };
         findings.push(LintFinding {
+            known_crash: None,
             related: Vec::new(),
             code: NO_EFFECT_HERE,
             severity: LintSeverity::Warning,
@@ -1463,6 +1486,7 @@ fn comment_look_alikes(
             ),
         };
         findings.push(LintFinding {
+            known_crash: None,
             related: Vec::new(),
             code: NOT_A_COMMENT,
             severity,
@@ -1677,6 +1701,7 @@ fn numbers_for_names(
         let name = operation.name.as_str();
         let is_number = number.value.parse::<f32>().is_ok() || number.value.starts_with("rnd(");
         findings.push(LintFinding {
+            known_crash: None,
             related: Vec::new(),
             code: NUMBER_FOR_A_NAME,
             severity: LintSeverity::Warning,
@@ -1791,6 +1816,7 @@ fn ignored_redefinitions(
                     })
                     .collect();
                 findings.push(LintFinding {
+                    known_crash: None,
                     related,
                     code: IGNORED_REDEFINITION,
                     severity: LintSeverity::Warning,
@@ -1828,6 +1854,153 @@ fn word_range(statement: &[u8], start: ByteOffset, index: usize) -> Option<ByteR
         found += 1;
     }
     None
+}
+
+fn crash_finding(lead: &str, range: ByteRange, hit: KnownCrashHit) -> Option<LintFinding> {
+    let entry = hit.entry().filter(|entry| entry.warns())?;
+    let cause = hit.cause()?;
+    let cause = if entry.cause.starts_with('{') {
+        cause
+    } else {
+        let mut characters = cause.chars();
+        characters
+            .next()
+            .map(|first| first.to_lowercase().chain(characters).collect())
+            .unwrap_or_default()
+    };
+    let message = match &entry.fix {
+        Some(fix) => format!("{lead} {cause} {fix}"),
+        None => format!("{lead} {cause}"),
+    };
+    Some(LintFinding {
+        code: GAME_CAN_CRASH,
+        severity: LintSeverity::Warning,
+        message,
+        range,
+        unnecessary: false,
+        fix: None,
+        related: Vec::new(),
+        known_crash: Some(hit),
+    })
+}
+
+fn crashing_lines(
+    document: &Document<'_>,
+    environment: &LintEnvironment<'_>,
+    findings: &mut Vec<LintFinding>,
+) {
+    let mut local = BTreeMap::<String, Vec<Option<String>>>::new();
+    for (name, value) in document_definitions(document.source, document.analysis) {
+        local.entry(name).or_default().push(value);
+    }
+    let definitions = |name: &str| definitions_of(name, &local, environment);
+    let mut reader = CrashingWords::new(&definitions);
+    let places = document.word_places();
+    let mut words = Vec::new();
+    let mut ranges = Vec::new();
+    for line in &document.lines {
+        if line.uncertain || line.kind == CstKind::Definition {
+            continue;
+        }
+        words.clear();
+        ranges.clear();
+        for token in &line.tokens {
+            let text = document.text(token);
+            if matches!(text, "{" | "}") || section_name(text).is_some() {
+                break;
+            }
+            for word in text
+                .split(|character: char| {
+                    matches!(character, '\t' | '\n' | '\u{b}' | '\u{c}' | '\r' | ' ')
+                })
+                .filter(|word| !word.is_empty())
+            {
+                words.push(word);
+                ranges.push(token.range);
+            }
+        }
+        let Some(first) = line.tokens.first() else {
+            continue;
+        };
+        if words.is_empty() {
+            continue;
+        }
+        let place = document.place_of(&places, first);
+        for crash in reader.of_line(&words, place) {
+            let mut hit = KnownCrashHit::new(crash.crash_id).with("word", words[crash.index]);
+            if let Some(command) = crash.command {
+                hit = hit.with("command", command);
+            }
+            findings.extend(crash_finding(
+                "The game crashes when this line runs:",
+                ranges[crash.index],
+                hit,
+            ));
+        }
+    }
+}
+
+fn map_shrinking_after_player_lands(
+    document: &Document<'_>,
+    view: &ProgramView<'_>,
+    findings: &mut Vec<LintFinding>,
+) {
+    let program = view.program;
+    let executed = || {
+        program
+            .operations
+            .iter()
+            .filter(|operation| operation.accepted_by_target_parser())
+    };
+    if executed().any(|operation| {
+        matches!(
+            operation.name.as_str(),
+            "direct_placement" | "circle_radius"
+        )
+    }) {
+        return;
+    }
+    let context = &program.execution_context;
+    let mut side = context.map_width.max(context.map_height);
+    let mut land_side = side;
+    let mut player_land_side = None::<u16>;
+    for operation in executed() {
+        match operation.name.as_str() {
+            "create_player_lands" => {
+                player_land_side = Some(player_land_side.map_or(side, |known| known.max(side)));
+            }
+            "create_land" => land_side = side,
+            "assign_to_player" | "assign_to" if operation.depth > 0 => {
+                player_land_side =
+                    Some(player_land_side.map_or(land_side, |known| known.max(land_side)));
+            }
+            "override_map_size" => {
+                let Some(value) = operation
+                    .arguments
+                    .first()
+                    .and_then(|argument| argument.value.parse::<f32>().ok())
+                    .filter(|value| value.is_finite())
+                else {
+                    continue;
+                };
+                let new_side = value.round().clamp(36.0, 480.0) as u16;
+                if player_land_side.is_some_and(|lands| new_side < lands)
+                    && operation.source_id == *document.source.id()
+                    && document
+                        .line_starting_at(operation.source_range.start)
+                        .is_some_and(|line| !line.uncertain)
+                {
+                    findings.extend(crash_finding(
+                        "With some seeds the game crashes on this map:",
+                        operation.source_range,
+                        KnownCrashHit::new(crash_ids::OVERRIDE_MAP_SIZE_SHRINKS_AFTER_LANDS),
+                    ));
+                }
+                side = new_side;
+            }
+            _ => {}
+        }
+    }
 }
 
 struct Suppressions {

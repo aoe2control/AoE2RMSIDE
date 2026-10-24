@@ -788,7 +788,17 @@ export function aggregateSelectionLayers(
   visibility: PreviewObjectVisibility = defaultPreviewObjectVisibility,
   routes: ConnectionRouteSet | null = null,
 ): AggregatedSelectionLayer[] {
-  return aggregateTileIndexLayers(
+  return selectionLayerAggregation(map, scene, selection, visibility, routes).finish();
+}
+
+export function selectionLayerAggregation(
+  map: PresentedPreviewResult,
+  scene: TopDownScene,
+  selection: PreviewSelection,
+  visibility: PreviewObjectVisibility = defaultPreviewObjectVisibility,
+  routes: ConnectionRouteSet | null = null,
+): TileLayerAggregation {
+  return new TileLayerAggregation(
     map,
     scene,
     selectionTileIndices(selection, scene.width),
@@ -807,149 +817,349 @@ export function aggregateTileIndexLayers(
   routes: ConnectionRouteSet | null = null,
   writtenBy?: ReadonlyMap<number, number>,
 ): AggregatedSelectionLayer[] {
-  const selectedTiles = new Set(
-    [...tileIndices].filter((index) => index >= 0 && index < scene.width * scene.height),
-  );
-  const groups = new Map<string, AggregatedSelectionLayer & { idSet: Set<number> }>();
-  const add = (layer: SelectedTileLayer, tileIndex: number, x: number, y: number) => {
-    if (operations && (layer.operationIndex === null || !operations.has(layer.operationIndex))) {
+  return new TileLayerAggregation(
+    map,
+    scene,
+    tileIndices,
+    visibility,
+    operations,
+    routes,
+    writtenBy,
+  ).finish();
+}
+
+const aggregationCheckInterval = 256;
+
+type AggregationGroup = AggregatedSelectionLayer & { idSet: Set<number> };
+
+type AggregationPhase =
+  'tiles' | 'terrain' | 'connections' | 'failures' | 'cliffs' | 'objects' | 'groups' | 'done';
+
+export class TileLayerAggregation {
+  readonly map: PresentedPreviewResult;
+  readonly scene: TopDownScene;
+  readonly #visibility: PreviewObjectVisibility;
+  readonly #operations: ReadonlySet<number> | undefined;
+  readonly #routes: ConnectionRouteSet | null;
+  readonly #writtenBy: ReadonlyMap<number, number> | undefined;
+  readonly #groups = new Map<string, AggregationGroup>();
+  readonly #terrains = new Map<number, { material: PreviewMaterial; key: string }>();
+  #input: Iterator<number> | null;
+  #tiles: number[] = [];
+  #selected: Uint8Array;
+  #traced: ReturnType<typeof tracedRouteTiles> | null = null;
+  #sorted: AggregationGroup[] = [];
+  #result: AggregatedSelectionLayer[] | null = null;
+  #phase: AggregationPhase = 'tiles';
+  #cursor = 0;
+  #inner = 0;
+  #units = 0;
+
+  constructor(
+    map: PresentedPreviewResult,
+    scene: TopDownScene,
+    tileIndices: Iterable<number>,
+    visibility: PreviewObjectVisibility = defaultPreviewObjectVisibility,
+    operations?: ReadonlySet<number>,
+    routes: ConnectionRouteSet | null = null,
+    writtenBy?: ReadonlyMap<number, number>,
+  ) {
+    this.map = map;
+    this.scene = scene;
+    this.#visibility = visibility;
+    this.#operations = operations;
+    this.#routes = routes;
+    this.#writtenBy = writtenBy;
+    this.#input = tileIndices[Symbol.iterator]();
+    this.#selected = new Uint8Array(scene.width * scene.height);
+  }
+
+  get done(): boolean {
+    return this.#result !== null;
+  }
+
+  get result(): AggregatedSelectionLayer[] | null {
+    return this.#result;
+  }
+
+  finish(): AggregatedSelectionLayer[] {
+    this.run(() => false);
+    return this.#result!;
+  }
+
+  run(shouldYield: () => boolean): boolean {
+    const { map, scene } = this;
+    const width = scene.width;
+    const total = scene.width * scene.height;
+    const selected = (tileIndex: number) =>
+      tileIndex >= 0 && tileIndex < total && this.#selected[tileIndex] === 1;
+    const yieldNow = () => {
+      this.#units += 1;
+      if (this.#units < aggregationCheckInterval) return false;
+      this.#units = 0;
+      return shouldYield();
+    };
+    while (this.#phase !== 'done') {
+      switch (this.#phase) {
+        case 'tiles': {
+          const input = this.#input!;
+          for (let next = input.next(); !next.done; next = input.next()) {
+            const index = next.value;
+            if (index >= 0 && index < total && this.#selected[index] === 0) {
+              this.#selected[index] = 1;
+              this.#tiles.push(index);
+            }
+            if (yieldNow()) return false;
+          }
+          this.#input = null;
+          this.#advance('terrain');
+          break;
+        }
+        case 'terrain': {
+          const operations = this.#operations;
+          while (this.#cursor < this.#tiles.length) {
+            const tileIndex = this.#tiles[this.#cursor]!;
+            this.#cursor += 1;
+            const owner = operationIndex(map.tileOperationIndicesLe, tileIndex);
+            const writer =
+              operations && (owner === null || !operations.has(owner))
+                ? (this.#writtenBy?.get(tileIndex) ?? owner)
+                : owner;
+            const terrainId = scene.terrainIds[tileIndex]!;
+            let terrain = this.#terrains.get(terrainId);
+            if (!terrain) {
+              const material = presentedTerrainMaterial(map, terrainId);
+              terrain = { material, key: renderedMaterialIdentity('terrain', material) };
+              this.#terrains.set(terrainId, terrain);
+            }
+            this.#add(
+              terrain.key,
+              `terrain-${tileIndex}`,
+              'terrain',
+              terrain.material,
+              writer,
+              0,
+              tileIndex,
+              tileIndex % width,
+              Math.floor(tileIndex / width),
+              undefined,
+            );
+            if (yieldNow()) return false;
+          }
+          this.#tiles = [];
+          this.#traced = this.#routes ? tracedRouteTiles(this.#routes, width) : null;
+          this.#advance('connections');
+          break;
+        }
+        case 'connections': {
+          const connections = scene.connections;
+          while (this.#cursor < connections.length) {
+            const index = this.#cursor;
+            const connection = connections[index]!;
+            const points =
+              this.#traced?.connections.get(index) ??
+              distinctPoints(connection.start, connection.end).map(
+                (point) => point.y * width + point.x,
+              );
+            while (this.#inner < points.length) {
+              const tileIndex = points[this.#inner]!;
+              this.#inner += 1;
+              if (!selected(tileIndex)) continue;
+              const material = connectionMaterial(connection);
+              this.#add(
+                renderedMaterialIdentity('connection', material),
+                `connection-${index}`,
+                'connection',
+                material,
+                operationIndex(map.connectionOperationIndicesLe, index),
+                1_000 + index,
+                tileIndex,
+                tileIndex % width,
+                Math.floor(tileIndex / width),
+                undefined,
+              );
+              if (yieldNow()) return false;
+            }
+            this.#cursor += 1;
+            this.#inner = 0;
+            if (yieldNow()) return false;
+          }
+          this.#advance('failures');
+          break;
+        }
+        case 'failures': {
+          const failures = this.#traced?.failures ?? [];
+          while (this.#cursor < failures.length) {
+            const ordinal = this.#cursor;
+            const { operationIndex: failedOperation, tiles } = failures[ordinal]!;
+            while (this.#inner < tiles.length) {
+              const tileIndex = tiles[this.#inner]!;
+              this.#inner += 1;
+              if (!selected(tileIndex)) continue;
+              const material = failedConnectionSearchMaterial();
+              this.#add(
+                renderedMaterialIdentity('connection', material),
+                `failed-search-${ordinal}`,
+                'connection',
+                material,
+                failedOperation,
+                1_000 + scene.connections.length + ordinal,
+                tileIndex,
+                tileIndex % width,
+                Math.floor(tileIndex / width),
+                undefined,
+              );
+              if (yieldNow()) return false;
+            }
+            this.#cursor += 1;
+            this.#inner = 0;
+            if (yieldNow()) return false;
+          }
+          this.#traced = null;
+          this.#advance('cliffs');
+          break;
+        }
+        case 'cliffs': {
+          const cliffs = scene.cliffs;
+          while (this.#cursor < cliffs.length) {
+            const index = this.#cursor;
+            this.#cursor += 1;
+            const cliff = cliffs[index]!;
+            for (const point of distinctPoints(cliff.from, cliff.to)) {
+              const tileIndex = point.y * width + point.x;
+              if (!selected(tileIndex)) continue;
+              const material = presentedCliffMaterial(map, cliff.cliffType);
+              this.#add(
+                renderedMaterialIdentity('cliff', material),
+                `cliff-${index}`,
+                'cliff',
+                material,
+                operationIndex(map.cliffOperationIndicesLe, index),
+                2_000 + index,
+                tileIndex,
+                point.x,
+                point.y,
+                undefined,
+              );
+            }
+            if (yieldNow()) return false;
+          }
+          this.#advance('objects');
+          break;
+        }
+        case 'objects': {
+          const objects = scene.objects;
+          while (this.#cursor < objects.length) {
+            const index = this.#cursor;
+            this.#cursor += 1;
+            const object = objects[index]!;
+            const x = Math.floor(object.x);
+            const y = Math.floor(object.y);
+            const tileIndex = y * width + x;
+            if (isListedPreviewObject(object, this.#visibility) && selected(tileIndex)) {
+              const material = presentedObjectMaterial(map, object, this.#visibility);
+              this.#add(
+                renderedMaterialIdentity(object.presentationKind, material),
+                `object-${object.index}`,
+                object.presentationKind,
+                material,
+                operationIndex(map.objectOperationIndicesLe, index),
+                3_000 + object.index,
+                tileIndex,
+                x,
+                y,
+                objectResource(object),
+              );
+            }
+            if (yieldNow()) return false;
+          }
+          this.#sorted = [...this.#groups.values()];
+          this.#advance('groups');
+          break;
+        }
+        case 'groups': {
+          const groups = this.#sorted;
+          while (this.#cursor < groups.length) {
+            const group = groups[this.#cursor]!;
+            this.#cursor += 1;
+            group.ids = [...group.idSet].sort((left, right) => left - right);
+            group.instances.sort(compareLayerInstances);
+            this.#units += Math.floor(group.instances.length / 8);
+            if (yieldNow()) return false;
+          }
+          this.#result = groups
+            .map(({ idSet: _idSet, ...group }) => group)
+            .sort(
+              (left, right) =>
+                right.count - left.count ||
+                left.renderOrder - right.renderOrder ||
+                lexicalCompare(left.key, right.key),
+            );
+          this.#sorted = [];
+          this.#groups.clear();
+          this.#terrains.clear();
+          this.#selected = new Uint8Array(0);
+          this.#phase = 'done';
+          break;
+        }
+      }
+    }
+    return true;
+  }
+
+  #advance(phase: AggregationPhase): void {
+    this.#phase = phase;
+    this.#cursor = 0;
+    this.#inner = 0;
+  }
+
+  #add(
+    groupKey: string,
+    key: string,
+    kind: SelectedTileLayerKind,
+    material: PreviewMaterial,
+    layerOperationIndex: number | null,
+    renderOrder: number,
+    tileIndex: number,
+    x: number,
+    y: number,
+    resource: SelectedTileLayer['resource'],
+  ): void {
+    const operations = this.#operations;
+    if (operations && (layerOperationIndex === null || !operations.has(layerOperationIndex))) {
       return;
     }
-    const key = renderedMaterialIdentity(layer.kind, layer.material);
-    let group = groups.get(key);
+    let group = this.#groups.get(groupKey);
     if (!group) {
       group = {
         count: 0,
         ids: [],
         idSet: new Set(),
         instances: [],
-        key,
-        kind: layer.kind,
-        material: layer.material,
-        renderOrder: layerKindOrder(layer.kind),
+        key: groupKey,
+        kind,
+        material,
+        renderOrder: layerKindOrder(kind),
       };
-      groups.set(key, group);
+      this.#groups.set(groupKey, group);
     }
-    const subject = layer.material.subject;
+    const subject = material.subject;
     if ('id' in subject) group.idSet.add(subject.id);
-    group.instances.push({
-      ...layer,
-      elementOrder: layer.renderOrder,
+    const instance: SelectedLayerInstance = {
+      key,
+      kind,
+      material,
+      operationIndex: layerOperationIndex,
+      renderOrder,
+      elementOrder: renderOrder,
       tileIndex,
       x,
       y,
-    });
+    };
+    if (resource) instance.resource = resource;
+    group.instances.push(instance);
     group.count += 1;
-  };
-  for (const tileIndex of selectedTiles) {
-    const x = tileIndex % scene.width;
-    const y = Math.floor(tileIndex / scene.width);
-    const owner = operationIndex(map.tileOperationIndicesLe, tileIndex);
-    const writer =
-      operations && (owner === null || !operations.has(owner))
-        ? (writtenBy?.get(tileIndex) ?? owner)
-        : owner;
-    add(
-      {
-        key: `terrain-${tileIndex}`,
-        kind: 'terrain',
-        material: presentedTerrainMaterial(map, scene.terrainIds[tileIndex]!),
-        operationIndex: writer,
-        renderOrder: 0,
-      },
-      tileIndex,
-      x,
-      y,
-    );
   }
-  const tracedTiles = routes ? tracedRouteTiles(routes, scene.width) : null;
-  scene.connections.forEach((connection, index) => {
-    const points =
-      tracedTiles?.connections.get(index) ??
-      distinctPoints(connection.start, connection.end).map(
-        (point) => point.y * scene.width + point.x,
-      );
-    for (const tileIndex of points) {
-      if (!selectedTiles.has(tileIndex)) continue;
-      add(
-        {
-          key: `connection-${index}`,
-          kind: 'connection',
-          material: connectionMaterial(connection),
-          operationIndex: operationIndex(map.connectionOperationIndicesLe, index),
-          renderOrder: 1_000 + index,
-        },
-        tileIndex,
-        tileIndex % scene.width,
-        Math.floor(tileIndex / scene.width),
-      );
-    }
-  });
-  tracedTiles?.failures.forEach(({ operationIndex: failedOperation, tiles }, ordinal) => {
-    for (const tileIndex of tiles) {
-      if (!selectedTiles.has(tileIndex)) continue;
-      add(
-        {
-          key: `failed-search-${ordinal}`,
-          kind: 'connection',
-          material: failedConnectionSearchMaterial(),
-          operationIndex: failedOperation,
-          renderOrder: 1_000 + scene.connections.length + ordinal,
-        },
-        tileIndex,
-        tileIndex % scene.width,
-        Math.floor(tileIndex / scene.width),
-      );
-    }
-  });
-  scene.cliffs.forEach((cliff, index) => {
-    for (const point of distinctPoints(cliff.from, cliff.to)) {
-      if (!selectedTiles.has(point.y * scene.width + point.x)) continue;
-      add(
-        {
-          key: `cliff-${index}`,
-          kind: 'cliff',
-          material: presentedCliffMaterial(map, cliff.cliffType),
-          operationIndex: operationIndex(map.cliffOperationIndicesLe, index),
-          renderOrder: 2_000 + index,
-        },
-        point.y * scene.width + point.x,
-        point.x,
-        point.y,
-      );
-    }
-  });
-  scene.objects.forEach((object, index) => {
-    if (!isListedPreviewObject(object, visibility)) return;
-    const x = Math.floor(object.x);
-    const y = Math.floor(object.y);
-    if (!selectedTiles.has(y * scene.width + x)) return;
-    add(
-      {
-        key: `object-${object.index}`,
-        kind: object.presentationKind,
-        material: presentedObjectMaterial(map, object, visibility),
-        operationIndex: operationIndex(map.objectOperationIndicesLe, index),
-        renderOrder: 3_000 + object.index,
-        resource: objectResource(object),
-      },
-      y * scene.width + x,
-      x,
-      y,
-    );
-  });
-  return [...groups.values()]
-    .map(({ idSet, ...group }) => ({
-      ...group,
-      ids: [...idSet].sort((left, right) => left - right),
-      instances: group.instances.sort(compareLayerInstances),
-    }))
-    .sort(
-      (left, right) =>
-        right.count - left.count ||
-        left.renderOrder - right.renderOrder ||
-        lexicalCompare(left.key, right.key),
-    );
 }
 
 function objectResource(
@@ -976,10 +1186,11 @@ export const previewResourceTotalMessages: Readonly<Record<PreviewResourceKind, 
   stone: 'preview-panel.legend.resource-total.stone',
 };
 
+const float32View = new DataView(new ArrayBuffer(4));
+
 export function float32FromBits(bits: number): number {
-  const view = new DataView(new ArrayBuffer(4));
-  view.setUint32(0, bits >>> 0);
-  return view.getFloat32(0);
+  float32View.setUint32(0, bits >>> 0);
+  return float32View.getFloat32(0);
 }
 
 export function layerResourceTotals(
@@ -1125,10 +1336,12 @@ export function resolveAggregatedLayerActivation(
 export function operationIndex(bytes: Uint8Array, index: number): number | null {
   const offset = index * 4;
   if (index < 0 || offset + 4 > bytes.byteLength) return null;
-  const value = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint32(
-    offset,
-    true,
-  );
+  const value =
+    (bytes[offset]! |
+      (bytes[offset + 1]! << 8) |
+      (bytes[offset + 2]! << 16) |
+      (bytes[offset + 3]! << 24)) >>>
+    0;
   return value === 0xffff_ffff ? null : value;
 }
 

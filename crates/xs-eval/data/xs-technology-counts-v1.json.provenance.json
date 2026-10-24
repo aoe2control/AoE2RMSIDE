@@ -1,0 +1,22 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2de-xs-technology-counts-v1",
+  "files": [
+    {
+      "path": "crates/xs-eval/data/xs-technology-counts-v1.json",
+      "sha256": "e315baaf76a735231bcb7dd2bcbd495181fbb62e946a21d5bcf300735518192a",
+      "authorship": "One number per shipped content pack: the count of technology slots in the game data of builds 101.103.48987 and 101.103.54800, read by the project's VER 8.9 reader from lawfully owned, version-verified installations.",
+      "license": "Neutral factual numbers; no source expression retained",
+      "sourceClassification": "sanitized-observation",
+      "created": "2026-10-21",
+      "containsGameContent": false,
+      "transformation": "The reader decodes the DAT's technology table and keeps only its row count; no names, text, art, data values, or installation fingerprint are retained. The XS start check answers xsGetPlayerNumberOfTechs with this number for previews that use the shipped content pack.",
+      "reviewer": "Reviewed and approved by the project maintainer on 2026-10-23"
+    }
+  ]
+}

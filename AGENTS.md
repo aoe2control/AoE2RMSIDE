@@ -66,12 +66,15 @@ own maps, deployment as a local mod, and the optional Game textures look.
 | `apps/desktop/src/generated`              | Generated Protobuf bindings (`pnpm schema:generate`).     |
 | `bins/rmsd`                               | Generation daemon.                                        |
 | `bins/rms-ls`                             | RMS and XS language server.                               |
-| `bins/rms-test`                           | Map test runner and its language server.                  |
+| `bins/rms-test`                           | Map test runner, language server, and quality check.      |
+| `bins/rms-connect`                        | MCP relay that AI apps start.                             |
+| `connector`                               | MCP tool catalog, prompts, and the guide for AI apps.     |
 | `crates/rms-*`                            | RMS source, syntax, semantics, profiles, content, engine. |
-| `crates/xs-*`                             | XS syntax and analysis.                                   |
+| `crates/xs-*`                             | XS syntax, analysis, and the XS start check.              |
+| `crates/rms-connect-protocol`             | The pipe contract between the MCP relay and the app.      |
 | `proto`                                   | Protobuf contract.                                        |
 | `schemas`                                 | JSON schemas of the data files.                           |
-| `profiles`                                | Behavior profiles and presentation palettes.              |
+| `profiles`                                | Behavior profiles, palettes, and the known-crash list.    |
 | `assets`                                  | Original artwork and third-party licenses.                |
 | `tools`                                   | Build and packaging scripts.                              |
 

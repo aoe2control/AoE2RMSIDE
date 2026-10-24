@@ -4263,9 +4263,10 @@ fn override_actor_radius_tile(
     }
     let window = 4 * (product as i32);
     if window == 0 {
-        return Err(invalid_request(
+        return Err(crash_refusal(
             "RMSGEN7103",
             "override_actor_radius_if_required moves an object that does not fit where it was placed, and the object is too small for the game's search for a free tile; the game crashes there, so this map cannot be previewed",
+            KnownCrashHit::new(crash_ids::ACTOR_RADIUS_SEARCH_TOO_SMALL),
         ));
     }
     let tiles = override_actor_radius_candidates(anchor, window, dimensions, tile_holds_objects);

@@ -93,7 +93,8 @@ use rms_content::{
     CivilizationId, CompatibleContentView, ContentPackIdentity, ObjectId, RestrictionDefinition,
     TerrainId,
 };
-use rms_profile::ProfileIdentity;
+pub use rms_profile::KnownCrashHit;
+use rms_profile::{ProfileIdentity, crash_ids};
 use rms_semantics::{
     ArgumentKind, ExecutionPlayerSetup, ResolvedArgument, RmsRandom, SemanticOperation,
     SemanticProgram, StrictParseOptions,
@@ -134,6 +135,7 @@ impl MapDimensions {
             return Err(GenerationError::InvalidRequest {
                 code: "RMSGEN1001",
                 message: "map dimensions must be between 1 and 512".to_owned(),
+                crash: None,
             });
         }
         Ok(usize::from(self.width) * usize::from(self.height))
@@ -1322,6 +1324,78 @@ pub struct GenerationMetrics {
     pub counters: BTreeMap<String, u64>,
 }
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct PlayerStart {
+    pub slot: u8,
+    pub team: u8,
+    pub land: Option<MapCoordinate>,
+    pub land_zone: Option<u8>,
+    pub land_zone_shared: bool,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct PlacementRecord {
+    pub operation_index: u32,
+    pub object_id: Option<ObjectId>,
+    pub player_slot: Option<u8>,
+    pub groups_requested: u32,
+    pub groups_placed: u32,
+    pub objects_created: u32,
+}
+
+pub const MAXIMUM_PLACEMENT_RECORDS: usize = 4_096;
+
+fn player_starts(
+    players: &[ExactSetupPlayer],
+    lands: &[exact_land::ExactLandDescriptor],
+) -> Vec<PlayerStart> {
+    let mut starts = players
+        .iter()
+        .map(|player| {
+            let land = lands
+                .iter()
+                .find(|land| land.assigned_slot == Some(player.slot));
+            PlayerStart {
+                slot: player.slot,
+                team: player.team,
+                land: land.map(|land| land.position),
+                land_zone: land.map(|land| land.zone),
+                land_zone_shared: land.is_some_and(|own| {
+                    lands
+                        .iter()
+                        .filter(|other| !std::ptr::eq(*other, own))
+                        .any(|other| other.zone == own.zone)
+                }),
+            }
+        })
+        .collect::<Vec<_>>();
+    starts.sort_by_key(|start| start.slot);
+    starts
+}
+
+fn placement_records(
+    attempts: &[exact_object::ExactObjectAttempt],
+    descriptors: &[exact_object::ExactObjectDescriptor],
+) -> (Vec<PlacementRecord>, u32) {
+    let records = attempts
+        .iter()
+        .filter_map(|attempt| {
+            let descriptor = descriptors.get(usize::from(attempt.descriptor_index))?;
+            Some(PlacementRecord {
+                operation_index: descriptor.operation_index,
+                object_id: descriptor.object_id,
+                player_slot: attempt.player_slot,
+                groups_requested: attempt.groups_requested,
+                groups_placed: attempt.groups_accepted,
+                objects_created: attempt.objects_created,
+            })
+        })
+        .take(MAXIMUM_PLACEMENT_RECORDS)
+        .collect::<Vec<_>>();
+    let omitted = attempts.len().saturating_sub(records.len());
+    (records, u32::try_from(omitted).unwrap_or(u32::MAX))
+}
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct GeneratedMap {
     pub dimensions: MapDimensions,
@@ -1348,6 +1422,9 @@ pub struct GeneratedMap {
     pub warnings: Vec<GenerationWarning>,
     pub metrics: GenerationMetrics,
     pub provenance: Vec<ProvenanceReference>,
+    pub player_starts: Vec<PlayerStart>,
+    pub placement_records: Vec<PlacementRecord>,
+    pub omitted_placement_records: u32,
 }
 
 impl GeneratedMap {
@@ -1691,6 +1768,7 @@ fn validate_exact_operation_count(operation_count: usize) -> Result<(), Generati
                 "the script expands to {} generation steps; a preview supports up to {MAXIMUM_QUALIFIED_EXACT_OPERATIONS}",
                 operation_count
             ),
+            crash: None,
         });
     }
     Ok(())
@@ -2348,9 +2426,10 @@ fn grouped_player_perimeters(
     let step = circumference.wrapping_div(position_group_count);
     let mut current = rng.bounded(circumference as u32).result as i32;
     if circumference == 0 {
-        return Err(invalid_request(
+        return Err(crash_refusal(
             "RMSGEN2002",
             "grouped player placement divides by a zero perimeter, which stops the game",
+            KnownCrashHit::new(crash_ids::GROUPED_PLACEMENT_ZERO_PERIMETER),
         ));
     }
     let record_zero = layout.first_descriptor;
@@ -2619,9 +2698,28 @@ fn refuse_off_map_player_starts(
         &lands,
         content,
         &off_map,
-    )?;
-    exact_object::refuse_off_map_land_anchors(semantic_program, setup, &lands, content, &off_map)?;
+    )
+    .map_err(crash_from_shrinking_after_lands)?;
+    exact_object::refuse_off_map_land_anchors(semantic_program, setup, &lands, content, &off_map)
+        .map_err(crash_from_shrinking_after_lands)?;
     Err(off_map_player_start_error())
+}
+
+fn crash_from_shrinking_after_lands(error: GenerationError) -> GenerationError {
+    match error {
+        GenerationError::InvalidRequest {
+            code,
+            message,
+            crash: Some(_),
+        } => GenerationError::InvalidRequest {
+            code,
+            message,
+            crash: Some(KnownCrashHit::new(
+                crash_ids::OVERRIDE_MAP_SIZE_SHRINKS_AFTER_LANDS,
+            )),
+        },
+        error => error,
+    }
 }
 
 fn native_signed_land_coordinate(value: i32) -> u16 {
@@ -3650,6 +3748,9 @@ impl ExactRmsGenerationBackend {
             &object.tile_operation_indices,
         );
         let tile_write_runs = tile_writes.finish(&object.tile_operation_indices);
+        let player_starts = player_starts(&setup.players, &land.descriptors);
+        let (placement_records, omitted_placement_records) =
+            placement_records(&object.statistics.attempts, &object.descriptors);
         let mut map = GeneratedMap {
             dimensions: connection.dimensions,
             terrain: final_terrain,
@@ -3722,6 +3823,9 @@ impl ExactRmsGenerationBackend {
                 .collect(),
             },
             provenance,
+            player_starts,
+            placement_records,
+            omitted_placement_records,
         };
         map.finalize_semantic_hash()?;
         let finalize_stage_hash = presentation_stage_hash(
@@ -4862,7 +4966,11 @@ pub enum GenerationError {
     #[error("generation was cancelled during {stage:?}", stage = .0.stage)]
     Cancelled(CancellationOutcome),
     #[error("invalid generation request {code}: {message}")]
-    InvalidRequest { code: &'static str, message: String },
+    InvalidRequest {
+        code: &'static str,
+        message: String,
+        crash: Option<KnownCrashHit>,
+    },
     #[error("the script changed after this generation was requested")]
     StaleSemanticProgram,
     #[error("the game version does not match this generation request")]
@@ -4920,6 +5028,24 @@ fn invalid_request(code: &'static str, message: &str) -> GenerationError {
     GenerationError::InvalidRequest {
         code,
         message: message.to_owned(),
+        crash: None,
+    }
+}
+
+fn crash_refusal(code: &'static str, message: &str, crash: KnownCrashHit) -> GenerationError {
+    GenerationError::InvalidRequest {
+        code,
+        message: message.to_owned(),
+        crash: Some(crash),
+    }
+}
+
+impl GenerationError {
+    pub fn known_crash(&self) -> Option<&KnownCrashHit> {
+        match self {
+            GenerationError::InvalidRequest { crash, .. } => crash.as_ref(),
+            _ => None,
+        }
     }
 }
 

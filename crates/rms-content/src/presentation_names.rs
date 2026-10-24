@@ -69,6 +69,16 @@ impl DatObjectMinimapIndex {
     }
 }
 
+pub fn read_aoe2de_dat_technology_count(
+    compressed: &[u8],
+    limits: DatImportLimits,
+) -> Result<u32, ContentError> {
+    let (_, decompressed) = inflate_aoe2de_dat(compressed, limits)?;
+    let document = decode_ver89(&decompressed)?;
+    u32::try_from(document.technologies.len())
+        .map_err(|_| ContentError::InvalidField("DAT technology count"))
+}
+
 pub fn read_aoe2de_dat_minimap_indices(
     compressed: &[u8],
     limits: DatImportLimits,

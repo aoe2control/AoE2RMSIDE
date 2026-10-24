@@ -911,8 +911,12 @@ img {
 }
 
 .separator-pill[data-visible='true'] {
-  opacity: 1;
+  opacity: 0.5;
   transition-duration: var(--motion-duration-separator-pill-in);
+}
+
+.separator-pill[data-visible='true'][data-dragging='true'] {
+  opacity: 1;
 }
 
 .resizing-horizontal {
@@ -1901,10 +1905,19 @@ img {
 .preview-run-source-row,
 .preview-run-seed-row,
 .preview-run-live-row,
-.preview-run-workers-row {
+.preview-run-workers-row,
+.preview-run-quality-row,
+.preview-run-quality-reserve {
   align-items: center;
   display: flex;
   gap: 4px;
+}
+
+.preview-run-quality-reserve {
+  height: 0;
+  margin-block-start: -4px;
+  overflow: hidden;
+  visibility: hidden;
 }
 
 .preview-run-automation,
@@ -1917,7 +1930,9 @@ img {
 .preview-run-seed-mode,
 .preview-run-adopt-seed,
 .preview-run-live-action,
-.preview-run-workers-automatic {
+.preview-run-workers-automatic,
+.preview-run-quality-settings,
+.preview-run-quality-cases {
   flex: 0 0 var(--preview-run-control-height);
   height: var(--preview-run-control-height);
   width: var(--preview-run-control-height);
@@ -1958,6 +1973,39 @@ img {
 
 .preview-run-automation {
   width: 100%;
+}
+
+.preview-run-quality-toggle {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+}
+
+.preview-run-quality-seeds {
+  flex: 0 0 3rem;
+  height: var(--preview-run-control-height);
+  min-width: 0;
+  padding-inline: 6px;
+  text-align: center;
+}
+
+.preview-run-quality-cases {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  justify-content: center;
+  padding: 0;
+}
+
+.preview-run-quality-cases > svg:last-child:not(:first-child) {
+  display: none;
+}
+
+.preview-run-quality-cases:hover,
+.preview-run-quality-cases:focus-visible,
+.preview-run-quality-cases:active,
+.preview-run-quality-cases[data-popup-open] {
+  background: var(--accent);
 }
 
 .preview-run-automation-label {
@@ -2250,6 +2298,37 @@ img {
   height: 12px;
   opacity: 0.5;
   width: 12px;
+}
+
+.editor-tab-app-mark {
+  color: var(--muted-foreground);
+  flex: 0 0 auto;
+  height: 12px;
+  margin-left: 4px;
+  width: 12px;
+}
+
+.editor-tab-app-note {
+  display: block;
+}
+
+.monaco-editor .app-edit-line {
+  background: color-mix(in oklch, var(--foreground) 12%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .monaco-editor .app-edit-line {
+    animation: app-edit-line-fade 4s ease-in forwards;
+  }
+}
+
+@keyframes app-edit-line-fade {
+  from {
+    background: color-mix(in oklch, var(--foreground) 12%, transparent);
+  }
+  to {
+    background: transparent;
+  }
 }
 
 .editor-tab-title {
@@ -3142,8 +3221,10 @@ img {
   transition: opacity 120ms ease;
 }
 
-.preview-preset-trigger,
-.dark .preview-preset-trigger,
+.preview-preset-trigger:not([data-temporary]),
+.dark .preview-preset-trigger:not([data-temporary]),
+.preview-preset-revert,
+.dark .preview-preset-revert,
 .preview-preset-manager-trigger,
 .dark .preview-preset-manager-trigger {
   backdrop-filter: var(--preview-overlay-blur);
@@ -3153,12 +3234,16 @@ img {
   color: var(--foreground);
 }
 
-.preview-preset-trigger:hover,
-.preview-preset-trigger:focus-visible,
-.preview-preset-trigger[data-popup-open],
-.dark .preview-preset-trigger:hover,
-.dark .preview-preset-trigger:focus-visible,
-.dark .preview-preset-trigger[data-popup-open],
+.preview-preset-trigger:not([data-temporary]):hover,
+.preview-preset-trigger:not([data-temporary]):focus-visible,
+.preview-preset-trigger:not([data-temporary])[data-popup-open],
+.dark .preview-preset-trigger:not([data-temporary]):hover,
+.dark .preview-preset-trigger:not([data-temporary]):focus-visible,
+.dark .preview-preset-trigger:not([data-temporary])[data-popup-open],
+.preview-preset-revert:hover,
+.preview-preset-revert:focus-visible,
+.dark .preview-preset-revert:hover,
+.dark .preview-preset-revert:focus-visible,
 .preview-preset-manager-trigger:hover,
 .preview-preset-manager-trigger:focus-visible,
 .preview-preset-manager-trigger[data-popup-open],
@@ -4658,6 +4743,10 @@ div:has(> .preview-layer-tooltip) {
   white-space: nowrap;
 }
 
+.test-results-crash-seeds {
+  max-width: 240px;
+}
+
 .test-results-row[data-repeats-check='true'] .output-headline {
   color: var(--muted-foreground);
   font-weight: 400;
@@ -4698,6 +4787,14 @@ div:has(> .preview-layer-tooltip) {
 .output-log > .output-group {
   contain-intrinsic-block-size: auto 27px;
   content-visibility: auto;
+}
+
+.problems-log {
+  overflow-anchor: none;
+}
+
+.problems-log > .output-group {
+  content-visibility: visible;
 }
 
 .output-log::selection,
@@ -4765,7 +4862,8 @@ div:has(> .preview-layer-tooltip) {
   color: var(--destructive);
 }
 
-.output-severity[data-severity='warning'] {
+.output-severity[data-severity='warning'],
+.output-run-status[data-result='test-warnings'] {
   color: var(--caution);
 }
 
@@ -4938,6 +5036,10 @@ div:has(> .preview-layer-tooltip) {
 .output-run-result[data-result='failed'],
 .output-run-result[data-result='test-failed'] {
   color: var(--destructive);
+}
+
+.output-run-result[data-result='test-warnings'] {
+  color: var(--caution);
 }
 
 .output-run-result[data-result='stopped'],
@@ -5303,6 +5405,240 @@ div:has(> .preview-layer-tooltip) {
   font-size: 12px;
   font-weight: 500;
   text-align: start;
+}
+
+.mcp-settings-dialog {
+  width: min(520px, calc(100vw - 40px));
+  max-width: 520px !important;
+  max-block-size: calc(100dvh - 40px);
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.mcp-settings-dialog[data-connecting],
+.mcp-settings-dialog[data-connecting] * {
+  visibility: hidden;
+  transition: none;
+}
+
+.mcp-connect-backdrop {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.mcp-connect-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.mcp-connect-prompt {
+  max-block-size: calc(8 * 1.5em + 12px);
+}
+
+.mcp-connect-hand-chevron {
+  transition: transform var(--motion-duration-dialog) var(--motion-ease-out);
+}
+
+.mcp-connect-hand-toggle[aria-expanded='true'] .mcp-connect-hand-chevron {
+  transform: rotate(90deg);
+}
+
+[dir='rtl'] .mcp-connect-hand-toggle[aria-expanded='false'] .mcp-connect-hand-chevron {
+  transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mcp-connect-hand-chevron {
+    transition: none;
+  }
+}
+
+.mcp-settings-dialog [data-slot='dialog-title'] {
+  padding-inline-end: 32px;
+  font-size: 16px;
+  text-align: start;
+}
+
+.mcp-settings-close {
+  position: absolute;
+  inset-block-start: 10px;
+  inset-inline-end: 10px;
+}
+
+.mcp-settings-description,
+.mcp-settings-empty,
+.mcp-setup-hint {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: start;
+}
+
+.mcp-settings-options {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  min-width: 0;
+  padding: 4px;
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+.mcp-settings-option {
+  height: auto;
+  gap: 12px;
+  padding-block: 6px;
+  padding-inline: 8px;
+  white-space: normal;
+}
+
+.mcp-settings-option-text {
+  display: grid;
+  flex: 1;
+  gap: 1px;
+  min-width: 0;
+}
+
+.mcp-settings-option-name {
+  color: var(--foreground);
+  font-size: 12px;
+}
+
+.mcp-settings-option-note {
+  color: var(--toggle-secondary-foreground);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.mcp-settings-section {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.mcp-settings-label {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: start;
+}
+
+.mcp-settings-options > .mcp-settings-empty {
+  padding-block: 6px;
+  padding-inline: 8px;
+}
+
+.mcp-settings-apps {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mcp-settings-app {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  min-height: 28px;
+  min-width: 0;
+  padding: 4px;
+  padding-inline-start: 8px;
+  border-radius: var(--radius-md);
+  background: var(--toggle-off);
+}
+
+.mcp-settings-app-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+
+.mcp-settings-app-status {
+  flex: none;
+}
+
+.mcp-settings-app-last-used {
+  color: var(--muted-foreground);
+  font-size: 11px;
+}
+
+.mcp-settings-app > [data-slot='button'] {
+  margin-inline-start: auto;
+}
+
+.mcp-setup-select {
+  inline-size: 100%;
+}
+
+.mcp-setup-text {
+  margin: 0;
+  max-block-size: 160px;
+  overflow: auto;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in oklch, var(--muted) 65%, transparent);
+  color: var(--foreground);
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: left;
+  user-select: text;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mcp-setup-text:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring-chrome);
+}
+
+.mcp-setup-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.mcp-setup-copy-icon {
+  display: inline-grid;
+  place-items: center;
+}
+
+.mcp-prompt-note {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: start;
+}
+
+.mcp-prompt-warning {
+  color: var(--caution);
+}
+
+.mcp-prompt-session {
+  justify-self: stretch;
+}
+
+.mcp-status-indicator {
+  gap: 4px;
+  max-inline-size: 160px;
+}
+
+.mcp-status-icon {
+  flex: none;
+  height: 14px;
+  width: 14px;
+}
+
+.mcp-status-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .segmented-control {
@@ -6959,6 +7295,12 @@ div:has(> .preview-layer-tooltip) {
   color: var(--caution);
 }
 
+.managed-mod-crash-warning {
+  color: var(--caution);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .managed-mod-certification {
   margin-right: auto;
   color: var(--muted-foreground);
@@ -7297,6 +7639,8 @@ div:has(> .preview-layer-tooltip) {
 .dark .preview-map-tool:focus-visible,
 .preview-preset-trigger:focus-visible,
 .dark .preview-preset-trigger:focus-visible,
+.preview-preset-revert:focus-visible,
+.dark .preview-preset-revert:focus-visible,
 .preview-preset-manager-trigger:focus-visible,
 .dark .preview-preset-manager-trigger:focus-visible,
 .preview-profiler-host .preview-profiler-button[data-keyboard-focus='true'],

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "hashRule": "rmside-connect-catalog-v1",
+  "files": [
+    "guide/anti-patterns.md",
+    "guide/fairness.md",
+    "guide/index.json",
+    "guide/known-crashes.md",
+    "guide/map-closed.md",
+    "guide/map-nomad.md",
+    "guide/map-open.md",
+    "guide/map-tests.md",
+    "guide/map-water.md",
+    "guide/pictures.md",
+    "guide/player-base.md",
+    "guide/quality-check.md",
+    "guide/reference-numbers.md",
+    "guide/skeleton.md",
+    "guide/special-objects.md",
+    "guide/teaching.md",
+    "guide/team-games.md",
+    "guide/visuals.md",
+    "guide/woodlines.md",
+    "guide/workflow.md",
+    "guide/xs-scripting.md",
+    "instructions.md",
+    "prompts.json",
+    "tools.v1.json"
+  ],
+  "sha256": "ce19e0f70916b4bba7645ace6a512dd5f1a1ce5d2267e03e60e343e330c33b42"
+}

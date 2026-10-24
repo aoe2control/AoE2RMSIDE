@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package rmside.connect.v1;
+
+message ProtocolVersion {
+  uint32 major = 1;
+  uint32 minor = 2;
+  uint32 patch = 3;
+}
+
+message CompatibilityRange {
+  uint32 minimum_major = 1;
+  uint32 maximum_major = 2;
+}
+
+message Envelope {
+  ProtocolVersion version = 1;
+  CompatibilityRange compatibility = 2;
+  uint64 message_id = 3;
+
+  oneof payload {
+    ClientHello client_hello = 10;
+    ServerHello server_hello = 11;
+    ClientProof client_proof = 12;
+    SessionReady session_ready = 13;
+    PairingChanged pairing_changed = 14;
+    CallTool call_tool = 20;
+    CancelCall cancel_call = 21;
+    CallProgress call_progress = 22;
+    CallResult call_result = 23;
+    Goodbye goodbye = 30;
+    ProtocolError protocol_error = 31;
+  }
+}
+
+message ClientHello {
+  string connector_version = 1;
+  bytes catalog_hash = 2;
+  bytes client_nonce = 3;
+  ClientApp app = 4;
+  string mcp_revision = 5;
+}
+
+message ClientApp {
+  string name = 1;
+  string title = 2;
+  string version = 3;
+  string launcher_image = 4;
+}
+
+message ServerHello {
+  string ide_version = 1;
+  bytes catalog_hash = 2;
+  bytes server_nonce = 3;
+  bytes server_proof = 4;
+}
+
+message ClientProof {
+  bytes client_proof = 1;
+}
+
+enum PairingState {
+  PAIRING_STATE_UNSPECIFIED = 0;
+  PAIRING_STATE_APPROVED = 1;
+  PAIRING_STATE_PENDING = 2;
+  PAIRING_STATE_DENIED = 3;
+}
+
+message SessionReady {
+  string session_id = 1;
+  PairingState pairing = 2;
+  string app_display_name = 3;
+}
+
+message PairingChanged {
+  PairingState pairing = 1;
+}
+
+message CallTool {
+  uint64 call_id = 1;
+  string tool_name = 2;
+  string arguments_json = 3;
+  bool wants_progress = 4;
+}
+
+message CancelCall {
+  uint64 call_id = 1;
+}
+
+message CallProgress {
+  uint64 call_id = 1;
+  uint32 done = 2;
+  uint32 total = 3;
+  string message = 4;
+}
+
+message ContentItem {
+  oneof item {
+    string text = 1;
+    Image image = 2;
+  }
+}
+
+message Image {
+  bytes png = 1;
+  uint32 width = 2;
+  uint32 height = 3;
+}
+
+message CallResult {
+  uint64 call_id = 1;
+  bool is_error = 2;
+  repeated ContentItem content = 3;
+}
+
+enum GoodbyeReason {
+  GOODBYE_REASON_UNSPECIFIED = 0;
+  GOODBYE_REASON_MCP_TURNED_OFF = 1;
+  GOODBYE_REASON_APP_REMOVED = 2;
+  GOODBYE_REASON_IDE_CLOSING = 3;
+  GOODBYE_REASON_IDE_UPDATING = 4;
+  GOODBYE_REASON_PROTOCOL_VIOLATION = 5;
+  GOODBYE_REASON_VERSION_MISMATCH = 6;
+  GOODBYE_REASON_LIMIT_REACHED = 7;
+}
+
+message Goodbye {
+  GoodbyeReason reason = 1;
+  string message = 2;
+}
+
+message ProtocolError {
+  string code = 1;
+  string message = 2;
+}

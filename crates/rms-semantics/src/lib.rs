@@ -17,8 +17,8 @@ pub use native_context::{
     opens_descriptor_block,
 };
 pub use native_dispatch::{
-    Braces, GAME_CRASH_CODE, UNSUPPORTED_DISPATCH_CODE, WordAction, WordDefinitions, WordPlace,
-    first_word_action,
+    Braces, CrashingWords, GAME_CRASH_CODE, UNSUPPORTED_DISPATCH_CODE, WordAction, WordCrash,
+    WordDefinitions, WordPlace, crashing_words, first_word_action,
 };
 pub use parser::{
     ArgumentKind, ArgumentResolution, ExecutionContext, ExecutionPlayerSetup,

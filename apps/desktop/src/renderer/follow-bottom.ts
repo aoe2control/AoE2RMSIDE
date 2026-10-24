@@ -180,15 +180,16 @@ export function scrollKeyDirection(key: string, shiftKey: boolean): ScrollDirect
   return upwardKeys.has(key) || (key === ' ' && shiftKey) ? 'up' : 'down';
 }
 
-export function useFollowBottom(
-  rowCount: number,
-  contentKey?: unknown,
-): {
+export interface FollowBottom {
   ref: (element: HTMLElement | null) => void;
   onScroll(): void;
   state: FollowState;
   jumpToLatest(): void;
-} {
+  following(): boolean;
+  keepAtBottom(): void;
+}
+
+export function useFollowBottom(rowCount: number, contentKey?: unknown): FollowBottom {
   const element = useRef<HTMLElement | null>(null);
   const model = useRef(initialFollowModel);
   const [state, setState] = useState(initialFollowState);
@@ -356,5 +357,13 @@ export function useFollowBottom(
     scrollToBottom();
   }, [commit, scrollToBottom]);
 
-  return { ref, onScroll, state, jumpToLatest };
+  const following = useCallback(
+    () => model.current.follow.pinned && !userScrolling(model.current, performance.now()),
+    [],
+  );
+  const keepAtBottom = useCallback(() => {
+    if (following()) scrollToBottom();
+  }, [following, scrollToBottom]);
+
+  return { ref, onScroll, state, jumpToLatest, following, keepAtBottom };
 }

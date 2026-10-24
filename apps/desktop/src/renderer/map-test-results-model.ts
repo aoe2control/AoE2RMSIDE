@@ -5,7 +5,8 @@ import {
   presentMessage,
 } from '../shared/message-catalog';
 import { t, type MessageId } from '../shared/i18n/translator';
-import type { OutputMessage } from '../shared/output-message';
+import { knownCrashCatalogue } from '../shared/known-crashes';
+import { outputNote, type OutputMessage, type OutputText } from '../shared/output-message';
 
 export interface MapTestFindingEntry {
   key: string;
@@ -42,9 +43,28 @@ export interface MapTestResultsSummary {
   seeds: number;
 }
 
+export interface MapTestCrashEntry {
+  key: string;
+  crashId: string;
+  mapName: string;
+  mapPath: string;
+  maps: number;
+  sampledMaps: number;
+  seeds: readonly number[];
+  omittedSeeds: number;
+  seedsText: string | null;
+  message: OutputMessage;
+}
+
+export interface MapTestCrashGroup {
+  maps: number;
+  entries: MapTestCrashEntry[];
+}
+
 export interface MapTestResultsModel {
   summary: MapTestResultsSummary;
   groups: MapTestCheckGroup[];
+  crashes: MapTestCrashGroup | null;
 }
 
 export const mapTestRowsPerPage = 100;
@@ -159,7 +179,77 @@ export function mapTestResultsModel(report: MapTestReport): MapTestResultsModel 
       seeds,
     },
     groups,
+    crashes: mapTestCrashGroup(report),
   };
+}
+
+export function crashSeedsText(seeds: readonly number[], omitted: number): string | null {
+  if (seeds.length === 0) return null;
+  const list = seeds.map(String);
+  return omitted > 0
+    ? t('test-results.crashes.seeds-more', { count: seeds.length, seeds: list, omitted })
+    : t('test-results.crashes.seeds', { count: seeds.length, seeds: list });
+}
+
+export function mapTestCrashGroup(report: MapTestReport): MapTestCrashGroup | null {
+  const entries: MapTestCrashEntry[] = [];
+  let maps = 0;
+  for (const source of report.gameCrashes?.sources ?? []) {
+    for (const crash of source.crashes) {
+      maps += crash.maps;
+      const counts = { maps: crash.maps, sampled: source.sampledMaps };
+      const entry = Object.hasOwn(knownCrashCatalogue, crash.crashId)
+        ? knownCrashCatalogue[crash.crashId]!
+        : null;
+      const text: { cause: OutputText; fix: OutputText | null } | null =
+        entry && entry.quality !== 'inferred'
+          ? {
+              cause: entry.placeholders.length === 0 ? { id: entry.cause } : { id: entry.title },
+              fix: entry.fix ? { id: entry.fix } : null,
+            }
+          : null;
+      const seedsText = crashSeedsText(crash.seeds, crash.omittedSeeds);
+      const detail = [
+        `${source.sourcePath}: ${crash.crashId}, ${crash.maps} of ${source.sampledMaps} maps`,
+        crash.seeds.length > 0
+          ? `Seeds: ${crash.seeds.join(', ')}${crash.omittedSeeds > 0 ? ` (+${crash.omittedSeeds} more)` : ''}`
+          : '',
+      ]
+        .filter(Boolean)
+        .join('\n');
+      const message = text
+        ? outputNote(
+            'Map test',
+            'map-test.game-crash',
+            { id: 'test-results.crashes.headline', args: counts },
+            {
+              severity: 'error',
+              cause: text.cause,
+              ...(text.fix ? { action: { text: text.fix } } : {}),
+              detail,
+            },
+          )
+        : outputNote(
+            'Map test',
+            'map-test.game-crash',
+            { id: 'test-results.crashes.headline.refused', args: counts },
+            { severity: 'error', detail },
+          );
+      entries.push({
+        key: `${source.sourcePath}\u0000${crash.crashId}`,
+        crashId: crash.crashId,
+        mapName: readablePathName(source.sourcePath),
+        mapPath: source.sourcePath,
+        maps: crash.maps,
+        sampledMaps: source.sampledMaps,
+        seeds: crash.seeds,
+        omittedSeeds: crash.omittedSeeds,
+        seedsText,
+        message,
+      });
+    }
+  }
+  return entries.length > 0 ? { maps, entries } : null;
 }
 
 export function mapTestNoFindingsText(summary: MapTestResultsSummary): string {

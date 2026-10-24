@@ -3,7 +3,7 @@ export const packageEditions = Object.freeze({
     edition: 'full',
     displayName: 'AoE2RMSIDE',
     artifactStem: 'AoE2RMSIDE',
-    natives: Object.freeze(['rmsd.exe', 'rms-ls.exe', 'rms-test.exe']),
+    natives: Object.freeze(['rmsd.exe', 'rms-ls.exe', 'rms-test.exe', 'rms-connect.exe']),
     windowsRegistration: true,
     requiredPackedMarkers: Object.freeze(['rms-session-3', 'rmside-multiplayer-refusal-1']),
     requiredNativeMarkers: Object.freeze({ 'rmsd.exe': Object.freeze(['AoE2ControlRmsIdeV1']) }),
@@ -48,6 +48,8 @@ export function packageEdition(name = 'full') {
 export function nativeCargoPackages(edition) {
   return edition.natives.map((name) => name.replace(/\.exe$/u, ''));
 }
+
+export const independentNatives = Object.freeze(['rms-connect.exe']);
 
 export function allPackagedNatives() {
   return [...new Set(Object.values(packageEditions).flatMap((edition) => edition.natives))].sort();

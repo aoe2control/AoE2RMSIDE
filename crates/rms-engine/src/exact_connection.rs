@@ -485,16 +485,18 @@ pub(crate) fn refuse_off_map_connection_endpoints(
 }
 
 fn off_map_connection_start_error() -> GenerationError {
-    invalid_request(
+    crash_refusal(
         "RMSGEN7001",
         "a connection starts at a land position outside the map, where the game writes outside its map data; the preview cannot generate this map",
+        KnownCrashHit::new(crash_ids::CONNECTION_TO_LAND_OUTSIDE_MAP),
     )
 }
 
 fn off_map_connection_target_error() -> GenerationError {
-    invalid_request(
+    crash_refusal(
         "RMSGEN7001",
         "a connection targets a land position outside the map; the game reads a missing tile there and crashes, so this map cannot be generated",
+        KnownCrashHit::new(crash_ids::CONNECTION_TO_LAND_OUTSIDE_MAP),
     )
 }
 

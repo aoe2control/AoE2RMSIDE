@@ -203,10 +203,12 @@ export function UpdateNoteAction() {
 }
 
 export function UpdateDialog({
+  aiAppsConnected = false,
   controller,
   open,
   onOpenChange,
 }: {
+  aiAppsConnected?: boolean;
   controller: UpdateController;
   open: boolean;
   onOpenChange(open: boolean): void;
@@ -227,6 +229,7 @@ export function UpdateDialog({
           <AlertDialogTitle>{t('app-update.dialog.title', { version })}</AlertDialogTitle>
           <AlertDialogDescription>
             {t('app-update.dialog.description', { version })} {t('app-update.dialog.unsaved')}
+            {aiAppsConnected ? <> {t('app-update.dialog.mcp-apps')}</> : null}
           </AlertDialogDescription>
           <Button
             className="output-link update-dialog-notes h-auto self-start"

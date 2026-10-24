@@ -3,14 +3,16 @@ use std::sync::OnceLock;
 
 use rms_analysis::analyze_document;
 use rms_analysis::docs::{
-    DocContext, DocumentationCatalog, TermKind, constant_markdown, documentation_catalog,
-    snippet_markdown, snippet_preview_lines, term_markdown,
+    DocContext, DocumentationCatalog, EvidenceStatus, FamilySource, TermKind, constant_markdown,
+    documentation_catalog, placed_crash_notes, snippet_markdown, snippet_preview_lines,
+    term_markdown,
 };
 use rms_content::packaged_support_bundles;
 use rms_source::{ByteOffset, SourceId, SourceText};
 use rms_syntax::{Token, TokenKind};
 use serde_json::{Value, json};
 
+use crate::reference::ReferenceKind;
 use crate::rms_completion::{Block, CaretContext, caret_context};
 use crate::{OpenDocument, RequestError, RequestResult, Server, lsp_range, section_at};
 
@@ -149,13 +151,100 @@ pub(crate) fn hover(server: &Server, document: &OpenDocument, token: &Token) -> 
     if token.kind != TokenKind::Identifier {
         return None;
     }
-    let value = if let Some(family) = catalog.run_setting_family(name) {
-        constant_markdown(Some(family), name, None)
-    } else {
-        let value = server.built_in_value(name)?;
-        constant_markdown(catalog.definition_family(name), name, Some(&value))
-    };
+    let value = constant_documentation(server, catalog, name)?;
     Some(json!({ "contents": markdown(value), "range": range }))
+}
+
+fn constant_documentation(
+    server: &Server,
+    catalog: &DocumentationCatalog,
+    name: &str,
+) -> Option<String> {
+    if let Some(family) = catalog.run_setting_family(name) {
+        return Some(constant_markdown(Some(family), name, None));
+    }
+    let value = server.built_in_value(name)?;
+    Some(constant_markdown(
+        catalog.definition_family(name),
+        name,
+        Some(&value),
+    ))
+}
+
+fn reference_kind(kind: TermKind) -> Option<ReferenceKind> {
+    match kind {
+        TermKind::Attribute => Some(ReferenceKind::Attribute),
+        TermKind::Delimiter => None,
+        TermKind::Section
+        | TermKind::Directive
+        | TermKind::Control
+        | TermKind::Command
+        | TermKind::Function => Some(ReferenceKind::Command),
+    }
+}
+
+pub(crate) fn term_reference(server: &Server, name: &str) -> Option<(ReferenceKind, String)> {
+    let catalog = catalog()?;
+    let term = catalog.term(name)?;
+    let kind = reference_kind(term.kind)?;
+    let profile = server.documentation_profile();
+    let context = DocContext {
+        section: None,
+        opener: None,
+        profile: Some(profile.as_str()),
+    };
+    let mut text = term_markdown(catalog, term, &context);
+    for (places, note) in placed_crash_notes(name, Some(profile.as_str())) {
+        text.push_str(&format!("\n\n**Game crash** ({places}): {note}"));
+    }
+    text.push_str("\n\n");
+    text.push_str(match term.evidence.status {
+        EvidenceStatus::EngineVerified => {
+            "**In the IDE:** the map engine models this, so generated maps show its effect."
+        }
+        EvidenceStatus::Documented => {
+            "**In the IDE:** documented only; the map engine does not model its effect, so only a game test shows it."
+        }
+        EvidenceStatus::Uncertain => {
+            "**In the IDE:** partly established; this text says only what is supported."
+        }
+    });
+    Some((kind, text))
+}
+
+pub(crate) fn constant_reference(server: &Server, name: &str) -> Option<String> {
+    constant_documentation(server, catalog()?, name)
+}
+
+pub(crate) fn reference_names(server: &Server) -> Vec<(String, ReferenceKind)> {
+    let Some(catalog) = catalog() else {
+        return Vec::new();
+    };
+    let mut names = Vec::new();
+    for term in catalog.terms() {
+        if let Some(kind) = reference_kind(term.kind) {
+            names.push((term.name.clone(), kind));
+        }
+    }
+    for family in &catalog.families {
+        if family.source == FamilySource::RunSettings {
+            for name in family.members.keys().chain(&family.membership.names) {
+                if !name.contains('#') {
+                    names.push((name.clone(), ReferenceKind::Constant));
+                }
+            }
+        }
+    }
+    let constant = |name: &String| (name.clone(), ReferenceKind::Constant);
+    match server.editor_selection() {
+        Some(selection) => names.extend(selection.implicit_definitions().keys().map(constant)),
+        None => {
+            if let Some(definitions) = packaged_definitions(packaged_profile()) {
+                names.extend(definitions.keys().map(constant));
+            }
+        }
+    }
+    names
 }
 
 pub(crate) fn attach(server: &Server, params: &Value, mut list: Value) -> Value {

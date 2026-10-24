@@ -321,6 +321,13 @@
       "maxLength": 40,
       "meaning": "Check item, on by default: in the map preview, a newly generated map, a change of the look or of the relief, and the stages shown while a map generates move or fade smoothly into the next picture instead of replacing it at once."
     },
+    "app-menu.view.xs-start-check": {
+      "message": "Check XS When Running a Map",
+      "screen": "application-menu/view",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Check item, on by default: each run of a map that includes XS files (#includeXS) also runs the XS code the map would run at game start and lists what it does in Output and its problems in Problems. Off, runs skip this check. Keep \"XS\" (the game's script language) as written."
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Show Live Generation Stages",
       "screen": "application-menu/view",
@@ -405,6 +412,13 @@
       "control": "menu-item",
       "maxLength": 40,
       "meaning": "Opens the Theme panel: the app's light or dark theme and the colors of the code editor's text. The ellipsis says a dialog follows."
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…",
+      "screen": "application-menu/view",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Opens the MCP settings: whether AI apps on this computer (such as Claude) may connect to AoE2RMSIDE through MCP, the Model Context Protocol, and how to set them up. Keep \"MCP\" as written. The ellipsis says a dialog follows."
     },
     "app-menu.view.theme": {
       "message": "Theme",
@@ -941,6 +955,13 @@
       "maxLength": 18,
       "meaning": "The quiet source word at the start of an Output row: says where the message comes from. Here: Map tests (scripts that generate many maps and check them). Keep it to one or two short words."
     },
+    "output.source.quality-check": {
+      "message": "Quality check",
+      "screen": "output",
+      "control": "label",
+      "maxLength": 18,
+      "meaning": "The quiet source word at the start of an Output row: says where the message comes from. Here: the quality check, which generates a map on many seeds and looks for unfair or broken maps. Keep it to one or two short words."
+    },
     "output.source.deploy": {
       "message": "Deploy",
       "screen": "output",
@@ -990,12 +1011,26 @@
       "maxLength": 18,
       "meaning": "The quiet source word at the start of an Output row: says where the message comes from. Here: The Game textures look of the preview, made from the linked game’s own graphics. Keep it to one or two short words."
     },
+    "output.source.xs": {
+      "message": "XS",
+      "screen": "output",
+      "control": "label",
+      "maxLength": 14,
+      "meaning": "The quiet source word at the start of an Output row: says where the message comes from. Here: The XS start check, which runs the map’s XS files once as the game does at game start. XS is the game’s script language; keep the name as written."
+    },
     "output.source.app": {
       "message": "App",
       "screen": "output",
       "control": "label",
       "maxLength": 14,
       "meaning": "The quiet source word at the start of an Output row: says where the message comes from. Here: The app itself. Keep it to one or two short words."
+    },
+    "output.source.mcp": {
+      "message": "MCP",
+      "screen": "output",
+      "control": "label",
+      "maxLength": 14,
+      "meaning": "The quiet source word at the start of an Output row: says where the message comes from. Here: an AI app working through MCP (the Model Context Protocol). Keep \"MCP\" as written."
     },
     "output.log.label": {
       "message": "{count, plural, one {{count} output messages} other {{count} output messages}}",
@@ -1178,6 +1213,629 @@
       "screen": "output",
       "control": "tooltip",
       "meaning": "Tooltip of a command name in that list: moves the editor caret to the first place the script uses it."
+    },
+    "output.xs-start.summary": {
+      "message": "XS start check: {files, list} ran main() and {rules, plural, one {# rule} other {# rules}} ({steps, plural, one {# step} other {# steps}})",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) that sums up the XS start check: after a preview run the IDE runs the map’s active XS files once, as the game does at game start (main() and the rules active at time 0), and lists in Output what they would do. The results were never compared against the game. main() is the XS function name, as written; steps counts the statements and expressions the check ran.",
+      "placeholders": {
+        "files": "the XS file names the check ran, as a list (for example start_bonus.xs)",
+        "rules": "how many rules ran at time 0",
+        "steps": "how many steps the check counted"
+      }
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "XS start check: {files, list} has no main() and ran {rules, plural, =0 {no rules} one {# rule} other {# rules}} ({steps, plural, one {# step} other {# steps}})",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) that sums up the XS start check when the XS files have no main() function (the XS name, as written), so only rules ran.",
+      "placeholders": {
+        "files": "the XS file names the check ran, as a list (for example start_bonus.xs)",
+        "rules": "how many rules ran at time 0",
+        "steps": "how many steps the check counted"
+      }
+    },
+    "output.xs-start.not-compared": {
+      "message": "Not compared against the game",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause under the XS start check summary in Output: what the check lists may differ from what the game does, because nobody compared it against the game."
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "Not compared against the game. Uses: {topics, list, unit}",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause under the XS start check summary in Output: the results were not compared against the game, and the run relied on these behaviors of the game that nobody has compared yet.",
+      "placeholders": {
+        "topics": "the behaviors the run relied on, such as “array defaults, text of numbers”"
+      }
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "whole-number arithmetic",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the list after “Uses:” under the XS start check summary: a behavior of the game the run relied on that nobody has compared against the game. Here: whole numbers that go past their range, negative division and remainder. Lower case, a short noun phrase."
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "mixed whole and decimal numbers",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the list after “Uses:” under the XS start check summary: a behavior of the game the run relied on that nobody has compared against the game. Here: a whole number and a decimal number in one calculation. Lower case, a short noun phrase."
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "text of numbers",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the list after “Uses:” under the XS start check summary: a behavior of the game the run relied on that nobody has compared against the game. Here: how numbers, vectors and true/false turn into text, also in chat lines. Lower case, a short noun phrase."
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "text functions",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the list after “Uses:” under the XS start check summary: a behavior of the game the run relied on that nobody has compared against the game. Here: edge cases of the XS text functions and long text. Lower case, a short noun phrase."
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "array defaults",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the list after “Uses:” under the XS start check summary: a behavior of the game the run relied on that nobody has compared against the game. Here: what a read outside an array, or of an array that does not exist, returns. Lower case, a short noun phrase."
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "rule order",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the list after “Uses:” under the XS start check summary: a behavior of the game the run relied on that nobody has compared against the game. Here: the order in which rules run at the start. Lower case, a short noun phrase."
+    },
+    "output.xs-start.topic.goto": {
+      "message": "labels and goto",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the list after “Uses:” under the XS start check summary: a behavior of the game the run relied on that nobody has compared against the game. Here: XS labels and the goto statement (XS words, as written). Lower case, a short noun phrase."
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "start values",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the list after “Uses:” under the XS start check summary: a behavior of the game the run relied on that nobody has compared against the game. Here: values the IDE assumes for a match that has just started, such as units without orders. Lower case, a short noun phrase."
+    },
+    "output.xs-start.chat": {
+      "message": "Chat: {text}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”, monospace) of the XS start check: a chat line the map’s XS would print at game start.",
+      "placeholders": {
+        "text": "the chat text the XS prints, as written"
+      }
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Gaia} other {Player {player}}}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "Who an XS start check change row is about: a player by number, or Gaia (the game’s name for the nature player 0, as in the game).",
+      "placeholders": {
+        "player": "the player number, 0 for Gaia, else 1 to 8"
+      }
+    },
+    "output.xs-start.resource.food": {
+      "message": "food",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "A player resource in an XS start check change row, lower case as in “Player 1: gold +200”. Use the game’s own word for this resource."
+    },
+    "output.xs-start.resource.wood": {
+      "message": "wood",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "A player resource in an XS start check change row, lower case as in “Player 1: gold +200”. Use the game’s own word for this resource."
+    },
+    "output.xs-start.resource.stone": {
+      "message": "stone",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "A player resource in an XS start check change row, lower case as in “Player 1: gold +200”. Use the game’s own word for this resource."
+    },
+    "output.xs-start.resource.gold": {
+      "message": "gold",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "A player resource in an XS start check change row, lower case as in “Player 1: gold +200”. Use the game’s own word for this resource."
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "attribute {id}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "A player attribute without a known name in an XS start check change row (the XS word for a player value), as in “attribute 32 +5”.",
+      "placeholders": {
+        "id": "the attribute number, as written"
+      }
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One change of a player resource in an XS start check row: the amount the XS adds, with its sign, as in “gold +200”.",
+      "placeholders": {
+        "amount": "the amount added (negative when taken away)",
+        "resource": "the resource, such as “gold”"
+      }
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource} set to {amount, number}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One change of a player resource in an XS start check row: the XS sets the resource to this value, as in “gold set to 500”.",
+      "placeholders": {
+        "amount": "the value it is set to",
+        "resource": "the resource, such as “gold”"
+      }
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One change of a player resource in an XS start check row: the XS multiplies the resource by this factor, as in “gold ×1.5”.",
+      "placeholders": {
+        "amount": "the factor",
+        "resource": "the resource, such as “gold”"
+      }
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: every change the XS makes to one player’s resources at game start, summed, as in “Player 1: gold +200, food +100”.",
+      "placeholders": {
+        "changes": "the resource changes, such as “gold +200”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded"
+      }
+    },
+    "output.xs-start.object": {
+      "message": "object {id}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "An object of the game named by its number in an XS start check row, when its name is not known.",
+      "placeholders": {
+        "id": "the object number, as written"
+      }
+    },
+    "output.xs-start.technology": {
+      "message": "technology {id}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "A technology named by its number in an XS start check row, when its name is not known.",
+      "placeholders": {
+        "id": "the technology number, as written"
+      }
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: researches {technology}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS researches a technology for the player at game start.",
+      "placeholders": {
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "technology": "the technology, as XS names it (cTech…) or “technology 22”"
+      }
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}: stance towards {other} set to {stance}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS sets the player’s diplomatic stance towards another player (the stance is the XS number, as written).",
+      "placeholders": {
+        "other": "the other player, “Player 2”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "stance": "the stance number the XS sets, as written"
+      }
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: name set to “{text}”",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS renames the player.",
+      "placeholders": {
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "text": "the new name, as written"
+      }
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: civilization name set to “{text}”",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS renames the player’s civilization.",
+      "placeholders": {
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "text": "the new name, as written"
+      }
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: color set to {value}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS changes the player’s color (the XS color number, as written).",
+      "placeholders": {
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "value": "the color number, as written"
+      }
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: creates {count} {object} near ({x}, {y}); placement not checked",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS creates units for the player at game start, near a map position in tiles; the IDE does not check whether they fit there.",
+      "placeholders": {
+        "count": "how many units",
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "x": "the tile column",
+        "y": "the tile row"
+      }
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: creates {count} {object}; placement not checked",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS creates units for the player at game start; the IDE does not check where they go.",
+      "placeholders": {
+        "count": "how many units",
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded"
+      }
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: removes {count} {object}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS removes the player’s units at game start.",
+      "placeholders": {
+        "count": "how many units",
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded"
+      }
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: moves {count} {object} to ({x}, {y})",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS moves the player’s units to a map position in tiles.",
+      "placeholders": {
+        "count": "how many units",
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "x": "the tile column",
+        "y": "the tile row"
+      }
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: moves {count} {object}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS moves the player’s units.",
+      "placeholders": {
+        "count": "how many units",
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded"
+      }
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: receives {count} {object} from {previous}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS gives units of another player (or Gaia) to this player.",
+      "placeholders": {
+        "count": "how many units",
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "previous": "the previous owner, “Player 2” or “Gaia”"
+      }
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: changes values of {count} {object}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS changes values (such as hit points) of the player’s placed units.",
+      "placeholders": {
+        "count": "how many units",
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded"
+      }
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: changes names or captions of {count} {object}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS changes the names or captions of the player’s placed units.",
+      "placeholders": {
+        "count": "how many units",
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded"
+      }
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: changes the data of {object}; recorded, not applied",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS changes the game data of an object for the player; the IDE lists it but does not apply it to the preview.",
+      "placeholders": {
+        "object": "the object, by the game’s name or “object 448”",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded"
+      }
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: changes the data of {technology}; recorded, not applied",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS changes the data of a technology for the player; the IDE lists it but does not apply it.",
+      "placeholders": {
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded",
+        "technology": "the technology, as XS names it (cTech…) or “technology 22”"
+      }
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, one {# call} other {# calls}})",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: an XS call that changes the game in a way the IDE has no words for; the call is the XS function name, as written.",
+      "placeholders": {
+        "call": "the XS function name, as written",
+        "calls": "how many calls",
+        "player": "who makes the change: “Player 3” or “Gaia”, already worded"
+      }
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Lighting mood set to {value}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”) of the XS start check: the XS changes the map’s lighting mood (the XS number, as written).",
+      "placeholders": {
+        "value": "the lighting mood number, as written"
+      }
+    },
+    "output.xs-start.finding.xs5001": {
+      "message": "The XS start check stopped after {limit} steps",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the XS ran too long (for example a loop that never ends), so the check stopped.",
+      "placeholders": {
+        "limit": "the step limit, as written"
+      },
+      "translate": false
+    },
+    "output.xs-start.finding.xs5002": {
+      "message": "The XS start check stopped at call depth {depth}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: functions called each other too deeply (for example endless recursion), so the check stopped.",
+      "placeholders": {
+        "depth": "the call depth, as written"
+      },
+      "translate": false
+    },
+    "output.xs-start.finding.xs5003": {
+      "message": "{access, select, write {Index {index} is outside array “{array}” ({size, plural, one {# item} other {# items}}); the write was skipped} other {Index {index} is outside array “{array}” ({size, plural, one {# item} other {# items}}); the run read {value}}}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the XS read or wrote an array item that does not exist. On a read, the check went on with the value shown; on a write, nothing was written.",
+      "placeholders": {
+        "access": "read or write (a select key, not shown)",
+        "array": "the array’s name, as written",
+        "index": "the index used, as written",
+        "size": "how many items the array has",
+        "value": "the value the read returned, as written"
+      },
+      "translate": false
+    },
+    "output.xs-start.finding.xs5004": {
+      "message": "Array {array} does not exist; the run read {value}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the XS read from an array that was never created; the check went on with the value shown.",
+      "placeholders": {
+        "array": "the array number or name, as written",
+        "value": "the value the read returned, as written"
+      },
+      "translate": false
+    },
+    "output.xs-start.finding.xs5005": {
+      "message": "Division by zero; the run stops because the game’s result is not known",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the XS divided by zero; the check stops because what the game does then is not known.",
+      "translate": false
+    },
+    "output.xs-start.finding.xs5006": {
+      "message": "Remainder of a division by zero; the run stops because the game’s result is not known",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the XS took the remainder (%) of a division by zero; the check stops because what the game does then is not known.",
+      "translate": false
+    },
+    "output.xs-start.finding.xs5007": {
+      "message": "A whole number went past its range and wrapped to {value}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: a whole-number calculation went past the largest or smallest whole number and wrapped around.",
+      "placeholders": {
+        "value": "the wrapped value, as written"
+      },
+      "translate": false
+    },
+    "output.xs-start.finding.xs5008": {
+      "message": "The XS start check stopped: the script uses more {bound, select, arrays {arrays} arrayItems {array items} text {text in one value} textTotal {text in total} other {memory}} than the check allows",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the XS used more memory than the check allows, so it stopped.",
+      "placeholders": {
+        "bound": "which limit was reached (a select key, not shown)"
+      },
+      "translate": false
+    },
+    "output.xs-start.finding.xs5010": {
+      "message": "Stopped at {call}: {reason}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the XS called a function the IDE cannot answer, so the check stopped there, naming the call and why.",
+      "placeholders": {
+        "call": "the XS function name, as written",
+        "reason": "why the IDE cannot answer it (one of the output.xs-start.reason messages)"
+      },
+      "translate": false
+    },
+    "output.xs-start.finding.xs5011": {
+      "message": "Random numbers come from the IDE’s own stream, not the game’s",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the XS asked for random numbers; the check used numbers of its own, so the results can differ from the game’s.",
+      "translate": false
+    },
+    "output.xs-start.finding.xs5020": {
+      "message": "Rule {rule} is enabled for later; timed rules are not run",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: a rule that runs later in the match was turned on; the check only runs what happens at game start.",
+      "placeholders": {
+        "rule": "the rule’s name, as written"
+      },
+      "translate": false
+    },
+    "output.xs-start.finding.xs5021": {
+      "message": "Objects that the selected game mode adds at start are not in the preview",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output and Problems row (source “XS”) of the XS start check, a finding of the run: the selected game mode places objects of its own when the match starts, which the preview does not have, so the XS cannot see them.",
+      "translate": false
+    },
+    "output.xs-start.reason.lobby-setting": {
+      "message": "the run settings do not hold this lobby value",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "Why the XS start check stopped at a call (after “Stopped at xsGetUnitHitpoints:”), lower case: the call asks for a lobby setting the preview’s run settings do not have, such as the difficulty.",
+      "translate": false
+    },
+    "output.xs-start.reason.object-data": {
+      "message": "the IDE does not know values of objects and units",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "Why the XS start check stopped at a call (after “Stopped at xsGetUnitHitpoints:”), lower case: the call asks for values of units, such as hit points.",
+      "translate": false
+    },
+    "output.xs-start.reason.technology-data": {
+      "message": "the IDE does not know technology data",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "Why the XS start check stopped at a call (after “Stopped at xsGetUnitHitpoints:”), lower case: the call asks about technologies.",
+      "translate": false
+    },
+    "output.xs-start.reason.text-table": {
+      "message": "the IDE does not have the game’s text tables",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "Why the XS start check stopped at a call (after “Stopped at xsGetUnitHitpoints:”), lower case: the call asks for text from the game’s text tables.",
+      "translate": false
+    },
+    "output.xs-start.reason.game-runtime": {
+      "message": "this call needs a running match",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "Why the XS start check stopped at a call (after “Stopped at xsGetUnitHitpoints:”), lower case: the call only works while a match is running.",
+      "translate": false
+    },
+    "output.xs-start.reason.not-in-map-scripts": {
+      "message": "the game does not offer this call to map scripts",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "Why the XS start check stopped at a call (after “Stopped at xsGetUnitHitpoints:”), lower case: the call exists only for AI or trigger scripts.",
+      "translate": false
+    },
+    "output.xs-start.reason.unknown-call": {
+      "message": "the IDE does not know this call",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "Why the XS start check stopped at a call (after “Stopped at xsGetUnitHitpoints:”), lower case: the IDE does not know the function at all.",
+      "translate": false
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Changes after this line are not listed.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause under the row where the XS start check stopped: where it stopped, and that what the XS would do after that point is missing from the list.",
+      "placeholders": {
+        "place": "the XS file and line, “start_bonus.xs, line 40”"
+      }
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Changes after the stop are not listed.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause under the row where the XS start check stopped, when the place is not known: what the XS would do after the stop is missing from the list."
+    },
+    "output.xs-start.skipped": {
+      "message": "XS start check skipped: {file} has {count, plural, one {# error} other {# errors}} (see Problems)",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”): the XS start check did not run because an XS file of the map has errors (the game then runs no XS at all); Problems lists them.",
+      "placeholders": {
+        "count": "how many errors the file has",
+        "file": "the XS file name, as written"
+      }
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "Link your game folder to run the XS start check",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”): the XS start check needs the game’s own XS constants from the linked game folder, and no game folder is linked."
+    },
+    "output.xs-start.omitted": {
+      "message": "Not every result of the XS start check is listed",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row (source “XS”): the XS start check found more than Output lists; the cause says what was left out."
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Left out: {items, list}",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause under that row: what the list leaves out, as in “Left out: 12 chat lines and 3 changes”.",
+      "placeholders": {
+        "items": "the left-out results with their counts"
+      }
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, one {# finding} other {# findings}}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the “Left out:” list of the XS start check: how many run findings are not listed.",
+      "placeholders": {
+        "count": "how many were left out"
+      }
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, one {# chat line} other {# chat lines}}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the “Left out:” list of the XS start check: how many chat lines the XS prints are not listed.",
+      "placeholders": {
+        "count": "how many were left out"
+      }
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, one {# change} other {# changes}}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the “Left out:” list of the XS start check: how many changes the XS makes are not listed.",
+      "placeholders": {
+        "count": "how many were left out"
+      }
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, one {# recorded call} other {# recorded calls}}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One item of the “Left out:” list of the XS start check: how many XS calls the check recorded (listed under Details) are not listed.",
+      "placeholders": {
+        "count": "how many were left out"
+      }
     },
     "output.constructs.more": {
       "message": "and {count} more",
@@ -1425,6 +2083,198 @@
       "maxLength": 28,
       "meaning": "Toggle in the run menu's first row, beside Run on save, off by default: while it is on, the preview runs shortly after the user stops typing. The two share one narrow row; a longer translation is clipped with a fade."
     },
+    "run-menu.quality-check": {
+      "message": "Quality check",
+      "screen": "run-menu",
+      "control": "option",
+      "maxLength": 28,
+      "meaning": "Toggle at the left of the run menu’s row below the seed, off by default: while it is on, Run and Run on save also check the map on many seeds after the preview shows it, starting at the seed in the Seed row (Run on edit never checks). The check looks for unfair or broken maps, such as resources one player lacks. A longer translation is clipped with a fade."
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Seeds to check",
+      "screen": "run-menu",
+      "control": "accessible-name",
+      "maxLength": 32,
+      "meaning": "Accessible name and tooltip of the number field beside Quality check in the run menu: how many seeds the quality check generates, 1 to 4096 (20 by default), starting at the seed in the Seed row. A seed is the number that makes a random map repeatable."
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Cases",
+      "screen": "run-menu",
+      "control": "accessible-name",
+      "maxLength": 24,
+      "meaning": "Accessible name of the icon button at the end of the Quality check row in the run menu: opens the list of cases (the things the quality check looks at, such as Wood or Paths), each with a check mark."
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Choose what the quality check looks at",
+      "screen": "run-menu",
+      "control": "tooltip",
+      "maxLength": 60,
+      "meaning": "Tooltip of the cases button at the end of the Quality check row in the run menu: it opens the list of cases to turn on or off."
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Other lobby settings",
+      "screen": "run-menu",
+      "control": "accessible-name",
+      "maxLength": 32,
+      "meaning": "Accessible name of the icon toggle in the Quality check row of the run menu, between the seed count and the cases button, off by default: while it is pressed, the quality check also checks the map with other map sizes and teams (lobby settings), not only the run menu's own."
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Also check Tiny 1v1, Medium 2v2 and Huge 4v4, 10 seeds each",
+      "screen": "run-menu",
+      "control": "tooltip",
+      "maxLength": 80,
+      "meaning": "Tooltip of the multi-setting icon toggle in the Quality check row of the run menu: while it is pressed, the quality check also generates the map on 10 seeds for each of three lobby settings, a Tiny map with one player against one, a Medium map with two against two, and a Huge map with four against four. Tiny, Medium and Huge are the game's map sizes; 1v1, 2v2 and 4v4 are team layouts."
+    },
+    "quality.case.generation": {
+      "message": "Generation",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether every seed generates cleanly: no refusal, no known game crash, no player without land, and no objects one player got and another did not. It always runs, so the list shows it checked and unavailable."
+    },
+    "quality.case.start-resources": {
+      "message": "Start resources",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether every player starts with the same resources near their town center (same counts per kind, similar totals)."
+    },
+    "quality.case.resource-distances": {
+      "message": "Resource distances",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether each player’s nearest gold, stone, wood and food are about as far away as the other players’, and on the same side (front, side or back)."
+    },
+    "quality.case.shared-resources": {
+      "message": "Shared resources",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether neutral resources and features between players (relics, gold, stone, hunt, the map centre) are split fairly."
+    },
+    "quality.case.wood": {
+      "message": "Wood",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether every player has a similar amount of forest, and a woodline, within walking distance of their start."
+    },
+    "quality.case.trapped": {
+      "message": "Trapped resources",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether resources near a start are closed in by trees, cliffs or water so that villagers cannot walk to them."
+    },
+    "quality.case.paths": {
+      "message": "Paths",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether players can walk to each other on a land map, and whether the walking distances between opponents are alike."
+    },
+    "quality.case.building-space": {
+      "message": "Building space",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether every player has a similar amount of open land to build on near their start."
+    },
+    "quality.case.hills": {
+      "message": "Hills",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether high ground in front of each player’s start is alike for every player."
+    },
+    "quality.case.water": {
+      "message": "Water",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether water access is fair: shores to build docks on, fish, and island size. Only on maps with water."
+    },
+    "quality.case.spacing": {
+      "message": "Spacing",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether resources are too close to each other or to a player’s start."
+    },
+    "quality.case.chokepoints": {
+      "message": "Chokepoints",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks narrow passages between opponents, or between a player’s start and their own gold or stone."
+    },
+    "quality.case.variation": {
+      "message": "Variation",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks whether the map changes from seed to seed (forests and starts are not the same every time)."
+    },
+    "quality.case.looks": {
+      "message": "Looks",
+      "screen": "run-menu",
+      "control": "menu-item",
+      "maxLength": 28,
+      "meaning": "Title of one quality check case: a check mark item in the run menu’s list of cases, and the case’s name in Output, Problems and Test Results. This case checks how the map looks: beaches, large empty areas, one terrain everywhere, unnatural shapes, and differences between the map’s edges."
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Headline of one quality check finding in Output, Problems and Test Results: the case’s title, then the check’s own sentence (in English) about what it found.",
+      "placeholders": {
+        "case": "a quality check case’s title, such as Shared resources",
+        "message": "the check’s English sentence, such as “Neutral stone is split unevenly between players”"
+      }
+    },
+    "quality.item.cause": {
+      "message": "{bad} of {of} maps{metric, select, yes { · median {p50}, 95th percentile {p95}, highest {max} {unit}} other {}}{worst, select, yes { · worst {count, plural, one {seed} other {seeds}} {seeds, list, unit}} other {}}",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Second line of a quality check finding: on how many of the checked maps it applied, then (when the check measured a value per map) the middle, the 95th percentile and the highest value over all maps, then the seeds of the worst maps. A seed is the number that makes a random map repeatable.",
+      "placeholders": {
+        "bad": "on how many maps the finding applied",
+        "of": "how many maps it was checked on",
+        "metric": "“yes” when the check measured a value per map, else “no”",
+        "p50": "the median value, a whole number",
+        "p95": "the 95th percentile value, a whole number",
+        "max": "the highest value, a whole number",
+        "unit": "the value’s unit in English, such as tiles or piles, as the check wrote it",
+        "worst": "“yes” when the finding names worst seeds, else “no”",
+        "count": "how many worst seeds are listed, 1 to 3",
+        "seeds": "the worst seeds, as the engine wrote them"
+      }
+    },
+    "quality.passed": {
+      "message": "Passed: {cases, list}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "An Output row after a quality check’s findings: the cases that found nothing to warn about.",
+      "placeholders": {
+        "cases": "the passed cases’ titles, such as Generation and Wood"
+      }
+    },
+    "quality.omitted": {
+      "message": "{count, plural, one {# more finding is not listed} other {# more findings are not listed}}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "The last Output row of a long quality check: findings left out to keep the summary short.",
+      "placeholders": {
+        "count": "how many findings are not listed"
+      }
+    },
+    "quality.failed": {
+      "message": "The quality check could not run",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when the quality check (which generates a map on many seeds and looks for unfair or broken maps) ended with an error and no catalog entry describes it."
+    },
     "run-menu.preset.default-name": {
       "message": "Config",
       "screen": "run-menu/presets",
@@ -1442,6 +2292,34 @@
         "number": "the first free number, 1 to 65"
       }
     },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})",
+      "screen": "run-menu/presets",
+      "control": "label",
+      "maxLength": 12,
+      "meaning": "Suggested name of a duplicated configuration (a saved set of run settings), like the name the Windows File Explorer gives a file copied into the same folder: the copied configuration's name followed by the lowest free number from 2, such as \"Config (2)\". The user can rename it at once. Keep the number after the name; English \" (2)\" is also recognised when a configuration with such a name is duplicated again.",
+      "placeholders": {
+        "name": "the duplicated configuration's name without an earlier copy number, written by the user",
+        "number": "the lowest free number, from 2"
+      }
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Test Config",
+      "screen": "run-menu/presets",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Name of the temporary configuration (a set of run settings) the IDE selects when the user shows a map test or quality check result that was generated with other lobby settings (another map size or player count, or civilizations the test chose for players set to Random): it holds that result's lobby settings and seed so the next run generates the same map. It is not saved and never appears in the configuration list; it shows on the configuration button above the map, drawn with a dotted outline. Use the same short configuration word as the default configuration name."
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Back to {name}",
+      "screen": "run-menu/presets",
+      "control": "tooltip",
+      "maxLength": 40,
+      "meaning": "Tooltip and accessible name of the undo-arrow icon button left of the configuration button above the map. It shows while the temporary configuration Test Config (set by showing a map test result) is active; clicking it selects the user's own configuration again, with its settings and seed as they were, and the temporary configuration is gone.",
+      "placeholders": {
+        "name": "the name of the user's configuration it goes back to, such as Config"
+      }
+    },
     "run-menu.preset.settings": {
       "message": "Preview configuration settings",
       "screen": "run-menu/presets",
@@ -1452,7 +2330,7 @@
       "message": "Manage preview configurations",
       "screen": "run-menu/presets",
       "control": "accessible-name",
-      "meaning": "Accessible name of the icon button that opens the list of saved preview configurations (select, rename, delete, new)."
+      "meaning": "Accessible name of the icon button that opens the list of saved preview configurations (select, rename, duplicate, delete, new)."
     },
     "run-menu.preset.new": {
       "message": "New Configuration",
@@ -1503,6 +2381,16 @@
         "name": "the configuration's name"
       }
     },
+    "run-menu.preset.duplicate": {
+      "message": "Duplicate {name}",
+      "screen": "run-menu/presets",
+      "control": "tooltip",
+      "maxLength": 40,
+      "meaning": "Tooltip and accessible name of the copy icon button beside a configuration's delete button in the configuration list. It adds a copy of the configuration with all its settings directly below it, selects the copy, and starts renaming it.",
+      "placeholders": {
+        "name": "the configuration's name"
+      }
+    },
     "run-menu.preset.delete.title": {
       "message": "Delete configuration {name}?",
       "screen": "confirmation-dialog/delete-preset",
@@ -1544,7 +2432,7 @@
       "message": "At most 64 configurations can be stored",
       "screen": "output",
       "control": "message-headline",
-      "meaning": "Output warning when a new configuration is refused because 64 configurations exist."
+      "meaning": "Output warning when a new configuration or a duplicate is refused because 64 configurations exist. It is also the tooltip of the configuration list's duplicate buttons while they are unavailable for that reason."
     },
     "run-menu.map-size": {
       "message": "Map size",
@@ -1938,6 +2826,16 @@
       "control": "message-headline",
       "meaning": "Output warning when a development fixture is run without an RMS script open (development builds). .rms and .rms2 are file extensions and stay as written."
     },
+    "mcp.run.settings-applied": {
+      "message": "{settings, list, unit} set by {app}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note after an AI app connected through the MCP connector showed a map in the preview and set Run menu settings for it, such as “seed 17, Medium, 4 players set by Claude”.",
+      "placeholders": {
+        "settings": "the settings the app changed: “seed 17”, a map size, a player count, team sizes such as 2v2, civilization or game mode names",
+        "app": "the AI app's name as shown in the connector settings, such as Claude"
+      }
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Random civilizations for this preview: {players, list, unit}",
       "screen": "output",
@@ -1987,6 +2885,13 @@
       "control": "status",
       "maxLength": 16,
       "meaning": "Result word of an Output run header (and the preview status) for a preview run or a map test that failed."
+    },
+    "run-menu.result.warnings": {
+      "message": "Warnings",
+      "screen": "output/run-header",
+      "control": "status",
+      "maxLength": 16,
+      "meaning": "Result word of an Output run header and of the Test Results summary for a quality check that found warnings but no failures."
     },
     "run-menu.result.passed": {
       "message": "Passed",
@@ -3006,6 +3911,13 @@
       "screen": "output",
       "control": "message-cause",
       "meaning": "Cause sentence of the message for code RMSXS0001, shown in Output, the editor notice, the deployment panel, or Problems.",
+      "translate": false
+    },
+    "message.RMSXS0001.headline.listed": {
+      "message": "XS changes are listed in Output, not drawn on the map",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Headline of the message for code RMSXS0001 after a run whose XS start check listed what the map’s XS does at game start: those changes appear as rows in Output, and the preview map does not show them.",
       "translate": false
     },
     "message.RMSXS.headline": {
@@ -8359,6 +9271,13 @@
       "maxLength": 48,
       "meaning": "Name of the RMS lint rule RMS4011 in View → Lint Rules (shown as “name (RMS4011)”; its check mark turns the rule on or off for the open workspace). The rule marks a name (a #define or #const) that some random or conditional paths of the script leave undefined where a command reads it."
     },
+    "lint-rule.RMS4012.title": {
+      "message": "The game can crash here",
+      "screen": "application-menu/view/lint-rules",
+      "control": "menu-item",
+      "maxLength": 48,
+      "meaning": "Name of the RMS lint rule RMS4012 in View → Lint Rules (shown as “name (RMS4012)”; its check mark turns the rule on or off for the open workspace). The rule marks a line on which the game itself can crash with another branch, seed or lobby setting, for example a defined name the game runs as a command."
+    },
     "map-icon.generate": {
       "message": "Generate map icon",
       "screen": "deploy-panel/map-icon",
@@ -9185,6 +10104,25 @@
         "seed": "the seed number, shown as written, such as 1234567"
       }
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Replayed the finding with its recorded seed {seed}, now locked for the next runs",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note after a finding of a map test or quality check was generated again in the preview with the seed (random number start value) the test recorded for it. That seed also became the Run menu's seed and its seed lock was turned on, so every following run uses the same seed.",
+      "placeholders": {
+        "seed": "the seed number, shown as written, such as 1234567"
+      }
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Replayed the finding with its recorded seed {seed}, now locked in the temporary configuration {name}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note after a finding of a map test or quality check was generated again in the preview with the seed (random number start value) the test recorded for it. The finding was generated with other lobby settings (map size, players, or civilizations the test chose for players set to Random) than the Run menu had, so the IDE put those settings and that seed, locked, into the named temporary configuration (a set of run settings that is not saved) and selected it, so every following run generates the same map.",
+      "placeholders": {
+        "seed": "the seed number, shown as written, such as 1234567",
+        "name": "the configuration's name, such as Test Config"
+      }
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "The game folder could not be unlinked",
       "screen": "output",
@@ -9257,6 +10195,813 @@
       "placeholders": {
         "name": "the file name shown on the tab, such as Arabia.rms"
       }
+    },
+    "mcp.tab.edited-by": {
+      "message": "Edited by {app}, not saved",
+      "screen": "editor/tabs",
+      "control": "tooltip",
+      "meaning": "Tooltip line and accessible description of an editor tab whose file holds changes an AI app made through MCP that are not saved yet; the tab shows a small sparkle mark.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.dialog.title": {
+      "message": "MCP",
+      "screen": "mcp-dialog",
+      "control": "dialog-title",
+      "maxLength": 32,
+      "meaning": "Title of the MCP settings dialog (View > MCP…). MCP is the Model Context Protocol, the standard AI apps use to connect to tools. Keep \"MCP\" as written."
+    },
+    "mcp.dialog.close-label": {
+      "message": "Close MCP settings",
+      "screen": "mcp-dialog",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the MCP dialog's icon-only close button."
+    },
+    "mcp.dialog.description": {
+      "message": "Let AI apps on this computer read, edit and check scripts in the open folder, generate maps and run map tests.",
+      "screen": "mcp-dialog",
+      "control": "dialog-text",
+      "meaning": "First line of the MCP dialog: what a connected AI app can do."
+    },
+    "mcp.enable.label": {
+      "message": "Enable MCP",
+      "screen": "mcp-dialog",
+      "control": "toggle",
+      "maxLength": 40,
+      "meaning": "On/off setting, off by default: while on, AI apps on this computer can connect to AoE2RMSIDE through MCP (each app is allowed once). Keep \"MCP\" as written."
+    },
+    "mcp.save.label": {
+      "message": "Let AI apps save files",
+      "screen": "mcp-dialog",
+      "control": "toggle",
+      "maxLength": 40,
+      "meaning": "On/off setting, off by default: whether a connected AI app may save the scripts it changed. When off, its changes stay unsaved in the editor."
+    },
+    "mcp.save.note": {
+      "message": "When off, AI changes stay unsaved until you save them.",
+      "screen": "mcp-dialog",
+      "control": "dialog-text",
+      "meaning": "Note under Let AI apps save files."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "MCP could not start because another program uses its connection name.",
+      "screen": "mcp-dialog",
+      "control": "message-headline",
+      "meaning": "Error in the MCP dialog: the connection AI apps use could not be opened because another program on the computer already holds its name."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "MCP could not start because it could not write its key file.",
+      "screen": "mcp-dialog",
+      "control": "message-headline",
+      "meaning": "Error in the MCP dialog: the small key file AI apps read to connect could not be written in the app's data folder."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "MCP could not start because its tool list does not match this version of AoE2RMSIDE. Reinstall AoE2RMSIDE.",
+      "screen": "mcp-dialog",
+      "control": "message-headline",
+      "meaning": "Error in the MCP dialog: the list of tools shipped with the app is damaged or belongs to another version."
+    },
+    "mcp.unavailable.internal": {
+      "message": "MCP could not start because of an unexpected error.",
+      "screen": "mcp-dialog",
+      "control": "message-headline",
+      "meaning": "Error in the MCP dialog for any other reason the connection could not start."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Turn Enable MCP off and on to try again.",
+      "screen": "mcp-dialog",
+      "control": "message-cause",
+      "meaning": "Line under an MCP start error: how to try again. \"Enable MCP\" is the setting's name above."
+    },
+    "mcp.apps.title": {
+      "message": "Allowed apps",
+      "screen": "mcp-dialog",
+      "control": "heading",
+      "maxLength": 40,
+      "meaning": "Heading of the list of AI apps the user allowed to connect."
+    },
+    "mcp.apps.empty": {
+      "message": "No apps yet. An app asks the first time it connects.",
+      "screen": "mcp-dialog",
+      "control": "empty-state",
+      "meaning": "Shown instead of the list while no AI app has been allowed."
+    },
+    "mcp.apps.connected": {
+      "message": "Connected",
+      "screen": "mcp-dialog",
+      "control": "status",
+      "maxLength": 20,
+      "meaning": "Small badge beside an allowed app that is connected right now."
+    },
+    "mcp.apps.last-used": {
+      "message": "Last used {date, date, medium}",
+      "screen": "mcp-dialog",
+      "control": "status",
+      "meaning": "Beside an allowed app that is not connected: the day it was last used.",
+      "placeholders": {
+        "date": "the day the app was last used, formatted as a date"
+      }
+    },
+    "mcp.apps.remove": {
+      "message": "Remove",
+      "screen": "mcp-dialog",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Removes the app from the allowed apps and disconnects it; it asks again the next time it connects."
+    },
+    "mcp.apps.remove-label": {
+      "message": "Remove {app}",
+      "screen": "mcp-dialog",
+      "control": "accessible-name",
+      "meaning": "Accessible name of an allowed app's Remove button.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.setup.app": {
+      "message": "AI app",
+      "screen": "mcp-connect",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the selection of the AI app to set up."
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop",
+      "screen": "mcp-connect",
+      "control": "option",
+      "maxLength": 32,
+      "meaning": "Choice in the AI app selection: the Claude Desktop app. A product name, kept as written."
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code",
+      "screen": "mcp-connect",
+      "control": "option",
+      "maxLength": 32,
+      "meaning": "Choice in the AI app selection: the Claude Code app. A product name, kept as written."
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex",
+      "screen": "mcp-connect",
+      "control": "option",
+      "maxLength": 32,
+      "meaning": "Choice in the AI app selection: the Codex app. A product name, kept as written."
+    },
+    "mcp.setup.app.other": {
+      "message": "Other app",
+      "screen": "mcp-connect",
+      "control": "option",
+      "maxLength": 32,
+      "meaning": "Choice in the AI app selection: any other AI app that can use MCP servers."
+    },
+    "mcp.setup.text-label": {
+      "message": "Setup text",
+      "screen": "mcp-connect",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the box that shows the setup text (a configuration snippet or a command with the program's path)."
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Add this to Claude Desktop's config (Settings > Developer > Edit Config), then restart it.",
+      "screen": "mcp-connect",
+      "control": "dialog-text",
+      "meaning": "How to use the setup text for Claude Desktop. \"Settings > Developer > Edit Config\" names Claude Desktop's own menu path; follow the words Claude Desktop shows in the user's language if known, else keep them."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Run this command in a terminal.",
+      "screen": "mcp-connect",
+      "control": "dialog-text",
+      "meaning": "How to use the setup text for Claude Code: it is a command line."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Run this command in a terminal.",
+      "screen": "mcp-connect",
+      "control": "dialog-text",
+      "meaning": "How to use the setup text for Codex: it is a command line."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Add this program as a local MCP server.",
+      "screen": "mcp-connect",
+      "control": "dialog-text",
+      "meaning": "How to use the setup text for another AI app: it names the program to start."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Turn on Enable MCP first.",
+      "screen": "mcp-connect",
+      "control": "dialog-text",
+      "meaning": "Shown in the Connect an AI app dialog under its first line while Enable MCP is off: the AI app can connect only once it is on. \"Enable MCP\" is the setting's name in the MCP dialog."
+    },
+    "mcp.setup.copy": {
+      "message": "Copy Setup",
+      "screen": "mcp-connect",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Copies the setup text to the clipboard."
+    },
+    "mcp.setup.copied": {
+      "message": "Setup copied",
+      "screen": "mcp-connect",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Copy Setup button for a moment after it copied the text."
+    },
+    "mcp.connect.row": {
+      "message": "Connect an AI app…",
+      "screen": "mcp-dialog",
+      "control": "button",
+      "maxLength": 40,
+      "meaning": "Button in the MCP dialog, below the allowed apps, that opens the Connect an AI app dialog. The ellipsis says it opens a dialog."
+    },
+    "mcp.connect.title": {
+      "message": "Connect an AI app",
+      "screen": "mcp-connect",
+      "control": "dialog-title",
+      "maxLength": 40,
+      "meaning": "Title of the small dialog that gives the user a prompt to paste into an AI app, such as Claude, so the app adds AoE2RMSIDE to its own settings."
+    },
+    "mcp.connect.close-label": {
+      "message": "Close",
+      "screen": "mcp-connect",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Connect an AI app dialog's icon-only close button."
+    },
+    "mcp.connect.description": {
+      "message": "Paste this prompt into your AI app. It sets itself up and tells you if something blocks it.",
+      "screen": "mcp-connect",
+      "control": "dialog-text",
+      "meaning": "First line of the Connect an AI app dialog. The prompt below it is English text for the AI app, which answers in the user's language. Claude Code and Claude Desktop are product names, kept as written."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Prompt for the AI app",
+      "screen": "mcp-connect",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the read-only box that shows the prompt to paste into the AI app."
+    },
+    "mcp.connect.copy": {
+      "message": "Copy Prompt",
+      "screen": "mcp-connect",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Copies the prompt for the AI app to the clipboard."
+    },
+    "mcp.connect.copied": {
+      "message": "Prompt copied",
+      "screen": "mcp-connect",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Copy Prompt button for a moment after it copied the prompt."
+    },
+    "mcp.connect.by-hand": {
+      "message": "Set up by hand",
+      "screen": "mcp-connect",
+      "control": "button",
+      "maxLength": 40,
+      "meaning": "Collapsed section below the prompt that opens the text to add AoE2RMSIDE to an AI app by hand (a configuration entry or a command) with Copy Setup."
+    },
+    "mcp.pairing.title": {
+      "message": "Allow {app} to use AoE2RMSIDE?",
+      "screen": "mcp-prompt/pairing",
+      "control": "dialog-title",
+      "meaning": "Title of the question shown the first time an AI app connects through MCP.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.pairing.description": {
+      "message": "It could edit scripts in the open folder, generate maps, run tests and deploy mods. Started by {program}.",
+      "screen": "mcp-prompt/pairing",
+      "control": "dialog-text",
+      "meaning": "One short line under the title: what the AI app named in the title could do once allowed, then the program that started the connection.",
+      "placeholders": {
+        "program": "the file name of the program that started the connection, such as Claude.exe; kept as written"
+      }
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "It could edit scripts in the open folder, generate maps, run tests and deploy mods.",
+      "screen": "mcp-prompt/pairing",
+      "control": "dialog-text",
+      "meaning": "The same line when the program that started the connection is not known."
+    },
+    "mcp.pairing.name-note": {
+      "message": "It names itself: allow it only if you set it up. Replacing a mod or a live test still asks you.",
+      "screen": "mcp-prompt/pairing",
+      "control": "dialog-text",
+      "meaning": "Warning in few words: the name in the title is what the app says about itself, so the user should allow only an app they added themselves; replacing one of the user's mods and starting a live test (the map in the running game) still ask the user first."
+    },
+    "mcp.pairing.allow": {
+      "message": "Allow",
+      "screen": "mcp-prompt/pairing",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Allows the AI app; it is remembered in the allowed apps."
+    },
+    "mcp.pairing.deny": {
+      "message": "Don't Allow",
+      "screen": "mcp-prompt/pairing",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Refuses the AI app until AoE2RMSIDE restarts."
+    },
+    "mcp.deploy.replace.title": {
+      "message": "Replace the mod “{mod}”?",
+      "screen": "mcp-prompt/deploy-replace",
+      "control": "dialog-title",
+      "meaning": "Question before an AI app's deployment replaces a mod it did not deploy itself.",
+      "placeholders": {
+        "mod": "the mod's name as the user or the AI app chose it; kept as written"
+      }
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} wants to deploy {file} into this mod. {app} did not deploy this mod in this session, so its files would be replaced.",
+      "screen": "mcp-prompt/deploy-replace",
+      "control": "dialog-text",
+      "meaning": "Why AoE2RMSIDE asks: the mod exists and the AI app did not create it in this session. To deploy is to install the map as a mod the game loads.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude",
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Replace",
+      "screen": "mcp-prompt/deploy-replace",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "Lets the AI app replace the mod's files."
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} asked to deploy {file} as the mod “{mod}”.",
+      "screen": "mcp-prompt/deploy-crash",
+      "control": "dialog-text",
+      "meaning": "Added to the warning that the game can crash on this map, when an AI app asked for the deployment.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude",
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written",
+        "mod": "the mod's name as the user or the AI app chose it; kept as written"
+      }
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} deployed {file} as the mod “{mod}”.",
+      "screen": "editor/notice",
+      "control": "notice",
+      "meaning": "Short notice after an AI app deployed a map as a mod (installed it for the game).",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude",
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written",
+        "mod": "the mod's name as the user or the AI app chose it; kept as written"
+      }
+    },
+    "mcp.live.title": {
+      "message": "Start a live test for {app}?",
+      "screen": "mcp-prompt/live-test",
+      "control": "dialog-title",
+      "meaning": "Question before an AI app starts a live test: the map is generated in the running game.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.live.description": {
+      "message": "{app} wants to test {file} with seed {seed} in the running game. The match that runs now ends.",
+      "screen": "mcp-prompt/live-test",
+      "control": "dialog-text",
+      "meaning": "What the live test does. A seed is the number that makes a random map repeatable.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude",
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written",
+        "seed": "the map's seed number, as written"
+      }
+    },
+    "mcp.live.session": {
+      "message": "Allow for this session",
+      "screen": "mcp-prompt/live-test",
+      "control": "toggle",
+      "maxLength": 40,
+      "meaning": "On/off choice in the question: when on, the AI app may start further live tests without asking until AoE2RMSIDE restarts."
+    },
+    "mcp.live.start": {
+      "message": "Start Live Test",
+      "screen": "mcp-prompt/live-test",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Starts the live test the AI app asked for."
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, one {# AI app} other {# AI apps}}",
+      "screen": "output-bar/mcp",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Short label of the MCP indicator at the right end of the Output bar while several AI apps are connected.",
+      "placeholders": {
+        "count": "how many AI apps are connected"
+      }
+    },
+    "mcp.status.connected": {
+      "message": "{app} connected",
+      "screen": "output-bar/mcp",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the MCP indicator while one AI app is connected.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, one {# AI app connected} other {# AI apps connected}}",
+      "screen": "output-bar/mcp",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the MCP indicator while several AI apps are connected.",
+      "placeholders": {
+        "count": "how many AI apps are connected"
+      }
+    },
+    "mcp.status.working": {
+      "message": "{app} is working",
+      "screen": "output-bar/mcp",
+      "control": "tooltip",
+      "meaning": "Tooltip and accessible name of the MCP indicator while an AI app's request runs.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.status.tooltip": {
+      "message": "Connected through MCP. Click for MCP settings.",
+      "screen": "output-bar/mcp",
+      "control": "tooltip",
+      "meaning": "Tooltip of the MCP indicator while an AI app is connected; a click opens the MCP dialog."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row for one request of an AI app, such as \"Claude: edited oasis.rms\".",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude",
+        "action": "what the app did, one of the mcp.action messages"
+      }
+    },
+    "mcp.output.call-failed": {
+      "message": "It found errors and sent them to the AI app.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of such a row when the request ended with errors in the script or a failing test, which the AI app received."
+    },
+    "mcp.output.connected": {
+      "message": "{app} connected",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row: an allowed AI app connected through MCP.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} disconnected",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row: a connected AI app closed its connection.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.output.denied": {
+      "message": "{app} was not allowed to connect",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row: the user chose Don't Allow for this AI app, or did so earlier since AoE2RMSIDE started.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude"
+      }
+    },
+    "mcp.output.busy": {
+      "message": "{app} was asked to wait: {running} is running",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row: an AI app asked for a run while another run held the IDE, so it was told to try again later.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude",
+        "running": "what runs, such as \"Map test · fair.rmstest\"; kept as written"
+      }
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} was refused",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row: an AI app's request was refused; the cause line says why.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude",
+        "tool": "the MCP tool's name, such as edit_file; a protocol name that stays as written"
+      }
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} was cancelled",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output row: an AI app's request was cancelled before it finished.",
+      "placeholders": {
+        "app": "the AI app's name as it names itself, such as Claude",
+        "tool": "the MCP tool's name, such as edit_file; a protocol name that stays as written"
+      }
+    },
+    "mcp.action.status": {
+      "message": "read the IDE status",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It asked what is open and running."
+    },
+    "mcp.action.list-files": {
+      "message": "listed files",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It listed files of the open folder."
+    },
+    "mcp.action.read-file": {
+      "message": "read {file}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It read a script.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.edit-file": {
+      "message": "edited {file}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It changed a script (unsaved).",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.create-file": {
+      "message": "created {file}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It created a new script.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.save-file": {
+      "message": "saved {file}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It saved a script.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.problems": {
+      "message": "checked {file}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It read the problems of a script.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.generate": {
+      "message": "generated {file}, seed {seed}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It generated a map from a script.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written",
+        "seed": "the map's seed number, as written"
+      }
+    },
+    "mcp.action.show-map": {
+      "message": "showed {file} in the preview",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It generated a map and showed it in the map preview for the user.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.inspect": {
+      "message": "looked at a generated map",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It read details of a map it generated."
+    },
+    "mcp.action.picture": {
+      "message": "got a picture of {file}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It got a picture of a generated map.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, one {got pictures of # seed of {file}} other {got pictures of # seeds of {file}}}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It got small pictures of the maps of several seeds.",
+      "placeholders": {
+        "count": "how many seeds (maps)",
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.map-test": {
+      "message": "ran the map test {file}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It ran a map test script.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, one {ran the quality check on {file} (# seed)} other {ran the quality check on {file} (# seeds)}}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It ran the quality check, which tests the map over many seeds.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written",
+        "seeds": "how many seeds were tested"
+      }
+    },
+    "mcp.action.run-status": {
+      "message": "checked on a running test",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It asked how a long test is going."
+    },
+    "mcp.action.details": {
+      "message": "read details of a result",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It asked for more details of a result."
+    },
+    "mcp.action.deploy": {
+      "message": "deployed {file} as the mod “{mod}”",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It installed the map as a mod for the game.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written",
+        "mod": "the mod's name as the user or the AI app chose it; kept as written"
+      }
+    },
+    "mcp.action.live-test": {
+      "message": "started a live test of {file}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It ran the map in the running game.",
+      "placeholders": {
+        "file": "a script's path inside the open folder, such as maps/oasis.rms; kept as written"
+      }
+    },
+    "mcp.action.guide": {
+      "message": "read the guide",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It read the guide written for AI apps."
+    },
+    "mcp.action.reference": {
+      "message": "looked up {name}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It looked up the documentation of a script word.",
+      "placeholders": {
+        "name": "an RMS or XS name, such as create_land; kept as written"
+      }
+    },
+    "mcp.action.tool": {
+      "message": "used {tool}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. Any other request.",
+      "placeholders": {
+        "tool": "the MCP tool's name, such as edit_file; a protocol name that stays as written"
+      }
+    },
+    "mcp.refusal.waiting": {
+      "message": "It waits for your answer in AoE2RMSIDE.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the app must first be allowed (or something else needs the user's answer) at the PC."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "You did not allow this app.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the user chose Don't Allow."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "The request was not valid.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the AI app sent a request AoE2RMSIDE could not use."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "No folder is open.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: AI apps work only in the folder open in AoE2RMSIDE."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "The file is outside the open folder, or AoE2RMSIDE protects it.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: AI apps may only use files inside the open folder that are not game or mod files."
+    },
+    "mcp.refusal.file-type": {
+      "message": "AI apps can't use this type of file.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: only script files and similar text files are allowed."
+    },
+    "mcp.refusal.not-found": {
+      "message": "The file was not found.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the file does not exist."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "The file already exists.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: a new file was asked for under a name that is taken."
+    },
+    "mcp.refusal.too-large": {
+      "message": "The file is too large.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the file exceeds the size limit."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "The file is not a text file.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the file is not text."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "The text to change was missing or found more than once.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the AI app's change did not match the script's current text, so nothing changed."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "Let AI apps save files is off.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: saving is off in the MCP dialog; \"Let AI apps save files\" is that setting's name."
+    },
+    "mcp.refusal.busy": {
+      "message": "Something else is running.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: another run held the IDE, so the app was told to try again later."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "The generated map is no longer kept.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the app asked about an older map AoE2RMSIDE no longer keeps."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "The test is no longer kept.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the app asked about an older test AoE2RMSIDE no longer keeps."
+    },
+    "mcp.refusal.stopped": {
+      "message": "You stopped it.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the user pressed Stop."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "The AI app cancelled it.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the app itself cancelled the request."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "You said no.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the user answered No or Cancel to a question."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "The game can crash on this map.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the game itself is known to crash with this map and these settings."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "The game is not ready for a live test.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: a live test needs the linked game running and its tools set up."
+    },
+    "mcp.refusal.too-many": {
+      "message": "The app sent too many requests.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the app sent requests faster than AoE2RMSIDE allows."
+    },
+    "mcp.refusal.internal": {
+      "message": "Something went wrong in AoE2RMSIDE.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: an unexpected error."
     },
     "code-editor.tab.unsaved": {
       "message": "Unsaved changes",
@@ -14360,6 +16105,12 @@
       "control": "dialog-text",
       "meaning": "Second paragraph of the update dialog: before closing for the update, AoE2RMSIDE asks about unsaved documents like when quitting."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Connected AI apps lose their connection during the update. Restart them afterwards.",
+      "screen": "confirmation-dialog/update",
+      "control": "dialog-text",
+      "meaning": "Extra sentence of the update dialog, shown only while an AI app (such as Claude) is connected through MCP: the update ends that connection, and the AI app must be restarted to connect again."
+    },
     "app-update.dialog.release-notes": {
       "message": "Release notes",
       "screen": "confirmation-dialog/update",
@@ -14696,6 +16447,539 @@
       "meaning": "Action line when a found program is not used.",
       "placeholders": {
         "language": "RMS or XS; stays as written"
+      }
+    },
+    "known-crash.headline": {
+      "message": "The game crashes on this map",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Headline when the game itself crashes on the map of the selected setup (a known game crash, not an error of AoE2RMSIDE), shown in Output, the editor notice, the deployment panel, and Problems. The cause and the fix of that crash follow."
+    },
+    "known-crash.headline.possible": {
+      "message": "The game can crash here",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Headline of a warning that the game itself can crash on this line with another seed, random branch, or lobby setting (a known game crash), shown in Output and Problems. The cause and the fix of that crash follow."
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "override_actor_radius_if_required on an object too small for the search",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required moves an object that does not fit where it was placed, and the object is too small for the game's search for a free tile.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "Remove override_actor_radius_if_required from that object.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "A line in a connection block has no terrain",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Inside the braces of a connection command the game reads a terrain from every line, and {word} has none.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Move the line out of the connection block, before the connection commands.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "A connection reaches a land outside the map",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "A connection starts or ends at a land whose position lies outside the map at this map size.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "Keep land_position inside the map for every map size.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "A defined name runs as cliff_type in <CLIFF_GENERATION>",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "command": "the RMS command the game runs that word as, such as cliff_type; stays as written",
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Remove the defined name, or write the command it was meant to be.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "A defined name runs as base_terrain or base_layer in create_elevation braces",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "command": "the RMS command the game runs that word as, such as cliff_type; stays as written",
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Remove the defined name, or write the command it was meant to be.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "A defined name runs as ai_info_map_type, effect_amount or effect_percent",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "command": "the RMS command the game runs that word as, such as cliff_type; stays as written",
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Remove the defined name, or write the command it was meant to be.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "A defined name runs as guard_state in <PLAYER_SETUP>",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "command": "the RMS command the game runs that word as, such as cliff_type; stays as written",
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Remove the defined name, or write the command it was meant to be.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "A defined name runs as base_terrain or base_layer in <LAND_GENERATION>",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "command": "the RMS command the game runs that word as, such as cliff_type; stays as written",
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Remove the defined name, or write the command it was meant to be.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "A defined name runs as terrain_type or assign_to in a land's braces",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "command": "the RMS command the game runs that word as, such as cliff_type; stays as written",
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Remove the defined name, or write the command it was meant to be.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "A defined name runs as terrain_to_place_on, layer_to_place_on or second_object in an object's braces",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "command": "the RMS command the game runs that word as, such as cliff_type; stays as written",
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Remove the defined name, or write the command it was meant to be.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "A defined name runs as create_terrain or color_correction in <TERRAIN_GENERATION>",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} is a defined name where a command can stand, so the game runs it as {command} with no value.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "command": "the RMS command the game runs that word as, such as cliff_type; stays as written",
+        "word": "the word of the script the game runs, as written (a defined name or a command); stays as written"
+      }
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Remove the defined name, or write the command it was meant to be.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Grouped player placement around a circle of length zero",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Players are placed in team groups around a circle of length zero, so the game divides by zero.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "add_object without an object in a named group",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "add_object has no object while a group is named, so the game crashes when that entry is chosen.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "Give add_object an object.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "An object is placed on a land outside the map",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "An object is placed per land on a land whose position lies outside the map at this map size.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "Keep land_position inside the map for every map size.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size makes the map smaller after the player lands",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size makes the map smaller after the player lands were made, so a player can start outside the map.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "Move override_map_size before create_player_lands.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "The map paints a terrain without movement data",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "The map paints terrain {terrain}, which the game's movement data does not cover, so the game crashes during the match.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written.",
+      "placeholders": {
+        "terrain": "a terrain number, as the script wrote it"
+      }
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Use a terrain that the game's movement data covers.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
+    },
+    "message.RMS4012.headline": {
+      "message": "The game can crash here",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Headline of the message for code RMS4012 (a line on which the game itself can crash with another seed, random branch, or lobby setting), shown in Output, the editor notice, the deployment panel, or Problems.",
+      "translate": false
+    },
+    "deploy-panel.crash-warning": {
+      "message": "With another seed or other lobby settings the game can crash on this map. {details}",
+      "screen": "deploy-panel",
+      "control": "dialog-text",
+      "meaning": "Warning line in Deploy as Mod when the map generated for the selected settings, but the game itself can crash on it with another seed or other lobby settings (a known game crash). Deploying stays possible.",
+      "placeholders": {
+        "details": "one or more sentences saying why the game can crash and what to change in the script"
+      }
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Deploy Anyway",
+      "screen": "deploy-panel",
+      "control": "button",
+      "maxLength": 20,
+      "meaning": "The deploy button while the panel warns that the game can crash on this map with another seed or other lobby settings: deploys the mod all the same."
+    },
+    "live-test.crash-warning.title": {
+      "message": "The game can crash on this map",
+      "screen": "confirmation-dialog/live-test-crash",
+      "control": "dialog-title",
+      "meaning": "Title of the confirmation before a live test of a map on which the game itself can crash with another seed or other lobby settings (a known game crash)."
+    },
+    "live-test.crash-warning.description": {
+      "message": "This seed works, but with another seed or other lobby settings the game can crash on this map. {details}",
+      "screen": "confirmation-dialog/live-test-crash",
+      "control": "dialog-text",
+      "meaning": "Text of the confirmation before such a live test. A seed is the number that makes a random map repeatable.",
+      "placeholders": {
+        "details": "one or more sentences saying why the game can crash and what to change in the script"
+      }
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Start Anyway",
+      "screen": "confirmation-dialog/live-test-crash",
+      "control": "button",
+      "maxLength": 32,
+      "meaning": "The confirmation's primary button: starts the live test all the same."
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "The game can crash on this map, so the live test was not started.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause sentence of the message for code live.crash-warning-declined: the author closed the warning that the game itself can crash on this map, so no live test ran."
+    },
+    "test-results.crashes.title": {
+      "message": "Game crashes",
+      "screen": "test-results",
+      "control": "label",
+      "maxLength": 40,
+      "meaning": "Title of the group in Test Results that counts the maps of a map test on which the game itself crashes (known game crashes)."
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, one {# map} other {# maps}}",
+      "screen": "test-results",
+      "control": "label",
+      "meaning": "How many maps of the map test the game crashes on, after the Game crashes title.",
+      "placeholders": {
+        "maps": "how many maps the game crashes on"
+      }
+    },
+    "test-results.crashes.headline": {
+      "message": "The game crashes on {maps, number} of {sampled, plural, one {# map} other {# maps}}",
+      "screen": "test-results",
+      "control": "message-headline",
+      "meaning": "One row of the Game crashes group: on how many of the maps a map test made of one script the game itself crashes for one reason. The reason and the fix follow.",
+      "placeholders": {
+        "maps": "how many maps the game crashes on",
+        "sampled": "how many maps the map test made of that script"
+      }
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{maps, plural, one {# map} other {# maps}} of {sampled, number} could not be generated",
+      "screen": "test-results",
+      "control": "message-headline",
+      "meaning": "One row of the Game crashes group for a reason this version of AoE2RMSIDE does not describe: how many of the maps a map test made of one script could not be generated.",
+      "placeholders": {
+        "maps": "how many maps could not be generated",
+        "sampled": "how many maps the map test made of that script"
+      }
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, one {Seed} other {Seeds}} {seeds, list, unit}",
+      "screen": "test-results",
+      "control": "label",
+      "meaning": "The seeds of the maps the game crashes on, to try them again. A seed is the number that makes a random map repeatable.",
+      "placeholders": {
+        "count": "how many seeds are listed",
+        "seeds": "the seed numbers, as the engine wrote them"
+      }
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, one {Seed} other {Seeds}} {seeds, list, unit} and {omitted, number} more",
+      "screen": "test-results",
+      "control": "label",
+      "meaning": "The first seeds of the maps the game crashes on, and how many more seeds are not listed. A seed is the number that makes a random map repeatable.",
+      "placeholders": {
+        "count": "how many seeds are listed",
+        "seeds": "the seed numbers, as the engine wrote them",
+        "omitted": "how many more seeds are not listed"
+      }
+    },
+    "test-results.crashes.source": {
+      "message": "Game crash",
+      "screen": "test-results",
+      "control": "accessible-name",
+      "meaning": "What the icon of a row in the Game crashes group stands for: maps of a map test on which the game itself crashes (a known game crash)."
+    },
+    "test-results.crashes.show": {
+      "message": "Show game crashes",
+      "screen": "test-results",
+      "control": "accessible-name",
+      "meaning": "The chevron that opens the Game crashes group in Test Results."
+    },
+    "test-results.crashes.hide": {
+      "message": "Hide game crashes",
+      "screen": "test-results",
+      "control": "accessible-name",
+      "meaning": "The chevron that closes the Game crashes group in Test Results."
+    },
+    "test-results.quality.summary": {
+      "message": "· Quality check of {map} · {facts}",
+      "screen": "test-results",
+      "control": "status",
+      "meaning": "The Test Results summary of a quality check after its result word (such as Failed): the checked map’s file name and its counts. It starts with the separating dot that follows the result word.",
+      "placeholders": {
+        "map": "the checked map’s file name, such as Demo Valley.rms",
+        "facts": "the counts, such as “20 maps · 2 failures · 1 warning”"
+      }
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, one {# map} other {# maps}} · {failures, plural, one {# failure} other {# failures}} · {warnings, plural, one {# warning} other {# warnings}}",
+      "screen": "test-results",
+      "control": "label",
+      "meaning": "The counts in the Test Results summary of a quality check: how many maps it checked, and how many failures and warnings it found.",
+      "placeholders": {
+        "maps": "how many maps were checked",
+        "failures": "how many failures were found",
+        "warnings": "how many warnings were found"
+      }
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, one {# finding} other {# findings}}",
+      "screen": "test-results",
+      "control": "label",
+      "meaning": "How many findings one quality check case has, after the case’s title in its Test Results group header.",
+      "placeholders": {
+        "count": "how many findings the case has"
+      }
+    },
+    "test-results.quality.show-case": {
+      "message": "Show the findings of {case}",
+      "screen": "test-results",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the button that expands one quality check case’s findings in Test Results.",
+      "placeholders": {
+        "case": "the case’s title, such as Wood"
+      }
+    },
+    "test-results.quality.hide-case": {
+      "message": "Hide the findings of {case}",
+      "screen": "test-results",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the button that collapses one quality check case’s findings in Test Results.",
+      "placeholders": {
+        "case": "the case’s title, such as Wood"
+      }
+    },
+    "test-results.quality.case-findings": {
+      "message": "Findings of {case}",
+      "screen": "test-results",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the list of one quality check case’s findings in Test Results.",
+      "placeholders": {
+        "case": "the case’s title, such as Wood"
+      }
+    },
+    "test-results.quality.no-findings": {
+      "message": "Every case passed on {maps, plural, one {# map} other {# maps}}",
+      "screen": "test-results",
+      "control": "empty-state",
+      "meaning": "Shown in Test Results when a quality check found nothing to warn about.",
+      "placeholders": {
+        "maps": "how many maps were checked"
+      }
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, one {# quality check finding} other {# quality check findings}}",
+      "screen": "test-results",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Test Results list after a quality check: how many findings it lists.",
+      "placeholders": {
+        "count": "how many findings are listed"
       }
     }
   }

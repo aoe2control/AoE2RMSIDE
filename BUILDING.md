@@ -80,7 +80,7 @@ pnpm package:zip
 ```
 
 This builds the desktop application, builds the native executables (`rmsd`,
-`rms-ls`, `rms-test`) in release mode, writes the license notices of every
+`rms-ls`, `rms-test`, and the MCP relay `rms-connect`) in release mode, writes the license notices of every
 third-party component into the package (`resources\THIRD-PARTY-NOTICES.txt`),
 packages everything with Electron Forge, and writes the portable ZIP with its
 SHA-256 checksum and build information:

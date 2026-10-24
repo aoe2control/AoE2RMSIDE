@@ -12,7 +12,7 @@ import {
 import { tmpdir } from 'node:os';
 import { basename, dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { allPackagedNatives, packageEdition } from './package-editions.mjs';
+import { allPackagedNatives, independentNatives, packageEdition } from './package-editions.mjs';
 import {
   innoRegistrationCleanupProcedure,
   innoRegistrySection,
@@ -238,7 +238,7 @@ export function innoSetupScript({
     'ChangesAssociations=yes',
     'CloseApplications=force',
     'CloseApplicationsFilter=*.exe,*.dll,*.chm',
-    `CloseApplicationsFilterExcludes=${natives.join(',')}`,
+    `CloseApplicationsFilterExcludes=${natives.filter((name) => !independentNatives.includes(name)).join(',')}`,
     'RestartApplications=no',
     'AllowCancelDuringInstall=no',
     'SetupMutex=AoE2RMSIDE.Setup',
@@ -344,6 +344,16 @@ export function innoSetupScript({
         `  else if FileInUse(Directory + ${pascal(`\\resources\\native\\${name}`)}) then Result := ${pascal(name)}`,
     ),
     '  ;',
+    'end;',
+    '',
+    '{ What the user closes for a running program: the AI app for the MCP relay. }',
+    'function RunningMessage(const Busy: String): String;',
+    'begin',
+    ...independentNatives.map(
+      (name) =>
+        `  if Busy = ${pascal(name)} then Result := 'An AI app is connected to AoE2RMSIDE (' + Busy + '). Close the AI app' else`,
+    ),
+    "  Result := 'AoE2RMSIDE is running (' + Busy + '). Close it';",
     'end;',
     '',
     'function WaitUntilClosed(const Directory: String; Seconds: Integer): String;',
@@ -457,7 +467,7 @@ export function innoSetupScript({
     "  if Busy <> '' then",
     '  begin',
     "    Log('AoE2RMSIDE replace: still running: ' + Busy);",
-    "    RaiseException('AoE2RMSIDE is still running (' + Busy + '). Close it, then run Setup again.');",
+    "    RaiseException(RunningMessage(Busy) + ', then run Setup again.');",
     '  end;',
     "  if (PreviousUninstaller = '') or not FileExists(PreviousUninstaller) then",
     '  begin',
@@ -551,7 +561,7 @@ export function innoSetupScript({
     "  Busy := WaitUntilClosed(ExpandConstant('{app}'), 0);",
     "  while (Busy <> '') and not UninstallSilent do",
     '  begin',
-    "    if MsgBox('AoE2RMSIDE is running (' + Busy + '). Close it, then choose Retry.', mbError, MB_RETRYCANCEL) <> IDRETRY then",
+    "    if MsgBox(RunningMessage(Busy) + ', then choose Retry.', mbError, MB_RETRYCANCEL) <> IDRETRY then",
     '    begin',
     '      Result := False;',
     '      Exit;',

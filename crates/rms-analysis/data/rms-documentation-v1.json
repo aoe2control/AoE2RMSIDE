@@ -2735,7 +2735,7 @@
         }
       ],
       "details": [
-        "Without it, every connection command plans and paints on the terrain as it was before the connections, and the results are combined at the end. Write it outside blocks; inside braces it has no effect."
+        "Without it, every connection command plans and paints on the terrain as it was before the connections, and the results are combined at the end. Write it once outside blocks, before the connection commands. Inside the braces of a connection command the game crashes on it; inside other braces it has no effect."
       ],
       "related": ["create_connect_all_lands"],
       "evidence": {

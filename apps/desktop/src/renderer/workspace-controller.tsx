@@ -40,6 +40,7 @@ import {
   explorerSelection,
   isCleanPreview,
   mergeNormalDocuments,
+  type WorkspaceFileOpenOptions,
 } from './open-documents';
 import { sameSourceIdentity } from './source-identity';
 import {
@@ -104,7 +105,11 @@ export interface WorkspaceController {
   pickFiles(): Promise<void>;
   pickFolder(): Promise<void>;
   openRecent(path: string): Promise<void>;
-  openWorkspaceFile(path: string, keepOpen?: boolean): Promise<EditorDocument | null>;
+  openWorkspaceFile(
+    path: string,
+    keepOpen?: boolean,
+    options?: WorkspaceFileOpenOptions,
+  ): Promise<EditorDocument | null>;
   openWorkspaceSource(sourceId: string, keepOpen?: boolean): Promise<EditorDocument | null>;
   acceptOpenResult(result: WorkspaceOpenResult, options?: { reveal?: boolean }): void;
   openDroppedFiles(files: File[]): Promise<void>;

@@ -21,6 +21,7 @@ pub fn discover_include_requests(
         message: message.to_owned(),
         source_chain: vec![source.id().clone()],
         range,
+        crash: None,
     };
     if source.bytes().len() > SOURCE_CATALOG_MAX_FILE_BYTES {
         return Err(error(
@@ -36,6 +37,7 @@ pub fn discover_include_requests(
             message,
             source_chain: vec![source.id().clone()],
             range: Some(range),
+            crash: None,
         });
     }
     let initial = Parser::new(None, options.clone());

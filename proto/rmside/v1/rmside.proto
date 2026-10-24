@@ -28,6 +28,7 @@ message StructuredError {
   string message = 2;
   bool retryable = 3;
   map<string, string> details = 4;
+  KnownCrashReference known_crash = 5;
 }
 
 message RequestIdentity {
@@ -69,6 +70,11 @@ message Capabilities {
   bool connection_routes = 17;
   bool control_pipe_exchange = 18;
   bool map_test_completion_order_preview = 19;
+  bool known_crash_ids = 20;
+  bool xs_start_check = 21;
+  bool map_test_game_crashes = 22;
+  bool map_test_xs = 23;
+  bool map_test_quality = 24;
 }
 
 enum MapTestStatus {
@@ -105,6 +111,37 @@ message MapTestRunRequest {
   bool automatic_workers = 23;
   bool report_request_revision = 24;
   bool completion_order_preview = 25;
+  bool report_game_crashes = 26;
+  XsGameConstants xs_constants = 27;
+  MapTestBuiltin builtin = 28;
+  QualityCheckOptions quality = 29;
+  bool report_quality = 30;
+}
+
+enum MapTestBuiltin {
+  MAP_TEST_BUILTIN_UNSPECIFIED = 0;
+  MAP_TEST_BUILTIN_QUALITY_CHECK_V1 = 1;
+}
+
+enum QualityDetail {
+  QUALITY_DETAIL_UNSPECIFIED = 0;
+  QUALITY_DETAIL_SAMPLE_ROWS = 1;
+}
+
+message QualitySettings {
+  string map_size = 1;
+  uint32 width = 2;
+  uint32 height = 3;
+  repeated PlayerConfiguration players = 4;
+  uint32 seed_count = 5;
+}
+
+message QualityCheckOptions {
+  repeated string case_ids = 1;
+  uint32 seed_start = 2;
+  uint32 seed_count = 3;
+  repeated QualitySettings settings = 4;
+  QualityDetail detail = 5;
 }
 
 message MapTestOutputEvent {
@@ -142,6 +179,37 @@ message MapTestRunResponse {
   bytes report_identity = 4;
   repeated Diagnostic diagnostics = 5;
   MapTestPreview preview = 6;
+  QualitySamples quality_samples = 7;
+}
+
+enum QualityLevel {
+  QUALITY_LEVEL_UNSPECIFIED = 0;
+  QUALITY_LEVEL_PASSED = 1;
+  QUALITY_LEVEL_ADVICE = 2;
+  QUALITY_LEVEL_WARNING = 3;
+  QUALITY_LEVEL_FAILURE = 4;
+}
+
+message QualityTile {
+  uint32 x = 1;
+  uint32 y = 2;
+  uint32 player = 3;
+}
+
+message QualitySampleRow {
+  uint32 settings_index = 1;
+  uint32 seed = 2;
+  string case_id = 3;
+  string code = 4;
+  QualityLevel level = 5;
+  optional sint64 value = 6;
+  repeated sint64 player_values = 7;
+  repeated QualityTile tiles = 8;
+}
+
+message QualitySamples {
+  repeated QualitySampleRow rows = 1;
+  uint32 omitted_rows = 2;
 }
 
 message HandshakeResponse {
@@ -177,6 +245,26 @@ message Diagnostic {
   DiagnosticSeverity severity = 3;
   string source_id = 4;
   SourceRange range = 5;
+  KnownCrashReference known_crash = 6;
+  repeated MessageArgument arguments = 7;
+}
+
+message MessageArgument {
+  string name = 1;
+  string value = 2;
+}
+
+enum KnownCrashEvidence {
+  KNOWN_CRASH_EVIDENCE_UNSPECIFIED = 0;
+  KNOWN_CRASH_EVIDENCE_LIVE = 1;
+  KNOWN_CRASH_EVIDENCE_STATIC = 2;
+  KNOWN_CRASH_EVIDENCE_INFERRED = 3;
+}
+
+message KnownCrashReference {
+  string crash_id = 1;
+  repeated MessageArgument arguments = 2;
+  KnownCrashEvidence evidence = 3;
 }
 
 message AnalysisRequest {
@@ -364,6 +452,13 @@ message GenerationRequest {
   LocalContentSource local_content = 26;
   bool progressive_preview = 27;
   bool connection_routes = 28;
+  bool xs_start_check = 29;
+  XsGameConstants xs_constants = 30;
+}
+
+message XsGameConstants {
+  bytes text = 1;
+  bytes sha256 = 2;
 }
 
 enum GenerationCertification {
@@ -617,6 +712,159 @@ message GenerationResponse {
   GenerationCertification certification = 17;
   ExecutionCostSummary execution_cost = 18;
   ConstructVerification construct_verification = 19;
+  XsStartReport xs_start = 20;
+}
+
+message XsStartReport {
+  uint32 contract_major = 1;
+  uint32 contract_minor = 2;
+  XsStartStatus status = 3;
+  XsStartVerification verification = 4;
+  repeated string source_ids = 5;
+  bytes constants_sha256 = 6;
+  bool main_ran = 7;
+  uint32 rules_run = 8;
+  uint64 steps = 9;
+  uint64 step_limit = 10;
+  repeated string unanswerable_calls = 11;
+  uint32 omitted_unanswerable_calls = 12;
+  repeated XsUnconfirmedTopic unconfirmed_topics = 13;
+  repeated Diagnostic findings = 14;
+  uint32 omitted_findings = 15;
+  repeated XsChatLine chat_lines = 16;
+  uint32 omitted_chat_lines = 17;
+  repeated XsStartChange changes = 18;
+  uint32 omitted_changes = 19;
+  repeated XsRecordedCall recorded_calls = 20;
+  uint32 omitted_recorded_calls = 21;
+  XsStartStop stop = 22;
+  repeated XsStartFileErrors compile_errors = 23;
+  uint32 random_draws = 24;
+}
+
+enum XsStartStatus {
+  XS_START_STATUS_UNSPECIFIED = 0;
+  XS_START_STATUS_COMPLETED = 1;
+  XS_START_STATUS_STOPPED = 2;
+  XS_START_STATUS_SKIPPED_COMPILE_ERRORS = 3;
+  XS_START_STATUS_SKIPPED_NO_CONSTANTS = 4;
+}
+
+enum XsStartVerification {
+  XS_START_VERIFICATION_UNSPECIFIED = 0;
+  XS_START_VERIFICATION_NOT_COMPARED = 1;
+}
+
+enum XsUnconfirmedTopic {
+  XS_UNCONFIRMED_TOPIC_UNSPECIFIED = 0;
+  XS_UNCONFIRMED_TOPIC_INTEGER_ARITHMETIC = 1;
+  XS_UNCONFIRMED_TOPIC_MIXED_NUMBERS = 2;
+  XS_UNCONFIRMED_TOPIC_NUMBER_TEXT = 3;
+  XS_UNCONFIRMED_TOPIC_TEXT_FUNCTIONS = 4;
+  XS_UNCONFIRMED_TOPIC_ARRAY_DEFAULTS = 5;
+  XS_UNCONFIRMED_TOPIC_RULE_ORDER = 6;
+  XS_UNCONFIRMED_TOPIC_GOTO = 7;
+  XS_UNCONFIRMED_TOPIC_START_DEFAULTS = 8;
+}
+
+enum XsUnansweredReason {
+  XS_UNANSWERED_REASON_UNSPECIFIED = 0;
+  XS_UNANSWERED_REASON_LOBBY_SETTING = 1;
+  XS_UNANSWERED_REASON_OBJECT_DATA = 2;
+  XS_UNANSWERED_REASON_TECHNOLOGY_DATA = 3;
+  XS_UNANSWERED_REASON_TEXT_TABLE = 4;
+  XS_UNANSWERED_REASON_GAME_RUNTIME = 5;
+  XS_UNANSWERED_REASON_NOT_IN_MAP_SCRIPTS = 6;
+  XS_UNANSWERED_REASON_UNKNOWN_CALL = 7;
+}
+
+message XsStartStop {
+  string code = 1;
+  string source_id = 2;
+  SourceRange range = 3;
+  string function = 4;
+  bool in_rule = 5;
+  string call = 6;
+  XsUnansweredReason reason = 7;
+}
+
+message XsStartFileErrors {
+  string source_id = 1;
+  uint32 errors = 2;
+}
+
+message XsChatLine {
+  string text = 1;
+  string call = 2;
+  string source_id = 3;
+  SourceRange range = 4;
+}
+
+enum XsStartChangeKind {
+  XS_START_CHANGE_KIND_UNSPECIFIED = 0;
+  XS_START_CHANGE_KIND_RESOURCE = 1;
+  XS_START_CHANGE_KIND_TECHNOLOGY = 2;
+  XS_START_CHANGE_KIND_DIPLOMACY = 3;
+  XS_START_CHANGE_KIND_PLAYER_NAME = 4;
+  XS_START_CHANGE_KIND_CIVILIZATION_NAME = 5;
+  XS_START_CHANGE_KIND_PLAYER_COLOR = 6;
+  XS_START_CHANGE_KIND_COLOR_MOOD = 7;
+  XS_START_CHANGE_KIND_UNITS_CREATED = 8;
+  XS_START_CHANGE_KIND_UNITS_REMOVED = 9;
+  XS_START_CHANGE_KIND_UNITS_MOVED = 10;
+  XS_START_CHANGE_KIND_UNITS_OWNER_CHANGED = 11;
+  XS_START_CHANGE_KIND_UNIT_VALUES = 12;
+  XS_START_CHANGE_KIND_UNIT_TEXT = 13;
+  XS_START_CHANGE_KIND_OBJECT_DATA = 14;
+  XS_START_CHANGE_KIND_TECHNOLOGY_DATA = 15;
+}
+
+enum XsStartOperation {
+  XS_START_OPERATION_UNSPECIFIED = 0;
+  XS_START_OPERATION_SET = 1;
+  XS_START_OPERATION_ADD = 2;
+  XS_START_OPERATION_MULTIPLY = 3;
+}
+
+message XsStartChange {
+  uint32 player = 1;
+  XsStartChangeKind kind = 2;
+  int32 target_id = 3;
+  string target_constant = 4;
+  XsStartOperation operation = 5;
+  float amount = 6;
+  uint32 count = 7;
+  XsVector position = 8;
+  string text = 9;
+  int32 value_id = 10;
+  uint32 calls = 11;
+  string call = 12;
+  string source_id = 13;
+  SourceRange range = 14;
+}
+
+message XsVector {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message XsValue {
+  oneof kind {
+    int32 int_value = 1;
+    float float_value = 2;
+    bool bool_value = 3;
+    string string_value = 4;
+    XsVector vector_value = 5;
+  }
+}
+
+message XsRecordedCall {
+  string name = 1;
+  repeated XsValue arguments = 2;
+  XsValue result = 3;
+  string source_id = 4;
+  SourceRange range = 5;
 }
 
 enum ConstructVerificationStatus {
@@ -735,6 +983,7 @@ message StageHash {
 message GenerationWarning {
   string code = 1;
   string message = 2;
+  KnownCrashReference known_crash = 3;
 }
 
 message ConfigurationCatalogRequest {}

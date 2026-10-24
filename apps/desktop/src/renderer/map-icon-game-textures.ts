@@ -17,7 +17,11 @@ import {
 } from '../shared/api';
 import { t } from '../shared/i18n/translator';
 import { drawTerrainChunk, planTerrainChunk } from './game-art-terrain';
-import { GameArtAssetStore, loadTerrainSources } from './game-art-resources';
+import {
+  GameArtAssetStore,
+  loadTerrainSources,
+  type GameArtImageSource,
+} from './game-art-resources';
 import type { MapIconArtSheets } from './map-icon-art';
 import { loadMapIconArtSheets } from './map-icon-art-sheets';
 import {
@@ -297,6 +301,43 @@ export function useMapIconGameTextures(options: {
     }
   };
   return { offered, render, pending, failed, renderAtSize };
+}
+
+export async function drawMapIconGameTextures(
+  api: GameArtImageSource & {
+    getGameArtStatus(): Promise<GameArtStatus>;
+    getGameArtTerrain(): Promise<GameArtTerrainIndex | null>;
+  },
+  result: PreviewGenerationResult,
+  input: MapIconRenderInput,
+): Promise<MapIconGameTexturesRender | null> {
+  const store = new GameArtAssetStore(api);
+  try {
+    const status = await api.getGameArtStatus();
+    if (!gameArtLookOffered(status) || status.state !== 'ready') return null;
+    const index = await api.getGameArtTerrain();
+    const source = index?.source;
+    if (!index || source === undefined || !mapIconGameTexturesSourcePattern.test(source)) {
+      return null;
+    }
+    const scene = decodeTopDownScene(result, { appearances: input.trees || input.minimapObjects });
+    const minimapColor = (terrainId: number) =>
+      terrainMaterial(terrainId, result.backend, result.minimapPalette, result.terrainNames).color;
+    const used = new Set<number>(scene.terrainIds);
+    for (const layer of scene.layerIds) if (layer !== 0xffff) used.add(layer);
+    const [sources, sheets] = await Promise.all([
+      loadTerrainSources(store, index, used, minimapColor),
+      mapIconNeedsArt(mapIconDrawnLayers(input))
+        ? loadMapIconArtSheets().catch(() => null)
+        : Promise.resolve(null),
+    ]);
+    const pixels = rasterizeMapIconGameTextures(scene, result, input, sources, sheets);
+    return pixels ? { pixels, source } : null;
+  } catch {
+    return null;
+  } finally {
+    store.retain(new Set());
+  }
 }
 
 export function rasterizeMapIconGameTextures(

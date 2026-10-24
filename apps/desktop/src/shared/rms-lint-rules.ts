@@ -26,6 +26,7 @@ export const rmsLintRules: readonly RmsLintRule[] = Object.freeze([
   lintRule('RMS4009', 'lint-rule.RMS4009.title'),
   lintRule('RMS4010', 'lint-rule.RMS4010.title'),
   lintRule('RMS4011', 'lint-rule.RMS4011.title'),
+  lintRule('RMS4012', 'lint-rule.RMS4012.title'),
 ]);
 
 export const disableRmsLintRuleCommandId = 'rmside.disableRmsLintRule';

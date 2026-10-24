@@ -1,7 +1,9 @@
 import type { OutputMessage, OutputWords } from './output-message';
+import { connectorIpcChannels, type ConnectorDesktopApi } from './connector-api';
 import type { ExternalLinkTarget } from './external-links';
 import type { GameModeModifier } from './lobby-options';
 import type { ConstructVerification } from './construct-verification';
+import type { XsStartOutcome } from './xs-start';
 import type { PreviewConnectionRoutesPayload } from './connection-routes';
 import type { PreviewSectionStart } from './section-starts';
 import type { ExecutionCostSummary, ExecutionProgressEvent } from './execution-cost';
@@ -14,6 +16,8 @@ import type { WorkspaceTreeChange } from './workspace-tree-change';
 import type { UpdateState } from './update';
 import type { EditorColorSchemeId } from './editor-color-scheme';
 import type { PreviewLayout } from './preview-layout';
+import type { KnownCrashReference } from './known-crashes';
+import type { AppQualityRun } from './connector-run-api';
 import type {
   ClipboardImageRequest,
   PreviewImageSaveRequest,
@@ -47,6 +51,7 @@ export const ipcChannels = {
   executionState: 'rmside:execution:state',
   executionStop: 'rmside:execution:stop',
   mapTestRun: 'rmside:map-test:run',
+  mapTestQualityAvailable: 'rmside:map-test:quality-available',
   mapTestReplay: 'rmside:map-test:replay',
   mapTestEvent: 'rmside:map-test:event',
   mapTestReportExport: 'rmside:map-test:report-export',
@@ -168,6 +173,7 @@ export const ipcChannels = {
   gameArtImages: 'rmside:game-art:images',
   gameArtEvent: 'rmside:game-art:event',
   gameTexturesFirstLink: 'rmside:game-art:first-link',
+  ...connectorIpcChannels,
 } as const;
 
 export type NativeProcessName = 'rmsd' | 'rms-ls' | 'rms-test' | 'rms-test-lsp';
@@ -514,6 +520,7 @@ export type ApplicationMenuAction =
   | { type: 'set-live-generation-stages'; enabled: boolean }
   | { type: 'set-gpu-map-rendering'; enabled: boolean }
   | { type: 'set-map-transitions'; enabled: boolean }
+  | { type: 'set-xs-start-check'; enabled: boolean }
   | { type: 'set-inlay-hints'; enabled: boolean }
   | { type: 'set-outline-row'; enabled: boolean }
   | { type: 'set-delete-permanently'; enabled: boolean }
@@ -523,6 +530,7 @@ export type ApplicationMenuAction =
   | { type: 'set-theme'; theme: ThemePreference }
   | { type: 'open-theme-settings' }
   | { type: 'open-language-settings' }
+  | { type: 'open-mcp-settings' }
   | { type: 'take-the-tour' };
 
 export interface NativeProcessStatus {
@@ -810,6 +818,19 @@ export interface PreviewGenerationInput {
   minimapPalette: SelectedMinimapPalette | null;
   texturePalette?: SelectedTexturePalette | null;
   progressivePreview?: boolean;
+  xsStartCheck?: boolean;
+  appRun?: AppRunReference;
+  automatic?: boolean;
+}
+
+export interface AppRunReference {
+  token: string;
+}
+
+export interface PreviewGenerationWarning {
+  code: string;
+  message: string;
+  knownCrash?: KnownCrashReference;
 }
 
 export interface PreviewGenerationResult {
@@ -888,17 +909,23 @@ export interface PreviewGenerationResult {
   resolvedRmsSourceIds: string[];
   externalAssetSourceIds: string[];
   stageHashes: { stage: string; hash: string }[];
-  warnings: { code: string; message: string }[];
+  warnings: PreviewGenerationWarning[];
   metrics: Record<string, number>;
   generationEvents: PreviewGenerationEvent[];
   traceIdentity: PreviewTraceIdentity;
   certification?: GenerationCertification;
   constructVerification?: ConstructVerification;
+  xsStart?: XsStartOutcome;
   executionCost?: ExecutionCostSummary;
 }
 
-export type RootExecutionKind = 'rms' | 'map-test' | 'control-live' | 'map-icon';
+export type RootExecutionKind = 'rms' | 'map-test' | 'control-live' | 'map-icon' | 'pictures';
 export type RootExecutionPhase = 'idle' | 'running' | 'stopping';
+
+export interface RootExecutionOrigin {
+  kind: 'app';
+  app: string;
+}
 
 export interface RootExecutionState {
   phase: RootExecutionPhase;
@@ -906,6 +933,8 @@ export interface RootExecutionState {
   kind?: RootExecutionKind;
   label?: string;
   startedAt?: number;
+  origin?: RootExecutionOrigin;
+  automatic?: boolean;
 }
 
 export interface MapTestRunInput {
@@ -929,6 +958,8 @@ export interface MapTestRunInput {
   minimapPalette: SelectedMinimapPalette | null;
   texturePalette?: SelectedTexturePalette | null;
   progressivePreview?: boolean;
+  appRun?: AppRunReference;
+  quality?: AppQualityRun;
 }
 
 export interface MapTestFinding {
@@ -945,11 +976,69 @@ export interface MapTestFinding {
   requestHash: string;
   mapHash: string;
   measurements: Record<string, boolean | number | string | null>;
+  settingsIndex?: number;
+}
+
+export interface MapTestSettingsVariant {
+  width: number;
+  height: number;
+  mapSize: string;
+  players: Array<{ slot: number; team: number; civilizationId: number; color: number }>;
+}
+
+export type MapTestQualityLevel = 'failure' | 'warning' | 'advice';
+
+export interface MapTestQualityWorst {
+  seed: number;
+  settingsIndex?: number;
+  value?: number;
+  players?: number[];
+  tile?: [number, number];
+}
+
+export interface MapTestQualityItem {
+  case: string;
+  code: string;
+  level: MapTestQualityLevel;
+  message: string;
+  metric?: { label: string; unit: string; p5: number; p50: number; p95: number; max: number };
+  bad: number;
+  of: number;
+  worst: MapTestQualityWorst[];
+}
+
+export interface MapTestQuality {
+  catalog: string;
+  seedStart: number;
+  seedCount: number;
+  samples: number;
+  failedSamples: number;
+  cases: string[];
+  skipped: Array<{ case: string; reason: 'not-selected' | 'not-applicable' | 'no-samples' }>;
+  result: 'passed' | 'warnings' | 'failed';
+  counts: { failures: number; warnings: number; advice: number };
+  items: MapTestQualityItem[];
+  passed: string[];
+  omittedItems: number;
+}
+
+export interface MapTestGameCrash {
+  crashId: string;
+  maps: number;
+  seeds: number[];
+  omittedSeeds: number;
+}
+
+export interface MapTestGameCrashSource {
+  sourcePath: string;
+  sampledMaps: number;
+  crashedMaps: number;
+  crashes: MapTestGameCrash[];
 }
 
 export interface MapTestReport {
   $schema: string;
-  schemaVersion: '1.0.0' | '1.1.0';
+  schemaVersion: '1.0.0' | '1.1.0' | '1.2.0' | '1.3.0' | '1.4.0';
   compatibility: { minimumMajor: 1; maximumMajor: 1 };
   semanticApiMajor: 2;
   reportIdentity: string;
@@ -982,6 +1071,12 @@ export interface MapTestReport {
     requestHash: string;
     mapHash: string;
   } | null;
+  gameCrashes?: { sources: MapTestGameCrashSource[] };
+  xsConstants?: { sha256: string };
+  settingsVariants?: MapTestSettingsVariant[];
+  qualityLibrary?: { version: string; sha256: string };
+  walkRules?: string;
+  quality?: MapTestQuality;
 }
 
 export interface MapTestRunResult {
@@ -1615,6 +1710,7 @@ export interface ControlLiveSynchronizationRequest {
   endingAge: ControlAge;
   replaceActiveMatch: boolean;
   overwriteDeploymentConflicts: boolean;
+  appRun?: AppRunReference;
 }
 
 export interface ControlLiveSynchronizationResult {
@@ -1971,6 +2067,7 @@ export interface DesktopSession {
   liveGenerationStages: boolean;
   gpuMapRendering: boolean;
   mapTransitions: boolean;
+  xsStartCheck: boolean;
   inlayHints: boolean;
   inlayHintsVersion: typeof inlayHintsSettingVersion;
   outlineRow: boolean;
@@ -2047,7 +2144,7 @@ export interface DesktopSessionRestore {
   diagnostics: OutputWords[];
 }
 
-export interface RmsideDesktopApi {
+export interface RmsideDesktopApi extends ConnectorDesktopApi {
   getDesktopSession(): Promise<DesktopSessionRestore>;
   saveDesktopSession(session: DesktopSession): Promise<void>;
   resetLayout(): Promise<void>;
@@ -2059,6 +2156,7 @@ export interface RmsideDesktopApi {
   getExecutionState(): Promise<RootExecutionState>;
   stopExecution(): Promise<boolean>;
   runMapTest(input: MapTestRunInput): Promise<MapTestRunResult>;
+  mapTestQualityAvailable(): Promise<boolean>;
   replayMapTestFinding(input: MapTestReplayInput): Promise<PreviewGenerationResult>;
   onMapTestEvent(listener: (event: MapTestEvent) => void): () => void;
   exportMapTestReport(reportJson: string): Promise<string | null>;

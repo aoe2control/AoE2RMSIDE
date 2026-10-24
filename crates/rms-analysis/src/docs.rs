@@ -562,6 +562,11 @@ pub fn term_markdown(
         }
     });
     sections.extend(details.iter().cloned());
+    sections.extend(
+        crash_notes(&term.name, context)
+            .into_iter()
+            .map(|note| format!("**Game crash.** {note}")),
+    );
     sections.extend(term.notes_for(context.profile).map(str::to_owned));
     let default = usage
         .and_then(|usage| usage.default.as_ref())
@@ -588,6 +593,66 @@ pub fn term_markdown(
         sections.push(format!("**See also:** {}", related.join(", ")));
     }
     sections.join("\n\n")
+}
+
+pub fn crash_notes(term: &str, context: &DocContext<'_>) -> Vec<&'static str> {
+    let Some(catalogue) = rms_profile::shipped_known_crash_catalogue() else {
+        return Vec::new();
+    };
+    let keys = context.keys();
+    let mut notes = Vec::new();
+    for entry in &catalogue.entries {
+        if !entry.warns()
+            || context
+                .profile
+                .is_some_and(|profile| !entry.covers_profile(profile))
+        {
+            continue;
+        }
+        for terms in &entry.doc_terms {
+            let here =
+                terms.places.is_empty() || terms.places.iter().any(|place| keys.contains(place));
+            if here
+                && terms.terms.iter().any(|name| name == term)
+                && !notes.contains(&terms.note.as_str())
+            {
+                notes.push(terms.note.as_str());
+            }
+        }
+    }
+    notes
+}
+
+pub fn placed_crash_notes(term: &str, profile: Option<&str>) -> Vec<(String, &'static str)> {
+    let Some(catalogue) = rms_profile::shipped_known_crash_catalogue() else {
+        return Vec::new();
+    };
+    let mut notes: Vec<(Vec<String>, &'static str)> = Vec::new();
+    for entry in &catalogue.entries {
+        if !entry.warns() || profile.is_some_and(|profile| !entry.covers_profile(profile)) {
+            continue;
+        }
+        for terms in &entry.doc_terms {
+            if terms.places.is_empty() || !terms.terms.iter().any(|name| name == term) {
+                continue;
+            }
+            let note = terms.note.as_str();
+            match notes.iter_mut().find(|(_, known)| *known == note) {
+                Some((places, _)) => {
+                    for place in &terms.places {
+                        if !places.contains(place) {
+                            places.push(place.clone());
+                        }
+                    }
+                }
+                None => notes.push((terms.places.clone(), note)),
+            }
+        }
+    }
+    notes
+        .into_iter()
+        .map(|(places, note)| (places_label(&places), note))
+        .collect()
 }
 
 fn capitalize(text: &str) -> String {

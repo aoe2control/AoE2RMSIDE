@@ -138,6 +138,9 @@
     "app-menu.view.map-transitions": {
       "message": "Harita geçişlerini animasyonla göster"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "Harita çalıştırılırken XS’i denetle"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Üretim aşamalarını anlık göster"
     },
@@ -170,6 +173,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "Tema…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "Tema"
@@ -399,6 +405,9 @@
     "output.source.map-test": {
       "message": "Harita testi"
     },
+    "output.source.quality-check": {
+      "message": "Kalite kontrolü"
+    },
     "output.source.deploy": {
       "message": "Mod kurulumu"
     },
@@ -420,8 +429,14 @@
     "output.source.game-textures": {
       "message": "Oyun dokuları"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "Uygulama"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, one {{count} çıktı iletisi} other {{count} çıktı iletisi}}"
@@ -491,6 +506,162 @@
     },
     "output.constructs.go-to": {
       "message": "İlk kullanımına git"
+    },
+    "output.xs-start.summary": {
+      "message": "XS başlangıç kontrolü: {files, list} main() ve {rules, plural, one {# kuralı} other {# kuralı}} çalıştırdı ({steps, plural, one {# adım} other {# adım}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "XS başlangıç kontrolü: {files, list} içinde main() yok; {rules, plural, =0 {hiç kural çalıştırılmadı} one {# kural çalıştırıldı} other {# kural çalıştırıldı}} ({steps, plural, one {# adım} other {# adım}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "Oyunla karşılaştırılmadı"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "Oyunla karşılaştırılmadı. Kullanılanlar: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "tam sayı aritmetiği"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "tam ve ondalık sayıların karışımı"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "sayıların metne dönüşümü"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "metin işlevleri"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "dizi varsayılanları"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "kural sırası"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "etiketler ve goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "başlangıç değerleri"
+    },
+    "output.xs-start.chat": {
+      "message": "Sohbet: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Gaia} one {Oyuncu {player}} other {Oyuncu {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "yiyecek"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "odun"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "taş"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "altın"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "özellik {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource} {amount, number} olarak ayarlandı"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "nesne {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "teknoloji {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: {technology} araştırır"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player} → {other}: tutum {stance} olarak ayarlandı"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: ad “{text}” olarak ayarlandı"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: uygarlık adı “{text}” olarak ayarlandı"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: renk {value} olarak ayarlandı"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: ({x}, {y}) yakınında {count} {object} oluşturur; yerleşim kontrol edilmedi"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: {count} {object} oluşturur; yerleşim kontrol edilmedi"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: {count} {object} kaldırır"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: ({x}, {y}) konumuna {count} {object} taşır"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: {count} {object} taşır"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: {count} {object} alır (önceki sahibi: {previous})"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: {count} {object} için değerleri değiştirir"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: {count} {object} için adları veya açıklamaları değiştirir"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: {object} için verileri değiştirir; kaydedildi, uygulanmadı"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: {technology} için verileri değiştirir; kaydedildi, uygulanmadı"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, one {# çağrı} other {# çağrı}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Aydınlatma modu {value} olarak ayarlandı"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Bu satırdan sonraki değişiklikler listelenmedi."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Durmadan sonraki değişiklikler listelenmedi."
+    },
+    "output.xs-start.skipped": {
+      "message": "XS başlangıç kontrolü atlandı: {file} dosyasında {count, plural, one {# hata} other {# hata}} var (bkz. Sorunlar)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "XS başlangıç kontrolünü çalıştırmak için oyun klasörünüzü bağlayın"
+    },
+    "output.xs-start.omitted": {
+      "message": "XS başlangıç kontrolünün tüm sonuçları listelenmedi"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Dışarıda bırakılanlar: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, one {# bulgu} other {# bulgu}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, one {# sohbet satırı} other {# sohbet satırı}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, one {# değişiklik} other {# değişiklik}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, one {# kaydedilmiş çağrı} other {# kaydedilmiş çağrı}}"
     },
     "output.constructs.more": {
       "message": "ve {count} tane daha"
@@ -597,11 +768,95 @@
     "run-menu.run-on-edit": {
       "message": "Düzenleyince"
     },
+    "run-menu.quality-check": {
+      "message": "Kalite kontrolü"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Kontrol edilecek tohum sayısı"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Ölçütler"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Kalite kontrolünün neye bakacağını seç"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Diğer lobi ayarları"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Minik 1v1, Orta 2v2 ve Kocaman 4v4 ayarlarını da her biri 10 tohumla kontrol et"
+    },
+    "quality.case.generation": {
+      "message": "Üretim"
+    },
+    "quality.case.start-resources": {
+      "message": "Başlangıçtaki kaynaklar"
+    },
+    "quality.case.resource-distances": {
+      "message": "Kaynak uzaklıkları"
+    },
+    "quality.case.shared-resources": {
+      "message": "Ortak kaynaklar"
+    },
+    "quality.case.wood": {
+      "message": "Odun"
+    },
+    "quality.case.trapped": {
+      "message": "Erişilemeyen kaynaklar"
+    },
+    "quality.case.paths": {
+      "message": "Yollar"
+    },
+    "quality.case.building-space": {
+      "message": "İnşa alanı"
+    },
+    "quality.case.hills": {
+      "message": "Tepeler"
+    },
+    "quality.case.water": {
+      "message": "Su"
+    },
+    "quality.case.spacing": {
+      "message": "Aralıklar"
+    },
+    "quality.case.chokepoints": {
+      "message": "Dar geçitler"
+    },
+    "quality.case.variation": {
+      "message": "Çeşitlilik"
+    },
+    "quality.case.looks": {
+      "message": "Görünüm"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "{of} haritanın {bad} tanesinde{metric, select, yes { · ortanca {p50}, 95. yüzdelik {p95}, en yüksek {max} {unit}} other {}}{worst, select, yes { · en kötü {count, plural, one {tohum} other {tohumlar}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "Başarılı: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, one {# bulgu daha listelenmedi} other {# bulgu daha listelenmedi}}"
+    },
+    "quality.failed": {
+      "message": "Kalite kontrolü çalıştırılamadı"
+    },
     "run-menu.preset.default-name": {
       "message": "Konfig"
     },
     "run-menu.preset.numbered-name": {
       "message": "Konfig {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Test Konfigi"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Geri dön: {name}"
     },
     "run-menu.preset.settings": {
       "message": "Yapılandırmanın önizleme ayarları"
@@ -626,6 +881,9 @@
     },
     "run-menu.preset.delete": {
       "message": "Ön ayarı sil: {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "Ön ayarı çoğalt: {name}"
     },
     "run-menu.preset.delete.title": {
       "message": "{name} yapılandırması silinsin mi?"
@@ -813,6 +1071,9 @@
     "run-menu.fixture.needs-source": {
       "message": "Geliştirme örnekleri boş olmayan bir .rms veya .rms2 betiği gerektirir"
     },
+    "mcp.run.settings-applied": {
+      "message": "{app} tarafından ayarlandı: {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Bu önizleme için rastgele seçilen uygarlıklar: {players, list, unit}"
     },
@@ -830,6 +1091,9 @@
     },
     "run-menu.result.failed": {
       "message": "Başarısız"
+    },
+    "run-menu.result.warnings": {
+      "message": "Uyarılar"
     },
     "run-menu.result.passed": {
       "message": "Başarılı"
@@ -2694,6 +2958,9 @@
     "lint-rule.RMS4011.title": {
       "message": "Ad tanımsız olabilir"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "Oyun burada çökebilir"
+    },
     "map-icon.generate": {
       "message": "Harita simgesi üret"
     },
@@ -3060,6 +3327,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "Bulgu, kaydedilmiş {seed} tohumuyla yeniden üretildi"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Bulgu, kaydedilmiş {seed} tohumuyla yeniden üretildi; tohum sonraki çalıştırmalar için kilitlendi"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Bulgu, kaydedilmiş {seed} tohumuyla yeniden üretildi; tohum {name} geçici yapılandırmasında kilitlendi"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "Oyun klasörünün bağlantısı kaldırılamadı"
     },
@@ -3092,6 +3365,336 @@
     },
     "code-editor.tab.close": {
       "message": "{name} dosyasını kapat"
+    },
+    "mcp.tab.edited-by": {
+      "message": "{app} tarafından düzenlendi, kaydedilmedi"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "MCP ayarlarını kapat"
+    },
+    "mcp.dialog.description": {
+      "message": "Bu bilgisayardaki yapay zekâ uygulamalarının açık klasördeki betikleri okumasına, düzenlemesine ve kontrol etmesine, harita üretmesine ve harita testleri çalıştırmasına izin verin."
+    },
+    "mcp.enable.label": {
+      "message": "MCP sunucusunu etkinleştir"
+    },
+    "mcp.save.label": {
+      "message": "Yapay zekâ dosya kaydedebilsin"
+    },
+    "mcp.save.note": {
+      "message": "Kapalıyken yapay zekâ değişiklikleri siz kaydedene kadar kaydedilmemiş kalır."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "Başka bir program bağlantı adını kullandığı için MCP başlatılamadı."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "Anahtar dosyası yazılamadığı için MCP başlatılamadı."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "Araç listesi bu AoE2RMSIDE sürümüyle eşleşmediği için MCP başlatılamadı. AoE2RMSIDE uygulamasını yeniden yükleyin."
+    },
+    "mcp.unavailable.internal": {
+      "message": "Beklenmeyen bir hata nedeniyle MCP başlatılamadı."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Yeniden denemek için MCP sunucusunu etkinleştir ayarını kapatıp açın."
+    },
+    "mcp.apps.title": {
+      "message": "İzin verilen uygulamalar"
+    },
+    "mcp.apps.empty": {
+      "message": "Henüz uygulama yok. Bir uygulama ilk bağlandığında izin ister."
+    },
+    "mcp.apps.connected": {
+      "message": "Bağlı"
+    },
+    "mcp.apps.last-used": {
+      "message": "Son kullanım: {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "Kaldır"
+    },
+    "mcp.apps.remove-label": {
+      "message": "{app} uygulamasını kaldır"
+    },
+    "mcp.setup.app": {
+      "message": "Yapay zekâ uygulaması"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "Başka uygulama"
+    },
+    "mcp.setup.text-label": {
+      "message": "Kurulum metni"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Bunu Claude Desktop yapılandırmasına ekleyin (Settings > Developer > Edit Config), ardından uygulamayı yeniden başlatın."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Bu komutu bir terminalde çalıştırın."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Bu komutu bir terminalde çalıştırın."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Bu programı yerel bir MCP sunucusu olarak ekleyin."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Önce MCP sunucusunu etkinleştir ayarını açın."
+    },
+    "mcp.setup.copy": {
+      "message": "Kurulumu kopyala"
+    },
+    "mcp.setup.copied": {
+      "message": "Kurulum kopyalandı"
+    },
+    "mcp.connect.row": {
+      "message": "Yapay zekâ uygulaması bağla…"
+    },
+    "mcp.connect.title": {
+      "message": "Yapay zekâ uygulaması bağla"
+    },
+    "mcp.connect.close-label": {
+      "message": "Kapat"
+    },
+    "mcp.connect.description": {
+      "message": "Bu istemi yapay zekâ uygulamanıza yapıştırın. Uygulama kendi kurulumunu yapar ve bir engel varsa size söyler."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Yapay zekâ uygulaması için istem"
+    },
+    "mcp.connect.copy": {
+      "message": "İstemi kopyala"
+    },
+    "mcp.connect.copied": {
+      "message": "İstem kopyalandı"
+    },
+    "mcp.connect.by-hand": {
+      "message": "Elle kur"
+    },
+    "mcp.pairing.title": {
+      "message": "{app} uygulamasına AoE2RMSIDE erişimi verilsin mi?"
+    },
+    "mcp.pairing.description": {
+      "message": "Açık klasördeki betikleri düzenleyebilir, harita üretebilir, test çalıştırabilir ve mod kurabilir. Başlatan program: {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "Açık klasördeki betikleri düzenleyebilir, harita üretebilir, test çalıştırabilir ve mod kurabilir."
+    },
+    "mcp.pairing.name-note": {
+      "message": "Bu adı uygulama kendisi bildirir: yalnızca siz kurduysanız izin verin. Mod değiştirmek ve oyunda test yine size sorulur."
+    },
+    "mcp.pairing.allow": {
+      "message": "İzin ver"
+    },
+    "mcp.pairing.deny": {
+      "message": "İzin verme"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "“{mod}” modu değiştirilsin mi?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app}, {file} dosyasını bu moda kurmak istiyor. Bu mod bu oturumda {app} tarafından kurulmadığı için dosyaları değiştirilecek."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Değiştir"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app}, {file} dosyasının “{mod}” modu olarak kurulmasını istedi."
+    },
+    "mcp.deploy.notice": {
+      "message": "{app}, {file} dosyasını “{mod}” modu olarak kurdu."
+    },
+    "mcp.live.title": {
+      "message": "{app} için oyunda test başlatılsın mı?"
+    },
+    "mcp.live.description": {
+      "message": "{app}, {file} dosyasını {seed} tohumuyla çalışan oyunda test etmek istiyor. Devam eden maç sona erer."
+    },
+    "mcp.live.session": {
+      "message": "Bu oturum boyunca izin ver"
+    },
+    "mcp.live.start": {
+      "message": "Oyunda testi başlat"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, one {# yapay zekâ uygulaması} other {# yapay zekâ uygulaması}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} bağlı"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, one {# yapay zekâ uygulaması bağlı} other {# yapay zekâ uygulaması bağlı}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} çalışıyor"
+    },
+    "mcp.status.tooltip": {
+      "message": "MCP üzerinden bağlı. MCP ayarları için tıklayın."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "Hatalar bulundu ve yapay zekâ uygulamasına gönderildi."
+    },
+    "mcp.output.connected": {
+      "message": "{app} bağlandı"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} bağlantıyı kesti"
+    },
+    "mcp.output.denied": {
+      "message": "{app} uygulamasının bağlanmasına izin verilmedi"
+    },
+    "mcp.output.busy": {
+      "message": "{app} uygulamasından beklemesi istendi: {running} çalışıyor"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} reddedildi"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} iptal edildi"
+    },
+    "mcp.action.status": {
+      "message": "IDE durumunu okudu"
+    },
+    "mcp.action.list-files": {
+      "message": "dosyaları listeledi"
+    },
+    "mcp.action.read-file": {
+      "message": "{file} dosyasını okudu"
+    },
+    "mcp.action.edit-file": {
+      "message": "{file} dosyasını düzenledi"
+    },
+    "mcp.action.create-file": {
+      "message": "{file} dosyasını oluşturdu"
+    },
+    "mcp.action.save-file": {
+      "message": "{file} dosyasını kaydetti"
+    },
+    "mcp.action.problems": {
+      "message": "{file} dosyasını kontrol etti"
+    },
+    "mcp.action.generate": {
+      "message": "{file} dosyasından harita üretti, tohum {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "{file} haritasını önizlemede gösterdi"
+    },
+    "mcp.action.inspect": {
+      "message": "üretilen bir haritaya baktı"
+    },
+    "mcp.action.picture": {
+      "message": "{file} haritasının görselini aldı"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, one {{file} haritasının # tohumdaki görsellerini aldı} other {{file} haritasının # tohumdaki görsellerini aldı}}"
+    },
+    "mcp.action.map-test": {
+      "message": "{file} harita testini çalıştırdı"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, one {{file} için kalite kontrolünü çalıştırdı (# tohum)} other {{file} için kalite kontrolünü çalıştırdı (# tohum)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "çalışan bir testin durumuna baktı"
+    },
+    "mcp.action.details": {
+      "message": "bir sonucun ayrıntılarını okudu"
+    },
+    "mcp.action.deploy": {
+      "message": "{file} dosyasını “{mod}” modu olarak kurdu"
+    },
+    "mcp.action.live-test": {
+      "message": "{file} için oyunda test başlattı"
+    },
+    "mcp.action.guide": {
+      "message": "kılavuzu okudu"
+    },
+    "mcp.action.reference": {
+      "message": "{name} için başvuruya baktı"
+    },
+    "mcp.action.tool": {
+      "message": "{tool} aracını kullandı"
+    },
+    "mcp.refusal.waiting": {
+      "message": "AoE2RMSIDE içinde yanıtınızı bekliyor."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "Bu uygulamaya izin vermediniz."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "İstek geçerli değildi."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "Açık klasör yok."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "Dosya açık klasörün dışında veya AoE2RMSIDE tarafından korunuyor."
+    },
+    "mcp.refusal.file-type": {
+      "message": "Yapay zekâ uygulamaları bu dosya türünü kullanamaz."
+    },
+    "mcp.refusal.not-found": {
+      "message": "Dosya bulunamadı."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "Dosya zaten var."
+    },
+    "mcp.refusal.too-large": {
+      "message": "Dosya çok büyük."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "Dosya bir metin dosyası değil."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "Değiştirilecek metin bulunamadı veya birden fazla kez bulundu."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "Yapay zekâ dosya kaydedebilsin ayarı kapalı."
+    },
+    "mcp.refusal.busy": {
+      "message": "Başka bir şey çalışıyor."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "Üretilen harita artık saklanmıyor."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "Test artık saklanmıyor."
+    },
+    "mcp.refusal.stopped": {
+      "message": "Siz durdurdunuz."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "Yapay zekâ uygulaması iptal etti."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "Hayır dediniz."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "Oyun bu haritada çökebilir."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "Oyun, oyunda test için hazır değil."
+    },
+    "mcp.refusal.too-many": {
+      "message": "Uygulama çok fazla istek gönderdi."
+    },
+    "mcp.refusal.internal": {
+      "message": "AoE2RMSIDE içinde bir sorun oluştu."
     },
     "code-editor.tab.unsaved": {
       "message": "Kaydedilmemiş değişiklikler"
@@ -5127,6 +5730,9 @@
     "app-update.dialog.unsaved": {
       "message": "Belgelerde kaydedilmemiş değişiklikler varsa önce bunlar size sorulur."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Bağlı yapay zekâ uygulamalarının bağlantısı güncelleme sırasında kesilir. Sonrasında bu uygulamaları yeniden başlatın."
+    },
     "app-update.dialog.release-notes": {
       "message": "Sürüm notları"
     },
@@ -5264,6 +5870,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "{language} dosyaları için yerleşik analiz kullanılır"
+    },
+    "known-crash.headline": {
+      "message": "Oyun bu haritada çöküyor"
+    },
+    "known-crash.headline.possible": {
+      "message": "Oyun burada çökebilir"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "Arama için fazla küçük bir nesnede override_actor_radius_if_required"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required, yerleştirildiği yere sığmayan bir nesneyi taşıyor ve nesne, oyunun boş kare araması için fazla küçük."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "O nesneden override_actor_radius_if_required komutunu kaldırın."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "Bağlantı bloğundaki bir satırda arazi yok"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Bir bağlantı komutunun süslü parantezleri içinde oyun her satırdan bir arazi okur, ancak {word} arazi içermiyor."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Satırı bağlantı bloğunun dışına, bağlantı komutlarından önceye taşıyın."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "Bir bağlantı harita dışındaki bir karaya ulaşıyor"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "Bir bağlantı, konumu bu harita boyutunda harita dışında kalan bir karada başlıyor veya bitiyor."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "land_position değerini her harita boyutunda harita içinde tutun."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "Tanımlanmış bir ad <CLIFF_GENERATION> içinde cliff_type olarak çalışıyor"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word}, bir komutun bulunabileceği yerde tanımlanmış bir ad; bu yüzden oyun onu değer olmadan {command} olarak çalıştırıyor."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Tanımlanmış adı kaldırın veya kastedilen komutu yazın."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "Tanımlanmış bir ad create_elevation süslü parantezlerinde base_terrain veya base_layer olarak çalışıyor"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word}, bir komutun bulunabileceği yerde tanımlanmış bir ad; bu yüzden oyun onu değer olmadan {command} olarak çalıştırıyor."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Tanımlanmış adı kaldırın veya kastedilen komutu yazın."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "Tanımlanmış bir ad ai_info_map_type, effect_amount veya effect_percent olarak çalışıyor"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word}, bir komutun bulunabileceği yerde tanımlanmış bir ad; bu yüzden oyun onu değer olmadan {command} olarak çalıştırıyor."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Tanımlanmış adı kaldırın veya kastedilen komutu yazın."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "Tanımlanmış bir ad <PLAYER_SETUP> içinde guard_state olarak çalışıyor"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word}, bir komutun bulunabileceği yerde tanımlanmış bir ad; bu yüzden oyun onu değer olmadan {command} olarak çalıştırıyor."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Tanımlanmış adı kaldırın veya kastedilen komutu yazın."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "Tanımlanmış bir ad <LAND_GENERATION> içinde base_terrain veya base_layer olarak çalışıyor"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word}, bir komutun bulunabileceği yerde tanımlanmış bir ad; bu yüzden oyun onu değer olmadan {command} olarak çalıştırıyor."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Tanımlanmış adı kaldırın veya kastedilen komutu yazın."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "Tanımlanmış bir ad bir karanın süslü parantezlerinde terrain_type veya assign_to olarak çalışıyor"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word}, bir komutun bulunabileceği yerde tanımlanmış bir ad; bu yüzden oyun onu değer olmadan {command} olarak çalıştırıyor."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Tanımlanmış adı kaldırın veya kastedilen komutu yazın."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "Tanımlanmış bir ad bir nesnenin süslü parantezlerinde terrain_to_place_on, layer_to_place_on veya second_object olarak çalışıyor"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word}, bir komutun bulunabileceği yerde tanımlanmış bir ad; bu yüzden oyun onu değer olmadan {command} olarak çalıştırıyor."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Tanımlanmış adı kaldırın veya kastedilen komutu yazın."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "Tanımlanmış bir ad <TERRAIN_GENERATION> içinde create_terrain veya color_correction olarak çalışıyor"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word}, bir komutun bulunabileceği yerde tanımlanmış bir ad; bu yüzden oyun onu değer olmadan {command} olarak çalıştırıyor."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Tanımlanmış adı kaldırın veya kastedilen komutu yazın."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Uzunluğu sıfır olan bir çember çevresinde gruplu oyuncu yerleşimi"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Oyuncular uzunluğu sıfır olan bir çember çevresine takım grupları hâlinde yerleştiriliyor; bu yüzden oyun sıfıra bölüyor."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "Adlandırılmış bir grupta nesnesiz add_object"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "Bir grup adlandırılmışken add_object bir nesne içermiyor; bu yüzden o girdi seçildiğinde oyun çöküyor."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "add_object komutuna bir nesne verin."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "Bir nesne harita dışındaki bir karaya yerleştiriliyor"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "Bir nesne kara başına yerleştiriliyor ve konumu bu harita boyutunda harita dışında kalan bir karaya düşüyor."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "land_position değerini her harita boyutunda harita içinde tutun."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size, oyuncu karalarından sonra haritayı küçültüyor"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size, oyuncu karaları oluşturulduktan sonra haritayı küçültüyor; bu yüzden bir oyuncu harita dışında başlayabilir."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "override_map_size komutunu create_player_lands komutundan önceye taşıyın."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "Harita, hareket verisi olmayan bir arazi boyuyor"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "Harita {terrain} arazisini boyuyor; oyunun hareket verileri bu araziyi kapsamadığından oyun maç sırasında çöküyor."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Oyunun hareket verilerinin kapsadığı bir arazi kullanın."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "Başka bir tohumla veya başka lobi ayarlarıyla oyun bu haritada çökebilir. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Yine de kur"
+    },
+    "live-test.crash-warning.title": {
+      "message": "Oyun bu haritada çökebilir"
+    },
+    "live-test.crash-warning.description": {
+      "message": "Bu tohum sorunsuz çalışıyor, ancak başka bir tohumla veya başka lobi ayarlarıyla oyun bu haritada çökebilir. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Yine de başlat"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "Oyun bu haritada çökebileceği için oyunda test başlatılmadı."
+    },
+    "test-results.crashes.title": {
+      "message": "Oyun çökmeleri"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, one {# harita} other {# harita}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "Oyun {sampled, plural, one {# haritanın} other {# haritanın}} {maps, number} tanesinde çöküyor"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{sampled, number} haritadan {maps, plural, one {# harita} other {# harita}} üretilemedi"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, one {Tohum} other {Tohumlar}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, one {Tohum} other {Tohumlar}} {seeds, list, unit} ve {omitted, number} tane daha"
+    },
+    "test-results.crashes.source": {
+      "message": "Oyun çökmesi"
+    },
+    "test-results.crashes.show": {
+      "message": "Oyun çökmelerini göster"
+    },
+    "test-results.crashes.hide": {
+      "message": "Oyun çökmelerini gizle"
+    },
+    "test-results.quality.summary": {
+      "message": "· {map} kalite kontrolü · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, one {# harita} other {# harita}} · {failures, plural, one {# başarısız} other {# başarısız}} · {warnings, plural, one {# uyarı} other {# uyarı}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, one {# bulgu} other {# bulgu}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "{case} bulgularını göster"
+    },
+    "test-results.quality.hide-case": {
+      "message": "{case} bulgularını gizle"
+    },
+    "test-results.quality.case-findings": {
+      "message": "{case} bulguları"
+    },
+    "test-results.quality.no-findings": {
+      "message": "Tüm ölçütler {maps, plural, one {# haritada} other {# haritada}} başarılı"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, one {# kalite kontrolü bulgusu} other {# kalite kontrolü bulgusu}}"
     }
   }
 }

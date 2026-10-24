@@ -146,6 +146,9 @@
     "app-menu.view.map-transitions": {
       "message": "맵 전환 애니메이션"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "맵 실행 시 XS 검사"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "생성 단계 실시간 표시"
     },
@@ -178,6 +181,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "테마…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "테마"
@@ -407,6 +413,9 @@
     "output.source.map-test": {
       "message": "맵 테스트"
     },
+    "output.source.quality-check": {
+      "message": "품질 검사"
+    },
     "output.source.deploy": {
       "message": "배포"
     },
@@ -428,8 +437,14 @@
     "output.source.game-textures": {
       "message": "게임 텍스처"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "앱"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, other {출력 메시지 {count}개}}"
@@ -499,6 +514,162 @@
     },
     "output.constructs.go-to": {
       "message": "처음 사용된 위치로 이동"
+    },
+    "output.xs-start.summary": {
+      "message": "XS 시작 검사: {files, list}에서 main()과 {rules, plural, other {규칙 #개}}를 실행했습니다({steps, plural, other {#단계}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "XS 시작 검사: {files, list}에 main()이 없으며 {rules, plural, =0 {규칙을 실행하지 않았습니다} other {규칙 #개를 실행했습니다}}({steps, plural, other {#단계}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "게임과 비교하지 않음"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "게임과 비교하지 않음. 사용한 동작: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "정수 연산"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "정수와 소수 혼합"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "숫자의 텍스트 변환"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "텍스트 함수"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "배열 기본값"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "규칙 순서"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "레이블과 goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "시작 값"
+    },
+    "output.xs-start.chat": {
+      "message": "채팅: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {중립} other {플레이어 {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "식량"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "목재"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "석재"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "금"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "속성 {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource} {amount, number}(으)로 설정"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "오브젝트 {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "기술 {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: {technology} 연구"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}: {other}에 대한 외교 입장을 {stance}(으)로 설정"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: 이름을 ‘{text}’(으)로 설정"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: 문명 이름을 ‘{text}’(으)로 설정"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: 색상을 {value}(으)로 설정"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: ({x}, {y}) 근처에 {object} {count}개 생성, 배치는 확인하지 않음"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: {object} {count}개 생성, 배치는 확인하지 않음"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: {object} {count}개 제거"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: {object} {count}개를 ({x}, {y}) 위치로 이동"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: {object} {count}개 이동"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: {previous}에게서 {object} {count}개를 받음"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: {object} {count}개의 값 변경"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: {object} {count}개의 이름 또는 캡션 변경"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: {object}의 데이터 변경, 기록만 하고 적용하지 않음"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: {technology}의 데이터 변경, 기록만 하고 적용하지 않음"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, other {#회 호출}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "색상 분위기를 {value}(으)로 설정"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. 이 줄 이후의 변경 사항은 표시되지 않습니다."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "중지 이후의 변경 사항은 표시되지 않습니다."
+    },
+    "output.xs-start.skipped": {
+      "message": "XS 시작 검사를 건너뜀: {file}에 {count, plural, other {오류 #개}}가 있습니다(문제 패널 참조)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "XS 시작 검사를 실행하려면 게임 폴더를 연결하세요"
+    },
+    "output.xs-start.omitted": {
+      "message": "XS 시작 검사 결과 중 일부는 표시되지 않았습니다"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "생략됨: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, other {발견 사항 #개}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, other {채팅 #줄}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, other {변경 사항 #개}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, other {기록된 호출 #개}}"
     },
     "output.constructs.more": {
       "message": "그 외 {count}개"
@@ -605,11 +776,95 @@
     "run-menu.run-on-edit": {
       "message": "편집 시 실행"
     },
+    "run-menu.quality-check": {
+      "message": "품질 검사"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "검사할 시드 수"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "검사 항목"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "품질 검사에서 확인할 항목 선택"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "다른 로비 설정"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "초소형 1v1, 중형 2v2, 초대형 4v4도 각각 시드 10개씩 검사"
+    },
+    "quality.case.generation": {
+      "message": "생성"
+    },
+    "quality.case.start-resources": {
+      "message": "시작 자원"
+    },
+    "quality.case.resource-distances": {
+      "message": "자원 거리"
+    },
+    "quality.case.shared-resources": {
+      "message": "공유 자원"
+    },
+    "quality.case.wood": {
+      "message": "목재"
+    },
+    "quality.case.trapped": {
+      "message": "갇힌 자원"
+    },
+    "quality.case.paths": {
+      "message": "경로"
+    },
+    "quality.case.building-space": {
+      "message": "건설 공간"
+    },
+    "quality.case.hills": {
+      "message": "언덕"
+    },
+    "quality.case.water": {
+      "message": "물"
+    },
+    "quality.case.spacing": {
+      "message": "간격"
+    },
+    "quality.case.chokepoints": {
+      "message": "병목 지점"
+    },
+    "quality.case.variation": {
+      "message": "다양성"
+    },
+    "quality.case.looks": {
+      "message": "외관"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "맵 {of}개 중 {bad}개{metric, select, yes { · 중앙값 {p50}, 95번째 백분위수 {p95}, 최댓값 {max} {unit}} other {}}{worst, select, yes { · 가장 나쁜 {count, plural, other {시드}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "통과: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, other {나머지 발견 사항 #개는 표시하지 않았습니다}}"
+    },
+    "quality.failed": {
+      "message": "품질 검사를 실행하지 못했습니다"
+    },
     "run-menu.preset.default-name": {
       "message": "구성"
     },
     "run-menu.preset.numbered-name": {
       "message": "구성 {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "테스트 구성"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "{name}(으)로 돌아가기"
     },
     "run-menu.preset.settings": {
       "message": "미리 보기 구성 설정"
@@ -634,6 +889,9 @@
     },
     "run-menu.preset.delete": {
       "message": "{name} 삭제"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "{name} 복제"
     },
     "run-menu.preset.delete.title": {
       "message": "{name} 구성을 삭제할까요?"
@@ -821,6 +1079,9 @@
     "run-menu.fixture.needs-source": {
       "message": "개발용 테스트 데이터에는 내용이 있는 .rms 또는 .rms2 스크립트가 필요합니다"
     },
+    "mcp.run.settings-applied": {
+      "message": "{app}이(가) {settings, list, unit}을(를) 설정했습니다"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "이번 미리 보기의 무작위 문명: {players, list, unit}"
     },
@@ -838,6 +1099,9 @@
     },
     "run-menu.result.failed": {
       "message": "실패"
+    },
+    "run-menu.result.warnings": {
+      "message": "경고"
     },
     "run-menu.result.passed": {
       "message": "통과"
@@ -2702,6 +2966,9 @@
     "lint-rule.RMS4011.title": {
       "message": "이름이 정의되지 않았을 수 있음"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "여기서 게임이 강제 종료될 수 있음"
+    },
     "map-icon.generate": {
       "message": "맵 아이콘 생성"
     },
@@ -3068,6 +3335,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "기록된 시드로 발견 사항을 재현했습니다: {seed}"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "기록된 시드 {seed}(으)로 발견 사항을 재현하고 다음 실행을 위해 시드를 고정했습니다"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "기록된 시드 {seed}(으)로 발견 사항을 재현하고 임시 구성 {name}에 시드를 고정했습니다"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "게임 폴더의 연결을 해제하지 못했습니다"
     },
@@ -3100,6 +3373,336 @@
     },
     "code-editor.tab.close": {
       "message": "{name} 닫기"
+    },
+    "mcp.tab.edited-by": {
+      "message": "{app}에서 편집함, 저장 안 됨"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "MCP 설정 닫기"
+    },
+    "mcp.dialog.description": {
+      "message": "이 컴퓨터의 AI 앱이 열린 폴더의 스크립트를 읽고 편집하고 검사하며, 맵을 생성하고 맵 테스트를 실행할 수 있게 합니다."
+    },
+    "mcp.enable.label": {
+      "message": "MCP 사용"
+    },
+    "mcp.save.label": {
+      "message": "AI 앱의 파일 저장 허용"
+    },
+    "mcp.save.note": {
+      "message": "꺼져 있으면 AI가 변경한 내용은 직접 저장할 때까지 저장되지 않은 상태로 남습니다."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "다른 프로그램이 연결 이름을 사용하고 있어 MCP를 시작하지 못했습니다."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "키 파일을 쓰지 못해 MCP를 시작하지 못했습니다."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "도구 목록이 이 버전의 AoE2RMSIDE와 맞지 않아 MCP를 시작하지 못했습니다. AoE2RMSIDE를 다시 설치하세요."
+    },
+    "mcp.unavailable.internal": {
+      "message": "예기치 않은 오류로 MCP를 시작하지 못했습니다."
+    },
+    "mcp.unavailable.retry": {
+      "message": "다시 시도하려면 ‘MCP 사용’을 껐다가 다시 켜세요."
+    },
+    "mcp.apps.title": {
+      "message": "허용된 앱"
+    },
+    "mcp.apps.empty": {
+      "message": "아직 앱이 없습니다. 앱이 처음 연결할 때 허용 여부를 묻습니다."
+    },
+    "mcp.apps.connected": {
+      "message": "연결됨"
+    },
+    "mcp.apps.last-used": {
+      "message": "마지막 사용: {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "제거"
+    },
+    "mcp.apps.remove-label": {
+      "message": "{app} 제거"
+    },
+    "mcp.setup.app": {
+      "message": "AI 앱"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "기타 앱"
+    },
+    "mcp.setup.text-label": {
+      "message": "설정 텍스트"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "이 내용을 Claude Desktop의 구성 파일(Settings > Developer > Edit Config)에 추가한 후 Claude Desktop을 다시 시작하세요."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "터미널에서 이 명령을 실행하세요."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "터미널에서 이 명령을 실행하세요."
+    },
+    "mcp.setup.hint.other": {
+      "message": "이 프로그램을 로컬 MCP 서버로 추가하세요."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "먼저 ‘MCP 사용’을 켜세요."
+    },
+    "mcp.setup.copy": {
+      "message": "설정 복사"
+    },
+    "mcp.setup.copied": {
+      "message": "설정 복사됨"
+    },
+    "mcp.connect.row": {
+      "message": "AI 앱 연결…"
+    },
+    "mcp.connect.title": {
+      "message": "AI 앱 연결"
+    },
+    "mcp.connect.close-label": {
+      "message": "닫기"
+    },
+    "mcp.connect.description": {
+      "message": "이 프롬프트를 AI 앱에 붙여 넣으세요. 앱이 스스로 설정하고, 막히는 부분이 있으면 알려 줍니다."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "AI 앱용 프롬프트"
+    },
+    "mcp.connect.copy": {
+      "message": "프롬프트 복사"
+    },
+    "mcp.connect.copied": {
+      "message": "프롬프트 복사됨"
+    },
+    "mcp.connect.by-hand": {
+      "message": "직접 설정"
+    },
+    "mcp.pairing.title": {
+      "message": "{app}에서 AoE2RMSIDE를 사용하도록 허용할까요?"
+    },
+    "mcp.pairing.description": {
+      "message": "열린 폴더의 스크립트를 편집하고, 맵을 생성하고, 테스트를 실행하고, 모드를 배포할 수 있게 됩니다. 시작한 프로그램: {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "열린 폴더의 스크립트를 편집하고, 맵을 생성하고, 테스트를 실행하고, 모드를 배포할 수 있게 됩니다."
+    },
+    "mcp.pairing.name-note": {
+      "message": "이 이름은 앱이 스스로 밝힌 것입니다. 직접 설정한 앱만 허용하세요. 모드 교체와 게임 내 테스트는 계속 확인을 요청합니다."
+    },
+    "mcp.pairing.allow": {
+      "message": "허용"
+    },
+    "mcp.pairing.deny": {
+      "message": "허용 안 함"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "‘{mod}’ 모드를 교체할까요?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app}이(가) {file}을(를) 이 모드에 배포하려고 합니다. {app}은(는) 이번 세션에서 이 모드를 배포하지 않았으므로 모드의 파일이 교체됩니다."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "교체"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app}이(가) {file}을(를) ‘{mod}’ 모드로 배포하도록 요청했습니다."
+    },
+    "mcp.deploy.notice": {
+      "message": "{app}이(가) {file}을(를) ‘{mod}’ 모드로 배포했습니다."
+    },
+    "mcp.live.title": {
+      "message": "{app}의 게임 내 테스트를 시작할까요?"
+    },
+    "mcp.live.description": {
+      "message": "{app}이(가) 실행 중인 게임에서 {file}을(를) 시드 {seed}(으)로 테스트하려고 합니다. 진행 중인 대전은 종료됩니다."
+    },
+    "mcp.live.session": {
+      "message": "이 세션 동안 허용"
+    },
+    "mcp.live.start": {
+      "message": "게임 내 테스트 시작"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, other {AI 앱 #개}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} 연결됨"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, other {AI 앱 #개 연결됨}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} 작업 중"
+    },
+    "mcp.status.tooltip": {
+      "message": "MCP로 연결되어 있습니다. 클릭하면 MCP 설정이 열립니다."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "오류를 발견하여 AI 앱에 보냈습니다."
+    },
+    "mcp.output.connected": {
+      "message": "{app} 연결됨"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} 연결 끊김"
+    },
+    "mcp.output.denied": {
+      "message": "{app}의 연결이 허용되지 않았습니다"
+    },
+    "mcp.output.busy": {
+      "message": "{app}에 대기를 요청했습니다: {running} 실행 중"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} 요청이 거부되었습니다"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} 요청이 취소되었습니다"
+    },
+    "mcp.action.status": {
+      "message": "IDE 상태를 읽었습니다"
+    },
+    "mcp.action.list-files": {
+      "message": "파일 목록을 확인했습니다"
+    },
+    "mcp.action.read-file": {
+      "message": "{file}을(를) 읽었습니다"
+    },
+    "mcp.action.edit-file": {
+      "message": "{file}을(를) 편집했습니다"
+    },
+    "mcp.action.create-file": {
+      "message": "{file}을(를) 만들었습니다"
+    },
+    "mcp.action.save-file": {
+      "message": "{file}을(를) 저장했습니다"
+    },
+    "mcp.action.problems": {
+      "message": "{file}을(를) 검사했습니다"
+    },
+    "mcp.action.generate": {
+      "message": "{file}을(를) 생성했습니다(시드 {seed})"
+    },
+    "mcp.action.show-map": {
+      "message": "{file}을(를) 미리 보기에 표시했습니다"
+    },
+    "mcp.action.inspect": {
+      "message": "생성된 맵을 살펴봤습니다"
+    },
+    "mcp.action.picture": {
+      "message": "{file}의 이미지를 가져왔습니다"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, other {{file}의 시드 #개 이미지를 가져왔습니다}}"
+    },
+    "mcp.action.map-test": {
+      "message": "맵 테스트 {file}을(를) 실행했습니다"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, other {{file}의 품질 검사를 실행했습니다(시드 #개)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "실행 중인 테스트 상태를 확인했습니다"
+    },
+    "mcp.action.details": {
+      "message": "결과의 세부 정보를 읽었습니다"
+    },
+    "mcp.action.deploy": {
+      "message": "{file}을(를) ‘{mod}’ 모드로 배포했습니다"
+    },
+    "mcp.action.live-test": {
+      "message": "{file}의 게임 내 테스트를 시작했습니다"
+    },
+    "mcp.action.guide": {
+      "message": "가이드를 읽었습니다"
+    },
+    "mcp.action.reference": {
+      "message": "{name}을(를) 조회했습니다"
+    },
+    "mcp.action.tool": {
+      "message": "{tool}을(를) 사용했습니다"
+    },
+    "mcp.refusal.waiting": {
+      "message": "AoE2RMSIDE에서 응답을 기다리고 있습니다."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "이 앱을 허용하지 않았습니다."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "요청이 올바르지 않습니다."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "열린 폴더가 없습니다."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "파일이 열린 폴더 밖에 있거나 AoE2RMSIDE가 보호하는 파일입니다."
+    },
+    "mcp.refusal.file-type": {
+      "message": "AI 앱은 이 형식의 파일을 사용할 수 없습니다."
+    },
+    "mcp.refusal.not-found": {
+      "message": "파일을 찾을 수 없습니다."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "파일이 이미 있습니다."
+    },
+    "mcp.refusal.too-large": {
+      "message": "파일이 너무 큽니다."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "텍스트 파일이 아닙니다."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "변경할 텍스트가 없거나 두 군데 이상에서 발견되었습니다."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "‘AI 앱의 파일 저장 허용’이 꺼져 있습니다."
+    },
+    "mcp.refusal.busy": {
+      "message": "다른 작업이 실행 중입니다."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "생성된 맵이 더 이상 보관되어 있지 않습니다."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "테스트가 더 이상 보관되어 있지 않습니다."
+    },
+    "mcp.refusal.stopped": {
+      "message": "직접 중지했습니다."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "AI 앱이 취소했습니다."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "확인 요청을 거절했습니다."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "이 맵에서는 게임이 강제 종료될 수 있습니다."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "게임이 게임 내 테스트를 할 준비가 되지 않았습니다."
+    },
+    "mcp.refusal.too-many": {
+      "message": "앱이 요청을 너무 많이 보냈습니다."
+    },
+    "mcp.refusal.internal": {
+      "message": "AoE2RMSIDE에서 문제가 발생했습니다."
     },
     "code-editor.tab.unsaved": {
       "message": "저장하지 않은 변경 내용"
@@ -5135,6 +5738,9 @@
     "app-update.dialog.unsaved": {
       "message": "저장하지 않은 변경 내용이 있는 문서가 있으면 먼저 이에 대해 묻습니다."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "연결된 AI 앱은 업데이트 중에 연결이 끊어집니다. 업데이트 후 AI 앱을 다시 시작하세요."
+    },
     "app-update.dialog.release-notes": {
       "message": "릴리스 노트"
     },
@@ -5272,6 +5878,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "{language} 파일에는 기본 제공 분석을 사용합니다"
+    },
+    "known-crash.headline": {
+      "message": "이 맵에서 게임이 강제 종료됩니다"
+    },
+    "known-crash.headline.possible": {
+      "message": "여기서 게임이 강제 종료될 수 있음"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "빈 타일 탐색에 비해 너무 작은 오브젝트의 override_actor_radius_if_required"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required는 배치된 위치에 맞지 않는 오브젝트를 옮기는데, 이 오브젝트는 게임의 빈 타일 탐색에 비해 너무 작습니다."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "해당 오브젝트에서 override_actor_radius_if_required를 제거하세요."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "연결 블록의 줄에 지형이 없음"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "연결 명령의 중괄호 안에서는 게임이 모든 줄에서 지형을 읽는데, {word}에는 지형이 없습니다."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "해당 줄을 연결 블록 밖, 연결 명령 앞으로 옮기세요."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "연결이 맵 밖의 육지에 닿음"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "연결이 시작하거나 끝나는 육지의 위치가 이 지도 크기에서는 맵 밖에 있습니다."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "모든 지도 크기에서 land_position이 맵 안에 있도록 하세요."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "<CLIFF_GENERATION>에서 정의된 이름이 cliff_type으로 실행됨"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word}은(는) 명령이 올 수 있는 위치에 있는 정의된 이름이어서, 게임이 이를 값 없는 {command}(으)로 실행합니다."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "정의된 이름을 제거하거나, 원래 의도한 명령을 작성하세요."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "create_elevation 중괄호 안에서 정의된 이름이 base_terrain 또는 base_layer로 실행됨"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word}은(는) 명령이 올 수 있는 위치에 있는 정의된 이름이어서, 게임이 이를 값 없는 {command}(으)로 실행합니다."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "정의된 이름을 제거하거나, 원래 의도한 명령을 작성하세요."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "정의된 이름이 ai_info_map_type, effect_amount 또는 effect_percent로 실행됨"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word}은(는) 명령이 올 수 있는 위치에 있는 정의된 이름이어서, 게임이 이를 값 없는 {command}(으)로 실행합니다."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "정의된 이름을 제거하거나, 원래 의도한 명령을 작성하세요."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "<PLAYER_SETUP>에서 정의된 이름이 guard_state로 실행됨"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word}은(는) 명령이 올 수 있는 위치에 있는 정의된 이름이어서, 게임이 이를 값 없는 {command}(으)로 실행합니다."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "정의된 이름을 제거하거나, 원래 의도한 명령을 작성하세요."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "<LAND_GENERATION>에서 정의된 이름이 base_terrain 또는 base_layer로 실행됨"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word}은(는) 명령이 올 수 있는 위치에 있는 정의된 이름이어서, 게임이 이를 값 없는 {command}(으)로 실행합니다."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "정의된 이름을 제거하거나, 원래 의도한 명령을 작성하세요."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "육지의 중괄호 안에서 정의된 이름이 terrain_type 또는 assign_to로 실행됨"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word}은(는) 명령이 올 수 있는 위치에 있는 정의된 이름이어서, 게임이 이를 값 없는 {command}(으)로 실행합니다."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "정의된 이름을 제거하거나, 원래 의도한 명령을 작성하세요."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "오브젝트의 중괄호 안에서 정의된 이름이 terrain_to_place_on, layer_to_place_on 또는 second_object로 실행됨"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word}은(는) 명령이 올 수 있는 위치에 있는 정의된 이름이어서, 게임이 이를 값 없는 {command}(으)로 실행합니다."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "정의된 이름을 제거하거나, 원래 의도한 명령을 작성하세요."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "<TERRAIN_GENERATION>에서 정의된 이름이 create_terrain 또는 color_correction으로 실행됨"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word}은(는) 명령이 올 수 있는 위치에 있는 정의된 이름이어서, 게임이 이를 값 없는 {command}(으)로 실행합니다."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "정의된 이름을 제거하거나, 원래 의도한 명령을 작성하세요."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "길이가 0인 원 둘레의 팀별 플레이어 배치"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "플레이어가 길이가 0인 원 둘레에 팀별로 묶여 배치되므로 게임이 0으로 나눕니다."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "이름이 지정된 그룹에서 오브젝트가 없는 add_object"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "그룹 이름이 지정되었는데 add_object에 오브젝트가 없어서, 해당 항목이 선택되면 게임이 강제 종료됩니다."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "add_object에 오브젝트를 지정하세요."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "맵 밖의 육지에 오브젝트가 배치됨"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "육지마다 배치되는 오브젝트가 이 지도 크기에서는 맵 밖에 위치한 육지에 배치됩니다."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "모든 지도 크기에서 land_position이 맵 안에 있도록 하세요."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size가 플레이어 육지 생성 후 맵을 작게 만듦"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size가 플레이어 육지가 만들어진 후 맵을 작게 만들어, 플레이어가 맵 밖에서 시작할 수 있습니다."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "override_map_size를 create_player_lands 앞으로 옮기세요."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "맵이 이동 데이터가 없는 지형을 칠함"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "맵이 게임의 이동 데이터에 포함되지 않은 지형 {terrain}을(를) 칠하므로 대전 중에 게임이 강제 종료됩니다."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "게임의 이동 데이터에 포함된 지형을 사용하세요."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "다른 시드나 다른 로비 설정에서는 이 맵에서 게임이 강제 종료될 수 있습니다. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "그래도 배포"
+    },
+    "live-test.crash-warning.title": {
+      "message": "이 맵에서 게임이 강제 종료될 수 있습니다"
+    },
+    "live-test.crash-warning.description": {
+      "message": "이 시드에서는 문제가 없지만, 다른 시드나 다른 로비 설정에서는 이 맵에서 게임이 강제 종료될 수 있습니다. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "그래도 시작"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "이 맵에서 게임이 강제 종료될 수 있어 게임 내 테스트를 시작하지 않았습니다."
+    },
+    "test-results.crashes.title": {
+      "message": "게임 강제 종료"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, other {맵 #개}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "{sampled, plural, other {맵 #개}} 중 {maps, number}개에서 게임이 강제 종료됩니다"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{sampled, number}개 중 {maps, plural, other {맵 #개}}를 생성하지 못했습니다"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, other {시드}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, other {시드}} {seeds, list, unit} 외 {omitted, number}개"
+    },
+    "test-results.crashes.source": {
+      "message": "게임 강제 종료"
+    },
+    "test-results.crashes.show": {
+      "message": "게임 강제 종료 표시"
+    },
+    "test-results.crashes.hide": {
+      "message": "게임 강제 종료 숨기기"
+    },
+    "test-results.quality.summary": {
+      "message": "· {map} 품질 검사 · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, other {맵 #개}} · {failures, plural, other {실패 #개}} · {warnings, plural, other {경고 #개}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, other {발견 사항 #개}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "{case}의 발견 사항 표시"
+    },
+    "test-results.quality.hide-case": {
+      "message": "{case}의 발견 사항 숨기기"
+    },
+    "test-results.quality.case-findings": {
+      "message": "{case}의 발견 사항"
+    },
+    "test-results.quality.no-findings": {
+      "message": "{maps, plural, other {맵 #개}}에서 모든 검사 항목을 통과했습니다"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, other {품질 검사 발견 사항 #개}}"
     }
   }
 }

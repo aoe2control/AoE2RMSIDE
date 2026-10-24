@@ -138,6 +138,9 @@
     "app-menu.view.map-transitions": {
       "message": "Animar las transiciones del mapa"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "Verificar XS al ejecutar el mapa"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Mostrar etapas de generación"
     },
@@ -170,6 +173,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "Tema…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "Tema"
@@ -399,6 +405,9 @@
     "output.source.map-test": {
       "message": "Test de mapas"
     },
+    "output.source.quality-check": {
+      "message": "Control de calidad"
+    },
     "output.source.deploy": {
       "message": "Instalación"
     },
@@ -420,8 +429,14 @@
     "output.source.game-textures": {
       "message": "Texturas del juego"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "Aplicación"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, one {{count} mensaje de salida} many {{count} mensajes de salida} other {{count} mensajes de salida}}"
@@ -491,6 +506,162 @@
     },
     "output.constructs.go-to": {
       "message": "Ir al primer uso"
+    },
+    "output.xs-start.summary": {
+      "message": "Comprobación XS de inicio de partida: se ejecutaron main() y {rules, plural, one {# regla} many {# reglas} other {# reglas}} en {files, list} ({steps, plural, one {# paso} many {# pasos} other {# pasos}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "Comprobación XS de inicio de partida: {files, list} no tiene main(); {rules, plural, =0 {no se ejecutó ninguna regla} one {se ejecutó # regla} many {se ejecutaron # reglas} other {se ejecutaron # reglas}} ({steps, plural, one {# paso} many {# pasos} other {# pasos}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "No se ha comparado con el juego"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "No se ha comparado con el juego. Usa: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "aritmética de números enteros"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "números enteros y decimales mezclados"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "texto de los números"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "funciones de texto"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "valores predeterminados de los arreglos"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "orden de las reglas"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "etiquetas y goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "valores iniciales"
+    },
+    "output.xs-start.chat": {
+      "message": "Chat: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Gaia} one {Jugador {player}} many {Jugador {player}} other {Jugador {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "comida"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "madera"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "piedra"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "oro"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "atributo {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource}: valor fijado en {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "objeto {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "tecnología {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: investiga {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}: postura hacia {other} fijada en {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: nombre cambiado a «{text}»"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: nombre de la civilización cambiado a «{text}»"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: color cambiado a {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: crea {count} {object} cerca de ({x}, {y}); colocación no comprobada"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: crea {count} {object}; colocación no comprobada"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: elimina {count} {object}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: mueve {count} {object} a ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: mueve {count} {object}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: recibe {count} {object} de {previous}"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: cambia los valores de {count} {object}"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: cambia los nombres o rótulos de {count} {object}"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: cambia los datos de {object}; registrado, no aplicado"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: cambia los datos de {technology}; registrado, no aplicado"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, one {# llamada} many {# llamadas} other {# llamadas}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Ambiente de iluminación fijado en {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Los cambios posteriores a esta línea no se muestran."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Los cambios posteriores a la detención no se muestran."
+    },
+    "output.xs-start.skipped": {
+      "message": "Comprobación XS de inicio de partida omitida: {file} tiene {count, plural, one {# error} many {# errores} other {# errores}} (consulta Problemas)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "Vincula la carpeta del juego para ejecutar la comprobación XS de inicio de partida"
+    },
+    "output.xs-start.omitted": {
+      "message": "No se muestran todos los resultados de la comprobación XS de inicio de partida"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Omitido: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, one {# incidencia} many {# incidencias} other {# incidencias}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, one {# línea de chat} many {# líneas de chat} other {# líneas de chat}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, one {# cambio} many {# cambios} other {# cambios}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, one {# llamada registrada} many {# llamadas registradas} other {# llamadas registradas}}"
     },
     "output.constructs.more": {
       "message": "y {count} más"
@@ -597,11 +768,95 @@
     "run-menu.run-on-edit": {
       "message": "Al editar"
     },
+    "run-menu.quality-check": {
+      "message": "Control de calidad"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Semillas a verificar"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Criterios"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Elegir qué revisa el control de calidad"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Otros ajustes de la sala"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Verificar también Diminuto 1c1, Medio 2c2 y Enorme 4c4, 10 semillas cada uno"
+    },
+    "quality.case.generation": {
+      "message": "Generación"
+    },
+    "quality.case.start-resources": {
+      "message": "Recursos de inicio"
+    },
+    "quality.case.resource-distances": {
+      "message": "Distancias de recursos"
+    },
+    "quality.case.shared-resources": {
+      "message": "Recursos compartidos"
+    },
+    "quality.case.wood": {
+      "message": "Madera"
+    },
+    "quality.case.trapped": {
+      "message": "Recursos inaccesibles"
+    },
+    "quality.case.paths": {
+      "message": "Caminos"
+    },
+    "quality.case.building-space": {
+      "message": "Espacio para construir"
+    },
+    "quality.case.hills": {
+      "message": "Colinas"
+    },
+    "quality.case.water": {
+      "message": "Agua"
+    },
+    "quality.case.spacing": {
+      "message": "Espaciado"
+    },
+    "quality.case.chokepoints": {
+      "message": "Pasos estrechos"
+    },
+    "quality.case.variation": {
+      "message": "Variación"
+    },
+    "quality.case.looks": {
+      "message": "Aspecto"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "{bad} de {of} mapas{metric, select, yes { · mediana {p50}, percentil 95 {p95}, máximo {max} {unit}} other {}}{worst, select, yes { · {count, plural, one {peor semilla} many {peores semillas} other {peores semillas}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "Superados: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, one {# incidencia más no aparece en la lista} many {# incidencias más no aparecen en la lista} other {# incidencias más no aparecen en la lista}}"
+    },
+    "quality.failed": {
+      "message": "No se pudo ejecutar el control de calidad"
+    },
     "run-menu.preset.default-name": {
       "message": "Config"
     },
     "run-menu.preset.numbered-name": {
       "message": "Config {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Config de prueba"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Volver a {name}"
     },
     "run-menu.preset.settings": {
       "message": "Ajustes de la configuración de vista previa"
@@ -626,6 +881,9 @@
     },
     "run-menu.preset.delete": {
       "message": "Eliminar {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "Duplicar {name}"
     },
     "run-menu.preset.delete.title": {
       "message": "¿Eliminar la configuración {name}?"
@@ -813,6 +1071,9 @@
     "run-menu.fixture.needs-source": {
       "message": "Los casos de prueba internos necesitan un script .rms o .rms2 que no esté vacío"
     },
+    "mcp.run.settings-applied": {
+      "message": "Ajustado por {app}: {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Civilizaciones aleatorias para esta vista previa: {players, list, unit}"
     },
@@ -830,6 +1091,9 @@
     },
     "run-menu.result.failed": {
       "message": "Fallido"
+    },
+    "run-menu.result.warnings": {
+      "message": "Avisos"
     },
     "run-menu.result.passed": {
       "message": "Superado"
@@ -2694,6 +2958,9 @@
     "lint-rule.RMS4011.title": {
       "message": "El nombre puede no estar definido"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "El juego puede bloquearse aquí"
+    },
     "map-icon.generate": {
       "message": "Generar ícono del mapa"
     },
@@ -3060,6 +3327,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "Se ha reproducido la incidencia con su semilla registrada {seed}"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Se ha reproducido la incidencia con su semilla registrada {seed}, ahora bloqueada para las siguientes ejecuciones"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Se ha reproducido la incidencia con su semilla registrada {seed}, ahora bloqueada en la configuración temporal {name}"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "No se ha podido desvincular la carpeta del juego"
     },
@@ -3092,6 +3365,336 @@
     },
     "code-editor.tab.close": {
       "message": "Cerrar {name}"
+    },
+    "mcp.tab.edited-by": {
+      "message": "Editado por {app}, sin guardar"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "Cerrar configuración de MCP"
+    },
+    "mcp.dialog.description": {
+      "message": "Permite que las aplicaciones de IA de esta computadora lean, editen y verifiquen los scripts de la carpeta abierta, generen mapas y ejecuten pruebas de mapas."
+    },
+    "mcp.enable.label": {
+      "message": "Activar MCP"
+    },
+    "mcp.save.label": {
+      "message": "Permitir que la IA guarde archivos"
+    },
+    "mcp.save.note": {
+      "message": "Si está desactivada, los cambios de la IA quedan sin guardar hasta que los guardes."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "MCP no pudo iniciarse porque otro programa usa su nombre de conexión."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "MCP no pudo iniciarse porque no pudo escribir su archivo de clave."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "MCP no pudo iniciarse porque su lista de herramientas no corresponde a esta versión de AoE2RMSIDE. Reinstala AoE2RMSIDE."
+    },
+    "mcp.unavailable.internal": {
+      "message": "MCP no pudo iniciarse por un error inesperado."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Desactiva y vuelve a activar «Activar MCP» para intentarlo de nuevo."
+    },
+    "mcp.apps.title": {
+      "message": "Aplicaciones permitidas"
+    },
+    "mcp.apps.empty": {
+      "message": "Aún no hay aplicaciones. Cada aplicación pide permiso la primera vez que se conecta."
+    },
+    "mcp.apps.connected": {
+      "message": "Conectado"
+    },
+    "mcp.apps.last-used": {
+      "message": "Último uso: {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "Quitar"
+    },
+    "mcp.apps.remove-label": {
+      "message": "Quitar {app}"
+    },
+    "mcp.setup.app": {
+      "message": "Aplicación de IA"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "Otra aplicación"
+    },
+    "mcp.setup.text-label": {
+      "message": "Texto de configuración"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Agrega esto a la configuración de Claude Desktop (Settings > Developer > Edit Config) y reinícialo."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Ejecuta este comando en una terminal."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Ejecuta este comando en una terminal."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Agrega este programa como servidor MCP local."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Activa primero «Activar MCP»."
+    },
+    "mcp.setup.copy": {
+      "message": "Copiar configuración"
+    },
+    "mcp.setup.copied": {
+      "message": "Configuración copiada"
+    },
+    "mcp.connect.row": {
+      "message": "Conectar una aplicación de IA…"
+    },
+    "mcp.connect.title": {
+      "message": "Conectar una aplicación de IA"
+    },
+    "mcp.connect.close-label": {
+      "message": "Cerrar"
+    },
+    "mcp.connect.description": {
+      "message": "Pega este prompt en tu aplicación de IA. Se configura sola y te avisa si algo se lo impide."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Prompt para la aplicación de IA"
+    },
+    "mcp.connect.copy": {
+      "message": "Copiar prompt"
+    },
+    "mcp.connect.copied": {
+      "message": "Prompt copiado"
+    },
+    "mcp.connect.by-hand": {
+      "message": "Configurar manualmente"
+    },
+    "mcp.pairing.title": {
+      "message": "¿Permitir que {app} use AoE2RMSIDE?"
+    },
+    "mcp.pairing.description": {
+      "message": "Podría editar scripts de la carpeta abierta, generar mapas, ejecutar pruebas e instalar mods. Conexión iniciada por {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "Podría editar scripts de la carpeta abierta, generar mapas, ejecutar pruebas e instalar mods."
+    },
+    "mcp.pairing.name-note": {
+      "message": "El nombre lo indica la propia aplicación: permítela solo si la configuraste tú. Reemplazar un mod o iniciar una prueba en el juego sigue pidiéndote permiso."
+    },
+    "mcp.pairing.allow": {
+      "message": "Permitir"
+    },
+    "mcp.pairing.deny": {
+      "message": "No permitir"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "¿Reemplazar el mod «{mod}»?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} quiere instalar {file} en este mod. {app} no instaló este mod en esta sesión, así que sus archivos se reemplazarían."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Reemplazar"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} pidió instalar {file} como el mod «{mod}»."
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} instaló {file} como el mod «{mod}»."
+    },
+    "mcp.live.title": {
+      "message": "¿Iniciar una prueba en el juego para {app}?"
+    },
+    "mcp.live.description": {
+      "message": "{app} quiere probar {file} con la semilla {seed} en el juego abierto. La partida actual terminará."
+    },
+    "mcp.live.session": {
+      "message": "Permitir durante esta sesión"
+    },
+    "mcp.live.start": {
+      "message": "Iniciar prueba en juego"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, one {# aplicación de IA} many {# aplicaciones de IA} other {# aplicaciones de IA}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} conectado"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, one {# aplicación de IA conectada} many {# aplicaciones de IA conectadas} other {# aplicaciones de IA conectadas}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} está trabajando"
+    },
+    "mcp.status.tooltip": {
+      "message": "Conectado mediante MCP. Haz clic para abrir la configuración de MCP."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "Se encontraron errores y se enviaron a la aplicación de IA."
+    },
+    "mcp.output.connected": {
+      "message": "{app} conectado"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} desconectado"
+    },
+    "mcp.output.denied": {
+      "message": "No se permitió la conexión de {app}"
+    },
+    "mcp.output.busy": {
+      "message": "Se le pidió a {app} que espere: {running} está en curso"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} rechazado"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} cancelado"
+    },
+    "mcp.action.status": {
+      "message": "leyó el estado del IDE"
+    },
+    "mcp.action.list-files": {
+      "message": "listó los archivos"
+    },
+    "mcp.action.read-file": {
+      "message": "leyó {file}"
+    },
+    "mcp.action.edit-file": {
+      "message": "editó {file}"
+    },
+    "mcp.action.create-file": {
+      "message": "creó {file}"
+    },
+    "mcp.action.save-file": {
+      "message": "guardó {file}"
+    },
+    "mcp.action.problems": {
+      "message": "verificó {file}"
+    },
+    "mcp.action.generate": {
+      "message": "generó {file}, semilla {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "mostró {file} en la vista previa"
+    },
+    "mcp.action.inspect": {
+      "message": "examinó un mapa generado"
+    },
+    "mcp.action.picture": {
+      "message": "obtuvo una imagen de {file}"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, one {obtuvo imágenes de # semilla de {file}} many {obtuvo imágenes de # semillas de {file}} other {obtuvo imágenes de # semillas de {file}}}"
+    },
+    "mcp.action.map-test": {
+      "message": "ejecutó la prueba de mapas {file}"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, one {ejecutó el control de calidad en {file} (# semilla)} many {ejecutó el control de calidad en {file} (# semillas)} other {ejecutó el control de calidad en {file} (# semillas)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "consultó una prueba en curso"
+    },
+    "mcp.action.details": {
+      "message": "leyó los detalles de un resultado"
+    },
+    "mcp.action.deploy": {
+      "message": "instaló {file} como el mod «{mod}»"
+    },
+    "mcp.action.live-test": {
+      "message": "inició una prueba en el juego de {file}"
+    },
+    "mcp.action.guide": {
+      "message": "leyó la guía"
+    },
+    "mcp.action.reference": {
+      "message": "consultó {name}"
+    },
+    "mcp.action.tool": {
+      "message": "usó {tool}"
+    },
+    "mcp.refusal.waiting": {
+      "message": "La solicitud espera tu respuesta en AoE2RMSIDE."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "No permitiste esta aplicación."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "La solicitud no era válida."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "No hay ninguna carpeta abierta."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "El archivo está fuera de la carpeta abierta o AoE2RMSIDE lo protege."
+    },
+    "mcp.refusal.file-type": {
+      "message": "Las aplicaciones de IA no pueden usar este tipo de archivo."
+    },
+    "mcp.refusal.not-found": {
+      "message": "No se encontró el archivo."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "El archivo ya existe."
+    },
+    "mcp.refusal.too-large": {
+      "message": "El archivo es demasiado grande."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "El archivo no es un archivo de texto."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "El texto que había que cambiar no estaba o aparecía más de una vez."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "La opción «Permitir que la IA guarde archivos» está desactivada."
+    },
+    "mcp.refusal.busy": {
+      "message": "Hay otra operación en curso."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "El mapa generado ya no se conserva."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "La prueba ya no se conserva."
+    },
+    "mcp.refusal.stopped": {
+      "message": "Detuviste la solicitud."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "La aplicación de IA canceló la solicitud."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "Respondiste que no."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "El juego puede bloquearse en este mapa."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "El juego no está listo para una prueba en el juego."
+    },
+    "mcp.refusal.too-many": {
+      "message": "La aplicación envió demasiadas solicitudes."
+    },
+    "mcp.refusal.internal": {
+      "message": "Algo salió mal en AoE2RMSIDE."
     },
     "code-editor.tab.unsaved": {
       "message": "Cambios sin guardar"
@@ -5127,6 +5730,9 @@
     "app-update.dialog.unsaved": {
       "message": "Si hay documentos con cambios sin guardar, primero se te preguntará por ellos."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Las aplicaciones de IA conectadas pierden la conexión durante la actualización. Reinícialas después."
+    },
     "app-update.dialog.release-notes": {
       "message": "Notas de la versión"
     },
@@ -5264,6 +5870,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "Se usa el análisis integrado para los archivos {language}"
+    },
+    "known-crash.headline": {
+      "message": "El juego se bloquea en este mapa"
+    },
+    "known-crash.headline.possible": {
+      "message": "El juego puede bloquearse aquí"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "override_actor_radius_if_required en un objeto demasiado pequeño para la búsqueda"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required mueve un objeto que no cabe donde se colocó, y el objeto es demasiado pequeño para la búsqueda de una casilla libre que hace el juego."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "Quita override_actor_radius_if_required de ese objeto."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "Una línea de un bloque de conexión no tiene terreno"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Dentro de las llaves de un comando de conexión, el juego lee un terreno de cada línea, y {word} no tiene ninguno."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Saca la línea del bloque de conexión y ponla antes de los comandos de conexión."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "Una conexión llega a una tierra fuera del mapa"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "Una conexión empieza o termina en una tierra cuya posición queda fuera del mapa con este tamaño de mapa."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "Mantén land_position dentro del mapa en todos los tamaños de mapa."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "Un nombre definido se ejecuta como cliff_type en <CLIFF_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} es un nombre definido donde puede ir un comando, así que el juego lo ejecuta como {command} sin valor."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Elimina el nombre definido o escribe el comando que debía ser."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "Un nombre definido se ejecuta como base_terrain o base_layer dentro de las llaves de create_elevation"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} es un nombre definido donde puede ir un comando, así que el juego lo ejecuta como {command} sin valor."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Elimina el nombre definido o escribe el comando que debía ser."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "Un nombre definido se ejecuta como ai_info_map_type, effect_amount o effect_percent"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} es un nombre definido donde puede ir un comando, así que el juego lo ejecuta como {command} sin valor."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Elimina el nombre definido o escribe el comando que debía ser."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "Un nombre definido se ejecuta como guard_state en <PLAYER_SETUP>"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} es un nombre definido donde puede ir un comando, así que el juego lo ejecuta como {command} sin valor."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Elimina el nombre definido o escribe el comando que debía ser."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "Un nombre definido se ejecuta como base_terrain o base_layer en <LAND_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} es un nombre definido donde puede ir un comando, así que el juego lo ejecuta como {command} sin valor."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Elimina el nombre definido o escribe el comando que debía ser."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "Un nombre definido se ejecuta como terrain_type o assign_to dentro de las llaves de una tierra"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} es un nombre definido donde puede ir un comando, así que el juego lo ejecuta como {command} sin valor."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Elimina el nombre definido o escribe el comando que debía ser."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "Un nombre definido se ejecuta como terrain_to_place_on, layer_to_place_on o second_object dentro de las llaves de un objeto"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} es un nombre definido donde puede ir un comando, así que el juego lo ejecuta como {command} sin valor."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Elimina el nombre definido o escribe el comando que debía ser."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "Un nombre definido se ejecuta como create_terrain o color_correction en <TERRAIN_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} es un nombre definido donde puede ir un comando, así que el juego lo ejecuta como {command} sin valor."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Elimina el nombre definido o escribe el comando que debía ser."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Colocación de jugadores en grupos alrededor de un círculo de longitud cero"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Los jugadores se colocan en grupos por equipos alrededor de un círculo de longitud cero, así que el juego divide entre cero."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "add_object sin objeto en un grupo con nombre"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "add_object no tiene objeto mientras se nombra un grupo, así que el juego se bloquea cuando se elige esa entrada."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "Asigna un objeto a add_object."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "Se coloca un objeto en una tierra fuera del mapa"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "Se coloca un objeto por cada tierra en una tierra cuya posición queda fuera del mapa con este tamaño de mapa."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "Mantén land_position dentro del mapa en todos los tamaños de mapa."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size reduce el mapa después de las tierras de los jugadores"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size reduce el mapa después de crear las tierras de los jugadores, así que un jugador puede empezar fuera del mapa."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "Mueve override_map_size antes de create_player_lands."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "El mapa pinta un terreno sin datos de movimiento"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "El mapa pinta el terreno {terrain}, que los datos de movimiento del juego no cubren, así que el juego se bloquea durante la partida."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Usa un terreno que cubran los datos de movimiento del juego."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "Con otra semilla u otras opciones de la sala, el juego puede bloquearse en este mapa. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Instalar aun así"
+    },
+    "live-test.crash-warning.title": {
+      "message": "El juego puede bloquearse en este mapa"
+    },
+    "live-test.crash-warning.description": {
+      "message": "Esta semilla funciona, pero con otra semilla u otras opciones de la sala el juego puede bloquearse en este mapa. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Iniciar de todos modos"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "El juego puede bloquearse en este mapa, así que no se inició la prueba en el juego."
+    },
+    "test-results.crashes.title": {
+      "message": "Bloqueos del juego"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, one {# mapa} many {# mapas} other {# mapas}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "El juego se bloquea en {maps, number} de {sampled, plural, one {# mapa} many {# mapas} other {# mapas}}"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "No se {maps, plural, one {pudo generar # mapa} many {pudieron generar # mapas} other {pudieron generar # mapas}} de {sampled, number}"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, one {Semilla} many {Semillas} other {Semillas}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, one {Semilla} many {Semillas} other {Semillas}} {seeds, list, unit} y {omitted, number} más"
+    },
+    "test-results.crashes.source": {
+      "message": "Bloqueo del juego"
+    },
+    "test-results.crashes.show": {
+      "message": "Mostrar bloqueos del juego"
+    },
+    "test-results.crashes.hide": {
+      "message": "Ocultar bloqueos del juego"
+    },
+    "test-results.quality.summary": {
+      "message": "· Control de calidad de {map} · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, one {# mapa} many {# mapas} other {# mapas}} · {failures, plural, one {# fallo} many {# fallos} other {# fallos}} · {warnings, plural, one {# aviso} many {# avisos} other {# avisos}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, one {# incidencia} many {# incidencias} other {# incidencias}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "Mostrar las incidencias de {case}"
+    },
+    "test-results.quality.hide-case": {
+      "message": "Ocultar las incidencias de {case}"
+    },
+    "test-results.quality.case-findings": {
+      "message": "Incidencias de {case}"
+    },
+    "test-results.quality.no-findings": {
+      "message": "Se han superado todos los criterios en {maps, plural, one {# mapa} many {# mapas} other {# mapas}}"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, one {# incidencia del control de calidad} many {# incidencias del control de calidad} other {# incidencias del control de calidad}}"
     }
   }
 }

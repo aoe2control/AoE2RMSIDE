@@ -22,10 +22,17 @@ export interface OutputRow {
 }
 
 export type OutputRunResult =
-  'exact' | 'synthetic' | 'unchanged' | 'failed' | 'stopped' | 'passed' | 'test-failed';
+  | 'exact'
+  | 'synthetic'
+  | 'unchanged'
+  | 'failed'
+  | 'stopped'
+  | 'passed'
+  | 'test-failed'
+  | 'test-warnings';
 
 export interface OutputRunHeader {
-  kind: 'preview' | 'map-test';
+  kind: 'preview' | 'map-test' | 'quality-check';
   script: string;
   seed?: number;
   size?: string;

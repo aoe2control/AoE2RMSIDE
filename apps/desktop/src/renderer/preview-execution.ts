@@ -11,6 +11,7 @@ import { isMapTestScriptName, type MapTestWorkerSetting } from '../shared/map-te
 import type { LiveControlAction } from './live-control-action';
 import type { LivePreviewStatus } from './live-preview';
 import type { PreviewCacheDiagnostics } from './preview-cache';
+import type { ReplayedLobbySettings } from './replay-run-preset';
 
 export type PreviewRunState = 'idle' | 'running' | 'success' | 'error';
 
@@ -86,13 +87,30 @@ export interface PreviewExecutionController {
   unverifiedVersionDescription?: string | null;
   useLocalVersion?(): void;
   setSeed(seed: number): void;
+  lockReplayedSeed?(
+    seed: number,
+    lobby: ReplayedLobbySettings | null,
+  ): { temporaryName: string | null } | null;
   mapTestWorkers?: MapTestWorkerSetting;
   setMapTestWorkers?(workers: MapTestWorkerSetting): void;
+  qualityCheck?: PreviewQualityCheckControls;
+  refreshQualityCheck?(): void;
   explainBlockedRun?(): void;
   toggleLiveTestOnRun(): void;
   toggleRunOnEdit(): void;
   toggleRunOnSave(): void;
   toggleSeedMode(): void;
+}
+
+export interface PreviewQualityCheckControls {
+  enabled: boolean;
+  seeds: number;
+  casesOff: readonly string[];
+  multiSettings: boolean;
+  toggle(): void;
+  setSeeds(seeds: number): void;
+  setCaseSelected(caseId: string, selected: boolean): void;
+  toggleMultiSettings(): void;
 }
 
 export interface ReusableCommittedPreview {

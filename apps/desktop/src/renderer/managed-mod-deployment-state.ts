@@ -13,6 +13,7 @@ import {
   maximumNamedUncertifiedConstructs,
   uncertifiedConstructList,
 } from '../shared/construct-verification';
+import { generationWarningCrashes, knownCrashDetails } from '../shared/known-crashes';
 import { constructVerificationNote } from './construct-verification-message';
 import type { PreviewRunState } from './preview-execution';
 
@@ -87,6 +88,14 @@ export function deploymentPanelError<Problem>(errors: {
   preview: Problem | null;
 }): Problem | null {
   return errors.action ?? errors.context ?? errors.source ?? errors.preview;
+}
+
+export function deploymentCrashWarning(
+  warnings: PreviewGenerationResult['warnings'] | null | undefined,
+): string | null {
+  const crashes = generationWarningCrashes(warnings);
+  if (crashes.length === 0) return null;
+  return t('deploy-panel.crash-warning', { details: knownCrashDetails(crashes) });
 }
 
 export function deploymentSourceFailureMessage(guidance: string | null): string {

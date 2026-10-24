@@ -9,12 +9,16 @@ members = [
     "crates/rms-engine",
     "crates/rms-trace",
     "crates/rms-protocol",
+    "crates/rms-connect-protocol",
     "crates/rms-analysis",
     "crates/rms-testkit",
     "crates/xs-syntax",
     "crates/xs-analysis",
+    "crates/xs-eval",
+    "crates/xs-start",
     "bins/rmsd",
     "bins/rms-ls",
+    "bins/rms-connect",
     "bins/rms-test",
 ]
 
@@ -50,10 +54,13 @@ rms-semantics = { path = "crates/rms-semantics" }
 rms-engine = { path = "crates/rms-engine" }
 rms-trace = { path = "crates/rms-trace" }
 rms-protocol = { path = "crates/rms-protocol" }
+rms-connect-protocol = { path = "crates/rms-connect-protocol" }
 rms-analysis = { path = "crates/rms-analysis" }
 rms-testkit = { path = "crates/rms-testkit" }
 xs-syntax = { path = "crates/xs-syntax" }
 xs-analysis = { path = "crates/xs-analysis" }
+xs-eval = { path = "crates/xs-eval" }
+xs-start = { path = "crates/xs-start" }
 
 [profile.release]
 codegen-units = 1

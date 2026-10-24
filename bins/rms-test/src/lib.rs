@@ -1,10 +1,19 @@
 #![allow(clippy::too_many_arguments)]
 
+mod analysis;
+mod library;
 mod machine;
+mod measure;
+pub mod quality;
+pub mod quality_text;
+mod records;
 mod retained;
 mod source_batch;
+mod variants;
+mod walk;
+mod xs;
 
-use std::collections::{BTreeMap, BTreeSet, VecDeque};
+use std::collections::{BTreeMap, BTreeSet, HashMap, VecDeque};
 use std::fmt::Write as _;
 use std::sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
@@ -25,32 +34,54 @@ use rms_engine::{
     GenerationRequest, MapCoordinate, MapDimensions, PlayerConfiguration, ResolvedGenerationInput,
     SetupContext, VisualCheckpoint, VisualCheckpointObserver, observe_exact_script_parse,
 };
-use rms_profile::BehaviorProfile;
+use rms_profile::{BehaviorProfile, KnownCrashHit};
 use rms_source::SourceCatalog;
 use rms_trace::{BoundedEventBuffer, TraceLevel};
 use serde::{Deserialize, Serialize};
 use serde_json::Value as JsonValue;
 use sha2::{Digest, Sha256};
 use starlark::any::ProvidesStaticType;
+use starlark::codemap::FileSpan;
 use starlark::docs::DocModule;
 use starlark::environment::{GlobalsBuilder, LibraryExtension, Module};
-use starlark::eval::Evaluator;
+use starlark::eval::{Evaluator, ReturnFileLoader};
 use starlark::syntax::{AstModule, Dialect};
 use starlark::values::none::NoneType;
 use starlark::values::structs::AllocStruct;
-use starlark::values::tuple::{AllocTuple, UnpackTuple};
+use starlark::values::tuple::{AllocTuple, TupleRef, UnpackTuple};
 use starlark::values::typing::StarlarkNever;
 use starlark::values::{Heap, Value};
 use starlark::{PrintHandler, starlark_module};
 
 pub const SEMANTIC_API_MAJOR: u32 = 2;
 pub const REPORT_SCHEMA_VERSION: &str = "1.1.0";
+pub const GAME_CRASH_REPORT_SCHEMA_VERSION: &str = "1.2.0";
+pub const XS_CONSTANTS_REPORT_SCHEMA_VERSION: &str = "1.3.0";
+pub const QUALITY_REPORT_SCHEMA_VERSION: &str = "1.4.0";
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
 pub enum ReportSchema {
     Legacy,
     #[default]
     RequestRevision,
+    GameCrashes,
+    Quality,
+}
+
+impl ReportSchema {
+    pub fn for_configuration(configuration: &RunConfiguration) -> Self {
+        if configuration.quality.is_some() || loads_quality_library(&configuration.script) {
+            Self::Quality
+        } else if configuration.xs_constants.is_some() {
+            Self::GameCrashes
+        } else {
+            Self::RequestRevision
+        }
+    }
+
+    pub fn counts_game_crashes(self) -> bool {
+        matches!(self, Self::GameCrashes | Self::Quality)
+    }
 }
 
 pub const MAX_SCRIPT_BYTES: usize = 1024 * 1024;
@@ -149,6 +180,9 @@ pub mod memory {
 pub fn language_environment() -> DocModule {
     let mut documentation = GlobalsBuilder::extended_by(&[LibraryExtension::StructType])
         .with(host_globals)
+        .with(analysis::analysis_globals)
+        .with(variants::variant_globals)
+        .with(library::library_globals)
         .build()
         .documentation();
     documentation
@@ -180,14 +214,23 @@ impl MemoryBudget {
 }
 
 const HOST_PRELUDE: &str = r#"
+def _rms_field(field):
+    return struct(
+        at = lambda x, y: __rms_field_at(field, x, y),
+        to = lambda place: __rms_field_to(field, place),
+        reachable = lambda place: __rms_field_to(field, place) != None,
+        nearest = lambda object_ids, owner = None, count = 2, max_distance = None: __rms_field_nearest(field, object_ids, owner, count, max_distance),
+        count_tiles = lambda max_distance, terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None, walkable = None, buildable = None: __rms_field_count_tiles(field, max_distance, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids, walkable, buildable),
+    )
+
 def _rms_map(handle):
     return struct(
         width = __rms_map_width(handle),
         height = __rms_map_height(handle),
         hash = __rms_map_hash(handle),
         tile = lambda x, y: __rms_map_tile(handle, x, y),
-        tiles = lambda terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None: __rms_map_tiles(handle, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids),
-        count_tiles = lambda terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None: __rms_map_count_tiles(handle, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids),
+        tiles = lambda terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None, walkable = None, buildable = None: __rms_map_tiles(handle, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids, walkable, buildable),
+        count_tiles = lambda terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None, walkable = None, buildable = None: __rms_map_count_tiles(handle, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids, walkable, buildable),
         objects = lambda object_ids = None, owner = None: __rms_map_objects(handle, False, owner, object_ids),
         walls = lambda object_ids = None, owner = None: __rms_map_objects(handle, True, owner, object_ids),
         cliffs = lambda cliff_types = None: __rms_map_cliffs(handle, cliff_types),
@@ -196,27 +239,49 @@ def _rms_map(handle):
         manhattan_distance = lambda x1, y1, x2, y2: __rms_manhattan(x1, y1, x2, y2),
         chebyshev_distance = lambda x1, y1, x2, y2: __rms_chebyshev(x1, y1, x2, y2),
         squared_distance = lambda x1, y1, x2, y2: __rms_squared(x1, y1, x2, y2),
-        boundaries = lambda terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None: __rms_map_boundaries(handle, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids),
-        components = lambda terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None: __rms_map_components(handle, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids),
-        connected = lambda x1, y1, x2, y2, terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None: __rms_map_connected(handle, x1, y1, x2, y2, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids),
+        boundaries = lambda terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None, walkable = None, buildable = None: __rms_map_boundaries(handle, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids, walkable, buildable),
+        components = lambda terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None, walkable = None, buildable = None: __rms_map_components(handle, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids, walkable, buildable),
+        connected = lambda x1, y1, x2, y2, terrain_ids = None, land_zone_ids = None, terrain_zone_ids = None, layer_ids = None, walkable = None, buildable = None: __rms_map_connected(handle, x1, y1, x2, y2, terrain_ids, land_zone_ids, terrain_zone_ids, layer_ids, walkable, buildable),
+        walk_distance = lambda x1, y1, x2, y2, open_for = None: __rms_walk_distance(handle, x1, y1, x2, y2, open_for),
+        distance_field = lambda sources, open_for = None, max_distance = None: _rms_field(__rms_distance_field(handle, sources, open_for, max_distance)),
+        narrowest_passage = lambda a, b = None, ring = None, open_for = None, limit = 16: __rms_narrowest_passage(handle, a, b, ring, open_for, limit),
+        walk_hash = lambda: __rms_map_walk_hash(handle),
     )
 
 def _rms_sample(handle):
+    failure = __rms_sample_failure(handle)
+    generated = failure == None
     return struct(
         seed = __rms_sample_seed(handle),
-        map = _rms_map(handle),
-        request_hash = __rms_sample_request_hash(handle),
-        map_hash = __rms_map_hash(handle),
+        map = _rms_map(handle) if generated else None,
+        request_hash = __rms_sample_request_hash(handle) if generated else None,
+        map_hash = __rms_map_hash(handle) if generated else None,
         warnings = __rms_sample_warnings(handle),
-        metrics = __rms_sample_metrics(handle),
+        metrics = __rms_sample_metrics(handle) if generated else None,
         expect = lambda condition, message, values = None, code = None: __rms_expect(handle, condition, message, code, values),
         report = lambda message, values = None, code = None: __rms_report(handle, message, code, values),
+        xs_start = lambda: __rms_sample_xs_start(handle),
+        players = __rms_sample_players(handle),
+        placements = lambda short_only = True: __rms_sample_placements(handle, short_only),
+        failure = failure,
+        settings = __rms_sample_settings(handle),
+        settings_index = __rms_sample_settings_index(handle),
+        _handle = handle,
     )
 
-def _rms_generate(target, seeds, preview = True):
-    return tuple([_rms_sample(handle) for handle in __rms_generate(target, seeds, preview)])
+def _rms_generate(target, seeds, preview = True, settings = None, failures = "stop", analyse = None):
+    return tuple([_rms_sample(handle) for handle in __rms_generate(target, seeds, preview, settings, failures, analyse)])
 
-rms = struct(source = __rms_source, seeds = __rms_seeds, generate = _rms_generate, id = __rms_id)
+def _rms_settings(map_size = None, players = None, teams = None):
+    return __rms_settings(map_size, players, teams)
+
+def _rms_xs(path, seed = 0):
+    selected = __rms_xs_source(path)
+    def call(name, *args):
+        return __rms_xs_call(selected, seed, name, args)
+    return struct(path = selected, call = call)
+
+rms = struct(source = __rms_source, seeds = __rms_seeds, generate = _rms_generate, settings = _rms_settings, id = __rms_id, xs = _rms_xs)
 "#;
 
 #[derive(Clone, Debug)]
@@ -235,6 +300,8 @@ pub struct RunConfiguration {
     pub workers: WorkerSetting,
     pub machine: Option<MachineResources>,
     pub retained_map_budget: Option<u64>,
+    pub xs_constants: Option<Arc<str>>,
+    pub quality: Option<quality::QualityRunPlan>,
 }
 
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
@@ -254,6 +321,7 @@ pub struct RunOutcome {
     pub diagnostic: Option<RunDiagnostic>,
     pub preview: Option<PreviewSample>,
     pub statistics: RunStatistics,
+    pub quality_samples: Option<rms_protocol::v1::QualitySamples>,
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
@@ -273,6 +341,8 @@ pub struct RunDiagnostic {
     pub message: String,
     pub line: Option<u32>,
     pub column: Option<u32>,
+    #[serde(skip)]
+    pub known_crash: Option<Box<KnownCrashHit>>,
 }
 
 #[derive(Clone, Debug)]
@@ -411,6 +481,65 @@ pub struct MapTestReport {
     pub findings: Vec<Finding>,
     pub output: Vec<String>,
     pub preview: Option<PreviewIdentity>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub game_crashes: Option<GameCrashes>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub xs_constants: Option<XsConstantsIdentity>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub settings_variants: Option<Vec<quality::ReportSettingsVariant>>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub quality_library: Option<quality::QualityLibraryIdentity>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub walk_rules: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub quality: Option<quality::QualityBlock>,
+}
+
+impl MapTestReport {
+    pub fn uses_quality_report(&self) -> bool {
+        self.settings_variants.is_some()
+            || self.quality_library.is_some()
+            || self.walk_rules.is_some()
+            || self.quality.is_some()
+            || self
+                .findings
+                .iter()
+                .any(|finding| finding.settings_index.is_some())
+    }
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct XsConstantsIdentity {
+    pub sha256: String,
+}
+
+pub const MAX_GAME_CRASH_SOURCES: usize = 64;
+pub const MAX_GAME_CRASHES_PER_SOURCE: usize = 256;
+pub const MAX_GAME_CRASH_SEEDS: usize = 32;
+
+#[derive(Clone, Debug, Default, Deserialize, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct GameCrashes {
+    pub sources: Vec<GameCrashSource>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct GameCrashSource {
+    pub source_path: String,
+    pub sampled_maps: u32,
+    pub crashed_maps: u32,
+    pub crashes: Vec<GameCrash>,
+}
+
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct GameCrash {
+    pub crash_id: String,
+    pub maps: u32,
+    pub seeds: Vec<u32>,
+    pub omitted_seeds: u32,
 }
 
 impl MapTestReport {
@@ -482,6 +611,8 @@ pub struct Finding {
     pub request_hash: String,
     pub map_hash: String,
     pub measurements: BTreeMap<String, JsonValue>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub settings_index: Option<u32>,
 }
 
 #[derive(Clone, Debug)]
@@ -504,13 +635,46 @@ struct GeneratedSample {
 #[derive(Debug, Default)]
 struct MutableState {
     findings: Vec<Finding>,
+    passing_findings: usize,
+    quality_failed: bool,
     output: Vec<String>,
     output_bytes: usize,
     generated_maps: usize,
+    sampled_maps: usize,
+    game_crashes: BTreeMap<String, SourceCrashTally>,
+    failed_crash: Option<KnownCrashHit>,
     assertion_count: u32,
     assertion_ordinals: BTreeMap<(u32, u32), u32>,
     occurrence_ordinals: BTreeMap<String, u32>,
     host_results: usize,
+}
+
+#[derive(Debug, Default)]
+struct SourceCrashTally {
+    sampled: u32,
+    crashes: BTreeMap<&'static str, (u32, BTreeSet<u32>)>,
+}
+
+#[derive(Debug)]
+struct GameCrashError {
+    crash: KnownCrashHit,
+    code: &'static str,
+    message: String,
+}
+
+impl std::fmt::Display for GameCrashError {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        formatter.write_str(&self.message)
+    }
+}
+
+impl std::error::Error for GameCrashError {}
+
+fn counted_crash(error: &anyhow::Error) -> Option<&'static str> {
+    error
+        .downcast_ref::<GameCrashError>()
+        .filter(|failure| failure.crash.entry().is_some_and(|entry| entry.warns()))
+        .map(|failure| failure.crash.id)
 }
 
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
@@ -565,9 +729,11 @@ struct PreparedTarget {
     source_graph_hash: [u8; 32],
     analysis: PreparedCatalogAnalysis,
     request: GenerationRequest,
+    town_center: Option<rms_content::ObjectId>,
+    settings_index: Option<u8>,
 }
 
-const PREPARED_TARGETS: usize = 4;
+const PREPARED_TARGETS: usize = 4 + variants::MAX_SETTINGS_VARIANTS;
 
 #[derive(ProvidesStaticType)]
 struct HostState {
@@ -576,6 +742,7 @@ struct HostState {
     retained: Mutex<RetainedStore>,
     prepared: Mutex<VecDeque<Arc<PreparedTarget>>>,
     measured_peak: AtomicU64,
+    measured_tiles: AtomicU64,
     regenerated: AtomicU64,
     max_workers: AtomicUsize,
     cancellation: Arc<AtomicCancellationToken>,
@@ -585,6 +752,12 @@ struct HostState {
     progressive: Option<Arc<ProgressiveLease>>,
     progress: Option<ProgressReporter>,
     memory_limited: AtomicBool,
+    count_game_crashes: bool,
+    xs_programs: xs::XsPrograms,
+    analysis: analysis::AnalysisState,
+    variants: Mutex<variants::SettingsVariants>,
+    quality_report: bool,
+    quality: library::QualityState,
 }
 
 impl HostState {
@@ -663,16 +836,40 @@ fn evaluate_script(host: &HostState, script: String) -> std::result::Result<(), 
     };
     let prelude_ast = AstModule::parse("<rms-test-host-v1>", HOST_PRELUDE.to_owned(), &dialect)
         .expect("frozen host prelude parses");
-    let ast = AstModule::parse(&host.context.config.script_name, script, &dialect)
+    let script_dialect = Dialect {
+        enable_load: true,
+        ..Dialect::Standard
+    };
+    let ast = AstModule::parse(&host.context.config.script_name, script, &script_dialect)
         .map_err(|error| ScriptFailure::Parse(format!("{error:#}")))?;
+    check_loads(&ast, host.quality_report).map_err(ScriptFailure::Parse)?;
     check_constant_sequences(&ast).map_err(ScriptFailure::ConstantSequence)?;
     let globals = GlobalsBuilder::extended_by(&[LibraryExtension::StructType])
         .with(host_globals)
+        .with(analysis::analysis_globals)
+        .with(variants::variant_globals)
+        .with(library::library_globals)
         .build();
+    let library = if ast.loads().is_empty() {
+        None
+    } else {
+        Some(
+            library::compile_library(host, &globals)
+                .map_err(|error| ScriptFailure::Evaluation(format!("{error:#}")))?,
+        )
+    };
+    let modules = library
+        .iter()
+        .map(|module| (quality::QUALITY_LIBRARY_MODULE, module))
+        .collect::<HashMap<_, _>>();
+    let loader = ReturnFileLoader { modules: &modules };
     Module::with_temp_heap(|module| {
         let print_handler = CapturedPrint(host);
         let mut evaluator = Evaluator::new(&module);
         evaluator.extra = Some(host);
+        if library.is_some() {
+            evaluator.set_loader(&loader);
+        }
         evaluator.set_print_handler(&print_handler);
         evaluator
             .set_max_callstack_size(MAX_CALL_DEPTH)
@@ -694,6 +891,61 @@ fn evaluate_script(host: &HostState, script: String) -> std::result::Result<(), 
         starlark::Result::Ok(())
     })
     .map_err(|error| ScriptFailure::Evaluation(format!("{error:#}")))
+}
+
+fn check_loads(ast: &AstModule, quality_report: bool) -> std::result::Result<(), String> {
+    let loads = ast.loads();
+    let line = |load: &starlark::syntax::AstLoad| load.span.resolve_span().begin.line + 1;
+    if let Some(load) = loads
+        .iter()
+        .find(|load| load.module_id != quality::QUALITY_LIBRARY_MODULE)
+    {
+        return Err(format!(
+            "line {}: a map test can load only \"{}\", not \"{}\"",
+            line(load),
+            quality::QUALITY_LIBRARY_MODULE,
+            load.module_id.escape_debug()
+        ));
+    }
+    match loads.first() {
+        Some(load) if !quality_report => Err(format!(
+            "line {}: \"{}\" runs only in a map test with quality reports turned on",
+            line(load),
+            quality::QUALITY_LIBRARY_MODULE
+        )),
+        _ => Ok(()),
+    }
+}
+
+fn loads_quality_library(script: &[u8]) -> bool {
+    let Ok(text) = std::str::from_utf8(script) else {
+        return false;
+    };
+    if !text.contains(quality::QUALITY_LIBRARY_MODULE) || check_script_nesting(text).is_err() {
+        return false;
+    }
+    let parse = || {
+        AstModule::parse(
+            "<rms-test-script>",
+            text.to_owned(),
+            &Dialect {
+                enable_load: true,
+                ..Dialect::Standard
+            },
+        )
+        .is_ok_and(|ast| {
+            ast.loads()
+                .iter()
+                .any(|load| load.module_id == quality::QUALITY_LIBRARY_MODULE)
+        })
+    };
+    thread::scope(|scope| {
+        thread::Builder::new()
+            .name("rms-test-load-check".to_owned())
+            .stack_size(EVALUATION_STACK_BYTES)
+            .spawn_scoped(scope, parse)
+            .is_ok_and(|worker| worker.join().unwrap_or(false))
+    })
 }
 
 struct CapturedPrint<'a>(&'a HostState);
@@ -808,12 +1060,8 @@ pub fn run_observed(
     cancellation: Arc<AtomicCancellationToken>,
     observers: RunObservers,
 ) -> RunOutcome {
-    run_observed_with_report_schema(
-        configuration,
-        cancellation,
-        observers,
-        ReportSchema::default(),
-    )
+    let report_schema = ReportSchema::for_configuration(&configuration);
+    run_observed_with_report_schema(configuration, cancellation, observers, report_schema)
 }
 
 pub fn run_observed_with_report_schema(
@@ -831,6 +1079,7 @@ pub fn run_observed_with_report_schema(
             diagnostic: Some(diagnostic),
             preview: None,
             statistics: RunStatistics::default(),
+            quality_samples: None,
         },
     }
 }
@@ -851,6 +1100,15 @@ fn run_inner(
             error.to_string(),
         )
     })?;
+    if configuration.xs_constants.is_some() && !report_schema.counts_game_crashes() {
+        return Err(failure(
+            RunStatus::Error,
+            Vec::new(),
+            "RMSTEST1001",
+            "a map test that carries the game's Constants.xs needs report 1.2's game-crash counts"
+                .to_owned(),
+        ));
+    }
     let script = decode_script(&configuration.script).map_err(|error| {
         failure(
             RunStatus::Error,
@@ -907,6 +1165,7 @@ fn run_inner(
         retained: Mutex::new(RetainedStore::new(budget.retained_maps)),
         prepared: Mutex::new(VecDeque::new()),
         measured_peak: AtomicU64::new(0),
+        measured_tiles: AtomicU64::new(0),
         regenerated: AtomicU64::new(0),
         max_workers: AtomicUsize::new(0),
         cancellation: cancellation.clone(),
@@ -919,6 +1178,12 @@ fn run_inner(
             .map(|preview| Arc::new(ProgressiveLease::new(preview))),
         progress: observers.progress.map(ProgressReporter::new),
         memory_limited: AtomicBool::new(false),
+        count_game_crashes: report_schema.counts_game_crashes(),
+        xs_programs: xs::XsPrograms::default(),
+        analysis: analysis::AnalysisState::default(),
+        variants: Mutex::new(variants::SettingsVariants::default()),
+        quality_report: report_schema == ReportSchema::Quality,
+        quality: library::QualityState::default(),
     };
     let evaluated = thread::scope(|scope| {
         thread::Builder::new()
@@ -958,7 +1223,11 @@ fn run_inner(
                 (status, "RMSTEST2002", message)
             }
         };
-        return Err(failure(status, state.output, code, message));
+        let mut failed = failure(status, state.output, code, message);
+        if code == "RMSTEST2002" {
+            failed.2.known_crash = state.failed_crash.take().map(Box::new);
+        }
+        return Err(failed);
     }
     if cancellation.is_cancelled() || host.started.elapsed() >= MAX_WALL_TIME {
         return Err(failure(
@@ -968,7 +1237,7 @@ fn run_inner(
             "map-test run was cancelled before commit".to_owned(),
         ));
     }
-    let status = if state.findings.is_empty() {
+    let status = if state.findings.len() == state.passing_findings && !state.quality_failed {
         RunStatus::Passed
     } else {
         RunStatus::Failed
@@ -1013,16 +1282,52 @@ fn run_inner(
     let profile = &context.config.profile;
     let content_identity = context.content_identity.clone();
     let mut findings = std::mem::take(&mut state.findings);
+    let game_crashes = report_schema.counts_game_crashes().then(|| GameCrashes {
+        sources: std::mem::take(&mut state.game_crashes)
+            .into_iter()
+            .map(|(source_path, tally)| {
+                let crashes = tally
+                    .crashes
+                    .into_iter()
+                    .map(|(crash_id, (maps, seeds))| GameCrash {
+                        crash_id: crash_id.to_owned(),
+                        maps,
+                        omitted_seeds: seeds.len().saturating_sub(MAX_GAME_CRASH_SEEDS) as u32,
+                        seeds: seeds.into_iter().take(MAX_GAME_CRASH_SEEDS).collect(),
+                    })
+                    .collect::<Vec<_>>();
+                GameCrashSource {
+                    source_path,
+                    sampled_maps: tally.sampled,
+                    crashed_maps: crashes.iter().map(|crash| crash.maps).sum(),
+                    crashes,
+                }
+            })
+            .collect(),
+    });
     if report_schema == ReportSchema::Legacy {
         for finding in &mut findings {
             finding.request_document_revision = None;
         }
     }
+    let xs_constants = context
+        .config
+        .xs_constants
+        .as_ref()
+        .filter(|_| host.xs_programs.constants_used())
+        .map(|text| XsConstantsIdentity {
+            sha256: hex::encode(Sha256::digest(text.as_bytes())),
+        });
+    let finished = host.quality.take_finished();
     let mut report = MapTestReport {
         schema: "https://rmside.invalid/schemas/map-test-report/v1".to_owned(),
         schema_version: match report_schema {
             ReportSchema::Legacy => "1.0.0",
             ReportSchema::RequestRevision => REPORT_SCHEMA_VERSION,
+            ReportSchema::GameCrashes | ReportSchema::Quality if xs_constants.is_some() => {
+                XS_CONSTANTS_REPORT_SCHEMA_VERSION
+            }
+            ReportSchema::GameCrashes | ReportSchema::Quality => GAME_CRASH_REPORT_SCHEMA_VERSION,
         }
         .to_owned(),
         compatibility: ReportCompatibility {
@@ -1070,7 +1375,21 @@ fn run_inner(
             request_hash: hex::encode(sample.request_hash),
             map_hash: hex::encode(sample.map_hash),
         }),
+        game_crashes,
+        xs_constants,
+        settings_variants: host
+            .variants
+            .lock()
+            .expect("map-test settings poisoned")
+            .report(),
+        quality_library: host.quality.loaded().then(library::library_identity),
+        walk_rules: (report_schema == ReportSchema::Quality && host.analysis.used())
+            .then(|| quality::WALK_RULES_ID.to_owned()),
+        quality: finished.as_ref().map(|finished| finished.block.clone()),
     };
+    if report_schema == ReportSchema::Quality && report.uses_quality_report() {
+        report.schema_version = QUALITY_REPORT_SCHEMA_VERSION.to_owned();
+    }
     let canonical = serde_json::to_vec(&report).map_err(|error| {
         failure(
             RunStatus::Error,
@@ -1125,6 +1444,7 @@ fn run_inner(
         diagnostic: None,
         preview,
         statistics,
+        quality_samples: finished.and_then(|finished| finished.samples),
     })
 }
 
@@ -1137,6 +1457,7 @@ fn failure(status: RunStatus, output: Vec<String>, code: &str, message: String) 
             message: bounded_diagnostic_message(redact_diagnostic(&message)),
             line: None,
             column: None,
+            known_crash: None,
         },
     )
 }
@@ -1244,6 +1565,38 @@ fn host_globals(builder: &mut GlobalsBuilder) {
         Ok(selected)
     }
 
+    fn __rms_xs_source(path: &str, eval: &mut Evaluator) -> anyhow::Result<String> {
+        xs::xs_source(&host(eval)?.context.config, path)
+    }
+
+    fn __rms_xs_call<'v>(
+        path: &str,
+        seed: u32,
+        name: &str,
+        args: Value<'v>,
+        eval: &mut Evaluator<'v, '_, '_>,
+    ) -> anyhow::Result<Value<'v>> {
+        let arguments = TupleRef::from_value(args)
+            .ok_or_else(|| anyhow!("rms.xs call arguments must be a tuple"))?;
+        xs::xs_call(
+            host(eval)?,
+            eval.heap(),
+            path,
+            i64::from(seed),
+            name,
+            arguments.content(),
+        )
+    }
+
+    fn __rms_sample_xs_start<'v>(
+        handle: u32,
+        eval: &mut Evaluator<'v, '_, '_>,
+    ) -> anyhow::Result<Value<'v>> {
+        let value = xs::sample_xs_start(host(eval)?, eval.heap(), handle)?;
+        check_heap(eval)?;
+        Ok(value)
+    }
+
     fn __rms_id<'v>(name: &str, eval: &mut Evaluator<'v, '_, '_>) -> anyhow::Result<u32> {
         constant_id(&host(eval)?.context.constants, name)
     }
@@ -1280,14 +1633,152 @@ fn host_globals(builder: &mut GlobalsBuilder) {
         target: String,
         seeds: Value<'v>,
         preview: bool,
+        settings: Value<'v>,
+        failures: &str,
+        analyse: Value<'v>,
+        measure: Option<Value<'v>>,
         eval: &mut Evaluator<'v, '_, '_>,
     ) -> anyhow::Result<Vec<u32>> {
         let seeds = value_u32_list(seeds, eval.heap())?;
-        generate_batch(host(eval)?, &target, &seeds, preview)
+        let settings = variants::settings_argument(settings, eval.heap())?;
+        let record_failures = match failures {
+            "stop" => false,
+            "record" => true,
+            _ => bail!("rms.generate failures must be \"stop\" or \"record\""),
+        };
+        let mut hints =
+            analysis::AnalysisHints::parse(optional_string_list(Some(analyse), eval.heap())?)?;
+        let measure =
+            library::measure_plan(host(eval)?, optional_string_list(measure, eval.heap())?)?;
+        if measure
+            .as_ref()
+            .is_some_and(library::MeasurePlan::needs_walk)
+        {
+            hints.walk = true;
+        }
+        generate_batch(
+            host(eval)?,
+            &target,
+            settings,
+            &seeds,
+            BatchOptions {
+                preview,
+                record_failures,
+                hints,
+                measure,
+            },
+        )
     }
 
     fn __rms_sample_seed(handle: u32, eval: &mut Evaluator) -> anyhow::Result<u32> {
         Ok(sample(host(eval)?, handle)?.seed)
+    }
+
+    fn __rms_sample_failure<'v>(
+        handle: u32,
+        eval: &mut Evaluator<'v, '_, '_>,
+    ) -> anyhow::Result<Value<'v>> {
+        let sample = sample(host(eval)?, handle)?;
+        let heap = eval.heap();
+        Ok(match &sample.failure {
+            None => Value::new_none(),
+            Some(failure) => heap.alloc(AllocStruct(vec![
+                ("code", heap.alloc(failure.code.as_str())),
+                ("message", heap.alloc(failure.message.as_str())),
+                (
+                    "crash_id",
+                    failure
+                        .crash_id
+                        .map_or_else(Value::new_none, |crash| heap.alloc(crash)),
+                ),
+            ])),
+        })
+    }
+
+    fn __rms_sample_players<'v>(
+        handle: u32,
+        eval: &mut Evaluator<'v, '_, '_>,
+    ) -> anyhow::Result<Value<'v>> {
+        let host = host(eval)?;
+        let sample = sample(host, handle)?;
+        host.charge_results(sample.players.len())?;
+        let heap = eval.heap();
+        let optional =
+            |value: Option<u32>| value.map_or_else(Value::new_none, |value| heap.alloc(value));
+        let values = sample
+            .players
+            .iter()
+            .map(|player| {
+                heap.alloc(AllocStruct(vec![
+                    ("slot", heap.alloc(u32::from(player.slot))),
+                    ("team", heap.alloc(u32::from(player.team))),
+                    (
+                        "start_x",
+                        optional(player.start_tile.map(|(x, _)| u32::from(x))),
+                    ),
+                    (
+                        "start_y",
+                        optional(player.start_tile.map(|(_, y)| u32::from(y))),
+                    ),
+                    ("start", heap.alloc(player.start.as_str())),
+                    ("land_zone", optional(player.land_zone.map(u32::from))),
+                    ("land_zone_shared", heap.alloc(player.land_zone_shared)),
+                    (
+                        "town_center",
+                        player
+                            .town_center
+                            .as_ref()
+                            .map_or_else(Value::new_none, |object| alloc_object(heap, object)),
+                    ),
+                ]))
+            })
+            .collect::<Vec<_>>();
+        Ok(heap.alloc(AllocTuple(values)))
+    }
+
+    fn __rms_sample_placements<'v>(
+        handle: u32,
+        short_only: bool,
+        eval: &mut Evaluator<'v, '_, '_>,
+    ) -> anyhow::Result<Value<'v>> {
+        let host = host(eval)?;
+        let record = generated_sample(host, handle)?;
+        let map = sample_map(host, handle)?;
+        let entry = host
+            .context
+            .config
+            .source_catalogs
+            .get(record.source_path.as_ref())
+            .map(|catalog| catalog.entry_source())
+            .transpose()?;
+        let rows = records::placement_rows(
+            &map,
+            entry
+                .as_ref()
+                .map(|entry| (entry.id().as_str(), entry.bytes())),
+            short_only,
+        );
+        host.charge_results(rows.len())?;
+        let heap = eval.heap();
+        let optional =
+            |value: Option<u32>| value.map_or_else(Value::new_none, |value| heap.alloc(value));
+        let values = rows
+            .into_iter()
+            .map(|row| {
+                heap.alloc(AllocStruct(vec![
+                    ("line", optional(row.line)),
+                    ("column", optional(row.column)),
+                    ("object_id", optional(row.object_id)),
+                    ("player", optional(row.player.map(u32::from))),
+                    ("groups_requested", heap.alloc(row.groups_requested)),
+                    ("groups_placed", heap.alloc(row.groups_placed)),
+                    ("objects_created", heap.alloc(row.objects_created)),
+                ]))
+            })
+            .collect::<Vec<_>>();
+        let placements = heap.alloc(AllocTuple(values));
+        check_heap(eval)?;
+        Ok(placements)
     }
 
     fn __rms_sample_request_hash(handle: u32, eval: &mut Evaluator) -> anyhow::Result<String> {
@@ -1357,6 +1848,8 @@ fn host_globals(builder: &mut GlobalsBuilder) {
         land_zone_ids: Option<Value<'v>>,
         terrain_zone_ids: Option<Value<'v>>,
         layer_ids: Option<Value<'v>>,
+        walkable: Option<Value<'v>>,
+        buildable: Option<Value<'v>>,
         eval: &mut Evaluator<'v, '_, '_>,
     ) -> anyhow::Result<Value<'v>> {
         let map = sample_map(host(eval)?, handle)?;
@@ -1370,6 +1863,7 @@ fn host_globals(builder: &mut GlobalsBuilder) {
             &host(eval)?.context.constants,
         )?;
         let host = host(eval)?;
+        let filter = map_walk_filter(host, handle, filter, walkable, buildable)?;
         let indices = matching_tiles(host, &map, &filter)?;
         host.charge_results(indices.len())?;
         let values = indices
@@ -1387,6 +1881,8 @@ fn host_globals(builder: &mut GlobalsBuilder) {
         land_zone_ids: Option<Value<'v>>,
         terrain_zone_ids: Option<Value<'v>>,
         layer_ids: Option<Value<'v>>,
+        walkable: Option<Value<'v>>,
+        buildable: Option<Value<'v>>,
         eval: &mut Evaluator<'v, '_, '_>,
     ) -> anyhow::Result<u32> {
         let map = sample_map(host(eval)?, handle)?;
@@ -1398,6 +1894,7 @@ fn host_globals(builder: &mut GlobalsBuilder) {
             eval.heap(),
             &host(eval)?.context.constants,
         )?;
+        let filter = map_walk_filter(host(eval)?, handle, filter, walkable, buildable)?;
         Ok(matching_tiles(host(eval)?, &map, &filter)?.len() as u32)
     }
 
@@ -1553,6 +2050,8 @@ fn host_globals(builder: &mut GlobalsBuilder) {
         land_zone_ids: Option<Value<'v>>,
         terrain_zone_ids: Option<Value<'v>>,
         layer_ids: Option<Value<'v>>,
+        walkable: Option<Value<'v>>,
+        buildable: Option<Value<'v>>,
         eval: &mut Evaluator<'v, '_, '_>,
     ) -> anyhow::Result<Value<'v>> {
         let map = sample_map(host(eval)?, handle)?;
@@ -1566,6 +2065,7 @@ fn host_globals(builder: &mut GlobalsBuilder) {
             &host(eval)?.context.constants,
         )?;
         let host = host(eval)?;
+        let filter = map_walk_filter(host, handle, filter, walkable, buildable)?;
         let indices = boundary_indices(host, &map, &filter)?;
         host.charge_results(indices.len())?;
         let values = indices
@@ -1583,6 +2083,8 @@ fn host_globals(builder: &mut GlobalsBuilder) {
         land_zone_ids: Option<Value<'v>>,
         terrain_zone_ids: Option<Value<'v>>,
         layer_ids: Option<Value<'v>>,
+        walkable: Option<Value<'v>>,
+        buildable: Option<Value<'v>>,
         eval: &mut Evaluator<'v, '_, '_>,
     ) -> anyhow::Result<Value<'v>> {
         let map = sample_map(host(eval)?, handle)?;
@@ -1596,6 +2098,7 @@ fn host_globals(builder: &mut GlobalsBuilder) {
             &host(eval)?.context.constants,
         )?;
         let host = host(eval)?;
+        let filter = map_walk_filter(host, handle, filter, walkable, buildable)?;
         let components = component_indices(host, &map, &filter)?;
         host.charge_results(
             components
@@ -1629,6 +2132,8 @@ fn host_globals(builder: &mut GlobalsBuilder) {
         land_zone_ids: Option<Value<'v>>,
         terrain_zone_ids: Option<Value<'v>>,
         layer_ids: Option<Value<'v>>,
+        walkable: Option<Value<'v>>,
+        buildable: Option<Value<'v>>,
         eval: &mut Evaluator<'v, '_, '_>,
     ) -> anyhow::Result<bool> {
         let map = sample_map(host(eval)?, handle)?;
@@ -1642,6 +2147,7 @@ fn host_globals(builder: &mut GlobalsBuilder) {
             eval.heap(),
             &host(eval)?.context.constants,
         )?;
+        let filter = map_walk_filter(host(eval)?, handle, filter, walkable, buildable)?;
         connected(host(eval)?, &map, &filter, start, end)
     }
 
@@ -1723,12 +2229,27 @@ fn sample(host: &HostState, handle: u32) -> Result<SampleRecord> {
         .ok_or_else(|| anyhow!("sample handle is invalid"))
 }
 
+fn generated_sample(host: &HostState, handle: u32) -> Result<SampleRecord> {
+    let record = sample(host, handle)?;
+    if record.failure.is_some() {
+        bail!("seed {} did not generate a map", record.seed);
+    }
+    Ok(record)
+}
+
 fn sample_map(host: &HostState, handle: u32) -> Result<Arc<GeneratedMap>> {
-    let lookup = host
-        .retained
-        .lock()
-        .expect("map-test retained samples poisoned")
-        .lookup(handle);
+    let lookup = {
+        let mut store = host
+            .retained
+            .lock()
+            .expect("map-test retained samples poisoned");
+        if let Some(record) = store.record(handle)
+            && record.failure.is_some()
+        {
+            bail!("seed {} did not generate a map", record.seed);
+        }
+        store.lookup(handle)
+    };
     let map = match lookup {
         Lookup::Decoded(map) => return Ok(map),
         Lookup::Compact(body) => Arc::new(body.decode()),
@@ -1758,12 +2279,28 @@ fn outside_folder_message(path: &str) -> String {
     format!("{path} is not a map in the open folder, so the map test cannot run it")
 }
 
+#[derive(Clone, Default)]
+struct BatchOptions {
+    preview: bool,
+    record_failures: bool,
+    hints: analysis::AnalysisHints,
+    measure: Option<library::MeasurePlan>,
+}
+
 fn generate_batch(
     host: &HostState,
     target: &str,
+    settings: Option<Vec<variants::LobbySettings>>,
     seeds: &[u32],
-    preview: bool,
+    options: BatchOptions,
 ) -> Result<Vec<u32>> {
+    let BatchOptions {
+        preview,
+        record_failures,
+        hints,
+        measure,
+    } = options;
+    let measure = measure.as_ref();
     let target = normalize_relative_path(target)?;
     if !host.context.config.source_catalogs.contains_key(&target) {
         bail!("{}", outside_folder_message(&target));
@@ -1771,28 +2308,48 @@ fn generate_batch(
     if seeds.is_empty() {
         return Ok(Vec::new());
     }
-    if host
-        .mutable
-        .lock()
-        .expect("map-test state poisoned")
-        .generated_maps
-        .saturating_add(seeds.len())
-        > MAX_GENERATED_MAPS
+    let settings = variants::settings_indexes(host, settings)?;
+    let jobs = (0..settings.len())
+        .flat_map(|setting| seeds.iter().map(move |seed| (setting, *seed)))
+        .collect::<Vec<_>>();
     {
-        bail!("generated-map count exceeds the 4,096-map limit");
+        let state = host.mutable.lock().expect("map-test state poisoned");
+        if state.sampled_maps.saturating_add(jobs.len()) > MAX_GENERATED_MAPS {
+            bail!("generated-map count exceeds the 4,096-map limit");
+        }
+        if host.count_game_crashes
+            && !state.game_crashes.contains_key(&target)
+            && state.game_crashes.len() >= MAX_GAME_CRASH_SOURCES
+        {
+            bail!("a map test that counts game crashes can sample at most 64 map scripts");
+        }
     }
     host.check_running()?;
     let progress = host.progress.as_ref();
     if let Some(progress) = progress {
         progress.update(|counts| {
-            counts.requested = counts.requested.saturating_add(seeds.len() as u32);
+            counts.requested = counts.requested.saturating_add(jobs.len() as u32);
         });
     }
-    let prepared = prepared_target(host, &target)?;
+    let prepared = settings
+        .iter()
+        .map(|index| prepared_target(host, &target, *index))
+        .collect::<Result<Vec<_>>>()?;
+    let largest_tiles = prepared
+        .iter()
+        .map(|prepared| prepared.tiles())
+        .max()
+        .unwrap_or(0);
     let content = CompatibleContentView::new(
         &host.context.config.content,
         &host.context.config.profile.profile_id,
     )?;
+    let rules = if hints.any() {
+        host.analysis.mark_used();
+        Some(analysis::rules(host)?)
+    } else {
+        None
+    };
     let lease = host
         .progressive
         .as_ref()
@@ -1805,24 +2362,34 @@ fn generate_batch(
         .retained
         .lock()
         .expect("map-test retained samples poisoned")
-        .begin_batch(seeds.len() as u32);
+        .begin_batch(jobs.len() as u32);
     let completed_preview = host
         .preview_callback
         .as_ref()
         .filter(|_| preview && host.preview_order == PreviewOrder::Completion);
     let machine = run_machine(host);
-    let planned = batch_workers(host, machine, seeds.len());
+    let planned = batch_workers(host, machine, jobs.len(), largest_tiles);
     host.max_workers.fetch_max(planned, Ordering::Relaxed);
     let allowed = AtomicUsize::new(planned);
     let next_job = AtomicUsize::new(0);
     let first_failure = AtomicUsize::new(usize::MAX);
     let failures = Mutex::new(BTreeMap::<usize, anyhow::Error>::new());
+    let crashed = Mutex::new(BTreeMap::<usize, &'static str>::new());
+    let recorded = Mutex::new(BTreeSet::<usize>::new());
     thread::scope(|scope| {
         for worker in 0..planned {
             let prepared = &prepared;
             let lease = lease.as_deref();
-            let (allowed, next_job, first_failure, failures) =
-                (&allowed, &next_job, &first_failure, &failures);
+            let rules = rules.as_deref();
+            let jobs = &jobs;
+            let (allowed, next_job, first_failure, failures, crashed, recorded) = (
+                &allowed,
+                &next_job,
+                &first_failure,
+                &failures,
+                &crashed,
+                &recorded,
+            );
             scope.spawn(move || {
                 machine::lower_thread_priority();
                 loop {
@@ -1830,12 +2397,14 @@ fn generate_batch(
                         break;
                     }
                     let index = next_job.fetch_add(1, Ordering::Relaxed);
-                    if index >= seeds.len() || index > first_failure.load(Ordering::Relaxed) {
+                    if index >= jobs.len() || index > first_failure.load(Ordering::Relaxed) {
                         break;
                     }
+                    let (setting, seed) = jobs[index];
+                    let prepared = &prepared[setting];
                     let sample = CandidateSample {
                         ordinal: first + index as u32,
-                        seed: seeds[index],
+                        seed,
                     };
                     let cancellation = BatchSampleCancellation {
                         host,
@@ -1843,9 +2412,42 @@ fn generate_batch(
                         index,
                     };
                     memory::reset_thread_peak();
-                    match generate_sample(prepared, content, sample, preview, &cancellation, lease)
-                    {
-                        Ok(generated) => {
+                    let generated =
+                        generate_sample(prepared, content, sample, preview, &cancellation, lease)
+                            .and_then(|mut generated| {
+                                let prewarmed = match rules {
+                                    Some(rules) => {
+                                        let prewarmed = analysis::prewarm(
+                                            rules,
+                                            &generated.map,
+                                            &generated.record.players,
+                                            hints,
+                                            host,
+                                        )?;
+                                        generated.record.walk_hash = Some(prewarmed.walk_hash());
+                                        Some(prewarmed)
+                                    }
+                                    None => None,
+                                };
+                                if let Some(plan) = measure {
+                                    let walk = rules.zip(
+                                        prewarmed
+                                            .as_ref()
+                                            .map(|prewarmed| prewarmed.grid().as_ref()),
+                                    );
+                                    library::measure_on_worker(
+                                        host,
+                                        plan,
+                                        sample.ordinal,
+                                        &generated.map,
+                                        &generated.record.players,
+                                        walk,
+                                    )?;
+                                }
+                                Ok((generated, prewarmed))
+                            });
+                    match generated {
+                        Ok((generated, prewarmed)) => {
                             if let Some(progress) = progress {
                                 progress.update(|counts| {
                                     counts.completed = counts.completed.saturating_add(1);
@@ -1857,7 +2459,10 @@ fn generate_batch(
                                     let map = Arc::new(generated.map.clone());
                                     (callback, preview_sample(&generated.record, map))
                                 });
-                            let body = CompactMap::encode(generated.map);
+                            let mut body = CompactMap::encode(generated.map);
+                            if let Some(prewarmed) = prewarmed {
+                                body = body.with_prewarmed(prewarmed);
+                            }
                             host.retained
                                 .lock()
                                 .expect("map-test retained samples poisoned")
@@ -1866,14 +2471,50 @@ fn generate_batch(
                                 let _ = callback(sample.ordinal, shown);
                             }
                             let peak = memory::thread_peak_bytes();
+                            if peak > 0 {
+                                host.measured_tiles
+                                    .fetch_max(prepared.tiles(), Ordering::Relaxed);
+                            }
                             if peak > host.measured_peak.fetch_max(peak, Ordering::Relaxed) {
                                 allowed.fetch_min(
-                                    batch_workers(host, machine, seeds.len()),
+                                    batch_workers(host, machine, jobs.len(), largest_tiles),
                                     Ordering::Relaxed,
                                 );
                             }
                         }
                         Err(error) => {
+                            let crash = counted_crash(&error).filter(|_| host.count_game_crashes);
+                            if let Some(crash) = crash {
+                                crashed
+                                    .lock()
+                                    .expect("map-test crashes poisoned")
+                                    .insert(index, crash);
+                            }
+                            let failure = record_failures
+                                .then(|| records::sample_failure(&error))
+                                .flatten();
+                            let failure_recorded = failure.is_some();
+                            if let Some(failure) = failure {
+                                host.retained
+                                    .lock()
+                                    .expect("map-test retained samples poisoned")
+                                    .insert_failed(
+                                        sample.ordinal,
+                                        failed_record(prepared, sample.seed, failure),
+                                    );
+                                recorded
+                                    .lock()
+                                    .expect("map-test failures poisoned")
+                                    .insert(index);
+                            }
+                            if crash.is_some() || failure_recorded {
+                                if let Some(progress) = progress {
+                                    progress.update(|counts| {
+                                        counts.completed = counts.completed.saturating_add(1);
+                                    });
+                                }
+                                continue;
+                            }
                             first_failure.fetch_min(index, Ordering::Relaxed);
                             failures
                                 .lock()
@@ -1888,13 +2529,16 @@ fn generate_batch(
     if let Some(lease) = &lease {
         lease.revoke();
     }
+    let crashed = crashed.into_inner().expect("map-test crashes poisoned");
     let committed = host.check_running().and_then(|()| {
         let mut failures = failures.into_inner().expect("map-test failures poisoned");
         let store = host
             .retained
             .lock()
             .expect("map-test retained samples poisoned");
-        match (0..seeds.len()).find(|index| store.record(first + *index as u32).is_none()) {
+        match (0..jobs.len()).find(|index| {
+            store.record(first + *index as u32).is_none() && !crashed.contains_key(index)
+        }) {
             Some(index) => Err(failures
                 .remove(&index)
                 .unwrap_or_else(|| anyhow!("generation was cancelled"))),
@@ -1906,29 +2550,82 @@ fn generate_batch(
             .lock()
             .expect("map-test retained samples poisoned")
             .abandon_batch(first);
+        host.quality.abandon(first);
+        if let Some(failure) = error.downcast_ref::<GameCrashError>() {
+            host.mutable
+                .lock()
+                .expect("map-test state poisoned")
+                .failed_crash = Some(failure.crash.clone());
+        }
         return Err(error);
     }
-    host.mutable
-        .lock()
-        .expect("map-test state poisoned")
-        .generated_maps += seeds.len();
+    let recorded = recorded.into_inner().expect("map-test failures poisoned");
+    let unmapped = crashed
+        .keys()
+        .chain(&recorded)
+        .collect::<BTreeSet<_>>()
+        .len();
+    {
+        let mut state = host.mutable.lock().expect("map-test state poisoned");
+        state.generated_maps += jobs.len() - unmapped;
+        state.sampled_maps += jobs.len();
+        if host.count_game_crashes {
+            let tally = state.game_crashes.entry(target.clone()).or_default();
+            tally.sampled = tally.sampled.saturating_add(jobs.len() as u32);
+            for (index, crash) in &crashed {
+                let (maps, crashed_seeds) = tally.crashes.entry(crash).or_default();
+                *maps = maps.saturating_add(1);
+                crashed_seeds.insert(jobs[*index].1);
+            }
+        }
+    }
+    let handles = (0..jobs.len())
+        .filter(|index| !crashed.contains_key(index) || recorded.contains(index))
+        .map(|index| first + index as u32)
+        .collect::<Vec<_>>();
     if preview
         && host.preview_order == PreviewOrder::Script
         && let Some(callback) = &host.preview_callback
     {
-        publish_finals(host, first, seeds.len() as u32, callback)?;
+        let mapped = (0..jobs.len())
+            .filter(|index| !crashed.contains_key(index) && !recorded.contains(index))
+            .map(|index| first + index as u32)
+            .collect::<Vec<_>>();
+        publish_finals(host, &mapped, callback)?;
     }
-    Ok((first..first + seeds.len() as u32).collect())
+    Ok(handles)
 }
 
-fn publish_finals(
-    host: &HostState,
-    first: u32,
-    count: u32,
-    callback: &PreviewCallback,
-) -> Result<()> {
-    let last = first + count - 1;
-    for handle in first..=last {
+fn failed_record(
+    prepared: &PreparedTarget,
+    seed: u32,
+    failure: records::SampleFailure,
+) -> SampleRecord {
+    SampleRecord {
+        seed,
+        source_path: prepared.source_path.clone(),
+        source_graph_hash: prepared.source_graph_hash,
+        request_document_revision: prepared.request.document_revision,
+        request_hash: [0; 32],
+        map_hash: [0; 32],
+        dimensions: prepared.request.dimensions,
+        warnings: Vec::new(),
+        metrics: rms_engine::GenerationMetrics::default(),
+        preview_requested: false,
+        execution_cost: None,
+        xs_roots: Arc::from(Vec::new()),
+        failure: Some(Arc::new(failure)),
+        players: Arc::from(Vec::new()),
+        walk_hash: None,
+        settings_index: prepared.settings_index,
+    }
+}
+
+fn publish_finals(host: &HostState, handles: &[u32], callback: &PreviewCallback) -> Result<()> {
+    let Some(&last) = handles.last() else {
+        return Ok(());
+    };
+    for &handle in handles {
         let (record, lookup) = {
             let store = host
                 .retained
@@ -1959,12 +2656,17 @@ fn run_machine(host: &HostState) -> MachineResources {
         .unwrap_or_else(MachineResources::detect)
 }
 
-fn batch_workers(host: &HostState, machine: MachineResources, samples: usize) -> usize {
+fn batch_workers(host: &HostState, machine: MachineResources, samples: usize, tiles: u64) -> usize {
     let measured = host.measured_peak.load(Ordering::Relaxed);
     let peak = if measured > 0 {
-        measured.saturating_add(measured / 4)
+        let peak = measured.saturating_add(measured / 4);
+        if tiles > host.measured_tiles.load(Ordering::Relaxed) {
+            peak.max(estimated_worker_peak_bytes(tiles))
+        } else {
+            peak
+        }
     } else {
-        estimated_worker_peak_bytes(host.context.config.dimensions.tile_count().unwrap_or(0) as u64)
+        estimated_worker_peak_bytes(tiles)
     };
     plan_workers(
         host.context.config.workers,
@@ -1978,7 +2680,13 @@ fn batch_workers(host: &HostState, machine: MachineResources, samples: usize) ->
 fn regenerate(host: &HostState, handle: u32) -> Result<Arc<GeneratedMap>> {
     host.check_running()?;
     let machine = run_machine(host);
-    let workers = batch_workers(host, machine, MAX_WORKERS);
+    let tiles = host
+        .variants
+        .lock()
+        .expect("map-test settings poisoned")
+        .largest_tiles()
+        .max(host.context.config.dimensions.tile_count().unwrap_or(0) as u64);
+    let workers = batch_workers(host, machine, MAX_WORKERS, tiles);
     let samples = {
         let store = host
             .retained
@@ -1996,15 +2704,31 @@ fn regenerate(host: &HostState, handle: u32) -> Result<Arc<GeneratedMap>> {
             })
             .collect::<Result<Vec<_>>>()?
     };
-    let Some((_, first_record)) = samples.first() else {
+    if samples.is_empty() {
         bail!("sample handle is invalid");
-    };
-    let prepared = prepared_target(host, &first_record.source_path)?;
+    }
+    let mut targets = BTreeMap::new();
+    for (_, record) in &samples {
+        if let std::collections::btree_map::Entry::Vacant(entry) =
+            targets.entry((record.source_path.clone(), record.settings_index))
+        {
+            entry.insert(prepared_target(
+                host,
+                &record.source_path,
+                record.settings_index,
+            )?);
+        }
+    }
     let content = CompatibleContentView::new(
         &host.context.config.content,
         &host.context.config.profile.profile_id,
     )?;
     let cancellation = SampleCancellation { host };
+    let rules = if samples.iter().any(|(_, record)| record.walk_hash.is_some()) {
+        Some(analysis::rules(host)?)
+    } else {
+        None
+    };
     let results = Mutex::new(
         std::iter::repeat_with(|| None)
             .take(samples.len())
@@ -2013,8 +2737,14 @@ fn regenerate(host: &HostState, handle: u32) -> Result<Arc<GeneratedMap>> {
     let next_job = AtomicUsize::new(0);
     thread::scope(|scope| {
         for _ in 0..workers.min(samples.len()) {
-            let (prepared, samples, results, next_job, cancellation) =
-                (&prepared, &samples, &results, &next_job, &cancellation);
+            let (targets, samples, results, next_job, cancellation, rules) = (
+                &targets,
+                &samples,
+                &results,
+                &next_job,
+                &cancellation,
+                &rules,
+            );
             scope.spawn(move || {
                 machine::lower_thread_priority();
                 loop {
@@ -2029,6 +2759,7 @@ fn regenerate(host: &HostState, handle: u32) -> Result<Arc<GeneratedMap>> {
                         ordinal: *candidate,
                         seed: record.seed,
                     };
+                    let prepared = &targets[&(record.source_path.clone(), record.settings_index)];
                     let result = generate_sample(prepared, content, sample, false, cancellation, None)
                         .and_then(|generated| {
                             if generated.record.request_hash != record.request_hash
@@ -2036,6 +2767,15 @@ fn regenerate(host: &HostState, handle: u32) -> Result<Arc<GeneratedMap>> {
                             {
                                 bail!(
                                     "the map of seed {} generated again differs from its first generation",
+                                    record.seed
+                                );
+                            }
+                            if let (Some(expected), Some(rules)) = (record.walk_hash, rules)
+                                && walk::WalkGrid::build(rules, &generated.map, host)?.hash()
+                                    != expected
+                            {
+                                bail!(
+                                    "the walking data of seed {} generated again differs from its first generation",
                                     record.seed
                                 );
                             }
@@ -2067,16 +2807,29 @@ fn regenerate(host: &HostState, handle: u32) -> Result<Arc<GeneratedMap>> {
     Ok(Arc::new(requested))
 }
 
-fn prepared_target(host: &HostState, target: &str) -> Result<Arc<PreparedTarget>> {
+fn prepared_target(
+    host: &HostState,
+    target: &str,
+    settings_index: Option<u8>,
+) -> Result<Arc<PreparedTarget>> {
     {
         let mut prepared = host.prepared.lock().expect("map-test targets poisoned");
-        if let Some(position) = prepared.iter().position(|entry| entry.target == target) {
+        if let Some(position) = prepared
+            .iter()
+            .position(|entry| entry.target == target && entry.settings_index == settings_index)
+        {
             let entry = prepared.remove(position).expect("position is in range");
             prepared.push_back(entry.clone());
             return Ok(entry);
         }
     }
-    let entry = Arc::new(prepare_target(&host.context, target)?);
+    let settings = variants::sample_settings(host, settings_index)?;
+    let entry = Arc::new(prepare_target(
+        &host.context,
+        target,
+        &settings,
+        settings_index,
+    )?);
     let mut prepared = host.prepared.lock().expect("map-test targets poisoned");
     if prepared.len() == PREPARED_TARGETS {
         prepared.pop_front();
@@ -2085,7 +2838,12 @@ fn prepared_target(host: &HostState, target: &str) -> Result<Arc<PreparedTarget>
     Ok(entry)
 }
 
-fn prepare_target(context: &RunnerContext, target: &str) -> Result<PreparedTarget> {
+fn prepare_target(
+    context: &RunnerContext,
+    target: &str,
+    settings: &variants::LobbySettings,
+    settings_index: Option<u8>,
+) -> Result<PreparedTarget> {
     let config = &context.config;
     let catalog = config
         .source_catalogs
@@ -2097,9 +2855,9 @@ fn prepare_target(context: &RunnerContext, target: &str) -> Result<PreparedTarge
     config.setup_context.configure_strict_parser(
         &mut options,
         0,
-        config.dimensions,
-        &config.map_size,
-        &config.players,
+        settings.dimensions,
+        &settings.map_size,
+        &settings.players,
     )?;
     let analysis = PreparedCatalogAnalysis::new(catalog, options).map_err(strict_failure)?;
     let entry = catalog.entry_source()?;
@@ -2114,9 +2872,9 @@ fn prepare_target(context: &RunnerContext, target: &str) -> Result<PreparedTarge
         content_pack: context.content_identity.clone(),
         backend_id: ExactRmsGenerationBackend.backend_id().to_owned(),
         seed: 0,
-        dimensions: config.dimensions,
-        map_size: config.map_size.clone(),
-        players: config.players.clone(),
+        dimensions: settings.dimensions,
+        map_size: settings.map_size.clone(),
+        players: settings.players.clone(),
         setup_context: config.setup_context,
         trace_level: TraceLevel::Off,
     };
@@ -2126,7 +2884,17 @@ fn prepare_target(context: &RunnerContext, target: &str) -> Result<PreparedTarge
         source_graph_hash: catalog.rms_graph_hash(),
         analysis,
         request,
+        town_center: constant_id(&context.constants, "TOWN_CENTER")
+            .ok()
+            .map(rms_content::ObjectId),
+        settings_index,
     })
+}
+
+impl PreparedTarget {
+    fn tiles(&self) -> u64 {
+        self.request.dimensions.tile_count().unwrap_or(0) as u64
+    }
 }
 
 fn strict_failure(error: rms_semantics::StrictParseError) -> anyhow::Error {
@@ -2134,11 +2902,39 @@ fn strict_failure(error: rms_semantics::StrictParseError) -> anyhow::Error {
         || "without a source range".to_owned(),
         |range| format!("at source bytes {}..{}", range.start.0, range.end.0),
     );
-    anyhow!(
+    let message = format!(
         "strict source execution failed ({}): {} ({range})",
-        error.code,
-        error.message
-    )
+        error.code, error.message
+    );
+    match error.crash {
+        Some(crash) => GameCrashError {
+            crash,
+            code: error.code,
+            message,
+        }
+        .into(),
+        None => records::StrictRefusal {
+            code: error.code,
+            message,
+        }
+        .into(),
+    }
+}
+
+fn generation_failure(error: rms_engine::GenerationError) -> anyhow::Error {
+    let code = match &error {
+        rms_engine::GenerationError::InvalidRequest { code, .. } => *code,
+        _ => "generation-refused",
+    };
+    match error.known_crash().cloned() {
+        Some(crash) => GameCrashError {
+            crash,
+            code,
+            message: error.to_string(),
+        }
+        .into(),
+        None => error.into(),
+    }
 }
 
 fn generate_sample(
@@ -2187,7 +2983,7 @@ fn generate_sample(
         lease.release(sample.ordinal);
     }
     drop(observed);
-    let mut map = generated?;
+    let mut map = generated.map_err(generation_failure)?;
     map.connection_routes = None;
     map.tile_write_runs = None;
     Ok(GeneratedSample {
@@ -2203,6 +2999,11 @@ fn generate_sample(
             metrics: map.metrics.clone(),
             preview_requested: preview,
             execution_cost: if preview { collector.finish() } else { None },
+            xs_roots: Arc::from(program.external_dependencies.as_slice()),
+            failure: None,
+            players: records::player_records(&map, prepared.town_center),
+            walk_hash: None,
+            settings_index: prepared.settings_index,
         },
         map,
     })
@@ -2216,17 +3017,38 @@ fn record_finding(
     code: Option<String>,
     assertion: AssertionContext,
 ) -> Result<()> {
+    check_finding(&message, code.as_deref())?;
+    let measurements = measurements(values)?;
+    record_measured_finding(host, handle, message, measurements, code, assertion, true)
+}
+
+fn check_finding(message: &str, code: Option<&str>) -> Result<()> {
     if message.is_empty() || message.len() > MAX_OUTPUT_MESSAGE_BYTES {
         bail!("finding message must contain 1 byte to 8 KiB");
     }
-    if code
-        .as_ref()
-        .is_some_and(|code| code.is_empty() || code.len() > 256)
-    {
+    if code.is_some_and(|code| code.is_empty() || code.len() > 256) {
         bail!("finding code must contain 1 to 256 bytes");
     }
-    let measurements = measurements(values)?;
+    Ok(())
+}
+
+fn record_measured_finding(
+    host: &HostState,
+    handle: u32,
+    message: String,
+    measurements: BTreeMap<String, JsonValue>,
+    code: Option<String>,
+    assertion: AssertionContext,
+    fails_run: bool,
+) -> Result<()> {
+    check_finding(&message, code.as_deref())?;
     let sample = sample(host, handle)?;
+    if sample.failure.is_some() {
+        bail!(
+            "seed {} did not generate a map, so it cannot record a finding; read sample.failure instead",
+            sample.seed
+        );
+    }
     let mut state = host.mutable.lock().expect("map-test state poisoned");
     if state.findings.len() >= MAX_FINDINGS {
         bail!("finding count exceeds the 4,096-result limit");
@@ -2258,10 +3080,15 @@ fn record_finding(
         request_hash: hex::encode(sample.request_hash),
         map_hash: hex::encode(sample.map_hash),
         measurements,
+        settings_index: sample.settings_index.map(u32::from),
     });
+    if !fails_run {
+        state.passing_findings += 1;
+    }
     Ok(())
 }
 
+#[derive(Clone)]
 struct AssertionContext {
     id: String,
     line: u32,
@@ -2272,6 +3099,22 @@ fn begin_assertion(host: &HostState, eval: &Evaluator) -> AssertionContext {
     let location = eval
         .call_stack_nth_location(1)
         .or_else(|| eval.call_stack_top_location());
+    assertion_at(host, location)
+}
+
+fn quality_assertion(host: &HostState, eval: &Evaluator) -> AssertionContext {
+    let script = host.context.config.script_name.as_str();
+    let location = eval
+        .call_stack()
+        .frames
+        .into_iter()
+        .rev()
+        .filter_map(|frame| frame.location)
+        .find(|location| location.filename() == script);
+    assertion_at(host, location)
+}
+
+fn assertion_at(host: &HostState, location: Option<FileSpan>) -> AssertionContext {
     let (line, column) = location
         .map(|location| {
             let resolved = location.resolve_span();
@@ -2938,12 +3781,57 @@ fn tile_filter<'v>(
     )
 }
 
+fn map_walk_filter(
+    host: &HostState,
+    handle: u32,
+    filter: TileFilter,
+    walkable: Option<Value<'_>>,
+    buildable: Option<Value<'_>>,
+) -> Result<TileFilter> {
+    let given = |value: Option<Value<'_>>| value.is_some_and(|value| !value.is_none());
+    if !given(walkable) && !given(buildable) {
+        return Ok(filter);
+    }
+    let (_, analysis) = analysis::sample_analysis(host, handle)?;
+    walk_filter(filter, Some(analysis.grid.clone()), walkable, buildable)
+}
+
+fn walk_filter(
+    mut filter: TileFilter,
+    grid: Option<Arc<walk::WalkGrid>>,
+    walkable: Option<Value<'_>>,
+    buildable: Option<Value<'_>>,
+) -> Result<TileFilter> {
+    let flag = |value: Option<Value<'_>>, name: &str| -> Result<Option<bool>> {
+        match value {
+            Some(value) if !value.is_none() => value
+                .unpack_bool()
+                .map(Some)
+                .ok_or_else(|| anyhow!("{name} must be True, False or None")),
+            _ => Ok(None),
+        }
+    };
+    filter.walkable = flag(walkable, "walkable")?;
+    filter.buildable = flag(buildable, "buildable")?;
+    if filter.walkable.is_some() || filter.buildable.is_some() {
+        let grid = grid.ok_or_else(|| anyhow!("walking data is unavailable"))?;
+        if filter.buildable.is_some() {
+            grid.require_buildable()?;
+        }
+        filter.grid = Some(grid);
+    }
+    Ok(filter)
+}
+
 #[derive(Default)]
 struct TileFilter {
     terrain_ids: Option<BTreeSet<u32>>,
     land_zone_ids: Option<BTreeSet<u32>>,
     terrain_zone_ids: Option<BTreeSet<u32>>,
     layer_ids: Option<BTreeSet<u32>>,
+    walkable: Option<bool>,
+    buildable: Option<bool>,
+    grid: Option<Arc<walk::WalkGrid>>,
 }
 
 impl TileFilter {
@@ -2958,6 +3846,7 @@ impl TileFilter {
             land_zone_ids: bounded_set(land_zone_ids, "land-zone filter")?,
             terrain_zone_ids: bounded_set(terrain_zone_ids, "terrain-zone filter")?,
             layer_ids: bounded_set(layer_ids, "layer filter")?,
+            ..Self::default()
         })
     }
 
@@ -2977,6 +3866,13 @@ impl TileFilter {
                 .layer_ids
                 .as_ref()
                 .is_none_or(|ids| ids.contains(&u32::from(map.layer[index])))
+            && self.grid.as_ref().is_none_or(|grid| {
+                self.walkable
+                    .is_none_or(|walkable| grid.walkable(index) == walkable)
+                    && self
+                        .buildable
+                        .is_none_or(|buildable| grid.buildable(index) == buildable)
+            })
     }
 }
 

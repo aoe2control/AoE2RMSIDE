@@ -25,6 +25,11 @@ import {
 } from '../shared/lobby-options';
 import { availableLanguages, t, translatorFor, type MessageId } from '../shared/i18n/translator';
 import { isMapTestWorkerSetting, type MapTestWorkerSetting } from '../shared/map-test-contract';
+import {
+  boundedQualitySeedCount,
+  normalizeQualityCasesOff,
+  qualityCheckSeeds,
+} from '../shared/quality-check';
 import { wordOutputText, type OutputText } from '../shared/output-message';
 import { civilizationName, packedCivilizationOptions } from './packed-game-options';
 
@@ -390,6 +395,29 @@ export interface RunConfiguration {
   profileInstallation: string | null;
   traceLevel: 'off' | 'summary' | 'full';
   mapTestWorkers: MapTestWorkerSetting;
+  qualityCheck: boolean;
+  qualityCheckSeeds: number;
+  qualityCheckCasesOff: string[];
+  qualityCheckMultiSettings: boolean;
+}
+
+type ComputerRunSettingKey =
+  | 'mapTestWorkers'
+  | 'qualityCheck'
+  | 'qualityCheckSeeds'
+  | 'qualityCheckCasesOff'
+  | 'qualityCheckMultiSettings';
+
+export function computerRunSettings(
+  configuration: Pick<RunConfiguration, ComputerRunSettingKey>,
+): Pick<RunConfiguration, ComputerRunSettingKey> {
+  return {
+    mapTestWorkers: configuration.mapTestWorkers,
+    qualityCheck: configuration.qualityCheck,
+    qualityCheckSeeds: configuration.qualityCheckSeeds,
+    qualityCheckCasesOff: [...configuration.qualityCheckCasesOff],
+    qualityCheckMultiSettings: configuration.qualityCheckMultiSettings,
+  };
 }
 
 export interface RunPreset {
@@ -406,6 +434,96 @@ export function nextRunPresetName(presets: readonly Pick<RunPreset, 'name'>[]): 
     if (!occupied.has(candidate.toLowerCase())) return candidate;
   }
   return t('run-menu.preset.numbered-name', { number: 65 });
+}
+
+export const maximumRunPresets = 64;
+export const maximumRunPresetNameLength = 64;
+
+export function isRunPresetNameTaken(
+  presets: readonly Pick<RunPreset, 'name'>[],
+  name: string,
+  except?: string,
+): boolean {
+  return presets.some(
+    (preset) =>
+      preset.name !== except &&
+      preset.name.localeCompare(name, undefined, { sensitivity: 'base' }) === 0,
+  );
+}
+
+function copiedRunPresetName(base: string, number: number): string {
+  const characters = Array.from(base);
+  for (;;) {
+    const name = t('run-menu.preset.copy-name', {
+      name: characters.join('').trimEnd(),
+      number,
+    });
+    if (name.length <= maximumRunPresetNameLength || characters.length === 0) return name;
+    characters.pop();
+  }
+}
+
+const copyNameMarker = '';
+const copyNumberMarker = '';
+
+function escapeRegularExpression(text: string): string {
+  return text.replace(/[\\^$.*+?()[\]{}|/]/gu, '\\$&');
+}
+
+function copiedRunPresetNameBase(name: string): string {
+  const template = t('run-menu.preset.copy-name', {
+    name: copyNameMarker,
+    number: copyNumberMarker,
+  }).replace(`⁨${copyNumberMarker}⁩`, copyNumberMarker);
+  const patterns = [/^(.+) \([0-9]+\)$/u];
+  const [before, between, after, ...rest] = template.split(/[]/u);
+  if (
+    rest.length === 0 &&
+    after !== undefined &&
+    template.indexOf(copyNameMarker) < template.indexOf(copyNumberMarker)
+  ) {
+    patterns.unshift(
+      new RegExp(
+        `^${escapeRegularExpression(before!)}(.+)${escapeRegularExpression(between!)}[0-9]+${escapeRegularExpression(after)}$`,
+        'u',
+      ),
+    );
+  }
+  for (const pattern of patterns) {
+    const base = pattern.exec(name)?.[1];
+    if (base?.trim()) return base;
+  }
+  return name;
+}
+
+export function duplicateRunPresetName(
+  sourceName: string,
+  presets: readonly Pick<RunPreset, 'name'>[],
+): string {
+  const base = copiedRunPresetNameBase(sourceName);
+  const last = presets.length + 2;
+  for (let number = 2; number < last; number += 1) {
+    const candidate = copiedRunPresetName(base, number);
+    if (!isRunPresetNameTaken(presets, candidate)) return candidate;
+  }
+  return copiedRunPresetName(base, last);
+}
+
+export function duplicateRunPreset<Preset extends RunPreset>(
+  presets: readonly Preset[],
+  sourceName: string,
+): { presets: Preset[]; preset: Preset } | null {
+  const index = presets.findIndex((preset) => preset.name === sourceName);
+  if (index < 0 || presets.length >= maximumRunPresets) return null;
+  const source = presets[index]!;
+  const preset = {
+    ...structuredClone(source),
+    name: duplicateRunPresetName(sourceName, presets),
+  };
+  return {
+    presets: [...presets.slice(0, index + 1), preset, ...presets.slice(index + 1)],
+    preset,
+  };
 }
 
 const earlierAutomaticNames: readonly (readonly [string, string])[] = [
@@ -769,6 +887,10 @@ export function createRunConfiguration(seed = randomSeed()): RunConfiguration {
     profileInstallation: null,
     traceLevel: 'off',
     mapTestWorkers: 'auto',
+    qualityCheck: false,
+    qualityCheckSeeds: qualityCheckSeeds.ideDefault,
+    qualityCheckCasesOff: [],
+    qualityCheckMultiSettings: false,
   };
 }
 
@@ -788,6 +910,10 @@ export function withSeed(configuration: RunConfiguration, seed: number): RunConf
       ...configuration.recentSeeds.filter((value) => value !== normalized),
     ].slice(0, maximumRecentSeeds),
   };
+}
+
+export function withLockedSeed(configuration: RunConfiguration, seed: number): RunConfiguration {
+  return { ...withSeed(configuration, seed), seedLocked: true };
 }
 
 export function withMapSize(
@@ -931,6 +1057,7 @@ export function buildPreviewGenerationInput(
   versionOrigin: PreviewVersionOrigin,
   preferredContentSourceFingerprint: string | null = null,
   localProductVersion: string | null = null,
+  xsStartCheck = true,
 ): PreviewGenerationInput {
   const errors = validateRunConfiguration(configuration);
   if (!document.content) errors.push(t('run-menu.blocked.source-empty'));
@@ -960,6 +1087,7 @@ export function buildPreviewGenerationInput(
     traceLevel: 'off',
     minimapPalette: resolveMinimapPalette(profile, localProductVersion),
     texturePalette: resolveTexturePalette(profile, localProductVersion),
+    xsStartCheck,
   };
 }
 
@@ -1140,7 +1268,12 @@ export function generationCacheKey(input: PreviewGenerationInput): string {
     players: input.players,
     modeContext: input.modeContext,
     traceLevel: input.traceLevel,
+    ...xsStartCheckKeyField(input),
   });
+}
+
+function xsStartCheckKeyField(input: PreviewGenerationInput): { xsStartCheck?: false } {
+  return input.xsStartCheck === false ? { xsStartCheck: false } : {};
 }
 
 export function generationSettingsKey(input: PreviewGenerationInput): string {
@@ -1159,6 +1292,7 @@ export function generationSettingsKey(input: PreviewGenerationInput): string {
     players: input.players,
     modeContext: input.modeContext,
     traceLevel: input.traceLevel,
+    ...xsStartCheckKeyField(input),
   });
 }
 
@@ -1394,6 +1528,13 @@ function validateStoredConfiguration(
   delete configuration.backend;
   configuration.traceLevel = 'off';
   if (!isMapTestWorkerSetting(configuration.mapTestWorkers)) configuration.mapTestWorkers = 'auto';
+  if (typeof configuration.qualityCheck !== 'boolean') configuration.qualityCheck = false;
+  configuration.qualityCheckSeeds =
+    boundedQualitySeedCount(configuration.qualityCheckSeeds) ?? qualityCheckSeeds.ideDefault;
+  configuration.qualityCheckCasesOff = normalizeQualityCasesOff(configuration.qualityCheckCasesOff);
+  if (typeof configuration.qualityCheckMultiSettings !== 'boolean') {
+    configuration.qualityCheckMultiSettings = false;
+  }
   delete configuration.contentPackId;
   delete configuration.rerollOnSuccessfulEdit;
   const storedMapSize = configuration.mapSize;

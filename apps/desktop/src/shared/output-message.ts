@@ -16,6 +16,7 @@ export const outputSources = [
   'Script',
   'Preview',
   'Map test',
+  'Quality check',
   'Deploy',
   'Live test',
   'Recovery',
@@ -23,7 +24,9 @@ export const outputSources = [
   'Files',
   'Game folder',
   'Game textures',
+  'XS',
   'App',
+  'MCP',
 ] as const;
 export type OutputSource = (typeof outputSources)[number];
 
@@ -32,6 +35,7 @@ const outputSourceLabels: Readonly<Record<OutputSource, MessageId>> = {
   Script: 'output.source.script',
   Preview: 'output.source.preview',
   'Map test': 'output.source.map-test',
+  'Quality check': 'output.source.quality-check',
   Deploy: 'output.source.deploy',
   'Live test': 'output.source.live-test',
   Recovery: 'output.source.recovery',
@@ -39,7 +43,9 @@ const outputSourceLabels: Readonly<Record<OutputSource, MessageId>> = {
   Files: 'output.source.files',
   'Game folder': 'output.source.game-folder',
   'Game textures': 'output.source.game-textures',
+  XS: 'output.source.xs',
   App: 'output.source.app',
+  MCP: 'output.source.mcp',
 };
 
 export function outputSourceLabel(source: OutputSource): string {

@@ -1,13 +1,58 @@
 import { builtinModules } from 'node:module';
 import { resolve } from 'node:path';
-import { defineConfig } from 'vite';
+import { build, defineConfig, type Plugin } from 'vite';
 import { buildIdentity, buildIdentityDefines } from './vite.edition.config';
 import { bundledPackagesCollector } from './vite.third-party.config';
 
+const nodeBuiltins = [...builtinModules, ...builtinModules.map((name) => `node:${name}`)];
+
+function pictureWorkerBuild(options: {
+  outDir: string;
+  sourcemap: boolean;
+  define: Record<string, string>;
+  plugins: Plugin[];
+}): Plugin {
+  return {
+    name: 'rmside-picture-worker',
+    apply: 'build',
+    async buildStart() {
+      await build({
+        configFile: false,
+        logLevel: 'warn',
+        define: options.define,
+        plugins: options.plugins,
+        build: {
+          emptyOutDir: false,
+          lib: {
+            entry: resolve(import.meta.dirname, 'src/main/pictures/picture-worker.ts'),
+            formats: ['cjs'],
+            fileName: () => 'picture-worker.cjs',
+          },
+          outDir: options.outDir,
+          rollupOptions: { external: nodeBuiltins },
+          sourcemap: options.sourcemap,
+          target: 'node24',
+        },
+      });
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const latencyProfile = mode === 'latency-profile';
+  const outDir = latencyProfile
+    ? resolve(import.meta.dirname, '../../target/latency-profile-desktop')
+    : resolve(import.meta.dirname, 'dist');
+  const define = buildIdentityDefines(buildIdentity());
+  const bundledPackages = latencyProfile ? null : bundledPackagesCollector('main');
+  const pictureWorker = pictureWorkerBuild({
+    outDir,
+    sourcemap: latencyProfile,
+    define,
+    plugins: bundledPackages ? [bundledPackages.workerPlugin()] : [],
+  });
   return {
-    define: buildIdentityDefines(buildIdentity()),
+    define,
     resolve: {
       alias: latencyProfile
         ? [
@@ -18,7 +63,7 @@ export default defineConfig(({ mode }) => {
           ]
         : [],
     },
-    plugins: latencyProfile ? [] : [bundledPackagesCollector('main').plugin],
+    plugins: bundledPackages ? [pictureWorker, bundledPackages.plugin] : [pictureWorker],
     build: {
       emptyOutDir: false,
       lib: {
@@ -26,11 +71,9 @@ export default defineConfig(({ mode }) => {
         formats: ['cjs'],
         fileName: () => 'main.cjs',
       },
-      outDir: latencyProfile
-        ? resolve(import.meta.dirname, '../../target/latency-profile-desktop')
-        : resolve(import.meta.dirname, 'dist'),
+      outDir,
       rollupOptions: {
-        external: ['electron', ...builtinModules, ...builtinModules.map((name) => `node:${name}`)],
+        external: ['electron', ...nodeBuiltins],
       },
       sourcemap: latencyProfile,
       target: 'node24',

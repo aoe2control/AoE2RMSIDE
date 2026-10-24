@@ -237,7 +237,7 @@ pub(crate) fn refuse_terrain_past_restriction_tables(
     else {
         return Ok(());
     };
-    Err(invalid_request(
+    Err(crash_refusal(
         "RMSGEN7103",
         &format!(
             "the map uses terrain {first}, which the game's movement tables do not cover \
@@ -245,6 +245,8 @@ pub(crate) fn refuse_terrain_past_restriction_tables(
              different map and crashes during the match, so this map cannot be previewed",
             covered - 1
         ),
+        KnownCrashHit::new(crash_ids::TERRAIN_WITHOUT_MOVEMENT_DATA)
+            .with("terrain", first.to_string()),
     ))
 }
 
@@ -253,8 +255,10 @@ fn zone_error(message: &str) -> GenerationError {
 }
 
 pub(crate) fn off_map_land_anchor_error() -> GenerationError {
-    zone_error(
+    crash_refusal(
+        "RMSGEN7101",
         "an object descriptor targets a land whose anchor lies outside the map; the game reads a missing tile there and crashes, so this map cannot be generated",
+        KnownCrashHit::new(crash_ids::OBJECT_ON_LAND_OUTSIDE_MAP),
     )
 }
 

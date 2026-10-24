@@ -146,6 +146,9 @@
     "app-menu.view.map-transitions": {
       "message": "地圖轉場動畫"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "執行地圖時檢查 XS"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "即時顯示產生階段"
     },
@@ -178,6 +181,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "佈景主題…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "佈景主題"
@@ -407,6 +413,9 @@
     "output.source.map-test": {
       "message": "地圖測試"
     },
+    "output.source.quality-check": {
+      "message": "品質檢查"
+    },
     "output.source.deploy": {
       "message": "部署"
     },
@@ -428,8 +437,14 @@
     "output.source.game-textures": {
       "message": "遊戲紋理"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "應用程式"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, other {{count} 則輸出訊息}}"
@@ -499,6 +514,162 @@
     },
     "output.constructs.go-to": {
       "message": "前往首次使用的位置"
+    },
+    "output.xs-start.summary": {
+      "message": "XS 開局檢查：{files, list} 執行了 main() 和 {rules, plural, other {# 條規則}}（{steps, plural, other {# 步}}）"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "XS 開局檢查：{files, list} 沒有 main()，{rules, plural, =0 {未執行任何規則} other {執行了 # 條規則}}（{steps, plural, other {# 步}}）"
+    },
+    "output.xs-start.not-compared": {
+      "message": "未與遊戲比對"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "未與遊戲比對。涉及：{topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "整數運算"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "整數與小數混合"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "數字的文字形式"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "文字函式"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "陣列預設值"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "規則順序"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "標籤與 goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "開局值"
+    },
+    "output.xs-start.chat": {
+      "message": "聊天：{text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {大地之母} other {玩家 {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "食物"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "木材"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "石料"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "黃金"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "屬性 {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource}設為 {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}：{changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "物件 {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "科技 {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}：研究 {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}：對 {other} 的外交立場設為 {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}：名稱設為「{text}」"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}：文明名稱設為「{text}」"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}：顏色設為 {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}：在 ({x}, {y}) 附近建立 {count} 個 {object}；未檢查放置位置"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}：建立 {count} 個 {object}；未檢查放置位置"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}：移除 {count} 個 {object}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}：將 {count} 個 {object} 移到 ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}：移動 {count} 個 {object}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}：從 {previous} 獲得 {count} 個 {object}"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}：變更 {count} 個 {object} 的數值"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}：變更 {count} 個 {object} 的名稱或說明文字"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}：變更 {object} 的資料；已記錄，未套用"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}：變更 {technology} 的資料；已記錄，未套用"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}：{call}（{calls, plural, other {# 次呼叫}}）"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "色調設為 {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}。此行之後的變更未列出。"
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "停止之後的變更未列出。"
+    },
+    "output.xs-start.skipped": {
+      "message": "已略過 XS 開局檢查：{file} 有 {count, plural, other {# 個錯誤}}（請見問題面板）"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "連結遊戲資料夾以執行 XS 開局檢查"
+    },
+    "output.xs-start.omitted": {
+      "message": "未列出 XS 開局檢查的全部結果"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "已省略：{items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, other {# 個發現項目}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, other {# 則聊天訊息}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, other {# 項變更}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, other {# 次已記錄的呼叫}}"
     },
     "output.constructs.more": {
       "message": "以及另外 {count} 項"
@@ -605,11 +776,95 @@
     "run-menu.run-on-edit": {
       "message": "編輯時執行"
     },
+    "run-menu.quality-check": {
+      "message": "品質檢查"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "檢查的種子數"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "檢查項目"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "選擇品質檢查的檢查項目"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "其他大廳設定"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "同時檢查微小 1v1、中型 2v2 與特大 4v4，各 10 個種子"
+    },
+    "quality.case.generation": {
+      "message": "產生"
+    },
+    "quality.case.start-resources": {
+      "message": "起始資源"
+    },
+    "quality.case.resource-distances": {
+      "message": "資源距離"
+    },
+    "quality.case.shared-resources": {
+      "message": "共享資源"
+    },
+    "quality.case.wood": {
+      "message": "木材"
+    },
+    "quality.case.trapped": {
+      "message": "受困資源"
+    },
+    "quality.case.paths": {
+      "message": "路徑"
+    },
+    "quality.case.building-space": {
+      "message": "建造空間"
+    },
+    "quality.case.hills": {
+      "message": "高地"
+    },
+    "quality.case.water": {
+      "message": "水面"
+    },
+    "quality.case.spacing": {
+      "message": "間距"
+    },
+    "quality.case.chokepoints": {
+      "message": "隘口"
+    },
+    "quality.case.variation": {
+      "message": "變化"
+    },
+    "quality.case.looks": {
+      "message": "外觀"
+    },
+    "quality.item.headline": {
+      "message": "{case}：{message}"
+    },
+    "quality.item.cause": {
+      "message": "{of} 張地圖中有 {bad} 張{metric, select, yes { · 中位數 {p50}，第 95 百分位數 {p95}，最大值 {max} {unit}} other {}}{worst, select, yes { · 最差{count, plural, other {種子}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "通過：{cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, other {另有 # 個發現項目未列出}}"
+    },
+    "quality.failed": {
+      "message": "無法執行品質檢查"
+    },
     "run-menu.preset.default-name": {
       "message": "組態"
     },
     "run-menu.preset.numbered-name": {
       "message": "組態 {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "測試組態"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "返回 {name}"
     },
     "run-menu.preset.settings": {
       "message": "預覽組態設定"
@@ -634,6 +889,9 @@
     },
     "run-menu.preset.delete": {
       "message": "刪除 {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "建立 {name} 的複本"
     },
     "run-menu.preset.delete.title": {
       "message": "刪除組態 {name}？"
@@ -821,6 +1079,9 @@
     "run-menu.fixture.needs-source": {
       "message": "開發測試範例需要非空白的 .rms 或 .rms2 指令碼"
     },
+    "mcp.run.settings-applied": {
+      "message": "{app} 已設定 {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "這次預覽的隨機文明：{players, list, unit}"
     },
@@ -838,6 +1099,9 @@
     },
     "run-menu.result.failed": {
       "message": "失敗"
+    },
+    "run-menu.result.warnings": {
+      "message": "警告"
     },
     "run-menu.result.passed": {
       "message": "通過"
@@ -2702,6 +2966,9 @@
     "lint-rule.RMS4011.title": {
       "message": "名稱可能未定義"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "遊戲可能在此崩潰"
+    },
     "map-icon.generate": {
       "message": "產生地圖圖示"
     },
@@ -3068,6 +3335,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "已使用記錄的種子 {seed} 重現發現項目"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "已使用記錄的種子 {seed} 重現發現項目，並為後續執行鎖定此種子"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "已使用記錄的種子 {seed} 重現發現項目，並在暫時組態 {name} 中鎖定此種子"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "無法取消遊戲資料夾的連結"
     },
@@ -3100,6 +3373,336 @@
     },
     "code-editor.tab.close": {
       "message": "關閉 {name}"
+    },
+    "mcp.tab.edited-by": {
+      "message": "已由 {app} 編輯，尚未儲存"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "關閉 MCP 設定"
+    },
+    "mcp.dialog.description": {
+      "message": "允許這部電腦上的 AI 應用程式讀取、編輯和檢查已開啟資料夾中的指令碼，產生地圖並執行地圖測試。"
+    },
+    "mcp.enable.label": {
+      "message": "啟用 MCP"
+    },
+    "mcp.save.label": {
+      "message": "允許 AI 應用程式儲存檔案"
+    },
+    "mcp.save.note": {
+      "message": "關閉時，AI 所做的變更會維持未儲存狀態，直到你儲存為止。"
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "另一個程式正在使用其連線名稱，因此 MCP 無法啟動。"
+    },
+    "mcp.unavailable.key-file": {
+      "message": "無法寫入金鑰檔案，因此 MCP 無法啟動。"
+    },
+    "mcp.unavailable.catalog": {
+      "message": "工具清單與此版本的 AoE2RMSIDE 不符，因此 MCP 無法啟動。請重新安裝 AoE2RMSIDE。"
+    },
+    "mcp.unavailable.internal": {
+      "message": "發生未預期的錯誤，MCP 無法啟動。"
+    },
+    "mcp.unavailable.retry": {
+      "message": "關閉再開啟「啟用 MCP」即可重試。"
+    },
+    "mcp.apps.title": {
+      "message": "已允許的應用程式"
+    },
+    "mcp.apps.empty": {
+      "message": "尚無應用程式。應用程式首次連線時會請求許可。"
+    },
+    "mcp.apps.connected": {
+      "message": "已連線"
+    },
+    "mcp.apps.last-used": {
+      "message": "上次使用：{date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "移除"
+    },
+    "mcp.apps.remove-label": {
+      "message": "移除 {app}"
+    },
+    "mcp.setup.app": {
+      "message": "AI 應用程式"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "其他應用程式"
+    },
+    "mcp.setup.text-label": {
+      "message": "設定文字"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "將此內容加入 Claude Desktop 的設定檔（Settings > Developer > Edit Config），然後重新啟動 Claude Desktop。"
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "在終端機中執行此命令。"
+    },
+    "mcp.setup.hint.codex": {
+      "message": "在終端機中執行此命令。"
+    },
+    "mcp.setup.hint.other": {
+      "message": "將此程式新增為本機 MCP 伺服器。"
+    },
+    "mcp.setup.needs-enable": {
+      "message": "請先開啟「啟用 MCP」。"
+    },
+    "mcp.setup.copy": {
+      "message": "複製設定"
+    },
+    "mcp.setup.copied": {
+      "message": "已複製設定"
+    },
+    "mcp.connect.row": {
+      "message": "連線 AI 應用程式…"
+    },
+    "mcp.connect.title": {
+      "message": "連線 AI 應用程式"
+    },
+    "mcp.connect.close-label": {
+      "message": "關閉"
+    },
+    "mcp.connect.description": {
+      "message": "將此提示詞貼到你的 AI 應用程式中。它會自行完成設定，遇到阻礙時會告訴你。"
+    },
+    "mcp.connect.prompt-label": {
+      "message": "給 AI 應用程式的提示詞"
+    },
+    "mcp.connect.copy": {
+      "message": "複製提示詞"
+    },
+    "mcp.connect.copied": {
+      "message": "已複製提示詞"
+    },
+    "mcp.connect.by-hand": {
+      "message": "手動設定"
+    },
+    "mcp.pairing.title": {
+      "message": "允許 {app} 使用 AoE2RMSIDE？"
+    },
+    "mcp.pairing.description": {
+      "message": "它將能編輯已開啟資料夾中的指令碼、產生地圖、執行測試及部署模組。由 {program} 啟動。"
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "它將能編輯已開啟資料夾中的指令碼、產生地圖、執行測試及部署模組。"
+    },
+    "mcp.pairing.name-note": {
+      "message": "名稱由應用程式自行宣稱：只有你親自設定的才允許。取代模組或進行遊戲內測試時仍會詢問你。"
+    },
+    "mcp.pairing.allow": {
+      "message": "允許"
+    },
+    "mcp.pairing.deny": {
+      "message": "不允許"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "取代模組「{mod}」？"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} 想將 {file} 部署到此模組。{app} 在此工作階段中未部署過此模組，因此其檔案將被取代。"
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "取代"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} 要求將 {file} 部署為模組「{mod}」。"
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} 已將 {file} 部署為模組「{mod}」。"
+    },
+    "mcp.live.title": {
+      "message": "為 {app} 開始遊戲內測試？"
+    },
+    "mcp.live.description": {
+      "message": "{app} 想在執行中的遊戲以種子 {seed} 測試 {file}。目前的對局將會結束。"
+    },
+    "mcp.live.session": {
+      "message": "在此工作階段中允許"
+    },
+    "mcp.live.start": {
+      "message": "開始遊戲內測試"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, other {# 個 AI 應用程式}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} 已連線"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, other {已連線 # 個 AI 應用程式}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} 正在工作"
+    },
+    "mcp.status.tooltip": {
+      "message": "已透過 MCP 連線。按一下可開啟 MCP 設定。"
+    },
+    "mcp.output.call": {
+      "message": "{app}：{action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "發現錯誤，並已傳送給 AI 應用程式。"
+    },
+    "mcp.output.connected": {
+      "message": "{app} 已連線"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} 已中斷連線"
+    },
+    "mcp.output.denied": {
+      "message": "{app} 未獲准連線"
+    },
+    "mcp.output.busy": {
+      "message": "已要求 {app} 等待：{running} 正在執行"
+    },
+    "mcp.output.refused": {
+      "message": "{app}：{tool} 遭到拒絕"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}：{tool} 已取消"
+    },
+    "mcp.action.status": {
+      "message": "讀取了 IDE 狀態"
+    },
+    "mcp.action.list-files": {
+      "message": "列出了檔案"
+    },
+    "mcp.action.read-file": {
+      "message": "讀取了 {file}"
+    },
+    "mcp.action.edit-file": {
+      "message": "編輯了 {file}"
+    },
+    "mcp.action.create-file": {
+      "message": "建立了 {file}"
+    },
+    "mcp.action.save-file": {
+      "message": "儲存了 {file}"
+    },
+    "mcp.action.problems": {
+      "message": "檢查了 {file}"
+    },
+    "mcp.action.generate": {
+      "message": "產生了 {file}，種子 {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "在預覽中顯示了 {file}"
+    },
+    "mcp.action.inspect": {
+      "message": "查看了產生的地圖"
+    },
+    "mcp.action.picture": {
+      "message": "取得了 {file} 的圖片"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, other {取得了 {file} 的 # 個種子的圖片}}"
+    },
+    "mcp.action.map-test": {
+      "message": "執行了地圖測試 {file}"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, other {對 {file} 執行了品質檢查（# 個種子）}}"
+    },
+    "mcp.action.run-status": {
+      "message": "查看了執行中的測試"
+    },
+    "mcp.action.details": {
+      "message": "讀取了結果的詳細資料"
+    },
+    "mcp.action.deploy": {
+      "message": "將 {file} 部署為模組「{mod}」"
+    },
+    "mcp.action.live-test": {
+      "message": "開始了 {file} 的遊戲內測試"
+    },
+    "mcp.action.guide": {
+      "message": "閱讀了指南"
+    },
+    "mcp.action.reference": {
+      "message": "查閱了 {name}"
+    },
+    "mcp.action.tool": {
+      "message": "使用了 {tool}"
+    },
+    "mcp.refusal.waiting": {
+      "message": "正在 AoE2RMSIDE 中等待你的回應。"
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "你未允許此應用程式。"
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "要求無效。"
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "未開啟資料夾。"
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "該檔案位於已開啟的資料夾之外，或受 AoE2RMSIDE 保護。"
+    },
+    "mcp.refusal.file-type": {
+      "message": "AI 應用程式無法使用此類型的檔案。"
+    },
+    "mcp.refusal.not-found": {
+      "message": "找不到該檔案。"
+    },
+    "mcp.refusal.already-exists": {
+      "message": "該檔案已存在。"
+    },
+    "mcp.refusal.too-large": {
+      "message": "該檔案過大。"
+    },
+    "mcp.refusal.binary-file": {
+      "message": "該檔案不是文字檔。"
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "要變更的文字不存在，或出現不只一次。"
+    },
+    "mcp.refusal.saving-off": {
+      "message": "「允許 AI 應用程式儲存檔案」已關閉。"
+    },
+    "mcp.refusal.busy": {
+      "message": "另一項作業正在執行。"
+    },
+    "mcp.refusal.map-expired": {
+      "message": "產生的地圖已不再保留。"
+    },
+    "mcp.refusal.run-expired": {
+      "message": "該測試已不再保留。"
+    },
+    "mcp.refusal.stopped": {
+      "message": "你已將其停止。"
+    },
+    "mcp.refusal.cancelled": {
+      "message": "AI 應用程式已將其取消。"
+    },
+    "mcp.refusal.user-declined": {
+      "message": "你選擇了否。"
+    },
+    "mcp.refusal.known-crash": {
+      "message": "遊戲可能會在這張地圖上崩潰。"
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "遊戲尚未準備好進行遊戲內測試。"
+    },
+    "mcp.refusal.too-many": {
+      "message": "該應用程式傳送的要求過多。"
+    },
+    "mcp.refusal.internal": {
+      "message": "AoE2RMSIDE 發生問題。"
     },
     "code-editor.tab.unsaved": {
       "message": "尚未儲存的變更"
@@ -5135,6 +5738,9 @@
     "app-update.dialog.unsaved": {
       "message": "如果有文件含有尚未儲存的變更，會先詢問你如何處理。"
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "已連線的 AI 應用程式會在更新期間中斷連線。更新後請重新啟動這些應用程式。"
+    },
     "app-update.dialog.release-notes": {
       "message": "版本資訊"
     },
@@ -5272,6 +5878,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "{language} 檔案將使用內建分析"
+    },
+    "known-crash.headline": {
+      "message": "遊戲會在此地圖上崩潰"
+    },
+    "known-crash.headline.possible": {
+      "message": "遊戲可能在此崩潰"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "在過小而無法搜尋的物件上使用 override_actor_radius_if_required"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required 會移動在放置位置容納不下的物件，而此物件過小，無法進行遊戲對空閒格子的搜尋。"
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "從該物件中移除 override_actor_radius_if_required。"
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "連接區塊中的某一行沒有地形"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "在連接指令的大括號內，遊戲會從每一行讀取地形，而 {word} 沒有地形。"
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "將該行移出連接區塊，放到連接指令之前。"
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "連接延伸到地圖外的陸地"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "連接的起點或終點所在陸地的位置在此地圖尺寸下位於地圖之外。"
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "確保 land_position 在每種地圖尺寸下都位於地圖之內。"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "<CLIFF_GENERATION> 中的已定義名稱被當作 cliff_type 執行"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} 是位於可出現指令之處的已定義名稱，因此遊戲會將其當作不帶值的 {command} 執行。"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "移除該已定義名稱，或寫出它原本應表示的指令。"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "create_elevation 大括號中的已定義名稱被當作 base_terrain 或 base_layer 執行"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} 是位於可出現指令之處的已定義名稱，因此遊戲會將其當作不帶值的 {command} 執行。"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "移除該已定義名稱，或寫出它原本應表示的指令。"
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "已定義名稱被當作 ai_info_map_type、effect_amount 或 effect_percent 執行"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} 是位於可出現指令之處的已定義名稱，因此遊戲會將其當作不帶值的 {command} 執行。"
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "移除該已定義名稱，或寫出它原本應表示的指令。"
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "<PLAYER_SETUP> 中的已定義名稱被當作 guard_state 執行"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} 是位於可出現指令之處的已定義名稱，因此遊戲會將其當作不帶值的 {command} 執行。"
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "移除該已定義名稱，或寫出它原本應表示的指令。"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "<LAND_GENERATION> 中的已定義名稱被當作 base_terrain 或 base_layer 執行"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} 是位於可出現指令之處的已定義名稱，因此遊戲會將其當作不帶值的 {command} 執行。"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "移除該已定義名稱，或寫出它原本應表示的指令。"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "陸地大括號中的已定義名稱被當作 terrain_type 或 assign_to 執行"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} 是位於可出現指令之處的已定義名稱，因此遊戲會將其當作不帶值的 {command} 執行。"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "移除該已定義名稱，或寫出它原本應表示的指令。"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "物件大括號中的已定義名稱被當作 terrain_to_place_on、layer_to_place_on 或 second_object 執行"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} 是位於可出現指令之處的已定義名稱，因此遊戲會將其當作不帶值的 {command} 執行。"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "移除該已定義名稱，或寫出它原本應表示的指令。"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "<TERRAIN_GENERATION> 中的已定義名稱被當作 create_terrain 或 color_correction 執行"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} 是位於可出現指令之處的已定義名稱，因此遊戲會將其當作不帶值的 {command} 執行。"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "移除該已定義名稱，或寫出它原本應表示的指令。"
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "在長度為零的圓周上依隊伍分組放置玩家"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "玩家依隊伍分組放置在長度為零的圓周上，導致遊戲除以零。"
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "具名群組中未指定物件的 add_object"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "已為群組命名，但 add_object 沒有指定物件，因此選中該項目時遊戲會崩潰。"
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "為 add_object 指定一個物件。"
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "物件被放置在地圖外的陸地上"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "依陸地放置的物件被放在一塊在此地圖尺寸下位於地圖之外的陸地上。"
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "確保 land_position 在每種地圖尺寸下都位於地圖之內。"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size 在玩家陸地產生後縮小地圖"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size 在玩家陸地產生後縮小了地圖，因此玩家可能從地圖外開始。"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "將 override_map_size 移到 create_player_lands 之前。"
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "地圖繪製了沒有移動資料的地形"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "地圖繪製了地形 {terrain}，而遊戲的移動資料不包含該地形，因此遊戲會在對局中崩潰。"
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "使用遊戲移動資料包含的地形。"
+    },
+    "deploy-panel.crash-warning": {
+      "message": "使用其他種子或其他大廳設定時，遊戲可能會在此地圖上崩潰。{details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "仍要部署"
+    },
+    "live-test.crash-warning.title": {
+      "message": "遊戲可能會在此地圖上崩潰"
+    },
+    "live-test.crash-warning.description": {
+      "message": "此種子可以正常運作，但使用其他種子或其他大廳設定時，遊戲可能會在此地圖上崩潰。{details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "仍要開始"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "遊戲可能會在此地圖上崩潰，因此未啟動遊戲內測試。"
+    },
+    "test-results.crashes.title": {
+      "message": "遊戲崩潰"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, other {# 張地圖}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "遊戲在 {sampled, plural, other {# 張地圖}}中的 {maps, number} 張上崩潰"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{sampled, number} 張中有 {maps, plural, other {# 張地圖}}無法產生"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, other {種子}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, other {種子}} {seeds, list, unit} 以及另外 {omitted, number} 個"
+    },
+    "test-results.crashes.source": {
+      "message": "遊戲崩潰"
+    },
+    "test-results.crashes.show": {
+      "message": "顯示遊戲崩潰"
+    },
+    "test-results.crashes.hide": {
+      "message": "隱藏遊戲崩潰"
+    },
+    "test-results.quality.summary": {
+      "message": "· {map} 的品質檢查 · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, other {# 張地圖}} · {failures, plural, other {# 項失敗}} · {warnings, plural, other {# 項警告}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, other {# 個發現項目}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "顯示 {case} 的發現項目"
+    },
+    "test-results.quality.hide-case": {
+      "message": "隱藏 {case} 的發現項目"
+    },
+    "test-results.quality.case-findings": {
+      "message": "{case} 的發現項目"
+    },
+    "test-results.quality.no-findings": {
+      "message": "所有檢查項目均已在{maps, plural, other { # 張地圖}}上通過"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, other {# 個品質檢查發現項目}}"
     }
   }
 }

@@ -12,6 +12,17 @@ export function themePanelMenuItem(): ThemePanelMenuItem {
   return { id: 'view.theme', label: t('app-menu.view.theme-panel') };
 }
 
+export interface McpSettingsMenuItem {
+  id: 'view.mcp';
+  label: string;
+}
+
+export function mcpSettingsMenuItem(
+  capabilities: Pick<EditionCapabilities, 'mcp'>,
+): McpSettingsMenuItem | null {
+  return capabilities.mcp ? { id: 'view.mcp', label: t('app-menu.view.mcp') } : null;
+}
+
 export type HelpMenuItem =
   | { id: 'help.take-the-tour'; label: string; kind: 'tour' }
   | { id: string; label: string; kind: 'link'; target: ExternalLinkTarget }

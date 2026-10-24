@@ -29,7 +29,7 @@
       "const": "https://rmside.invalid/schemas/map-test-report/v1"
     },
     "schemaVersion": {
-      "enum": ["1.0.0", "1.1.0"]
+      "enum": ["1.0.0", "1.1.0", "1.2.0", "1.3.0", "1.4.0"]
     },
     "compatibility": {
       "$ref": "#/definitions/compatibility"
@@ -115,6 +115,31 @@
           "type": "null"
         }
       ]
+    },
+    "gameCrashes": {
+      "$ref": "#/definitions/gameCrashes"
+    },
+    "xsConstants": {
+      "$ref": "#/definitions/xsConstants"
+    },
+    "settingsVariants": {
+      "description": "Report 1.4: the lobby settings other than settings that samples used, in the order the run sampled them. Findings and quality worst samples name one by settingsIndex; without it they used settings.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "$ref": "#/definitions/settingsVariant"
+      }
+    },
+    "qualityLibrary": {
+      "$ref": "#/definitions/qualityLibrary"
+    },
+    "walkRules": {
+      "description": "Report 1.4: the walkability rule set of the walking data the run read, such as villager-1. Part of the report identity.",
+      "$ref": "#/definitions/qualityId"
+    },
+    "quality": {
+      "$ref": "#/definitions/quality"
     }
   },
   "definitions": {
@@ -370,6 +395,10 @@
         },
         "requestDocumentRevision": {
           "$ref": "#/definitions/u64Decimal"
+        },
+        "settingsIndex": {
+          "description": "Report 1.4: the sample's index in settingsVariants; absent for the report's own settings.",
+          "$ref": "#/definitions/settingsIndex"
         }
       }
     },
@@ -391,10 +420,413 @@
         }
       }
     },
+    "gameCrashes": {
+      "description": "Report 1.2: the samples whose generation was refused because the game crashes on them, per source and known-crash id. A crashed sample generates no map, so generatedMaps counts the other samples; per source, sampledMaps minus crashedMaps are the maps it generated, and crashedMaps is the sum of its crashes' maps.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources"],
+      "properties": {
+        "sources": {
+          "description": "Every source the run sampled, sorted by sourcePath.",
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/definitions/gameCrashSource"
+          }
+        }
+      }
+    },
+    "gameCrashSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourcePath", "sampledMaps", "crashedMaps", "crashes"],
+      "properties": {
+        "sourcePath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\:]+$"
+        },
+        "sampledMaps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "crashedMaps": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "crashes": {
+          "description": "Sorted by crashId, one per id.",
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/definitions/gameCrash"
+          }
+        }
+      }
+    },
+    "gameCrash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["crashId", "maps", "seeds", "omittedSeeds"],
+      "properties": {
+        "crashId": {
+          "description": "The id of the shipped known-crash catalogue entry.",
+          "type": "string",
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+        },
+        "maps": {
+          "description": "Samples of this source refused with this crash.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "seeds": {
+          "description": "The first 32 distinct seeds of those samples, ascending.",
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4294967295
+          }
+        },
+        "omittedSeeds": {
+          "description": "Distinct seeds left out of seeds by its bound.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        }
+      }
+    },
+    "xsConstants": {
+      "description": "Report 1.3: the game's Constants.xs that the run's XS calls and start checks used. Its SHA-256 is part of the report identity; a run whose XS used no constants writes report 1.2.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sha256"],
+      "properties": {
+        "sha256": {
+          "description": "Lowercase hexadecimal SHA-256 of the Constants.xs bytes.",
+          "$ref": "#/definitions/hash"
+        }
+      }
+    },
     "u64Decimal": {
       "type": "string",
       "maxLength": 20,
       "pattern": "^(?:0|[1-9][0-9]{0,18}|1[0-7][0-9]{18}|18[0-3][0-9]{17}|184[0-3][0-9]{16}|1844[0-5][0-9]{15}|18446[0-6][0-9]{14}|184467[0-3][0-9]{13}|1844674[0-3][0-9]{12}|184467440[0-6][0-9]{10}|1844674407[0-2][0-9]{9}|18446744073[0-6][0-9]{8}|1844674407370[0-8][0-9]{6}|18446744073709[0-4][0-9]{5}|184467440737095[0-4][0-9]{4}|18446744073709550[0-9]{3}|18446744073709551[0-5][0-9]{2}|1844674407370955160[0-9]{1}|1844674407370955161[0-4]|18446744073709551615)$"
+    },
+    "settingsIndex": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15
+    },
+    "qualityId": {
+      "type": "string",
+      "maxLength": 48,
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "settingsVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "mapSize", "players"],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 512
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 512
+        },
+        "mapSize": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "players": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/definitions/player"
+          }
+        }
+      }
+    },
+    "qualityLibrary": {
+      "description": "Report 1.4: the shipped quality library @rmside/quality the script loaded. Part of the report identity.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "sha256"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "sha256": {
+          "description": "Lowercase hexadecimal SHA-256 of the library's text.",
+          "$ref": "#/definitions/hash"
+        }
+      }
+    },
+    "quality": {
+      "description": "Report 1.4: the quality check result, at most 16 KiB as compact JSON. Items are sorted failures first, then warnings, then advice; within a level by the order of cases, then by code; at most six per case and three worst samples per item. counts include the items left out, and omittedItems counts those.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog",
+        "seedStart",
+        "seedCount",
+        "samples",
+        "failedSamples",
+        "cases",
+        "skipped",
+        "result",
+        "counts",
+        "items",
+        "passed",
+        "omittedItems"
+      ],
+      "properties": {
+        "catalog": {
+          "description": "The quality case catalogue version; major 1.",
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+        },
+        "seedStart": {
+          "description": "The first seed, in the unsigned form.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "seedCount": {
+          "description": "Seeds per setting.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "samples": {
+          "description": "Samples of the check, failed generations included.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "failedSamples": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "cases": {
+          "description": "The cases that ran, in catalogue order; generation always runs.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/qualityId"
+          }
+        },
+        "skipped": {
+          "description": "Every other catalogue case, in catalogue order.",
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["case", "reason"],
+            "properties": {
+              "case": {
+                "$ref": "#/definitions/qualityId"
+              },
+              "reason": {
+                "enum": ["not-selected", "not-applicable", "no-samples"]
+              }
+            }
+          }
+        },
+        "result": {
+          "enum": ["passed", "warnings", "failed"]
+        },
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["failures", "warnings", "advice"],
+          "properties": {
+            "failures": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "warnings": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "advice": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            }
+          }
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 192,
+          "items": {
+            "$ref": "#/definitions/qualityItem"
+          }
+        },
+        "passed": {
+          "description": "The cases that ran without a failure or warning item, in catalogue order.",
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/qualityId"
+          }
+        },
+        "omittedItems": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      }
+    },
+    "qualityItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case", "code", "level", "message", "bad", "of", "worst"],
+      "properties": {
+        "case": {
+          "$ref": "#/definitions/qualityId"
+        },
+        "code": {
+          "description": "Unique within its case. The findings of its worst samples have the code case/code.",
+          "$ref": "#/definitions/qualityId"
+        },
+        "level": {
+          "enum": ["failure", "warning", "advice"]
+        },
+        "message": {
+          "description": "One line of at most 120 bytes.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f]+$"
+        },
+        "metric": {
+          "$ref": "#/definitions/qualityMetric"
+        },
+        "bad": {
+          "description": "Samples on which the item applied.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4096
+        },
+        "of": {
+          "description": "Samples it was measured on.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "worst": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/definitions/qualityWorst"
+          }
+        }
+      }
+    },
+    "qualityMetric": {
+      "description": "An item's value over the samples it was measured on: nearest-rank percentiles in a whole unit, ascending.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "unit", "p5", "p50", "p95", "max"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f]+$"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16,
+          "pattern": "^[^\\u0000-\\u001f\\u007f-\\u009f]+$"
+        },
+        "p5": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "p50": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "p95": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "max": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "qualityWorst": {
+      "description": "One of an item's worst samples, worst first; value is present only when the item has a metric.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seed"],
+      "properties": {
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "settingsIndex": {
+          "$ref": "#/definitions/settingsIndex"
+        },
+        "value": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "players": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          }
+        },
+        "tile": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 511
+          }
+        }
+      }
     }
   },
   "allOf": [
@@ -402,7 +834,7 @@
       "if": {
         "properties": {
           "schemaVersion": {
-            "const": "1.1.0"
+            "enum": ["1.1.0", "1.2.0", "1.3.0", "1.4.0"]
           }
         }
       },
@@ -430,6 +862,106 @@
               }
             },
             "type": "array"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "enum": ["1.2.0", "1.3.0", "1.4.0"]
+          }
+        }
+      },
+      "then": {
+        "required": ["gameCrashes"],
+        "properties": {
+          "gameCrashes": {}
+        }
+      },
+      "else": {
+        "properties": {
+          "gameCrashes": false
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "1.3.0"
+          }
+        }
+      },
+      "then": {
+        "required": ["xsConstants"],
+        "properties": {
+          "xsConstants": {}
+        }
+      },
+      "else": {
+        "if": {
+          "properties": {
+            "schemaVersion": {
+              "const": "1.4.0"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "xsConstants": {}
+          }
+        },
+        "else": {
+          "properties": {
+            "xsConstants": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "1.4.0"
+          }
+        }
+      },
+      "then": {
+        "anyOf": [
+          {
+            "required": ["settingsVariants"],
+            "properties": { "settingsVariants": {} }
+          },
+          {
+            "required": ["qualityLibrary"],
+            "properties": { "qualityLibrary": {} }
+          },
+          {
+            "required": ["walkRules"],
+            "properties": { "walkRules": {} }
+          },
+          {
+            "required": ["quality"],
+            "properties": { "quality": {} }
+          }
+        ]
+      },
+      "else": {
+        "properties": {
+          "settingsVariants": false,
+          "qualityLibrary": false,
+          "walkRules": false,
+          "quality": false,
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "settingsIndex": false
+              }
+            }
           }
         }
       }

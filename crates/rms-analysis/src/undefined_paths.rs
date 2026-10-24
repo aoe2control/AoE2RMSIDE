@@ -681,6 +681,7 @@ pub(crate) fn possibly_undefined_names(
             })
             .collect();
         findings.push(LintFinding {
+            known_crash: None,
             related,
             code: POSSIBLY_UNDEFINED_NAME,
             severity: LintSeverity::Hint,

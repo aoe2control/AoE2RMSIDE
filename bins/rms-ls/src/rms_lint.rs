@@ -81,6 +81,9 @@ pub(crate) fn finding_json(
     if finding.unnecessary {
         value["tags"] = json!([1]);
     }
+    if let Some(crash) = &finding.known_crash {
+        value["data"] = json!({ "rmsKnownCrash": known_crash_json(crash) });
+    }
     let related = finding
         .related
         .iter()
@@ -106,6 +109,18 @@ pub(crate) fn finding_json(
         value["relatedInformation"] = Value::Array(related);
     }
     Some(value)
+}
+
+pub(crate) fn known_crash_json(crash: &rms_profile::KnownCrashHit) -> Value {
+    json!({
+        "crashId": crash.id,
+        "arguments": crash
+            .arguments
+            .iter()
+            .map(|(name, value)| json!({ "name": name, "value": value }))
+            .collect::<Vec<_>>(),
+        "evidence": crash.evidence().as_str(),
+    })
 }
 
 fn edits_json(source: &SourceText, fix: &LintFix) -> Option<Vec<Value>> {

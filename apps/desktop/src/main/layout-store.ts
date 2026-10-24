@@ -73,6 +73,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   liveGenerationStages: true,
   gpuMapRendering: true,
   mapTransitions: true,
+  xsStartCheck: true,
   inlayHints: true,
   inlayHintsVersion: inlayHintsSettingVersion,
   outlineRow: true,
@@ -206,6 +207,10 @@ export class DesktopSessionStore {
     return this.update((session) => ({ ...session, mapTransitions }));
   }
 
+  updateXsStartCheck(xsStartCheck: boolean): Promise<void> {
+    return this.update((session) => ({ ...session, xsStartCheck }));
+  }
+
   updateInlayHints(inlayHints: boolean): Promise<void> {
     return this.update((session) => ({ ...session, inlayHints }));
   }
@@ -337,6 +342,7 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     liveGenerationStages: true,
     gpuMapRendering: true,
     mapTransitions: true,
+    xsStartCheck: true,
     inlayHints: true,
     inlayHintsVersion: inlayHintsSettingVersion,
     outlineRow: true,
@@ -443,6 +449,7 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.mapTransitions === undefined
         ? true
         : validateBoolean(value.mapTransitions, 'map transitions preference'),
+    xsStartCheck: typeof value.xsStartCheck === 'boolean' ? value.xsStartCheck : true,
     inlayHints: migrateInlayHints(value.inlayHints, value.inlayHintsVersion),
     inlayHintsVersion: inlayHintsSettingVersion,
     outlineRow:

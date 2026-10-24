@@ -35,14 +35,19 @@ function sameOpenFile(
 export function placeOpenedDocument(
   current: readonly EditorDocument[],
   incoming: EditorDocument,
+  options: { replacePreview?: boolean } = {},
 ): { existing: EditorDocument } | { documents: EditorDocument[] } {
   const existing = current.find((document) => sameOpenFile(document, incoming));
   if (existing) return { existing };
   const next = [...current];
-  const previewIndex = next.findIndex(isCleanPreview);
+  const previewIndex = options.replacePreview === false ? -1 : next.findIndex(isCleanPreview);
   if (previewIndex >= 0) next.splice(previewIndex, 1, incoming);
   else next.push(incoming);
   return { documents: next };
+}
+
+export interface WorkspaceFileOpenOptions {
+  background?: boolean;
 }
 
 export interface WorkspaceFileOpenHost {
@@ -55,7 +60,11 @@ export interface WorkspaceFileOpenHost {
 
 export function createWorkspaceFileOpener(
   host: WorkspaceFileOpenHost,
-): (path: string, keepOpen?: boolean) => Promise<EditorDocument | null> {
+): (
+  path: string,
+  keepOpen?: boolean,
+  options?: WorkspaceFileOpenOptions,
+) => Promise<EditorDocument | null> {
   const pending = new Map<string, Promise<EditorDocument | null>>();
   const findOpen = (path: string, id?: string) =>
     host
@@ -77,31 +86,37 @@ export function createWorkspaceFileOpener(
     host.activate(shown.id, path);
     return shown;
   };
-  const readAndPlace = async (path: string, keepOpen: boolean) => {
+  const readAndPlace = async (path: string, keepOpen: boolean, background: boolean) => {
     let incoming: EditorDocument;
     try {
-      incoming = { ...(await host.read(path)), preview: !keepOpen };
+      incoming = { ...(await host.read(path)), preview: !keepOpen && !background };
     } catch (error) {
       host.failed(error);
       return null;
     }
-    const placed = placeOpenedDocument(host.documents(), incoming);
-    if ('existing' in placed) return show(placed.existing, path, keepOpen);
+    const placed = placeOpenedDocument(host.documents(), incoming, {
+      replacePreview: !background,
+    });
+    if ('existing' in placed) {
+      return background ? placed.existing : show(placed.existing, path, keepOpen);
+    }
     host.setDocuments(placed.documents);
-    host.activate(incoming.id, incoming.path);
+    if (!background) host.activate(incoming.id, incoming.path);
     return incoming;
   };
-  return async (path, keepOpen = false) => {
+  return async (path, keepOpen = false, options = {}) => {
+    const background = options.background === true;
     const existing = findOpen(path);
-    if (existing) return show(existing, path, keepOpen);
+    if (existing) return background ? existing : show(existing, path, keepOpen);
     const key = pathKey(path);
     const reading = pending.get(key);
     if (reading) {
       const opened = await reading;
       const current = opened ? findOpen(path, opened.id) : undefined;
-      return current ? show(current, path, keepOpen) : null;
+      if (!current) return null;
+      return background ? current : show(current, path, keepOpen);
     }
-    const read = readAndPlace(path, keepOpen);
+    const read = readAndPlace(path, keepOpen, background);
     pending.set(key, read);
     try {
       return await read;

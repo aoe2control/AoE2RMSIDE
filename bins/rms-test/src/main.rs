@@ -32,12 +32,13 @@ use rms_test::{
     CandidateSample, MAX_WORKERS, MachineResources, PreviewCallback, PreviewOrder,
     ProgressCallback, ProgressivePreview, ReportSchema, RunConfiguration, RunDiagnostic,
     RunObservers, RunOutcome, RunStatistics, RunStatus, SEMANTIC_API_MAJOR, SampleProgress,
-    WorkerSetting, report_json, run, run_observed_with_report_schema,
+    WorkerSetting, quality, report_json, run, run_observed_with_report_schema,
 };
 use serde::Serialize;
+use sha2::Digest;
 use starlark::analysis::AstModuleLint;
 use starlark::docs::DocModule;
-use starlark::errors::EvalMessage;
+use starlark::errors::{EvalMessage, EvalSeverity};
 use starlark::syntax::{AstModule, Dialect};
 use starlark_lsp::error::eval_message_to_lsp_diagnostic;
 use starlark_lsp::server::{LspContext, LspEvalResult, LspUri, StringLiteralResult, stdio_server};
@@ -209,9 +210,10 @@ struct RunArguments {
     /// Authorized workspace root snapshotted before script evaluation.
     #[arg(long)]
     workspace: PathBuf,
-    /// Sandboxed Starlark script inside the authorized workspace.
-    #[arg(long)]
-    script: PathBuf,
+    /// Sandboxed Starlark script inside the authorized workspace. Without
+    /// it, `--quality-cases` runs the built-in quality check.
+    #[arg(long, required_unless_present = "quality_cases")]
+    script: Option<PathBuf>,
     /// Default root RMS path, relative to the workspace.
     #[arg(long)]
     source: PathBuf,
@@ -249,6 +251,35 @@ struct RunArguments {
     /// Optional report destination. Stdout always receives the same report JSON.
     #[arg(long)]
     output: Option<PathBuf>,
+    /// The game's Constants.xs, which `rms.xs()` calls and `sample.xs_start()` need.
+    #[arg(long)]
+    xs_constants: Option<PathBuf>,
+    /// Runs the built-in quality check with these comma-separated cases
+    /// instead of a script; `generation` always runs. Its summary goes to
+    /// stderr.
+    #[arg(long, value_delimiter = ',', conflicts_with = "script")]
+    quality_cases: Vec<String>,
+    /// The quality check's first seed.
+    #[arg(long, default_value_t = 1)]
+    quality_seed_start: u32,
+    /// The quality check's seeds.
+    #[arg(long, default_value_t = 20)]
+    quality_seed_count: u32,
+}
+
+const MAX_XS_CONSTANTS_BYTES: u64 = 4 * 1024 * 1024;
+
+fn read_xs_constants(path: &Path) -> Result<Arc<str>> {
+    let size = fs::metadata(path)
+        .context("reading the game's Constants.xs")?
+        .len();
+    if size == 0 || size > MAX_XS_CONSTANTS_BYTES {
+        bail!("--xs-constants must name a Constants.xs file of at most 4 MiB");
+    }
+    let bytes = fs::read(path).context("reading the game's Constants.xs")?;
+    let text = String::from_utf8(bytes)
+        .map_err(|_| anyhow!("--xs-constants must name a UTF-8 text file"))?;
+    Ok(Arc::from(text))
 }
 
 fn parse_workers(value: &str) -> std::result::Result<WorkerSetting, String> {
@@ -443,10 +474,36 @@ fn main() -> Result<()> {
 
 struct MapTestLspContext;
 
+const LOAD_HAS_NO_FILE: &str =
+    "A map test loads only the built-in \"@rmside/quality\", which has no file to open";
+
+fn other_loads(ast: &AstModule) -> Vec<EvalMessage> {
+    ast.loads()
+        .into_iter()
+        .filter(|load| load.module_id != rms_test::quality::QUALITY_LIBRARY_MODULE)
+        .map(|load| {
+            let span = load.span.resolve_span();
+            EvalMessage {
+                path: load.span.filename().to_owned(),
+                span: Some(span),
+                severity: EvalSeverity::Error,
+                name: "RMSTEST2001".to_owned(),
+                description: format!(
+                    "a map test can load only \"{}\", not \"{}\"",
+                    rms_test::quality::QUALITY_LIBRARY_MODULE,
+                    load.module_id.escape_debug()
+                ),
+                full_error_with_span: None,
+                original: Some(load.span.source_span().to_owned()),
+            }
+        })
+        .collect()
+}
+
 impl LspContext for MapTestLspContext {
     fn parse_file_with_contents(&self, uri: &LspUri, content: String) -> LspEvalResult {
         let dialect = Dialect {
-            enable_load: false,
+            enable_load: true,
             ..Dialect::Standard
         };
         if let Err(message) = rms_test::check_script_nesting(&content) {
@@ -460,10 +517,10 @@ impl LspContext for MapTestLspContext {
         }
         match AstModule::parse(&uri.path().to_string_lossy(), content, &dialect) {
             Ok(ast) => LspEvalResult {
-                diagnostics: ast
-                    .lint(None)
+                diagnostics: other_loads(&ast)
                     .into_iter()
-                    .map(|lint| eval_message_to_lsp_diagnostic(EvalMessage::from(lint)))
+                    .chain(ast.lint(None).into_iter().map(EvalMessage::from))
+                    .map(eval_message_to_lsp_diagnostic)
                     .collect(),
                 ast: Some(ast),
             },
@@ -483,7 +540,7 @@ impl LspContext for MapTestLspContext {
         _current_file: &LspUri,
         _workspace_root: Option<&Path>,
     ) -> Result<LspUri, String> {
-        Err("load() is disabled by the map-test v1 dialect".to_owned())
+        Err(LOAD_HAS_NO_FILE.to_owned())
     }
 
     fn render_as_load(
@@ -492,7 +549,7 @@ impl LspContext for MapTestLspContext {
         _current_file: &LspUri,
         _workspace_root: Option<&Path>,
     ) -> Result<String, String> {
-        Err("load() is disabled by the map-test v1 dialect".to_owned())
+        Err(LOAD_HAS_NO_FILE.to_owned())
     }
 
     fn resolve_string_literal(
@@ -531,6 +588,11 @@ fn run_cli(arguments: RunArguments) -> Result<()> {
         if let Some(path) = arguments.output {
             fs::write(path, &bytes).context("writing map-test report")?;
         }
+        if let Some(block) = &report.quality {
+            for line in rms_test::quality_text::render_quality_text(block) {
+                eprintln!("{line}");
+            }
+        }
         if report.status == RunStatus::Failed {
             bail!("map-test findings were reported");
         }
@@ -560,11 +622,25 @@ fn cli_configuration(arguments: &RunArguments) -> Result<RunConfiguration> {
     if !workspace.is_dir() {
         bail!("workspace must be a directory");
     }
-    let script = authorized_file(&workspace, &arguments.script)?;
-    let script_name = workspace_relative(&workspace, &script)?;
-    if script.extension().and_then(|value| value.to_str()) != Some("rmstest") {
-        bail!("script must use the dedicated .rmstest extension");
-    }
+    let (script, script_name, quality) = match &arguments.script {
+        Some(script) => {
+            let script = authorized_file(&workspace, script)?;
+            let script_name = workspace_relative(&workspace, &script)?;
+            if script.extension().and_then(|value| value.to_str()) != Some("rmstest") {
+                bail!("script must use the dedicated .rmstest extension");
+            }
+            (
+                fs::read(script).context("reading map-test script")?,
+                script_name,
+                None,
+            )
+        }
+        None => (
+            quality::QUALITY_CHECK_SCRIPT.as_bytes().to_vec(),
+            quality::QUALITY_CHECK_SCRIPT_NAME.to_owned(),
+            Some(cli_quality_plan(arguments)?),
+        ),
+    };
     let source = authorized_file(&workspace, &arguments.source)?;
     let source_path = workspace_relative(&workspace, &source)?;
     let extension = source
@@ -613,7 +689,7 @@ fn cli_configuration(arguments: &RunArguments) -> Result<RunConfiguration> {
         })
         .collect();
     Ok(RunConfiguration {
-        script: fs::read(script).context("reading map-test script")?,
+        script,
         script_name,
         workspace_name: workspace
             .file_name()
@@ -642,6 +718,28 @@ fn cli_configuration(arguments: &RunArguments) -> Result<RunConfiguration> {
         workers: arguments.workers,
         machine: None,
         retained_map_budget: None,
+        xs_constants: arguments
+            .xs_constants
+            .as_deref()
+            .map(read_xs_constants)
+            .transpose()?,
+        quality,
+    })
+}
+
+fn cli_quality_plan(arguments: &RunArguments) -> Result<quality::QualityRunPlan> {
+    if !(1..=rms_protocol::MAX_QUALITY_SEEDS).contains(&arguments.quality_seed_count) {
+        bail!(
+            "--quality-seed-count is 1 to {}",
+            rms_protocol::MAX_QUALITY_SEEDS
+        );
+    }
+    Ok(quality::QualityRunPlan {
+        cases: quality::select_cases(&arguments.quality_cases)?,
+        seed_start: arguments.quality_seed_start,
+        seed_count: arguments.quality_seed_count,
+        settings: Vec::new(),
+        sample_rows: false,
     })
 }
 
@@ -924,6 +1022,11 @@ fn run_service<R: Read, W: Write + Send>(input: &mut R, output: &mut W) -> Resul
                                     connection_routes: false,
                                     control_pipe_exchange: false,
                                     map_test_completion_order_preview: true,
+                                    known_crash_ids: true,
+                                    xs_start_check: false,
+                                    map_test_game_crashes: true,
+                                    map_test_xs: true,
+                                    map_test_quality: true,
                                 }),
                             }),
                         ),
@@ -1061,7 +1164,11 @@ fn run_service<R: Read, W: Write + Send>(input: &mut R, output: &mut W) -> Resul
                                         progressive,
                                         progress,
                                     },
-                                    if run_request.report_request_revision {
+                                    if run_request.report_quality {
+                                        ReportSchema::Quality
+                                    } else if run_request.report_game_crashes {
+                                        ReportSchema::GameCrashes
+                                    } else if run_request.report_request_revision {
                                         ReportSchema::RequestRevision
                                     } else {
                                         ReportSchema::Legacy
@@ -1296,6 +1403,31 @@ fn protocol_configuration(request: &v1::MapTestRunRequest) -> Result<RunConfigur
     if request.completion_order_preview && request.progressive_preview {
         bail!("completion-order map-test previews take no stage candidates");
     }
+    if request.report_game_crashes && !request.report_request_revision {
+        bail!("map-test game-crash reports (report 1.2) need the request revision of report 1.1");
+    }
+    let quality = quality::quality_run_plan(request)?;
+    let (script, script_name) = match quality {
+        Some(_) => (
+            quality::QUALITY_CHECK_SCRIPT.as_bytes().to_vec(),
+            quality::QUALITY_CHECK_SCRIPT_NAME.to_owned(),
+        ),
+        None => (request.script.clone(), request.script_name.clone()),
+    };
+    let xs_constants = match &request.xs_constants {
+        Some(constants) => {
+            validate_xs_constants(constants)?;
+            if !request.report_game_crashes {
+                bail!(
+                    "map-test XS constants (report 1.3) need the game-crash counts of report 1.2"
+                );
+            }
+            Some(Arc::<str>::from(
+                std::str::from_utf8(&constants.text).context("Constants.xs is not UTF-8 text")?,
+            ))
+        }
+        None => None,
+    };
     let profiles = ProfileCatalog::frozen_current()?;
     let profile = profiles
         .get(&request.profile_id)
@@ -1324,8 +1456,8 @@ fn protocol_configuration(request: &v1::MapTestRunRequest) -> Result<RunConfigur
         }
     }
     Ok(RunConfiguration {
-        script: request.script.clone(),
-        script_name: request.script_name.clone(),
+        script,
+        script_name,
         workspace_name: request.workspace_name.clone(),
         default_source_path: (!request.default_source_path.is_empty())
             .then(|| request.default_source_path.clone()),
@@ -1342,6 +1474,8 @@ fn protocol_configuration(request: &v1::MapTestRunRequest) -> Result<RunConfigur
         workers: protocol_workers(request)?,
         machine: None,
         retained_map_budget: None,
+        xs_constants,
+        quality,
     })
 }
 
@@ -1365,6 +1499,19 @@ fn protocol_workers(request: &v1::MapTestRunRequest) -> Result<WorkerSetting> {
     ))
 }
 
+fn validate_xs_constants(constants: &v1::XsGameConstants) -> Result<()> {
+    if constants.text.is_empty() || constants.text.len() > rms_protocol::MAX_XS_CONSTANTS_BYTES {
+        bail!("Constants.xs must hold 1 byte to 4 MiB");
+    }
+    if std::str::from_utf8(&constants.text).is_err() {
+        bail!("Constants.xs is not UTF-8 text");
+    }
+    if sha2::Sha256::digest(&constants.text).as_slice() != constants.sha256.as_slice() {
+        bail!("Constants.xs does not match its SHA-256");
+    }
+    Ok(())
+}
+
 fn protocol_configuration_failure(error: anyhow::Error) -> RunOutcome {
     RunOutcome {
         status: RunStatus::Error,
@@ -1375,9 +1522,11 @@ fn protocol_configuration_failure(error: anyhow::Error) -> RunOutcome {
             message: error.to_string(),
             line: None,
             column: None,
+            known_crash: None,
         }),
         preview: None,
         statistics: RunStatistics::default(),
+        quality_samples: None,
     }
 }
 
@@ -1597,11 +1746,13 @@ fn protocol_outcome(
             outcome.status = RunStatus::Error;
             outcome.report = None;
             outcome.preview = None;
+            outcome.quality_samples = None;
             outcome.diagnostic = Some(RunDiagnostic {
                 code: "RMSTEST3002".to_owned(),
                 message: error.to_string(),
                 line: None,
                 column: None,
+                known_crash: None,
             });
             (Vec::new(), Vec::new())
         }
@@ -1616,15 +1767,44 @@ fn protocol_outcome(
             .diagnostic
             .into_iter()
             .map(|diagnostic| v1::Diagnostic {
+                known_crash: diagnostic
+                    .known_crash
+                    .as_deref()
+                    .and_then(known_crash_reference),
                 code: diagnostic.code,
                 message: diagnostic.message,
                 severity: v1::DiagnosticSeverity::Error as i32,
                 source_id: String::new(),
                 range: None,
+                arguments: Vec::new(),
             })
             .collect(),
         preview: outcome.preview.map(protocol_preview),
+        quality_samples: outcome.quality_samples,
     }
+}
+
+fn known_crash_reference(crash: &rms_profile::KnownCrashHit) -> Option<v1::KnownCrashReference> {
+    use rms_profile::KnownCrashEvidenceQuality as Quality;
+    let reference = v1::KnownCrashReference {
+        crash_id: crash.id.to_owned(),
+        arguments: crash
+            .arguments
+            .iter()
+            .map(|(name, value)| v1::MessageArgument {
+                name: (*name).to_owned(),
+                value: value.clone(),
+            })
+            .collect(),
+        evidence: match crash.evidence() {
+            Quality::Live => v1::KnownCrashEvidence::Live,
+            Quality::Static => v1::KnownCrashEvidence::Static,
+            Quality::Inferred => v1::KnownCrashEvidence::Inferred,
+        } as i32,
+    };
+    rms_protocol::validate_known_crash_reference(&reference)
+        .ok()
+        .map(|()| reference)
 }
 
 fn protocol_status(status: RunStatus) -> v1::MapTestStatus {

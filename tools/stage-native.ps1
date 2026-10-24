@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string[]]$Natives = @('rmsd.exe', 'rms-ls.exe', 'rms-test.exe')
+    [string[]]$Natives = @('rmsd.exe', 'rms-ls.exe', 'rms-test.exe', 'rms-connect.exe')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -14,7 +14,7 @@ if (-not $destinationRoot.StartsWith($repositoryRoot, [StringComparison]::Ordina
 
 $Natives = @($Natives | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 foreach ($name in $Natives) {
-    if (@('rmsd.exe', 'rms-ls.exe', 'rms-test.exe') -notcontains $name) {
+    if (@('rmsd.exe', 'rms-ls.exe', 'rms-test.exe', 'rms-connect.exe') -notcontains $name) {
         throw "Unknown native executable: $name"
     }
 }

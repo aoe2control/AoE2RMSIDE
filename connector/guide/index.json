@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0.0",
+  "topics": [
+    {
+      "id": "workflow",
+      "title": "Workflow",
+      "summary": "The working loop from idea to finished map, and the finishing report."
+    },
+    {
+      "id": "teaching",
+      "title": "Teaching",
+      "summary": "How to explain scripts: small lessons, one concept at a time, before and after pictures."
+    },
+    {
+      "id": "skeleton",
+      "title": "Script skeleton",
+      "summary": "A known-good script structure, section order, and snippets to start from."
+    },
+    {
+      "id": "player-base",
+      "title": "Player base",
+      "summary": "The standard start objects with their distance bands."
+    },
+    {
+      "id": "fairness",
+      "title": "Fairness",
+      "summary": "Land placement, banded distances, avoid zones, paths, and actor areas."
+    },
+    {
+      "id": "woodlines",
+      "title": "Woodlines",
+      "summary": "Near and medium woodlines and straggler trees."
+    },
+    {
+      "id": "map-open",
+      "title": "Open maps",
+      "summary": "Notes for open land maps."
+    },
+    {
+      "id": "map-closed",
+      "title": "Closed maps",
+      "summary": "Notes for closed maps with walls of forest or cliffs."
+    },
+    {
+      "id": "map-water",
+      "title": "Water maps",
+      "summary": "Notes for water and hybrid maps."
+    },
+    {
+      "id": "map-nomad",
+      "title": "Nomad maps",
+      "summary": "Notes for nomad maps."
+    },
+    {
+      "id": "team-games",
+      "title": "Team games",
+      "summary": "Team positions, pocket and flank bases, team-level fairness, and testing each team setup."
+    },
+    {
+      "id": "visuals",
+      "title": "Visuals",
+      "summary": "Terrain mixing, beaches, scenery, and avoiding artificial shapes."
+    },
+    {
+      "id": "special-objects",
+      "title": "Special objects",
+      "summary": "Gimmicks, Gaia buildings, capturable objects, and attributes whose effect only the game shows."
+    },
+    {
+      "id": "xs-scripting",
+      "title": "XS scripting",
+      "summary": "What map XS can do, writing valid XS, common mistakes, and checking it in the IDE."
+    },
+    {
+      "id": "quality-check",
+      "title": "Quality check",
+      "summary": "The cases and their ids, seed counts, reading worst seeds and marks, overrides, and the library."
+    },
+    {
+      "id": "pictures",
+      "title": "Pictures",
+      "summary": "Which views to ask for and what colour pictures cannot show."
+    },
+    {
+      "id": "map-tests",
+      "title": "Map tests",
+      "summary": "Writing .rmstest map tests for what the user asked for: players, walking, passages, settings."
+    },
+    {
+      "id": "anti-patterns",
+      "title": "Mistakes to avoid",
+      "summary": "Common mistakes in generated maps and how to avoid them."
+    },
+    {
+      "id": "known-crashes",
+      "title": "Known game crashes",
+      "summary": "Script patterns the game crashes on, and their fixes."
+    },
+    {
+      "id": "reference-numbers",
+      "title": "Reference numbers",
+      "summary": "Quality-check limits and typical numbers for reading a report."
+    }
+  ]
+}

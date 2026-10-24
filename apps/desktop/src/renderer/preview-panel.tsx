@@ -198,6 +198,7 @@ import {
   useHeld,
   usePresence,
 } from './motion';
+import { useFinishedWork } from './sliced-work';
 import { OverflowingLabel } from './overflow-label';
 import { SearchField } from './search-field';
 import {
@@ -298,7 +299,6 @@ import {
 } from './top-down-preview';
 import {
   aggregatedLayerTileIndices,
-  aggregateSelectionLayers,
   aggregateTileIndexLayers,
   cliffMaterial,
   connectionMaterial,
@@ -317,6 +317,7 @@ import {
   terrainColorSourcesIdentity,
   terrainMaterial,
   resolveAggregatedLayerActivation,
+  selectionLayerAggregation,
   type AggregatedSelectionLayer,
   type PreviewLayerLabel,
   type PreviewMaterial,
@@ -365,6 +366,7 @@ import {
   previewMotionFocus,
   previewResizeAnchor,
   previewSwitchRestoreCamera,
+  previewSwitchRestoreView,
   type PreviewCanvasSize,
   type PreviewLayoutSwitchPlan,
   type PreviewSwitchRestore,
@@ -401,6 +403,8 @@ import {
   raisedRoundedTileFill,
   raisedTileFill,
 } from './preview-raised-overlays';
+import { useAppPictureViewBridge } from './app-pictures';
+import type { AppPictureView } from '../shared/connector-picture-api';
 import {
   finalPictureReady,
   gameTexturesLiveStages,
@@ -1101,6 +1105,32 @@ export function PreviewPanel() {
   );
   const raisedChosen = shownElevationMode === 'raised';
   const elevationMode = flatElevationMode(shownElevationMode);
+  const appPictureView = useRef<() => AppPictureView>(() => ({ shown: false }));
+  appPictureView.current = () => {
+    if (!map || typeof map.requestHash !== 'string') return { shown: false };
+    const shownViewport = viewportRef.current;
+    const shownCamera = displayedCamera.current;
+    return {
+      shown: true,
+      requestHash: map.requestHash,
+      look: drawnLook,
+      perspective: previewPerspective,
+      relief: shownElevationMode,
+      objects: overlays.objects,
+      camera: {
+        centerX: shownCamera.centerX,
+        centerY: shownCamera.centerY,
+        zoom: shownCamera.zoom,
+      },
+      viewport: {
+        width: previewVisibleWidth(shownViewport),
+        height: shownViewport.height,
+        padding: shownViewport.padding,
+      },
+      mapTest: mapTestPreviewShown,
+    };
+  };
+  useAppPictureViewBridge(appPictureView);
   const scene = useMemo(() => (map ? decodeTopDownScene(map) : null), [map]);
   const connectionRoutes = useMemo<ConnectionRouteSet | null>(
     () => (map ? decodeConnectionRoutes(map) : null),
@@ -1401,6 +1431,8 @@ export function PreviewPanel() {
       ? selection
       : null
     : selection;
+  const displaySelectionNow = useRef(displaySelection);
+  displaySelectionNow.current = displaySelection;
   const codeHighlightTiles = useRef<readonly number[]>(sourceHighlightTileIndices);
   codeHighlightTiles.current = sourceHighlightTileIndices;
   const sourceHighlightTiles = useRef<readonly number[]>(sourceHighlightTileIndices);
@@ -1473,7 +1505,7 @@ export function PreviewPanel() {
         viewScene,
         next,
         viewport,
-        dragSelection ?? displaySelection,
+        dragSelection ?? displaySelectionNow.current,
         sourceHighlightTiles.current,
         legendHoverTileIndices.current,
       );
@@ -1482,7 +1514,7 @@ export function PreviewPanel() {
         container.dataset.outlineCameraZoom = next.zoom.toFixed(4);
       }
     },
-    [displaySelection, viewScene, viewport],
+    [viewScene, viewport],
   );
 
   const commitCameraTransition = useCallback(() => {
@@ -1712,21 +1744,61 @@ export function PreviewPanel() {
       }
       const before = transitionTarget ?? displayedCamera.current;
       const fittedBefore = cameraIsFitted.current;
+      const laidOutBefore = cameraViewport.current;
       cameraIsFitted.current = switchPlan.fitted;
       nextCamera = previewLayoutSwitchCamera(viewScene, switchPlan, viewport);
       cameraViewport.current = viewport;
       switchRestore.current = {
         before,
         fitted: fittedBefore,
+        viewport: laidOutBefore,
         after: nextCamera,
         behindEditor: !(viewport.behindEditor ?? false),
       };
     } else if (restored) {
-      switchRestore.current = null;
+      switchRestore.current = {
+        before: displayedCamera.current,
+        fitted: cameraIsFitted.current,
+        viewport: cameraViewport.current,
+        after: restored.camera,
+        behindEditor: !(viewport.behindEditor ?? false),
+      };
       restoresSwitch = true;
       cameraIsFitted.current = restored.fitted;
       nextCamera = restored.camera;
       cameraViewport.current = viewport;
+    } else if (!dimensionsChanged && previewViewportIsCollapsed(viewport)) {
+      nextCamera = transitionTarget ?? displayedCamera.current;
+    } else if (
+      !dimensionsChanged &&
+      !(switchPlan && !switchPlan.committed) &&
+      !previewViewportIsCollapsed(cameraViewport.current) &&
+      (cameraViewport.current.behindEditor ?? false) !== (viewport.behindEditor ?? false)
+    ) {
+      const laidOut = cameraViewport.current;
+      const kept = transitionTarget ?? displayedCamera.current;
+      nextCamera = cameraIsFitted.current
+        ? fitPreviewCamera(viewScene.width, viewScene.height)
+        : clampPreviewCamera(
+            previewCameraForCentre(
+              clampPreviewCamera(kept, viewScene.width, viewScene.height, viewport),
+              viewScene.width,
+              viewScene.height,
+              laidOut,
+              viewport,
+            ),
+            viewScene.width,
+            viewScene.height,
+            viewport,
+          );
+      cameraViewport.current = viewport;
+      switchRestore.current = {
+        before: kept,
+        fitted: cameraIsFitted.current,
+        viewport: laidOut,
+        after: nextCamera,
+        behindEditor: laidOut.behindEditor ?? false,
+      };
     } else if (!dimensionsChanged) {
       nextCamera = clampPreviewCamera(
         transitionTarget ?? displayedCamera.current,
@@ -1776,6 +1848,7 @@ export function PreviewPanel() {
     if (!viewScene) return;
     const transitionTarget = pendingCamera.current;
     stopCameraAnimation();
+    if (previewViewportIsCollapsed(viewport)) return;
     const laidOut = cameraViewport.current;
     cameraViewport.current = viewport;
     const clampedCamera = cameraIsFitted.current
@@ -2062,6 +2135,7 @@ export function PreviewPanel() {
     let glideFrame: number | null = null;
     let drawnRegionReach = previewRegionReach(container);
     let seenLayout = region?.dataset.layout;
+    let planExpiry: number | null = null;
     const planLayoutSwitch = () => {
       const layout = region?.dataset.layout;
       const from = seenLayout;
@@ -2078,6 +2152,12 @@ export function PreviewPanel() {
       const built = builtMapLayer.current;
       if (!initialized || disposed || !built || previewViewportIsCollapsed(built.viewport)) return;
       const reach = previewRegionReach(container);
+      if (
+        (cameraViewport.current.behindEditor ?? false) === previewLaidOutBehindEditor(container)
+      ) {
+        drawnRegionReach = reach;
+        return;
+      }
       const stale = staleLayerCamera.current;
       const drawnCamera =
         stale && stale.viewport === built.viewport ? stale.camera : displayedCamera.current;
@@ -2095,13 +2175,22 @@ export function PreviewPanel() {
         { ...viewportRef.current, ...settled },
         cameraIsFitted.current ||
           previewCameraIsCentred(camera, built.scene.width, built.scene.height),
+        previewSwitchRestoreView(switchRestore.current, camera, settled.behindEditor ?? false),
       );
-      layoutSwitchPlan.current = {
+      const entry = {
         ...plan,
         committed: false,
         expiresAt: performance.now() + layoutSwitchPlanLifetimeMs,
       };
+      layoutSwitchPlan.current = entry;
       drawnRegionReach = reach;
+      if (planExpiry !== null) window.clearTimeout(planExpiry);
+      planExpiry = window.setTimeout(() => {
+        planExpiry = null;
+        if (!disposed && layoutSwitchPlan.current === entry && !entry.committed) {
+          scheduler?.request();
+        }
+      }, layoutSwitchPlanLifetimeMs + 50);
     };
     const followLayoutGlide = () => {
       glideFrame = null;
@@ -2257,6 +2346,7 @@ export function PreviewPanel() {
     if (editorRegion) editorRegionObserver.observe(editorRegion);
     return () => {
       disposed = true;
+      if (planExpiry !== null) window.clearTimeout(planExpiry);
       layoutObserver.disconnect();
       editorShownObserver.disconnect();
       editorRegionObserver.disconnect();
@@ -2837,13 +2927,25 @@ export function PreviewPanel() {
     });
     const redrawEasedSelection = () => {
       const drag = gesture.current;
-      if (drag?.kind !== 'selection' || drag.cancelled) return;
+      if (drag?.kind === 'selection') {
+        if (drag.cancelled) return;
+        drawSelectionOutline(
+          selectionOutline.current,
+          scene,
+          displayedCamera.current,
+          viewport,
+          selectionDragRectangle(drag, scene),
+        );
+        return;
+      }
+      const outline = selectionOutline.current;
+      if (!outline) return;
       drawSelectionOutline(
-        selectionOutline.current,
+        outline,
         scene,
         displayedCamera.current,
         viewport,
-        selectionDragRectangle(drag, scene),
+        selectionOutlineShown.get(outline) ?? null,
       );
     };
     selectionEaseRedraw.current = redrawEasedSelection;
@@ -2888,7 +2990,7 @@ export function PreviewPanel() {
             scene.width,
             scene.height,
           )
-        : displaySelection,
+        : displaySelectionNow.current,
       sourceHighlightTiles.current,
       legendHoverTileIndices.current,
     );
@@ -3029,7 +3131,7 @@ export function PreviewPanel() {
         scene,
         panned,
         viewport,
-        displaySelection,
+        displaySelectionNow.current,
         sourceHighlightTiles.current,
         legendHoverTileIndices.current,
       );
@@ -3142,9 +3244,9 @@ export function PreviewPanel() {
           cameraAnimation.current !== null || wheelCommitTimer.current !== null,
         );
         if (releasedCamera) setCamera(releasedCamera);
-        selectionEase.end();
         if (commitSelection && !finishedGesture.cancelled && !connectionClick) {
           const committed = selectionDragRectangle(finishedGesture, scene);
+          selectionEase.release(committed);
           selectionDimensions.current = `${scene.width}x${scene.height}`;
           setSelection(committed);
           drawSelectionOutline(
@@ -3155,12 +3257,13 @@ export function PreviewPanel() {
             committed,
           );
         } else {
+          selectionEase.end();
           drawSelectionOutline(
             selectionOutline.current,
             scene,
             displayedCamera.current,
             viewport,
-            displaySelection,
+            displaySelectionNow.current,
           );
         }
         setSelectionPreview(null);
@@ -3203,7 +3306,7 @@ export function PreviewPanel() {
           scene,
           finishedGesture.startCamera,
           viewport,
-          displaySelection,
+          displaySelectionNow.current,
           sourceHighlightTiles.current,
           legendHoverTileIndices.current,
         );
@@ -3322,13 +3425,7 @@ export function PreviewPanel() {
     };
     frozenCanvasTransform.current = transformFrozenCanvas;
     refreshFrozenCanvas.current?.();
-    if (displaySelection) {
-      container.dataset.selectionOutlineStyle = 'perimeter';
-      container.dataset.selectionRange = `${displaySelection.minimumX},${displaySelection.minimumY}:${displaySelection.maximumX},${displaySelection.maximumY}`;
-    } else {
-      delete container.dataset.selectionOutlineStyle;
-      delete container.dataset.selectionRange;
-    }
+    writeSelectionDataset(container, displaySelectionNow.current);
     return () => {
       interaction.removeAllListeners();
       if (captureLayers.current === sceneCaptureLayers) captureLayers.current = null;
@@ -3363,7 +3460,6 @@ export function PreviewPanel() {
     sceneCamera,
     candidateCoversScene,
     commitCameraTransition,
-    displaySelection,
     elevationMode,
     raisedChosen,
     gameArtCliffBandView,
@@ -3388,7 +3484,6 @@ export function PreviewPanel() {
     previewTileGrid,
     resolvedTheme,
     viewScene,
-    selection,
     terrainColorSources,
     textureColorsShown,
     colourLayerColors,
@@ -3398,6 +3493,17 @@ export function PreviewPanel() {
     minimapObjectsShown,
     viewport,
   ]);
+  useLayoutEffect(() => {
+    const container = host.current;
+    if (container) writeSelectionDataset(container, displaySelection);
+    const outline = selectionOutline.current;
+    if (!viewScene || !outline) return;
+    const drag = gesture.current;
+    if (drag?.kind === 'selection' && !drag.cancelled) return;
+    const shown = selectionOutlineShown.get(outline);
+    if (shown !== undefined && samePreviewSelection(shown, displaySelection)) return;
+    drawSelectionOutline(outline, viewScene, displayedCamera.current, viewport, displaySelection);
+  }, [displaySelection]);
   useEffect(() => {
     if (sceneCamera === camera || !viewScene) return;
     if (cameraAnimation.current || gesture.current) return;
@@ -3878,10 +3984,8 @@ export function PreviewPanel() {
         return;
       }
       case 'clear':
-        if (gesture.current?.kind === 'selection') {
-          gesture.current.cancelled = true;
-          selectionEase.end();
-        }
+        if (gesture.current?.kind === 'selection') gesture.current.cancelled = true;
+        selectionEase.end();
         selectionDimensions.current = null;
         keyboardCursor.current = null;
         setSelection(null);
@@ -4050,19 +4154,33 @@ export function PreviewPanel() {
   );
 
   const mapBounds = viewScene ? mapScreenBounds(viewScene, camera, viewport) : null;
-  const selectionLayers = useMemo(
+  const selectionAggregation = useMemo(
     () =>
       legendMap && scene && selection
-        ? aggregateSelectionLayers(
+        ? selectionLayerAggregation(
             legendMap,
             scene,
             selection,
             objectVisibility,
             shownConnectionMode === 'paths' ? connectionRoutes : null,
           )
-        : [],
+        : null,
     [connectionRoutes, legendMap, objectVisibility, scene, selection, shownConnectionMode],
   );
+  const finishedSelectionAggregation = useFinishedWork(selectionAggregation);
+  const selectionLayersPending =
+    selectionAggregation !== null && finishedSelectionAggregation !== selectionAggregation;
+  const shownSelectionAggregation = useRef<typeof selectionAggregation>(null);
+  if (!selectionAggregation) shownSelectionAggregation.current = null;
+  else if (!selectionLayersPending) shownSelectionAggregation.current = selectionAggregation;
+  const heldSelectionAggregation = shownSelectionAggregation.current;
+  const selectionLayers = !selectionAggregation
+    ? []
+    : !selectionLayersPending
+      ? selectionAggregation.result
+      : heldSelectionAggregation?.scene === selectionAggregation.scene
+        ? heldSelectionAggregation.result
+        : null;
   const sourceHighlightLayers = useMemo(() => {
     if (!map || !legendMap || !scene || sourceHighlightTileIndices.length === 0) return null;
     const layers = aggregateTileIndexLayers(
@@ -4320,14 +4438,15 @@ export function PreviewPanel() {
     [],
   );
   const announcedSelection = useRef<PreviewSelection | null>(null);
+  const announcedLayersPending = legendContent === 'selection' && selectionLayersPending;
   useEffect(() => {
-    if (selection === announcedSelection.current) return undefined;
+    if (selection === announcedSelection.current || announcedLayersPending) return undefined;
     const timer = window.setTimeout(() => {
       announcedSelection.current = selection;
       announce(describePreviewSelection(selection, announcedLayerSummary.current));
     }, 200);
     return () => window.clearTimeout(timer);
-  }, [announce, selection]);
+  }, [announce, announcedLayersPending, selection]);
   const committedMapHash = map?.semanticHash ?? null;
   const announcedMapHash = useRef(committedMapHash);
   useEffect(() => {
@@ -4650,6 +4769,7 @@ export function PreviewPanel() {
                 ) : null}
                 {legendShown && shownLegendLayers ? (
                   <SelectionLayerLegend
+                    busy={shownLegendContent === 'selection' && selectionLayersPending}
                     closing={legendPresence.closing}
                     content={shownLegendContent}
                     entersAlone={legendEntersAlone}
@@ -4775,6 +4895,7 @@ export function PreviewPanel() {
 }
 
 function SelectionLayerLegend({
+  busy,
   closing,
   content,
   entersAlone,
@@ -4791,6 +4912,7 @@ function SelectionLayerLegend({
   showHelpers,
   surfaceRef,
 }: {
+  busy: boolean;
   closing: boolean;
   content: 'selection' | 'source-highlight' | 'provisional';
   readOnly?: boolean;
@@ -4913,6 +5035,7 @@ function SelectionLayerLegend({
   useEffect(() => () => onHover(null), [onHover]);
   return (
     <div
+      aria-busy={busy || undefined}
       aria-label={t('preview-panel.legend.label')}
       className="preview-map-legend motion-surface motion-edge"
       data-legend-content={content}
@@ -5039,7 +5162,6 @@ const SelectionLayerRow = memo(function SelectionLayerRow({
     () => !readOnly && resolveAggregatedLayerActivationForAvailability(layer),
     [layer, readOnly],
   );
-  const resources = useMemo(() => layerResourceTotals(layer), [layer]);
   return (
     <Tooltip disableHoverablePopup>
       <TooltipTrigger
@@ -5080,7 +5202,7 @@ const SelectionLayerRow = memo(function SelectionLayerRow({
         <span className="preview-layer-count">{layer.count}</span>
       </TooltipTrigger>
       <TooltipContent className="preview-layer-tooltip" side="right">
-        <LayerTooltip label={label} resources={resources} />
+        <LayerTooltip label={label} layer={layer} />
       </TooltipContent>
     </Tooltip>
   );
@@ -5546,6 +5668,8 @@ const raisedOutlineCache = new WeakMap<
 
 const selectionOutlineEases = new WeakMap<Graphics, SelectionEase>();
 
+const selectionOutlineShown = new WeakMap<Graphics, PreviewSelection | null>();
+
 const selectionOutlineReports = new WeakMap<
   Graphics,
   (edges: { minimumX: number; minimumY: number; maximumX: number; maximumY: number } | null) => void
@@ -5593,6 +5717,7 @@ function drawSelectionOutline(
   if (!graphics) return;
   graphics.clear();
   requestPreviewRender(graphics);
+  selectionOutlineShown.set(graphics, shownSelection);
   const fade = overlayFadeOf<PreviewSelection>(graphics);
   const selection = fade
     ? fade.show(shownSelection, `${scene.width}x${scene.height}`)
@@ -5917,12 +6042,13 @@ function LayerName({ label }: { label: PreviewLayerLabel }) {
 
 function LayerTooltip({
   label,
-  resources,
+  layer,
 }: {
   label: PreviewLayerLabel;
-  resources: ReturnType<typeof layerResourceTotals>;
+  layer: AggregatedSelectionLayer;
 }) {
   const { t } = useI18n();
+  const resources = useMemo(() => layerResourceTotals(layer), [layer]);
   return (
     <div className="preview-layer-tooltip-body" data-testid="preview-layer-tooltip">
       <span className="preview-layer-tooltip-name">{label.fullName}</span>
@@ -6493,6 +6619,16 @@ function sameMapCoordinate(
   return (
     left === right || (left !== null && right !== null && left.x === right.x && left.y === right.y)
   );
+}
+
+function writeSelectionDataset(container: HTMLElement, selection: PreviewSelection | null): void {
+  if (selection) {
+    container.dataset.selectionOutlineStyle = 'perimeter';
+    container.dataset.selectionRange = `${selection.minimumX},${selection.minimumY}:${selection.maximumX},${selection.maximumY}`;
+  } else {
+    delete container.dataset.selectionOutlineStyle;
+    delete container.dataset.selectionRange;
+  }
 }
 
 function samePreviewSelection(

@@ -31,7 +31,7 @@ wish.
 
 Examples of what is in scope:
 
-- a script, include, map test, or other file that makes the application or
+- a script, include, XS file, map test, or other file that makes the application or
   one of its native executables run code, read or write files outside what
   the user opened or authorized, or exhaust memory or disk without a bound;
 - a way for the renderer process to reach Node.js, the file system, or child
@@ -39,6 +39,10 @@ Examples of what is in scope:
 - a way to make the application write into the game installation, or into a
   file in the user's game profile that the application did not create;
 - a way to start a live test in a multiplayer match;
+- a way for a program to use the MCP connection without the user allowing
+  it, or for an allowed AI app to read or write files outside the open
+  folder, save while **Let AI apps save files** is off, replace a mod it did
+  not deploy, or start a live test without the user's confirmation;
 - a way to make the in-app update run a file other than the installer of an
   AoE2RMSIDE release published in this repository.
 
@@ -56,6 +60,15 @@ affected.
   application archive after checking that archive's integrity.
 - The native executables accept only bounded, versioned messages and refuse
   unsupported versions instead of guessing.
+- MCP, the connection for AI apps, is off until the user turns on **Enable
+  MCP**. It is a named pipe on the user's computer, not a network server,
+  and only a program that can read its key in the user's settings folder can
+  open it. The relay `rms-connect.exe` that AI apps start connects only to
+  the AoE2RMSIDE installation it belongs to. Each AI app is allowed once in
+  a prompt; the name it shows is the name the app gives itself, so allowing
+  an app is consent, not protection against other programs running as the
+  same user. Allowed apps work only in the open folder; replacing a mod they
+  did not deploy and starting a live test ask the user first.
 - The application has no telemetry and no automatic crash upload. Logs stay
   on the user's computer unless the user chooses to share them.
 - At startup the main process makes one request to GitHub to check for a

@@ -138,6 +138,9 @@
     "app-menu.view.map-transitions": {
       "message": "地图过渡动画"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "运行地图时检查 XS"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "实时显示生成阶段"
     },
@@ -170,6 +173,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "主题…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "主题"
@@ -399,6 +405,9 @@
     "output.source.map-test": {
       "message": "地图测试"
     },
+    "output.source.quality-check": {
+      "message": "质量检查"
+    },
     "output.source.deploy": {
       "message": "部署"
     },
@@ -420,8 +429,14 @@
     "output.source.game-textures": {
       "message": "游戏纹理"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "应用"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, other {{count} 条输出消息}}"
@@ -491,6 +506,162 @@
     },
     "output.constructs.go-to": {
       "message": "转到首次使用处"
+    },
+    "output.xs-start.summary": {
+      "message": "XS 开局检查：{files, list} 运行了 main() 和 {rules, plural, other {# 条规则}}（{steps, plural, other {# 步}}）"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "XS 开局检查：{files, list} 没有 main()，{rules, plural, =0 {未运行任何规则} other {运行了 # 条规则}}（{steps, plural, other {# 步}}）"
+    },
+    "output.xs-start.not-compared": {
+      "message": "未与游戏对比"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "未与游戏对比。涉及：{topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "整数运算"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "整数与小数混合"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "数字的文本形式"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "文本函数"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "数组默认值"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "规则顺序"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "标签和 goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "开局值"
+    },
+    "output.xs-start.chat": {
+      "message": "聊天：{text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {大地之母} other {玩家 {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "食物"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "木材"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "石料"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "黄金"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "属性 {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource}设为 {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}：{changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "对象 {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "科技 {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}：研究 {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}：对 {other} 的外交状态设为 {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}：名称设为“{text}”"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}：文明名称设为“{text}”"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}：颜色设为 {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}：在 ({x}, {y}) 附近创建 {count} 个 {object}；未检查放置位置"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}：创建 {count} 个 {object}；未检查放置位置"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}：移除 {count} 个 {object}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}：将 {count} 个 {object} 移到 ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}：移动 {count} 个 {object}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}：从 {previous} 获得 {count} 个 {object}"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}：更改 {count} 个 {object} 的数值"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}：更改 {count} 个 {object} 的名称或说明文字"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}：更改 {object} 的数据；已记录，未应用"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}：更改 {technology} 的数据；已记录，未应用"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}：{call}（{calls, plural, other {# 次调用}}）"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "色调设为 {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}。此行之后的更改未列出。"
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "停止之后的更改未列出。"
+    },
+    "output.xs-start.skipped": {
+      "message": "已跳过 XS 开局检查：{file} 有 {count, plural, other {# 个错误}}（见问题面板）"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "关联游戏文件夹以运行 XS 开局检查"
+    },
+    "output.xs-start.omitted": {
+      "message": "未列出 XS 开局检查的全部结果"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "已省略：{items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, other {# 个发现项}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, other {# 条聊天消息}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, other {# 项更改}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, other {# 次已记录的调用}}"
     },
     "output.constructs.more": {
       "message": "以及另外 {count} 项"
@@ -597,11 +768,95 @@
     "run-menu.run-on-edit": {
       "message": "编辑时运行"
     },
+    "run-menu.quality-check": {
+      "message": "质量检查"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "检查的种子数"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "检查项"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "选择质量检查的检查项"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "其他大厅设置"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "同时检查极小型 1v1、中型 2v2 和巨大型 4v4，各 10 个种子"
+    },
+    "quality.case.generation": {
+      "message": "生成"
+    },
+    "quality.case.start-resources": {
+      "message": "初始资源"
+    },
+    "quality.case.resource-distances": {
+      "message": "资源距离"
+    },
+    "quality.case.shared-resources": {
+      "message": "共享资源"
+    },
+    "quality.case.wood": {
+      "message": "木材"
+    },
+    "quality.case.trapped": {
+      "message": "被困资源"
+    },
+    "quality.case.paths": {
+      "message": "路径"
+    },
+    "quality.case.building-space": {
+      "message": "建造空间"
+    },
+    "quality.case.hills": {
+      "message": "高地"
+    },
+    "quality.case.water": {
+      "message": "水域"
+    },
+    "quality.case.spacing": {
+      "message": "间距"
+    },
+    "quality.case.chokepoints": {
+      "message": "隘口"
+    },
+    "quality.case.variation": {
+      "message": "变化"
+    },
+    "quality.case.looks": {
+      "message": "外观"
+    },
+    "quality.item.headline": {
+      "message": "{case}：{message}"
+    },
+    "quality.item.cause": {
+      "message": "{of} 张地图中有 {bad} 张{metric, select, yes { · 中位数 {p50}，第 95 百分位数 {p95}，最大值 {max} {unit}} other {}}{worst, select, yes { · 最差{count, plural, other {种子}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "通过：{cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, other {另有 # 个发现项未列出}}"
+    },
+    "quality.failed": {
+      "message": "质量检查无法运行"
+    },
     "run-menu.preset.default-name": {
       "message": "配置"
     },
     "run-menu.preset.numbered-name": {
       "message": "配置 {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "测试配置"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "返回 {name}"
     },
     "run-menu.preset.settings": {
       "message": "预览配置设置"
@@ -626,6 +881,9 @@
     },
     "run-menu.preset.delete": {
       "message": "删除 {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "创建 {name} 的副本"
     },
     "run-menu.preset.delete.title": {
       "message": "删除配置 {name}？"
@@ -813,6 +1071,9 @@
     "run-menu.fixture.needs-source": {
       "message": "开发测试样例需要非空的 .rms 或 .rms2 脚本"
     },
+    "mcp.run.settings-applied": {
+      "message": "{app} 已设置 {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "本次预览的随机文明：{players, list, unit}"
     },
@@ -830,6 +1091,9 @@
     },
     "run-menu.result.failed": {
       "message": "失败"
+    },
+    "run-menu.result.warnings": {
+      "message": "警告"
     },
     "run-menu.result.passed": {
       "message": "通过"
@@ -2694,6 +2958,9 @@
     "lint-rule.RMS4011.title": {
       "message": "名称可能未定义"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "游戏可能在此崩溃"
+    },
     "map-icon.generate": {
       "message": "生成地图图标"
     },
@@ -3060,6 +3327,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "已使用记录的种子 {seed} 重现发现项"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "已使用记录的种子 {seed} 重现发现项，并为后续运行锁定该种子"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "已使用记录的种子 {seed} 重现发现项，并在临时配置 {name} 中锁定该种子"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "无法取消游戏文件夹关联"
     },
@@ -3092,6 +3365,336 @@
     },
     "code-editor.tab.close": {
       "message": "关闭 {name}"
+    },
+    "mcp.tab.edited-by": {
+      "message": "已由 {app} 编辑，未保存"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "关闭 MCP 设置"
+    },
+    "mcp.dialog.description": {
+      "message": "允许此电脑上的 AI 应用读取、编辑和检查已打开文件夹中的脚本，生成地图并运行地图测试。"
+    },
+    "mcp.enable.label": {
+      "message": "启用 MCP"
+    },
+    "mcp.save.label": {
+      "message": "允许 AI 应用保存文件"
+    },
+    "mcp.save.note": {
+      "message": "关闭时，AI 所做的更改会保持未保存状态，直到你保存。"
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "另一个程序正在使用其连接名称，因此 MCP 无法启动。"
+    },
+    "mcp.unavailable.key-file": {
+      "message": "无法写入密钥文件，因此 MCP 无法启动。"
+    },
+    "mcp.unavailable.catalog": {
+      "message": "工具列表与此版本的 AoE2RMSIDE 不匹配，因此 MCP 无法启动。请重新安装 AoE2RMSIDE。"
+    },
+    "mcp.unavailable.internal": {
+      "message": "发生意外错误，MCP 无法启动。"
+    },
+    "mcp.unavailable.retry": {
+      "message": "关闭再开启“启用 MCP”即可重试。"
+    },
+    "mcp.apps.title": {
+      "message": "已允许的应用"
+    },
+    "mcp.apps.empty": {
+      "message": "还没有应用。应用首次连接时会请求许可。"
+    },
+    "mcp.apps.connected": {
+      "message": "已连接"
+    },
+    "mcp.apps.last-used": {
+      "message": "上次使用：{date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "移除"
+    },
+    "mcp.apps.remove-label": {
+      "message": "移除 {app}"
+    },
+    "mcp.setup.app": {
+      "message": "AI 应用"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "其他应用"
+    },
+    "mcp.setup.text-label": {
+      "message": "设置文本"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "将此内容添加到 Claude Desktop 的配置文件（Settings > Developer > Edit Config），然后重启 Claude Desktop。"
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "在终端中运行此命令。"
+    },
+    "mcp.setup.hint.codex": {
+      "message": "在终端中运行此命令。"
+    },
+    "mcp.setup.hint.other": {
+      "message": "将此程序添加为本地 MCP 服务器。"
+    },
+    "mcp.setup.needs-enable": {
+      "message": "请先开启“启用 MCP”。"
+    },
+    "mcp.setup.copy": {
+      "message": "复制设置"
+    },
+    "mcp.setup.copied": {
+      "message": "已复制设置"
+    },
+    "mcp.connect.row": {
+      "message": "连接 AI 应用…"
+    },
+    "mcp.connect.title": {
+      "message": "连接 AI 应用"
+    },
+    "mcp.connect.close-label": {
+      "message": "关闭"
+    },
+    "mcp.connect.description": {
+      "message": "将此提示词粘贴到你的 AI 应用中。它会自行完成设置，遇到阻碍时会告诉你。"
+    },
+    "mcp.connect.prompt-label": {
+      "message": "给 AI 应用的提示词"
+    },
+    "mcp.connect.copy": {
+      "message": "复制提示词"
+    },
+    "mcp.connect.copied": {
+      "message": "已复制提示词"
+    },
+    "mcp.connect.by-hand": {
+      "message": "手动设置"
+    },
+    "mcp.pairing.title": {
+      "message": "允许 {app} 使用 AoE2RMSIDE？"
+    },
+    "mcp.pairing.description": {
+      "message": "它将可以编辑已打开文件夹中的脚本、生成地图、运行测试和部署模组。由 {program} 启动。"
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "它将可以编辑已打开文件夹中的脚本、生成地图、运行测试和部署模组。"
+    },
+    "mcp.pairing.name-note": {
+      "message": "名称由应用自行声明：仅在你亲自设置了它时才允许。替换模组或进行实机测试时仍会询问你。"
+    },
+    "mcp.pairing.allow": {
+      "message": "允许"
+    },
+    "mcp.pairing.deny": {
+      "message": "不允许"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "替换模组“{mod}”？"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "{app} 想要将 {file} 部署到此模组。{app} 在本次会话中未部署过此模组，因此其文件将被替换。"
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "替换"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "{app} 请求将 {file} 部署为模组“{mod}”。"
+    },
+    "mcp.deploy.notice": {
+      "message": "{app} 已将 {file} 部署为模组“{mod}”。"
+    },
+    "mcp.live.title": {
+      "message": "为 {app} 开始实机测试？"
+    },
+    "mcp.live.description": {
+      "message": "{app} 想在正在运行的游戏中以种子 {seed} 测试 {file}。当前对局将会结束。"
+    },
+    "mcp.live.session": {
+      "message": "在本次会话中允许"
+    },
+    "mcp.live.start": {
+      "message": "开始实机测试"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, other {# 个 AI 应用}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app} 已连接"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, other {已连接 # 个 AI 应用}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} 正在工作"
+    },
+    "mcp.status.tooltip": {
+      "message": "已通过 MCP 连接。单击可打开 MCP 设置。"
+    },
+    "mcp.output.call": {
+      "message": "{app}：{action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "发现了错误，并已发送给 AI 应用。"
+    },
+    "mcp.output.connected": {
+      "message": "{app} 已连接"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app} 已断开连接"
+    },
+    "mcp.output.denied": {
+      "message": "{app} 未获准连接"
+    },
+    "mcp.output.busy": {
+      "message": "已要求 {app} 等待：{running} 正在运行"
+    },
+    "mcp.output.refused": {
+      "message": "{app}：{tool} 被拒绝"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}：{tool} 已取消"
+    },
+    "mcp.action.status": {
+      "message": "读取了 IDE 状态"
+    },
+    "mcp.action.list-files": {
+      "message": "列出了文件"
+    },
+    "mcp.action.read-file": {
+      "message": "读取了 {file}"
+    },
+    "mcp.action.edit-file": {
+      "message": "编辑了 {file}"
+    },
+    "mcp.action.create-file": {
+      "message": "创建了 {file}"
+    },
+    "mcp.action.save-file": {
+      "message": "保存了 {file}"
+    },
+    "mcp.action.problems": {
+      "message": "检查了 {file}"
+    },
+    "mcp.action.generate": {
+      "message": "生成了 {file}，种子 {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "在预览中显示了 {file}"
+    },
+    "mcp.action.inspect": {
+      "message": "查看了生成的地图"
+    },
+    "mcp.action.picture": {
+      "message": "获取了 {file} 的图片"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, other {获取了 {file} 的 # 个种子的图片}}"
+    },
+    "mcp.action.map-test": {
+      "message": "运行了地图测试 {file}"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, other {对 {file} 运行了质量检查（# 个种子）}}"
+    },
+    "mcp.action.run-status": {
+      "message": "查看了正在运行的测试"
+    },
+    "mcp.action.details": {
+      "message": "读取了结果的详细信息"
+    },
+    "mcp.action.deploy": {
+      "message": "将 {file} 部署为模组“{mod}”"
+    },
+    "mcp.action.live-test": {
+      "message": "开始了 {file} 的实机测试"
+    },
+    "mcp.action.guide": {
+      "message": "阅读了指南"
+    },
+    "mcp.action.reference": {
+      "message": "查阅了 {name}"
+    },
+    "mcp.action.tool": {
+      "message": "使用了 {tool}"
+    },
+    "mcp.refusal.waiting": {
+      "message": "正在 AoE2RMSIDE 中等待你的回应。"
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "你未允许此应用。"
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "请求无效。"
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "未打开文件夹。"
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "该文件位于已打开的文件夹之外，或受 AoE2RMSIDE 保护。"
+    },
+    "mcp.refusal.file-type": {
+      "message": "AI 应用无法使用此类型的文件。"
+    },
+    "mcp.refusal.not-found": {
+      "message": "未找到该文件。"
+    },
+    "mcp.refusal.already-exists": {
+      "message": "该文件已存在。"
+    },
+    "mcp.refusal.too-large": {
+      "message": "该文件过大。"
+    },
+    "mcp.refusal.binary-file": {
+      "message": "该文件不是文本文件。"
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "要更改的文本不存在，或出现了不止一次。"
+    },
+    "mcp.refusal.saving-off": {
+      "message": "“允许 AI 应用保存文件”已关闭。"
+    },
+    "mcp.refusal.busy": {
+      "message": "另一项任务正在运行。"
+    },
+    "mcp.refusal.map-expired": {
+      "message": "生成的地图已不再保留。"
+    },
+    "mcp.refusal.run-expired": {
+      "message": "该测试已不再保留。"
+    },
+    "mcp.refusal.stopped": {
+      "message": "你已将其停止。"
+    },
+    "mcp.refusal.cancelled": {
+      "message": "AI 应用已将其取消。"
+    },
+    "mcp.refusal.user-declined": {
+      "message": "你选择了否。"
+    },
+    "mcp.refusal.known-crash": {
+      "message": "游戏可能会在此地图上崩溃。"
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "游戏尚未准备好进行实机测试。"
+    },
+    "mcp.refusal.too-many": {
+      "message": "该应用发送的请求过多。"
+    },
+    "mcp.refusal.internal": {
+      "message": "AoE2RMSIDE 出现问题。"
     },
     "code-editor.tab.unsaved": {
       "message": "未保存的更改"
@@ -5127,6 +5730,9 @@
     "app-update.dialog.unsaved": {
       "message": "如果有文档包含未保存的更改，会先询问你如何处理。"
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "已连接的 AI 应用会在更新期间断开连接。更新后请重启这些应用。"
+    },
     "app-update.dialog.release-notes": {
       "message": "发行说明"
     },
@@ -5264,6 +5870,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "{language} 文件将使用内置分析"
+    },
+    "known-crash.headline": {
+      "message": "游戏会在此地图上崩溃"
+    },
+    "known-crash.headline.possible": {
+      "message": "游戏可能在此崩溃"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "在过小而无法搜索的对象上使用 override_actor_radius_if_required"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required 会移动在放置位置容纳不下的对象，而该对象过小，无法进行游戏对空闲地块的搜索。"
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "从该对象中删除 override_actor_radius_if_required。"
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "连接块中的某一行没有地形"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "在连接命令的大括号内，游戏会从每一行读取地形，而 {word} 没有地形。"
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "将该行移出连接块，放到连接命令之前。"
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "连接延伸到地图外的陆地"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "连接的起点或终点所在陆地的位置在此地图尺寸下位于地图之外。"
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "确保 land_position 在每种地图尺寸下都位于地图之内。"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "<CLIFF_GENERATION> 中的已定义名称被当作 cliff_type 执行"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} 是位于可出现命令之处的已定义名称，因此游戏会将其当作不带值的 {command} 执行。"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "删除该已定义名称，或写出它本应表示的命令。"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "create_elevation 大括号中的已定义名称被当作 base_terrain 或 base_layer 执行"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} 是位于可出现命令之处的已定义名称，因此游戏会将其当作不带值的 {command} 执行。"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "删除该已定义名称，或写出它本应表示的命令。"
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "已定义名称被当作 ai_info_map_type、effect_amount 或 effect_percent 执行"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} 是位于可出现命令之处的已定义名称，因此游戏会将其当作不带值的 {command} 执行。"
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "删除该已定义名称，或写出它本应表示的命令。"
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "<PLAYER_SETUP> 中的已定义名称被当作 guard_state 执行"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} 是位于可出现命令之处的已定义名称，因此游戏会将其当作不带值的 {command} 执行。"
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "删除该已定义名称，或写出它本应表示的命令。"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "<LAND_GENERATION> 中的已定义名称被当作 base_terrain 或 base_layer 执行"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} 是位于可出现命令之处的已定义名称，因此游戏会将其当作不带值的 {command} 执行。"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "删除该已定义名称，或写出它本应表示的命令。"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "陆地大括号中的已定义名称被当作 terrain_type 或 assign_to 执行"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} 是位于可出现命令之处的已定义名称，因此游戏会将其当作不带值的 {command} 执行。"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "删除该已定义名称，或写出它本应表示的命令。"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "对象大括号中的已定义名称被当作 terrain_to_place_on、layer_to_place_on 或 second_object 执行"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} 是位于可出现命令之处的已定义名称，因此游戏会将其当作不带值的 {command} 执行。"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "删除该已定义名称，或写出它本应表示的命令。"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "<TERRAIN_GENERATION> 中的已定义名称被当作 create_terrain 或 color_correction 执行"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} 是位于可出现命令之处的已定义名称，因此游戏会将其当作不带值的 {command} 执行。"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "删除该已定义名称，或写出它本应表示的命令。"
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "在长度为零的圆周上按队伍分组放置玩家"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "玩家按队伍分组放置在长度为零的圆周上，导致游戏除以零。"
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "命名组中未指定对象的 add_object"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "已为组命名，但 add_object 没有指定对象，因此选中该条目时游戏会崩溃。"
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "为 add_object 指定一个对象。"
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "对象被放置在地图外的陆地上"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "按陆地放置的对象被放在一块在此地图尺寸下位于地图之外的陆地上。"
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "确保 land_position 在每种地图尺寸下都位于地图之内。"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size 在玩家陆地生成后缩小地图"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size 在玩家陆地生成后缩小了地图，因此玩家可能从地图外开始。"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "将 override_map_size 移到 create_player_lands 之前。"
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "地图绘制了没有移动数据的地形"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "地图绘制了地形 {terrain}，而游戏的移动数据不包含该地形，因此游戏会在对局中崩溃。"
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "使用游戏移动数据包含的地形。"
+    },
+    "deploy-panel.crash-warning": {
+      "message": "使用其他种子或其他大厅设置时，游戏可能会在此地图上崩溃。{details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "仍然部署"
+    },
+    "live-test.crash-warning.title": {
+      "message": "游戏可能会在此地图上崩溃"
+    },
+    "live-test.crash-warning.description": {
+      "message": "此种子可以正常运行，但使用其他种子或其他大厅设置时，游戏可能会在此地图上崩溃。{details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "仍然开始"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "游戏可能会在此地图上崩溃，因此未启动实机测试。"
+    },
+    "test-results.crashes.title": {
+      "message": "游戏崩溃"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, other {# 张地图}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "游戏在 {sampled, plural, other {# 张地图}}中的 {maps, number} 张上崩溃"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "{sampled, number} 张中有 {maps, plural, other {# 张地图}}无法生成"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, other {种子}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, other {种子}} {seeds, list, unit} 以及另外 {omitted, number} 个"
+    },
+    "test-results.crashes.source": {
+      "message": "游戏崩溃"
+    },
+    "test-results.crashes.show": {
+      "message": "显示游戏崩溃"
+    },
+    "test-results.crashes.hide": {
+      "message": "隐藏游戏崩溃"
+    },
+    "test-results.quality.summary": {
+      "message": "· {map} 的质量检查 · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, other {# 张地图}} · {failures, plural, other {# 项失败}} · {warnings, plural, other {# 项警告}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, other {# 个发现项}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "显示 {case} 的发现项"
+    },
+    "test-results.quality.hide-case": {
+      "message": "隐藏 {case} 的发现项"
+    },
+    "test-results.quality.case-findings": {
+      "message": "{case} 的发现项"
+    },
+    "test-results.quality.no-findings": {
+      "message": "所有检查项均已在{maps, plural, other { # 张地图}}上通过"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, other {# 个质量检查发现项}}"
     }
   },
   "listPatterns": {

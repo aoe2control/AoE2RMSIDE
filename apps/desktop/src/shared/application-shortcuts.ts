@@ -106,6 +106,7 @@ export const modalSafeMenuActions: ReadonlySet<ApplicationMenuAction['type']> = 
   'set-live-generation-stages',
   'set-gpu-map-rendering',
   'set-map-transitions',
+  'set-xs-start-check',
   'set-outline-row',
   'set-inlay-hints',
   'set-delete-permanently',

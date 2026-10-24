@@ -9,9 +9,155 @@ pub mod v1 {
 }
 
 pub const PROTOCOL_MAJOR: u32 = 2;
-pub const PROTOCOL_MINOR: u32 = 23;
+pub const PROTOCOL_MINOR: u32 = 25;
 pub const PROTOCOL_PATCH: u32 = 0;
 pub const MAX_FRAME_BYTES: usize = 20 * 1024 * 1024;
+
+pub const XS_START_REPORT_MAJOR: u32 = 1;
+pub const XS_START_REPORT_MINOR: u32 = 0;
+pub const MAX_XS_START_FINDINGS: usize = 200;
+pub const MAX_XS_START_CHAT_LINES: usize = 1_000;
+pub const MAX_XS_START_CHANGES: usize = 1_000;
+pub const MAX_XS_START_RECORDED_CALLS: usize = 5_000;
+pub const MAX_XS_START_SOURCE_IDS: usize = 64;
+pub const MAX_XS_START_UNANSWERABLE_CALLS: usize = 64;
+pub const MAX_XS_START_REPORT_BYTES: usize = 2 * 1024 * 1024;
+pub const MAX_XS_CHAT_LINE_BYTES: usize = 2_048;
+pub const MAX_XS_VALUE_TEXT_BYTES: usize = 256;
+pub const MAX_XS_CONSTANTS_BYTES: usize = 4 * 1024 * 1024;
+pub const MAX_DIAGNOSTIC_ARGUMENTS: usize = 8;
+pub const MAX_KNOWN_CRASH_ARGUMENTS: usize = 4;
+pub const MAX_MESSAGE_ARGUMENT_NAME_BYTES: usize = 32;
+pub const MAX_MESSAGE_ARGUMENT_VALUE_BYTES: usize = 256;
+pub const MAX_KNOWN_CRASH_ID_BYTES: usize = 64;
+pub const KNOWN_CRASH_PLACEHOLDERS: [&str; 3] = ["command", "terrain", "word"];
+pub const MAX_QUALITY_CASE_IDS: usize = 32;
+pub const MAX_QUALITY_ID_BYTES: usize = 48;
+pub const MAX_QUALITY_SETTINGS: usize = 16;
+pub const MAX_QUALITY_SEEDS: u32 = 4_096;
+pub const MAX_QUALITY_PLAYER_VALUES: usize = 8;
+pub const MAX_QUALITY_ROW_TILES: usize = 8;
+pub const MAX_QUALITY_SAMPLE_BYTES: usize = 256 * 1024;
+
+#[derive(Clone, Copy, Debug, Eq, Error, PartialEq)]
+pub enum ContractViolation {
+    #[error("too many message arguments")]
+    TooManyArguments,
+    #[error("a message argument name is not lower camel case ASCII of 1 to 32 bytes")]
+    ArgumentName,
+    #[error("message argument names are not sorted and unique")]
+    ArgumentOrder,
+    #[error("a message argument value exceeds 256 bytes")]
+    ArgumentValue,
+    #[error("a known-crash id is not lower-case words joined by hyphens of at most 64 bytes")]
+    CrashId,
+    #[error("a known-crash argument is not a cause placeholder")]
+    CrashPlaceholder,
+    #[error("the known-crash evidence is unspecified or unknown")]
+    CrashEvidence,
+    #[error(
+        "a quality case id or item code is not lower-case words joined by hyphens of at most 48 bytes"
+    )]
+    QualityId,
+    #[error("a quality sample row has an unspecified or unknown level")]
+    QualityLevel,
+    #[error("a quality sample row has more than 8 player values or tiles")]
+    QualityRowBound,
+    #[error("quality sample rows are not sorted by setting")]
+    QualityRowOrder,
+    #[error("quality sample rows exceed 256 KiB")]
+    QualitySamplesTooLarge,
+}
+
+pub fn validate_message_arguments(
+    arguments: &[v1::MessageArgument],
+    maximum: usize,
+) -> Result<(), ContractViolation> {
+    if arguments.len() > maximum {
+        return Err(ContractViolation::TooManyArguments);
+    }
+    for argument in arguments {
+        let name = argument.name.as_bytes();
+        let valid_name = (1..=MAX_MESSAGE_ARGUMENT_NAME_BYTES).contains(&name.len())
+            && name[0].is_ascii_lowercase()
+            && name.iter().all(u8::is_ascii_alphanumeric);
+        if !valid_name {
+            return Err(ContractViolation::ArgumentName);
+        }
+        if argument.value.len() > MAX_MESSAGE_ARGUMENT_VALUE_BYTES {
+            return Err(ContractViolation::ArgumentValue);
+        }
+    }
+    if !arguments.windows(2).all(|pair| pair[0].name < pair[1].name) {
+        return Err(ContractViolation::ArgumentOrder);
+    }
+    Ok(())
+}
+
+pub fn is_known_crash_id(id: &str) -> bool {
+    id.len() <= MAX_KNOWN_CRASH_ID_BYTES
+        && id.starts_with(|character: char| character.is_ascii_lowercase())
+        && id.split('-').all(|word| {
+            !word.is_empty()
+                && word
+                    .bytes()
+                    .all(|byte| byte.is_ascii_lowercase() || byte.is_ascii_digit())
+        })
+}
+
+pub fn validate_known_crash_reference(
+    reference: &v1::KnownCrashReference,
+) -> Result<(), ContractViolation> {
+    if !is_known_crash_id(&reference.crash_id) {
+        return Err(ContractViolation::CrashId);
+    }
+    validate_message_arguments(&reference.arguments, MAX_KNOWN_CRASH_ARGUMENTS)?;
+    if !reference
+        .arguments
+        .iter()
+        .all(|argument| KNOWN_CRASH_PLACEHOLDERS.contains(&argument.name.as_str()))
+    {
+        return Err(ContractViolation::CrashPlaceholder);
+    }
+    match v1::KnownCrashEvidence::try_from(reference.evidence) {
+        Ok(v1::KnownCrashEvidence::Unspecified) | Err(_) => Err(ContractViolation::CrashEvidence),
+        Ok(_) => Ok(()),
+    }
+}
+
+pub fn is_quality_id(id: &str) -> bool {
+    id.len() <= MAX_QUALITY_ID_BYTES && is_known_crash_id(id)
+}
+
+pub fn validate_quality_samples(samples: &v1::QualitySamples) -> Result<(), ContractViolation> {
+    if samples.encoded_len() > MAX_QUALITY_SAMPLE_BYTES {
+        return Err(ContractViolation::QualitySamplesTooLarge);
+    }
+    for row in &samples.rows {
+        if !is_quality_id(&row.case_id) || !is_quality_id(&row.code) {
+            return Err(ContractViolation::QualityId);
+        }
+        match v1::QualityLevel::try_from(row.level) {
+            Ok(v1::QualityLevel::Unspecified) | Err(_) => {
+                return Err(ContractViolation::QualityLevel);
+            }
+            Ok(_) => {}
+        }
+        if row.player_values.len() > MAX_QUALITY_PLAYER_VALUES
+            || row.tiles.len() > MAX_QUALITY_ROW_TILES
+        {
+            return Err(ContractViolation::QualityRowBound);
+        }
+    }
+    if !samples
+        .rows
+        .windows(2)
+        .all(|pair| pair[0].settings_index <= pair[1].settings_index)
+    {
+        return Err(ContractViolation::QualityRowOrder);
+    }
+    Ok(())
+}
 
 pub fn artifact_version() -> v1::ArtifactVersion {
     v1::ArtifactVersion {
@@ -50,6 +196,7 @@ pub fn structured_error(
             message: message.into(),
             retryable,
             details: Default::default(),
+            known_crash: None,
         }),
     )
 }

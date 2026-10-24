@@ -2,6 +2,7 @@ import type { Container } from 'pixi.js';
 import {
   clampPreviewCamera,
   fitPreviewCamera,
+  mapScreenBounds,
   previewCameraForCentre,
   previewCameraIsCentred,
   previewScale,
@@ -153,6 +154,7 @@ export interface PreviewLayoutSwitchPlan {
   settled: PreviewViewport;
   target: PreviewCamera;
   fitted: boolean;
+  restored: PreviewSwitchRestoreView | null;
   offset: PreviewScreenTransform;
 }
 
@@ -163,18 +165,25 @@ export function previewLayoutSwitchPlan(
   shift: number,
   settled: PreviewViewport,
   centred: boolean,
+  restore: PreviewSwitchRestoreView | null = null,
 ): PreviewLayoutSwitchPlan {
   const { width, height } = scene;
   const start = composePreviewTransforms({ scale: 1, x: shift, y: 0 }, stage);
   const stationary = previewCameraForPlacement(scene, drawn, start, settled);
   const aim = centred ? { ...stationary, centerX: width / 2, centerY: height / 2 } : stationary;
   let target = clampPreviewCamera(aim, width, height, settled);
-  const fitted = previewCameraIsCentred(target, width, height) && Math.abs(target.zoom - 1) < 1e-6;
+  let fitted = previewCameraIsCentred(target, width, height) && Math.abs(target.zoom - 1) < 1e-6;
   if (fitted) target = fitPreviewCamera(width, height);
+  if (restore) {
+    const view = previewRestoredCamera(scene, restore, settled);
+    if (!previewCamerasAlike(scene, view, target, settled)) target = view;
+    fitted = restore.fitted;
+  }
   return {
     settled,
     target,
     fitted,
+    restored: restore,
     offset: composePreviewTransforms(
       start,
       previewScreenTransform(width, height, target, settled, drawn.camera, drawn.viewport),
@@ -197,10 +206,13 @@ export function previewLayoutSwitchSettles(
 
 export function previewLayoutSwitchCamera(
   scene: { width: number; height: number },
-  plan: Pick<PreviewLayoutSwitchPlan, 'settled' | 'target' | 'fitted'>,
+  plan: Pick<PreviewLayoutSwitchPlan, 'settled' | 'target' | 'fitted'> & {
+    restored?: PreviewSwitchRestoreView | null;
+  },
   viewport: PreviewViewport,
 ): PreviewCamera {
   const { width, height } = scene;
+  if (plan.restored) return previewRestoredCamera(scene, plan.restored, viewport);
   if (plan.fitted) return fitPreviewCamera(width, height);
   const fit = fitPreviewCamera(width, height);
   const ratio =
@@ -215,6 +227,7 @@ export function previewLayoutSwitchCamera(
 
 export interface PreviewSwitchRestore {
   before: PreviewCamera;
+  viewport: PreviewViewport;
   fitted: boolean;
   after: PreviewCamera;
   behindEditor: boolean;
@@ -226,22 +239,72 @@ export function previewSwitchRestoreCamera(
   camera: PreviewCamera,
   viewport: PreviewViewport,
 ): { camera: PreviewCamera; fitted: boolean } | null {
+  const view = previewSwitchRestoreView(restore, camera, viewport.behindEditor ?? false);
+  if (!view) return null;
+  const { width, height } = scene;
+  return {
+    fitted: view.fitted,
+    camera: view.fitted
+      ? fitPreviewCamera(width, height)
+      : clampPreviewCamera(view.camera, width, height, viewport),
+  };
+}
+
+export function previewSwitchRestoreView(
+  restore: PreviewSwitchRestore | null,
+  camera: PreviewCamera,
+  behindEditor: boolean,
+): PreviewSwitchRestoreView | null {
   if (
     !restore ||
-    (viewport.behindEditor ?? false) !== restore.behindEditor ||
+    restore.behindEditor !== behindEditor ||
     camera.centerX !== restore.after.centerX ||
     camera.centerY !== restore.after.centerY ||
     camera.zoom !== restore.after.zoom
   ) {
     return null;
   }
+  return { camera: restore.before, fitted: restore.fitted, viewport: restore.viewport };
+}
+
+export interface PreviewSwitchRestoreView {
+  camera: PreviewCamera;
+  fitted: boolean;
+  viewport: PreviewViewport;
+}
+
+export function previewRestoredCamera(
+  scene: { width: number; height: number },
+  view: PreviewSwitchRestoreView,
+  viewport: PreviewViewport,
+): PreviewCamera {
   const { width, height } = scene;
-  return {
-    fitted: restore.fitted,
-    camera: restore.fitted
-      ? fitPreviewCamera(width, height)
-      : clampPreviewCamera(restore.before, width, height, viewport),
-  };
+  const fit = fitPreviewCamera(width, height);
+  if (view.fitted) return fit;
+  const ratio =
+    previewScale(width, height, fit, view.viewport) / previewScale(width, height, fit, viewport);
+  return clampPreviewCamera(
+    { ...view.camera, zoom: view.camera.zoom * ratio },
+    width,
+    height,
+    viewport,
+  );
+}
+
+function previewCamerasAlike(
+  scene: { width: number; height: number },
+  left: PreviewCamera,
+  right: PreviewCamera,
+  viewport: PreviewViewport,
+): boolean {
+  const a = mapScreenBounds(scene, left, viewport);
+  const b = mapScreenBounds(scene, right, viewport);
+  return (
+    Math.abs(a.left - b.left) <= 1.5 &&
+    Math.abs(a.right - b.right) <= 1.5 &&
+    Math.abs(a.top - b.top) <= 1.5 &&
+    Math.abs(a.bottom - b.bottom) <= 1.5
+  );
 }
 
 export function previewFocusShownShare(

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "tableId": "aoe2de-xs-technology-counts-v1",
+  "counts": [
+    {
+      "contentPackId": "aoe2de-101.103.48987-complete-v1",
+      "technologyCount": 1510
+    },
+    {
+      "contentPackId": "aoe2de-101.103.54800-complete-v1",
+      "technologyCount": 1510
+    }
+  ]
+}

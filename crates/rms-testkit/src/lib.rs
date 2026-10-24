@@ -446,6 +446,9 @@ impl GenerationBackend for SyntheticGenerationBackend {
                 counters: BTreeMap::from([("rng-checkpoints".to_owned(), 2)]),
             },
             provenance,
+            player_starts: Vec::new(),
+            placement_records: Vec::new(),
+            omitted_placement_records: 0,
         };
         map.finalize_semantic_hash()?;
         map.validate()?;

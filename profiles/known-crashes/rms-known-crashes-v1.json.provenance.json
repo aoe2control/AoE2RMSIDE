@@ -1,0 +1,22 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2de-rms-known-crashes-v1",
+  "files": [
+    {
+      "path": "profiles/known-crashes/rms-known-crashes-v1.json",
+      "sha256": "8dbfbc5b834a3bf5ea14396e20c0d2aec3a39e89d8f19ab9a7a89ec7fd2a0316",
+      "authorship": "Independently written catalogue of the conditions under which the game itself crashes on a random map script: stable ids, plain causes and fixes, what each crash depends on, where the IDE detects it, and the evidence quality per behavior profile. Written in the project's own words from the project's own observations of the game, in play and in its code.",
+      "license": "Independent text under the repository license; command and section names are factual identifiers",
+      "sourceClassification": "sanitized-observation",
+      "created": "2026-10-21",
+      "containsGameContent": false,
+      "transformation": "Publishable conclusions only: no game file, address, crash dump, session record, case identity, or community script name is reproduced; those stay in the private ledger under the same ids. The SHA-256 covers the file with LF line endings.",
+      "reviewer": "Reviewed and approved by the project maintainer on 2026-10-21"
+    }
+  ]
+}

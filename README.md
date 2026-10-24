@@ -29,6 +29,15 @@ ZIP from the releases page.
 
 To build it yourself, follow [BUILDING.md](BUILDING.md).
 
+## Check your maps
+
+Besides the preview, AoE2RMSIDE warns where the game itself is known to crash
+on a script and says how to avoid it, and, with your game folder linked,
+shows what your map's XS files do when the game starts. After each Run it can also run a quality check: it
+generates the map on many seeds, optionally with other lobby settings, and
+reports unfair or broken spots, such as a resource one player lacks, with the
+seeds to look at. Map tests check your own rules the same way.
+
 ## Works with external language servers
 
 AoE2RMSIDE has its own RMS and XS analysis. If you have a separate language
@@ -36,6 +45,18 @@ server installed, such as [XS Check](https://github.com/Divy1211/xs-check)
 (it also comes with the XS extension for Visual Studio Code), AoE2RMSIDE finds
 it and uses its errors, completion and hover alongside its own. See
 [External language servers](https://aoe2control.github.io/aoe2rmside/writing-scripts/#external-language-servers).
+
+## Works with AI apps
+
+AI apps on your computer can use AoE2RMSIDE through MCP: read and edit the
+scripts in your open folder, generate maps and look at pictures of them, run
+map tests and the quality check, deploy maps when you ask, and start live
+tests after you allow them. Their edits stay unsaved until you save them. MCP
+is off until you turn on **Enable MCP** under **View → MCP…**, and you allow
+each app once. The scripts, results and map pictures an app asks for go to
+that app, and from there to its provider; AoE2RMSIDE itself sends nothing
+over the internet. See
+[AI apps (MCP)](https://aoe2control.github.io/aoe2rmside/ai-apps/).
 
 ## Learn more
 

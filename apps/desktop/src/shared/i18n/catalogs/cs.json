@@ -138,6 +138,9 @@
     "app-menu.view.map-transitions": {
       "message": "Animovat přechody mapy"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "Kontrolovat XS při spuštění mapy"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Zobrazovat průběžné fáze generování"
     },
@@ -170,6 +173,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "Motiv…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "Motiv"
@@ -399,6 +405,9 @@
     "output.source.map-test": {
       "message": "Test mapy"
     },
+    "output.source.quality-check": {
+      "message": "Kontrola kvality"
+    },
     "output.source.deploy": {
       "message": "Nasazení"
     },
@@ -420,8 +429,14 @@
     "output.source.game-textures": {
       "message": "Herní textury"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "Aplikace"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, one {{count} výstupní zpráva} few {{count} výstupní zprávy} many {{count} výstupní zprávy} other {{count} výstupních zpráv}}"
@@ -491,6 +506,162 @@
     },
     "output.constructs.go-to": {
       "message": "Přejít na první použití"
+    },
+    "output.xs-start.summary": {
+      "message": "Kontrola startu XS: {files, list} – spuštěno main() a {rules, plural, one {# pravidlo} few {# pravidla} many {# pravidla} other {# pravidel}} ({steps, plural, one {# krok} few {# kroky} many {# kroku} other {# kroků}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "Kontrola startu XS: {files, list} nemá main(); {rules, plural, =0 {nespuštěno žádné pravidlo} one {spuštěno # pravidlo} few {spuštěna # pravidla} many {spuštěno # pravidla} other {spuštěno # pravidel}} ({steps, plural, one {# krok} few {# kroky} many {# kroku} other {# kroků}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "Neporovnáno s hrou"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "Neporovnáno s hrou. Využívá: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "aritmetika celých čísel"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "smíšená celá a desetinná čísla"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "čísla jako text"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "textové funkce"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "výchozí hodnoty polí"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "pořadí pravidel"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "návěští a goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "počáteční hodnoty"
+    },
+    "output.xs-start.chat": {
+      "message": "Chat: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Gaia} one {Hráč {player}} few {Hráč {player}} many {Hráč {player}} other {Hráč {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "jídlo"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "dřevo"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "kámen"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "zlato"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "atribut {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource}: nastaveno na {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "objekt {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "technologie {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: vyzkoumá {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player}: diplomatický postoj ({other}) nastaven na {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: jméno nastaveno na „{text}“"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: název civilizace nastaven na „{text}“"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: barva nastavena na {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: vytvoří {count}× {object} poblíž ({x}, {y}); umístění nekontrolováno"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: vytvoří {count}× {object}; umístění nekontrolováno"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: odstraní {count}× {object}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: přesune {count}× {object} na ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: přesune {count}× {object}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: získá {count}× {object} od: {previous}"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: změní hodnoty ({count}× {object})"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: změní jména nebo popisky ({count}× {object})"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: změní data: {object}; zaznamenáno, nepoužito"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: změní data: {technology}; zaznamenáno, nepoužito"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, one {# volání} few {# volání} many {# volání} other {# volání}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Nálada osvětlení nastavena na {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Změny po tomto řádku nejsou uvedeny."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Změny po zastavení nejsou uvedeny."
+    },
+    "output.xs-start.skipped": {
+      "message": "Kontrola startu XS přeskočena: {file} obsahuje {count, plural, one {# chybu} few {# chyby} many {# chyby} other {# chyb}} (viz Problémy)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "Propojte složku hry, abyste mohli spustit kontrolu startu XS"
+    },
+    "output.xs-start.omitted": {
+      "message": "Nejsou uvedeny všechny výsledky kontroly startu XS"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Vynecháno: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, one {# nález} few {# nálezy} many {# nálezu} other {# nálezů}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, one {# řádek chatu} few {# řádky chatu} many {# řádku chatu} other {# řádků chatu}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, one {# změna} few {# změny} many {# změny} other {# změn}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, one {# zaznamenané volání} few {# zaznamenaná volání} many {# zaznamenaného volání} other {# zaznamenaných volání}}"
     },
     "output.constructs.more": {
       "message": "další: {count}"
@@ -597,11 +768,95 @@
     "run-menu.run-on-edit": {
       "message": "Při úpravě"
     },
+    "run-menu.quality-check": {
+      "message": "Kontrola kvality"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Semínka ke kontrole"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Kritéria"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Vyberte, co má kontrola kvality posuzovat"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Jiná nastavení herní místnosti"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Zkontroluje i mapy Drobná 1v1, Střední 2v2 a Obrovská 4v4, vždy 10 semínek"
+    },
+    "quality.case.generation": {
+      "message": "Generování"
+    },
+    "quality.case.start-resources": {
+      "message": "Suroviny u startu"
+    },
+    "quality.case.resource-distances": {
+      "message": "Vzdálenosti surovin"
+    },
+    "quality.case.shared-resources": {
+      "message": "Sdílené suroviny"
+    },
+    "quality.case.wood": {
+      "message": "Dřevo"
+    },
+    "quality.case.trapped": {
+      "message": "Uzavřené suroviny"
+    },
+    "quality.case.paths": {
+      "message": "Cesty"
+    },
+    "quality.case.building-space": {
+      "message": "Prostor pro stavby"
+    },
+    "quality.case.hills": {
+      "message": "Kopce"
+    },
+    "quality.case.water": {
+      "message": "Voda"
+    },
+    "quality.case.spacing": {
+      "message": "Rozestupy"
+    },
+    "quality.case.chokepoints": {
+      "message": "Úzká místa"
+    },
+    "quality.case.variation": {
+      "message": "Proměnlivost"
+    },
+    "quality.case.looks": {
+      "message": "Vzhled"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "{bad} z {of} map{metric, select, yes { · medián {p50}, 95. percentil {p95}, nejvyšší {max} {unit}} other {}}{worst, select, yes { · {count, plural, one {nejhorší semínko} few {nejhorší semínka} many {nejhorší semínka} other {nejhorší semínka}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "Prošlo: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, one {Další # nález není uveden} few {Další # nálezy nejsou uvedeny} many {Dalšího # nálezu není uvedeno} other {Dalších # nálezů není uvedeno}}"
+    },
+    "quality.failed": {
+      "message": "Kontrolu kvality se nepodařilo spustit"
+    },
     "run-menu.preset.default-name": {
       "message": "Konfig"
     },
     "run-menu.preset.numbered-name": {
       "message": "Konfig {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Testovací konfig"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Zpět na konfiguraci {name}"
     },
     "run-menu.preset.settings": {
       "message": "Nastavení konfigurace náhledu"
@@ -626,6 +881,9 @@
     },
     "run-menu.preset.delete": {
       "message": "Smazat {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "Duplikovat {name}"
     },
     "run-menu.preset.delete.title": {
       "message": "Smazat konfiguraci {name}?"
@@ -813,6 +1071,9 @@
     "run-menu.fixture.needs-source": {
       "message": "Vývojové ukázky vyžadují neprázdný skript .rms nebo .rms2"
     },
+    "mcp.run.settings-applied": {
+      "message": "Nastaveno aplikací {app}: {settings, list, unit}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Náhodné civilizace pro tento náhled: {players, list, unit}"
     },
@@ -830,6 +1091,9 @@
     },
     "run-menu.result.failed": {
       "message": "Neúspěch"
+    },
+    "run-menu.result.warnings": {
+      "message": "Varování"
     },
     "run-menu.result.passed": {
       "message": "Úspěch"
@@ -2694,6 +2958,9 @@
     "lint-rule.RMS4011.title": {
       "message": "Název nemusí být definován"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "Hra zde může spadnout"
+    },
     "map-icon.generate": {
       "message": "Generovat ikonu mapy"
     },
@@ -3060,6 +3327,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "Nález znovu vygenerován se zaznamenaným semínkem {seed}"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Nález znovu vygenerován se zaznamenaným semínkem {seed}, nyní uzamčeným pro další spuštění"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Nález znovu vygenerován se zaznamenaným semínkem {seed}, nyní uzamčeným v dočasné konfiguraci {name}"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "Složku hry se nepodařilo odpojit"
     },
@@ -3092,6 +3365,336 @@
     },
     "code-editor.tab.close": {
       "message": "Zavřít {name}"
+    },
+    "mcp.tab.edited-by": {
+      "message": "Upraveno aplikací {app}, neuloženo"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "Zavřít nastavení MCP"
+    },
+    "mcp.dialog.description": {
+      "message": "Umožněte aplikacím AI v tomto počítači číst, upravovat a kontrolovat skripty v otevřené složce, generovat mapy a spouštět testy map."
+    },
+    "mcp.enable.label": {
+      "message": "Povolit MCP"
+    },
+    "mcp.save.label": {
+      "message": "Povolit aplikacím AI ukládat soubory"
+    },
+    "mcp.save.note": {
+      "message": "Když je vypnuto, změny od AI zůstanou neuložené, dokud je neuložíte."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "MCP se nepodařilo spustit, protože jiný program používá jeho název připojení."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "MCP se nepodařilo spustit, protože se nepodařilo zapsat jeho soubor s klíčem."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "MCP se nepodařilo spustit, protože jeho seznam nástrojů neodpovídá této verzi AoE2RMSIDE. Přeinstalujte AoE2RMSIDE."
+    },
+    "mcp.unavailable.internal": {
+      "message": "MCP se nepodařilo spustit kvůli neočekávané chybě."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Chcete-li to zkusit znovu, vypněte a znovu zapněte Povolit MCP."
+    },
+    "mcp.apps.title": {
+      "message": "Povolené aplikace"
+    },
+    "mcp.apps.empty": {
+      "message": "Zatím žádné aplikace. Aplikace se zeptá při prvním připojení."
+    },
+    "mcp.apps.connected": {
+      "message": "Připojeno"
+    },
+    "mcp.apps.last-used": {
+      "message": "Naposledy použito {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "Odebrat"
+    },
+    "mcp.apps.remove-label": {
+      "message": "Odebrat {app}"
+    },
+    "mcp.setup.app": {
+      "message": "Aplikace AI"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "Jiná aplikace"
+    },
+    "mcp.setup.text-label": {
+      "message": "Text nastavení"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Přidejte to do konfigurace Claude Desktop (Settings > Developer > Edit Config) a poté Claude Desktop restartujte."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Spusťte tento příkaz v terminálu."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Spusťte tento příkaz v terminálu."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Přidejte tento program jako místní server MCP."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Nejprve zapněte Povolit MCP."
+    },
+    "mcp.setup.copy": {
+      "message": "Kopírovat nastavení"
+    },
+    "mcp.setup.copied": {
+      "message": "Nastavení zkopírováno"
+    },
+    "mcp.connect.row": {
+      "message": "Připojit aplikaci AI…"
+    },
+    "mcp.connect.title": {
+      "message": "Připojit aplikaci AI"
+    },
+    "mcp.connect.close-label": {
+      "message": "Zavřít"
+    },
+    "mcp.connect.description": {
+      "message": "Vložte tento prompt do své aplikace AI. Sama se nastaví a dá vám vědět, pokud jí něco brání."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Prompt pro aplikaci AI"
+    },
+    "mcp.connect.copy": {
+      "message": "Kopírovat prompt"
+    },
+    "mcp.connect.copied": {
+      "message": "Prompt zkopírován"
+    },
+    "mcp.connect.by-hand": {
+      "message": "Nastavit ručně"
+    },
+    "mcp.pairing.title": {
+      "message": "Povolit aplikaci {app} používat AoE2RMSIDE?"
+    },
+    "mcp.pairing.description": {
+      "message": "Aplikace by mohla upravovat skripty v otevřené složce, generovat mapy, spouštět testy a nasazovat mody. Spuštěno programem {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "Aplikace by mohla upravovat skripty v otevřené složce, generovat mapy, spouštět testy a nasazovat mody."
+    },
+    "mcp.pairing.name-note": {
+      "message": "Tento název si aplikace dává sama: povolte ji, jen pokud jste ji nastavili vy. Nahrazení modu a test ve hře budou i nadále vyžadovat váš souhlas."
+    },
+    "mcp.pairing.allow": {
+      "message": "Povolit"
+    },
+    "mcp.pairing.deny": {
+      "message": "Nepovolit"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "Nahradit mod „{mod}“?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "Aplikace {app} chce nasadit {file} do tohoto modu. Tento mod v této relaci nenasadila, takže by se jeho soubory nahradily."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Nahradit"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "Aplikace {app} požádala o nasazení {file} jako modu „{mod}“."
+    },
+    "mcp.deploy.notice": {
+      "message": "Aplikace {app} nasadila {file} jako mod „{mod}“."
+    },
+    "mcp.live.title": {
+      "message": "Spustit test ve hře pro aplikaci {app}?"
+    },
+    "mcp.live.description": {
+      "message": "Aplikace {app} chce otestovat {file} se semínkem {seed} ve spuštěné hře. Aktuální zápas skončí."
+    },
+    "mcp.live.session": {
+      "message": "Povolit pro tuto relaci"
+    },
+    "mcp.live.start": {
+      "message": "Spustit test ve hře"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, one {# aplikace AI} few {# aplikace AI} many {# aplikace AI} other {# aplikací AI}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app}: připojeno"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, one {Připojena # aplikace AI} few {Připojeny # aplikace AI} many {Připojeno # aplikace AI} other {Připojeno # aplikací AI}}"
+    },
+    "mcp.status.working": {
+      "message": "{app} pracuje"
+    },
+    "mcp.status.tooltip": {
+      "message": "Připojeno přes MCP. Kliknutím otevřete nastavení MCP."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "Byly nalezeny chyby a odeslány aplikaci AI."
+    },
+    "mcp.output.connected": {
+      "message": "{app}: připojeno"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app}: odpojeno"
+    },
+    "mcp.output.denied": {
+      "message": "{app}: připojení nebylo povoleno"
+    },
+    "mcp.output.busy": {
+      "message": "{app}: požádáno o počkání, běží {running}"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: {tool} bylo odmítnuto"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: {tool} bylo zrušeno"
+    },
+    "mcp.action.status": {
+      "message": "přečten stav IDE"
+    },
+    "mcp.action.list-files": {
+      "message": "vypsány soubory"
+    },
+    "mcp.action.read-file": {
+      "message": "přečten soubor {file}"
+    },
+    "mcp.action.edit-file": {
+      "message": "upraven soubor {file}"
+    },
+    "mcp.action.create-file": {
+      "message": "vytvořen soubor {file}"
+    },
+    "mcp.action.save-file": {
+      "message": "uložen soubor {file}"
+    },
+    "mcp.action.problems": {
+      "message": "zkontrolován soubor {file}"
+    },
+    "mcp.action.generate": {
+      "message": "vygenerována mapa ze souboru {file}, semínko {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "zobrazena mapa ze souboru {file} v náhledu"
+    },
+    "mcp.action.inspect": {
+      "message": "prohlédnuta vygenerovaná mapa"
+    },
+    "mcp.action.picture": {
+      "message": "získán obrázek {file}"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, one {získány obrázky {file} pro # semínko} few {získány obrázky {file} pro # semínka} many {získány obrázky {file} pro # semínka} other {získány obrázky {file} pro # semínek}}"
+    },
+    "mcp.action.map-test": {
+      "message": "spuštěn test mapy {file}"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, one {spuštěna kontrola kvality {file} (# semínko)} few {spuštěna kontrola kvality {file} (# semínka)} many {spuštěna kontrola kvality {file} (# semínka)} other {spuštěna kontrola kvality {file} (# semínek)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "zjištěn stav běžícího testu"
+    },
+    "mcp.action.details": {
+      "message": "přečteny podrobnosti výsledku"
+    },
+    "mcp.action.deploy": {
+      "message": "nasazen soubor {file} jako mod „{mod}“"
+    },
+    "mcp.action.live-test": {
+      "message": "spuštěn test ve hře pro {file}"
+    },
+    "mcp.action.guide": {
+      "message": "přečten průvodce"
+    },
+    "mcp.action.reference": {
+      "message": "vyhledána dokumentace k {name}"
+    },
+    "mcp.action.tool": {
+      "message": "použit nástroj {tool}"
+    },
+    "mcp.refusal.waiting": {
+      "message": "AoE2RMSIDE čeká na vaši odpověď."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "Tuto aplikaci jste nepovolili."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "Požadavek byl neplatný."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "Není otevřena žádná složka."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "Soubor je mimo otevřenou složku, nebo jej AoE2RMSIDE chrání."
+    },
+    "mcp.refusal.file-type": {
+      "message": "Aplikace AI nemohou používat tento typ souboru."
+    },
+    "mcp.refusal.not-found": {
+      "message": "Soubor nebyl nalezen."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "Soubor již existuje."
+    },
+    "mcp.refusal.too-large": {
+      "message": "Soubor je příliš velký."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "Soubor není textový."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "Text ke změně chyběl, nebo se vyskytoval vícekrát."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "Volba Povolit aplikacím AI ukládat soubory je vypnutá."
+    },
+    "mcp.refusal.busy": {
+      "message": "Právě běží něco jiného."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "Vygenerovaná mapa už není uchována."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "Test už není uchován."
+    },
+    "mcp.refusal.stopped": {
+      "message": "Zastavili jste to."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "Aplikace AI požadavek zrušila."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "Odmítli jste."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "Hra může na této mapě spadnout."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "Hra není připravena na test ve hře."
+    },
+    "mcp.refusal.too-many": {
+      "message": "Aplikace odeslala příliš mnoho požadavků."
+    },
+    "mcp.refusal.internal": {
+      "message": "V AoE2RMSIDE došlo k chybě."
     },
     "code-editor.tab.unsaved": {
       "message": "Neuložené změny"
@@ -5127,6 +5730,9 @@
     "app-update.dialog.unsaved": {
       "message": "Pokud dokumenty obsahují neuložené změny, nejprve se vás na ně zeptá."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Připojené aplikace AI během aktualizace ztratí připojení. Poté je restartujte."
+    },
     "app-update.dialog.release-notes": {
       "message": "Poznámky k vydání"
     },
@@ -5264,6 +5870,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "Pro soubory {language} se používá vestavěná analýza"
+    },
+    "known-crash.headline": {
+      "message": "Hra na této mapě spadne"
+    },
+    "known-crash.headline.possible": {
+      "message": "Hra zde může spadnout"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "override_actor_radius_if_required u objektu, který je pro hledání příliš malý"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required přesouvá objekt, který se nevejde tam, kam byl umístěn, a objekt je pro hledání volného políčka hrou příliš malý."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "Odebrat override_actor_radius_if_required z tohoto objektu."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "Řádek v bloku spojení nemá terén"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Uvnitř složených závorek příkazu spojení čte hra z každého řádku terén a {word} žádný nemá."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Přesunout řádek z bloku spojení před příkazy spojení."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "Spojení vede k oblasti mimo mapu"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "Spojení začíná nebo končí v oblasti, jejíž poloha při této velikosti mapy leží mimo mapu."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "Udržet land_position uvnitř mapy při každé velikosti mapy."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "Definovaný název se v <CLIFF_GENERATION> provede jako cliff_type"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} je definovaný název na místě, kde může stát příkaz, takže jej hra provede jako {command} bez hodnoty."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Odebrat definovaný název, nebo napsat příkaz, který měl být použit."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "Definovaný název se ve složených závorkách create_elevation provede jako base_terrain nebo base_layer"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} je definovaný název na místě, kde může stát příkaz, takže jej hra provede jako {command} bez hodnoty."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Odebrat definovaný název, nebo napsat příkaz, který měl být použit."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "Definovaný název se provede jako ai_info_map_type, effect_amount nebo effect_percent"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} je definovaný název na místě, kde může stát příkaz, takže jej hra provede jako {command} bez hodnoty."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Odebrat definovaný název, nebo napsat příkaz, který měl být použit."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "Definovaný název se v <PLAYER_SETUP> provede jako guard_state"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} je definovaný název na místě, kde může stát příkaz, takže jej hra provede jako {command} bez hodnoty."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Odebrat definovaný název, nebo napsat příkaz, který měl být použit."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "Definovaný název se v <LAND_GENERATION> provede jako base_terrain nebo base_layer"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} je definovaný název na místě, kde může stát příkaz, takže jej hra provede jako {command} bez hodnoty."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Odebrat definovaný název, nebo napsat příkaz, který měl být použit."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "Definovaný název se ve složených závorkách oblasti provede jako terrain_type nebo assign_to"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} je definovaný název na místě, kde může stát příkaz, takže jej hra provede jako {command} bez hodnoty."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Odebrat definovaný název, nebo napsat příkaz, který měl být použit."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "Definovaný název se ve složených závorkách objektu provede jako terrain_to_place_on, layer_to_place_on nebo second_object"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} je definovaný název na místě, kde může stát příkaz, takže jej hra provede jako {command} bez hodnoty."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Odebrat definovaný název, nebo napsat příkaz, který měl být použit."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "Definovaný název se v <TERRAIN_GENERATION> provede jako create_terrain nebo color_correction"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} je definovaný název na místě, kde může stát příkaz, takže jej hra provede jako {command} bez hodnoty."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Odebrat definovaný název, nebo napsat příkaz, který měl být použit."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Skupinové rozmístění hráčů kolem kruhu nulové délky"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Hráči jsou rozmístěni v týmových skupinách kolem kruhu nulové délky, takže hra dělí nulou."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "add_object bez objektu v pojmenované skupině"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "add_object nemá objekt, přestože je pojmenována skupina, takže hra spadne, když je tato položka vybrána."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "Zadat objekt pro add_object."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "Objekt je umístěn do oblasti mimo mapu"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "Objekt umisťovaný pro každou oblast zvlášť je umístěn do oblasti, jejíž poloha při této velikosti mapy leží mimo mapu."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "Udržet land_position uvnitř mapy při každé velikosti mapy."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size zmenší mapu po vytvoření oblastí hráčů"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size zmenší mapu až po vytvoření oblastí hráčů, takže hráč může začít mimo mapu."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "Přesunout override_map_size před create_player_lands."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "Mapa používá terén bez dat pohybu"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "Mapa používá terén {terrain}, který data pohybu hry nepokrývají, takže hra během zápasu spadne."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Použít terén, který data pohybu hry pokrývají."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "S jiným semínkem nebo jiným nastavením herní místnosti může hra na této mapě spadnout. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Přesto nasadit"
+    },
+    "live-test.crash-warning.title": {
+      "message": "Hra může na této mapě spadnout"
+    },
+    "live-test.crash-warning.description": {
+      "message": "Toto semínko funguje, ale s jiným semínkem nebo jiným nastavením herní místnosti může hra na této mapě spadnout. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Přesto spustit"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "Hra může na této mapě spadnout, proto se test ve hře nespustil."
+    },
+    "test-results.crashes.title": {
+      "message": "Pády hry"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, one {# mapa} few {# mapy} many {# mapy} other {# map}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "Hra spadne na {maps, number} z {sampled, plural, one {# mapy} few {# map} many {# mapy} other {# map}}"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "Nepodařilo se vygenerovat {maps, plural, one {# mapu} few {# mapy} many {# mapy} other {# map}} z {sampled, number}"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, one {Semínko} few {Semínka} many {Semínka} other {Semínka}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, one {Semínko} few {Semínka} many {Semínka} other {Semínka}} {seeds, list, unit} a další: {omitted, number}"
+    },
+    "test-results.crashes.source": {
+      "message": "Pád hry"
+    },
+    "test-results.crashes.show": {
+      "message": "Zobrazit pády hry"
+    },
+    "test-results.crashes.hide": {
+      "message": "Skrýt pády hry"
+    },
+    "test-results.quality.summary": {
+      "message": "· Kontrola kvality {map} · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, one {# mapa} few {# mapy} many {# mapy} other {# map}} · {failures, plural, one {# selhání} few {# selhání} many {# selhání} other {# selhání}} · {warnings, plural, one {# varování} few {# varování} many {# varování} other {# varování}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, one {# nález} few {# nálezy} many {# nálezu} other {# nálezů}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "Zobrazit nálezy kritéria {case}"
+    },
+    "test-results.quality.hide-case": {
+      "message": "Skrýt nálezy kritéria {case}"
+    },
+    "test-results.quality.case-findings": {
+      "message": "Nálezy kritéria {case}"
+    },
+    "test-results.quality.no-findings": {
+      "message": "Všechna kritéria prošla na {maps, plural, one {# mapě} few {# mapách} many {# mapy} other {# mapách}}"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, one {# nález kontroly kvality} few {# nálezy kontroly kvality} many {# nálezu kontroly kvality} other {# nálezů kontroly kvality}}"
     }
   }
 }

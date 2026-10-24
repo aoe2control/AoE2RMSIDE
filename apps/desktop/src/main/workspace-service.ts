@@ -65,7 +65,7 @@ import {
   isSourceNewlineStyle,
 } from './source-codec';
 import { StandardResourcePolicy } from './standard-resource-policy';
-import { readFileBounded } from './bounded-file';
+import { readFileBounded, renameReplacing } from './bounded-file';
 import { DesktopError } from '../shared/desktop-error';
 import { isReservedWindowsDeviceName } from './windows-names';
 import type { WorkspaceTreeChange } from '../shared/workspace-tree-change';
@@ -593,7 +593,10 @@ export class WorkspaceService {
     const capability = [...this.openedDocuments.values()].find(
       (candidate) => pathKey(candidate.path) === pathKey(scriptPath),
     );
-    if (!capability || !isMapTestPath(capability.path)) {
+    if (
+      !capability ||
+      (!isMapTestPath(capability.path) && !isSupportedSourcePath(capability.path))
+    ) {
       if (this.activeWorkspaceRoot && isPathInside(scriptPath, this.activeWorkspaceRoot)) {
         return this.activeWorkspaceRoot;
       }
@@ -2114,6 +2117,23 @@ export class WorkspaceService {
     }
   }
 
+  isProtectedPath(targetPath: string): boolean {
+    return this.sourceKind(targetPath) === 'protected';
+  }
+
+  grantWorkspaceFolder(canonicalPath: string): string {
+    const root = this.activeWorkspaceRoot;
+    if (!root || !isPathInside(canonicalPath, root) || this.isProtectedPath(canonicalPath)) {
+      throw new DesktopError('files.outside-folder', 'folder is outside the authorized workspace');
+    }
+    return this.grantEntry(
+      normalizeAbsolutePath(canonicalPath),
+      'folder',
+      true,
+      pathKey(canonicalPath) === pathKey(root),
+    ).id;
+  }
+
   private sourceKind(targetPath: string): WorkspaceSourceKind {
     return [
       ...this.configuredProtectedRoots,
@@ -2319,40 +2339,6 @@ export async function atomicReplaceFile(targetPath: string, bytes: Uint8Array): 
     await handle?.close().catch(() => undefined);
     await rm(temporaryPath, { force: true }).catch(() => undefined);
     throw error;
-  }
-}
-
-const transientReplaceErrors = new Set(['EPERM', 'EACCES', 'EBUSY']);
-
-export interface RenameReplacingOptions {
-  renameFile?: (source: string, target: string) => Promise<void>;
-  wait?: (milliseconds: number) => Promise<void>;
-  retryMilliseconds?: number;
-}
-
-export async function renameReplacing(
-  source: string,
-  target: string,
-  {
-    renameFile = rename,
-    wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds)),
-    retryMilliseconds = 2_000,
-  }: RenameReplacingOptions = {},
-): Promise<void> {
-  let waited = 0;
-  let pause = 5;
-  for (;;) {
-    try {
-      await renameFile(source, target);
-      return;
-    } catch (error) {
-      const code = (error as NodeJS.ErrnoException | null)?.code;
-      if (!code || !transientReplaceErrors.has(code) || waited >= retryMilliseconds) throw error;
-      const delay = Math.min(pause, retryMilliseconds - waited);
-      await wait(delay);
-      waited += delay;
-      pause = Math.min(pause * 2, 100);
-    }
   }
 }
 

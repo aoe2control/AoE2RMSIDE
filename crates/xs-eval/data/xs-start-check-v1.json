@@ -1,0 +1,1225 @@
+{
+  "schemaVersion": "1.0.0",
+  "tableId": "aoe2de-xs-start-check-v1",
+  "catalogId": "aoe2de-xs-builtins-v1",
+  "calls": [
+    {
+      "name": "abs",
+      "class": "pure"
+    },
+    {
+      "name": "acos",
+      "class": "pure"
+    },
+    {
+      "name": "asin",
+      "class": "pure"
+    },
+    {
+      "name": "atan",
+      "class": "pure"
+    },
+    {
+      "name": "atan2",
+      "class": "pure"
+    },
+    {
+      "name": "atan2v",
+      "class": "pure"
+    },
+    {
+      "name": "bin",
+      "class": "pure"
+    },
+    {
+      "name": "bitAnd",
+      "class": "pure"
+    },
+    {
+      "name": "bitCastToFloat",
+      "class": "pure"
+    },
+    {
+      "name": "bitCastToInt",
+      "class": "pure"
+    },
+    {
+      "name": "bitLsh",
+      "class": "pure"
+    },
+    {
+      "name": "bitNot",
+      "class": "pure"
+    },
+    {
+      "name": "bitOr",
+      "class": "pure"
+    },
+    {
+      "name": "bitRsh",
+      "class": "pure"
+    },
+    {
+      "name": "bitXor",
+      "class": "pure"
+    },
+    {
+      "name": "ceil",
+      "class": "pure"
+    },
+    {
+      "name": "chr",
+      "class": "pure"
+    },
+    {
+      "name": "cos",
+      "class": "pure"
+    },
+    {
+      "name": "degrees",
+      "class": "pure"
+    },
+    {
+      "name": "dist",
+      "class": "pure"
+    },
+    {
+      "name": "exp",
+      "class": "pure"
+    },
+    {
+      "name": "floor",
+      "class": "pure"
+    },
+    {
+      "name": "fstr",
+      "class": "pure"
+    },
+    {
+      "name": "hex",
+      "class": "pure"
+    },
+    {
+      "name": "ln",
+      "class": "pure"
+    },
+    {
+      "name": "log10",
+      "class": "pure"
+    },
+    {
+      "name": "log2",
+      "class": "pure"
+    },
+    {
+      "name": "ord",
+      "class": "pure"
+    },
+    {
+      "name": "pow",
+      "class": "pure"
+    },
+    {
+      "name": "radians",
+      "class": "pure"
+    },
+    {
+      "name": "round",
+      "class": "pure"
+    },
+    {
+      "name": "sin",
+      "class": "pure"
+    },
+    {
+      "name": "sqrt",
+      "class": "pure"
+    },
+    {
+      "name": "strCharAt",
+      "class": "pure"
+    },
+    {
+      "name": "strContains",
+      "class": "pure"
+    },
+    {
+      "name": "strEndsWith",
+      "class": "pure"
+    },
+    {
+      "name": "strIndexOf",
+      "class": "pure"
+    },
+    {
+      "name": "strInsert",
+      "class": "pure"
+    },
+    {
+      "name": "strJoin",
+      "class": "pure"
+    },
+    {
+      "name": "strLastIndexOf",
+      "class": "pure"
+    },
+    {
+      "name": "strLen",
+      "class": "pure"
+    },
+    {
+      "name": "strRemove",
+      "class": "pure"
+    },
+    {
+      "name": "strRemovePrefix",
+      "class": "pure"
+    },
+    {
+      "name": "strRemoveSuffix",
+      "class": "pure"
+    },
+    {
+      "name": "strReplace",
+      "class": "pure"
+    },
+    {
+      "name": "strReverse",
+      "class": "pure"
+    },
+    {
+      "name": "strSplit",
+      "class": "pure"
+    },
+    {
+      "name": "strStartsWith",
+      "class": "pure"
+    },
+    {
+      "name": "strSubstring",
+      "class": "pure"
+    },
+    {
+      "name": "strToFloat",
+      "class": "pure"
+    },
+    {
+      "name": "strToInt",
+      "class": "pure"
+    },
+    {
+      "name": "strToLower",
+      "class": "pure"
+    },
+    {
+      "name": "strToUpper",
+      "class": "pure"
+    },
+    {
+      "name": "strTrim",
+      "class": "pure"
+    },
+    {
+      "name": "strTrimEnd",
+      "class": "pure"
+    },
+    {
+      "name": "strTrimStart",
+      "class": "pure"
+    },
+    {
+      "name": "tan",
+      "class": "pure"
+    },
+    {
+      "name": "xsAddRuntimeEvent",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsArrayCreateBool",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayCreateFloat",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayCreateInt",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayCreateString",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayCreateVector",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayGetBool",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayGetFloat",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayGetInt",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayGetSize",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayGetString",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayGetVector",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayResizeBool",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayResizeFloat",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayResizeInt",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayResizeString",
+      "class": "pure"
+    },
+    {
+      "name": "xsArrayResizeVector",
+      "class": "pure"
+    },
+    {
+      "name": "xsArraySetBool",
+      "class": "pure"
+    },
+    {
+      "name": "xsArraySetFloat",
+      "class": "pure"
+    },
+    {
+      "name": "xsArraySetInt",
+      "class": "pure"
+    },
+    {
+      "name": "xsArraySetString",
+      "class": "pure"
+    },
+    {
+      "name": "xsArraySetVector",
+      "class": "pure"
+    },
+    {
+      "name": "xsBreakPoint",
+      "class": "pure"
+    },
+    {
+      "name": "xsBuildUnit",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsCeilToInt",
+      "class": "pure"
+    },
+    {
+      "name": "xsChatData",
+      "class": "chat"
+    },
+    {
+      "name": "xsClearInstructions",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsClearTimer",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsCloseFile",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsCreateFile",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsCreateUnit",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsDeclareVictory",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsDisableRule",
+      "class": "pure"
+    },
+    {
+      "name": "xsDisableRuleGroup",
+      "class": "pure"
+    },
+    {
+      "name": "xsDisableSelf",
+      "class": "pure"
+    },
+    {
+      "name": "xsDisplayInstructions",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsDisplayTimer",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsDoesUnitExist",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsDumpArrays",
+      "class": "pure"
+    },
+    {
+      "name": "xsEffectAmount",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsEnableRule",
+      "class": "pure"
+    },
+    {
+      "name": "xsEnableRuleGroup",
+      "class": "pure"
+    },
+    {
+      "name": "xsFlashUnit",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsGetAiScriptGoal",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsGetAiSignal",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsGetCivName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetColorMood",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetContextPlayer",
+      "class": "pure"
+    },
+    {
+      "name": "xsGetDamageClassName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetDataTypeSize",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsGetDifficulty",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetDiplomacy",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetFilePosition",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsGetFileSize",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsGetFunctionID",
+      "class": "pure"
+    },
+    {
+      "name": "xsGetGameTime",
+      "class": "mocked",
+      "mock": "time"
+    },
+    {
+      "name": "xsGetGarrisonedInUnitId",
+      "class": "startDefault"
+    },
+    {
+      "name": "xsGetGarrisonedUnitIds",
+      "class": "startDefault"
+    },
+    {
+      "name": "xsGetGoal",
+      "class": "refused",
+      "reason": "notInMapScripts"
+    },
+    {
+      "name": "xsGetGroupMoveTarget",
+      "class": "startDefault"
+    },
+    {
+      "name": "xsGetHandicapMultiplier",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetLocalPlayerId",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsGetLocale",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetMapHeight",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetMapID",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetMapName",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetMapSeed",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetMapTileAttribute",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetMapWidth",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetNumPlayers",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetObjectAttribute",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetObjectAttributeName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetObjectClass",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetObjectCopyId",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetObjectCount",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetObjectCountTotal",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetObjectName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetObjectTaskCount",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetObjectType",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetPlayerAttributeName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetPlayerCivName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetPlayerCivilization",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetPlayerColor",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetPlayerColorTag",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetPlayerInGame",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetPlayerName",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetPlayerNumberOfObjects",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetPlayerNumberOfTechs",
+      "class": "refused",
+      "reason": "technologyData"
+    },
+    {
+      "name": "xsGetPlayerType",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetPlayerUnitIds",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetRandomNumber",
+      "class": "random"
+    },
+    {
+      "name": "xsGetRandomNumberLH",
+      "class": "random"
+    },
+    {
+      "name": "xsGetRandomNumberMax",
+      "class": "random"
+    },
+    {
+      "name": "xsGetStrategicNumber",
+      "class": "refused",
+      "reason": "notInMapScripts"
+    },
+    {
+      "name": "xsGetString",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetTaskAmount",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetTechAttribute",
+      "class": "refused",
+      "reason": "technologyData"
+    },
+    {
+      "name": "xsGetTechName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetTechState",
+      "class": "refused",
+      "reason": "technologyData"
+    },
+    {
+      "name": "xsGetTime",
+      "class": "mocked",
+      "mock": "time"
+    },
+    {
+      "name": "xsGetTimerTimeRemaining",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsGetTurn",
+      "class": "mocked",
+      "mock": "time"
+    },
+    {
+      "name": "xsGetUnitAttribute",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitAttributeHeld",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitAttributeTypesHeld",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitBuildPoints",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitCaption",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetUnitCharge",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitCivName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetUnitClass",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetUnitCopyId",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitGatherPoint",
+      "class": "startDefault"
+    },
+    {
+      "name": "xsGetUnitGroupId",
+      "class": "startDefault"
+    },
+    {
+      "name": "xsGetUnitHitpoints",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitMoveTarget",
+      "class": "startDefault"
+    },
+    {
+      "name": "xsGetUnitName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetUnitObjectId",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetUnitOwner",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetUnitPlayerName",
+      "class": "refused",
+      "reason": "textTable"
+    },
+    {
+      "name": "xsGetUnitPosition",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetUnitProperty",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitTargetUnitId",
+      "class": "startDefault"
+    },
+    {
+      "name": "xsGetUnitTaskCount",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetUnitType",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsGetVictoryCondition",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetVictoryConditionForSecondaryGameMode",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetVictoryPlayer",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsGetVictoryPlayerForSecondaryGameMode",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsGetVictoryTime",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetVictoryTimeForSecondaryGameMode",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetVictoryType",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsGetWorldPlayerId",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsGetWorldTime",
+      "class": "mocked",
+      "mock": "time"
+    },
+    {
+      "name": "xsHasResearchedLocalTechnology",
+      "class": "refused",
+      "reason": "technologyData"
+    },
+    {
+      "name": "xsInitiateResearch",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsIsObjectAvailable",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsIsObjectValid",
+      "class": "previewRead"
+    },
+    {
+      "name": "xsIsRuleEnabled",
+      "class": "pure"
+    },
+    {
+      "name": "xsIsRuleGroupEnabled",
+      "class": "pure"
+    },
+    {
+      "name": "xsModifyObjectTasks",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsModifyUnitTasks",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsObjectHasAction",
+      "class": "refused",
+      "reason": "objectData"
+    },
+    {
+      "name": "xsObjectTaskAmount",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsOffsetFilePosition",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsOpenFile",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsPlaySound",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsPlayerAttribute",
+      "class": "refused",
+      "reason": "lobbySetting"
+    },
+    {
+      "name": "xsReadFloat",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsReadInt",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsReadString",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsReadVector",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsRemoveTask",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsRemoveUnit",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsResearchLocalTechnology",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsResearchTechnology",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsResetTaskAmount",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSendChat",
+      "class": "chat"
+    },
+    {
+      "name": "xsSetAiScriptGoal",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsSetAiSignal",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsSetChatToPlayer",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsSetColorMood",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetContextPlayer",
+      "class": "pure"
+    },
+    {
+      "name": "xsSetDiplomacy",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetFilePosition",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsSetGoal",
+      "class": "refused",
+      "reason": "notInMapScripts"
+    },
+    {
+      "name": "xsSetObjectDescription",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetPlayerAttribute",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetPlayerCivName",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetPlayerColor",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetPlayerName",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetRuleMaxInterval",
+      "class": "pure"
+    },
+    {
+      "name": "xsSetRuleMaxIntervalSelf",
+      "class": "pure"
+    },
+    {
+      "name": "xsSetRuleMinInterval",
+      "class": "pure"
+    },
+    {
+      "name": "xsSetRuleMinIntervalSelf",
+      "class": "pure"
+    },
+    {
+      "name": "xsSetRulePriority",
+      "class": "pure"
+    },
+    {
+      "name": "xsSetRulePrioritySelf",
+      "class": "pure"
+    },
+    {
+      "name": "xsSetStrategicNumber",
+      "class": "refused",
+      "reason": "notInMapScripts"
+    },
+    {
+      "name": "xsSetTechDescription",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetTechName",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetTriggerVariable",
+      "class": "refused",
+      "reason": "notInMapScripts"
+    },
+    {
+      "name": "xsSetUnitAttributeHeld",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitBuildPoints",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitCaption",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitCharge",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsSetUnitCivName",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitGatherPoint",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsSetUnitHitpoints",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitName",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitOwner",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitPlayerName",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitPosition",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetUnitProperty",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsSetViewPosition",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsSetZoom",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsStopUnit",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsTask",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsTaskAmount",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsTaskUnits",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsTrainObject",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsTriggerVariable",
+      "class": "refused",
+      "reason": "notInMapScripts"
+    },
+    {
+      "name": "xsUnitTaskAmount",
+      "class": "recordedChange"
+    },
+    {
+      "name": "xsUnsyncGetLocalPlayerId",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsUnsyncGetPlayerSelectedUnitIds",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsUnsyncGetTimerTimeRemaining",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsUnsyncGetViewPosition",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsUnsyncGetZoom",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsUnsyncIsSandboxMode",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsUnsyncIsUnitVisible",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsVectorGetX",
+      "class": "pure"
+    },
+    {
+      "name": "xsVectorGetY",
+      "class": "pure"
+    },
+    {
+      "name": "xsVectorGetZ",
+      "class": "pure"
+    },
+    {
+      "name": "xsVectorLength",
+      "class": "pure"
+    },
+    {
+      "name": "xsVectorNormalize",
+      "class": "pure"
+    },
+    {
+      "name": "xsVectorSet",
+      "class": "pure"
+    },
+    {
+      "name": "xsVectorSetX",
+      "class": "pure"
+    },
+    {
+      "name": "xsVectorSetY",
+      "class": "pure"
+    },
+    {
+      "name": "xsVectorSetZ",
+      "class": "pure"
+    },
+    {
+      "name": "xsWriteFloat",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsWriteInt",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsWriteString",
+      "class": "mocked",
+      "mock": "file"
+    },
+    {
+      "name": "xsWriteVector",
+      "class": "mocked",
+      "mock": "file"
+    }
+  ]
+}

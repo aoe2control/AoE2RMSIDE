@@ -138,6 +138,9 @@
     "app-menu.view.map-transitions": {
       "message": "Анимировать смену карты"
     },
+    "app-menu.view.xs-start-check": {
+      "message": "Проверять XS при запуске карты"
+    },
     "app-menu.view.live-generation-stages": {
       "message": "Показывать этапы создания карты"
     },
@@ -170,6 +173,9 @@
     },
     "app-menu.view.theme-panel": {
       "message": "Тема…"
+    },
+    "app-menu.view.mcp": {
+      "message": "MCP…"
     },
     "app-menu.view.theme": {
       "message": "Тема"
@@ -399,6 +405,9 @@
     "output.source.map-test": {
       "message": "Тест карт"
     },
+    "output.source.quality-check": {
+      "message": "Проверка качества"
+    },
     "output.source.deploy": {
       "message": "Развёртывание"
     },
@@ -420,8 +429,14 @@
     "output.source.game-textures": {
       "message": "Текстуры игры"
     },
+    "output.source.xs": {
+      "message": "XS"
+    },
     "output.source.app": {
       "message": "Приложение"
+    },
+    "output.source.mcp": {
+      "message": "MCP"
     },
     "output.log.label": {
       "message": "{count, plural, one {{count} сообщение вывода} few {{count} сообщения вывода} many {{count} сообщений вывода} other {{count} сообщения вывода}}"
@@ -491,6 +506,162 @@
     },
     "output.constructs.go-to": {
       "message": "Перейти к первому использованию"
+    },
+    "output.xs-start.summary": {
+      "message": "Стартовая проверка XS: {files, list} — выполнены main() и {rules, plural, one {# правило} few {# правила} many {# правил} other {# правила}} ({steps, plural, one {# шаг} few {# шага} many {# шагов} other {# шага}})"
+    },
+    "output.xs-start.summary.no-main": {
+      "message": "Стартовая проверка XS: в {files, list} нет main(); {rules, plural, =0 {правила не выполнены} one {выполнено # правило} few {выполнено # правила} many {выполнено # правил} other {выполнено # правила}} ({steps, plural, one {# шаг} few {# шага} many {# шагов} other {# шага}})"
+    },
+    "output.xs-start.not-compared": {
+      "message": "Не сравнено с игрой"
+    },
+    "output.xs-start.not-compared.uses": {
+      "message": "Не сравнено с игрой. Использует: {topics, list, unit}"
+    },
+    "output.xs-start.topic.integer-arithmetic": {
+      "message": "целочисленная арифметика"
+    },
+    "output.xs-start.topic.mixed-numbers": {
+      "message": "смешение целых и дробных чисел"
+    },
+    "output.xs-start.topic.number-text": {
+      "message": "числа в виде текста"
+    },
+    "output.xs-start.topic.text-functions": {
+      "message": "текстовые функции"
+    },
+    "output.xs-start.topic.array-defaults": {
+      "message": "значения массивов по умолчанию"
+    },
+    "output.xs-start.topic.rule-order": {
+      "message": "порядок правил"
+    },
+    "output.xs-start.topic.goto": {
+      "message": "метки и goto"
+    },
+    "output.xs-start.topic.start-defaults": {
+      "message": "начальные значения"
+    },
+    "output.xs-start.chat": {
+      "message": "Чат: {text}"
+    },
+    "output.xs-start.player": {
+      "message": "{player, plural, =0 {Природа} one {Игрок {player}} few {Игрок {player}} many {Игрок {player}} other {Игрок {player}}}"
+    },
+    "output.xs-start.resource.food": {
+      "message": "пища"
+    },
+    "output.xs-start.resource.wood": {
+      "message": "древесина"
+    },
+    "output.xs-start.resource.stone": {
+      "message": "камень"
+    },
+    "output.xs-start.resource.gold": {
+      "message": "золото"
+    },
+    "output.xs-start.resource.attribute": {
+      "message": "атрибут {id}"
+    },
+    "output.xs-start.amount.add": {
+      "message": "{resource} {amount, number, ::sign-always}"
+    },
+    "output.xs-start.amount.set": {
+      "message": "{resource}: установлено {amount, number}"
+    },
+    "output.xs-start.amount.multiply": {
+      "message": "{resource} ×{amount, number}"
+    },
+    "output.xs-start.change.resources": {
+      "message": "{player}: {changes, list, unit}"
+    },
+    "output.xs-start.object": {
+      "message": "объект {id}"
+    },
+    "output.xs-start.technology": {
+      "message": "технология {id}"
+    },
+    "output.xs-start.change.technology": {
+      "message": "{player}: исследует {technology}"
+    },
+    "output.xs-start.change.diplomacy": {
+      "message": "{player} → {other}: установлены отношения {stance}"
+    },
+    "output.xs-start.change.player-name": {
+      "message": "{player}: имя изменено на «{text}»"
+    },
+    "output.xs-start.change.civilization-name": {
+      "message": "{player}: название цивилизации изменено на «{text}»"
+    },
+    "output.xs-start.change.player-color": {
+      "message": "{player}: цвет изменён на {value}"
+    },
+    "output.xs-start.change.units-created": {
+      "message": "{player}: создаёт {object} × {count} рядом с ({x}, {y}); размещение не проверено"
+    },
+    "output.xs-start.change.units-created.no-position": {
+      "message": "{player}: создаёт {object} × {count}; размещение не проверено"
+    },
+    "output.xs-start.change.units-removed": {
+      "message": "{player}: удаляет {object} × {count}"
+    },
+    "output.xs-start.change.units-moved": {
+      "message": "{player}: перемещает {object} × {count} в ({x}, {y})"
+    },
+    "output.xs-start.change.units-moved.no-position": {
+      "message": "{player}: перемещает {object} × {count}"
+    },
+    "output.xs-start.change.units-owner-changed": {
+      "message": "{player}: получает {object} × {count} (прежний владелец: {previous})"
+    },
+    "output.xs-start.change.unit-values": {
+      "message": "{player}: меняет значения: {object} × {count}"
+    },
+    "output.xs-start.change.unit-text": {
+      "message": "{player}: меняет имена или подписи: {object} × {count}"
+    },
+    "output.xs-start.change.object-data": {
+      "message": "{player}: меняет данные: {object}; записано, но не применено"
+    },
+    "output.xs-start.change.technology-data": {
+      "message": "{player}: меняет данные: {technology}; записано, но не применено"
+    },
+    "output.xs-start.change.other": {
+      "message": "{player}: {call} ({calls, plural, one {# вызов} few {# вызова} many {# вызовов} other {# вызова}})"
+    },
+    "output.xs-start.change.color-mood": {
+      "message": "Режим освещения: {value}"
+    },
+    "output.xs-start.stop.place": {
+      "message": "{place}. Изменения после этой строки не показаны."
+    },
+    "output.xs-start.stop.no-place": {
+      "message": "Изменения после остановки не показаны."
+    },
+    "output.xs-start.skipped": {
+      "message": "Стартовая проверка XS пропущена: в {file} {count, plural, one {# ошибка} few {# ошибки} many {# ошибок} other {# ошибки}} (см. панель проблем)"
+    },
+    "output.xs-start.needs-game-folder": {
+      "message": "Подключите папку игры, чтобы выполнить стартовую проверку XS"
+    },
+    "output.xs-start.omitted": {
+      "message": "Показаны не все результаты стартовой проверки XS"
+    },
+    "output.xs-start.omitted.cause": {
+      "message": "Не показано: {items, list}"
+    },
+    "output.xs-start.omitted.findings": {
+      "message": "{count, plural, one {# замечание} few {# замечания} many {# замечаний} other {# замечания}}"
+    },
+    "output.xs-start.omitted.chat-lines": {
+      "message": "{count, plural, one {# строка чата} few {# строки чата} many {# строк чата} other {# строки чата}}"
+    },
+    "output.xs-start.omitted.changes": {
+      "message": "{count, plural, one {# изменение} few {# изменения} many {# изменений} other {# изменения}}"
+    },
+    "output.xs-start.omitted.recorded-calls": {
+      "message": "{count, plural, one {# записанный вызов} few {# записанных вызова} many {# записанных вызовов} other {# записанного вызова}}"
     },
     "output.constructs.more": {
       "message": "и ещё {count}"
@@ -597,11 +768,95 @@
     "run-menu.run-on-edit": {
       "message": "При правке"
     },
+    "run-menu.quality-check": {
+      "message": "Проверка качества"
+    },
+    "run-menu.quality-check.seeds": {
+      "message": "Число зёрен для проверки"
+    },
+    "run-menu.quality-check.cases": {
+      "message": "Критерии"
+    },
+    "run-menu.quality-check.cases-tooltip": {
+      "message": "Выбрать критерии проверки качества"
+    },
+    "run-menu.quality-check.multi-settings": {
+      "message": "Другие настройки лобби"
+    },
+    "run-menu.quality-check.multi-settings-tooltip": {
+      "message": "Также проверить Крошечную 1v1, Среднюю 2v2 и Огромную 4v4, по 10 зёрен"
+    },
+    "quality.case.generation": {
+      "message": "Генерация"
+    },
+    "quality.case.start-resources": {
+      "message": "Ресурсы у старта"
+    },
+    "quality.case.resource-distances": {
+      "message": "Расстояния до ресурсов"
+    },
+    "quality.case.shared-resources": {
+      "message": "Общие ресурсы"
+    },
+    "quality.case.wood": {
+      "message": "Древесина"
+    },
+    "quality.case.trapped": {
+      "message": "Недоступные ресурсы"
+    },
+    "quality.case.paths": {
+      "message": "Пути"
+    },
+    "quality.case.building-space": {
+      "message": "Место для застройки"
+    },
+    "quality.case.hills": {
+      "message": "Холмы"
+    },
+    "quality.case.water": {
+      "message": "Вода"
+    },
+    "quality.case.spacing": {
+      "message": "Отступы"
+    },
+    "quality.case.chokepoints": {
+      "message": "Узкие места"
+    },
+    "quality.case.variation": {
+      "message": "Разнообразие"
+    },
+    "quality.case.looks": {
+      "message": "Внешний вид"
+    },
+    "quality.item.headline": {
+      "message": "{case}: {message}"
+    },
+    "quality.item.cause": {
+      "message": "Карт: {bad} из {of}{metric, select, yes { · медиана {p50}, 95-й процентиль {p95}, максимум {max} {unit}} other {}}{worst, select, yes { · {count, plural, one {худшее зерно} few {худшие зёрна} many {худшие зёрна} other {худшие зёрна}} {seeds, list, unit}} other {}}"
+    },
+    "quality.passed": {
+      "message": "Пройдено: {cases, list}"
+    },
+    "quality.omitted": {
+      "message": "{count, plural, one {Ещё # замечание не показано} few {Ещё # замечания не показаны} many {Ещё # замечаний не показано} other {Ещё # замечания не показано}}"
+    },
+    "quality.failed": {
+      "message": "Не удалось выполнить проверку качества"
+    },
     "run-menu.preset.default-name": {
       "message": "Конфиг"
     },
     "run-menu.preset.numbered-name": {
       "message": "Конфиг {number}"
+    },
+    "run-menu.preset.copy-name": {
+      "message": "{name} ({number})"
+    },
+    "run-menu.preset.test-config-name": {
+      "message": "Тестовый конфиг"
+    },
+    "run-menu.preset.revert-temporary": {
+      "message": "Вернуться к {name}"
     },
     "run-menu.preset.settings": {
       "message": "Настройки конфигурации предпросмотра"
@@ -626,6 +881,9 @@
     },
     "run-menu.preset.delete": {
       "message": "Удалить {name}"
+    },
+    "run-menu.preset.duplicate": {
+      "message": "Дублировать {name}"
     },
     "run-menu.preset.delete.title": {
       "message": "Удалить конфигурацию {name}?"
@@ -813,6 +1071,9 @@
     "run-menu.fixture.needs-source": {
       "message": "Для тестовых примеров разработки нужен непустой скрипт .rms или .rms2"
     },
+    "mcp.run.settings-applied": {
+      "message": "{settings, list, unit} — задано приложением {app}"
+    },
     "run-menu.random-civilizations.headline": {
       "message": "Случайные цивилизации для этого предпросмотра: {players, list, unit}"
     },
@@ -830,6 +1091,9 @@
     },
     "run-menu.result.failed": {
       "message": "Сбой"
+    },
+    "run-menu.result.warnings": {
+      "message": "Предупреждения"
     },
     "run-menu.result.passed": {
       "message": "Пройдено"
@@ -2694,6 +2958,9 @@
     "lint-rule.RMS4011.title": {
       "message": "Имя может быть не определено"
     },
+    "lint-rule.RMS4012.title": {
+      "message": "Здесь игра может вылететь"
+    },
     "map-icon.generate": {
       "message": "Создать значок карты"
     },
@@ -3060,6 +3327,12 @@
     "workbench.map-test.replayed-with-seed": {
       "message": "Карта с замечанием создана повторно с записанным зерном {seed}"
     },
+    "workbench.map-test.replayed-seed-locked": {
+      "message": "Карта с замечанием создана повторно с записанным зерном {seed}; оно зафиксировано для следующих запусков"
+    },
+    "workbench.map-test.replayed-seed-locked-preset": {
+      "message": "Карта с замечанием создана повторно с записанным зерном {seed}; оно зафиксировано во временной конфигурации {name}"
+    },
     "workbench.game-folder.unlink-failed": {
       "message": "Не удалось отключить папку игры"
     },
@@ -3092,6 +3365,336 @@
     },
     "code-editor.tab.close": {
       "message": "Закрыть {name}"
+    },
+    "mcp.tab.edited-by": {
+      "message": "Изменено в {app}, не сохранено"
+    },
+    "mcp.dialog.title": {
+      "message": "MCP"
+    },
+    "mcp.dialog.close-label": {
+      "message": "Закрыть настройки MCP"
+    },
+    "mcp.dialog.description": {
+      "message": "Разрешите ИИ-приложениям на этом компьютере читать, изменять и проверять скрипты в открытой папке, создавать карты и запускать тесты карт."
+    },
+    "mcp.enable.label": {
+      "message": "Включить MCP"
+    },
+    "mcp.save.label": {
+      "message": "Разрешить ИИ-приложениям сохранять файлы"
+    },
+    "mcp.save.note": {
+      "message": "Если выключено, изменения ИИ остаются несохранёнными, пока вы их не сохраните."
+    },
+    "mcp.unavailable.pipe-in-use": {
+      "message": "Не удалось запустить MCP: его имя подключения занято другой программой."
+    },
+    "mcp.unavailable.key-file": {
+      "message": "Не удалось запустить MCP: не удалось записать файл ключа."
+    },
+    "mcp.unavailable.catalog": {
+      "message": "Не удалось запустить MCP: список инструментов не соответствует этой версии AoE2RMSIDE. Переустановите AoE2RMSIDE."
+    },
+    "mcp.unavailable.internal": {
+      "message": "Не удалось запустить MCP из-за непредвиденной ошибки."
+    },
+    "mcp.unavailable.retry": {
+      "message": "Чтобы повторить попытку, выключите и снова включите «Включить MCP»."
+    },
+    "mcp.apps.title": {
+      "message": "Разрешённые приложения"
+    },
+    "mcp.apps.empty": {
+      "message": "Приложений пока нет. Приложение запросит разрешение при первом подключении."
+    },
+    "mcp.apps.connected": {
+      "message": "Подключено"
+    },
+    "mcp.apps.last-used": {
+      "message": "Последнее использование: {date, date, medium}"
+    },
+    "mcp.apps.remove": {
+      "message": "Убрать"
+    },
+    "mcp.apps.remove-label": {
+      "message": "Убрать {app}"
+    },
+    "mcp.setup.app": {
+      "message": "ИИ-приложение"
+    },
+    "mcp.setup.app.claude-desktop": {
+      "message": "Claude Desktop"
+    },
+    "mcp.setup.app.claude-code": {
+      "message": "Claude Code"
+    },
+    "mcp.setup.app.codex": {
+      "message": "Codex"
+    },
+    "mcp.setup.app.other": {
+      "message": "Другое приложение"
+    },
+    "mcp.setup.text-label": {
+      "message": "Текст настройки"
+    },
+    "mcp.setup.hint.claude-desktop": {
+      "message": "Добавьте это в конфигурацию Claude Desktop (Settings > Developer > Edit Config) и перезапустите приложение."
+    },
+    "mcp.setup.hint.claude-code": {
+      "message": "Выполните эту команду в терминале."
+    },
+    "mcp.setup.hint.codex": {
+      "message": "Выполните эту команду в терминале."
+    },
+    "mcp.setup.hint.other": {
+      "message": "Добавьте эту программу как локальный MCP-сервер."
+    },
+    "mcp.setup.needs-enable": {
+      "message": "Сначала включите «Включить MCP»."
+    },
+    "mcp.setup.copy": {
+      "message": "Копировать настройку"
+    },
+    "mcp.setup.copied": {
+      "message": "Настройка скопирована"
+    },
+    "mcp.connect.row": {
+      "message": "Подключить ИИ-приложение…"
+    },
+    "mcp.connect.title": {
+      "message": "Подключить ИИ-приложение"
+    },
+    "mcp.connect.close-label": {
+      "message": "Закрыть"
+    },
+    "mcp.connect.description": {
+      "message": "Вставьте этот запрос в ИИ-приложение. Оно настроится само и сообщит, если что-то мешает."
+    },
+    "mcp.connect.prompt-label": {
+      "message": "Запрос для ИИ-приложения"
+    },
+    "mcp.connect.copy": {
+      "message": "Копировать запрос"
+    },
+    "mcp.connect.copied": {
+      "message": "Запрос скопирован"
+    },
+    "mcp.connect.by-hand": {
+      "message": "Настроить вручную"
+    },
+    "mcp.pairing.title": {
+      "message": "Разрешить {app} использовать AoE2RMSIDE?"
+    },
+    "mcp.pairing.description": {
+      "message": "Приложение сможет изменять скрипты в открытой папке, создавать карты, запускать тесты и развёртывать моды. Запущено программой {program}."
+    },
+    "mcp.pairing.description.no-program": {
+      "message": "Приложение сможет изменять скрипты в открытой папке, создавать карты, запускать тесты и развёртывать моды."
+    },
+    "mcp.pairing.name-note": {
+      "message": "Это имя приложение называет само: разрешайте, только если настроили его вы. Замена мода и тест в игре всё равно потребуют вашего согласия."
+    },
+    "mcp.pairing.allow": {
+      "message": "Разрешить"
+    },
+    "mcp.pairing.deny": {
+      "message": "Не разрешать"
+    },
+    "mcp.deploy.replace.title": {
+      "message": "Заменить мод «{mod}»?"
+    },
+    "mcp.deploy.replace.description": {
+      "message": "Приложение {app} хочет развернуть {file} в этом моде. В этом сеансе приложение {app} этот мод не развёртывало, поэтому его файлы будут заменены."
+    },
+    "mcp.deploy.replace.confirm": {
+      "message": "Заменить"
+    },
+    "mcp.deploy.crash.by-app": {
+      "message": "Приложение {app} запросило развёртывание {file} как мода «{mod}»."
+    },
+    "mcp.deploy.notice": {
+      "message": "Приложение {app} развернуло {file} как мод «{mod}»."
+    },
+    "mcp.live.title": {
+      "message": "Запустить тест в игре для {app}?"
+    },
+    "mcp.live.description": {
+      "message": "Приложение {app} хочет протестировать {file} с зерном {seed} в запущенной игре. Текущий матч завершится."
+    },
+    "mcp.live.session": {
+      "message": "Разрешить до конца сеанса"
+    },
+    "mcp.live.start": {
+      "message": "Начать тест в игре"
+    },
+    "mcp.status.many": {
+      "message": "{count, plural, one {# ИИ-приложение} few {# ИИ-приложения} many {# ИИ-приложений} other {# ИИ-приложения}}"
+    },
+    "mcp.status.connected": {
+      "message": "{app}: подключено"
+    },
+    "mcp.status.connected-many": {
+      "message": "{count, plural, one {Подключено # ИИ-приложение} few {Подключено # ИИ-приложения} many {Подключено # ИИ-приложений} other {Подключено # ИИ-приложения}}"
+    },
+    "mcp.status.working": {
+      "message": "{app}: идёт работа"
+    },
+    "mcp.status.tooltip": {
+      "message": "Подключено через MCP. Щёлкните, чтобы открыть настройки MCP."
+    },
+    "mcp.output.call": {
+      "message": "{app}: {action}"
+    },
+    "mcp.output.call-failed": {
+      "message": "Найдены ошибки; они отправлены ИИ-приложению."
+    },
+    "mcp.output.connected": {
+      "message": "{app}: подключено"
+    },
+    "mcp.output.disconnected": {
+      "message": "{app}: отключено"
+    },
+    "mcp.output.denied": {
+      "message": "Приложению {app} не разрешено подключаться"
+    },
+    "mcp.output.busy": {
+      "message": "Приложению {app} предложено подождать: выполняется {running}"
+    },
+    "mcp.output.refused": {
+      "message": "{app}: запрос {tool} отклонён"
+    },
+    "mcp.output.cancelled": {
+      "message": "{app}: запрос {tool} отменён"
+    },
+    "mcp.action.status": {
+      "message": "прочитано состояние IDE"
+    },
+    "mcp.action.list-files": {
+      "message": "получен список файлов"
+    },
+    "mcp.action.read-file": {
+      "message": "прочитан файл {file}"
+    },
+    "mcp.action.edit-file": {
+      "message": "изменён файл {file}"
+    },
+    "mcp.action.create-file": {
+      "message": "создан файл {file}"
+    },
+    "mcp.action.save-file": {
+      "message": "сохранён файл {file}"
+    },
+    "mcp.action.problems": {
+      "message": "проверен файл {file}"
+    },
+    "mcp.action.generate": {
+      "message": "создана карта {file}, зерно {seed}"
+    },
+    "mcp.action.show-map": {
+      "message": "карта {file} показана в предпросмотре"
+    },
+    "mcp.action.inspect": {
+      "message": "просмотрена созданная карта"
+    },
+    "mcp.action.picture": {
+      "message": "получено изображение {file}"
+    },
+    "mcp.action.contact-sheet": {
+      "message": "{count, plural, one {получены изображения {file}, зёрен: #} few {получены изображения {file}, зёрен: #} many {получены изображения {file}, зёрен: #} other {получены изображения {file}, зёрен: #}}"
+    },
+    "mcp.action.map-test": {
+      "message": "выполнен тест карт {file}"
+    },
+    "mcp.action.quality-check": {
+      "message": "{seeds, plural, one {выполнена проверка качества {file} (# зерно)} few {выполнена проверка качества {file} (# зерна)} many {выполнена проверка качества {file} (# зёрен)} other {выполнена проверка качества {file} (# зерна)}}"
+    },
+    "mcp.action.run-status": {
+      "message": "запрошено состояние идущего теста"
+    },
+    "mcp.action.details": {
+      "message": "прочитаны подробности результата"
+    },
+    "mcp.action.deploy": {
+      "message": "{file} развёрнут как мод «{mod}»"
+    },
+    "mcp.action.live-test": {
+      "message": "запущен тест {file} в игре"
+    },
+    "mcp.action.guide": {
+      "message": "прочитано руководство"
+    },
+    "mcp.action.reference": {
+      "message": "открыта справка по {name}"
+    },
+    "mcp.action.tool": {
+      "message": "использован {tool}"
+    },
+    "mcp.refusal.waiting": {
+      "message": "Требуется ваш ответ в AoE2RMSIDE."
+    },
+    "mcp.refusal.not-allowed": {
+      "message": "Вы не дали разрешение этому приложению."
+    },
+    "mcp.refusal.invalid-arguments": {
+      "message": "Недопустимый запрос."
+    },
+    "mcp.refusal.no-folder-open": {
+      "message": "Папка не открыта."
+    },
+    "mcp.refusal.outside-workspace": {
+      "message": "Файл находится вне открытой папки или защищён AoE2RMSIDE."
+    },
+    "mcp.refusal.file-type": {
+      "message": "ИИ-приложения не могут работать с файлами этого типа."
+    },
+    "mcp.refusal.not-found": {
+      "message": "Файл не найден."
+    },
+    "mcp.refusal.already-exists": {
+      "message": "Файл уже существует."
+    },
+    "mcp.refusal.too-large": {
+      "message": "Файл слишком большой."
+    },
+    "mcp.refusal.binary-file": {
+      "message": "Это не текстовый файл."
+    },
+    "mcp.refusal.edit-conflict": {
+      "message": "Изменяемый текст не найден или найден несколько раз."
+    },
+    "mcp.refusal.saving-off": {
+      "message": "Параметр «Разрешить ИИ-приложениям сохранять файлы» выключен."
+    },
+    "mcp.refusal.busy": {
+      "message": "Уже выполняется другая задача."
+    },
+    "mcp.refusal.map-expired": {
+      "message": "Созданная карта больше не хранится."
+    },
+    "mcp.refusal.run-expired": {
+      "message": "Тест больше не хранится."
+    },
+    "mcp.refusal.stopped": {
+      "message": "Вы остановили выполнение."
+    },
+    "mcp.refusal.cancelled": {
+      "message": "ИИ-приложение отменило запрос."
+    },
+    "mcp.refusal.user-declined": {
+      "message": "Вы отказались."
+    },
+    "mcp.refusal.known-crash": {
+      "message": "На этой карте игра может вылететь."
+    },
+    "mcp.refusal.game-not-ready": {
+      "message": "Игра не готова к тесту."
+    },
+    "mcp.refusal.too-many": {
+      "message": "Приложение отправило слишком много запросов."
+    },
+    "mcp.refusal.internal": {
+      "message": "В AoE2RMSIDE произошла ошибка."
     },
     "code-editor.tab.unsaved": {
       "message": "Несохранённые изменения"
@@ -5127,6 +5730,9 @@
     "app-update.dialog.unsaved": {
       "message": "Если в документах есть несохранённые изменения, сначала появится вопрос о них."
     },
+    "app-update.dialog.mcp-apps": {
+      "message": "Подключённые ИИ-приложения потеряют соединение во время обновления. Затем перезапустите их."
+    },
     "app-update.dialog.release-notes": {
       "message": "Заметки о выпуске"
     },
@@ -5264,6 +5870,222 @@
     },
     "external-language-server.action.not-used": {
       "message": "Для файлов {language} используется встроенный анализ"
+    },
+    "known-crash.headline": {
+      "message": "Игра вылетает на этой карте"
+    },
+    "known-crash.headline.possible": {
+      "message": "Здесь игра может вылететь"
+    },
+    "known-crash.actor-radius-search-too-small.title": {
+      "message": "override_actor_radius_if_required у объекта, слишком маленького для поиска"
+    },
+    "known-crash.actor-radius-search-too-small.cause": {
+      "message": "override_actor_radius_if_required сдвигает объект, который не помещается там, где его разместили, а объект слишком мал для поиска свободной клетки в игре."
+    },
+    "known-crash.actor-radius-search-too-small.fix": {
+      "message": "Удалить override_actor_radius_if_required у этого объекта."
+    },
+    "known-crash.connection-block-missing-terrain.title": {
+      "message": "В строке блока соединения нет местности"
+    },
+    "known-crash.connection-block-missing-terrain.cause": {
+      "message": "Внутри фигурных скобок команды соединения игра читает местность из каждой строки, а у {word} её нет."
+    },
+    "known-crash.connection-block-missing-terrain.fix": {
+      "message": "Перенести строку из блока соединения перед командами соединения."
+    },
+    "known-crash.connection-to-land-outside-map.title": {
+      "message": "Соединение доходит до участка за пределами карты"
+    },
+    "known-crash.connection-to-land-outside-map.cause": {
+      "message": "Соединение начинается или заканчивается на участке, позиция которого при этом размере карты лежит за пределами карты."
+    },
+    "known-crash.connection-to-land-outside-map.fix": {
+      "message": "Держать land_position в пределах карты при любом размере карты."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.title": {
+      "message": "Определённое имя выполняется как cliff_type в <CLIFF_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-cliff-type.cause": {
+      "message": "{word} — определённое имя там, где может стоять команда, поэтому игра выполняет его как {command} без значения."
+    },
+    "known-crash.defined-name-runs-as-cliff-type.fix": {
+      "message": "Удалить определённое имя или написать команду, которая имелась в виду."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.title": {
+      "message": "Определённое имя выполняется как base_terrain или base_layer в фигурных скобках create_elevation"
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.cause": {
+      "message": "{word} — определённое имя там, где может стоять команда, поэтому игра выполняет его как {command} без значения."
+    },
+    "known-crash.defined-name-runs-as-elevation-terrain.fix": {
+      "message": "Удалить определённое имя или написать команду, которая имелась в виду."
+    },
+    "known-crash.defined-name-runs-as-global-command.title": {
+      "message": "Определённое имя выполняется как ai_info_map_type, effect_amount или effect_percent"
+    },
+    "known-crash.defined-name-runs-as-global-command.cause": {
+      "message": "{word} — определённое имя там, где может стоять команда, поэтому игра выполняет его как {command} без значения."
+    },
+    "known-crash.defined-name-runs-as-global-command.fix": {
+      "message": "Удалить определённое имя или написать команду, которая имелась в виду."
+    },
+    "known-crash.defined-name-runs-as-guard-state.title": {
+      "message": "Определённое имя выполняется как guard_state в <PLAYER_SETUP>"
+    },
+    "known-crash.defined-name-runs-as-guard-state.cause": {
+      "message": "{word} — определённое имя там, где может стоять команда, поэтому игра выполняет его как {command} без значения."
+    },
+    "known-crash.defined-name-runs-as-guard-state.fix": {
+      "message": "Удалить определённое имя или написать команду, которая имелась в виду."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.title": {
+      "message": "Определённое имя выполняется как base_terrain или base_layer в <LAND_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.cause": {
+      "message": "{word} — определённое имя там, где может стоять команда, поэтому игра выполняет его как {command} без значения."
+    },
+    "known-crash.defined-name-runs-as-land-base-terrain.fix": {
+      "message": "Удалить определённое имя или написать команду, которая имелась в виду."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.title": {
+      "message": "Определённое имя выполняется как terrain_type или assign_to в фигурных скобках участка"
+    },
+    "known-crash.defined-name-runs-as-land-terrain.cause": {
+      "message": "{word} — определённое имя там, где может стоять команда, поэтому игра выполняет его как {command} без значения."
+    },
+    "known-crash.defined-name-runs-as-land-terrain.fix": {
+      "message": "Удалить определённое имя или написать команду, которая имелась в виду."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.title": {
+      "message": "Определённое имя выполняется как terrain_to_place_on, layer_to_place_on или second_object в фигурных скобках объекта"
+    },
+    "known-crash.defined-name-runs-as-object-terrain.cause": {
+      "message": "{word} — определённое имя там, где может стоять команда, поэтому игра выполняет его как {command} без значения."
+    },
+    "known-crash.defined-name-runs-as-object-terrain.fix": {
+      "message": "Удалить определённое имя или написать команду, которая имелась в виду."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.title": {
+      "message": "Определённое имя выполняется как create_terrain или color_correction в <TERRAIN_GENERATION>"
+    },
+    "known-crash.defined-name-runs-as-terrain-command.cause": {
+      "message": "{word} — определённое имя там, где может стоять команда, поэтому игра выполняет его как {command} без значения."
+    },
+    "known-crash.defined-name-runs-as-terrain-command.fix": {
+      "message": "Удалить определённое имя или написать команду, которая имелась в виду."
+    },
+    "known-crash.grouped-placement-zero-perimeter.title": {
+      "message": "Размещение игроков группами по кругу нулевой длины"
+    },
+    "known-crash.grouped-placement-zero-perimeter.cause": {
+      "message": "Игроки размещаются командными группами по кругу нулевой длины, поэтому игра делит на ноль."
+    },
+    "known-crash.object-group-entry-without-object.title": {
+      "message": "add_object без объекта в именованной группе"
+    },
+    "known-crash.object-group-entry-without-object.cause": {
+      "message": "У add_object нет объекта, хотя группа названа, поэтому игра вылетает, когда выбирается эта запись."
+    },
+    "known-crash.object-group-entry-without-object.fix": {
+      "message": "Указать объект для add_object."
+    },
+    "known-crash.object-on-land-outside-map.title": {
+      "message": "Объект размещается на участке за пределами карты"
+    },
+    "known-crash.object-on-land-outside-map.cause": {
+      "message": "Объект размещается для каждого участка на участке, позиция которого при этом размере карты лежит за пределами карты."
+    },
+    "known-crash.object-on-land-outside-map.fix": {
+      "message": "Держать land_position в пределах карты при любом размере карты."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.title": {
+      "message": "override_map_size уменьшает карту после участков игроков"
+    },
+    "known-crash.override-map-size-shrinks-after-lands.cause": {
+      "message": "override_map_size уменьшает карту после создания участков игроков, поэтому игрок может начать за пределами карты."
+    },
+    "known-crash.override-map-size-shrinks-after-lands.fix": {
+      "message": "Перенести override_map_size перед create_player_lands."
+    },
+    "known-crash.terrain-without-movement-data.title": {
+      "message": "Карта рисует местность без данных о передвижении"
+    },
+    "known-crash.terrain-without-movement-data.cause": {
+      "message": "Карта рисует местность {terrain}, которую не охватывают данные игры о передвижении, поэтому игра вылетает во время матча."
+    },
+    "known-crash.terrain-without-movement-data.fix": {
+      "message": "Использовать местность, которую охватывают данные игры о передвижении."
+    },
+    "deploy-panel.crash-warning": {
+      "message": "С другим зерном или другими параметрами лобби игра может вылететь на этой карте. {details}"
+    },
+    "deploy-panel.deploy-anyway": {
+      "message": "Всё равно развернуть"
+    },
+    "live-test.crash-warning.title": {
+      "message": "Игра может вылететь на этой карте"
+    },
+    "live-test.crash-warning.description": {
+      "message": "С этим зерном всё работает, но с другим зерном или другими параметрами лобби игра может вылететь на этой карте. {details}"
+    },
+    "live-test.crash-warning.confirm": {
+      "message": "Всё равно запустить"
+    },
+    "message.live.crash-warning-declined.cause": {
+      "message": "Игра может вылететь на этой карте, поэтому тест в игре не запущен."
+    },
+    "test-results.crashes.title": {
+      "message": "Вылеты игры"
+    },
+    "test-results.crashes.maps": {
+      "message": "{maps, plural, one {# карта} few {# карты} many {# карт} other {# карты}}"
+    },
+    "test-results.crashes.headline": {
+      "message": "Игра вылетает на {maps, number} из {sampled, plural, one {# карты} few {# карт} many {# карт} other {# карты}}"
+    },
+    "test-results.crashes.headline.refused": {
+      "message": "Не удалось создать {maps, plural, one {# карту} few {# карты} many {# карт} other {# карты}} из {sampled, number}"
+    },
+    "test-results.crashes.seeds": {
+      "message": "{count, plural, one {Зерно} few {Зёрна} many {Зёрна} other {Зёрна}} {seeds, list, unit}"
+    },
+    "test-results.crashes.seeds-more": {
+      "message": "{count, plural, one {Зерно} few {Зёрна} many {Зёрна} other {Зёрна}} {seeds, list, unit} и ещё {omitted, number}"
+    },
+    "test-results.crashes.source": {
+      "message": "Вылет игры"
+    },
+    "test-results.crashes.show": {
+      "message": "Показать вылеты игры"
+    },
+    "test-results.crashes.hide": {
+      "message": "Скрыть вылеты игры"
+    },
+    "test-results.quality.summary": {
+      "message": "· Проверка качества {map} · {facts}"
+    },
+    "test-results.quality.facts": {
+      "message": "{maps, plural, one {# карта} few {# карты} many {# карт} other {# карты}} · {failures, plural, one {# сбой} few {# сбоя} many {# сбоев} other {# сбоя}} · {warnings, plural, one {# предупреждение} few {# предупреждения} many {# предупреждений} other {# предупреждения}}"
+    },
+    "test-results.quality.findings": {
+      "message": "{count, plural, one {# замечание} few {# замечания} many {# замечаний} other {# замечания}}"
+    },
+    "test-results.quality.show-case": {
+      "message": "Показать замечания: {case}"
+    },
+    "test-results.quality.hide-case": {
+      "message": "Скрыть замечания: {case}"
+    },
+    "test-results.quality.case-findings": {
+      "message": "Замечания: {case}"
+    },
+    "test-results.quality.no-findings": {
+      "message": "Все критерии пройдены на {maps, plural, one {# карте} few {# картах} many {# картах} other {# карты}}"
+    },
+    "test-results.quality.list-label": {
+      "message": "{count, plural, one {# замечание проверки качества} few {# замечания проверки качества} many {# замечаний проверки качества} other {# замечания проверки качества}}"
     }
   }
 }

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "1.0.0",
+  "prompts": [
+    {
+      "name": "new_map",
+      "title": "New map",
+      "description": "Start a new random map script from your idea.",
+      "arguments": [
+        {
+          "name": "idea",
+          "description": "What the map should be like.",
+          "required": true,
+          "maxLength": 1000
+        },
+        {
+          "name": "map_type",
+          "description": "open, closed, water, or nomad.",
+          "required": false,
+          "maxLength": 32,
+          "absent": "not decided yet"
+        }
+      ],
+      "text": "I want a new random map script for Age of Empires II DE.\nIdea: {idea}\nMap type: {map_type}\n\nFirst ask me what you need to know: map type, map sizes, player counts, teams, and game mode. Then read read_guide(\"workflow\") and read_guide(\"skeleton\") and start from the skeleton. Work in small steps with edit_file, generate_map, and get_picture, and tell me what each step changes."
+    },
+    {
+      "name": "finish_map",
+      "title": "Finish map",
+      "description": "Check a finished-looking map over many seeds and report.",
+      "arguments": [
+        {
+          "name": "file",
+          "description": "The script, relative to the open folder.",
+          "required": true,
+          "maxLength": 260
+        }
+      ],
+      "text": "The map in {file} looks finished to me. Run run_quality_check on it with 50 seeds over the settings it is meant for. Fix what fails: rerun only the failed cases while fixing, then once in full. Look at get_picture with view bases and at a contact_sheet. Then give me a short report: the seeds and numbers you checked, the risks that remain, and what only a game test can judge."
+    },
+    {
+      "name": "teach_me",
+      "title": "Teach me",
+      "description": "Learn random map scripting step by step.",
+      "arguments": [
+        {
+          "name": "topic",
+          "description": "What you want to learn.",
+          "required": false,
+          "maxLength": 200,
+          "absent": "the basics; suggest a path"
+        },
+        {
+          "name": "level",
+          "description": "beginner or intermediate.",
+          "required": false,
+          "maxLength": 32,
+          "values": ["beginner", "intermediate"],
+          "absent": "ask me"
+        }
+      ],
+      "text": "Teach me to write random map scripts for Age of Empires II DE.\nTopic: {topic}\nMy level: {level}\n\nRead read_guide(\"teaching\") first. Be a patient tutor: one concept at a time, in small steps. For each step, make a small edit in a practice file, generate the map with compare_to the previous map, and show me the difference with get_picture view compare. Use lookup_reference for every new command and explain it in plain words. Check that I understood before you move on."
+    },
+    {
+      "name": "explain_script",
+      "title": "Explain script",
+      "description": "Have a script explained section by section.",
+      "arguments": [
+        {
+          "name": "file",
+          "description": "The script, relative to the open folder.",
+          "required": true,
+          "maxLength": 260
+        }
+      ],
+      "text": "Explain the script {file} to me. Read it, then explain its sections and what each part places on the map. Generate it once and use inspect_map with sources: true to tie script lines to what they create; show pictures where they help. Use plain words, and use lookup_reference for the commands you name."
+    }
+  ]
+}

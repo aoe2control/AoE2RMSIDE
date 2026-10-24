@@ -53,7 +53,8 @@ import {
 } from './app-context';
 import { AppTour } from './app-tour';
 import { isUntitledDocument } from './untitled-documents';
-import { mapTestReplayInput } from './map-test-replay';
+import { mapTestReplayInput, replayedRunSeed } from './map-test-replay';
+import { replayedLobbySettings } from './replay-run-preset';
 import { contentMatchStep, type ContentMatchGesture, type ContentMatchVisit } from './monaco-find';
 import { mapTestPreviewShown, type PreviewMapOrigin } from './map-test-preview';
 import {
@@ -91,6 +92,12 @@ import {
   sourcePathKey,
   type ProblemTarget,
 } from './problems-model';
+import { xsStartProblemMessage } from './xs-start-output';
+import {
+  isQualityReport,
+  qualityProblemDiagnostics,
+  qualityProblemMessage,
+} from './quality-check-output';
 import {
   outputSeverityFilterDefault,
   problemsSeverityFilterDefault,
@@ -141,6 +148,17 @@ import {
   UpdateProvider,
   useUpdateController,
 } from './update-control';
+import {
+  connectorAppsConnected,
+  connectorDeployNotice,
+  connectorOutputMessage,
+  type ConnectorDeployNotice,
+} from './mcp-connector-model';
+import { useConnectorState } from './mcp-connector-state';
+import { McpPrompts } from './mcp-prompts';
+import { useAppPictureTexturesBridge } from './app-picture-textures';
+import { McpSettingsDialog } from './mcp-settings-dialog';
+import { McpStatusIndicator } from './mcp-status-indicator';
 
 const bottomPanelNavigationHeight = 34;
 const explorerDefaultWidth = 248;
@@ -195,6 +213,19 @@ export function App() {
   const [mapTestDiagnostics, setMapTestDiagnostics] = useState<
     Map<string, LanguageServerDiagnostic[]>
   >(new Map());
+  const [xsStartDiagnostics, setXsStartDiagnostics] = useState<
+    ReadonlyMap<string, LanguageServerDiagnostic[]>
+  >(new Map());
+  const [qualityDiagnostics, setQualityDiagnostics] = useState<
+    ReadonlyMap<string, LanguageServerDiagnostic[]>
+  >(new Map());
+  const publishXsStartFindings = useCallback(
+    (findings: ReadonlyMap<string, LanguageServerDiagnostic[]>) =>
+      setXsStartDiagnostics((current) =>
+        current.size === 0 && findings.size === 0 ? current : findings,
+      ),
+    [],
+  );
   const [bottomPanelOpen, setBottomPanelOpen] = useState(false);
   const [bottomPanelHeight, setBottomPanelHeight] = useState(150);
   const bottomPanelPresence = usePresence(bottomPanelOpen);
@@ -289,6 +320,7 @@ export function App() {
   const [liveGenerationStages, setLiveGenerationStages] = useState(true);
   const [gpuMapRendering, setGpuMapRendering] = useState(true);
   const [mapTransitions, setMapTransitions] = useState(true);
+  const [xsStartCheck, setXsStartCheck] = useState(true);
   const [inlayHints, setInlayHints] = useState(true);
   const [outlineRow, setOutlineRow] = useState(true);
   const [deletePermanently, setDeletePermanently] = useState(false);
@@ -309,6 +341,12 @@ export function App() {
   );
   const [installedSourceBrowserOpen, setInstalledSourceBrowserOpen] = useState(false);
   const [languageSettingsOpen, setLanguageSettingsOpen] = useState(false);
+  const [connectorState, setConnectorState] = useConnectorState(editionCapabilities.mcp);
+  useAppPictureTexturesBridge(editionCapabilities.mcp);
+  const [mcpSettingsOpen, setMcpSettingsOpen] = useState(false);
+  const openMcpSettings = useCallback(() => setMcpSettingsOpen(true), []);
+  const [appDeployNotice, setAppDeployNotice] = useState<ConnectorDeployNotice | null>(null);
+  const dismissAppDeployNotice = useCallback(() => setAppDeployNotice(null), []);
   const [definitionFileRequest, setDefinitionFileRequest] = useState<DefinitionFileRequest | null>(
     null,
   );
@@ -415,10 +453,27 @@ export function App() {
   );
   const problemFileGroups = useMemo(
     () =>
-      problemGroups([...languageDiagnostics, ...mapTestDiagnostics], {
-        isProtected: (uri) => isStandardGameSource(uri, readOnlySourceKeys),
-      }),
-    [languageDiagnostics, mapTestDiagnostics, readOnlySourceKeys],
+      problemGroups(
+        [
+          ...languageDiagnostics,
+          ...mapTestDiagnostics,
+          ...xsStartDiagnostics,
+          ...qualityDiagnostics,
+        ],
+        {
+          isProtected: (uri) => isStandardGameSource(uri, readOnlySourceKeys),
+          present: (diagnostic, severity) =>
+            xsStartProblemMessage(diagnostic, severity) ??
+            qualityProblemMessage(diagnostic, severity),
+        },
+      ),
+    [
+      languageDiagnostics,
+      mapTestDiagnostics,
+      xsStartDiagnostics,
+      qualityDiagnostics,
+      readOnlySourceKeys,
+    ],
   );
   const problemsTotal = problemCount(problemFileGroups);
   const [outputSeverityFilter, setOutputSeverityFilter] = useState<SeverityFilter>(
@@ -447,6 +502,11 @@ export function App() {
     },
     [workspace],
   );
+  const navigateToProblemLatest = useRef(navigateToProblem);
+  navigateToProblemLatest.current = navigateToProblem;
+  const openProblem = useCallback((target: ProblemTarget, location: string) => {
+    void navigateToProblemLatest.current(target, location);
+  }, []);
   const openSourceLocation = useCallback(
     async (uri: string, line: number, character: number): Promise<boolean> => {
       const key = sourcePathKey(uri);
@@ -610,6 +670,16 @@ export function App() {
         } else next.delete(scriptUri);
         return next;
       });
+      const qualityCheck = input.quality !== undefined;
+      if (qualityCheck) {
+        const qualityReport =
+          result.report && isQualityReport(result.report) ? result.report : null;
+        setQualityDiagnostics(
+          qualityReport
+            ? new Map([[scriptUri, qualityProblemDiagnostics(qualityReport.quality)]])
+            : new Map(),
+        );
+      }
       if (result.report && result.reportJson) {
         const nextResults = {
           report: result.report,
@@ -622,14 +692,14 @@ export function App() {
         mapTestResultsRef.current = nextResults;
         setMapTestResults(nextResults);
         setMapTestResultsOrigin('current');
-        if (resultsTabAppearing) {
+        if (resultsTabAppearing && !qualityCheck) {
           setBottomPanelOpen(true);
           setBottomPanelTab('test-results');
         }
       } else {
         setMapTestResultsOrigin(result.status === 'cancelled' ? 'after-stop' : 'after-error');
       }
-      if (result.preview) commitPreview(result.preview, 'map-test');
+      if (result.preview && !qualityCheck) commitPreview(result.preview, 'map-test');
     },
     [commitPreview],
   );
@@ -643,6 +713,7 @@ export function App() {
   const clearMapTestResults = useCallback(() => {
     mapTestResultsRef.current = null;
     setMapTestResults(null);
+    setQualityDiagnostics((current) => (current.size === 0 ? current : new Map()));
     setMapTestResultsOrigin('current');
     setBottomPanelTab((current) => (current === 'test-results' ? 'output' : current));
   }, []);
@@ -704,6 +775,7 @@ export function App() {
       mapTestResults,
       clearMapTestResults,
       publishMapTestResult,
+      publishXsStartFindings,
       markMapTestRun,
       mapTestProgress,
       sourceInvalid,
@@ -720,6 +792,7 @@ export function App() {
       liveGenerationStages,
       gpuMapRendering,
       mapTransitions,
+      xsStartCheck,
       previewPerspective,
       setPreviewPerspective,
       previewLook,
@@ -744,6 +817,7 @@ export function App() {
       liveGenerationStages,
       gpuMapRendering,
       mapTransitions,
+      xsStartCheck,
       previewPerspective,
       previewLook,
       previewTileGrid,
@@ -762,6 +836,7 @@ export function App() {
       markMapTestRun,
       mapTestProgress,
       publishMapTestResult,
+      publishXsStartFindings,
       commitPreview,
       previewMapOrigin,
       mapTestPreview,
@@ -870,6 +945,7 @@ export function App() {
     setLiveGenerationStages(session.liveGenerationStages);
     setGpuMapRendering(session.gpuMapRendering);
     setMapTransitions(session.mapTransitions);
+    setXsStartCheck(session.xsStartCheck);
     setInlayHints(session.inlayHints);
     setOutlineRow(session.outlineRow);
     setDeletePermanently(session.deletePermanently);
@@ -1082,7 +1158,9 @@ export function App() {
       else if (action.type === 'set-theme') setThemePreference(action.theme);
       else if (action.type === 'open-theme-settings') setThemeSettingsOpen(true);
       else if (action.type === 'open-language-settings') setLanguageSettingsOpen(true);
-      else if (action.type === 'reset-layout') void resetLayout();
+      else if (action.type === 'open-mcp-settings') {
+        if (editionCapabilities.mcp) setMcpSettingsOpen(true);
+      } else if (action.type === 'reset-layout') void resetLayout();
       else if (action.type === 'new-file') currentWorkspace.newFile();
       else if (action.type === 'new-map-test-script') currentWorkspace.newMapTestScript();
       else if (action.type === 'generate-definition-file') openDefinitionFile(null);
@@ -1118,6 +1196,8 @@ export function App() {
         setGpuMapRendering(action.enabled);
       } else if (action.type === 'set-map-transitions') {
         setMapTransitions(action.enabled);
+      } else if (action.type === 'set-xs-start-check') {
+        setXsStartCheck(action.enabled);
       } else if (action.type === 'set-inlay-hints') {
         setInlayHints(action.enabled);
       } else if (action.type === 'set-outline-row') {
@@ -1180,10 +1260,18 @@ export function App() {
     const unsubscribeDiagnostic = window.rmside.onWorkspaceDiagnostic((message) =>
       appendOutput(message),
     );
+    const unsubscribeConnector = editionCapabilities.mcp
+      ? window.rmside.onConnectorOutput((row) => {
+          appendOutput(connectorOutputMessage(row));
+          const notice = connectorDeployNotice(row);
+          if (notice) setAppDeployNotice(notice);
+        })
+      : () => undefined;
     return () => {
       cancelled = true;
       unsubscribe();
       unsubscribeDiagnostic();
+      unsubscribeConnector();
     };
   }, [appendOutput]);
 
@@ -1432,51 +1520,92 @@ export function App() {
     }
   }, [appendOutput, mapTestResults]);
 
+  const previewExecutionRef = useRef(previewExecution);
+  previewExecutionRef.current = previewExecution;
   const replayMapTestFinding = useCallback(
     async (findingId: string) => {
       if (!mapTestResults) return;
+      const qualityCheck = isQualityReport(mapTestResults.report);
       const scriptDocument = mapTestResults.scriptUri
         ? workspace.documents.find((document) => document.uri === mapTestResults.scriptUri)
         : workspace.activeDocument;
-      if (!scriptDocument || !/\.rmstest$/iu.test(scriptDocument.name)) {
+      const scriptName = qualityCheck
+        ? readablePathName(
+            mapTestResults.report.findings.find((entry) => entry.findingId === findingId)
+              ?.sourcePath ?? mapTestResults.report.script.name,
+          )
+        : readablePathName(mapTestResults.report.script.name);
+      if (
+        !scriptDocument ||
+        (qualityCheck
+          ? scriptDocument.name.toLowerCase() !== scriptName.toLowerCase()
+          : !/\.rmstest$/iu.test(scriptDocument.name))
+      ) {
         appendOutput(
           presentMessage({
-            source: 'Map test',
+            source: qualityCheck ? 'Quality check' : 'Map test',
             code: 'map-test.replay-needs-script',
-            params: { script: readablePathName(mapTestResults.report.script.name) },
+            params: { script: scriptName },
           }),
         );
         return;
       }
       workspace.setActiveDocument(scriptDocument.id);
+      const replayInput = mapTestReplayInput({
+        executionId: `map-test-replay-${crypto.randomUUID()}`,
+        results: mapTestResults,
+        script: scriptDocument,
+        findingId,
+      });
+      const replayActivity = previewCandidates.activity === null ? replayInput.executionId : null;
+      if (replayActivity !== null) {
+        previewCandidates.begin(replayActivity, undefined, {
+          kind: 'map-test',
+          progressive: false,
+          minimapPalette: replayInput.minimapPalette,
+          texturePalette: replayInput.texturePalette ?? null,
+        });
+      }
       try {
-        const result = await window.rmside.replayMapTestFinding(
-          mapTestReplayInput({
-            executionId: `map-test-replay-${crypto.randomUUID()}`,
-            results: mapTestResults,
-            script: scriptDocument,
-            findingId,
-          }),
-        );
+        const result = await window.rmside.replayMapTestFinding(replayInput);
         commitPreview(result, 'map-test');
+        if (replayActivity !== null) previewCandidates.end(replayActivity);
         const replayedSeed = mapTestResults.report.findings.find(
           (entry) => entry.findingId === findingId,
         )?.seed;
+        const runSeed = replayedRunSeed(mapTestResults.report, findingId);
+        const execution = previewExecutionRef.current;
+        const locked =
+          runSeed !== null && execution?.settingsLoaded
+            ? (execution.lockReplayedSeed?.(
+                runSeed,
+                replayedLobbySettings(mapTestResults.report, findingId),
+              ) ?? null)
+            : null;
         appendOutput(
           outputNote(
             'Map test',
             'map-test.replayed',
-            replayedSeed === undefined
-              ? { id: 'workbench.map-test.replayed' }
-              : { id: 'workbench.map-test.replayed-with-seed', args: { seed: replayedSeed } },
+            runSeed !== null && locked?.temporaryName
+              ? {
+                  id: 'workbench.map-test.replayed-seed-locked-preset',
+                  args: { seed: runSeed, name: locked.temporaryName },
+                }
+              : runSeed !== null && locked
+                ? { id: 'workbench.map-test.replayed-seed-locked', args: { seed: runSeed } }
+                : replayedSeed === undefined
+                  ? { id: 'workbench.map-test.replayed' }
+                  : { id: 'workbench.map-test.replayed-with-seed', args: { seed: replayedSeed } },
           ),
         );
       } catch (error) {
         const failure = presentMapTestReplayFailure(errorMessage(error));
         if (!failureReportedByMain(failure, 'preview')) appendOutput(failure);
+      } finally {
+        if (replayActivity !== null) previewCandidates.end(replayActivity);
       }
     },
-    [appendOutput, commitPreview, mapTestResults, workspace],
+    [appendOutput, commitPreview, mapTestResults, previewCandidates, workspace],
   );
 
   const goToMapTestCheck = useCallback(
@@ -1623,6 +1752,8 @@ export function App() {
                   executionFailureSequence={executionFailure.raised}
                   onDismissExecutionFailureNotice={dismissExecutionFailureNotice}
                   onDismissRecoveryNotice={workspace.dismissRecoveryNotice}
+                  appDeployNotice={appDeployNotice}
+                  onDismissAppDeployNotice={dismissAppDeployNotice}
                   onCyclePreviewLayout={cyclePreviewLayout}
                   editorShown={editorShown}
                   onHideEditor={hideEditor}
@@ -1801,6 +1932,9 @@ export function App() {
               {editionCapabilities.executionProfiler ? (
                 <div className="output-profiler-host" ref={setOutputProfilerHost} />
               ) : null}
+              {editionCapabilities.mcp ? (
+                <McpStatusIndicator onOpenSettings={openMcpSettings} state={connectorState} />
+              ) : null}
               {editionCapabilities.preview ? (
                 <div className="output-version-host" ref={setOutputVersionHost} />
               ) : (
@@ -1819,7 +1953,7 @@ export function App() {
             <ProblemsPanel
               filter={problemsSeverityFilter}
               groups={problemFileGroups}
-              onNavigate={(target, location) => void navigateToProblem(target, location)}
+              onNavigate={openProblem}
             />
           </TabsContent>
           <TabsContent
@@ -1899,8 +2033,20 @@ export function App() {
             requestedSourceId={managedModDeploymentSourceId}
           />
         ) : null}
+        {editionCapabilities.mcp ? (
+          <>
+            <McpSettingsDialog
+              onOpenChange={setMcpSettingsOpen}
+              onStateChange={setConnectorState}
+              open={mcpSettingsOpen}
+              state={connectorState}
+            />
+            <McpPrompts state={connectorState} />
+          </>
+        ) : null}
         {editionCapabilities.releaseCheck ? (
           <UpdateDialog
+            aiAppsConnected={connectorAppsConnected(connectorState)}
             controller={update.controller}
             onOpenChange={update.setDialogOpen}
             open={update.dialogOpen}

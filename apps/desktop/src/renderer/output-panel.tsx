@@ -5,6 +5,7 @@ import {
   CircleCheck,
   CircleMinus,
   CircleX,
+  TriangleAlert,
   type LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -215,12 +216,19 @@ const runStatusIcons: Readonly<Record<OutputRunResult, LucideIcon>> = {
   passed: CircleCheck,
   failed: CircleX,
   'test-failed': CircleX,
+  'test-warnings': TriangleAlert,
   stopped: CircleMinus,
 };
 
 function OutputRunStatusIcon({ header }: { header: OutputRunHeader }) {
   const Icon = runStatusIcons[header.result];
-  const source = outputSourceLabel(header.kind === 'map-test' ? 'Map test' : 'Run');
+  const source = outputSourceLabel(
+    header.kind === 'map-test'
+      ? 'Map test'
+      : header.kind === 'quality-check'
+        ? 'Quality check'
+        : 'Run',
+  );
   return (
     <Tooltip disableHoverablePopup>
       <TooltipTrigger
@@ -254,7 +262,12 @@ const OutputRowView = memo(function OutputRowView({
       data-source={message.source}
     >
       <OutputSeverityIcon severity={message.severity} source={outputSourceLabel(message.source)} />
-      <OutputMessageText detailsMemory={openOutputDetails} message={message} repeat={row.repeat} />
+      <OutputMessageText
+        detailsMemory={openOutputDetails}
+        message={message}
+        noteDetails={message.source === 'XS'}
+        repeat={row.repeat}
+      />
       {child ? null : <OutputTime time={row.time} />}
     </div>
   );

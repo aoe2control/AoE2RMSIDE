@@ -30,7 +30,7 @@ use rms_engine::{
 };
 use rms_profile::{
     BehaviorProfile, CapabilityStatus, CertifiedConstructs, GenerationCertification,
-    ProfileCatalog, frozen_certified_constructs,
+    KnownCrashEvidenceQuality, KnownCrashHit, ProfileCatalog, frozen_certified_constructs,
 };
 use rms_protocol::v1::envelope::Payload;
 use rms_protocol::v1::{self, ErrorCode};
@@ -57,6 +57,7 @@ pub mod control_pipe;
 mod game_art;
 mod latency;
 mod local_content;
+mod xs_start_frame;
 
 pub use connection_routes::{decode_connection_routes, protocol_connection_routes};
 pub const SERVER_NAME: &str = "rmsd";
@@ -190,6 +191,11 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
                                     connection_routes: true,
                                     control_pipe_exchange: true,
                                     map_test_completion_order_preview: false,
+                                    known_crash_ids: true,
+                                    xs_start_check: true,
+                                    map_test_game_crashes: false,
+                                    map_test_xs: false,
+                                    map_test_quality: false,
                                 }),
                             }),
                         )],
@@ -1145,6 +1151,7 @@ fn generation_worker(
             );
             if let Some(Payload::Error(error)) = error.payload.as_mut() {
                 error.details = failure.details;
+                error.known_crash = failure.known_crash;
             }
             let _ = send_protocol_batch(
                 &writer,
@@ -1168,6 +1175,7 @@ fn framed_generation_response(
     );
     fit_tile_write_runs(&mut response);
     connection_routes::fit_connection_routes(&mut response);
+    xs_start_frame::fit_xs_start(&mut response);
     fits_frame(&response)
         .map(|()| (sequence, response))
         .map_err(|length| frame_too_large_failure("generation response", length, sequence))
@@ -1344,6 +1352,7 @@ fn analyze_source_with_catalog(
             message,
             source_chain: Vec::new(),
             range: None,
+            crash: None,
         }),
     };
     match strict {
@@ -1357,16 +1366,19 @@ fn analyze_source_with_catalog(
                 .iter()
                 .any(|diagnostic| diagnostic.code == error.code)
             {
-                diagnostics.push(protocol_diagnostic(
-                    &source,
-                    error.code,
-                    &error.message,
-                    v1::DiagnosticSeverity::Error,
-                    error.range.unwrap_or(ByteRange {
-                        start: ByteOffset(0),
-                        end: ByteOffset(source.bytes().len() as u32),
-                    }),
-                ));
+                diagnostics.push(v1::Diagnostic {
+                    known_crash: error.crash.as_ref().and_then(known_crash_reference),
+                    ..protocol_diagnostic(
+                        &source,
+                        error.code,
+                        &error.message,
+                        v1::DiagnosticSeverity::Error,
+                        error.range.unwrap_or(ByteRange {
+                            start: ByteOffset(0),
+                            end: ByteOffset(source.bytes().len() as u32),
+                        }),
+                    )
+                });
             }
             SourceAnalysis {
                 diagnostics,
@@ -1569,6 +1581,19 @@ fn require_catalog_standard_includes(
     Ok(())
 }
 
+pub fn validate_xs_constants(constants: &v1::XsGameConstants) -> Result<(), &'static str> {
+    if constants.text.is_empty() || constants.text.len() > rms_protocol::MAX_XS_CONSTANTS_BYTES {
+        return Err("Constants.xs must hold 1 byte to 4 MiB");
+    }
+    if std::str::from_utf8(&constants.text).is_err() {
+        return Err("Constants.xs is not UTF-8 text");
+    }
+    if Sha256::digest(&constants.text).as_slice() != constants.sha256.as_slice() {
+        return Err("Constants.xs does not match its SHA-256");
+    }
+    Ok(())
+}
+
 fn failed_source_analysis(uri: &str, code: &str, message: String) -> SourceAnalysis {
     SourceAnalysis {
         diagnostics: vec![v1::Diagnostic {
@@ -1577,6 +1602,8 @@ fn failed_source_analysis(uri: &str, code: &str, message: String) -> SourceAnaly
             severity: v1::DiagnosticSeverity::Error as i32,
             source_id: uri.to_owned(),
             range: None,
+            known_crash: None,
+            arguments: Vec::new(),
         }],
         semantic_hash: Vec::new(),
         source_catalog: None,
@@ -1608,6 +1635,8 @@ fn protocol_diagnostic(
             byte_start: u64::from(range.start.0),
             byte_end: u64::from(range.end.0),
         }),
+        known_crash: None,
+        arguments: Vec::new(),
     }
 }
 
@@ -1622,6 +1651,7 @@ struct ProtocolFailure {
     retryable: bool,
     terminal_sequence: u64,
     details: BTreeMap<String, String>,
+    known_crash: Option<v1::KnownCrashReference>,
 }
 
 fn execute_generation(
@@ -1640,6 +1670,9 @@ fn execute_generation(
         .ok_or_else(|| malformed("generation document identity is required"))?;
     if document.uri.is_empty() || document.uri.len() > 4096 {
         return Err(malformed("generation document URI is invalid"));
+    }
+    if let Some(constants) = &request.xs_constants {
+        validate_xs_constants(constants).map_err(malformed)?;
     }
     let profile_catalog = ProfileCatalog::frozen_shared()
         .map_err(|error| internal_failure(format!("profile catalog failed: {error}")))?;
@@ -1734,6 +1767,7 @@ fn execute_generation(
     latency::step(identity_request_id, "source-catalog");
     let source_id = SourceId::new(document.uri.clone())
         .map_err(|error| malformed(format!("invalid document identity: {error}")))?;
+    let source_id_for_warnings = source_id.clone();
     let source = SourceText::from_bytes(source_id, request.source.clone())
         .map_err(|error| malformed(format!("invalid source bytes: {error}")))?;
     let vocabulary = content.verified().rms_implicit_definitions();
@@ -1800,8 +1834,9 @@ fn execute_generation(
     } else {
         parse()
     }
-    .map_err(|error| {
-        malformed(format!(
+    .map_err(|error| ProtocolFailure {
+        known_crash: error.crash.as_ref().and_then(known_crash_reference),
+        ..malformed(format!(
             "the script could not be analyzed ({}): {}",
             error.code, error.message
         ))
@@ -2000,6 +2035,45 @@ fn execute_generation(
     } else {
         None
     };
+    let crash_warnings = if backend == v1::GenerationBackend::Exact {
+        SourceText::from_bytes(source_id_for_warnings, request.source.clone())
+            .map(|source| crash_warnings(&source, &semantic_program, vocabulary))
+            .unwrap_or_default()
+    } else {
+        Vec::new()
+    };
+    let xs_start = if request.xs_start_check
+        && backend == v1::GenerationBackend::Exact
+        && !semantic_program.external_dependencies.is_empty()
+    {
+        let technology_count = match &content {
+            ResolvedContent::Product(_) => xs_eval::technology_counts()
+                .ok()
+                .and_then(|table| table.get(&internal_request.content_pack.pack_id)),
+            ResolvedContent::Local(_) => None,
+        };
+        let input = xs_start::XsStartInput {
+            constants: request.xs_constants.as_ref(),
+            roots: &semantic_program.external_dependencies,
+            catalog: source_catalog.as_ref(),
+            profile_id: &profile.profile_id,
+            content: content_view,
+            technology_count,
+            request: &internal_request,
+            map: &map,
+        };
+        match xs_start::xs_start_report(&input, &|| cancellation.is_cancelled()) {
+            xs_start::XsStartOutcome::Report(report) => Some(*report),
+            xs_start::XsStartOutcome::Cancelled => {
+                return Err(cancelled_failure(
+                    events.last_sequence + 1,
+                    "generation request was cancelled before commit",
+                ));
+            }
+        }
+    } else {
+        None
+    };
     let mut response = protocol_generation_response(
         request,
         &semantic_program,
@@ -2009,6 +2083,8 @@ fn execute_generation(
         false,
         identity_request_id,
     )?;
+    response.warnings.extend(crash_warnings);
+    response.xs_start = xs_start;
     response.certification = protocol_certification(certification)? as i32;
     response.execution_cost = if observe_execution {
         collector
@@ -2437,6 +2513,7 @@ fn protocol_generation_response(
         .map(|warning| v1::GenerationWarning {
             code: warning.code.clone(),
             message: warning.message.clone(),
+            known_crash: None,
         })
         .collect::<Vec<_>>();
     if !program.external_dependencies.is_empty() {
@@ -2446,6 +2523,7 @@ fn protocol_generation_response(
                 "{} external XS dependency was validated but standalone preview does not execute post-load XS effects",
                 program.external_dependencies.len()
             ),
+            known_crash: None,
         });
     }
     let connection_routes = if request.connection_routes {
@@ -2602,6 +2680,7 @@ fn protocol_generation_response(
         certification: v1::GenerationCertification::Unspecified as i32,
         execution_cost: None,
         construct_verification: None,
+        xs_start: None,
     };
     if identity_request_id.is_empty() {
         return Err(malformed("generation request identity is invalid"));
@@ -3433,6 +3512,7 @@ fn malformed(message: impl Into<String>) -> ProtocolFailure {
         retryable: false,
         terminal_sequence: 0,
         details: Default::default(),
+        known_crash: None,
     }
 }
 
@@ -3443,6 +3523,7 @@ fn stale(message: impl Into<String>) -> ProtocolFailure {
         retryable: true,
         terminal_sequence: 0,
         details: Default::default(),
+        known_crash: None,
     }
 }
 
@@ -3453,6 +3534,7 @@ fn unsupported(message: impl Into<String>) -> ProtocolFailure {
         retryable: false,
         terminal_sequence: 0,
         details: Default::default(),
+        known_crash: None,
     }
 }
 
@@ -3463,11 +3545,13 @@ fn internal_failure(message: impl Into<String>) -> ProtocolFailure {
         retryable: false,
         terminal_sequence: 0,
         details: Default::default(),
+        known_crash: None,
     }
 }
 
 fn map_generation_failure(error: GenerationError) -> ProtocolFailure {
-    match error {
+    let known_crash = error.known_crash().and_then(known_crash_reference);
+    let failure = match error {
         GenerationError::UnsupportedCapability { .. } => unsupported(error.to_string()),
         GenerationError::Cancelled(_) => ProtocolFailure {
             code: ErrorCode::Cancelled,
@@ -3475,14 +3559,93 @@ fn map_generation_failure(error: GenerationError) -> ProtocolFailure {
             retryable: true,
             terminal_sequence: 0,
             details: Default::default(),
+            known_crash: None,
         },
         GenerationError::StaleSemanticProgram => stale(error.to_string()),
         GenerationError::BackendFailure { .. } | GenerationError::EventSink(_) => {
             internal_failure(error.to_string())
         }
         _ => malformed(error.to_string()),
+    };
+    ProtocolFailure {
+        known_crash,
+        ..failure
     }
 }
+
+pub fn known_crash_reference(crash: &KnownCrashHit) -> Option<v1::KnownCrashReference> {
+    let reference = v1::KnownCrashReference {
+        crash_id: crash.id.to_owned(),
+        arguments: crash
+            .arguments
+            .iter()
+            .map(|(name, value)| v1::MessageArgument {
+                name: (*name).to_owned(),
+                value: value.clone(),
+            })
+            .collect(),
+        evidence: match crash.evidence() {
+            KnownCrashEvidenceQuality::Live => v1::KnownCrashEvidence::Live,
+            KnownCrashEvidenceQuality::Static => v1::KnownCrashEvidence::Static,
+            KnownCrashEvidenceQuality::Inferred => v1::KnownCrashEvidence::Inferred,
+        } as i32,
+    };
+    rms_protocol::validate_known_crash_reference(&reference)
+        .ok()
+        .map(|()| reference)
+}
+
+fn crash_warnings(
+    source: &SourceText,
+    program: &rms_semantics::SemanticProgram,
+    vocabulary: &BTreeMap<String, String>,
+) -> Vec<v1::GenerationWarning> {
+    let analysis = rms_analysis::analyze_document(source);
+    let disabled = rms_analysis::LINT_RULES
+        .iter()
+        .map(|rule| rule.code)
+        .filter(|code| *code != rms_analysis::GAME_CAN_CRASH)
+        .map(str::to_owned)
+        .collect::<std::collections::BTreeSet<_>>();
+    let defined = |name: &str| vocabulary.contains_key(name);
+    let values = |name: &str| match vocabulary.get(name) {
+        Some(value) => rms_semantics::WordDefinitions::Values(vec![value.clone()]),
+        None => rms_semantics::WordDefinitions::Undefined,
+    };
+    let setup = BTreeMap::new();
+    let lookup = |id: &SourceId| (id == source.id()).then_some(source);
+    let environment = rms_analysis::LintEnvironment {
+        external_names: None,
+        defined_elsewhere: &defined,
+        definitions_elsewhere: &values,
+        is_entry_script: true,
+        program: Some(rms_analysis::ProgramView {
+            program,
+            game_definitions: vocabulary,
+            setup_definitions: &setup,
+            source: &lookup,
+        }),
+        predefined: None,
+        disabled: &disabled,
+    };
+    let mut warnings = Vec::new();
+    for finding in rms_analysis::lint_document(source, &analysis, &environment) {
+        let Some(crash) = finding.known_crash.as_ref().and_then(known_crash_reference) else {
+            continue;
+        };
+        if warnings.len() >= MAXIMUM_CRASH_WARNINGS {
+            break;
+        }
+        warnings.push(v1::GenerationWarning {
+            code: finding.code.to_owned(),
+            message: finding.message,
+            known_crash: Some(crash),
+        });
+    }
+    warnings
+}
+
+const MAXIMUM_CRASH_WARNINGS: usize = 64;
 
 fn missing_content_failure(
     kind: ContentDefinitionKind,
@@ -3516,6 +3679,7 @@ fn frame_too_large_failure(
             retryable: false,
             terminal_sequence,
             details: error.details,
+            known_crash: None,
         },
         _ => with_terminal_sequence(
             internal_failure(format!("{description} exceeds the protocol frame bound")),
@@ -3536,6 +3700,7 @@ fn cancelled_failure(sequence: u64, message: impl Into<String>) -> ProtocolFailu
         retryable: true,
         terminal_sequence: sequence,
         details: Default::default(),
+        known_crash: None,
     }
 }
 

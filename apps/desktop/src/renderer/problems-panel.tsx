@@ -1,8 +1,8 @@
-import { useId, useState } from 'react';
+import { memo, useCallback, useId, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import type { MessageId } from '../shared/i18n/translator';
-import type { OutputSeverity } from '../shared/output-message';
+import type { OutputMessage, OutputSeverity } from '../shared/output-message';
 import { useFollowBottom } from './follow-bottom';
 import { useI18n } from './i18n';
 import {
@@ -18,6 +18,7 @@ import {
   type ProblemFileGroup,
   type ProblemTarget,
 } from './problems-model';
+import { useProblemRowWindow, type ProblemRowWindow, type WindowGroup } from './problems-window';
 import type { SeverityFilter } from './severity-filter';
 
 const severityWords: Record<OutputSeverity, MessageId> = {
@@ -43,7 +44,7 @@ function worstSeverity(group: ProblemFileGroup): OutputSeverity {
   return group.counts.error > 0 ? 'error' : group.counts.warning > 0 ? 'warning' : 'info';
 }
 
-export function ProblemsPanel({
+export const ProblemsPanel = memo(function ProblemsPanel({
   filter,
   groups,
   onNavigate,
@@ -53,10 +54,30 @@ export function ProblemsPanel({
   onNavigate(target: ProblemTarget, location: string): void;
 }) {
   const { t } = useI18n();
-  const shown = filterProblemGroups(groups, filter);
+  const shown = useMemo(() => filterProblemGroups(groups, filter), [groups, filter]);
   const [closed, setClosed] = useState<ReadonlySet<string>>(() => new Set());
+  const [openDetails] = useState(() => new WeakSet<OutputMessage>());
   const rows = shown.reduce((total, group) => total + group.entries.length, 0);
   const follow = useFollowBottom(rows, shown);
+  const windowGroups = useMemo<WindowGroup[]>(
+    () =>
+      shown.map((group) => ({
+        uri: group.uri,
+        keys: group.entries.map((entry) => entry.key),
+        open: !closed.has(group.uri),
+      })),
+    [closed, shown],
+  );
+  const rowWindow = useProblemRowWindow(windowGroups, follow);
+  const followRef = follow.ref;
+  const windowRef = rowWindow.listRef;
+  const listRef = useCallback(
+    (element: HTMLDivElement | null) => {
+      followRef(element);
+      windowRef(element);
+    },
+    [followRef, windowRef],
+  );
   const hidden = groups.reduce((total, group) => total + group.entries.length, 0) - rows;
   const toggle = (uri: string) =>
     setClosed((current) => {
@@ -72,8 +93,13 @@ export function ProblemsPanel({
         className="output-log problems-log owned-scrollbars"
         data-follow={follow.state.pinned ? 'pinned' : 'free'}
         data-testid="problems"
-        onScroll={follow.onScroll}
-        ref={follow.ref}
+        onBlur={(event) => rowWindow.onBlur(event.relatedTarget)}
+        onFocus={(event) => rowWindow.onFocus(event.target)}
+        onScroll={() => {
+          follow.onScroll();
+          rowWindow.onScroll();
+        }}
+        ref={listRef}
       >
         {groups.length === 0 ? (
           <p className="output-empty">{t('problems-panel.empty')}</p>
@@ -87,6 +113,8 @@ export function ProblemsPanel({
               onNavigate={onNavigate}
               onToggle={() => toggle(group.uri)}
               open={!closed.has(group.uri)}
+              openDetails={openDetails}
+              rowWindow={rowWindow}
               total={groups.find((candidate) => candidate.uri === group.uri) ?? group}
             />
           ))
@@ -95,30 +123,41 @@ export function ProblemsPanel({
       <JumpToLatest follow={follow} />
     </div>
   );
-}
+});
 
 function ProblemGroupView({
   group,
   onNavigate,
   onToggle,
   open,
+  openDetails,
+  rowWindow,
   total,
 }: {
   group: ProblemFileGroup;
   onNavigate(target: ProblemTarget, location: string): void;
   onToggle(): void;
   open: boolean;
+  openDetails: WeakSet<OutputMessage>;
+  rowWindow: ProblemRowWindow;
   total: ProblemFileGroup;
 }) {
   const { t } = useI18n();
   const titleId = useId();
   const rowsId = useId();
+  const { containerRef } = rowWindow;
+  const rowsRef = useCallback(
+    (element: HTMLDivElement | null) => containerRef(group.uri, element),
+    [containerRef, group.uri],
+  );
+  const setSize = group.entries.length;
   return (
     <div
       aria-labelledby={titleId}
       className="output-group problems-group"
       data-file={group.name}
       data-open={open ? 'true' : 'false'}
+      data-problem-group={group.uri}
       data-protected={group.protected ? 'true' : 'false'}
       role="group"
     >
@@ -154,37 +193,82 @@ function ProblemGroupView({
         className="output-group-rows"
         hidden={!open}
         id={rowsId}
+        ref={rowsRef}
         role="list"
       >
-        {group.entries.map((entry) => (
-          <ProblemRowView entry={entry} key={entry.key} onNavigate={onNavigate} />
-        ))}
+        {rowWindow
+          .slots(group.uri)
+          .flatMap((slot) =>
+            slot.kind === 'gap' ? (
+              <div
+                aria-hidden="true"
+                className="problems-gap"
+                key={`gap-${slot.start}`}
+                style={{ height: slot.height }}
+              />
+            ) : (
+              group.entries
+                .slice(slot.start, slot.end)
+                .map((entry, offset) => (
+                  <ProblemRowView
+                    entry={entry}
+                    key={entry.key}
+                    measureRow={rowWindow.measureRow}
+                    openDetails={openDetails}
+                    onNavigate={onNavigate}
+                    position={slot.start + offset + 1}
+                    setSize={setSize}
+                  />
+                ))
+            ),
+          )}
       </div>
     </div>
   );
 }
 
-function ProblemRowView({
+const ProblemRowView = memo(function ProblemRowView({
   entry,
+  measureRow,
   onNavigate,
+  openDetails,
+  position,
+  setSize,
 }: {
   entry: ProblemEntry;
+  measureRow: ProblemRowWindow['measureRow'];
   onNavigate(target: ProblemTarget, location: string): void;
+  openDetails: WeakSet<OutputMessage>;
+  position: number;
+  setSize: number;
 }) {
   const { t } = useI18n();
   const go = () => onNavigate(entry.target, entry.location);
   const click = usePlainClick(go);
+  const key = entry.key;
+  const measure = useCallback(
+    (element: HTMLDivElement) => measureRow(key, element),
+    [key, measureRow],
+  );
   return (
     <div
+      aria-posinset={position}
+      aria-setsize={setSize}
       className="output-row problems-row"
       data-code={entry.message.code}
       data-severity={entry.severity}
       onClick={click.onClick}
       onMouseDown={click.onMouseDown}
+      ref={measure}
       role="listitem"
     >
       <OutputSeverityIcon severity={entry.severity} source={t(severityWords[entry.severity])} />
-      <OutputMessageText message={entry.message} noteDetails repeat={entry.count} />
+      <OutputMessageText
+        detailsMemory={openDetails}
+        message={entry.message}
+        noteDetails
+        repeat={entry.count}
+      />
       <Tooltip disableHoverablePopup>
         <TooltipTrigger
           render={
@@ -205,4 +289,4 @@ function ProblemRowView({
       </Tooltip>
     </div>
   );
-}
+});

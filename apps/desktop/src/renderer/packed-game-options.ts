@@ -74,6 +74,14 @@ const civilizationNames: ReadonlyMap<number, MessageId> = new Map<number, Messag
   [62, 'game-options.civilization.danes'],
 ]);
 
+export function civilizationIdForKey(key: string): number | undefined {
+  if (key === 'random') return randomCivilizationId;
+  for (const [id, name] of civilizationNames) {
+    if (name === `game-options.civilization.${key}`) return id;
+  }
+  return undefined;
+}
+
 export function civilizationName(id: number): OutputText {
   if (id === randomCivilizationId) return { id: 'game-options.civilization.random' };
   const name = civilizationNames.get(id);
