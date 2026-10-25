@@ -11,7 +11,7 @@ import { isMapTestScriptName, type MapTestWorkerSetting } from '../shared/map-te
 import type { LiveControlAction } from './live-control-action';
 import type { LivePreviewStatus } from './live-preview';
 import type { PreviewCacheDiagnostics } from './preview-cache';
-import type { ReplayedLobbySettings } from './replay-run-preset';
+import type { PreviewBeforeReplay, ReplayedLobbySettings } from './replay-run-preset';
 
 export type PreviewRunState = 'idle' | 'running' | 'success' | 'error';
 
@@ -90,6 +90,7 @@ export interface PreviewExecutionController {
   lockReplayedSeed?(
     seed: number,
     lobby: ReplayedLobbySettings | null,
+    shown?: PreviewBeforeReplay,
   ): { temporaryName: string | null } | null;
   mapTestWorkers?: MapTestWorkerSetting;
   setMapTestWorkers?(workers: MapTestWorkerSetting): void;

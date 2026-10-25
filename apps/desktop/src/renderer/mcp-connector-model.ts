@@ -111,6 +111,11 @@ const actionWords: Readonly<Record<ConnectorToolName | 'show_map', ActionWords>>
   read_guide: plain('mcp.action.guide'),
   lookup_reference: (facts) =>
     facts.name ? { id: 'mcp.action.reference', args: { name: facts.name } } : null,
+  list_folders: plain('mcp.action.list-folders'),
+  open_folder: (facts) =>
+    facts.name
+      ? { id: 'mcp.action.open-folder', args: { name: facts.name } }
+      : { id: 'mcp.action.open-folder-open' },
 };
 
 export function connectorActionText(tool: string, facts: ConnectorOutputFacts = {}): OutputText {
@@ -143,6 +148,12 @@ const refusalCauses: Readonly<Partial<Record<ConnectorErrorCode, MessageId>>> = 
   rate_limited: 'mcp.refusal.too-many',
   too_many_calls: 'mcp.refusal.too-many',
   internal: 'mcp.refusal.internal',
+};
+
+const toolRefusalCauses: Readonly<
+  Partial<Record<ConnectorToolName, Partial<Record<ConnectorErrorCode, MessageId>>>>
+> = {
+  open_folder: { not_found: 'mcp.refusal.folder-gone', busy: 'mcp.refusal.folder-busy' },
 };
 
 function rowCode(kind: string): string {
@@ -191,7 +202,9 @@ export function connectorOutputMessage(row: ConnectorOutputRow): OutputMessage {
       { severity: row.severity, detail },
     );
   }
-  const cause = row.error ? refusalCauses[row.error] : undefined;
+  const cause = row.error
+    ? (toolRefusalCauses[row.tool]?.[row.error] ?? refusalCauses[row.error])
+    : undefined;
   return outputNote(
     'MCP',
     rowCode(row.outcome),

@@ -75,6 +75,8 @@ message Capabilities {
   bool map_test_game_crashes = 22;
   bool map_test_xs = 23;
   bool map_test_quality = 24;
+  bool object_instance_ids = 25;
+  bool presentation_instance_ids = 26;
 }
 
 enum MapTestStatus {
@@ -622,6 +624,18 @@ message ObjectColumns {
   bytes behavior_flags_le = 15;
   bytes resource_type_le = 16;
   bytes resource_quantity_f32_bits_le = 17;
+  bytes instance_ids_le = 18;
+  ObjectInstanceIdState instance_id_state = 19;
+}
+
+enum ObjectInstanceIdState {
+  OBJECT_INSTANCE_ID_STATE_UNSPECIFIED = 0;
+  OBJECT_INSTANCE_ID_STATE_AVAILABLE = 1;
+  OBJECT_INSTANCE_ID_STATE_NOT_EXACT_BACKEND = 2;
+  OBJECT_INSTANCE_ID_STATE_UNVERIFIED_GAME_VERSION = 3;
+  OBJECT_INSTANCE_ID_STATE_NOT_COMPARED_FOR_VERSION = 4;
+  OBJECT_INSTANCE_ID_STATE_SECOND_COUNTER_OBJECTS = 5;
+  OBJECT_INSTANCE_ID_STATE_NOT_IN_THIS_PREVIEW = 6;
 }
 
 message ConnectionColumns {
@@ -648,6 +662,8 @@ message ColumnarMapState {
   bytes cliff_pieces_le = 13;
   bytes appearance_objects_le = 14;
   ConnectionRoutes connection_routes = 15;
+  bytes cliff_piece_instance_ids_le = 16;
+  bytes appearance_instance_ids_le = 17;
 }
 
 message ConnectionRoutes {

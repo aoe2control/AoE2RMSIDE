@@ -2300,6 +2300,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "復原檔案已損毀，或由其他 AoE2RMSIDE 發行版寫入。"
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "無法將資料夾貼到其本身或其內部的資料夾中。"
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "該資料夾中已有同名的項目。"
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "一次最多貼上 {limit, number, integer} 個項目。"
+    },
+    "message.files.copy-limit.cause": {
+      "message": "這些項目包含超過 {entries, number, integer} 個檔案和資料夾或 {megabytes, number, integer} MiB。"
+    },
+    "message.files.copy-link.cause": {
+      "message": "這些項目本身是或包含連結、目錄連接或其他特殊項目。"
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "無法將該項目移動到其他磁碟機。"
+    },
     "message.game-textures.cause": {
       "message": "預覽與地圖圖示改用紋理配色。"
     },
@@ -2504,6 +2522,18 @@
     "explorer.open-folder.tooltip": {
       "message": "開啟資料夾"
     },
+    "explorer.switch-folder.label": {
+      "message": "切換資料夾"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "切換資料夾"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "最近使用的資料夾"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "沒有其他最近使用的資料夾"
+    },
     "explorer.tree.label": {
       "message": "{name} 的檔案"
     },
@@ -2536,6 +2566,15 @@
     },
     "explorer.context.delete": {
       "message": "刪除"
+    },
+    "explorer.context.copy": {
+      "message": "複製"
+    },
+    "explorer.context.cut": {
+      "message": "剪下"
+    },
+    "explorer.context.paste": {
+      "message": "貼上"
     },
     "explorer.inline.create-file": {
       "message": "建立檔案"
@@ -3384,7 +3423,7 @@
       "message": "關閉 MCP 設定"
     },
     "mcp.dialog.description": {
-      "message": "允許這部電腦上的 AI 應用程式讀取、編輯和檢查已開啟資料夾中的指令碼，產生地圖並執行地圖測試。"
+      "message": "允許這部電腦上的 AI 應用程式讀取、編輯和檢查已開啟資料夾及你最近使用的資料夾中的指令碼，產生地圖並執行地圖測試。"
     },
     "mcp.enable.label": {
       "message": "啟用 MCP"
@@ -3495,10 +3534,10 @@
       "message": "允許 {app} 使用 AoE2RMSIDE？"
     },
     "mcp.pairing.description": {
-      "message": "它將能編輯已開啟資料夾中的指令碼、產生地圖、執行測試及部署模組。由 {program} 啟動。"
+      "message": "它將能編輯已開啟資料夾及你最近使用的資料夾中的指令碼、產生地圖、執行測試及部署模組。由 {program} 啟動。"
     },
     "mcp.pairing.description.no-program": {
-      "message": "它將能編輯已開啟資料夾中的指令碼、產生地圖、執行測試及部署模組。"
+      "message": "它將能編輯已開啟資料夾及你最近使用的資料夾中的指令碼、產生地圖、執行測試及部署模組。"
     },
     "mcp.pairing.name-note": {
       "message": "名稱由應用程式自行宣稱：只有你親自設定的才允許。取代模組或進行遊戲內測試時仍會詢問你。"
@@ -3635,6 +3674,15 @@
     "mcp.action.reference": {
       "message": "查閱了 {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "列出了最近使用的資料夾"
+    },
+    "mcp.action.open-folder": {
+      "message": "開啟了資料夾 {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "要求了已開啟的資料夾"
+    },
     "mcp.action.tool": {
       "message": "使用了 {tool}"
     },
@@ -3659,6 +3707,9 @@
     "mcp.refusal.not-found": {
       "message": "找不到該檔案。"
     },
+    "mcp.refusal.folder-gone": {
+      "message": "該資料夾已不在最近使用的資料夾中。"
+    },
     "mcp.refusal.already-exists": {
       "message": "該檔案已存在。"
     },
@@ -3676,6 +3727,9 @@
     },
     "mcp.refusal.busy": {
       "message": "另一項作業正在執行。"
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE 正忙於執行、對話方塊或其他資料夾。"
     },
     "mcp.refusal.map-expired": {
       "message": "產生的地圖已不再保留。"
@@ -4697,6 +4751,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "石料：總計 {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "顯示輔助物件（{count}）"
     },
@@ -5638,6 +5698,18 @@
     },
     "workspace.failed.delete": {
       "message": "無法刪除項目"
+    },
+    "workspace.failed.copy": {
+      "message": "無法複製項目"
+    },
+    "workspace.failed.cut": {
+      "message": "無法剪下項目"
+    },
+    "workspace.failed.paste": {
+      "message": "未貼上任何內容"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, other {已略過 {count} 個檔案，因為檔案總管不會列出其檔案類型}}"
     },
     "workspace.failed.restore-session": {
       "message": "無法還原上次工作階段"

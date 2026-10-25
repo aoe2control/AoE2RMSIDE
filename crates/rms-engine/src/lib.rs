@@ -1138,6 +1138,8 @@ pub struct PlacedObject {
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CliffPiece {
+    #[serde(default)]
+    pub instance_id: u32,
     pub object_id: ObjectId,
     pub x_256: u32,
     pub y_256: u32,
@@ -1232,6 +1234,7 @@ fn presentation_cliff_pieces(
                 })
                 .map_or([0; 4], |rule| rule.edges);
             Some(CliffPiece {
+                instance_id: piece.instance_id,
                 object_id: piece.object_id,
                 x_256,
                 y_256,
@@ -1245,6 +1248,8 @@ fn presentation_cliff_pieces(
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TerrainAppearanceObject {
+    #[serde(default)]
+    pub instance_id: u32,
     pub object_id: ObjectId,
     pub x_256: u32,
     pub y_256: u32,
@@ -1255,7 +1260,7 @@ pub struct TerrainAppearanceObject {
 pub const MAXIMUM_PRESENTATION_APPEARANCE_OBJECTS: usize = 524_288;
 
 fn presentation_appearance_objects(
-    standing: &[(ObjectId, [u32; 2])],
+    standing: &[(u32, ObjectId, [u32; 2])],
     content: CompatibleContentView<'_>,
     dimensions: MapDimensions,
     adjustments: &mut PresentationAdjustments,
@@ -1271,7 +1276,7 @@ fn presentation_appearance_objects(
     standing
         .iter()
         .take(MAXIMUM_PRESENTATION_APPEARANCE_OBJECTS)
-        .filter_map(|(object_id, [x_bits, y_bits])| {
+        .filter_map(|(instance_id, object_id, [x_bits, y_bits])| {
             let position = match (fixed(*x_bits), fixed(*y_bits)) {
                 (Some(x), Some(y)) => presentation_position(x, y, dimensions, adjustments),
                 _ => {
@@ -1282,6 +1287,7 @@ fn presentation_appearance_objects(
             let (x_256, y_256) = position?;
             let definition = content.object(*object_id);
             Some(TerrainAppearanceObject {
+                instance_id: *instance_id,
                 object_id: *object_id,
                 x_256,
                 y_256,
@@ -1344,6 +1350,50 @@ pub struct PlacementRecord {
 }
 
 pub const MAXIMUM_PLACEMENT_RECORDS: usize = 4_096;
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct WorldRoster {
+    pub objects: Vec<WorldRosterObject>,
+    pub destroyed_instance_ids: Vec<u32>,
+    pub game_setup_objects: Vec<GameSetupObject>,
+    pub cursors: WorldRosterCursors,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct GameSetupObject {
+    pub instance_id: u32,
+    pub object_id: ObjectId,
+    pub owner: u8,
+    pub position_f32_bits: [u32; 2],
+}
+
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub enum ObjectInstanceIdentities {
+    #[default]
+    NotModelled,
+    Native,
+    SecondCounterObjects,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct WorldRosterObject {
+    pub instance_id: u32,
+    pub object_id: ObjectId,
+    pub owner: u8,
+    pub lifecycle: u8,
+    pub position_f32_bits: [u32; 2],
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct WorldRosterCursors {
+    pub land_appearances_end: u32,
+    pub object_module_entry: u32,
+    pub terrain_appearance_refresh_end: u32,
+    pub scripted_objects_end: u32,
+    pub post_rms_next_instance_id: u32,
+    pub game_setup_objects_end: u32,
+    pub roster_next_instance_id: u32,
+}
 
 fn player_starts(
     players: &[ExactSetupPlayer],
@@ -1425,6 +1475,8 @@ pub struct GeneratedMap {
     pub player_starts: Vec<PlayerStart>,
     pub placement_records: Vec<PlacementRecord>,
     pub omitted_placement_records: u32,
+    pub world_roster: Option<WorldRoster>,
+    pub object_instance_identities: ObjectInstanceIdentities,
 }
 
 impl GeneratedMap {
@@ -3662,6 +3714,7 @@ impl ExactRmsGenerationBackend {
             input.content,
             cancellation,
         )?;
+        exact_object::reserve_game_setup_identities(&mut object, &setup, input.content)?;
         exact_terrain::finalize_game_mode_terrain(
             connection.dimensions,
             &mut object.terrain,
@@ -3694,6 +3747,8 @@ impl ExactRmsGenerationBackend {
                 ),
             ],
         );
+        let world_roster =
+            (input.request.trace_level == TraceLevel::Full).then(|| object.world_roster());
         observer.step_started(ExecutionStep::FinalizeObjectOrder);
         let (final_objects, final_object_operation_indices) =
             match exact_object::native_identity_order(&object.objects, input.content) {
@@ -3826,6 +3881,12 @@ impl ExactRmsGenerationBackend {
             player_starts,
             placement_records,
             omitted_placement_records,
+            world_roster,
+            object_instance_identities: if object.instance_ids_follow_native_counter() {
+                ObjectInstanceIdentities::Native
+            } else {
+                ObjectInstanceIdentities::SecondCounterObjects
+            },
         };
         map.finalize_semantic_hash()?;
         let finalize_stage_hash = presentation_stage_hash(

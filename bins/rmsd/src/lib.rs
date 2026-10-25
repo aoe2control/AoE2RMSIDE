@@ -23,8 +23,8 @@ use rms_engine::{
     ContentDefinitionKind, ExactRmsGenerationBackend, ExecutionCostCollector, ExecutionCostSummary,
     ExecutionObserver, ExecutionProgress, GameMode, GameModeModifier, GameModeModifiers,
     GeneratedMap, GenerationBackend, GenerationError, GenerationRequest, LobbyOptions,
-    MapDimensions, NoopExecutionObserver, PlayerConfiguration, PositionPolicy,
-    ResolvedGenerationInput, SetupContext, SetupContextVersion, StartingAge,
+    MapDimensions, NoopExecutionObserver, ObjectInstanceIdentities, PlayerConfiguration,
+    PositionPolicy, ResolvedGenerationInput, SetupContext, SetupContextVersion, StartingAge,
     StartingResourcePolicy, StepCost, VisualCheckpoint, VisualCheckpointObserver, VisualStage,
     exact_effective_dimensions, observe_exact_script_parse,
 };
@@ -196,6 +196,8 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
                                     map_test_game_crashes: false,
                                     map_test_xs: false,
                                     map_test_quality: false,
+                                    object_instance_ids: true,
+                                    presentation_instance_ids: true,
                                 }),
                             }),
                         )],
@@ -2074,6 +2076,7 @@ fn execute_generation(
     } else {
         None
     };
+    let instance_ids = instance_id_columns(backend, certification, &profile.profile_id, &map);
     let mut response = protocol_generation_response(
         request,
         &semantic_program,
@@ -2083,6 +2086,9 @@ fn execute_generation(
         false,
         identity_request_id,
     )?;
+    if let Some(state) = response.map_state.as_mut() {
+        instance_ids.apply(state);
+    }
     response.warnings.extend(crash_warnings);
     response.xs_start = xs_start;
     response.certification = protocol_certification(certification)? as i32;
@@ -2274,6 +2280,116 @@ fn construct_verification(
         executed_constructs: u32::try_from(executed.len()).unwrap_or(u32::MAX),
         table_id: entry.table_id.clone(),
     })
+}
+
+const INSTANCE_ID_COMPARED_PROFILES: [&str; 2] = [
+    rms_profile::CURRENT_PROFILE_ID,
+    rms_profile::PROFILE_54800_ID,
+];
+
+#[derive(Debug, Eq, PartialEq)]
+struct InstanceIdColumns {
+    state: i32,
+    objects: Vec<u8>,
+    cliff_pieces: Vec<u8>,
+    appearances: Vec<u8>,
+}
+
+impl InstanceIdColumns {
+    fn empty(state: v1::ObjectInstanceIdState) -> Self {
+        Self {
+            state: state as i32,
+            objects: Vec::new(),
+            cliff_pieces: Vec::new(),
+            appearances: Vec::new(),
+        }
+    }
+
+    fn apply(self, map: &mut v1::ColumnarMapState) {
+        self.set(map);
+        if rms_protocol::validate_map_instance_ids(map).is_err() {
+            Self::empty(v1::ObjectInstanceIdState::NotComparedForVersion).set(map);
+        }
+    }
+
+    fn set(self, map: &mut v1::ColumnarMapState) {
+        if let Some(columns) = map.objects.as_mut() {
+            columns.instance_id_state = self.state;
+            columns.instance_ids_le = self.objects;
+        }
+        map.cliff_piece_instance_ids_le = self.cliff_pieces;
+        map.appearance_instance_ids_le = self.appearances;
+    }
+}
+
+fn instance_id_columns(
+    backend: v1::GenerationBackend,
+    certification: GenerationCertification,
+    profile_id: &str,
+    map: &GeneratedMap,
+) -> InstanceIdColumns {
+    let state = object_instance_id_state(
+        backend,
+        certification,
+        profile_id,
+        map.object_instance_identities,
+    );
+    encode_instance_id_columns(
+        state,
+        map.objects.iter().map(|object| object.instance_id),
+        map.cliff_pieces.iter().map(|piece| piece.instance_id),
+        map.appearance_objects
+            .iter()
+            .map(|appearance| appearance.instance_id),
+    )
+}
+
+fn object_instance_id_state(
+    backend: v1::GenerationBackend,
+    certification: GenerationCertification,
+    profile_id: &str,
+    identities: ObjectInstanceIdentities,
+) -> v1::ObjectInstanceIdState {
+    use v1::ObjectInstanceIdState as State;
+    if backend != v1::GenerationBackend::Exact {
+        State::NotExactBackend
+    } else if certification != GenerationCertification::VersionMapped {
+        State::UnverifiedGameVersion
+    } else if !INSTANCE_ID_COMPARED_PROFILES.contains(&profile_id) {
+        State::NotComparedForVersion
+    } else {
+        match identities {
+            ObjectInstanceIdentities::Native => State::Available,
+            ObjectInstanceIdentities::SecondCounterObjects => State::SecondCounterObjects,
+            ObjectInstanceIdentities::NotModelled => State::NotExactBackend,
+        }
+    }
+}
+
+fn encode_instance_id_columns(
+    state: v1::ObjectInstanceIdState,
+    objects: impl Iterator<Item = u32>,
+    cliff_pieces: impl Iterator<Item = u32>,
+    appearances: impl Iterator<Item = u32>,
+) -> InstanceIdColumns {
+    use v1::ObjectInstanceIdState as State;
+    if state != State::Available {
+        return InstanceIdColumns::empty(state);
+    }
+    fn encode(ids: impl Iterator<Item = u32>) -> Option<Vec<u8>> {
+        ids.map(|id| i32::try_from(id).ok())
+            .collect::<Option<Vec<_>>>()
+            .map(encode_i32)
+    }
+    match (encode(objects), encode(cliff_pieces), encode(appearances)) {
+        (Some(objects), Some(cliff_pieces), Some(appearances)) => InstanceIdColumns {
+            state: state as i32,
+            objects,
+            cliff_pieces,
+            appearances,
+        },
+        _ => InstanceIdColumns::empty(State::NotComparedForVersion),
+    }
 }
 
 fn protocol_certification(
@@ -2549,6 +2665,8 @@ fn protocol_generation_response(
             cliff_edges: encode_cliffs(&map.cliffs),
             cliff_pieces_le: encode_cliff_pieces(&map.cliff_pieces),
             appearance_objects_le: encode_appearance_objects(&map.appearance_objects),
+            cliff_piece_instance_ids_le: Vec::new(),
+            appearance_instance_ids_le: Vec::new(),
             objects: Some(v1::ObjectColumns {
                 ids_le: encode_u32(map.objects.iter().map(|value| value.object_id.0)),
                 x_le: encode_u32(map.objects.iter().map(|value| value.x_256)),
@@ -2588,6 +2706,8 @@ fn protocol_generation_response(
                     .map(|value| value.selection_flags)
                     .collect(),
                 behavior_flags_le: encode_u16(map.objects.iter().map(|value| value.behavior_flags)),
+                instance_ids_le: Vec::new(),
+                instance_id_state: v1::ObjectInstanceIdState::Unspecified as i32,
             }),
             layer_ids_le: encode_u16(map.layer.iter().copied()),
             flags_le: encode_u32(map.flags.iter().map(|value| value.0)),

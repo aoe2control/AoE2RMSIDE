@@ -54,7 +54,7 @@ import {
 import { AppTour } from './app-tour';
 import { isUntitledDocument } from './untitled-documents';
 import { mapTestReplayInput, replayedRunSeed } from './map-test-replay';
-import { replayedLobbySettings } from './replay-run-preset';
+import { replayedLobbySettings, type PreviewBeforeReplay } from './replay-run-preset';
 import { contentMatchStep, type ContentMatchGesture, type ContentMatchVisit } from './monaco-find';
 import { mapTestPreviewShown, type PreviewMapOrigin } from './map-test-preview';
 import {
@@ -193,6 +193,8 @@ export function App() {
   const mapRef = useRef(map);
   mapRef.current = map;
   const [previewMapOrigin, setPreviewMapOrigin] = useState<PreviewMapOrigin>('generation');
+  const previewMapOriginRef = useRef(previewMapOrigin);
+  previewMapOriginRef.current = previewMapOrigin;
   const [executionFailure, setExecutionFailure] = useState<{
     raised: number;
     notice: ExecutionFailureNoticeContent | null;
@@ -628,6 +630,28 @@ export function App() {
     [executionProfiler, previewCandidates],
   );
 
+  const replaySequence = useRef(0);
+  const replayActivityRef = useRef<string | null>(null);
+  const restorePreviewBeforeReplay = useCallback(
+    (shown: PreviewBeforeReplay) => {
+      replaySequence.current += 1;
+      if (replayActivityRef.current !== null) {
+        previewCandidates.end(replayActivityRef.current);
+        replayActivityRef.current = null;
+      }
+      if (shown.map) {
+        commitPreview(shown.map, shown.origin);
+        return;
+      }
+      previewCandidates.clear();
+      setMap(null);
+      setPreviewMapOrigin('generation');
+      executionProfiler.settle(null);
+      setSelection(null);
+    },
+    [commitPreview, executionProfiler, previewCandidates],
+  );
+
   const settleRunOutcome = useCallback(
     (outcome: RunOutcome, trigger: RunTrigger, runKey?: string) => {
       const { clearMap, discardCandidate, notice } = runOutcomeEffects(outcome, trigger);
@@ -767,6 +791,7 @@ export function App() {
       setEditorPointerInside,
       selectPreviewOperation,
       commitPreview,
+      restorePreviewBeforeReplay,
       previewMapOrigin,
       mapTestPreviewShown: mapTestPreview,
       settleRunOutcome,
@@ -838,6 +863,7 @@ export function App() {
       publishMapTestResult,
       publishXsStartFindings,
       commitPreview,
+      restorePreviewBeforeReplay,
       previewMapOrigin,
       mapTestPreview,
       settleRunOutcome,
@@ -1550,6 +1576,18 @@ export function App() {
         );
         return;
       }
+      const shownMap = mapRef.current;
+      const shownBefore: PreviewBeforeReplay = {
+        map: shownMap,
+        origin: shownMap ? previewMapOriginRef.current : 'generation',
+        sourceText: shownMap
+          ? (previewSourceContents.get(shownMap) ??
+            workspace.documents.find((document) => document.uri === shownMap.documentUri)
+              ?.content ??
+            null)
+          : null,
+      };
+      const sequence = replaySequence.current;
       workspace.setActiveDocument(scriptDocument.id);
       const replayInput = mapTestReplayInput({
         executionId: `map-test-replay-${crypto.randomUUID()}`,
@@ -1559,6 +1597,7 @@ export function App() {
       });
       const replayActivity = previewCandidates.activity === null ? replayInput.executionId : null;
       if (replayActivity !== null) {
+        replayActivityRef.current = replayActivity;
         previewCandidates.begin(replayActivity, undefined, {
           kind: 'map-test',
           progressive: false,
@@ -1568,6 +1607,7 @@ export function App() {
       }
       try {
         const result = await window.rmside.replayMapTestFinding(replayInput);
+        if (replaySequence.current !== sequence) return;
         commitPreview(result, 'map-test');
         if (replayActivity !== null) previewCandidates.end(replayActivity);
         const replayedSeed = mapTestResults.report.findings.find(
@@ -1580,6 +1620,7 @@ export function App() {
             ? (execution.lockReplayedSeed?.(
                 runSeed,
                 replayedLobbySettings(mapTestResults.report, findingId),
+                shownBefore,
               ) ?? null)
             : null;
         appendOutput(
@@ -1599,10 +1640,12 @@ export function App() {
           ),
         );
       } catch (error) {
+        if (replaySequence.current !== sequence) return;
         const failure = presentMapTestReplayFailure(errorMessage(error));
         if (!failureReportedByMain(failure, 'preview')) appendOutput(failure);
       } finally {
         if (replayActivity !== null) previewCandidates.end(replayActivity);
+        if (replayActivityRef.current === replayActivity) replayActivityRef.current = null;
       }
     },
     [appendOutput, commitPreview, mapTestResults, previewCandidates, workspace],

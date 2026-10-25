@@ -93,9 +93,11 @@ import {
 } from './automatic-generation';
 import {
   replayedRunChange,
+  revertedPreview,
   revertTemporaryRun,
   testConfigName,
   userRunConfiguration,
+  type PreviewBeforeReplay,
   type ReplayedLobbySettings,
   type TemporaryRunConfiguration,
 } from './replay-run-preset';
@@ -113,6 +115,7 @@ import {
   type LiveWorkflowEvent,
 } from './control-presentation';
 import { buildControlLiveRequest, controlAcceptsLiveSetup } from './control-live-request';
+import { DashedOutline } from './dashed-outline';
 import { liveControlAction } from './live-control-action';
 import {
   idleLiveTestProgress,
@@ -334,6 +337,7 @@ export function RunConfigurationPanel({
     previewCandidates,
     publishMapTestResult,
     publishXsStartFindings,
+    restorePreviewBeforeReplay,
     setPreviewExecution,
     settleOutputRun,
     settleRunOutcome,
@@ -392,6 +396,12 @@ export function RunConfigurationPanel({
   const settledOutputRuns = useRef(new Map<string, 'shown' | 'discarded'>());
   const outputRunSequence = useRef(0);
   const suppressNextAutomaticGeneration = useRef(false);
+  const pendingRevertGeneration = useRef<{
+    documentUri: string;
+    identity: string | null;
+    waitFor: string | null;
+  } | null>(null);
+  const [revertGenerationRequest, setRevertGenerationRequest] = useState(0);
   const [appRunActive, setAppRunActive] = useState(false);
   const automaticGenerationDeferred = useRef(false);
   const installationDiscoveryStarted = useRef(false);
@@ -1383,9 +1393,11 @@ export function RunConfigurationPanel({
       explicitSource?: PinnedPreviewSource,
       supersedeOwnPreview = false,
       appRun?: AppPreviewRun,
+      keepMapTestResults = false,
     ): string | null => {
       if (!catalog) return null;
       if (executionState.phase !== 'idle' && !supersedeOwnPreview) return null;
+      pendingRevertGeneration.current = null;
       const document = explicitSource
         ? {
             id: explicitSource.id,
@@ -1467,7 +1479,7 @@ export function RunConfigurationPanel({
       if (deduplicate && lastScheduledJobIdentity.current === jobIdentity) return null;
       lastScheduledJobIdentity.current = jobIdentity;
       if (debounceMs <= 0) admitRun(job);
-      clearMapTestResults();
+      if (!keepMapTestResults) clearMapTestResults();
       pendingQualityCheck.current = null;
       lastScheduledOutputRunId.current = outputRun.id;
       const randomCivilizations = randomCivilizationResolutions(requestedConfiguration);
@@ -2572,10 +2584,17 @@ export function RunConfigurationPanel({
     (
       seed: number,
       lobby: ReplayedLobbySettings | null,
+      shown?: PreviewBeforeReplay,
     ): { temporaryName: string | null } | null => {
       const { configuration: current, temporary } = replayStateRef.current;
       if (!current || !Number.isSafeInteger(seed) || seed < 0 || seed > 0xffff_ffff) return null;
-      const next = replayedRunChange({ state: { configuration: current, temporary }, lobby, seed });
+      pendingRevertGeneration.current = null;
+      const next = replayedRunChange({
+        state: { configuration: current, temporary },
+        lobby,
+        seed,
+        ...(shown ? { shown } : {}),
+      });
       if (
         automaticGenerationIdentity(next.configuration) !== automaticGenerationIdentity(current)
       ) {
@@ -3111,6 +3130,61 @@ export function RunConfigurationPanel({
   }, [appRunActive, effectiveConfiguration, executionState.phase, scheduleGeneration]);
 
   useEffect(() => {
+    const pending = pendingRevertGeneration.current;
+    if (!pending || !effectiveConfiguration) return;
+    if (automaticGenerationIdentity(configuration) !== pending.identity) {
+      pendingRevertGeneration.current = null;
+      return;
+    }
+    const ownPreview =
+      executionState.phase !== 'idle' &&
+      executionState.executionId === activePreviewExecutionId.current;
+    if (executionState.phase !== 'idle' && !ownPreview) {
+      if (executionState.executionId !== pending.waitFor) pendingRevertGeneration.current = null;
+      return;
+    }
+    pendingRevertGeneration.current = null;
+    const document = documentsRef.current.find(
+      (candidate) => candidate.uri === pending.documentUri,
+    );
+    if (!document || !isPreviewScriptName(document.name) || !document.content) return;
+    const executionSource = currentDocument.current;
+    if (executionSource.id === document.id && executionSource.uri === document.uri) {
+      activeLiveBackend.current = {};
+      scheduleGeneration(
+        'explicit',
+        effectiveConfiguration,
+        undefined,
+        0,
+        false,
+        undefined,
+        ownPreview,
+        undefined,
+        true,
+      );
+      return;
+    }
+    activeLiveBackend.current = null;
+    scheduleGeneration(
+      'explicit',
+      effectiveConfiguration,
+      undefined,
+      0,
+      false,
+      { id: document.id, uri: document.uri, name: document.name, content: document.content },
+      ownPreview,
+      undefined,
+      true,
+    );
+  }, [
+    configuration,
+    effectiveConfiguration,
+    executionState,
+    revertGenerationRequest,
+    scheduleGeneration,
+  ]);
+
+  useEffect(() => {
     if (!effectiveConfiguration) return undefined;
     return window.rmside.onNativeEvent((status) => {
       const active = activeLiveBackend.current;
@@ -3470,13 +3544,48 @@ export function RunConfigurationPanel({
     return duplicated.preset.name;
   };
   const revertTemporary = () => {
-    if (!temporaryRun) return;
-    setConfiguration((current) =>
-      current
-        ? revertTemporaryRun({ configuration: current, temporary: temporaryRun }).configuration
-        : current,
+    const { configuration: current, temporary } = replayStateRef.current;
+    if (!temporaryRun || !current || !temporary) return;
+    let reverted = revertTemporaryRun({ configuration: current, temporary }).configuration;
+    const shown = temporary.shown;
+    const plan = revertedPreview(
+      shown,
+      reverted,
+      (uri) => documentsRef.current.find((document) => document.uri === uri)?.content ?? null,
     );
+    if (plan.kind === 'regenerate' && !reverted.seedLocked) {
+      reverted = withSeed(reverted, plan.seed);
+    }
+    if (
+      plan.kind !== 'keep' &&
+      automaticGenerationIdentity(reverted) !== automaticGenerationIdentity(current)
+    ) {
+      suppressNextAutomaticGeneration.current = true;
+    }
+    replayStateRef.current = { configuration: reverted, temporary: null };
+    setConfiguration(reverted);
     setTemporaryRun(null);
+    if (plan.kind === 'keep' || !shown) return;
+    const ownPreviewRunning =
+      executionState.phase !== 'idle' &&
+      executionState.executionId === activePreviewExecutionId.current;
+    if (plan.kind === 'restore' && (runState === 'running' || liveStatus?.phase === 'editing')) {
+      cancelLiveCoordinator();
+    }
+    restorePreviewBeforeReplay(shown);
+    if (shown.map && resultGenerationFacts.current.has(shown.map)) {
+      lastCommittedResult.current = shown.map;
+    }
+    if (plan.kind !== 'regenerate') return;
+    pendingRevertGeneration.current = {
+      documentUri: plan.documentUri,
+      identity: automaticGenerationIdentity(reverted),
+      waitFor:
+        executionState.phase === 'idle' || ownPreviewRunning
+          ? null
+          : (executionState.executionId ?? null),
+    };
+    setRevertGenerationRequest((request) => request + 1);
   };
   const createPreset = (requestedName: string): boolean => {
     const nextName = requestedName.trim();
@@ -3800,10 +3909,11 @@ function PreviewPresetControls({
                 aria-label={t('run-menu.preset.settings')}
                 className="preview-preset-trigger"
                 data-temporary={temporaryName !== null || undefined}
-                variant={temporaryName !== null ? 'dotted' : 'ghost'}
+                variant={temporaryName !== null ? 'dashed' : 'ghost'}
               />
             }
           >
+            {temporaryName !== null ? <DashedOutline /> : null}
             <span>{temporaryName ?? activePresetName}</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent

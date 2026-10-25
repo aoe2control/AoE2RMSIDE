@@ -135,6 +135,8 @@ export const ipcChannels = {
   workspaceOpenFile: 'rmside:workspace:open-file',
   workspaceOpenSource: 'rmside:workspace:open-source',
   workspaceOpenRecent: 'rmside:workspace:open-recent',
+  workspaceSwitchFolders: 'rmside:workspace:switch-folders',
+  workspaceSwitchFolder: 'rmside:workspace:switch-folder',
   shellOpenTake: 'rmside:shell-open:take',
   shellOpenPending: 'rmside:shell-open:pending',
   workspaceReadDirectory: 'rmside:workspace:read-directory',
@@ -148,6 +150,9 @@ export const ipcChannels = {
   definitionFileGenerate: 'rmside:definition-file:generate',
   workspaceRename: 'rmside:workspace:rename',
   workspaceDelete: 'rmside:workspace:delete',
+  workspaceClipboardWrite: 'rmside:workspace:clipboard-write',
+  workspaceClipboardState: 'rmside:workspace:clipboard-state',
+  workspacePaste: 'rmside:workspace:paste',
   workspaceSave: 'rmside:workspace:save',
   workspaceSaveAs: 'rmside:workspace:save-as',
   workspaceRecent: 'rmside:workspace:recent',
@@ -860,6 +865,8 @@ export interface PreviewGenerationResult {
   cliffEdges: Uint8Array;
   cliffPiecesLe?: Uint8Array;
   appearanceObjectsLe?: Uint8Array;
+  cliffPieceInstanceIdsLe?: Uint8Array;
+  appearanceInstanceIdsLe?: Uint8Array;
   objects: {
     idsLe: Uint8Array;
     xLe: Uint8Array;
@@ -877,6 +884,7 @@ export interface PreviewGenerationResult {
     dataStatusesLe: Uint8Array;
     selectionFlags: Uint8Array;
     behaviorFlagsLe: Uint8Array;
+    instanceIdsLe?: Uint8Array;
   };
   layerIdsLe: Uint8Array;
   flagsLe: Uint8Array;
@@ -1961,6 +1969,29 @@ export interface WorkspaceMutationResult {
   wasNonEmptyFolder?: boolean;
 }
 
+export interface ExplorerClipboardWriteRequest {
+  entryId: string;
+  mode: 'copy' | 'cut';
+}
+
+export interface ExplorerClipboardState {
+  canPaste: boolean;
+  cutEntryId: string | null;
+}
+
+export interface ExplorerPasteRequest {
+  targetId: string;
+}
+
+export interface ExplorerPasteResult {
+  status: 'pasted' | 'nothing' | 'unchanged';
+  operation: 'copy' | 'move' | null;
+  entries: WorkspaceDirectoryEntry[];
+  pathChanges: WorkspacePathChange[];
+  skipped: number;
+  state: ExplorerClipboardState;
+}
+
 export interface WorkspaceOpenResult {
   documents: WorkspaceDocument[];
   folder: WorkspaceFolder | null;
@@ -1975,6 +2006,16 @@ export interface RecentWorkspaceEntry {
   name: string;
   kind: WorkspaceEntryKind;
 }
+
+export interface WorkspaceSwitchFolder {
+  id: string;
+  name: string;
+  path: string;
+  open: boolean;
+}
+
+export type WorkspaceSwitchOutcome =
+  { kind: 'switched'; opened: WorkspaceOpenResult } | { kind: 'gone' };
 
 export interface WorkspaceSaveRequest {
   documentId: string;
@@ -2258,6 +2299,8 @@ export interface RmsideDesktopApi extends ConnectorDesktopApi {
   openWorkspaceFile(path: string): Promise<WorkspaceDocument>;
   openWorkspaceSource(sourceId: string): Promise<WorkspaceDocument>;
   openRecent(path: string): Promise<WorkspaceOpenResult>;
+  switchFolders(): Promise<WorkspaceSwitchFolder[]>;
+  switchFolder(id: string): Promise<WorkspaceSwitchOutcome>;
   takeShellOpenRequest(): Promise<ShellOpenTakeResult | null>;
   onShellOpenPending(listener: () => void): () => void;
   readDirectory(entryId: string): Promise<WorkspaceDirectoryEntry[]>;
@@ -2275,6 +2318,9 @@ export interface RmsideDesktopApi extends ConnectorDesktopApi {
   ): Promise<DefinitionFileGenerateResult>;
   renameWorkspaceEntry(request: WorkspaceRenameRequest): Promise<WorkspaceMutationResult>;
   deleteWorkspaceEntry(request: WorkspaceDeleteRequest): Promise<WorkspaceMutationResult>;
+  writeExplorerClipboard(request: ExplorerClipboardWriteRequest): Promise<ExplorerClipboardState>;
+  explorerClipboardState(): Promise<ExplorerClipboardState>;
+  pasteExplorerEntries(request: ExplorerPasteRequest): Promise<ExplorerPasteResult>;
   saveFile(request: WorkspaceSaveRequest): Promise<WorkspaceSaveResult>;
   saveFileAs(request: WorkspaceSaveAsRequest): Promise<WorkspaceDocument | null>;
   recentEntries(): Promise<RecentWorkspaceEntry[]>;

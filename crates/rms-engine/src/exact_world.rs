@@ -177,6 +177,7 @@ pub(super) struct ObjectRoster {
     footprints: footprint::Footprints,
     pub(super) path: super::exact_path::PathContext,
     history: RosterHistory,
+    second_counter_births: u32,
 }
 
 #[derive(Clone, Debug, Default)]
@@ -305,6 +306,18 @@ impl ObjectRoster {
 
     pub fn has_destroyed(&self) -> bool {
         !self.destroyed.is_empty()
+    }
+
+    pub fn destroyed_identities(&self) -> impl Iterator<Item = u32> + '_ {
+        self.destroyed.iter().copied()
+    }
+
+    pub fn note_second_counter_birth(&mut self) {
+        self.second_counter_births = self.second_counter_births.saturating_add(1);
+    }
+
+    pub fn second_counter_births(&self) -> u32 {
+        self.second_counter_births
     }
 
     pub fn live_objects_in(

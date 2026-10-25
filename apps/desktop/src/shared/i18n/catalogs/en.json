@@ -2308,7 +2308,7 @@
       "screen": "run-menu/presets",
       "control": "label",
       "maxLength": 24,
-      "meaning": "Name of the temporary configuration (a set of run settings) the IDE selects when the user shows a map test or quality check result that was generated with other lobby settings (another map size or player count, or civilizations the test chose for players set to Random): it holds that result's lobby settings and seed so the next run generates the same map. It is not saved and never appears in the configuration list; it shows on the configuration button above the map, drawn with a dotted outline. Use the same short configuration word as the default configuration name."
+      "meaning": "Name of the temporary configuration (a set of run settings) the IDE selects when the user shows a map test or quality check result that was generated with other lobby settings (another map size or player count, or civilizations the test chose for players set to Random): it holds that result's lobby settings and seed so the next run generates the same map. It is not saved and never appears in the configuration list; it shows on the configuration button above the map, drawn with a dashed outline. Use the same short configuration word as the default configuration name."
     },
     "run-menu.preset.revert-temporary": {
       "message": "Back to {name}",
@@ -6131,6 +6131,49 @@
       "control": "message-cause",
       "meaning": "Cause under “Unsaved work from the last session could not be read and was skipped” when AoE2RMSIDE’s own recovery file cannot be used. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "A folder can’t be pasted into itself or one of its own folders.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause when the Explorer’s Paste would copy or move a folder into itself or into a folder inside it, so nothing was pasted. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "The folder already holds an item with that name.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause when the Explorer’s Paste of a cut file or folder (a move) would land on a file or folder of the same name in the target folder, so nothing was moved. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Paste at most {limit, number, integer} items at once.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause when more files and folders were copied in Windows File Explorer than the Explorer’s Paste copies at once, so nothing was pasted. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why.",
+      "placeholders": {
+        "limit": "the most files and folders pasted at once, a whole number"
+      }
+    },
+    "message.files.copy-limit.cause": {
+      "message": "The items hold more than {entries, number, integer} files and folders or {megabytes, number, integer} MiB.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause when the files and folders to paste (with everything inside the folders) are more or larger than one Explorer paste copies, so nothing was pasted. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why.",
+      "placeholders": {
+        "entries": "the most files and folders one paste copies, a whole number",
+        "megabytes": "the most data one paste copies, in mebibytes, a whole number"
+      }
+    },
+    "message.files.copy-link.cause": {
+      "message": "The items are or hold a link, a junction, or another special item.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause when the files and folders to paste are, or contain, a symbolic link, a folder junction, or another entry that is not an ordinary file or folder, which the Explorer’s Paste never copies, so nothing was pasted. Link and junction are the Windows names. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "The item can’t move to another drive.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause when the Explorer’s Paste of a cut file or folder would move it to a folder on another drive (a drive mounted inside the open folder), so nothing was moved. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why."
+    },
     "message.game-textures.cause": {
       "message": "The preview and the map icon show texture colors instead.",
       "screen": "output",
@@ -8180,6 +8223,33 @@
       "maxLength": 28,
       "meaning": "Tooltip of the Explorer toolbar icon button that opens a folder; same words as File → Open Folder in the menu, without the ellipsis."
     },
+    "explorer.switch-folder.label": {
+      "message": "Switch folder",
+      "screen": "explorer",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the small dropdown arrow after the open folder's name at the top of the Explorer; it opens a menu of recent folders to open instead (one folder is open at a time)."
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Switch Folder",
+      "screen": "explorer",
+      "control": "tooltip",
+      "maxLength": 28,
+      "meaning": "Tooltip of the small dropdown arrow after the open folder's name at the top of the Explorer, which opens a menu of recent folders to open instead."
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Recent folders",
+      "screen": "explorer/switch-folder-menu",
+      "control": "heading",
+      "maxLength": 32,
+      "meaning": "Muted group label at the top of the Explorer's folder switcher menu, above the recently opened folders (the same folders as File → Open Recent, without the open one)."
+    },
+    "explorer.switch-folder.empty": {
+      "message": "No Other Recent Folders",
+      "screen": "explorer/switch-folder-menu",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Disabled item of the Explorer's folder switcher menu when no folder other than the open one was opened recently."
+    },
     "explorer.tree.label": {
       "message": "{name} files",
       "screen": "explorer",
@@ -8252,6 +8322,27 @@
       "control": "menu-item",
       "maxLength": 24,
       "meaning": "Explorer menu item that deletes the file or folder after a confirmation (to the Recycle Bin unless Skip Recycle Bin When Deleting is on)."
+    },
+    "explorer.context.copy": {
+      "message": "Copy",
+      "screen": "explorer/context-menu",
+      "control": "menu-item",
+      "maxLength": 24,
+      "meaning": "Explorer menu item (and Ctrl+C) that copies the file or folder so Paste can put a copy of it into another folder; it also goes to the Windows clipboard, so it pastes in Windows File Explorer."
+    },
+    "explorer.context.cut": {
+      "message": "Cut",
+      "screen": "explorer/context-menu",
+      "control": "menu-item",
+      "maxLength": 24,
+      "meaning": "Explorer menu item (and Ctrl+X) that marks the file or folder to be moved: the next Paste into another folder moves it there. The Windows meaning of Cut."
+    },
+    "explorer.context.paste": {
+      "message": "Paste",
+      "screen": "explorer/context-menu",
+      "control": "menu-item",
+      "maxLength": 24,
+      "meaning": "Explorer menu item (and Ctrl+V) on a folder and on the empty part of the Explorer: puts a copy of what was copied (in the Explorer or in Windows File Explorer) into the folder, or moves what was cut there."
     },
     "explorer.inline.create-file": {
       "message": "Create file",
@@ -10219,7 +10310,7 @@
       "meaning": "Accessible name of the MCP dialog's icon-only close button."
     },
     "mcp.dialog.description": {
-      "message": "Let AI apps on this computer read, edit and check scripts in the open folder, generate maps and run map tests.",
+      "message": "Let AI apps on this computer read, edit and check scripts in the open folder and your recent folders, generate maps and run map tests.",
       "screen": "mcp-dialog",
       "control": "dialog-text",
       "meaning": "First line of the MCP dialog: what a connected AI app can do."
@@ -10464,7 +10555,7 @@
       }
     },
     "mcp.pairing.description": {
-      "message": "It could edit scripts in the open folder, generate maps, run tests and deploy mods. Started by {program}.",
+      "message": "It could edit scripts in the open folder and your recent folders, generate maps, run tests and deploy mods. Started by {program}.",
       "screen": "mcp-prompt/pairing",
       "control": "dialog-text",
       "meaning": "One short line under the title: what the AI app named in the title could do once allowed, then the program that started the connection.",
@@ -10473,7 +10564,7 @@
       }
     },
     "mcp.pairing.description.no-program": {
-      "message": "It could edit scripts in the open folder, generate maps, run tests and deploy mods.",
+      "message": "It could edit scripts in the open folder and your recent folders, generate maps, run tests and deploy mods.",
       "screen": "mcp-prompt/pairing",
       "control": "dialog-text",
       "meaning": "The same line when the program that started the connection is not known."
@@ -10862,6 +10953,27 @@
         "name": "an RMS or XS name, such as create_land; kept as written"
       }
     },
+    "mcp.action.list-folders": {
+      "message": "listed the recent folders",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It listed the folders the user opened recently (the Explorer's folder switcher)."
+    },
+    "mcp.action.open-folder": {
+      "message": "opened the folder {name}",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It switched AoE2RMSIDE to one of the user's recent folders; open tabs stayed open.",
+      "placeholders": {
+        "name": "the folder's name as Windows shows it, such as Maps; kept as written"
+      }
+    },
+    "mcp.action.open-folder-open": {
+      "message": "asked for the folder that is already open",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "What an AI app did, after \"{app}: \" in its Output row. It asked to switch to a folder, but that folder was already the open folder, so nothing changed."
+    },
     "mcp.action.tool": {
       "message": "used {tool}",
       "screen": "output",
@@ -10913,6 +11025,12 @@
       "control": "message-cause",
       "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: the file does not exist."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "The folder is no longer among the recent folders.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request to switch folders was refused: the folder was removed from the recent folders or deleted."
+    },
     "mcp.refusal.already-exists": {
       "message": "The file already exists.",
       "screen": "output",
@@ -10948,6 +11066,12 @@
       "screen": "output",
       "control": "message-cause",
       "meaning": "Cause line of an Output row whose AI app request was refused or cancelled: another run held the IDE, so the app was told to try again later."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE was busy with a run, a dialog or another folder.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause line of an Output row whose AI app request to switch folders was refused: a run was going, the user had a dialog open, or another folder was being opened, so the app was told to try again later."
     },
     "mcp.refusal.map-expired": {
       "message": "The generated map is no longer kept.",
@@ -13376,6 +13500,25 @@
         "amount": "the stone the row's objects hold together, a whole number"
       }
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}",
+      "screen": "preview/legend",
+      "control": "tooltip",
+      "meaning": "The bottom line of the tooltip of a row of the legend beside the map that lists the terrains and objects on the selected tiles, when the row is one object: the number the game gives that object when it generates the map.",
+      "placeholders": {
+        "id": "the object's number, plain digits without grouping"
+      }
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}",
+      "screen": "preview/legend",
+      "control": "tooltip",
+      "meaning": "The bottom line of the tooltip of a row of the legend beside the map that lists the terrains and objects on the selected tiles, when the row is several objects: the lowest and highest of the numbers the game gives those objects when it generates the map.",
+      "placeholders": {
+        "low": "the lowest of the objects' numbers, plain digits without grouping",
+        "high": "the highest of the objects' numbers, plain digits without grouping"
+      }
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Show Helper Objects ({count})",
       "screen": "preview/legend",
@@ -15756,6 +15899,33 @@
       "screen": "output",
       "control": "message-headline",
       "meaning": "Output headline when deleting a file or folder in the Explorer failed."
+    },
+    "workspace.failed.copy": {
+      "message": "The item could not be copied",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when the Explorer’s Copy of a file or folder failed."
+    },
+    "workspace.failed.cut": {
+      "message": "The item could not be cut",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when the Explorer’s Cut of a file or folder (marking it to be moved by the next Paste) failed."
+    },
+    "workspace.failed.paste": {
+      "message": "Nothing was pasted",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when the Explorer’s Paste failed; a paste either completes or leaves nothing behind, so nothing was copied or moved."
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} file was left out because the Explorer doesn’t list its file type} other {{count} files were left out because the Explorer doesn’t list their file type}}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note after a paste of files copied in Windows File Explorer: the files of other types (such as images) were not pasted, because the Explorer lists only script files. The rest was pasted.",
+      "placeholders": {
+        "count": "how many files were left out, a whole number"
+      }
     },
     "workspace.failed.restore-session": {
       "message": "The previous session could not be restored",

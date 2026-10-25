@@ -2300,6 +2300,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Tệp khôi phục bị hỏng hoặc do một bản phát hành AoE2RMSIDE khác ghi."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Không thể dán một thư mục vào chính nó hoặc vào một thư mục bên trong nó."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "Thư mục đã có một mục mang tên đó."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Mỗi lần chỉ dán tối đa {limit, number, integer} mục."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Các mục chứa hơn {entries, number, integer} tệp và thư mục hoặc hơn {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Các mục là hoặc chứa liên kết, điểm nối hoặc một mục đặc biệt khác."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Không thể di chuyển mục sang ổ đĩa khác."
+    },
     "message.game-textures.cause": {
       "message": "Bản xem trước và biểu tượng bản đồ dùng màu họa tiết để thay thế."
     },
@@ -2504,6 +2522,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Mở thư mục"
     },
+    "explorer.switch-folder.label": {
+      "message": "Chuyển thư mục"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Chuyển thư mục"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Thư mục gần đây"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Không có thư mục gần đây nào khác"
+    },
     "explorer.tree.label": {
       "message": "Các tệp trong {name}"
     },
@@ -2536,6 +2566,15 @@
     },
     "explorer.context.delete": {
       "message": "Xóa"
+    },
+    "explorer.context.copy": {
+      "message": "Sao chép"
+    },
+    "explorer.context.cut": {
+      "message": "Cắt"
+    },
+    "explorer.context.paste": {
+      "message": "Dán"
     },
     "explorer.inline.create-file": {
       "message": "Tạo tệp"
@@ -3384,7 +3423,7 @@
       "message": "Đóng thiết lập MCP"
     },
     "mcp.dialog.description": {
-      "message": "Cho phép ứng dụng AI trên máy tính này đọc, sửa và kiểm tra kịch bản trong thư mục đang mở, tạo bản đồ và chạy kiểm thử bản đồ."
+      "message": "Cho phép ứng dụng AI trên máy tính này đọc, sửa và kiểm tra kịch bản trong thư mục đang mở và các thư mục gần đây của bạn, tạo bản đồ và chạy kiểm thử bản đồ."
     },
     "mcp.enable.label": {
       "message": "Bật MCP"
@@ -3495,10 +3534,10 @@
       "message": "Cho phép {app} dùng AoE2RMSIDE?"
     },
     "mcp.pairing.description": {
-      "message": "Ứng dụng có thể sửa kịch bản trong thư mục đang mở, tạo bản đồ, chạy kiểm thử và triển khai mod. Được khởi chạy bởi {program}."
+      "message": "Ứng dụng có thể sửa kịch bản trong thư mục đang mở và các thư mục gần đây của bạn, tạo bản đồ, chạy kiểm thử và triển khai mod. Được khởi chạy bởi {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Ứng dụng có thể sửa kịch bản trong thư mục đang mở, tạo bản đồ, chạy kiểm thử và triển khai mod."
+      "message": "Ứng dụng có thể sửa kịch bản trong thư mục đang mở và các thư mục gần đây của bạn, tạo bản đồ, chạy kiểm thử và triển khai mod."
     },
     "mcp.pairing.name-note": {
       "message": "Tên này do ứng dụng tự khai: chỉ cho phép nếu chính bạn đã thiết lập nó. Thay thế mod hoặc thử trong trò chơi vẫn sẽ hỏi bạn."
@@ -3635,6 +3674,15 @@
     "mcp.action.reference": {
       "message": "đã tra cứu {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "đã liệt kê các thư mục gần đây"
+    },
+    "mcp.action.open-folder": {
+      "message": "đã mở thư mục {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "đã yêu cầu thư mục đang mở"
+    },
     "mcp.action.tool": {
       "message": "đã dùng {tool}"
     },
@@ -3659,6 +3707,9 @@
     "mcp.refusal.not-found": {
       "message": "Không tìm thấy tệp."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Thư mục này không còn trong danh sách thư mục gần đây."
+    },
     "mcp.refusal.already-exists": {
       "message": "Tệp đã tồn tại."
     },
@@ -3676,6 +3727,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Có tác vụ khác đang chạy."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE đang bận với một lượt chạy, một hộp thoại hoặc một thư mục khác."
     },
     "mcp.refusal.map-expired": {
       "message": "Bản đồ đã tạo không còn được lưu giữ."
@@ -4697,6 +4751,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Đá: tổng cộng {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Hiện đối tượng hỗ trợ ({count})"
     },
@@ -5638,6 +5698,18 @@
     },
     "workspace.failed.delete": {
       "message": "Không thể xóa mục"
+    },
+    "workspace.failed.copy": {
+      "message": "Không thể sao chép mục"
+    },
+    "workspace.failed.cut": {
+      "message": "Không thể cắt mục"
+    },
+    "workspace.failed.paste": {
+      "message": "Không có gì được dán"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, other {Đã bỏ qua {count} tệp vì Trình duyệt tệp không liệt kê loại tệp của chúng}}"
     },
     "workspace.failed.restore-session": {
       "message": "Không thể khôi phục phiên trước"

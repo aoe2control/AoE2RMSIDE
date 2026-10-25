@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "恢复文件已损坏，或由其他 AoE2RMSIDE 发行版写入。"
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "无法将文件夹粘贴到其自身或其内部的文件夹中。"
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "该文件夹中已有同名项目。"
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "一次最多粘贴 {limit, number, integer} 个项目。"
+    },
+    "message.files.copy-limit.cause": {
+      "message": "这些项目包含超过 {entries, number, integer} 个文件和文件夹或 {megabytes, number, integer} MiB。"
+    },
+    "message.files.copy-link.cause": {
+      "message": "这些项目本身是或包含链接、目录联接或其他特殊项目。"
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "无法将该项目移动到其他驱动器。"
+    },
     "message.game-textures.cause": {
       "message": "预览和地图图标将改用纹理配色。"
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "打开文件夹"
     },
+    "explorer.switch-folder.label": {
+      "message": "切换文件夹"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "切换文件夹"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "最近使用的文件夹"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "没有其他最近使用的文件夹"
+    },
     "explorer.tree.label": {
       "message": "{name} 中的文件"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "删除"
+    },
+    "explorer.context.copy": {
+      "message": "复制"
+    },
+    "explorer.context.cut": {
+      "message": "剪切"
+    },
+    "explorer.context.paste": {
+      "message": "粘贴"
     },
     "explorer.inline.create-file": {
       "message": "创建文件"
@@ -3376,7 +3415,7 @@
       "message": "关闭 MCP 设置"
     },
     "mcp.dialog.description": {
-      "message": "允许此电脑上的 AI 应用读取、编辑和检查已打开文件夹中的脚本，生成地图并运行地图测试。"
+      "message": "允许此电脑上的 AI 应用读取、编辑和检查已打开文件夹及你最近使用的文件夹中的脚本，生成地图并运行地图测试。"
     },
     "mcp.enable.label": {
       "message": "启用 MCP"
@@ -3487,10 +3526,10 @@
       "message": "允许 {app} 使用 AoE2RMSIDE？"
     },
     "mcp.pairing.description": {
-      "message": "它将可以编辑已打开文件夹中的脚本、生成地图、运行测试和部署模组。由 {program} 启动。"
+      "message": "它将可以编辑已打开文件夹及你最近使用的文件夹中的脚本、生成地图、运行测试和部署模组。由 {program} 启动。"
     },
     "mcp.pairing.description.no-program": {
-      "message": "它将可以编辑已打开文件夹中的脚本、生成地图、运行测试和部署模组。"
+      "message": "它将可以编辑已打开文件夹及你最近使用的文件夹中的脚本、生成地图、运行测试和部署模组。"
     },
     "mcp.pairing.name-note": {
       "message": "名称由应用自行声明：仅在你亲自设置了它时才允许。替换模组或进行实机测试时仍会询问你。"
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "查阅了 {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "列出了最近使用的文件夹"
+    },
+    "mcp.action.open-folder": {
+      "message": "打开了文件夹 {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "请求了已打开的文件夹"
+    },
     "mcp.action.tool": {
       "message": "使用了 {tool}"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "未找到该文件。"
     },
+    "mcp.refusal.folder-gone": {
+      "message": "该文件夹已不在最近使用的文件夹中。"
+    },
     "mcp.refusal.already-exists": {
       "message": "该文件已存在。"
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "另一项任务正在运行。"
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE 正忙于运行、对话框或其他文件夹。"
     },
     "mcp.refusal.map-expired": {
       "message": "生成的地图已不再保留。"
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "石料：总计 {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "显示辅助对象（{count}）"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "无法删除项目"
+    },
+    "workspace.failed.copy": {
+      "message": "无法复制项目"
+    },
+    "workspace.failed.cut": {
+      "message": "无法剪切项目"
+    },
+    "workspace.failed.paste": {
+      "message": "未粘贴任何内容"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, other {已略过 {count} 个文件，因为文件资源管理器不列出其文件类型}}"
     },
     "workspace.failed.restore-session": {
       "message": "无法恢复上次会话"

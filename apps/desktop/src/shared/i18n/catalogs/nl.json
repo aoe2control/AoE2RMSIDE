@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Het herstelbestand is beschadigd of door een andere AoE2RMSIDE-versie geschreven."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Een map kan niet in zichzelf of in een van zijn eigen mappen worden geplakt."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "De map bevat al een item met die naam."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Plak maximaal {limit, number, integer} items tegelijk."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "De items bevatten meer dan {entries, number, integer} bestanden en mappen of {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "De items zijn of bevatten een koppeling, een verbindingspunt of een ander speciaal item."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Het item kan niet naar een ander station worden verplaatst."
+    },
     "message.game-textures.cause": {
       "message": "Het voorbeeld en het kaartpictogram tonen in plaats daarvan textuurkleuren."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Map openen"
     },
+    "explorer.switch-folder.label": {
+      "message": "Map wisselen"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Map wisselen"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Recente mappen"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Geen andere recente mappen"
+    },
     "explorer.tree.label": {
       "message": "Bestanden in {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Verwijderen"
+    },
+    "explorer.context.copy": {
+      "message": "Kopiëren"
+    },
+    "explorer.context.cut": {
+      "message": "Knippen"
+    },
+    "explorer.context.paste": {
+      "message": "Plakken"
     },
     "explorer.inline.create-file": {
       "message": "Bestand maken"
@@ -3376,7 +3415,7 @@
       "message": "MCP-instellingen sluiten"
     },
     "mcp.dialog.description": {
-      "message": "Laat AI-apps op deze computer scripts in de geopende map lezen, bewerken en controleren, kaarten genereren en kaarttests uitvoeren."
+      "message": "Laat AI-apps op deze computer scripts in de geopende map en je recente mappen lezen, bewerken en controleren, kaarten genereren en kaarttests uitvoeren."
     },
     "mcp.enable.label": {
       "message": "MCP inschakelen"
@@ -3487,10 +3526,10 @@
       "message": "{app} toestaan AoE2RMSIDE te gebruiken?"
     },
     "mcp.pairing.description": {
-      "message": "De app zou scripts in de geopende map kunnen bewerken, kaarten genereren, tests uitvoeren en mods installeren. Gestart door {program}."
+      "message": "De app zou scripts in de geopende map en je recente mappen kunnen bewerken, kaarten genereren, tests uitvoeren en mods installeren. Gestart door {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "De app zou scripts in de geopende map kunnen bewerken, kaarten genereren, tests uitvoeren en mods installeren."
+      "message": "De app zou scripts in de geopende map en je recente mappen kunnen bewerken, kaarten genereren, tests uitvoeren en mods installeren."
     },
     "mcp.pairing.name-note": {
       "message": "De app geeft zichzelf deze naam: sta hem alleen toe als je hem zelf hebt ingesteld. Een mod vervangen of een livetest starten vraagt nog steeds eerst om je toestemming."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "{name} opgezocht"
     },
+    "mcp.action.list-folders": {
+      "message": "recente mappen weergegeven"
+    },
+    "mcp.action.open-folder": {
+      "message": "map {name} geopend"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "de map gevraagd die al geopend is"
+    },
     "mcp.action.tool": {
       "message": "{tool} gebruikt"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "Het bestand is niet gevonden."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "De map staat niet meer bij de recente mappen."
+    },
     "mcp.refusal.already-exists": {
       "message": "Het bestand bestaat al."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Er wordt al iets anders uitgevoerd."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE was bezig met een uitvoering, een dialoogvenster of een andere map."
     },
     "mcp.refusal.map-expired": {
       "message": "De gegenereerde kaart wordt niet meer bewaard."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Steen: {amount, number, integer} in totaal"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Hulpobjecten tonen ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Het item kon niet worden verwijderd"
+    },
+    "workspace.failed.copy": {
+      "message": "Het item kon niet worden gekopieerd"
+    },
+    "workspace.failed.cut": {
+      "message": "Het item kon niet worden geknipt"
+    },
+    "workspace.failed.paste": {
+      "message": "Er is niets geplakt"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} bestand is weggelaten omdat Verkenner het bestandstype ervan niet weergeeft} other {{count} bestanden zijn weggelaten omdat Verkenner hun bestandstype niet weergeeft}}"
     },
     "workspace.failed.restore-session": {
       "message": "De vorige sessie kon niet worden hersteld"

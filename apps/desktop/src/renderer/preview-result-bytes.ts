@@ -19,6 +19,8 @@ export function previewResultBytes(result: PreviewGenerationResult): number {
     result.cliffEdges.byteLength +
     (result.cliffPiecesLe?.byteLength ?? 0) +
     (result.appearanceObjectsLe?.byteLength ?? 0) +
+    (result.cliffPieceInstanceIdsLe?.byteLength ?? 0) +
+    (result.appearanceInstanceIdsLe?.byteLength ?? 0) +
     result.layerIdsLe.byteLength +
     result.flagsLe.byteLength +
     result.objects.idsLe.byteLength +
@@ -37,6 +39,7 @@ export function previewResultBytes(result: PreviewGenerationResult): number {
     result.objects.dataStatusesLe.byteLength +
     result.objects.selectionFlags.byteLength +
     result.objects.behaviorFlagsLe.byteLength +
+    (result.objects.instanceIdsLe?.byteLength ?? 0) +
     result.connections.startXLe.byteLength +
     result.connections.startYLe.byteLength +
     result.connections.endXLe.byteLength +

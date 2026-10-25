@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Kurtarma dosyası bozuk veya başka bir AoE2RMSIDE sürümü tarafından yazılmış."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Bir klasör kendi içine veya kendi klasörlerinden birine yapıştırılamaz."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "Klasörde bu adda bir öğe zaten var."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Aynı anda en fazla {limit, number, integer} öğe yapıştırın."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Öğeler {entries, number, integer} dosya ve klasör ya da {megabytes, number, integer} MiB sınırını aşıyor."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Öğeler bir bağlantı, bağlantı noktası veya başka bir özel öğedir ya da bunlardan birini içerir."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Öğe başka bir sürücüye taşınamaz."
+    },
     "message.game-textures.cause": {
       "message": "Önizleme ve harita simgesi bunun yerine doku renklerini gösterir."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Klasör aç"
     },
+    "explorer.switch-folder.label": {
+      "message": "Klasör değiştir"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Klasör değiştir"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Son kullanılan klasörler"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Son kullanılan başka klasör yok"
+    },
     "explorer.tree.label": {
       "message": "{name} klasöründeki dosyalar"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Sil"
+    },
+    "explorer.context.copy": {
+      "message": "Kopyala"
+    },
+    "explorer.context.cut": {
+      "message": "Kes"
+    },
+    "explorer.context.paste": {
+      "message": "Yapıştır"
     },
     "explorer.inline.create-file": {
       "message": "Dosya oluştur"
@@ -3376,7 +3415,7 @@
       "message": "MCP ayarlarını kapat"
     },
     "mcp.dialog.description": {
-      "message": "Bu bilgisayardaki yapay zekâ uygulamalarının açık klasördeki betikleri okumasına, düzenlemesine ve kontrol etmesine, harita üretmesine ve harita testleri çalıştırmasına izin verin."
+      "message": "Bu bilgisayardaki yapay zekâ uygulamalarının açık klasördeki ve son kullanılan klasörlerinizdeki betikleri okumasına, düzenlemesine ve kontrol etmesine, harita üretmesine ve harita testleri çalıştırmasına izin verin."
     },
     "mcp.enable.label": {
       "message": "MCP sunucusunu etkinleştir"
@@ -3487,10 +3526,10 @@
       "message": "{app} uygulamasına AoE2RMSIDE erişimi verilsin mi?"
     },
     "mcp.pairing.description": {
-      "message": "Açık klasördeki betikleri düzenleyebilir, harita üretebilir, test çalıştırabilir ve mod kurabilir. Başlatan program: {program}."
+      "message": "Açık klasördeki ve son kullanılan klasörlerinizdeki betikleri düzenleyebilir, harita üretebilir, test çalıştırabilir ve mod kurabilir. Başlatan program: {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Açık klasördeki betikleri düzenleyebilir, harita üretebilir, test çalıştırabilir ve mod kurabilir."
+      "message": "Açık klasördeki ve son kullanılan klasörlerinizdeki betikleri düzenleyebilir, harita üretebilir, test çalıştırabilir ve mod kurabilir."
     },
     "mcp.pairing.name-note": {
       "message": "Bu adı uygulama kendisi bildirir: yalnızca siz kurduysanız izin verin. Mod değiştirmek ve oyunda test yine size sorulur."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "{name} için başvuruya baktı"
     },
+    "mcp.action.list-folders": {
+      "message": "son kullanılan klasörleri listeledi"
+    },
+    "mcp.action.open-folder": {
+      "message": "{name} klasörünü açtı"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "zaten açık olan klasörü istedi"
+    },
     "mcp.action.tool": {
       "message": "{tool} aracını kullandı"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "Dosya bulunamadı."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Klasör artık son kullanılan klasörler arasında değil."
+    },
     "mcp.refusal.already-exists": {
       "message": "Dosya zaten var."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Başka bir şey çalışıyor."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE bir çalıştırma, bir pencere veya başka bir klasörle meşguldü."
     },
     "mcp.refusal.map-expired": {
       "message": "Üretilen harita artık saklanmıyor."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Taş: toplam {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Yardımcı nesneleri göster ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Öğe silinemedi"
+    },
+    "workspace.failed.copy": {
+      "message": "Öğe kopyalanamadı"
+    },
+    "workspace.failed.cut": {
+      "message": "Öğe kesilemedi"
+    },
+    "workspace.failed.paste": {
+      "message": "Hiçbir şey yapıştırılmadı"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {Gezgin dosya türünü listelemediği için {count} dosya dışarıda bırakıldı} other {Gezgin dosya türlerini listelemediği için {count} dosya dışarıda bırakıldı}}"
     },
     "workspace.failed.restore-session": {
       "message": "Önceki oturum geri yüklenemedi"

@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Файл відновлення пошкоджений або записаний іншою версією AoE2RMSIDE."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Папку не можна вставити в неї саму або в одну з її власних папок."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "У папці вже є елемент із такою назвою."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Вставляйте не більше {limit, number, integer} елементів за раз."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Елементи містять понад {entries, number, integer} файлів і папок або понад {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Елементи є посиланням, точкою з’єднання чи іншим особливим елементом або містять їх."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Елемент не можна перемістити на інший диск."
+    },
     "message.game-textures.cause": {
       "message": "Натомість перегляд і піктограма мапи показують кольори текстур."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Відкрити папку"
     },
+    "explorer.switch-folder.label": {
+      "message": "Змінити папку"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Змінити папку"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Нещодавні папки"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Немає інших нещодавніх папок"
+    },
     "explorer.tree.label": {
       "message": "Файли: {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Видалити"
+    },
+    "explorer.context.copy": {
+      "message": "Копіювати"
+    },
+    "explorer.context.cut": {
+      "message": "Вирізати"
+    },
+    "explorer.context.paste": {
+      "message": "Вставити"
     },
     "explorer.inline.create-file": {
       "message": "Створити файл"
@@ -3376,7 +3415,7 @@
       "message": "Закрити налаштування MCP"
     },
     "mcp.dialog.description": {
-      "message": "Дозвольте застосункам ШІ на цьому комп’ютері читати, редагувати й перевіряти скрипти у відкритій папці, створювати мапи й запускати тести мап."
+      "message": "Дозвольте застосункам ШІ на цьому комп’ютері читати, редагувати й перевіряти скрипти у відкритій папці та ваших нещодавніх папках, створювати мапи й запускати тести мап."
     },
     "mcp.enable.label": {
       "message": "Увімкнути MCP"
@@ -3487,10 +3526,10 @@
       "message": "Дозволити {app} використовувати AoE2RMSIDE?"
     },
     "mcp.pairing.description": {
-      "message": "Застосунок міг би редагувати скрипти у відкритій папці, створювати мапи, запускати тести й розгортати моди. Запущено програмою {program}."
+      "message": "Застосунок міг би редагувати скрипти у відкритій папці та ваших нещодавніх папках, створювати мапи, запускати тести й розгортати моди. Запущено програмою {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Застосунок міг би редагувати скрипти у відкритій папці, створювати мапи, запускати тести й розгортати моди."
+      "message": "Застосунок міг би редагувати скрипти у відкритій папці та ваших нещодавніх папках, створювати мапи, запускати тести й розгортати моди."
     },
     "mcp.pairing.name-note": {
       "message": "Цю назву застосунок указує сам: дозвольте його, лише якщо ви самі його налаштували. Заміна моду або тест у грі все одно потребують вашої згоди."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "переглянуто довідку для {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "отримано список нещодавніх папок"
+    },
+    "mcp.action.open-folder": {
+      "message": "відкрито папку {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "запитано папку, яку вже відкрито"
+    },
     "mcp.action.tool": {
       "message": "використано {tool}"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "Файл не знайдено."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Цієї папки більше немає серед нещодавніх."
+    },
     "mcp.refusal.already-exists": {
       "message": "Файл уже існує."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Уже виконується щось інше."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE був зайнятий виконанням, діалоговим вікном або іншою папкою."
     },
     "mcp.refusal.map-expired": {
       "message": "Створена мапа більше не зберігається."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Камінь: усього {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Показати допоміжні об’єкти ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Не вдалося видалити елемент"
+    },
+    "workspace.failed.copy": {
+      "message": "Не вдалося скопіювати елемент"
+    },
+    "workspace.failed.cut": {
+      "message": "Не вдалося вирізати елемент"
+    },
+    "workspace.failed.paste": {
+      "message": "Нічого не вставлено"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} файл пропущено, бо провідник не показує його тип файлу} few {{count} файли пропущено, бо провідник не показує їхній тип файлу} many {{count} файлів пропущено, бо провідник не показує їхній тип файлу} other {{count} файлу пропущено, бо провідник не показує їхній тип файлу}}"
     },
     "workspace.failed.restore-session": {
       "message": "Не вдалося відновити попередній сеанс"

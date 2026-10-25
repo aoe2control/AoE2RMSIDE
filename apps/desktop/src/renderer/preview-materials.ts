@@ -175,6 +175,7 @@ export interface SelectedTileLayer {
   operationIndex: number | null;
   renderOrder: number;
   resource?: { type: number; quantityF32Bits: number };
+  instanceId?: number;
 }
 
 export interface SelectedLayerInstance extends SelectedTileLayer {
@@ -192,6 +193,7 @@ export interface AggregatedSelectionLayer {
   kind: SelectedTileLayerKind;
   material: PreviewMaterial;
   renderOrder: number;
+  cliffPieceInstanceIds?: readonly number[];
 }
 
 const layerTileIndices = new WeakMap<AggregatedSelectionLayer, readonly number[]>();
@@ -830,7 +832,27 @@ export function aggregateTileIndexLayers(
 
 const aggregationCheckInterval = 256;
 
-type AggregationGroup = AggregatedSelectionLayer & { idSet: Set<number> };
+type AggregationGroup = AggregatedSelectionLayer & {
+  idSet: Set<number>;
+  pieceIdSet?: Set<number>;
+};
+
+function cliffPointNodeKey(point: { x: number; y: number }): number | null {
+  const nodeX = Math.floor((point.x - 1) / 3);
+  const nodeY = Math.floor((point.y - 1) / 3);
+  return nodeX < 0 || nodeY < 0 ? null : nodeY * 65_536 + nodeX;
+}
+
+function cliffPieceIdsByNode(scene: Pick<TopDownScene, 'cliffPieces'>): Map<number, number> {
+  const ids = new Map<number, number>();
+  for (const piece of scene.cliffPieces ?? []) {
+    if (piece.instanceId === undefined) continue;
+    const nodeX = Math.floor((piece.x * 256) / 768);
+    const nodeY = Math.floor((piece.y * 256) / 768);
+    ids.set(nodeY * 65_536 + nodeX, piece.instanceId);
+  }
+  return ids;
+}
 
 type AggregationPhase =
   'tiles' | 'terrain' | 'connections' | 'failures' | 'cliffs' | 'objects' | 'groups' | 'done';
@@ -844,10 +866,12 @@ export class TileLayerAggregation {
   readonly #writtenBy: ReadonlyMap<number, number> | undefined;
   readonly #groups = new Map<string, AggregationGroup>();
   readonly #terrains = new Map<number, { material: PreviewMaterial; key: string }>();
+  readonly #firstObjects = new Map<AggregationGroup, number>();
   #input: Iterator<number> | null;
   #tiles: number[] = [];
   #selected: Uint8Array;
   #traced: ReturnType<typeof tracedRouteTiles> | null = null;
+  #pieceIds: Map<number, number> | null = null;
   #sorted: AggregationGroup[] = [];
   #result: AggregatedSelectionLayer[] | null = null;
   #phase: AggregationPhase = 'tiles';
@@ -943,6 +967,7 @@ export class TileLayerAggregation {
               tileIndex % width,
               Math.floor(tileIndex / width),
               undefined,
+              undefined,
             );
             if (yieldNow()) return false;
           }
@@ -977,6 +1002,7 @@ export class TileLayerAggregation {
                 tileIndex % width,
                 Math.floor(tileIndex / width),
                 undefined,
+                undefined,
               );
               if (yieldNow()) return false;
             }
@@ -1008,6 +1034,7 @@ export class TileLayerAggregation {
                 tileIndex % width,
                 Math.floor(tileIndex / width),
                 undefined,
+                undefined,
               );
               if (yieldNow()) return false;
             }
@@ -1021,16 +1048,20 @@ export class TileLayerAggregation {
         }
         case 'cliffs': {
           const cliffs = scene.cliffs;
+          this.#pieceIds ??= cliffPieceIdsByNode(scene);
+          const pieceIds = this.#pieceIds;
           while (this.#cursor < cliffs.length) {
             const index = this.#cursor;
             this.#cursor += 1;
             const cliff = cliffs[index]!;
+            let groupKey: string | null = null;
             for (const point of distinctPoints(cliff.from, cliff.to)) {
               const tileIndex = point.y * width + point.x;
               if (!selected(tileIndex)) continue;
               const material = presentedCliffMaterial(map, cliff.cliffType);
-              this.#add(
-                renderedMaterialIdentity('cliff', material),
+              const key = renderedMaterialIdentity('cliff', material);
+              const added = this.#add(
+                key,
                 `cliff-${index}`,
                 'cliff',
                 material,
@@ -1040,17 +1071,29 @@ export class TileLayerAggregation {
                 point.x,
                 point.y,
                 undefined,
+                undefined,
               );
+              if (added) groupKey = key;
+            }
+            const group = groupKey === null ? undefined : this.#groups.get(groupKey);
+            if (group && pieceIds.size > 0) {
+              for (const point of [cliff.from, cliff.to]) {
+                const node = cliffPointNodeKey(point);
+                const id = node === null ? undefined : pieceIds.get(node);
+                if (id !== undefined) (group.pieceIdSet ??= new Set()).add(id);
+              }
             }
             if (yieldNow()) return false;
           }
+          this.#pieceIds = null;
           this.#advance('objects');
           break;
         }
         case 'objects': {
           const objects = scene.objects;
-          while (this.#cursor < objects.length) {
-            const index = this.#cursor;
+          const order = objectTileOrder(scene);
+          while (this.#cursor < order.length) {
+            const index = order[this.#cursor]!;
             this.#cursor += 1;
             const object = objects[index]!;
             const x = Math.floor(object.x);
@@ -1069,10 +1112,13 @@ export class TileLayerAggregation {
                 x,
                 y,
                 objectResource(object),
+                object.instanceId,
+                index,
               );
             }
             if (yieldNow()) return false;
           }
+          this.#firstObjects.clear();
           this.#sorted = [...this.#groups.values()];
           this.#advance('groups');
           break;
@@ -1088,7 +1134,14 @@ export class TileLayerAggregation {
             if (yieldNow()) return false;
           }
           this.#result = groups
-            .map(({ idSet: _idSet, ...group }) => group)
+            .map(({ idSet: _idSet, pieceIdSet, ...group }) =>
+              pieceIdSet && pieceIdSet.size > 0
+                ? {
+                    ...group,
+                    cliffPieceInstanceIds: [...pieceIdSet].sort((left, right) => left - right),
+                  }
+                : group,
+            )
             .sort(
               (left, right) =>
                 right.count - left.count ||
@@ -1124,12 +1177,21 @@ export class TileLayerAggregation {
     x: number,
     y: number,
     resource: SelectedTileLayer['resource'],
-  ): void {
+    instanceId: number | undefined,
+    objectIndex?: number,
+  ): boolean {
     const operations = this.#operations;
     if (operations && (layerOperationIndex === null || !operations.has(layerOperationIndex))) {
-      return;
+      return false;
     }
     let group = this.#groups.get(groupKey);
+    if (group && objectIndex !== undefined) {
+      const first = this.#firstObjects.get(group);
+      if (first === undefined || objectIndex < first) {
+        this.#firstObjects.set(group, objectIndex);
+        group.material = material;
+      }
+    }
     if (!group) {
       group = {
         count: 0,
@@ -1142,6 +1204,7 @@ export class TileLayerAggregation {
         renderOrder: layerKindOrder(kind),
       };
       this.#groups.set(groupKey, group);
+      if (objectIndex !== undefined) this.#firstObjects.set(group, objectIndex);
     }
     const subject = material.subject;
     if ('id' in subject) group.idSet.add(subject.id);
@@ -1157,9 +1220,40 @@ export class TileLayerAggregation {
       y,
     };
     if (resource) instance.resource = resource;
+    if (instanceId !== undefined) instance.instanceId = instanceId;
     group.instances.push(instance);
     group.count += 1;
+    return true;
   }
+}
+
+const objectTileOrders = new WeakMap<object, Uint32Array>();
+
+export function objectTileOrder(
+  scene: Pick<TopDownScene, 'objects' | 'width' | 'height'>,
+): Uint32Array {
+  const cached = objectTileOrders.get(scene);
+  if (cached) return cached;
+  const { objects, width } = scene;
+  const total = width * scene.height;
+  const tiles = new Uint32Array(objects.length);
+  const starts = new Uint32Array(total + 2);
+  for (let index = 0; index < objects.length; index += 1) {
+    const object = objects[index]!;
+    const tile = Math.floor(object.y) * width + Math.floor(object.x);
+    const bucket = tile >= 0 && tile < total ? tile : total;
+    tiles[index] = bucket;
+    starts[bucket + 1]! += 1;
+  }
+  for (let bucket = 1; bucket < starts.length; bucket += 1) starts[bucket]! += starts[bucket - 1]!;
+  const order = new Uint32Array(objects.length);
+  for (let index = 0; index < objects.length; index += 1) {
+    const bucket = tiles[index]!;
+    order[starts[bucket]!] = index;
+    starts[bucket]! += 1;
+  }
+  objectTileOrders.set(scene, order);
+  return order;
 }
 
 function objectResource(
@@ -1211,6 +1305,29 @@ export function layerResourceTotals(
     const amount = Math.round(totals.get(kind) ?? 0);
     return amount === 0 ? [] : [{ kind, amount }];
   });
+}
+
+export function layerInstanceIdRange(
+  layer: Pick<AggregatedSelectionLayer, 'instances' | 'kind' | 'cliffPieceInstanceIds'>,
+): { low: number; high: number; count: number } | null {
+  if (layer.kind === 'cliff') {
+    const ids = layer.cliffPieceInstanceIds;
+    if (!ids || ids.length === 0) return null;
+    return { low: ids[0]!, high: ids.at(-1)!, count: ids.length };
+  }
+  if (layer.kind !== 'object' && layer.kind !== 'wall') return null;
+  const counted = new Set<string>();
+  let low = Number.POSITIVE_INFINITY;
+  let high = Number.NEGATIVE_INFINITY;
+  for (const instance of layer.instances) {
+    if (counted.has(instance.key)) continue;
+    counted.add(instance.key);
+    const id = instance.instanceId;
+    if (id === undefined) return null;
+    if (id < low) low = id;
+    if (id > high) high = id;
+  }
+  return counted.size === 0 ? null : { low, high, count: counted.size };
 }
 
 export function operationTileIndices(

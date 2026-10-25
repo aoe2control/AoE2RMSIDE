@@ -2300,6 +2300,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "復元ファイルが破損しているか、別の AoE2RMSIDE リリースで書き込まれています。"
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "フォルダーをそれ自体やその中のフォルダーに貼り付けることはできません。"
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "フォルダーには同じ名前の項目が既にあります。"
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "一度に貼り付けられる項目は {limit, number, integer} 個までです。"
+    },
+    "message.files.copy-limit.cause": {
+      "message": "項目に含まれるファイルとフォルダーが {entries, number, integer} 個または {megabytes, number, integer} MiB を超えています。"
+    },
+    "message.files.copy-link.cause": {
+      "message": "項目がリンク、ジャンクション、その他の特殊な項目であるか、それらを含んでいます。"
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "項目を別のドライブに移動することはできません。"
+    },
     "message.game-textures.cause": {
       "message": "代わりに、プレビューとマップアイコンをテクスチャ色で表示します。"
     },
@@ -2504,6 +2522,18 @@
     "explorer.open-folder.tooltip": {
       "message": "フォルダーを開く"
     },
+    "explorer.switch-folder.label": {
+      "message": "フォルダーを切り替える"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "フォルダーを切り替える"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "最近使ったフォルダー"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "ほかに最近使ったフォルダーはありません"
+    },
     "explorer.tree.label": {
       "message": "{name} 内のファイル"
     },
@@ -2536,6 +2566,15 @@
     },
     "explorer.context.delete": {
       "message": "削除"
+    },
+    "explorer.context.copy": {
+      "message": "コピー"
+    },
+    "explorer.context.cut": {
+      "message": "切り取り"
+    },
+    "explorer.context.paste": {
+      "message": "貼り付け"
     },
     "explorer.inline.create-file": {
       "message": "ファイルを作成"
@@ -3384,7 +3423,7 @@
       "message": "MCP 設定を閉じる"
     },
     "mcp.dialog.description": {
-      "message": "このコンピューター上の AI アプリが、開いているフォルダーのスクリプトを読み取り、編集、チェックし、マップの生成やマップテストの実行を行えるようにします。"
+      "message": "このコンピューター上の AI アプリが、開いているフォルダーと最近使ったフォルダーのスクリプトを読み取り、編集、チェックし、マップの生成やマップテストの実行を行えるようにします。"
     },
     "mcp.enable.label": {
       "message": "MCP を有効にする"
@@ -3495,10 +3534,10 @@
       "message": "{app} に AoE2RMSIDE の使用を許可しますか？"
     },
     "mcp.pairing.description": {
-      "message": "開いているフォルダーのスクリプトの編集、マップの生成、テストの実行、MOD の配置ができるようになります。起動元：{program}。"
+      "message": "開いているフォルダーと最近使ったフォルダーのスクリプトの編集、マップの生成、テストの実行、MOD の配置ができるようになります。起動元：{program}。"
     },
     "mcp.pairing.description.no-program": {
-      "message": "開いているフォルダーのスクリプトの編集、マップの生成、テストの実行、MOD の配置ができるようになります。"
+      "message": "開いているフォルダーと最近使ったフォルダーのスクリプトの編集、マップの生成、テストの実行、MOD の配置ができるようになります。"
     },
     "mcp.pairing.name-note": {
       "message": "この名前はアプリ自身が名乗ったものです。自分で設定したアプリだけを許可してください。MOD の置き換えとゲーム内テストは、引き続き確認を求めます。"
@@ -3635,6 +3674,15 @@
     "mcp.action.reference": {
       "message": "{name} を調べました"
     },
+    "mcp.action.list-folders": {
+      "message": "最近使ったフォルダーを一覧表示しました"
+    },
+    "mcp.action.open-folder": {
+      "message": "フォルダー {name} を開きました"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "既に開いているフォルダーを要求しました"
+    },
     "mcp.action.tool": {
       "message": "{tool} を使用しました"
     },
@@ -3659,6 +3707,9 @@
     "mcp.refusal.not-found": {
       "message": "ファイルが見つかりませんでした。"
     },
+    "mcp.refusal.folder-gone": {
+      "message": "このフォルダーは最近使ったフォルダーにもうありません。"
+    },
     "mcp.refusal.already-exists": {
       "message": "ファイルは既に存在します。"
     },
@@ -3676,6 +3727,9 @@
     },
     "mcp.refusal.busy": {
       "message": "別の処理を実行中です。"
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE は実行、ダイアログ、または別のフォルダーの処理中でした。"
     },
     "mcp.refusal.map-expired": {
       "message": "生成したマップはもう保持されていません。"
@@ -4697,6 +4751,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "石材：合計 {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "補助オブジェクトを表示（{count}）"
     },
@@ -5638,6 +5698,18 @@
     },
     "workspace.failed.delete": {
       "message": "項目を削除できませんでした"
+    },
+    "workspace.failed.copy": {
+      "message": "項目をコピーできませんでした"
+    },
+    "workspace.failed.cut": {
+      "message": "項目を切り取れませんでした"
+    },
+    "workspace.failed.paste": {
+      "message": "何も貼り付けられませんでした"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, other {エクスプローラーに表示されないファイルの種類のため、{count} 個のファイルを除外しました}}"
     },
     "workspace.failed.restore-session": {
       "message": "前回のセッションを復元できませんでした"

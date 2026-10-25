@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { constants, watch, type Dir, type FSWatcher, type Stats } from 'node:fs';
 import {
   access,
+  copyFile,
   lstat,
   mkdir,
   open,
@@ -25,6 +26,7 @@ import type {
   WorkspaceDeleteRequest,
   WorkspaceDirectoryEntry,
   WorkspaceDocument,
+  WorkspaceEntryKind,
   WorkspaceExternalChange,
   WorkspaceFolder,
   WorkspaceMutationResult,
@@ -38,6 +40,8 @@ import type {
   WorkspaceSaveResult,
   WorkspaceSearchResult,
   WorkspaceSourceKind,
+  WorkspaceSwitchFolder,
+  WorkspaceSwitchOutcome,
 } from '../shared/api';
 import {
   definitionFileKey,
@@ -66,6 +70,7 @@ import {
 } from './source-codec';
 import { StandardResourcePolicy } from './standard-resource-policy';
 import { readFileBounded, renameReplacing } from './bounded-file';
+import { copyEntryName, explorerCopyBounds } from './explorer-clipboard-format';
 import { DesktopError } from '../shared/desktop-error';
 import { isReservedWindowsDeviceName } from './windows-names';
 import type { WorkspaceTreeChange } from '../shared/workspace-tree-change';
@@ -104,6 +109,26 @@ export interface GeneratedFileTarget {
 
 export type GeneratedFileWriteResult =
   { status: 'written'; path: string } | { status: 'exists'; fileName: string };
+
+export type WorkspaceEntryPathEvent =
+  { kind: 'moved'; changes: readonly WorkspacePathChange[] } | { kind: 'removed'; path: string };
+
+interface CopyEntry {
+  relative: string;
+  kind: WorkspaceEntryKind;
+}
+
+interface CopyItem {
+  source: string;
+  kind: WorkspaceEntryKind;
+  name: string;
+  entries: CopyEntry[];
+}
+
+interface CopyBudget {
+  entries: number;
+  bytes: number;
+}
 
 export interface ProtectedRoot {
   path: string;
@@ -174,12 +199,14 @@ export class WorkspaceService {
   private readonly sourceTreeListeners = new Set<(path: string | null) => void>();
   private readonly treeChangeListeners = new Set<(change: WorkspaceTreeChange) => void>();
   private readonly rootListeners = new Set<(root: string | null) => void>();
+  private readonly entryPathListeners = new Set<(event: WorkspaceEntryPathEvent) => void>();
   private sourceTreeWatcher: FSWatcher | null = null;
   private sourceTreeTimer: NodeJS.Timeout | null = null;
   private treeChangeCoalescer: TreeChangeCoalescer | null = null;
   private sourceTreeRewatchTimer: NodeJS.Timeout | null = null;
   private activeWorkspaceRoot: string | null = null;
   private folderActivation: Promise<unknown> = Promise.resolve();
+  private pendingFolderActivations = 0;
   private activeSearch: AbortController | null = null;
   private collisionScanRevision = 0;
   private collisionWarningSignature: string | null = null;
@@ -1030,7 +1057,71 @@ export class WorkspaceService {
     this.standardResources.assertCreatableFileName(request.name);
     const parentPath = dirname(capability.path);
     await assertNoSiblingCollision(parentPath, request.name, basename(capability.path));
-    const targetPath = join(parentPath, request.name);
+    return this.relocateEntry(capability, join(parentPath, request.name), persist);
+  }
+
+  async moveEntry(
+    sourcePath: string,
+    kind: WorkspaceEntryKind,
+    targetFolderId: string,
+    persist: (changes: WorkspacePathChange[]) => Promise<void> = async () => {},
+  ): Promise<{ status: 'moved' | 'unchanged'; result: WorkspaceMutationResult }> {
+    if (!this.activeWorkspaceRoot) {
+      throw new DesktopError('files.outside-folder', 'no workspace folder is open');
+    }
+    const capability = await this.resolveEntryCapability(
+      entryId(validateAbsolutePath(sourcePath), kind),
+    );
+    this.assertMutable(capability, false);
+    const target = await this.resolveFolderCapability(targetFolderId);
+    this.assertMutable(target, true);
+    if (capability.kind === 'folder' && isPathInside(target.path, capability.path)) {
+      throw new DesktopError(
+        'files.paste-into-itself',
+        'a folder cannot be pasted into itself or one of its own folders',
+      );
+    }
+    const name = basename(capability.path);
+    if (pathKey(dirname(capability.path)) === pathKey(target.path)) {
+      return {
+        status: 'unchanged',
+        result: {
+          entry: this.toDirectoryEntry(capability),
+          kind: capability.kind,
+          pathChanges: [],
+          targetName: name,
+          targetPath: capability.path,
+        },
+      };
+    }
+    if (capability.kind === 'file') this.standardResources.assertCreatableFileName(name);
+    const key = name.toLocaleLowerCase('en-US');
+    if (
+      (await readdir(target.path)).some((entry) => entry.toLocaleLowerCase('en-US') === key) ||
+      (await pathPresent(join(target.path, name)))
+    ) {
+      throw new DesktopError(
+        'files.paste-name-taken',
+        'the folder already holds an item with that name',
+      );
+    }
+    return {
+      status: 'moved',
+      result: await this.relocateEntry(capability, join(target.path, name), persist),
+    };
+  }
+
+  private async relocateEntry(
+    capability: EntryCapability,
+    targetPath: string,
+    persist: (changes: WorkspacePathChange[]) => Promise<void>,
+  ): Promise<WorkspaceMutationResult> {
+    const parentPath = dirname(capability.path);
+    const targetParent = dirname(targetPath);
+    const invalidateParents = () => {
+      this.invalidateRelevance(parentPath);
+      if (pathKey(targetParent) !== pathKey(parentPath)) this.invalidateRelevance(targetParent);
+    };
     const changes = this.collectPathChanges(capability.path, targetPath);
     const reverseChanges = changes.map((change) => ({
       oldId: change.newId,
@@ -1059,7 +1150,17 @@ export class WorkspaceService {
     }
     try {
       await assertPathAbsent(targetPath);
-      await rename(finalSource, targetPath);
+      try {
+        await rename(finalSource, targetPath);
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code === 'EXDEV') {
+          throw new DesktopError(
+            'files.move-other-drive',
+            'the entry cannot move to another drive',
+          );
+        }
+        throw error;
+      }
       let persistenceCommitted = false;
       try {
         const canonicalTarget = await canonicalExistingPath(targetPath);
@@ -1092,18 +1193,18 @@ export class WorkspaceService {
       if (temporaryPath) {
         await rename(temporaryPath, capability.path).catch(() => undefined);
       }
-      this.invalidateRelevance(parentPath);
+      invalidateParents();
       throw error;
     }
     this.applyPathChanges(changes);
-    this.invalidateRelevance(parentPath);
+    invalidateParents();
     const renamed = this.entries.get(entryId(targetPath, capability.kind));
     if (!renamed) throw new Error('renamed entry capability was not committed');
     return {
       entry: this.toDirectoryEntry(renamed),
       kind: capability.kind,
       pathChanges: changes,
-      targetName: request.name,
+      targetName: basename(targetPath),
       targetPath,
     };
   }
@@ -1131,6 +1232,9 @@ export class WorkspaceService {
       );
     });
     this.removeCapabilitiesAt(capability.path);
+    for (const listener of this.entryPathListeners) {
+      listener({ kind: 'removed', path: capability.path });
+    }
     await this.recentStore.remove(capability.path);
     this.invalidateRelevance(dirname(capability.path));
     return {
@@ -1140,6 +1244,118 @@ export class WorkspaceService {
       targetPath: capability.path,
       wasNonEmptyFolder,
     };
+  }
+
+  onEntryPathsChanged(listener: (event: WorkspaceEntryPathEvent) => void): () => void {
+    this.entryPathListeners.add(listener);
+    return () => this.entryPathListeners.delete(listener);
+  }
+
+  async clipboardEntry(
+    id: string,
+    cut: boolean,
+  ): Promise<{ path: string; kind: WorkspaceEntryKind }> {
+    const capability = await this.resolveEntryCapability(id);
+    if (cut) this.assertMutable(capability, false);
+    return { path: capability.path, kind: capability.kind };
+  }
+
+  async copyEntriesInto(
+    sources: ReadonlyArray<{ path: string; kind?: WorkspaceEntryKind }>,
+    targetFolderId: string,
+  ): Promise<{ entries: WorkspaceDirectoryEntry[]; skipped: number }> {
+    const root = this.activeWorkspaceRoot;
+    if (!root) throw new DesktopError('files.outside-folder', 'no workspace folder is open');
+    if (
+      !Array.isArray(sources) ||
+      sources.length < 1 ||
+      sources.length > explorerCopyBounds.items
+    ) {
+      throw new DesktopError('files.paste-too-many', 'paste 1 to 64 items at once', {
+        limit: explorerCopyBounds.items,
+      });
+    }
+    const target = await this.resolveFolderCapability(targetFolderId);
+    this.assertMutable(target, true);
+    const budget: CopyBudget = { entries: 0, bytes: 0 };
+    const items: CopyItem[] = [];
+    let firstSkipped: string | null = null;
+    for (const source of sources) {
+      const item = await planCopySource(source.path, source.kind, target.path, budget);
+      if (item) items.push(item);
+      else firstSkipped ??= source.path;
+    }
+    if (items.length === 0) {
+      throw new DesktopError(
+        'files.unsupported',
+        `${basename(firstSkipped ?? '')} is not a file type the Explorer lists`,
+      );
+    }
+    const created: string[] = [];
+    const entries: WorkspaceDirectoryEntry[] = [];
+    let copiedBytes = 0;
+    const copyFileBounded = async (from: string, to: string) => {
+      await copyRegularFile(from, to);
+      copiedBytes += (await stat(to)).size;
+      if (copiedBytes > explorerCopyBounds.bytes) throw copyLimitError();
+    };
+    try {
+      for (const item of items) {
+        const name = await this.availableCopyName(target.path, item.name, item.kind);
+        const destination = join(target.path, name);
+        if (item.kind === 'file') {
+          await copyFileBounded(item.source, destination);
+          created.push(destination);
+        } else {
+          await mkdir(destination);
+          created.push(destination);
+          for (const entry of item.entries) {
+            const to = join(destination, entry.relative);
+            if (to.length > maximumPathLength) throw copyLimitError();
+            if (entry.kind === 'folder') await mkdir(to);
+            else await copyFileBounded(join(item.source, entry.relative), to);
+          }
+        }
+        const canonical = await canonicalExistingPath(destination);
+        if (this.activeWorkspaceRoot !== root || !isPathInside(canonical, root)) {
+          throw new Error('pasted entry escaped its authorized workspace');
+        }
+        const writable = await this.isWritable(canonical);
+        entries.push(
+          item.kind === 'file'
+            ? this.grantEntry(canonical, 'file', writable, false)
+            : {
+                ...this.grantEntry(canonical, 'folder', writable, false),
+                hasChildren: item.entries.length > 0,
+              },
+        );
+      }
+    } catch (error) {
+      for (const path of created.reverse()) {
+        await rm(path, { recursive: true, force: true, maxRetries: 2 }).catch(() => undefined);
+        this.removeCapabilitiesAt(path);
+      }
+      this.invalidateRelevance(target.path);
+      throw error;
+    }
+    this.invalidateRelevance(target.path);
+    return { entries, skipped: sources.length - items.length };
+  }
+
+  private async availableCopyName(
+    folder: string,
+    name: string,
+    kind: WorkspaceEntryKind,
+  ): Promise<string> {
+    const taken = new Set((await readdir(folder)).map((entry) => entry.toLocaleLowerCase('en-US')));
+    for (let ordinal = 0; ordinal <= taken.size * 2 + 1; ordinal += 1) {
+      const candidate = ordinal === 0 ? name : copyEntryName(name, kind, ordinal);
+      if (taken.has(candidate.toLocaleLowerCase('en-US'))) continue;
+      if (kind === 'file' && this.standardResources.isReservedFileName(candidate)) continue;
+      if (await pathPresent(join(folder, candidate))) continue;
+      return candidate;
+    }
+    throw new Error('no free copy name is available');
   }
 
   private async deletePermanently(capability: EntryCapability): Promise<void> {
@@ -1229,6 +1445,26 @@ export class WorkspaceService {
 
   recentEntries(): Promise<RecentWorkspaceEntry[]> {
     return this.recentStore.read();
+  }
+
+  async switchFolders(): Promise<WorkspaceSwitchFolder[]> {
+    return folderSwitchList(await this.recentStore.read(), this.activeWorkspaceRoot);
+  }
+
+  async switchToFolder(id: string): Promise<WorkspaceSwitchOutcome> {
+    if (typeof id !== 'string' || !folderSwitchIdPattern.test(id)) {
+      throw new DesktopError('files.recent-missing', 'folder switch identity is malformed');
+    }
+    const folder = (await this.switchFolders()).find((candidate) => candidate.id === id);
+    if (!folder) return { kind: 'gone' };
+    let canonicalPath: string;
+    try {
+      canonicalPath = await canonicalExistingPath(folder.path);
+      if (!(await stat(canonicalPath)).isDirectory()) return { kind: 'gone' };
+    } catch {
+      return { kind: 'gone' };
+    }
+    return { kind: 'switched', opened: await this.openPaths([canonicalPath]) };
   }
 
   async validDialogPath(
@@ -1368,9 +1604,18 @@ export class WorkspaceService {
   }
 
   private activateFolder(canonicalPath: string): Promise<WorkspaceFolder> {
-    const activation = this.folderActivation.then(() => this.activateFolderNow(canonicalPath));
+    this.pendingFolderActivations += 1;
+    const activation = this.folderActivation
+      .then(() => this.activateFolderNow(canonicalPath))
+      .finally(() => {
+        this.pendingFolderActivations -= 1;
+      });
     this.folderActivation = activation.catch(() => undefined);
     return activation;
+  }
+
+  folderActivationPending(): boolean {
+    return this.pendingFolderActivations > 0;
   }
 
   private async activateFolderNow(canonicalPath: string): Promise<WorkspaceFolder> {
@@ -1917,6 +2162,7 @@ export class WorkspaceService {
       this.openedDocuments.set(change?.newId ?? oldId, { ...capability, path });
     }
     this.rebuildWatchers();
+    for (const listener of this.entryPathListeners) listener({ kind: 'moved', changes });
   }
 
   private removeCapabilitiesAt(targetPath: string): void {
@@ -2585,6 +2831,30 @@ function normalizeAbsolutePath(targetPath: string): string {
   return normalized;
 }
 
+const folderSwitchIdPattern = /^[0-9a-f]{32}$/u;
+
+export function folderSwitchList(
+  recent: readonly RecentWorkspaceEntry[],
+  openFolderPath: string | null,
+): WorkspaceSwitchFolder[] {
+  const openKey = openFolderPath === null ? null : pathKey(openFolderPath);
+  const seen = new Set<string>();
+  const folders: WorkspaceSwitchFolder[] = [];
+  for (const entry of recent) {
+    if (entry.kind !== 'folder') continue;
+    const key = pathKey(entry.path);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    folders.push({
+      id: createHash('sha256').update(key, 'utf8').digest('hex').slice(0, 32),
+      name: entry.name,
+      path: entry.path,
+      open: key === openKey,
+    });
+  }
+  return folders;
+}
+
 function pathKey(targetPath: string): string {
   const normalized = normalizeAbsolutePath(targetPath);
   return process.platform === 'win32' ? normalized.toLocaleLowerCase('en-US') : normalized;
@@ -2599,7 +2869,7 @@ function documentId(targetPath: string): string {
   return `file:${createHash('sha256').update(pathKey(targetPath)).digest('hex')}`;
 }
 
-function entryId(targetPath: string, kind: 'file' | 'folder'): string {
+export function entryId(targetPath: string, kind: 'file' | 'folder'): string {
   return `entry:${kind}:${createHash('sha256').update(pathKey(targetPath)).digest('hex')}`;
 }
 
@@ -2731,6 +3001,120 @@ async function assertPathAbsent(targetPath: string): Promise<void> {
     throw error;
   }
   throw new Error(t('file-actions.entry.name-or-alias-exists'));
+}
+
+async function pathPresent(targetPath: string): Promise<boolean> {
+  try {
+    await lstat(targetPath);
+    return true;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return false;
+    throw error;
+  }
+}
+
+function copyLimitError(): DesktopError {
+  return new DesktopError(
+    'files.copy-limit',
+    `the items to paste hold more than ${explorerCopyBounds.entries} files and folders or ${explorerCopyBounds.bytes / (1024 * 1024)} MiB`,
+    {
+      entries: explorerCopyBounds.entries,
+      megabytes: explorerCopyBounds.bytes / (1024 * 1024),
+    },
+  );
+}
+
+function copyLinkError(): DesktopError {
+  return new DesktopError(
+    'files.copy-link',
+    'the items to paste are or hold a link, junction, or other special entry',
+  );
+}
+
+function chargeCopy(budget: CopyBudget, bytes: number): void {
+  budget.entries += 1;
+  budget.bytes += bytes;
+  if (budget.entries > explorerCopyBounds.entries || budget.bytes > explorerCopyBounds.bytes) {
+    throw copyLimitError();
+  }
+}
+
+async function planCopySource(
+  requestedPath: string,
+  expectedKind: WorkspaceEntryKind | undefined,
+  targetPath: string,
+  budget: CopyBudget,
+): Promise<CopyItem | null> {
+  const path = validateAbsolutePath(requestedPath);
+  let status: Stats;
+  try {
+    status = await lstat(path);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      throw new DesktopError('files.entry-stale', 'a copied entry no longer exists');
+    }
+    throw error;
+  }
+  if (status.isSymbolicLink() || (!status.isFile() && !status.isDirectory())) {
+    throw copyLinkError();
+  }
+  const kind: WorkspaceEntryKind = status.isDirectory() ? 'folder' : 'file';
+  if (expectedKind !== undefined && kind !== expectedKind) {
+    throw new DesktopError('files.entry-stale', 'a copied entry changed before the paste');
+  }
+  const source = await canonicalExistingPath(path);
+  const name = basename(source);
+  if (name.length === 0) throw copyLinkError();
+  if (kind === 'file') {
+    if (!isSupportedSourcePath(source)) return null;
+    chargeCopy(budget, status.size);
+    return { source, kind, name, entries: [] };
+  }
+  if (isPathInside(targetPath, source)) {
+    throw new DesktopError(
+      'files.paste-into-itself',
+      'a folder cannot be pasted into itself or one of its own folders',
+    );
+  }
+  chargeCopy(budget, 0);
+  const entries: CopyEntry[] = [];
+  const visit = async (directory: string, relativePath: string, depth: number) => {
+    if (depth > maximumTraversalDepth) throw copyLimitError();
+    const names: string[] = [];
+    const handle = await opendir(directory);
+    try {
+      for await (const entry of handle) {
+        names.push(entry.name);
+        if (names.length + budget.entries > explorerCopyBounds.entries) throw copyLimitError();
+      }
+    } catch (error) {
+      await handle.close().catch(() => undefined);
+      throw error;
+    }
+    names.sort(compareText);
+    for (const childName of names) {
+      const childPath = join(directory, childName);
+      const childRelative = relativePath ? join(relativePath, childName) : childName;
+      const childStatus = await lstat(childPath);
+      if (childStatus.isSymbolicLink()) throw copyLinkError();
+      if (childStatus.isDirectory()) {
+        chargeCopy(budget, 0);
+        entries.push({ relative: childRelative, kind: 'folder' });
+        await visit(childPath, childRelative, depth + 1);
+      } else if (childStatus.isFile()) {
+        chargeCopy(budget, childStatus.size);
+        entries.push({ relative: childRelative, kind: 'file' });
+      } else throw copyLinkError();
+    }
+  };
+  await visit(source, '', 1);
+  return { source, kind, name, entries };
+}
+
+async function copyRegularFile(from: string, to: string): Promise<void> {
+  const status = await lstat(from);
+  if (status.isSymbolicLink() || !status.isFile()) throw copyLinkError();
+  await copyFile(from, to, constants.COPYFILE_EXCL);
 }
 
 async function readBoundedFile(

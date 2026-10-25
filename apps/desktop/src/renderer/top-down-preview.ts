@@ -170,6 +170,7 @@ export interface TopDownObject {
   dataStatus: number;
   selectionFlags: number;
   behaviorFlags: number;
+  instanceId?: number;
   appearance?: 'tree' | 'decoration';
 }
 
@@ -242,6 +243,16 @@ export function decodeTopDownScene(
   const cliffPieces = map.cliffPiecesLe
     ? (decodeCliffPieceColumn(map.cliffPiecesLe, map.width, map.height) ?? [])
     : [];
+  const pieceIds = presentationInstanceIds(
+    map.cliffPieceInstanceIdsLe,
+    cliffPieces.length,
+    'cliff piece instance IDs',
+  );
+  if (pieceIds) {
+    cliffPieces.forEach((piece, index) => {
+      piece.instanceId = pieceIds[index]!;
+    });
+  }
   const connections = decodeConnections(map, map.width, map.height);
   const objects = decodeObjects(map, map.width, map.height);
   if (options.appearances !== false) appendAppearanceObjects(objects, map);
@@ -262,14 +273,32 @@ export function decodeTopDownScene(
   };
 }
 
+function presentationInstanceIds(
+  column: Uint8Array | undefined,
+  count: number,
+  label: string,
+): number[] | undefined {
+  if (!column || count === 0 || column.byteLength !== count * 4) return undefined;
+  return decodeSigned32(column, count, label);
+}
+
 export function appendAppearanceObjects(
   objects: TopDownObject[],
-  map: Pick<PreviewGenerationResult, 'appearanceObjectsLe' | 'width' | 'height' | 'objectClasses'>,
+  map: Pick<
+    PreviewGenerationResult,
+    'appearanceObjectsLe' | 'appearanceInstanceIdsLe' | 'width' | 'height' | 'objectClasses'
+  >,
 ): void {
   if (!map.appearanceObjectsLe) return;
-  const records = decodeAppearanceObjectColumn(map.appearanceObjectsLe, map.width, map.height);
+  const records =
+    decodeAppearanceObjectColumn(map.appearanceObjectsLe, map.width, map.height) ?? [];
   const classes = previewObjectClassLookup(map);
-  for (const record of records ?? []) {
+  const instanceIds = presentationInstanceIds(
+    map.appearanceInstanceIdsLe,
+    records.length,
+    'terrain appearance instance IDs',
+  );
+  for (const [recordIndex, record] of records.entries()) {
     const objectClass = classes.get(record.objectId);
     objects.push({
       index: objects.length,
@@ -290,6 +319,7 @@ export function appendAppearanceObjects(
       dataStatus: 0,
       selectionFlags: 0,
       behaviorFlags: 0,
+      ...(instanceIds === undefined ? {} : { instanceId: instanceIds[recordIndex]! }),
       appearance: record.tree ? 'tree' : 'decoration',
     });
   }
@@ -997,6 +1027,11 @@ function decodeObjects(
   ) {
     throw new Error('object byte columns have an invalid length');
   }
+  const instanceIdsLe = map.objects.instanceIdsLe;
+  const instanceIds =
+    instanceIdsLe && instanceIdsLe.byteLength === count * 4
+      ? decodeSigned32(instanceIdsLe, count, 'object instance IDs')
+      : undefined;
   const classes = previewObjectClassLookup(map);
   return Array.from({ length: count }, (_, index) => {
     const x = xs[index]! / 256;
@@ -1024,6 +1059,7 @@ function decodeObjects(
       dataStatus: dataStatuses[index]!,
       selectionFlags: map.objects.selectionFlags[index]!,
       behaviorFlags: behaviorFlags[index]!,
+      ...(instanceIds === undefined ? {} : { instanceId: instanceIds[index]! }),
     };
   });
 }

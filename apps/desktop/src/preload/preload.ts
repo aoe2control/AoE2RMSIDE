@@ -78,6 +78,8 @@ import {
   type DefinitionFilePrepareRequest,
   type WorkspaceDeleteRequest,
   type WorkspaceRenameRequest,
+  type ExplorerClipboardWriteRequest,
+  type ExplorerPasteRequest,
   type WorkspaceSaveAsRequest,
   type WorkspaceSaveRequest,
 } from '../shared/api';
@@ -543,6 +545,20 @@ function assertRenameRequest(value: WorkspaceRenameRequest): WorkspaceRenameRequ
     entryId: assertEntryId(value.entryId),
     name: assertEntryName(value.name),
   });
+}
+
+function assertExplorerClipboardWriteRequest(
+  value: ExplorerClipboardWriteRequest,
+): ExplorerClipboardWriteRequest {
+  if (!value || (value.mode !== 'copy' && value.mode !== 'cut')) {
+    throw new Error('explorer clipboard request is invalid');
+  }
+  return Object.freeze({ entryId: assertEntryId(value.entryId), mode: value.mode });
+}
+
+function assertExplorerPasteRequest(value: ExplorerPasteRequest): ExplorerPasteRequest {
+  if (!value) throw new Error('explorer paste request is invalid');
+  return Object.freeze({ targetId: assertEntryId(value.targetId) });
 }
 
 function assertDeleteRequest(value: WorkspaceDeleteRequest): WorkspaceDeleteRequest {
@@ -1343,6 +1359,12 @@ const api: RmsideDesktopApi = Object.freeze({
     ),
   openRecent: (path: string) =>
     ipcRenderer.invoke(ipcChannels.workspaceOpenRecent, assertPath(path)),
+  switchFolders: () => ipcRenderer.invoke(ipcChannels.workspaceSwitchFolders),
+  switchFolder: (id: string) =>
+    ipcRenderer.invoke(
+      ipcChannels.workspaceSwitchFolder,
+      assertBoundedString(id, 'folder switch identity', 64),
+    ),
   takeShellOpenRequest: () => ipcRenderer.invoke(ipcChannels.shellOpenTake),
   onShellOpenPending: (listener: () => void) => {
     const handler = () => listener();
@@ -1381,6 +1403,14 @@ const api: RmsideDesktopApi = Object.freeze({
     ipcRenderer.invoke(ipcChannels.workspaceRename, assertRenameRequest(request)),
   deleteWorkspaceEntry: (request: WorkspaceDeleteRequest) =>
     ipcRenderer.invoke(ipcChannels.workspaceDelete, assertDeleteRequest(request)),
+  writeExplorerClipboard: (request: ExplorerClipboardWriteRequest) =>
+    ipcRenderer.invoke(
+      ipcChannels.workspaceClipboardWrite,
+      assertExplorerClipboardWriteRequest(request),
+    ),
+  explorerClipboardState: () => ipcRenderer.invoke(ipcChannels.workspaceClipboardState),
+  pasteExplorerEntries: (request: ExplorerPasteRequest) =>
+    ipcRenderer.invoke(ipcChannels.workspacePaste, assertExplorerPasteRequest(request)),
   saveFile: (request: WorkspaceSaveRequest) =>
     ipcRenderer.invoke(ipcChannels.workspaceSave, assertSaveRequest(request)),
   saveFileAs: (request: WorkspaceSaveAsRequest) =>

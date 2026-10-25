@@ -19,14 +19,22 @@ export function reconcilePointerHover(window: DialogWindow, cursorPosition: () =
   });
 }
 
+let nativeDialogsOpen = 0;
+
+export function nativeDialogOpen(): boolean {
+  return nativeDialogsOpen > 0;
+}
+
 export async function withNativeDialog<T>(
   window: DialogWindow,
   show: () => Promise<T>,
   cursorPosition: () => Point,
 ): Promise<T> {
+  nativeDialogsOpen += 1;
   try {
     return await show();
   } finally {
+    nativeDialogsOpen -= 1;
     reconcilePointerHover(window, cursorPosition);
   }
 }

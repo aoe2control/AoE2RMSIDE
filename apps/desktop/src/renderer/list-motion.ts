@@ -284,20 +284,23 @@ export class ListMotion {
 
   private animate(elements: ListMotionElements, now: number): Promise<unknown>[] {
     const previous = this.snapshot;
-    const running = elements.shell
-      .getAnimations()
-      .find((animation) => animation.id === motionIds.height && animation.playState !== 'finished');
-    const drawnHeight = running
+    const running = listAnimations(elements.shell);
+    const easing = (running.get(elements.shell) ?? []).some(
+      (animation) => animation.id === motionIds.height && animation.playState !== 'finished',
+    );
+    const drawnHeight = easing
       ? shellHeight(elements.shell)
       : (previous?.shellHeight ?? Number.NaN);
     const drawnShift = new Map<Element, number>();
-    for (const animation of elements.shell.getAnimations({ subtree: true })) {
-      const target = (animation.effect as KeyframeEffect | null)?.target;
-      if (animation.id === motionIds.move && target instanceof HTMLElement) {
+    for (const [target, animations] of running) {
+      if (
+        target instanceof HTMLElement &&
+        animations.some((animation) => animation.id === motionIds.move)
+      ) {
         drawnShift.set(target, translateY(target));
       }
     }
-    for (const animation of elements.shell.getAnimations()) {
+    for (const animation of running.get(elements.shell) ?? []) {
       if (animation.id === motionIds.height) animation.finish();
     }
     delete elements.shell.dataset.listOverflow;
@@ -319,26 +322,30 @@ export class ListMotion {
     }
     const motions: Promise<unknown>[] = [];
     const diff = diffKeyedList(previous.keys, next.keys);
+    const ease = shellHeightEase(drawnHeight, next.shellHeight, false);
+    const fits = ease !== null && layoutFits(elements.rows);
+    const heightDuration = motionDuration('--motion-duration-list-height', 180);
+    const heightEasing = motionEasing('--motion-ease-out', 'cubic-bezier(0.16, 1, 0.3, 1)');
     if (diff.entered.length > 0 || diff.left.length > 0 || this.changed(previous, next)) {
       const burst = !this.coalescer.admit(now);
-      motions.push(...this.animateRows(elements, previous, next, diff, drawnShift, burst));
+      motions.push(...this.animateRows(elements, previous, next, diff, drawnShift, running, burst));
     }
-    for (const animation of elements.shell.getAnimations({ subtree: true })) {
-      if (animation.id !== motionIds.height && listMotionAnimationIds.includes(animation.id)) {
-        motions.push(animation.finished);
+    for (const animations of running.values()) {
+      for (const animation of animations) {
+        if (
+          animation.id !== motionIds.height &&
+          listMotionAnimationIds.includes(animation.id) &&
+          animation.playState !== 'idle'
+        ) {
+          motions.push(animation.finished);
+        }
       }
     }
-    const ease = shellHeightEase(drawnHeight, next.shellHeight, false);
-    const fits = layoutFits(elements.rows);
     if (ease && fits) elements.shell.dataset.listOverflow = 'clip';
     if (ease) {
       const animation = elements.shell.animate(
         ease.map((height) => ({ height: `${height}px` })),
-        {
-          duration: motionDuration('--motion-duration-list-height', 180),
-          easing: motionEasing('--motion-ease-out', 'cubic-bezier(0.16, 1, 0.3, 1)'),
-          id: motionIds.height,
-        },
+        { duration: heightDuration, easing: heightEasing, id: motionIds.height },
       );
       const shell = elements.shell;
       const unclip = () => {
@@ -358,11 +365,17 @@ export class ListMotion {
     next: ListSnapshot,
     diff: KeyedListDiff,
     drawnShift: ReadonlyMap<Element, number>,
+    running: ReadonlyMap<Element, readonly Animation[]>,
     burst: boolean,
   ): Promise<unknown>[] {
     const motions: Promise<unknown>[] = [];
     const track = (animation: Animation | undefined) => {
       if (animation) motions.push(animation.finished);
+    };
+    const cancelGlide = (element: Element) => {
+      for (const animation of running.get(element) ?? []) {
+        if (animation.id === motionIds.move) animation.cancel();
+      }
     };
     const itemDuration = motionDuration('--motion-duration-list-item', 140);
     const moveDuration = motionDuration('--motion-duration-list-move', 160);
@@ -381,16 +394,12 @@ export class ListMotion {
       const after = next.rows.get(key);
       if (!before || !after) continue;
       if (!inside(previous, before) && !inside(next, after)) {
-        for (const animation of after.element.getAnimations()) {
-          if (animation.id === motionIds.move) animation.cancel();
-        }
+        cancelGlide(after.element);
         continue;
       }
       const drawn = this.drawnOffset(previous, before) + (drawnShift.get(after.element) ?? 0);
       const offset = drawn - this.drawnOffset(next, after);
-      for (const animation of after.element.getAnimations()) {
-        if (animation.id === motionIds.move) animation.cancel();
-      }
+      cancelGlide(after.element);
       if (Math.abs(offset) >= 0.5) {
         track(
           after.element.animate(
@@ -586,6 +595,19 @@ export function layoutScrollHeight(rows: HTMLElement): number {
     }
   }
   return extent + (Number.parseFloat(getComputedStyle(rows).paddingBottom) || 0);
+}
+
+export function listAnimations(shell: Element): Map<Element, Animation[]> {
+  const byTarget = new Map<Element, Animation[]>();
+  for (const animation of shell.getAnimations({ subtree: true })) {
+    if (!listMotionAnimationIds.includes(animation.id)) continue;
+    const target = (animation.effect as KeyframeEffect | null)?.target;
+    if (!target) continue;
+    const animations = byTarget.get(target);
+    if (animations) animations.push(animation);
+    else byTarget.set(target, [animation]);
+  }
+  return byTarget;
 }
 
 function translateY(element: HTMLElement): number {

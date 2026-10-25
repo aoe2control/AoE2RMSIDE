@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "O arquivo de recuperação está danificado ou foi gravado por outra versão do AoE2RMSIDE."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Uma pasta não pode ser colada em si mesma nem em uma de suas próprias pastas."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "A pasta já contém um item com esse nome."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Cole no máximo {limit, number, integer} itens de uma vez."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Os itens contêm mais de {entries, number, integer} arquivos e pastas ou {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Os itens são ou contêm um link, uma junção ou outro item especial."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "O item não pode ser movido para outra unidade."
+    },
     "message.game-textures.cause": {
       "message": "A prévia e o ícone do mapa mostram as cores das texturas no lugar delas."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Abrir pasta"
     },
+    "explorer.switch-folder.label": {
+      "message": "Trocar de pasta"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Trocar de pasta"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Pastas recentes"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Nenhuma outra pasta recente"
+    },
     "explorer.tree.label": {
       "message": "Arquivos de {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Excluir"
+    },
+    "explorer.context.copy": {
+      "message": "Copiar"
+    },
+    "explorer.context.cut": {
+      "message": "Recortar"
+    },
+    "explorer.context.paste": {
+      "message": "Colar"
     },
     "explorer.inline.create-file": {
       "message": "Criar arquivo"
@@ -3376,7 +3415,7 @@
       "message": "Fechar configurações de MCP"
     },
     "mcp.dialog.description": {
-      "message": "Permita que aplicativos de IA neste computador leiam, editem e verifiquem scripts da pasta aberta, gerem mapas e executem testes de mapas."
+      "message": "Permita que aplicativos de IA neste computador leiam, editem e verifiquem scripts da pasta aberta e das suas pastas recentes, gerem mapas e executem testes de mapas."
     },
     "mcp.enable.label": {
       "message": "Ativar MCP"
@@ -3487,10 +3526,10 @@
       "message": "Permitir que {app} use o AoE2RMSIDE?"
     },
     "mcp.pairing.description": {
-      "message": "Poderia editar scripts na pasta aberta, gerar mapas, executar testes e instalar mods. Conexão iniciada por {program}."
+      "message": "Poderia editar scripts na pasta aberta e nas suas pastas recentes, gerar mapas, executar testes e instalar mods. Conexão iniciada por {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Poderia editar scripts na pasta aberta, gerar mapas, executar testes e instalar mods."
+      "message": "Poderia editar scripts na pasta aberta e nas suas pastas recentes, gerar mapas, executar testes e instalar mods."
     },
     "mcp.pairing.name-note": {
       "message": "O nome é informado pelo próprio aplicativo: permita apenas se você o configurou. Substituir um mod ou iniciar um teste no jogo ainda pede sua confirmação."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "consultou {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "listou as pastas recentes"
+    },
+    "mcp.action.open-folder": {
+      "message": "abriu a pasta {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "pediu a pasta que já está aberta"
+    },
     "mcp.action.tool": {
       "message": "usou {tool}"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "O arquivo não foi encontrado."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "A pasta não está mais entre as pastas recentes."
+    },
     "mcp.refusal.already-exists": {
       "message": "O arquivo já existe."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Outra operação está em andamento."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "O AoE2RMSIDE estava ocupado com uma execução, uma caixa de diálogo ou outra pasta."
     },
     "mcp.refusal.map-expired": {
       "message": "O mapa gerado não está mais guardado."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Pedra: {amount, number, integer} no total"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Mostrar objetos auxiliares ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Não foi possível excluir o item"
+    },
+    "workspace.failed.copy": {
+      "message": "Não foi possível copiar o item"
+    },
+    "workspace.failed.cut": {
+      "message": "Não foi possível recortar o item"
+    },
+    "workspace.failed.paste": {
+      "message": "Nada foi colado"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, =0 {{count} arquivos foram deixados de fora porque o Explorador não lista o tipo de arquivo deles} one {{count} arquivo foi deixado de fora porque o Explorador não lista o tipo de arquivo dele} many {{count} arquivos foram deixados de fora porque o Explorador não lista o tipo de arquivo deles} other {{count} arquivos foram deixados de fora porque o Explorador não lista o tipo de arquivo deles}}"
     },
     "workspace.failed.restore-session": {
       "message": "Não foi possível restaurar a sessão anterior"

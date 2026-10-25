@@ -373,5 +373,9 @@ export function previewLegendMaxHeight(
 ): number {
   const top = (layout.narrow ? 56 : 22) + 22 + 6 + (layout.readoutStacked ? 20 : 0);
   const bottom = 22 + 26 + 20;
-  return Math.max(26, previewHeight - top - bottom);
+  return Math.max(selectionListRowHeight, previewHeight - top - bottom);
 }
+
+export const selectionListRowHeight = 26;
+
+export const selectionListRowsPerFrame = 24;

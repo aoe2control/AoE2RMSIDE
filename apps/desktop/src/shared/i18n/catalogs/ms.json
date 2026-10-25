@@ -2300,6 +2300,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Fail pemulihan rosak atau ditulis oleh keluaran AoE2RMSIDE yang lain."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Folder tidak boleh ditampal ke dalam dirinya sendiri atau ke dalam salah satu foldernya sendiri."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "Folder itu sudah mengandungi item dengan nama itu."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Tampal paling banyak {limit, number, integer} item sekali gus."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Item itu mengandungi lebih daripada {entries, number, integer} fail dan folder atau {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Item itu ialah atau mengandungi pautan, simpang direktori atau item khas yang lain."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Item tidak boleh dialihkan ke pemacu lain."
+    },
     "message.game-textures.cause": {
       "message": "Pratonton dan ikon peta menggunakan warna tekstur sebagai gantinya."
     },
@@ -2504,6 +2522,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Buka Folder"
     },
+    "explorer.switch-folder.label": {
+      "message": "Tukar folder"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Tukar Folder"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Folder terkini"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Tiada Folder Terkini Lain"
+    },
     "explorer.tree.label": {
       "message": "Fail {name}"
     },
@@ -2536,6 +2566,15 @@
     },
     "explorer.context.delete": {
       "message": "Padam"
+    },
+    "explorer.context.copy": {
+      "message": "Salin"
+    },
+    "explorer.context.cut": {
+      "message": "Potong"
+    },
+    "explorer.context.paste": {
+      "message": "Tampal"
     },
     "explorer.inline.create-file": {
       "message": "Cipta fail"
@@ -3384,7 +3423,7 @@
       "message": "Tutup tetapan MCP"
     },
     "mcp.dialog.description": {
-      "message": "Benarkan aplikasi AI pada komputer ini membaca, menyunting dan menyemak skrip dalam folder yang terbuka, menjana peta dan menjalankan ujian peta."
+      "message": "Benarkan aplikasi AI pada komputer ini membaca, menyunting dan menyemak skrip dalam folder yang terbuka dan folder terkini anda, menjana peta dan menjalankan ujian peta."
     },
     "mcp.enable.label": {
       "message": "Dayakan MCP"
@@ -3495,10 +3534,10 @@
       "message": "Benarkan {app} menggunakan AoE2RMSIDE?"
     },
     "mcp.pairing.description": {
-      "message": "Ia boleh menyunting skrip dalam folder yang terbuka, menjana peta, menjalankan ujian dan memasang mod. Dimulakan oleh {program}."
+      "message": "Ia boleh menyunting skrip dalam folder yang terbuka dan folder terkini anda, menjana peta, menjalankan ujian dan memasang mod. Dimulakan oleh {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Ia boleh menyunting skrip dalam folder yang terbuka, menjana peta, menjalankan ujian dan memasang mod."
+      "message": "Ia boleh menyunting skrip dalam folder yang terbuka dan folder terkini anda, menjana peta, menjalankan ujian dan memasang mod."
     },
     "mcp.pairing.name-note": {
       "message": "Nama ini diberikan oleh aplikasi itu sendiri: benarkan hanya jika anda yang menyediakannya. Menggantikan mod atau ujian langsung tetap akan bertanya kepada anda."
@@ -3635,6 +3674,15 @@
     "mcp.action.reference": {
       "message": "mencari {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "menyenaraikan folder terkini"
+    },
+    "mcp.action.open-folder": {
+      "message": "membuka folder {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "meminta folder yang sudah terbuka"
+    },
     "mcp.action.tool": {
       "message": "menggunakan {tool}"
     },
@@ -3659,6 +3707,9 @@
     "mcp.refusal.not-found": {
       "message": "Fail tidak ditemui."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Folder ini tiada lagi dalam senarai folder terkini."
+    },
     "mcp.refusal.already-exists": {
       "message": "Fail sudah wujud."
     },
@@ -3676,6 +3727,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Ada perkara lain sedang berjalan."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE sibuk dengan pelaksanaan, dialog atau folder lain."
     },
     "mcp.refusal.map-expired": {
       "message": "Peta yang dijana tidak lagi disimpan."
@@ -4697,6 +4751,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Batu: {amount, number, integer} kesemuanya"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Tunjukkan objek pembantu ({count})"
     },
@@ -5638,6 +5698,18 @@
     },
     "workspace.failed.delete": {
       "message": "Item tidak dapat dipadam"
+    },
+    "workspace.failed.copy": {
+      "message": "Item tidak dapat disalin"
+    },
+    "workspace.failed.cut": {
+      "message": "Item tidak dapat dipotong"
+    },
+    "workspace.failed.paste": {
+      "message": "Tiada apa-apa yang ditampal"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, other {{count} fail ditinggalkan kerana Penjelajah tidak menyenaraikan jenis failnya}}"
     },
     "workspace.failed.restore-session": {
       "message": "Sesi terdahulu tidak dapat dipulihkan"

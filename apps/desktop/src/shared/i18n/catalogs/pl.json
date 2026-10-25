@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Plik odzyskiwania jest uszkodzony lub został zapisany przez inne wydanie AoE2RMSIDE."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Folderu nie można wkleić do niego samego ani do jednego z jego własnych folderów."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "Folder zawiera już element o tej nazwie."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Wklejaj naraz najwyżej {limit, number, integer} elementów."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Elementy zawierają więcej niż {entries, number, integer} plików i folderów lub {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Elementy są lub zawierają łącze, punkt połączenia albo inny specjalny element."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Elementu nie można przenieść na inny dysk."
+    },
     "message.game-textures.cause": {
       "message": "Podgląd i ikona mapy pokazują zamiast tego kolory tekstur."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Otwórz folder"
     },
+    "explorer.switch-folder.label": {
+      "message": "Przełącz folder"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Przełącz folder"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Ostatnio używane foldery"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Brak innych ostatnio używanych folderów"
+    },
     "explorer.tree.label": {
       "message": "Pliki w {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Usuń"
+    },
+    "explorer.context.copy": {
+      "message": "Kopiuj"
+    },
+    "explorer.context.cut": {
+      "message": "Wytnij"
+    },
+    "explorer.context.paste": {
+      "message": "Wklej"
     },
     "explorer.inline.create-file": {
       "message": "Utwórz plik"
@@ -3376,7 +3415,7 @@
       "message": "Zamknij ustawienia MCP"
     },
     "mcp.dialog.description": {
-      "message": "Pozwól aplikacjom AI na tym komputerze odczytywać, edytować i sprawdzać skrypty w otwartym folderze, generować mapy i uruchamiać testy map."
+      "message": "Pozwól aplikacjom AI na tym komputerze odczytywać, edytować i sprawdzać skrypty w otwartym folderze i w twoich ostatnio używanych folderach, generować mapy i uruchamiać testy map."
     },
     "mcp.enable.label": {
       "message": "Włącz MCP"
@@ -3487,10 +3526,10 @@
       "message": "Pozwolić aplikacji {app} używać AoE2RMSIDE?"
     },
     "mcp.pairing.description": {
-      "message": "Aplikacja mogłaby edytować skrypty w otwartym folderze, generować mapy, uruchamiać testy i wdrażać mody. Uruchomiona przez {program}."
+      "message": "Aplikacja mogłaby edytować skrypty w otwartym folderze i w twoich ostatnio używanych folderach, generować mapy, uruchamiać testy i wdrażać mody. Uruchomiona przez {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Aplikacja mogłaby edytować skrypty w otwartym folderze, generować mapy, uruchamiać testy i wdrażać mody."
+      "message": "Aplikacja mogłaby edytować skrypty w otwartym folderze i w twoich ostatnio używanych folderach, generować mapy, uruchamiać testy i wdrażać mody."
     },
     "mcp.pairing.name-note": {
       "message": "Tę nazwę aplikacja podaje sama: zezwól tylko na aplikację dodaną przez ciebie. Zastąpienie moda i test w grze nadal wymagają twojej zgody."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "sprawdzono opis {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "wyświetlono listę ostatnio używanych folderów"
+    },
+    "mcp.action.open-folder": {
+      "message": "otwarto folder {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "zażądano folderu, który jest już otwarty"
+    },
     "mcp.action.tool": {
       "message": "użyto {tool}"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "Nie znaleziono pliku."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Tego folderu nie ma już wśród ostatnio używanych folderów."
+    },
     "mcp.refusal.already-exists": {
       "message": "Plik już istnieje."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Trwa inne zadanie."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE był zajęty wykonaniem, oknem dialogowym lub innym folderem."
     },
     "mcp.refusal.map-expired": {
       "message": "Wygenerowana mapa nie jest już przechowywana."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Kamienie: łącznie {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Pokaż obiekty pomocnicze ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Nie udało się usunąć elementu"
+    },
+    "workspace.failed.copy": {
+      "message": "Nie udało się skopiować elementu"
+    },
+    "workspace.failed.cut": {
+      "message": "Nie udało się wyciąć elementu"
+    },
+    "workspace.failed.paste": {
+      "message": "Nic nie zostało wklejone"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} plik został pominięty, ponieważ Eksplorator nie wyświetla jego typu pliku} few {{count} pliki zostały pominięte, ponieważ Eksplorator nie wyświetla ich typu pliku} many {{count} plików zostało pominiętych, ponieważ Eksplorator nie wyświetla ich typu pliku} other {{count} pliku zostało pominięte, ponieważ Eksplorator nie wyświetla ich typu pliku}}"
     },
     "workspace.failed.restore-session": {
       "message": "Nie udało się przywrócić poprzedniej sesji"

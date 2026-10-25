@@ -259,7 +259,11 @@ export class WorkspaceTools {
     const active = root && tabs?.active ? relativeOf(root, tabs.active) : null;
     const make = (shown: readonly (typeof open)[number][], omitted: number) => ({
       folder: root ? (root.split(/[\\/]/u).filter(Boolean).at(-1) ?? root) : undefined,
-      ...(root ? {} : { note: 'No folder is open. Ask the user to open their scripts folder.' }),
+      ...(root
+        ? {}
+        : {
+            note: 'No folder is open. Open a recent one with list_folders and open_folder, or ask the user to open their scripts folder.',
+          }),
       active: active ?? undefined,
       open: shown,
       ...(parts.run === undefined ? {} : { run: parts.run }),

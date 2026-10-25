@@ -248,6 +248,7 @@ export interface CliffPieceRecord {
   y: number;
   facet: number;
   edges: readonly [number, number, number, number];
+  instanceId?: number;
 }
 
 export function decodeCliffPieceColumn(

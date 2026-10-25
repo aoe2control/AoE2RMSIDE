@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 export interface SlicedWork {
   run(shouldYield: () => boolean): boolean;
@@ -58,4 +58,41 @@ export function useFinishedWork<T extends SlicedWork>(work: T | null): T | null 
     return runInSlices(work, () => setFinished(work));
   }, [work]);
   return finished;
+}
+
+export function initiallyMountedRows(
+  previousMounted: number,
+  total: number,
+  first: number,
+): number {
+  return Math.min(total, Math.max(previousMounted, first));
+}
+
+export function useRowsMountedInFrames(
+  rows: readonly unknown[],
+  first: number,
+  step: number,
+): number {
+  const [state, setState] = useState(() => ({
+    rows,
+    mounted: initiallyMountedRows(0, rows.length, first),
+  }));
+  let mounted = state.mounted;
+  if (state.rows !== rows) {
+    mounted = initiallyMountedRows(Math.min(state.mounted, state.rows.length), rows.length, first);
+    setState({ rows, mounted });
+  }
+  const total = rows.length;
+  useEffect(() => {
+    if (mounted >= total) return undefined;
+    const frame = requestAnimationFrame(() =>
+      setState((current) =>
+        current.rows === rows
+          ? { rows, mounted: Math.min(total, current.mounted + Math.max(1, step)) }
+          : current,
+      ),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [mounted, rows, step, total]);
+  return Math.min(mounted, total);
 }

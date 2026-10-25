@@ -2300,6 +2300,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "पुनर्प्राप्ति फ़ाइल क्षतिग्रस्त है या AoE2RMSIDE की किसी दूसरी रिलीज़ ने लिखी थी।"
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "किसी फ़ोल्डर को उसी में या उसके अपने किसी फ़ोल्डर में चिपकाया नहीं जा सकता।"
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "फ़ोल्डर में उस नाम का आइटम पहले से मौजूद है।"
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "एक बार में अधिकतम {limit, number, integer} आइटम चिपकाएँ।"
+    },
+    "message.files.copy-limit.cause": {
+      "message": "आइटम में {entries, number, integer} से अधिक फ़ाइलें और फ़ोल्डर या {megabytes, number, integer} MiB से अधिक डेटा है।"
+    },
+    "message.files.copy-link.cause": {
+      "message": "आइटम स्वयं लिंक, जंक्शन या कोई अन्य विशेष आइटम हैं, या उनमें ऐसा कोई आइटम है।"
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "आइटम को किसी दूसरी ड्राइव पर नहीं ले जाया जा सकता।"
+    },
     "message.game-textures.cause": {
       "message": "इसके बजाय पूर्वावलोकन और मानचित्र का आइकन टेक्सचर के रंग दिखाते हैं।"
     },
@@ -2504,6 +2522,18 @@
     "explorer.open-folder.tooltip": {
       "message": "फ़ोल्डर खोलें"
     },
+    "explorer.switch-folder.label": {
+      "message": "फ़ोल्डर बदलें"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "फ़ोल्डर बदलें"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "हाल के फ़ोल्डर"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "हाल का कोई अन्य फ़ोल्डर नहीं"
+    },
     "explorer.tree.label": {
       "message": "{name} की फ़ाइलें"
     },
@@ -2536,6 +2566,15 @@
     },
     "explorer.context.delete": {
       "message": "हटाएँ"
+    },
+    "explorer.context.copy": {
+      "message": "कॉपी करें"
+    },
+    "explorer.context.cut": {
+      "message": "काटें"
+    },
+    "explorer.context.paste": {
+      "message": "चिपकाएँ"
     },
     "explorer.inline.create-file": {
       "message": "फ़ाइल बनाएँ"
@@ -3384,7 +3423,7 @@
       "message": "MCP सेटिंग्स बंद करें"
     },
     "mcp.dialog.description": {
-      "message": "इस कंप्यूटर के AI ऐप्स को खुले फ़ोल्डर की स्क्रिप्ट पढ़ने, संपादित करने और जाँचने, मानचित्र बनाने और मानचित्र परीक्षण चलाने दें।"
+      "message": "इस कंप्यूटर के AI ऐप्स को खुले फ़ोल्डर और आपके हाल के फ़ोल्डरों की स्क्रिप्ट पढ़ने, संपादित करने और जाँचने, मानचित्र बनाने और मानचित्र परीक्षण चलाने दें।"
     },
     "mcp.enable.label": {
       "message": "MCP सक्षम करें"
@@ -3495,10 +3534,10 @@
       "message": "{app} को AoE2RMSIDE इस्तेमाल करने दें?"
     },
     "mcp.pairing.description": {
-      "message": "यह खुले फ़ोल्डर की स्क्रिप्ट संपादित कर सकेगा, मानचित्र बना सकेगा, परीक्षण चला सकेगा और मॉड तैनात कर सकेगा। {program} ने शुरू किया।"
+      "message": "यह खुले फ़ोल्डर और आपके हाल के फ़ोल्डरों की स्क्रिप्ट संपादित कर सकेगा, मानचित्र बना सकेगा, परीक्षण चला सकेगा और मॉड तैनात कर सकेगा। {program} ने शुरू किया।"
     },
     "mcp.pairing.description.no-program": {
-      "message": "यह खुले फ़ोल्डर की स्क्रिप्ट संपादित कर सकेगा, मानचित्र बना सकेगा, परीक्षण चला सकेगा और मॉड तैनात कर सकेगा।"
+      "message": "यह खुले फ़ोल्डर और आपके हाल के फ़ोल्डरों की स्क्रिप्ट संपादित कर सकेगा, मानचित्र बना सकेगा, परीक्षण चला सकेगा और मॉड तैनात कर सकेगा।"
     },
     "mcp.pairing.name-note": {
       "message": "यह नाम ऐप खुद बताता है: अनुमति तभी दें जब इसे आपने सेट किया हो। मॉड बदलने या लाइव परीक्षण से पहले फिर भी आपसे पूछा जाएगा।"
@@ -3635,6 +3674,15 @@
     "mcp.action.reference": {
       "message": "{name} का विवरण देखा"
     },
+    "mcp.action.list-folders": {
+      "message": "हाल के फ़ोल्डरों की सूची देखी"
+    },
+    "mcp.action.open-folder": {
+      "message": "फ़ोल्डर {name} खोला"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "पहले से खुला फ़ोल्डर माँगा"
+    },
     "mcp.action.tool": {
       "message": "{tool} इस्तेमाल किया"
     },
@@ -3659,6 +3707,9 @@
     "mcp.refusal.not-found": {
       "message": "फ़ाइल नहीं मिली।"
     },
+    "mcp.refusal.folder-gone": {
+      "message": "यह फ़ोल्डर अब हाल के फ़ोल्डरों में नहीं है।"
+    },
     "mcp.refusal.already-exists": {
       "message": "फ़ाइल पहले से मौजूद है।"
     },
@@ -3676,6 +3727,9 @@
     },
     "mcp.refusal.busy": {
       "message": "कुछ और चल रहा है।"
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE किसी रन, संवाद या दूसरे फ़ोल्डर में व्यस्त था।"
     },
     "mcp.refusal.map-expired": {
       "message": "बना हुआ मानचित्र अब रखा नहीं गया है।"
@@ -4697,6 +4751,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "पत्थर: कुल {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "सहायक वस्तुएँ दिखाएँ ({count})"
     },
@@ -5638,6 +5698,18 @@
     },
     "workspace.failed.delete": {
       "message": "आइटम हटाया नहीं जा सका"
+    },
+    "workspace.failed.copy": {
+      "message": "आइटम कॉपी नहीं किया जा सका"
+    },
+    "workspace.failed.cut": {
+      "message": "आइटम काटा नहीं जा सका"
+    },
+    "workspace.failed.paste": {
+      "message": "कुछ भी चिपकाया नहीं गया"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} फ़ाइल छोड़ दी गई, क्योंकि एक्सप्लोरर उसका फ़ाइल प्रकार नहीं दिखाता} other {{count} फ़ाइलें छोड़ दी गईं, क्योंकि एक्सप्लोरर उनका फ़ाइल प्रकार नहीं दिखाता}}"
     },
     "workspace.failed.restore-session": {
       "message": "पिछला सत्र बहाल नहीं हो सका"

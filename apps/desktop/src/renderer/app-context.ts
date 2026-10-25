@@ -16,6 +16,7 @@ import type { PreviewMapOrigin } from './map-test-preview';
 import type { OutputRunHeader } from './output-log';
 import type { PreviewCandidateStore } from './preview-candidate-store';
 import type { PinnedPreviewSource, PreviewExecutionController } from './preview-execution';
+import type { PreviewBeforeReplay } from './replay-run-preset';
 import type { RunOutcome, RunTrigger } from './run-outcome';
 import type { SourceHighlightRequest } from './source-highlight';
 import type { WorkspaceController } from './workspace-controller';
@@ -44,6 +45,7 @@ export interface AppPanelContextValue {
   setEditorPointerInside(inside: boolean, leave?: EditorPointerLeave): void;
   selectPreviewOperation(operationIndex: number): void;
   commitPreview(map: PreviewGenerationResult, origin?: PreviewMapOrigin): void;
+  restorePreviewBeforeReplay(shown: PreviewBeforeReplay): void;
   previewMapOrigin: PreviewMapOrigin;
   mapTestPreviewShown: boolean;
   settleRunOutcome(outcome: RunOutcome, trigger: RunTrigger, runKey?: string): void;

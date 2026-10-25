@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Il file di ripristino è danneggiato o è stato scritto da un’altra versione di AoE2RMSIDE."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Una cartella non può essere incollata in se stessa o in una delle sue cartelle."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "La cartella contiene già un elemento con questo nome."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Incolla al massimo {limit, number, integer} elementi alla volta."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Gli elementi contengono più di {entries, number, integer} file e cartelle o {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Gli elementi sono o contengono un collegamento, una giunzione o un altro elemento speciale."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "L’elemento non può essere spostato su un’altra unità."
+    },
     "message.game-textures.cause": {
       "message": "L’anteprima e l’icona della mappa mostrano invece i colori delle texture."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Apri cartella"
     },
+    "explorer.switch-folder.label": {
+      "message": "Cambia cartella"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Cambia cartella"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Cartelle recenti"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Nessun’altra cartella recente"
+    },
     "explorer.tree.label": {
       "message": "File di {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Elimina"
+    },
+    "explorer.context.copy": {
+      "message": "Copia"
+    },
+    "explorer.context.cut": {
+      "message": "Taglia"
+    },
+    "explorer.context.paste": {
+      "message": "Incolla"
     },
     "explorer.inline.create-file": {
       "message": "Crea file"
@@ -3376,7 +3415,7 @@
       "message": "Chiudi impostazioni MCP"
     },
     "mcp.dialog.description": {
-      "message": "Consenti alle app di IA di questo computer di leggere, modificare e controllare gli script della cartella aperta, generare mappe ed eseguire test delle mappe."
+      "message": "Consenti alle app di IA di questo computer di leggere, modificare e controllare gli script della cartella aperta e delle tue cartelle recenti, generare mappe ed eseguire test delle mappe."
     },
     "mcp.enable.label": {
       "message": "Attiva MCP"
@@ -3487,10 +3526,10 @@
       "message": "Consentire a {app} di usare AoE2RMSIDE?"
     },
     "mcp.pairing.description": {
-      "message": "Potrebbe modificare gli script della cartella aperta, generare mappe, eseguire test e installare mod. Connessione avviata da {program}."
+      "message": "Potrebbe modificare gli script della cartella aperta e delle tue cartelle recenti, generare mappe, eseguire test e installare mod. Connessione avviata da {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Potrebbe modificare gli script della cartella aperta, generare mappe, eseguire test e installare mod."
+      "message": "Potrebbe modificare gli script della cartella aperta e delle tue cartelle recenti, generare mappe, eseguire test e installare mod."
     },
     "mcp.pairing.name-note": {
       "message": "Il nome lo indica l’app stessa: consentila solo se l’hai configurata tu. Sostituire un mod o avviare un test nel gioco richiede comunque la tua conferma."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "ha cercato {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "ha elencato le cartelle recenti"
+    },
+    "mcp.action.open-folder": {
+      "message": "ha aperto la cartella {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "ha chiesto la cartella già aperta"
+    },
     "mcp.action.tool": {
       "message": "ha usato {tool}"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "File non trovato."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "La cartella non è più tra le cartelle recenti."
+    },
     "mcp.refusal.already-exists": {
       "message": "Il file esiste già."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "È in corso un’altra operazione."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE era occupato con un’esecuzione, una finestra di dialogo o un’altra cartella."
     },
     "mcp.refusal.map-expired": {
       "message": "La mappa generata non è più conservata."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Pietra: {amount, number, integer} in totale"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Mostra oggetti ausiliari ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Impossibile eliminare l’elemento"
+    },
+    "workspace.failed.copy": {
+      "message": "Impossibile copiare l’elemento"
+    },
+    "workspace.failed.cut": {
+      "message": "Impossibile tagliare l’elemento"
+    },
+    "workspace.failed.paste": {
+      "message": "Non è stato incollato nulla"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} file è stato escluso perché Esplora file non ne elenca il tipo} many {{count} file sono stati esclusi perché Esplora file non ne elenca il tipo} other {{count} file sono stati esclusi perché Esplora file non ne elenca il tipo}}"
     },
     "workspace.failed.restore-session": {
       "message": "Impossibile ripristinare la sessione precedente"

@@ -1,5 +1,7 @@
+import { DesktopError } from '../shared/desktop-error';
 import { presentMessage, stripTransport } from '../shared/message-catalog';
 import { t, type MessageId } from '../shared/i18n/translator';
+import { useAppFolderSwitchBridge } from './app-folder-switch';
 import { deleteEntryConfirmation } from './delete-confirmation';
 import { unsavedChangesConfirmation, type DirtyDocumentsAction } from './unsaved-changes';
 import {
@@ -21,6 +23,7 @@ import {
 } from 'react';
 import type {
   DesktopSession,
+  ExplorerClipboardState,
   MonacoViewState,
   RecoveryDocument,
   RecoverySnapshot,
@@ -30,11 +33,13 @@ import type {
   WorkspaceFolder,
   WorkspaceMutationResult,
   WorkspaceOpenResult,
+  WorkspacePathChange,
 } from '../shared/api';
 import { isMapTestScriptName } from '../shared/map-test-contract';
 import { editorTextAdoption } from './editor-model-sync';
 import { formatSourceDocument } from './monaco-language';
 import { explorerAncestorFolders } from './explorer-search-tree';
+import { ExplorerClipboardTracker } from './explorer-row-commands';
 import {
   createWorkspaceFileOpener,
   explorerSelection,
@@ -105,6 +110,7 @@ export interface WorkspaceController {
   pickFiles(): Promise<void>;
   pickFolder(): Promise<void>;
   openRecent(path: string): Promise<void>;
+  switchFolder(id: string): Promise<void>;
   openWorkspaceFile(
     path: string,
     keepOpen?: boolean,
@@ -120,6 +126,10 @@ export interface WorkspaceController {
     name: string,
   ): Promise<WorkspaceMutationResult>;
   deleteWorkspaceEntry(entry: WorkspaceDirectoryEntry): Promise<WorkspaceMutationResult | null>;
+  explorerClipboard: ExplorerClipboardState;
+  refreshExplorerClipboard(): void;
+  putOnExplorerClipboard(entry: WorkspaceDirectoryEntry, mode: 'copy' | 'cut'): Promise<void>;
+  pasteIntoWorkspaceFolder(target: WorkspaceDirectoryEntry): Promise<void>;
   saveActive(): Promise<void>;
   saveActiveAs(): Promise<void>;
   formatActive(): Promise<void>;
@@ -148,6 +158,10 @@ export function useWorkspaceController(
   const [lastNormalActivePath, setLastNormalActivePath] = useState<string | null>(null);
   const [lastSave, setLastSave] = useState<{ documentId: string; sequence: number } | null>(null);
   const [mutationRevision, setMutationRevision] = useState(0);
+  const [explorerClipboard, setExplorerClipboard] = useState<ExplorerClipboardState>({
+    canPaste: false,
+    cutEntryId: null,
+  });
   const [revealSequence, setRevealSequence] = useState(0);
   const countReveal = useCallback(() => setRevealSequence((sequence) => sequence + 1), []);
   const [sessionReady, setSessionReady] = useState(false);
@@ -734,6 +748,34 @@ export function useWorkspaceController(
     [acceptOpenResult, appendOutput],
   );
 
+  const openSwitchFolder = useCallback(
+    async (id: string): Promise<'switched' | 'gone'> => {
+      const outcome = await window.rmside.switchFolder(id);
+      if (outcome.kind !== 'switched') return 'gone';
+      acceptOpenResult(outcome.opened);
+      return 'switched';
+    },
+    [acceptOpenResult],
+  );
+  useAppFolderSwitchBridge(openSwitchFolder);
+
+  const switchFolder = useCallback(
+    async (id: string) => {
+      let raw: string;
+      try {
+        if ((await openSwitchFolder(id)) === 'switched') return;
+        raw = new DesktopError('files.recent-missing', 'path is not a recent workspace entry')
+          .message;
+      } catch (error) {
+        raw = errorMessage(error);
+      }
+      appendOutput(
+        presentMessage({ source: 'Files', raw, fallbackHeadline: 'workspace.failed.open-recent' }),
+      );
+    },
+    [openSwitchFolder, appendOutput],
+  );
+
   const appendOutputRef = useRef(appendOutput);
   appendOutputRef.current = appendOutput;
   const countRevealRef = useRef(countReveal);
@@ -877,36 +919,38 @@ export function useWorkspaceController(
     [openWorkspaceFile],
   );
 
+  const followPathChanges = useCallback((pathChanges: readonly WorkspacePathChange[]) => {
+    if (pathChanges.length === 0) return;
+    updateDocuments(setDocuments, documentsRef, (current) =>
+      current.map((document) => {
+        const change = pathChanges.find(
+          (candidate) =>
+            candidate.oldId === document.id ||
+            (document.path && pathKey(candidate.oldPath) === pathKey(document.path)),
+        );
+        return change
+          ? {
+              ...document,
+              id: change.newId,
+              uri: change.newUri,
+              path: change.newPath,
+              name: basenameFromPath(change.newPath),
+            }
+          : document;
+      }),
+    );
+    setActiveDocumentId(
+      (current) => pathChanges.find((change) => change.oldId === current)?.newId ?? current,
+    );
+    setExpandedPaths((current) => remapPaths(current, pathChanges));
+    setSelectedPath((current) => remapPath(current, pathChanges));
+  }, []);
+
   const renameWorkspaceEntry = useCallback(
     async (entry: WorkspaceDirectoryEntry, name: string) => {
       try {
         const result = await window.rmside.renameWorkspaceEntry({ entryId: entry.id, name });
-        if (result.pathChanges.length > 0) {
-          updateDocuments(setDocuments, documentsRef, (current) =>
-            current.map((document) => {
-              const change = result.pathChanges.find(
-                (candidate) =>
-                  candidate.oldId === document.id ||
-                  (document.path && pathKey(candidate.oldPath) === pathKey(document.path)),
-              );
-              return change
-                ? {
-                    ...document,
-                    id: change.newId,
-                    uri: change.newUri,
-                    path: change.newPath,
-                    name: basenameFromPath(change.newPath),
-                  }
-                : document;
-            }),
-          );
-          setActiveDocumentId(
-            (current) =>
-              result.pathChanges.find((change) => change.oldId === current)?.newId ?? current,
-          );
-          setExpandedPaths((current) => remapPaths(current, result));
-          setSelectedPath((current) => remapPath(current, result));
-        }
+        followPathChanges(result.pathChanges);
         setMutationRevision((revision) => revision + 1);
         return result;
       } catch (error) {
@@ -921,7 +965,83 @@ export function useWorkspaceController(
         throw error;
       }
     },
-    [appendOutput],
+    [appendOutput, followPathChanges],
+  );
+
+  const [explorerClipboardTracker] = useState(
+    () => new ExplorerClipboardTracker(setExplorerClipboard),
+  );
+
+  const refreshExplorerClipboard = useCallback(() => {
+    void explorerClipboardTracker
+      .request(
+        () => window.rmside.explorerClipboardState(),
+        (state) => state,
+      )
+      .catch(() => undefined);
+  }, [explorerClipboardTracker]);
+
+  const putOnExplorerClipboard = useCallback(
+    async (entry: WorkspaceDirectoryEntry, mode: 'copy' | 'cut') => {
+      try {
+        await explorerClipboardTracker.put(entry.id, mode, () =>
+          window.rmside.writeExplorerClipboard({ entryId: entry.id, mode }),
+        );
+      } catch (error) {
+        refreshExplorerClipboard();
+        appendOutput(
+          presentMessage({
+            source: 'Files',
+            raw: errorMessage(error),
+            fallbackHeadline: mode === 'cut' ? 'workspace.failed.cut' : 'workspace.failed.copy',
+          }),
+        );
+      }
+    },
+    [appendOutput, explorerClipboardTracker, refreshExplorerClipboard],
+  );
+
+  const pasteIntoWorkspaceFolder = useCallback(
+    async (target: WorkspaceDirectoryEntry) => {
+      try {
+        const result = await explorerClipboardTracker.request(
+          () => window.rmside.pasteExplorerEntries({ targetId: target.id }),
+          (answer) => answer.state,
+        );
+        if (result.status !== 'pasted') return;
+        followPathChanges(result.pathChanges);
+        const root = folderRef.current;
+        if (!root || pathKey(root.path) !== pathKey(target.path)) {
+          setExpandedPaths((current) =>
+            current.some((path) => pathKey(path) === pathKey(target.path))
+              ? current
+              : [...current, target.path],
+          );
+        }
+        const first = result.entries[0];
+        if (first) setSelectedPath(first.path);
+        setMutationRevision((revision) => revision + 1);
+        if (result.skipped > 0) {
+          appendOutput(
+            outputNote('Files', 'files.paste-skipped', {
+              id: 'workspace.paste.skipped',
+              args: { count: result.skipped },
+            }),
+          );
+        }
+      } catch (error) {
+        setMutationRevision((revision) => revision + 1);
+        refreshExplorerClipboard();
+        appendOutput(
+          presentMessage({
+            source: 'Files',
+            raw: errorMessage(error),
+            fallbackHeadline: 'workspace.failed.paste',
+          }),
+        );
+      }
+    },
+    [appendOutput, explorerClipboardTracker, followPathChanges, refreshExplorerClipboard],
   );
 
   const deleteWorkspaceEntry = useCallback(
@@ -1171,6 +1291,7 @@ export function useWorkspaceController(
       pickFiles,
       pickFolder,
       openRecent,
+      switchFolder,
       openWorkspaceFile,
       openWorkspaceSource,
       acceptOpenResult,
@@ -1179,6 +1300,10 @@ export function useWorkspaceController(
       openGeneratedFile,
       renameWorkspaceEntry,
       deleteWorkspaceEntry,
+      explorerClipboard,
+      refreshExplorerClipboard,
+      putOnExplorerClipboard,
+      pasteIntoWorkspaceFolder,
       saveActive,
       saveActiveAs,
       formatActive,
@@ -1203,8 +1328,12 @@ export function useWorkspaceController(
       dismissRecoveryNotice,
       documents,
       expandedPaths,
+      explorerClipboard,
       folder,
       mutationRevision,
+      pasteIntoWorkspaceFolder,
+      putOnExplorerClipboard,
+      refreshExplorerClipboard,
       revealSequence,
       newMapTestScript,
       newXsScript,
@@ -1212,6 +1341,7 @@ export function useWorkspaceController(
       openDroppedFiles,
       openGeneratedFile,
       openRecent,
+      switchFolder,
       openWorkspaceFile,
       openWorkspaceSource,
       pickFiles,
@@ -1326,16 +1456,19 @@ function basenameFromPath(path: string): string {
   return path.replaceAll('\\', '/').split('/').at(-1) ?? path;
 }
 
-function remapPath(path: string | null, result: WorkspaceMutationResult): string | null {
+function remapPath(
+  path: string | null,
+  pathChanges: readonly WorkspacePathChange[],
+): string | null {
   if (!path) return null;
-  const containing = result.pathChanges
+  const containing = pathChanges
     .filter((candidate) => isPathInside(path, candidate.oldPath))
     .sort((left, right) => left.oldPath.length - right.oldPath.length)[0];
   return containing ? `${containing.newPath}${path.slice(containing.oldPath.length)}` : path;
 }
 
-function remapPaths(paths: string[], result: WorkspaceMutationResult): string[] {
-  return paths.map((path) => remapPath(path, result) ?? path);
+function remapPaths(paths: string[], pathChanges: readonly WorkspacePathChange[]): string[] {
+  return paths.map((path) => remapPath(path, pathChanges) ?? path);
 }
 
 function errorMessage(error: unknown): string {

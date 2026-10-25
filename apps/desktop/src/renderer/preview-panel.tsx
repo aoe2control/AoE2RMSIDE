@@ -198,13 +198,15 @@ import {
   useHeld,
   usePresence,
 } from './motion';
-import { useFinishedWork } from './sliced-work';
+import { useFinishedWork, useRowsMountedInFrames } from './sliced-work';
 import { OverflowingLabel } from './overflow-label';
 import { SearchField } from './search-field';
 import {
   focusPreviewCanvasQuietly,
   previewLegendMaxHeight,
   rectContainsPoint,
+  selectionListRowHeight,
+  selectionListRowsPerFrame,
   useCanvasKeyboardFocus,
   useOverlayPointerHover,
   usePreviewLegendWidth,
@@ -303,6 +305,7 @@ import {
   cliffMaterial,
   connectionMaterial,
   isDrawnPreviewObject,
+  layerInstanceIdRange,
   layerResourceTotals,
   legendHighlightKey,
   objectNameForId,
@@ -4948,6 +4951,13 @@ function SelectionLayerLegend({
         : allListedLayers,
     [allListedLayers, filter, labels],
   );
+  const mountedRows = useRowsMountedInFrames(
+    listedLayers,
+    Math.ceil(maxHeight / selectionListRowHeight) + 1,
+    selectionListRowsPerFrame,
+  );
+  const mountedLayers =
+    mountedRows < listedLayers.length ? listedLayers.slice(0, mountedRows) : listedLayers;
   const [pointerLayerKey, setPointerLayerKey] = useState<string | null>(null);
   const [focusedLayerKey, setFocusedLayerKey] = useState<string | null>(null);
   const [listedContent, setListedContent] = useState(content);
@@ -4970,6 +4980,7 @@ function SelectionLayerLegend({
   const [listMotion] = useState(
     () =>
       new ListMotion({
+        cullToShell: true,
         ghostClassName: 'preview-legend-ghost',
         keyAttribute: 'layerKey',
         rowSelector: ':scope > .preview-layer-row',
@@ -5005,12 +5016,12 @@ function SelectionLayerLegend({
       viewport.scrollTop = 0;
     }
     listMotion.update({ ghosts: ghostLayer, rows: viewport, shell });
-  }, [content, contentIdentity, listMotion]);
+  }, [content, contentIdentity, listMotion, mountedRows]);
   useLayoutEffect(() => {
     updateFades();
     const frame = requestAnimationFrame(updateFades);
     return () => cancelAnimationFrame(frame);
-  }, [contentIdentity, maxHeight, resolvedTheme, updateFades]);
+  }, [contentIdentity, maxHeight, mountedRows, resolvedTheme, updateFades]);
   useEffect(() => {
     const viewport = rows.current;
     if (!viewport) return undefined;
@@ -5035,7 +5046,7 @@ function SelectionLayerLegend({
   useEffect(() => () => onHover(null), [onHover]);
   return (
     <div
-      aria-busy={busy || undefined}
+      aria-busy={busy || mountedRows < listedLayers.length || undefined}
       aria-label={t('preview-panel.legend.label')}
       className="preview-map-legend motion-surface motion-edge"
       data-legend-content={content}
@@ -5102,7 +5113,7 @@ function SelectionLayerLegend({
           ref={rows}
           tabIndex={0}
         >
-          {listedLayers.map((layer) => (
+          {mountedLayers.map((layer) => (
             <SelectionLayerRow
               art={layerArt?.get(layer.key)}
               key={layer.key}
@@ -6049,6 +6060,7 @@ function LayerTooltip({
 }) {
   const { t } = useI18n();
   const resources = useMemo(() => layerResourceTotals(layer), [layer]);
+  const instanceIds = useMemo(() => layerInstanceIdRange(layer), [layer]);
   return (
     <div className="preview-layer-tooltip-body" data-testid="preview-layer-tooltip">
       <span className="preview-layer-tooltip-name">{label.fullName}</span>
@@ -6067,6 +6079,16 @@ function LayerTooltip({
           {t(previewResourceTotalMessages[kind], { amount })}
         </span>
       ))}
+      {instanceIds ? (
+        <span className="preview-layer-tooltip-detail" data-part="instance-ids">
+          {instanceIds.low === instanceIds.high
+            ? t('preview-panel.legend.instance-id.one', { id: String(instanceIds.low) })
+            : t('preview-panel.legend.instance-id.range', {
+                low: String(instanceIds.low),
+                high: String(instanceIds.high),
+              })}
+        </span>
+      ) : null}
     </div>
   );
 }

@@ -9,7 +9,7 @@ pub mod v1 {
 }
 
 pub const PROTOCOL_MAJOR: u32 = 2;
-pub const PROTOCOL_MINOR: u32 = 25;
+pub const PROTOCOL_MINOR: u32 = 27;
 pub const PROTOCOL_PATCH: u32 = 0;
 pub const MAX_FRAME_BYTES: usize = 20 * 1024 * 1024;
 
@@ -67,6 +67,12 @@ pub enum ContractViolation {
     QualityRowOrder,
     #[error("quality sample rows exceed 256 KiB")]
     QualitySamplesTooLarge,
+    #[error("instance IDs are present without the available state, or absent with it")]
+    InstanceIdState,
+    #[error("instance IDs do not give one 4-byte ID per object, cliff piece or terrain appearance")]
+    InstanceIdLength,
+    #[error("instance IDs are negative or repeated")]
+    InstanceIdValue,
 }
 
 pub fn validate_message_arguments(
@@ -123,6 +129,71 @@ pub fn validate_known_crash_reference(
         Ok(v1::KnownCrashEvidence::Unspecified) | Err(_) => Err(ContractViolation::CrashEvidence),
         Ok(_) => Ok(()),
     }
+}
+
+pub fn validate_object_instance_ids(columns: &v1::ObjectColumns) -> Result<(), ContractViolation> {
+    let available = columns.instance_id_state == v1::ObjectInstanceIdState::Available as i32;
+    if !available {
+        return if columns.instance_ids_le.is_empty() {
+            Ok(())
+        } else {
+            Err(ContractViolation::InstanceIdState)
+        };
+    }
+    if !columns.ids_le.len().is_multiple_of(4)
+        || columns.instance_ids_le.len() != columns.ids_le.len()
+    {
+        return Err(ContractViolation::InstanceIdLength);
+    }
+    unique_non_negative_ids([columns.instance_ids_le.as_slice()])
+}
+
+pub fn validate_map_instance_ids(map: &v1::ColumnarMapState) -> Result<(), ContractViolation> {
+    let none = v1::ObjectColumns::default();
+    let objects = map.objects.as_ref().unwrap_or(&none);
+    validate_object_instance_ids(objects)?;
+    let available = objects.instance_id_state == v1::ObjectInstanceIdState::Available as i32;
+    if !available {
+        return if map.cliff_piece_instance_ids_le.is_empty()
+            && map.appearance_instance_ids_le.is_empty()
+        {
+            Ok(())
+        } else {
+            Err(ContractViolation::InstanceIdState)
+        };
+    }
+    for (records, record_bytes, ids) in [
+        (&map.cliff_pieces_le, 20, &map.cliff_piece_instance_ids_le),
+        (
+            &map.appearance_objects_le,
+            16,
+            &map.appearance_instance_ids_le,
+        ),
+    ] {
+        if !records.len().is_multiple_of(record_bytes)
+            || ids.len() != records.len() / record_bytes * 4
+        {
+            return Err(ContractViolation::InstanceIdLength);
+        }
+    }
+    unique_non_negative_ids([
+        objects.instance_ids_le.as_slice(),
+        map.cliff_piece_instance_ids_le.as_slice(),
+        map.appearance_instance_ids_le.as_slice(),
+    ])
+}
+
+fn unique_non_negative_ids<const N: usize>(columns: [&[u8]; N]) -> Result<(), ContractViolation> {
+    let mut ids = columns
+        .iter()
+        .flat_map(|column| column.chunks_exact(4))
+        .map(|bytes| i32::from_le_bytes([bytes[0], bytes[1], bytes[2], bytes[3]]))
+        .collect::<Vec<_>>();
+    ids.sort_unstable();
+    if ids.first().is_some_and(|id| *id < 0) || ids.windows(2).any(|pair| pair[0] == pair[1]) {
+        return Err(ContractViolation::InstanceIdValue);
+    }
+    Ok(())
 }
 
 pub fn is_quality_id(id: &str) -> bool {

@@ -1027,6 +1027,8 @@ fn run_service<R: Read, W: Write + Send>(input: &mut R, output: &mut W) -> Resul
                                     map_test_game_crashes: true,
                                     map_test_xs: true,
                                     map_test_quality: true,
+                                    object_instance_ids: false,
+                                    presentation_instance_ids: false,
                                 }),
                             }),
                         ),
@@ -1910,6 +1912,8 @@ fn protocol_preview(sample: rms_test::PreviewSample) -> v1::MapTestPreview {
             land_ids_le: encode_u32(map.land_zone.iter().copied()),
             cliff_pieces_le: Vec::new(),
             appearance_objects_le: Vec::new(),
+            cliff_piece_instance_ids_le: Vec::new(),
+            appearance_instance_ids_le: Vec::new(),
             cliff_edges: map
                 .cliffs
                 .iter()
@@ -1962,6 +1966,8 @@ fn protocol_preview(sample: rms_test::PreviewSample) -> v1::MapTestPreview {
                     .map(|value| value.selection_flags)
                     .collect(),
                 behavior_flags_le: encode_u16(map.objects.iter().map(|value| value.behavior_flags)),
+                instance_ids_le: Vec::new(),
+                instance_id_state: v1::ObjectInstanceIdState::NotInThisPreview as i32,
             }),
             layer_ids_le: encode_u16(map.layer.iter().copied()),
             flags_le: encode_u32(map.flags.iter().map(|value| value.0)),

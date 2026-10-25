@@ -1728,6 +1728,21 @@ const desktopRefusalCatalog: Record<string, CatalogEntry> = {
     action: step('message.files.recovery-too-large.action'),
   },
   'files.recovery-invalid': { cause: 'message.files.recovery-invalid.cause' },
+  'files.paste-into-itself': { cause: 'message.files.paste-into-itself.cause' },
+  'files.paste-name-taken': { cause: 'message.files.paste-name-taken.cause' },
+  'files.paste-too-many': {
+    cause: (facts) =>
+      t('message.files.paste-too-many.cause', { limit: numberParam(facts, 'limit') }),
+  },
+  'files.copy-limit': {
+    cause: (facts) =>
+      t('message.files.copy-limit.cause', {
+        entries: numberParam(facts, 'entries'),
+        megabytes: numberParam(facts, 'megabytes'),
+      }),
+  },
+  'files.copy-link': { cause: 'message.files.copy-link.cause' },
+  'files.move-other-drive': { cause: 'message.files.move-other-drive.cause' },
   'installed-source.clone-destination': {
     cause: 'message.installed-source.clone-destination.cause',
   },

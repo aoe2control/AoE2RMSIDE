@@ -50,6 +50,7 @@ import {
   LocalContentImportStatus,
   LocalContentSourceSchema,
   MutationOperation,
+  ObjectInstanceIdState,
   type Envelope,
   type ConfigurationCatalogResponse,
   type ContentPackDescriptor as ProtocolContentPackDescriptor,
@@ -105,6 +106,7 @@ import type {
   GameArtNativeSource,
 } from './game-art-service';
 import {
+  cliffPieceRecordBytes,
   decodeCliffPieceColumn,
   type GameArtPhase,
   type GameArtSpriteRequestObject,
@@ -114,7 +116,10 @@ import {
   mapIconArtObjectDescriptors,
 } from '../shared/map-icon-art-objects';
 import { isObjectClassList, objectClassesFor } from '../shared/object-classes';
-import { decodeAppearanceObjectColumn } from '../shared/terrain-appearances';
+import {
+  appearanceObjectRecordBytes,
+  decodeAppearanceObjectColumn,
+} from '../shared/terrain-appearances';
 import { validSectionStarts } from '../shared/section-starts';
 import { validTileWriteRuns } from '../shared/tile-write-runs';
 import { constantNamesFor } from './constant-names-provider';
@@ -166,7 +171,7 @@ interface PendingRequest {
   reject(error: Error): void;
 }
 
-const protocolVersion = { major: 2, minor: 25, patch: 0 } as const;
+const protocolVersion = { major: 2, minor: 27, patch: 0 } as const;
 
 export class ProtocolResponseError extends Error {
   constructor(
@@ -207,6 +212,8 @@ export class RmsdClient {
   private controlPipeExchangeSupported = false;
   private knownCrashIds = false;
   private xsStartCheck = false;
+  private objectInstanceIds = false;
+  private presentationInstanceIds = false;
   private readonly installationReads = new InstallationReadQueue({
     isBusy: isInstallationReadersBusy,
   });
@@ -289,6 +296,8 @@ export class RmsdClient {
     this.controlPipeExchangeSupported = negotiated.capabilities.controlPipeExchange;
     this.knownCrashIds = negotiated.capabilities.knownCrashIds;
     this.xsStartCheck = negotiated.capabilities.xsStartCheck;
+    this.objectInstanceIds = negotiated.capabilities.objectInstanceIds;
+    this.presentationInstanceIds = negotiated.capabilities.presentationInstanceIds;
     this.onStatus({ name: 'rmsd', state: 'running' });
   }
 
@@ -575,6 +584,8 @@ export class RmsdClient {
       setup.colors,
       this.knownCrashIds,
       this.xsStartCheck ? xsStart : undefined,
+      this.objectInstanceIds,
+      this.presentationInstanceIds,
     );
     latencyProbe.step(requestId, 'response-convert');
     return result;
@@ -1120,6 +1131,56 @@ export function toGenerationWarning(
   };
 }
 
+export function toObjectInstanceIds(
+  column: Uint8Array,
+  state: ObjectInstanceIdState,
+  objectCount: number,
+): Uint8Array | undefined {
+  if (state !== ObjectInstanceIdState.AVAILABLE) return undefined;
+  if (!Number.isInteger(objectCount) || column.byteLength !== objectCount * 4) return undefined;
+  const view = new DataView(column.buffer, column.byteOffset, column.byteLength);
+  const seen = new Set<number>();
+  for (let index = 0; index < objectCount; index += 1) {
+    const id = view.getInt32(index * 4, true);
+    if (id < 0 || seen.has(id)) return undefined;
+    seen.add(id);
+  }
+  return Uint8Array.from(column);
+}
+
+export function toPresentationInstanceIds(
+  objectIds: Uint8Array | undefined,
+  pieceIds: Uint8Array,
+  pieceRecordBytes: number,
+  appearanceIds: Uint8Array,
+  appearanceRecordBytes: number,
+): { cliffPieceInstanceIdsLe?: Uint8Array; appearanceInstanceIdsLe?: Uint8Array } {
+  if (!objectIds || objectIds.byteLength % 4 !== 0) return {};
+  if (
+    !Number.isInteger(pieceRecordBytes / cliffPieceRecordBytes) ||
+    !Number.isInteger(appearanceRecordBytes / appearanceObjectRecordBytes) ||
+    pieceIds.byteLength !== (pieceRecordBytes / cliffPieceRecordBytes) * 4 ||
+    appearanceIds.byteLength !== (appearanceRecordBytes / appearanceObjectRecordBytes) * 4
+  ) {
+    return {};
+  }
+  const seen = new Set<number>();
+  for (const column of [objectIds, pieceIds, appearanceIds]) {
+    const view = new DataView(column.buffer, column.byteOffset, column.byteLength);
+    for (let offset = 0; offset < column.byteLength; offset += 4) {
+      const id = view.getInt32(offset, true);
+      if (id < 0 || seen.has(id)) return {};
+      seen.add(id);
+    }
+  }
+  return {
+    ...(pieceRecordBytes > 0 ? { cliffPieceInstanceIdsLe: Uint8Array.from(pieceIds) } : {}),
+    ...(appearanceRecordBytes > 0
+      ? { appearanceInstanceIdsLe: Uint8Array.from(appearanceIds) }
+      : {}),
+  };
+}
+
 function toPreviewResult(
   response: GenerationResponse,
   input: PreviewGenerationInput,
@@ -1128,6 +1189,8 @@ function toPreviewResult(
   playerColors: readonly number[] = [],
   knownCrashIds = false,
   xsStartRequest?: XsStartCheckRequest,
+  objectInstanceIds = false,
+  presentationInstanceIds = false,
 ): PreviewGenerationResult {
   const map = response.mapState;
   const provenance = response.provenance;
@@ -1229,6 +1292,28 @@ function toPreviewResult(
     response.constructVerification,
     provenance.operations.length,
   );
+  const instanceIdsLe = objectInstanceIds
+    ? toObjectInstanceIds(objects.instanceIdsLe, objects.instanceIdState, objectCount)
+    : undefined;
+  const cliffPiecesLe =
+    map.cliffPiecesLe.byteLength > 0 &&
+    decodeCliffPieceColumn(map.cliffPiecesLe, map.width, map.height)
+      ? Uint8Array.from(map.cliffPiecesLe)
+      : undefined;
+  const appearanceObjectsLe =
+    map.appearanceObjectsLe.byteLength > 0 &&
+    decodeAppearanceObjectColumn(map.appearanceObjectsLe, map.width, map.height)
+      ? Uint8Array.from(map.appearanceObjectsLe)
+      : undefined;
+  const presentationIds = presentationInstanceIds
+    ? toPresentationInstanceIds(
+        instanceIdsLe,
+        map.cliffPieceInstanceIdsLe,
+        cliffPiecesLe?.byteLength ?? 0,
+        map.appearanceInstanceIdsLe,
+        appearanceObjectsLe?.byteLength ?? 0,
+      )
+    : {};
   const xsStart =
     input.backend === 'exact'
       ? toXsStartOutcome(response.xsStart, {
@@ -1266,14 +1351,9 @@ function toPreviewResult(
     terrainZonesLe: Uint8Array.from(map.zonesLe),
     landIdsLe: Uint8Array.from(map.landIdsLe),
     cliffEdges: Uint8Array.from(map.cliffEdges),
-    ...(map.cliffPiecesLe.byteLength > 0 &&
-    decodeCliffPieceColumn(map.cliffPiecesLe, map.width, map.height)
-      ? { cliffPiecesLe: Uint8Array.from(map.cliffPiecesLe) }
-      : {}),
-    ...(map.appearanceObjectsLe.byteLength > 0 &&
-    decodeAppearanceObjectColumn(map.appearanceObjectsLe, map.width, map.height)
-      ? { appearanceObjectsLe: Uint8Array.from(map.appearanceObjectsLe) }
-      : {}),
+    ...(cliffPiecesLe ? { cliffPiecesLe } : {}),
+    ...(appearanceObjectsLe ? { appearanceObjectsLe } : {}),
+    ...presentationIds,
     objects: {
       idsLe: Uint8Array.from(objects.idsLe),
       xLe: Uint8Array.from(objects.xLe),
@@ -1291,6 +1371,7 @@ function toPreviewResult(
       dataStatusesLe: Uint8Array.from(objects.dataStatusesLe),
       selectionFlags: Uint8Array.from(objects.selectionFlags),
       behaviorFlagsLe: Uint8Array.from(objects.behaviorFlagsLe),
+      ...(instanceIdsLe ? { instanceIdsLe } : {}),
     },
     layerIdsLe: Uint8Array.from(map.layerIdsLe),
     flagsLe: Uint8Array.from(map.flagsLe),

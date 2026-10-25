@@ -1256,6 +1256,9 @@ img {
 }
 
 .explorer-root-pinned {
+  align-items: center;
+  display: flex;
+  gap: 2px;
   min-width: 0;
   overflow: hidden;
 }
@@ -1298,6 +1301,20 @@ img {
   > .explorer-entry
   > * {
   opacity: 1;
+}
+
+.explorer-row[data-cut='true'] > .explorer-entry > * {
+  opacity: var(--quiet-opacity);
+}
+
+.explorer-content:has(> .explorer-tree-area) {
+  display: flex;
+  flex-direction: column;
+}
+
+.explorer-tree-area {
+  flex: 1 0 auto;
+  min-width: 0;
 }
 
 .directory-children,
@@ -1407,6 +1424,27 @@ img {
 .explorer-root-pinned .explorer-create-action {
   transition-duration: var(--motion-duration-surface);
   transition-timing-function: var(--motion-ease-out);
+}
+
+.explorer-root-pinned > .explorer-row {
+  flex: 1 1 0;
+}
+
+.explorer-folder-switch {
+  color: var(--muted-foreground);
+  flex: none;
+}
+
+.explorer-folder-switch svg {
+  height: 12px;
+  width: 12px;
+}
+
+.explorer-folder-switch:hover,
+.explorer-folder-switch:focus-visible,
+.explorer-folder-switch[data-popup-open] {
+  background: color-mix(in oklch, var(--sidebar-foreground) 14%, transparent);
+  color: var(--foreground);
 }
 
 .explorer-search-indicator .running-indicator {
@@ -3215,10 +3253,35 @@ img {
 
 .preview-version-trigger > svg {
   color: var(--foreground);
+  margin-inline-end: -6px;
   order: -1;
   opacity: 0;
   transform: rotate(180deg) scale(0.85);
-  transition: opacity 120ms ease;
+  transition:
+    opacity 120ms ease,
+    width var(--motion-duration-readout-resize) var(--motion-ease-out),
+    margin-inline-end var(--motion-duration-readout-resize) var(--motion-ease-out);
+  width: 0;
+}
+
+.preview-version-trigger:hover > svg,
+.preview-version-trigger:focus-visible > svg,
+.preview-version-trigger[data-popup-open] > svg {
+  margin-inline-end: 0;
+  width: 0.875rem;
+}
+
+.dashed-outline {
+  color: var(--muted-foreground);
+  height: 100%;
+  left: 0;
+  opacity: 0.6;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  stroke: currentColor;
+  top: 0;
+  width: 100%;
 }
 
 .preview-preset-trigger:not([data-temporary]),
@@ -5246,6 +5309,20 @@ div:has(> .preview-layer-tooltip) {
 }
 
 .explorer-create-menu [data-slot='dropdown-menu-item'] {
+  white-space: nowrap;
+}
+
+.explorer-folder-switch-menu {
+  max-width: min(22rem, var(--available-width));
+  min-width: 12rem;
+  width: max-content;
+}
+
+.explorer-folder-switch-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 

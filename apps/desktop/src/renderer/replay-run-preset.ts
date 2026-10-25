@@ -1,5 +1,6 @@
-import type { MapTestReport } from '../shared/api';
+import type { MapTestReport, PreviewGenerationResult } from '../shared/api';
 import { t } from '../shared/i18n/translator';
+import type { PreviewMapOrigin } from './map-test-preview';
 import {
   computerRunSettings,
   runGameModeOptions,
@@ -153,6 +154,37 @@ function withFreeValues(active: readonly number[], start: number): number[] {
 
 export interface TemporaryRunConfiguration {
   previous: RunConfiguration;
+  shown?: PreviewBeforeReplay;
+}
+
+export interface PreviewBeforeReplay {
+  map: PreviewGenerationResult | null;
+  origin: PreviewMapOrigin;
+  sourceText: string | null;
+}
+
+export type RevertedPreview =
+  | { kind: 'keep' }
+  | { kind: 'restore' }
+  | { kind: 'regenerate'; documentUri: string; seed: number };
+
+export function revertedPreview(
+  shown: PreviewBeforeReplay | undefined,
+  user: RunConfiguration,
+  documentText: (uri: string) => string | null,
+): RevertedPreview {
+  if (!shown) return { kind: 'keep' };
+  const { map } = shown;
+  if (!map) return { kind: 'restore' };
+  const current = documentText(map.documentUri);
+  if (current === null || shown.sourceText === null || current === shown.sourceText) {
+    return { kind: 'restore' };
+  }
+  return {
+    kind: 'regenerate',
+    documentUri: map.documentUri,
+    seed: user.seedLocked ? user.seed : (map.presentationSeed ?? user.seed),
+  };
 }
 
 export interface ReplayRunState {
@@ -177,8 +209,9 @@ export function replayedRunChange(options: {
   state: ReplayRunState;
   lobby: ReplayedLobbySettings | null;
   seed: number;
+  shown?: PreviewBeforeReplay;
 }): ReplayRunState {
-  const { state, lobby, seed } = options;
+  const { state, lobby, seed, shown } = options;
   const seedOnCurrent: ReplayRunState = {
     configuration: withLockedSeed(state.configuration, seed),
     temporary: state.temporary,
@@ -193,6 +226,9 @@ export function replayedRunChange(options: {
   if (!replayed) return seedOnCurrent;
   return {
     configuration: replayed,
-    temporary: { previous: state.temporary?.previous ?? state.configuration },
+    temporary: state.temporary ?? {
+      previous: state.configuration,
+      ...(shown ? { shown } : {}),
+    },
   };
 }

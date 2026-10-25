@@ -2300,6 +2300,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "복구 파일이 손상되었거나 다른 AoE2RMSIDE 릴리스에서 기록되었습니다."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "폴더를 자기 자신이나 그 안의 폴더에 붙여넣을 수 없습니다."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "폴더에 같은 이름의 항목이 이미 있습니다."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "한 번에 항목을 최대 {limit, number, integer}개까지 붙여넣으세요."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "항목에 들어 있는 파일과 폴더가 {entries, number, integer}개 또는 {megabytes, number, integer} MiB를 넘습니다."
+    },
+    "message.files.copy-link.cause": {
+      "message": "항목이 링크, 정션 또는 다른 특수 항목이거나 이를 포함하고 있습니다."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "항목을 다른 드라이브로 옮길 수 없습니다."
+    },
     "message.game-textures.cause": {
       "message": "대신 미리 보기와 맵 아이콘에 텍스처 색상을 표시합니다."
     },
@@ -2504,6 +2522,18 @@
     "explorer.open-folder.tooltip": {
       "message": "폴더 열기"
     },
+    "explorer.switch-folder.label": {
+      "message": "폴더 전환"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "폴더 전환"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "최근 폴더"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "다른 최근 폴더 없음"
+    },
     "explorer.tree.label": {
       "message": "{name}의 파일"
     },
@@ -2536,6 +2566,15 @@
     },
     "explorer.context.delete": {
       "message": "삭제"
+    },
+    "explorer.context.copy": {
+      "message": "복사"
+    },
+    "explorer.context.cut": {
+      "message": "잘라내기"
+    },
+    "explorer.context.paste": {
+      "message": "붙여넣기"
     },
     "explorer.inline.create-file": {
       "message": "파일 만들기"
@@ -3384,7 +3423,7 @@
       "message": "MCP 설정 닫기"
     },
     "mcp.dialog.description": {
-      "message": "이 컴퓨터의 AI 앱이 열린 폴더의 스크립트를 읽고 편집하고 검사하며, 맵을 생성하고 맵 테스트를 실행할 수 있게 합니다."
+      "message": "이 컴퓨터의 AI 앱이 열린 폴더와 최근 폴더의 스크립트를 읽고 편집하고 검사하며, 맵을 생성하고 맵 테스트를 실행할 수 있게 합니다."
     },
     "mcp.enable.label": {
       "message": "MCP 사용"
@@ -3495,10 +3534,10 @@
       "message": "{app}에서 AoE2RMSIDE를 사용하도록 허용할까요?"
     },
     "mcp.pairing.description": {
-      "message": "열린 폴더의 스크립트를 편집하고, 맵을 생성하고, 테스트를 실행하고, 모드를 배포할 수 있게 됩니다. 시작한 프로그램: {program}."
+      "message": "열린 폴더와 최근 폴더의 스크립트를 편집하고, 맵을 생성하고, 테스트를 실행하고, 모드를 배포할 수 있게 됩니다. 시작한 프로그램: {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "열린 폴더의 스크립트를 편집하고, 맵을 생성하고, 테스트를 실행하고, 모드를 배포할 수 있게 됩니다."
+      "message": "열린 폴더와 최근 폴더의 스크립트를 편집하고, 맵을 생성하고, 테스트를 실행하고, 모드를 배포할 수 있게 됩니다."
     },
     "mcp.pairing.name-note": {
       "message": "이 이름은 앱이 스스로 밝힌 것입니다. 직접 설정한 앱만 허용하세요. 모드 교체와 게임 내 테스트는 계속 확인을 요청합니다."
@@ -3635,6 +3674,15 @@
     "mcp.action.reference": {
       "message": "{name}을(를) 조회했습니다"
     },
+    "mcp.action.list-folders": {
+      "message": "최근 폴더 목록을 확인했습니다"
+    },
+    "mcp.action.open-folder": {
+      "message": "{name} 폴더를 열었습니다"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "이미 열린 폴더를 요청했습니다"
+    },
     "mcp.action.tool": {
       "message": "{tool}을(를) 사용했습니다"
     },
@@ -3659,6 +3707,9 @@
     "mcp.refusal.not-found": {
       "message": "파일을 찾을 수 없습니다."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "이 폴더는 더 이상 최근 폴더 목록에 없습니다."
+    },
     "mcp.refusal.already-exists": {
       "message": "파일이 이미 있습니다."
     },
@@ -3676,6 +3727,9 @@
     },
     "mcp.refusal.busy": {
       "message": "다른 작업이 실행 중입니다."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE가 실행, 대화 상자 또는 다른 폴더를 처리하는 중이었습니다."
     },
     "mcp.refusal.map-expired": {
       "message": "생성된 맵이 더 이상 보관되어 있지 않습니다."
@@ -4697,6 +4751,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "석재: 총 {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "보조 오브젝트 표시({count})"
     },
@@ -5638,6 +5698,18 @@
     },
     "workspace.failed.delete": {
       "message": "항목을 삭제하지 못했습니다"
+    },
+    "workspace.failed.copy": {
+      "message": "항목을 복사하지 못했습니다"
+    },
+    "workspace.failed.cut": {
+      "message": "항목을 잘라내지 못했습니다"
+    },
+    "workspace.failed.paste": {
+      "message": "아무것도 붙여넣지 않았습니다"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, other {탐색기에 표시되지 않는 파일 형식이라 파일 {count}개를 제외했습니다}}"
     },
     "workspace.failed.restore-session": {
       "message": "이전 세션을 복원하지 못했습니다"

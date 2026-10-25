@@ -1307,6 +1307,63 @@
         "image": false,
         "shape": "plain text: syntax, arguments, defaults, notes; unknown names: up to 5 close names"
       }
+    },
+    {
+      "name": "list_folders",
+      "title": "List folders",
+      "description": "The folders the user opened recently in AoE2RMSIDE, most recent first: name, id, and which one is open. Game and mod folders are never listed. Use open_folder with an id to work in another folder.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 3000,
+        "image": false,
+        "shape": "{folders:[{id,name,open}],note,more}"
+      }
+    },
+    {
+      "name": "open_folder",
+      "title": "Open folder",
+      "description": "Switch AoE2RMSIDE to a folder from list_folders, by its id. Open tabs stay open with their unsaved changes; every other tool then works in that folder. Switch only when the user wants another folder. Waits for a running run; busy while the user has a dialog open.",
+      "servedBy": "ide",
+      "lane": "none",
+      "confirmation": "none",
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The folder's id from list_folders.",
+            "minLength": 32,
+            "maxLength": 32,
+            "pattern": "^[0-9a-f]{32}$"
+          }
+        },
+        "required": ["id"],
+        "additionalProperties": false
+      },
+      "output": {
+        "maxChars": 600,
+        "image": false,
+        "shape": "{folder,status:switched|already_open,note}"
+      }
     }
   ]
 }

@@ -17,8 +17,8 @@ const buttonVariants = cva(
           'bg-destructive/10 text-destructive hover:bg-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30',
         warning:
           'bg-caution/15 text-caution hover:bg-caution/25 dark:bg-caution/20 dark:hover:bg-caution/30',
-        dotted:
-          'border-dotted border-muted-foreground/60 bg-transparent text-foreground hover:bg-muted aria-expanded:bg-muted dark:hover:bg-muted/50 dark:aria-expanded:bg-muted/50',
+        dashed:
+          'relative bg-transparent text-foreground hover:bg-muted aria-expanded:bg-muted dark:hover:bg-muted/50 dark:aria-expanded:bg-muted/50',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {

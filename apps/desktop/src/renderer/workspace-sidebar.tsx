@@ -9,6 +9,7 @@ import {
   useState,
   type CSSProperties,
   type KeyboardEvent,
+  type RefObject,
 } from 'react';
 import { FolderIcon } from '@animateicons/react/lucide';
 import {
@@ -83,6 +84,16 @@ import {
   mergeDirectoryEntries,
 } from './explorer-refresh';
 import { sameUnsavedTexts } from './explorer-content-search';
+import {
+  ExplorerClipboardContext,
+  ExplorerClipboardMenuItems,
+  ExplorerPasteMenuItem,
+  ExplorerTreeArea,
+  useExplorerClipboardActions,
+  useExplorerRowKeys,
+} from './explorer-clipboard-menu';
+import type { ExplorerRowTarget } from './explorer-row-commands';
+import { FolderSwitcher } from './folder-switcher';
 import { HoverMotionIcon } from './hover-motion-icon';
 import { ListMotion, type ListMotionElements } from './list-motion';
 import { useI18n } from './i18n';
@@ -513,6 +524,9 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
     return () => window.clearTimeout(timer);
   }, [searching, workspace.folder?.id]);
 
+  const clipboardActions = useExplorerClipboardActions(workspace);
+  const rootPinned = useRef<HTMLDivElement>(null);
+
   const rootEntry = useMemo<WorkspaceDirectoryEntry | null>(
     () =>
       workspace.folder
@@ -730,6 +744,13 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
     }
   };
 
+  const rootSelected =
+    rootEntry !== null && pathKey(workspace.selectedPath ?? '') === pathKey(rootEntry.path);
+  const rootTabStop =
+    searchState.tabStopKey === null
+      ? rootSelected
+      : rootEntry !== null && searchState.tabStopKey === pathKey(rootEntry.path);
+
   return (
     <aside
       aria-hidden={!expanded}
@@ -873,24 +894,29 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
           role={workspace.folder ? 'tree' : undefined}
         >
           {workspace.folder && rootEntry ? (
-            <div className="explorer-root-pinned">
-              <FolderRow
-                entry={rootEntry}
-                expanded
-                isRoot
-                count={searchTree?.counts.get(pathKey(rootEntry.path))}
-                onCreate={beginCreate}
-                onDelete={() => {}}
-                onFindInFiles={beginFindInFiles}
-                onRename={() => {}}
-                onSelect={() => selectPath(rootEntry.path)}
-                selected={pathKey(workspace.selectedPath ?? '') === pathKey(rootEntry.path)}
-                searchBusy={Boolean(searchQuery) && searching && searchIndicatorVisible}
-                tabStop={
-                  searchState.tabStopKey === null
-                    ? undefined
-                    : searchState.tabStopKey === pathKey(rootEntry.path)
-                }
+            <div className="explorer-root-pinned" ref={rootPinned}>
+              <ExplorerClipboardContext.Provider value={clipboardActions}>
+                <FolderRow
+                  entry={rootEntry}
+                  expanded
+                  isRoot
+                  count={searchTree?.counts.get(pathKey(rootEntry.path))}
+                  onCreate={beginCreate}
+                  onDelete={() => {}}
+                  onFindInFiles={beginFindInFiles}
+                  onRename={() => {}}
+                  onSelect={() => selectPath(rootEntry.path)}
+                  pathTooltipAnchor={rootPinned}
+                  selected={rootSelected}
+                  searchBusy={Boolean(searchQuery) && searching && searchIndicatorVisible}
+                  tabStop={rootTabStop}
+                />
+              </ExplorerClipboardContext.Provider>
+              <FolderSwitcher
+                folderPath={rootEntry.path}
+                onOpenFolder={() => void workspace.pickFolder()}
+                onSwitch={(id) => void workspace.switchFolder(id)}
+                tabStop={rootTabStop}
               />
             </div>
           ) : null}
@@ -902,48 +928,73 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
               ref={explorerContent}
             >
               {workspace.folder && rootEntry ? (
-                <ExplorerSearchContext.Provider value={searchState}>
-                  <ExplorerRefreshContext.Provider value={refreshRegistry}>
-                    <DirectoryChildren
-                      draft={draft}
-                      mutationRevision={workspace.mutationRevision}
-                      onCancelDraft={() => {
-                        createRequest.current += 1;
-                        setDraft(null);
-                      }}
-                      onCommitDraft={commitDraft}
-                      onCreate={beginCreate}
-                      onDelete={(entry) => void workspace.deleteWorkspaceEntry(entry)}
-                      onFindInFiles={beginFindInFiles}
-                      onDraftValueChange={(value) =>
-                        setDraft((current) => (current ? { ...current, value, error: null } : null))
-                      }
-                      onRename={beginRename}
-                      onSelect={selectPath}
-                      onTransientListed={(listed) =>
-                        setTransientEntry((current) => (current === listed ? null : current))
-                      }
-                      parent={rootEntry}
-                      search={searchTree}
-                      transientEntry={transientEntry}
-                      workspace={workspace}
-                    />
-                  </ExplorerRefreshContext.Provider>
-                  {searchTree && searchTree.shown.size === 0 && !searching ? (
-                    <div className="explorer-empty-folder">
-                      {t(
-                        editionCapabilities.newRmsScript
-                          ? 'explorer.search.no-results.rms'
-                          : 'explorer.search.no-results',
-                      )}
-                    </div>
-                  ) : null}
-                  {searchTree && searchView?.contents?.truncated ? (
-                    <div className="explorer-search-note" role="note">
-                      {t('explorer.search.truncated')}
-                    </div>
-                  ) : null}
-                </ExplorerSearchContext.Provider>
+                <ExplorerTreeArea
+                  clipboard={clipboardActions}
+                  menu={
+                    <>
+                      {rootEntry.writable ? (
+                        <>
+                          <FolderCreateMenuItems entry={rootEntry} onCreate={beginCreate} />
+                          <ContextMenuSeparator />
+                          <ExplorerPasteMenuItem target={rootEntry} />
+                          <ContextMenuSeparator />
+                        </>
+                      ) : null}
+                      <ContextMenuItem
+                        onClick={() =>
+                          void window.rmside.openWorkspaceFolderInExplorer(rootEntry.id)
+                        }
+                      >
+                        <FolderSearch /> {t('explorer.context.open-in-explorer')}
+                      </ContextMenuItem>
+                    </>
+                  }
+                >
+                  <ExplorerSearchContext.Provider value={searchState}>
+                    <ExplorerRefreshContext.Provider value={refreshRegistry}>
+                      <DirectoryChildren
+                        draft={draft}
+                        mutationRevision={workspace.mutationRevision}
+                        onCancelDraft={() => {
+                          createRequest.current += 1;
+                          setDraft(null);
+                        }}
+                        onCommitDraft={commitDraft}
+                        onCreate={beginCreate}
+                        onDelete={(entry) => void workspace.deleteWorkspaceEntry(entry)}
+                        onFindInFiles={beginFindInFiles}
+                        onDraftValueChange={(value) =>
+                          setDraft((current) =>
+                            current ? { ...current, value, error: null } : null,
+                          )
+                        }
+                        onRename={beginRename}
+                        onSelect={selectPath}
+                        onTransientListed={(listed) =>
+                          setTransientEntry((current) => (current === listed ? null : current))
+                        }
+                        parent={rootEntry}
+                        search={searchTree}
+                        transientEntry={transientEntry}
+                        workspace={workspace}
+                      />
+                    </ExplorerRefreshContext.Provider>
+                    {searchTree && searchTree.shown.size === 0 && !searching ? (
+                      <div className="explorer-empty-folder">
+                        {t(
+                          editionCapabilities.newRmsScript
+                            ? 'explorer.search.no-results.rms'
+                            : 'explorer.search.no-results',
+                        )}
+                      </div>
+                    ) : null}
+                    {searchTree && searchView?.contents?.truncated ? (
+                      <div className="explorer-search-note" role="note">
+                        {t('explorer.search.truncated')}
+                      </div>
+                    ) : null}
+                  </ExplorerSearchContext.Provider>
+                </ExplorerTreeArea>
               ) : (
                 <Empty className="explorer-empty">
                   <EmptyHeader>
@@ -978,15 +1029,17 @@ export const WorkspaceSidebar = memo(function WorkspaceSidebar({
 function ExplorerEntryLabel({
   children,
   match,
+  measure = 'hover',
 }: {
   children: string;
   match?: WorkspaceSearchNameRange | undefined;
+  measure?: 'observe' | 'hover';
 }) {
   const highlighted = match && match.end > match.start;
   return (
     <OverflowingLabel
       className="explorer-entry-label"
-      measure="hover"
+      measure={measure}
       name={children}
       textClassName="explorer-entry-label-text"
     >
@@ -1244,6 +1297,7 @@ function DirectoryChildren({
             count={search?.counts.get(key)}
             depth={depth}
             entry={entry}
+            folder={parent}
             hidden={filteredOut}
             key={entry.id}
             match={search?.matches.get(key)}
@@ -1327,6 +1381,7 @@ function FolderRow({
   match,
   count,
   style,
+  pathTooltipAnchor,
   onCreate,
   onRename,
   onDelete,
@@ -1339,6 +1394,7 @@ function FolderRow({
   selected: boolean;
   isRoot?: boolean;
   searchBusy?: boolean;
+  pathTooltipAnchor?: RefObject<HTMLElement | null>;
   tabStop?: boolean | undefined;
   match?: WorkspaceSearchNameRange | undefined;
   count?: number | undefined;
@@ -1351,15 +1407,19 @@ function FolderRow({
 }) {
   const { t } = useI18n();
   const searchState = useContext(ExplorerSearchContext);
+  const clipboard = useContext(ExplorerClipboardContext);
   const [contextOpen, setContextOpen] = useState(false);
   const key = pathKey(entry.path);
   const isTabStop =
     tabStop ?? (searchState.tabStopKey === null ? selected : searchState.tabStopKey === key);
+  const commandTarget: ExplorerRowTarget = { entry, isRoot, pasteTarget: entry };
+  const handleRowKeys = useExplorerRowKeys(commandTarget, { rename: onRename, delete: onDelete });
   const row = (
     <div
       className="explorer-row"
       data-active={(!isRoot && searchState.activeKey === key) || undefined}
       data-context-open={contextOpen || undefined}
+      data-cut={clipboard?.cutEntryId === entry.id || undefined}
       data-kind="folder"
       data-match={match ? true : undefined}
       data-row-key={isRoot ? undefined : key}
@@ -1387,6 +1447,7 @@ function FolderRow({
               className="explorer-entry"
               data-root={isRoot || undefined}
               onClick={onSelect}
+              onKeyDown={handleRowKeys}
               role="treeitem"
               style={style}
               tabIndex={isTabStop ? 0 : -1}
@@ -1395,10 +1456,17 @@ function FolderRow({
           }
         >
           {isRoot ? <FolderOpen /> : expanded ? <ChevronDown /> : <ChevronRight />}
-          <ExplorerEntryLabel match={match}>{entry.name}</ExplorerEntryLabel>
+          <ExplorerEntryLabel match={match} measure={isRoot ? 'observe' : 'hover'}>
+            {entry.name}
+          </ExplorerEntryLabel>
           <ExplorerEntryCount count={count} />
         </TooltipTrigger>
-        <TooltipContent align="start" className="explorer-path-tooltip" side="right">
+        <TooltipContent
+          align="start"
+          anchor={pathTooltipAnchor}
+          className="explorer-path-tooltip"
+          side="right"
+        >
           {entry.path}
         </TooltipContent>
       </Tooltip>
@@ -1419,7 +1487,12 @@ function FolderRow({
     </div>
   );
   return (
-    <ContextMenu onOpenChange={setContextOpen}>
+    <ContextMenu
+      onOpenChange={(open) => {
+        setContextOpen(open);
+        if (open) clipboard?.refresh();
+      }}
+    >
       <ContextMenuTrigger render={row} />
       <ContextMenuContent className="explorer-context-menu">
         <ContextMenuItem onClick={() => void window.rmside.openWorkspaceFolderInExplorer(entry.id)}>
@@ -1431,38 +1504,20 @@ function FolderRow({
         {entry.writable ? (
           <>
             <ContextMenuSeparator />
-            {editionCapabilities.newRmsScript ? (
-              <ContextMenuItem onClick={() => onCreate(entry, 'file')}>
-                <FilePlus2 /> {t('explorer.create.script')}
-              </ContextMenuItem>
-            ) : null}
-            {editionCapabilities.mapTests ? (
-              <ContextMenuItem onClick={() => onCreate(entry, 'file', 'map-test-v1')}>
-                <FileCode2 /> {t('explorer.create.map-test-script')}
-              </ContextMenuItem>
-            ) : null}
-            {definitionFilesAvailable(editionCapabilities) ? (
-              <ContextMenuItem onClick={() => onCreate(entry, 'file', 'definition-file')}>
-                <FileDigit /> {t('explorer.create.definition-file')}
-              </ContextMenuItem>
-            ) : null}
-            <ContextMenuItem onClick={() => onCreate(entry, 'file', 'xs-v1')}>
-              <FileCode2 /> {t('explorer.create.xs-script')}
+            <FolderCreateMenuItems entry={entry} onCreate={onCreate} />
+          </>
+        ) : null}
+        <ContextMenuSeparator />
+        <ExplorerClipboardMenuItems target={commandTarget} withPaste />
+        {entry.writable && !isRoot ? (
+          <>
+            <ContextMenuSeparator />
+            <ContextMenuItem onClick={() => onRename(entry)}>
+              <Pencil /> {t('explorer.context.rename')}
             </ContextMenuItem>
-            <ContextMenuItem onClick={() => onCreate(entry, 'folder')}>
-              <FolderPlus /> {t('explorer.create.folder')}
+            <ContextMenuItem onClick={() => onDelete(entry)} variant="destructive">
+              <Trash2 /> {t('explorer.context.delete')}
             </ContextMenuItem>
-            {!isRoot ? (
-              <>
-                <ContextMenuSeparator />
-                <ContextMenuItem onClick={() => onRename(entry)}>
-                  <Pencil /> {t('explorer.context.rename')}
-                </ContextMenuItem>
-                <ContextMenuItem onClick={() => onDelete(entry)} variant="destructive">
-                  <Trash2 /> {t('explorer.context.delete')}
-                </ContextMenuItem>
-              </>
-            ) : null}
           </>
         ) : null}
       </ContextMenuContent>
@@ -1470,8 +1525,44 @@ function FolderRow({
   );
 }
 
+function FolderCreateMenuItems({
+  entry,
+  onCreate,
+}: {
+  entry: WorkspaceDirectoryEntry;
+  onCreate(parent: WorkspaceDirectoryEntry, kind: WorkspaceEntryKind, action?: CreateAction): void;
+}) {
+  const { t } = useI18n();
+  return (
+    <>
+      {editionCapabilities.newRmsScript ? (
+        <ContextMenuItem onClick={() => onCreate(entry, 'file')}>
+          <FilePlus2 /> {t('explorer.create.script')}
+        </ContextMenuItem>
+      ) : null}
+      {editionCapabilities.mapTests ? (
+        <ContextMenuItem onClick={() => onCreate(entry, 'file', 'map-test-v1')}>
+          <FileCode2 /> {t('explorer.create.map-test-script')}
+        </ContextMenuItem>
+      ) : null}
+      {definitionFilesAvailable(editionCapabilities) ? (
+        <ContextMenuItem onClick={() => onCreate(entry, 'file', 'definition-file')}>
+          <FileDigit /> {t('explorer.create.definition-file')}
+        </ContextMenuItem>
+      ) : null}
+      <ContextMenuItem onClick={() => onCreate(entry, 'file', 'xs-v1')}>
+        <FileCode2 /> {t('explorer.create.xs-script')}
+      </ContextMenuItem>
+      <ContextMenuItem onClick={() => onCreate(entry, 'folder')}>
+        <FolderPlus /> {t('explorer.create.folder')}
+      </ContextMenuItem>
+    </>
+  );
+}
+
 function FileRow({
   entry,
+  folder,
   selected,
   depth,
   hidden = false,
@@ -1482,6 +1573,7 @@ function FileRow({
   onDelete,
 }: {
   entry: WorkspaceDirectoryEntry;
+  folder: WorkspaceDirectoryEntry;
   selected: boolean;
   depth: number;
   hidden?: boolean;
@@ -1493,9 +1585,12 @@ function FileRow({
 }) {
   const { t } = useI18n();
   const searchState = useContext(ExplorerSearchContext);
+  const clipboard = useContext(ExplorerClipboardContext);
   const [contextOpen, setContextOpen] = useState(false);
   const key = pathKey(entry.path);
   const isTabStop = searchState.tabStopKey === null ? selected : searchState.tabStopKey === key;
+  const commandTarget: ExplorerRowTarget = { entry, isRoot: false, pasteTarget: folder };
+  const handleRowKeys = useExplorerRowKeys(commandTarget, { rename: onRename, delete: onDelete });
   const selectedFill =
     selected && (searchState.activeKey === null || searchState.activeKey === key);
   const row = (
@@ -1503,6 +1598,7 @@ function FileRow({
       className="explorer-row"
       data-active={searchState.activeKey === key || undefined}
       data-context-open={contextOpen || undefined}
+      data-cut={clipboard?.cutEntryId === entry.id || undefined}
       data-kind="file"
       data-match={match ? true : undefined}
       data-row-key={key}
@@ -1521,6 +1617,7 @@ function FileRow({
               className="explorer-entry"
               onClick={(event) => onOpen(event.detail === 2 ? 'second-click' : 'click')}
               onDoubleClick={() => onOpen('pin')}
+              onKeyDown={handleRowKeys}
               role="treeitem"
               style={{ paddingLeft: `${12 + depth * 14}px` }}
               tabIndex={isTabStop ? 0 : -1}
@@ -1538,17 +1635,22 @@ function FileRow({
       </Tooltip>
     </div>
   );
-  if (!entry.writable) return row;
   return (
     <ContextMenu onOpenChange={setContextOpen}>
       <ContextMenuTrigger render={row} />
       <ContextMenuContent className="explorer-context-menu">
-        <ContextMenuItem onClick={() => onRename(entry)}>
-          <Pencil /> {t('explorer.context.rename')}
-        </ContextMenuItem>
-        <ContextMenuItem onClick={() => onDelete(entry)} variant="destructive">
-          <Trash2 /> {t('explorer.context.delete')}
-        </ContextMenuItem>
+        <ExplorerClipboardMenuItems target={commandTarget} withPaste={false} />
+        {entry.writable ? (
+          <>
+            <ContextMenuSeparator />
+            <ContextMenuItem onClick={() => onRename(entry)}>
+              <Pencil /> {t('explorer.context.rename')}
+            </ContextMenuItem>
+            <ContextMenuItem onClick={() => onDelete(entry)} variant="destructive">
+              <Trash2 /> {t('explorer.context.delete')}
+            </ContextMenuItem>
+          </>
+        ) : null}
       </ContextMenuContent>
     </ContextMenu>
   );

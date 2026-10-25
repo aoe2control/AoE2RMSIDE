@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Le fichier de récupération est endommagé ou a été écrit par une autre version d’AoE2RMSIDE."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Un dossier ne peut pas être collé dans lui-même ni dans l’un de ses propres dossiers."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "Le dossier contient déjà un élément portant ce nom."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Collez au plus {limit, number, integer} éléments à la fois."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Les éléments contiennent plus de {entries, number, integer} fichiers et dossiers ou {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Les éléments sont ou contiennent un lien, une jonction ou un autre élément spécial."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "L’élément ne peut pas être déplacé vers un autre lecteur."
+    },
     "message.game-textures.cause": {
       "message": "L’aperçu et l’icône de la carte utilisent les couleurs des textures à la place."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Ouvrir un dossier"
     },
+    "explorer.switch-folder.label": {
+      "message": "Changer de dossier"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Changer de dossier"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Dossiers récents"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Aucun autre dossier récent"
+    },
     "explorer.tree.label": {
       "message": "Fichiers de {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Supprimer"
+    },
+    "explorer.context.copy": {
+      "message": "Copier"
+    },
+    "explorer.context.cut": {
+      "message": "Couper"
+    },
+    "explorer.context.paste": {
+      "message": "Coller"
     },
     "explorer.inline.create-file": {
       "message": "Créer un fichier"
@@ -3376,7 +3415,7 @@
       "message": "Fermer les paramètres MCP"
     },
     "mcp.dialog.description": {
-      "message": "Permettez aux applications d’IA de cet ordinateur de lire, modifier et vérifier les scripts du dossier ouvert, de générer des cartes et de lancer des tests de cartes."
+      "message": "Permettez aux applications d’IA de cet ordinateur de lire, modifier et vérifier les scripts du dossier ouvert et de vos dossiers récents, de générer des cartes et de lancer des tests de cartes."
     },
     "mcp.enable.label": {
       "message": "Activer MCP"
@@ -3487,10 +3526,10 @@
       "message": "Autoriser {app} à utiliser AoE2RMSIDE ?"
     },
     "mcp.pairing.description": {
-      "message": "Cette application pourrait modifier les scripts du dossier ouvert, générer des cartes, lancer des tests et déployer des mods. Connexion lancée par {program}."
+      "message": "Cette application pourrait modifier les scripts du dossier ouvert et de vos dossiers récents, générer des cartes, lancer des tests et déployer des mods. Connexion lancée par {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Cette application pourrait modifier les scripts du dossier ouvert, générer des cartes, lancer des tests et déployer des mods."
+      "message": "Cette application pourrait modifier les scripts du dossier ouvert et de vos dossiers récents, générer des cartes, lancer des tests et déployer des mods."
     },
     "mcp.pairing.name-note": {
       "message": "Ce nom, c’est l’application qui le donne : ne l’autorisez que si vous l’avez configurée. Remplacer un mod ou lancer un test en jeu demande toujours votre accord."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "a recherché {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "a listé les dossiers récents"
+    },
+    "mcp.action.open-folder": {
+      "message": "a ouvert le dossier {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "a demandé le dossier déjà ouvert"
+    },
     "mcp.action.tool": {
       "message": "a utilisé {tool}"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "Le fichier est introuvable."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Le dossier ne figure plus parmi les dossiers récents."
+    },
     "mcp.refusal.already-exists": {
       "message": "Le fichier existe déjà."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Une autre opération est en cours."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE était occupé par une exécution, une boîte de dialogue ou un autre dossier."
     },
     "mcp.refusal.map-expired": {
       "message": "La carte générée n’est plus conservée."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Pierre : {amount, number, integer} au total"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Afficher les auxiliaires ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "L’élément n’a pas pu être supprimé"
+    },
+    "workspace.failed.copy": {
+      "message": "L’élément n’a pas pu être copié"
+    },
+    "workspace.failed.cut": {
+      "message": "L’élément n’a pas pu être coupé"
+    },
+    "workspace.failed.paste": {
+      "message": "Rien n’a été collé"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} fichier a été laissé de côté, car l’Explorateur n’affiche pas son type de fichier} many {{count} fichiers ont été laissés de côté, car l’Explorateur n’affiche pas leur type de fichier} other {{count} fichiers ont été laissés de côté, car l’Explorateur n’affiche pas leur type de fichier}}"
     },
     "workspace.failed.restore-session": {
       "message": "La session précédente n’a pas pu être restaurée"

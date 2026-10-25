@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Файл восстановления повреждён или записан другой версией AoE2RMSIDE."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Папку нельзя вставить в неё саму или в одну из её собственных папок."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "В папке уже есть элемент с таким именем."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Вставляйте не более {limit, number, integer} элементов за раз."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Элементы содержат более {entries, number, integer} файлов и папок или более {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Элементы являются ссылкой, точкой соединения или другим особым элементом либо содержат их."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Элемент нельзя переместить на другой диск."
+    },
     "message.game-textures.cause": {
       "message": "В предпросмотре и на значке карты вместо них используются цвета текстур."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Открыть папку"
     },
+    "explorer.switch-folder.label": {
+      "message": "Сменить папку"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Сменить папку"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Недавно открытые папки"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Нет других недавно открытых папок"
+    },
     "explorer.tree.label": {
       "message": "Файлы папки {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Удалить"
+    },
+    "explorer.context.copy": {
+      "message": "Копировать"
+    },
+    "explorer.context.cut": {
+      "message": "Вырезать"
+    },
+    "explorer.context.paste": {
+      "message": "Вставить"
     },
     "explorer.inline.create-file": {
       "message": "Создать файл"
@@ -3376,7 +3415,7 @@
       "message": "Закрыть настройки MCP"
     },
     "mcp.dialog.description": {
-      "message": "Разрешите ИИ-приложениям на этом компьютере читать, изменять и проверять скрипты в открытой папке, создавать карты и запускать тесты карт."
+      "message": "Разрешите ИИ-приложениям на этом компьютере читать, изменять и проверять скрипты в открытой папке и в недавно открытых папках, создавать карты и запускать тесты карт."
     },
     "mcp.enable.label": {
       "message": "Включить MCP"
@@ -3487,10 +3526,10 @@
       "message": "Разрешить {app} использовать AoE2RMSIDE?"
     },
     "mcp.pairing.description": {
-      "message": "Приложение сможет изменять скрипты в открытой папке, создавать карты, запускать тесты и развёртывать моды. Запущено программой {program}."
+      "message": "Приложение сможет изменять скрипты в открытой папке и в недавно открытых папках, создавать карты, запускать тесты и развёртывать моды. Запущено программой {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Приложение сможет изменять скрипты в открытой папке, создавать карты, запускать тесты и развёртывать моды."
+      "message": "Приложение сможет изменять скрипты в открытой папке и в недавно открытых папках, создавать карты, запускать тесты и развёртывать моды."
     },
     "mcp.pairing.name-note": {
       "message": "Это имя приложение называет само: разрешайте, только если настроили его вы. Замена мода и тест в игре всё равно потребуют вашего согласия."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "открыта справка по {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "получен список недавно открытых папок"
+    },
+    "mcp.action.open-folder": {
+      "message": "открыта папка {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "запрошена папка, которая уже открыта"
+    },
     "mcp.action.tool": {
       "message": "использован {tool}"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "Файл не найден."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Этой папки больше нет среди недавно открытых."
+    },
     "mcp.refusal.already-exists": {
       "message": "Файл уже существует."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Уже выполняется другая задача."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE был занят запуском, диалоговым окном или другой папкой."
     },
     "mcp.refusal.map-expired": {
       "message": "Созданная карта больше не хранится."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Камень: всего {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Показать служебные объекты ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Не удалось удалить элемент"
+    },
+    "workspace.failed.copy": {
+      "message": "Не удалось скопировать элемент"
+    },
+    "workspace.failed.cut": {
+      "message": "Не удалось вырезать элемент"
+    },
+    "workspace.failed.paste": {
+      "message": "Ничего не вставлено"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} файл пропущен, так как проводник не показывает его тип файла} few {{count} файла пропущены, так как проводник не показывает их тип файла} many {{count} файлов пропущено, так как проводник не показывает их тип файла} other {{count} файла пропущено, так как проводник не показывает их тип файла}}"
     },
     "workspace.failed.restore-session": {
       "message": "Не удалось восстановить прошлый сеанс"

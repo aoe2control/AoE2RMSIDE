@@ -183,7 +183,7 @@ export class MapTestClient {
       createEnvelope(`map-test-handshake-${randomUUID()}`, {
         case: 'handshakeRequest',
         value: create(HandshakeRequestSchema, {
-          protocolVersion: create(ArtifactVersionSchema, { major: 2, minor: 25, patch: 0 }),
+          protocolVersion: create(ArtifactVersionSchema, { major: 2, minor: 27, patch: 0 }),
           supportedProtocol: create(CompatibilityRangeSchema, {
             minimumMajor: 2,
             maximumMajor: 2,

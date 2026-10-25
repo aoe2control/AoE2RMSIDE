@@ -31,6 +31,8 @@ export const connectorToolNames = [
   'live_test',
   'read_guide',
   'lookup_reference',
+  'list_folders',
+  'open_folder',
 ] as const;
 export type ConnectorToolName = (typeof connectorToolNames)[number];
 
@@ -180,6 +182,7 @@ export const connectorRendererRequestKinds = [
   'pictureView',
   'pictureInput',
   'pictureTextures',
+  'switchFolder',
 ] as const;
 export type ConnectorRendererRequestKind = (typeof connectorRendererRequestKinds)[number];
 

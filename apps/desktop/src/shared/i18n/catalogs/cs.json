@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Soubor pro obnovení je poškozený nebo ho zapsalo jiné vydání AoE2RMSIDE."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Složku nelze vložit do ní samotné ani do některé z jejích vlastních složek."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "Složka již obsahuje položku s tímto názvem."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Vkládejte najednou nejvýše {limit, number, integer} položek."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Položky obsahují více než {entries, number, integer} souborů a složek nebo {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Položky jsou nebo obsahují odkaz, spojení adresářů nebo jinou zvláštní položku."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Položku nelze přesunout na jinou jednotku."
+    },
     "message.game-textures.cause": {
       "message": "Náhled a ikona mapy místo toho zobrazují barvy textur."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Otevřít složku"
     },
+    "explorer.switch-folder.label": {
+      "message": "Přepnout složku"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Přepnout složku"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Nedávné složky"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Žádné další nedávné složky"
+    },
     "explorer.tree.label": {
       "message": "Soubory složky {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Smazat"
+    },
+    "explorer.context.copy": {
+      "message": "Kopírovat"
+    },
+    "explorer.context.cut": {
+      "message": "Vyjmout"
+    },
+    "explorer.context.paste": {
+      "message": "Vložit"
     },
     "explorer.inline.create-file": {
       "message": "Vytvořit soubor"
@@ -3376,7 +3415,7 @@
       "message": "Zavřít nastavení MCP"
     },
     "mcp.dialog.description": {
-      "message": "Umožněte aplikacím AI v tomto počítači číst, upravovat a kontrolovat skripty v otevřené složce, generovat mapy a spouštět testy map."
+      "message": "Umožněte aplikacím AI v tomto počítači číst, upravovat a kontrolovat skripty v otevřené složce a ve vašich nedávných složkách, generovat mapy a spouštět testy map."
     },
     "mcp.enable.label": {
       "message": "Povolit MCP"
@@ -3487,10 +3526,10 @@
       "message": "Povolit aplikaci {app} používat AoE2RMSIDE?"
     },
     "mcp.pairing.description": {
-      "message": "Aplikace by mohla upravovat skripty v otevřené složce, generovat mapy, spouštět testy a nasazovat mody. Spuštěno programem {program}."
+      "message": "Aplikace by mohla upravovat skripty v otevřené složce a ve vašich nedávných složkách, generovat mapy, spouštět testy a nasazovat mody. Spuštěno programem {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Aplikace by mohla upravovat skripty v otevřené složce, generovat mapy, spouštět testy a nasazovat mody."
+      "message": "Aplikace by mohla upravovat skripty v otevřené složce a ve vašich nedávných složkách, generovat mapy, spouštět testy a nasazovat mody."
     },
     "mcp.pairing.name-note": {
       "message": "Tento název si aplikace dává sama: povolte ji, jen pokud jste ji nastavili vy. Nahrazení modu a test ve hře budou i nadále vyžadovat váš souhlas."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "vyhledána dokumentace k {name}"
     },
+    "mcp.action.list-folders": {
+      "message": "vypsány nedávné složky"
+    },
+    "mcp.action.open-folder": {
+      "message": "otevřena složka {name}"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "vyžádána složka, která už je otevřená"
+    },
     "mcp.action.tool": {
       "message": "použit nástroj {tool}"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "Soubor nebyl nalezen."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Složka již není mezi nedávnými složkami."
+    },
     "mcp.refusal.already-exists": {
       "message": "Soubor již existuje."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Právě běží něco jiného."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE byl zaneprázdněn spuštěním, dialogovým oknem nebo jinou složkou."
     },
     "mcp.refusal.map-expired": {
       "message": "Vygenerovaná mapa už není uchována."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Kámen: celkem {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Zobrazit pomocné objekty ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Položku se nepodařilo smazat"
+    },
+    "workspace.failed.copy": {
+      "message": "Položku se nepodařilo zkopírovat"
+    },
+    "workspace.failed.cut": {
+      "message": "Položku se nepodařilo vyjmout"
+    },
+    "workspace.failed.paste": {
+      "message": "Nic nebylo vloženo"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} soubor byl vynechán, protože Průzkumník nezobrazuje jeho typ souboru} few {{count} soubory byly vynechány, protože Průzkumník nezobrazuje jejich typ souboru} many {{count} souboru bylo vynecháno, protože Průzkumník nezobrazuje jejich typ souboru} other {{count} souborů bylo vynecháno, protože Průzkumník nezobrazuje jejich typ souboru}}"
     },
     "workspace.failed.restore-session": {
       "message": "Předchozí relaci se nepodařilo obnovit"

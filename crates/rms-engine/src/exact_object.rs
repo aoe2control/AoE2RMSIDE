@@ -362,6 +362,8 @@ pub struct ExactObjectState {
     runtime_attributes: std::sync::Arc<ObjectRuntimeAttributes>,
     restriction_zones: ExactRestrictionZones,
     post_rms_next_instance_id: u32,
+    scripted_next_instance_id: u32,
+    game_setup_objects: Vec<GameSetupObject>,
     post_rms_objects: Vec<PlacedObject>,
     post_rms_positions: BTreeMap<usize, [u32; 2]>,
     automatic_technologies: Option<AutomaticTechnologyState>,
@@ -392,7 +394,7 @@ impl ExactObjectState {
         &self.module_exit_pieces
     }
 
-    pub fn standing_appearance_objects(&self) -> Vec<(ObjectId, [u32; 2])> {
+    pub fn standing_appearance_objects(&self) -> Vec<(u32, ObjectId, [u32; 2])> {
         let prelude_end = u32::try_from(self.terrain_appearances.objects.len())
             .ok()
             .and_then(|count| self.module_entry_next_instance_id.checked_add(count))
@@ -409,8 +411,51 @@ impl ExactObjectState {
             .filter(|(identity, object)| {
                 object.owner == 0 && object.lifecycle < 7 && !pieces.contains(identity)
             })
-            .map(|(_, object)| (object.object_id, object.position_bits))
+            .map(|(identity, object)| (identity, object.object_id, object.position_bits))
             .collect()
+    }
+
+    pub fn world_roster(&self) -> WorldRoster {
+        let roster = &self.restriction_zones.objects;
+        let refresh_end = u32::try_from(self.terrain_appearances.objects.len())
+            .ok()
+            .and_then(|count| self.module_entry_next_instance_id.checked_add(count))
+            .unwrap_or(u32::MAX);
+        WorldRoster {
+            objects: roster
+                .objects_from(0)
+                .map(|(instance_id, object)| WorldRosterObject {
+                    instance_id,
+                    object_id: object.object_id,
+                    owner: object.owner,
+                    lifecycle: object.lifecycle,
+                    position_f32_bits: object.position_bits,
+                })
+                .collect(),
+            destroyed_instance_ids: roster.destroyed_identities().collect(),
+            game_setup_objects: self.game_setup_objects.clone(),
+            cursors: WorldRosterCursors {
+                land_appearances_end: u32::try_from(self.module_entry_appearances.len())
+                    .unwrap_or(u32::MAX),
+                object_module_entry: self.module_entry_next_instance_id,
+                terrain_appearance_refresh_end: refresh_end,
+                scripted_objects_end: self.scripted_next_instance_id,
+                post_rms_next_instance_id: self
+                    .game_setup_objects
+                    .first()
+                    .map_or(self.post_rms_next_instance_id, |object| object.instance_id),
+                game_setup_objects_end: self.post_rms_next_instance_id,
+                roster_next_instance_id: roster.next_identity(),
+            },
+        }
+    }
+
+    pub fn instance_ids_follow_native_counter(&self) -> bool {
+        self.restriction_zones.objects.second_counter_births() == 0
+    }
+
+    pub fn game_setup_objects(&self) -> &[GameSetupObject] {
+        &self.game_setup_objects
     }
 
     pub fn scripted_construction_position_f32_bits(&self, index: usize) -> Option<[u32; 2]> {
@@ -1106,7 +1151,8 @@ impl FoundationMap<'_> {
             .runtime_attributes
             .definition(object.object_id, object.owner, self.content)
             .ok_or_else(|| missing_object_definition(object.object_id))?;
-        std::sync::Arc::make_mut(&mut self.restriction_zones.objects).birth_on_terrain(
+        let roster = std::sync::Arc::make_mut(&mut self.restriction_zones.objects);
+        roster.birth_on_terrain(
             object.instance_id,
             object.object_id,
             object.owner,
@@ -1120,6 +1166,12 @@ impl FoundationMap<'_> {
             definition.position_family,
             Some(self.terrain),
         )?;
+        if definition
+            .constructor_type
+            .is_some_and(|kind| DESCENDING_IDENTITY_CONSTRUCTOR_TYPES.contains(&kind))
+        {
+            roster.note_second_counter_birth();
+        }
         self.next_instance_id = self
             .next_instance_id
             .checked_add(1)
@@ -1816,6 +1868,8 @@ pub(crate) fn resolve_exact_object_state_with_substages(
         runtime_attributes,
         restriction_zones,
         post_rms_next_instance_id,
+        scripted_next_instance_id: post_rms_next_instance_id,
+        game_setup_objects: Vec::new(),
         post_rms_objects: Vec::new(),
         post_rms_positions: BTreeMap::new(),
         automatic_technologies,
@@ -1844,6 +1898,87 @@ pub(crate) fn native_identity_order(
         .collect::<Vec<_>>();
     order.extend((0..objects.len()).filter(|&index| !descending(&objects[index])));
     Some(order)
+}
+
+const ALLY_FLARE_TOWN_CENTER_OBJECT_ID: ObjectId = ObjectId(109);
+const ALLY_FLARE_OBJECT_ID: ObjectId = ObjectId(332);
+const CAPTURE_THE_RELIC_RELIC_OBJECT_ID: ObjectId = ObjectId(285);
+
+pub(super) fn reserve_game_setup_identities(
+    state: &mut ExactObjectState,
+    setup: &ExactSetupState,
+    content: CompatibleContentView<'_>,
+) -> Result<(), GenerationError> {
+    let mut players = setup.players.iter().collect::<Vec<_>>();
+    players.sort_by_key(|player| player.slot);
+    let allied = |left: &ExactSetupPlayer, right: &ExactSetupPlayer| {
+        left.slot == right.slot || (left.team != 0 && left.team == right.team)
+    };
+    let town_center = |player: &ExactSetupPlayer| -> Option<[u32; 2]> {
+        let master =
+            content.substituted_object(player.civilization_id, ALLY_FLARE_TOWN_CENTER_OBJECT_ID);
+        let scripted = state.objects.iter().enumerate().map(|(index, object)| {
+            (
+                object,
+                construction_position(index, object, &state.scripted_position_overrides),
+            )
+        });
+        let starts = state
+            .post_rms_objects
+            .iter()
+            .enumerate()
+            .map(|(index, object)| {
+                (
+                    object,
+                    construction_position(index, object, &state.post_rms_positions),
+                )
+            });
+        scripted
+            .chain(starts)
+            .filter(|(object, _)| object.owner == player.slot && object.object_id == master)
+            .min_by_key(|(object, _)| object.instance_id)
+            .map(|(_, position)| position.map(f32::to_bits))
+    };
+    let town_centers = players
+        .iter()
+        .map(|player| town_center(player))
+        .collect::<Vec<_>>();
+    let mut next = state.post_rms_next_instance_id;
+    let mut reserved = Vec::new();
+    let mut reserve = |object_id: ObjectId, owner: u8, position_f32_bits: [u32; 2]| {
+        let instance_id = next;
+        next = next
+            .checked_add(1)
+            .ok_or_else(|| invalid_object("game setup identity exceeds u32"))?;
+        reserved.push(GameSetupObject {
+            instance_id,
+            object_id,
+            owner,
+            position_f32_bits,
+        });
+        Ok::<_, GenerationError>(())
+    };
+    for owner in &players {
+        for (ally, town_center) in players.iter().zip(&town_centers) {
+            if let (true, Some(position)) = (allied(owner, ally), town_center) {
+                reserve(ALLY_FLARE_OBJECT_ID, owner.slot, *position)?;
+            }
+        }
+    }
+    if setup.game_mode == GameMode::CaptureTheRelic {
+        let centre = |extent: u16| (f32::from(extent / 2) + 0.5).to_bits();
+        reserve(
+            CAPTURE_THE_RELIC_RELIC_OBJECT_ID,
+            0,
+            [
+                centre(state.dimensions.width),
+                centre(state.dimensions.height),
+            ],
+        )?;
+    }
+    state.post_rms_next_instance_id = next;
+    state.game_setup_objects = reserved;
+    Ok(())
 }
 
 #[allow(clippy::too_many_arguments)]

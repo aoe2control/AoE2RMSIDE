@@ -449,6 +449,8 @@ impl GenerationBackend for SyntheticGenerationBackend {
             player_starts: Vec::new(),
             placement_records: Vec::new(),
             omitted_placement_records: 0,
+            world_roster: None,
+            object_instance_identities: rms_engine::ObjectInstanceIdentities::NotModelled,
         };
         map.finalize_semantic_hash()?;
         map.validate()?;

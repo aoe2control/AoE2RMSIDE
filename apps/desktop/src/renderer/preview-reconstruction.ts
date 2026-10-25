@@ -226,8 +226,26 @@ export function reconstructedPreviewResult(
   const connectionOperationIndices = new Uint32Array(
     state.connections.map((value) => value.provenanceOperationIndex),
   );
+  const objects = encodeObjects(state.objects, template.objects);
+  const {
+    cliffPieceInstanceIdsLe: _cliffPieceIds,
+    appearanceInstanceIdsLe: _appearanceIds,
+    ...shared
+  } = template;
+  const presentationIds =
+    objects.instanceIdsLe === undefined
+      ? {}
+      : {
+          ...(template.cliffPieceInstanceIdsLe
+            ? { cliffPieceInstanceIdsLe: Uint8Array.from(template.cliffPieceInstanceIdsLe) }
+            : {}),
+          ...(template.appearanceInstanceIdsLe
+            ? { appearanceInstanceIdsLe: Uint8Array.from(template.appearanceInstanceIdsLe) }
+            : {}),
+        };
   return {
-    ...template,
+    ...shared,
+    ...presentationIds,
     width: state.width,
     height: state.height,
     terrainIdsLe: state.terrainIdsLe,
@@ -237,7 +255,7 @@ export function reconstructedPreviewResult(
     layerIdsLe: state.layerIdsLe,
     flagsLe: state.flagsLe,
     cliffEdges: encodeCliffs(state.cliffs),
-    objects: encodeObjects(state.objects, template.objects),
+    objects,
     connections: encodeConnections(state.connections),
     sourceIds,
     tileSourceIndicesLe: bytesOf(tileSourceIndices),
@@ -650,6 +668,9 @@ function encodeObjects(
     behaviorFlagsLe: preservesTemplateDetails
       ? Uint8Array.from(template.behaviorFlagsLe)
       : new Uint8Array(values.length * 2),
+    ...(preservesTemplateDetails && template.instanceIdsLe
+      ? { instanceIdsLe: Uint8Array.from(template.instanceIdsLe) }
+      : {}),
   };
 }
 

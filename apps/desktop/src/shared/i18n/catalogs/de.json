@@ -2292,6 +2292,24 @@
     "message.files.recovery-invalid.cause": {
       "message": "Die Wiederherstellungsdatei ist beschädigt oder stammt von einer anderen AoE2RMSIDE-Version."
     },
+    "message.files.paste-into-itself.cause": {
+      "message": "Ein Ordner kann nicht in sich selbst oder in einen seiner eigenen Ordner eingefügt werden."
+    },
+    "message.files.paste-name-taken.cause": {
+      "message": "Der Ordner enthält bereits ein Element mit diesem Namen."
+    },
+    "message.files.paste-too-many.cause": {
+      "message": "Füge höchstens {limit, number, integer} Elemente auf einmal ein."
+    },
+    "message.files.copy-limit.cause": {
+      "message": "Die Elemente enthalten mehr als {entries, number, integer} Dateien und Ordner oder {megabytes, number, integer} MiB."
+    },
+    "message.files.copy-link.cause": {
+      "message": "Die Elemente sind oder enthalten einen Link, eine Verzeichnisverbindung oder ein anderes besonderes Element."
+    },
+    "message.files.move-other-drive.cause": {
+      "message": "Das Element kann nicht auf ein anderes Laufwerk verschoben werden."
+    },
     "message.game-textures.cause": {
       "message": "Die Vorschau und das Kartensymbol zeigen stattdessen Texturfarben."
     },
@@ -2496,6 +2514,18 @@
     "explorer.open-folder.tooltip": {
       "message": "Ordner öffnen"
     },
+    "explorer.switch-folder.label": {
+      "message": "Ordner wechseln"
+    },
+    "explorer.switch-folder.tooltip": {
+      "message": "Ordner wechseln"
+    },
+    "explorer.switch-folder.recent": {
+      "message": "Zuletzt geöffnete Ordner"
+    },
+    "explorer.switch-folder.empty": {
+      "message": "Keine anderen zuletzt geöffneten Ordner"
+    },
     "explorer.tree.label": {
       "message": "Dateien in {name}"
     },
@@ -2528,6 +2558,15 @@
     },
     "explorer.context.delete": {
       "message": "Löschen"
+    },
+    "explorer.context.copy": {
+      "message": "Kopieren"
+    },
+    "explorer.context.cut": {
+      "message": "Ausschneiden"
+    },
+    "explorer.context.paste": {
+      "message": "Einfügen"
     },
     "explorer.inline.create-file": {
       "message": "Datei erstellen"
@@ -3376,7 +3415,7 @@
       "message": "MCP-Einstellungen schließen"
     },
     "mcp.dialog.description": {
-      "message": "Erlaube KI-Apps auf diesem Computer, Skripte im geöffneten Ordner zu lesen, zu bearbeiten und zu prüfen, Karten zu erzeugen und Kartentests auszuführen."
+      "message": "Erlaube KI-Apps auf diesem Computer, Skripte im geöffneten Ordner und in deinen zuletzt geöffneten Ordnern zu lesen, zu bearbeiten und zu prüfen, Karten zu erzeugen und Kartentests auszuführen."
     },
     "mcp.enable.label": {
       "message": "MCP aktivieren"
@@ -3487,10 +3526,10 @@
       "message": "{app} erlauben, AoE2RMSIDE zu verwenden?"
     },
     "mcp.pairing.description": {
-      "message": "Die App könnte Skripte im geöffneten Ordner bearbeiten, Karten erzeugen, Tests ausführen und Mods bereitstellen. Gestartet von {program}."
+      "message": "Die App könnte Skripte im geöffneten Ordner und in deinen zuletzt geöffneten Ordnern bearbeiten, Karten erzeugen, Tests ausführen und Mods bereitstellen. Gestartet von {program}."
     },
     "mcp.pairing.description.no-program": {
-      "message": "Die App könnte Skripte im geöffneten Ordner bearbeiten, Karten erzeugen, Tests ausführen und Mods bereitstellen."
+      "message": "Die App könnte Skripte im geöffneten Ordner und in deinen zuletzt geöffneten Ordnern bearbeiten, Karten erzeugen, Tests ausführen und Mods bereitstellen."
     },
     "mcp.pairing.name-note": {
       "message": "Diesen Namen gibt sich die App selbst: Erlaube sie nur, wenn du sie eingerichtet hast. Vor dem Ersetzen einer Mod oder einem Live-Test wirst du weiterhin gefragt."
@@ -3627,6 +3666,15 @@
     "mcp.action.reference": {
       "message": "{name} nachgeschlagen"
     },
+    "mcp.action.list-folders": {
+      "message": "zuletzt geöffnete Ordner aufgelistet"
+    },
+    "mcp.action.open-folder": {
+      "message": "Ordner {name} geöffnet"
+    },
+    "mcp.action.open-folder-open": {
+      "message": "den bereits geöffneten Ordner angefordert"
+    },
     "mcp.action.tool": {
       "message": "{tool} verwendet"
     },
@@ -3651,6 +3699,9 @@
     "mcp.refusal.not-found": {
       "message": "Die Datei wurde nicht gefunden."
     },
+    "mcp.refusal.folder-gone": {
+      "message": "Der Ordner ist nicht mehr unter den zuletzt geöffneten Ordnern."
+    },
     "mcp.refusal.already-exists": {
       "message": "Die Datei existiert bereits."
     },
@@ -3668,6 +3719,9 @@
     },
     "mcp.refusal.busy": {
       "message": "Gerade läuft etwas anderes."
+    },
+    "mcp.refusal.folder-busy": {
+      "message": "AoE2RMSIDE war mit einer Ausführung, einem Dialog oder einem anderen Ordner beschäftigt."
     },
     "mcp.refusal.map-expired": {
       "message": "Die erzeugte Karte wird nicht mehr aufbewahrt."
@@ -4689,6 +4743,12 @@
     "preview-panel.legend.resource-total.stone": {
       "message": "Steine: insgesamt {amount, number, integer}"
     },
+    "preview-panel.legend.instance-id.one": {
+      "message": "ID {id}"
+    },
+    "preview-panel.legend.instance-id.range": {
+      "message": "ID {low}-{high}"
+    },
     "preview-panel.legend.helpers.show": {
       "message": "Hilfsobjekte anzeigen ({count})"
     },
@@ -5630,6 +5690,18 @@
     },
     "workspace.failed.delete": {
       "message": "Das Element konnte nicht gelöscht werden"
+    },
+    "workspace.failed.copy": {
+      "message": "Das Element konnte nicht kopiert werden"
+    },
+    "workspace.failed.cut": {
+      "message": "Das Element konnte nicht ausgeschnitten werden"
+    },
+    "workspace.failed.paste": {
+      "message": "Es wurde nichts eingefügt"
+    },
+    "workspace.paste.skipped": {
+      "message": "{count, plural, one {{count} Datei wurde ausgelassen, weil der Explorer ihren Dateityp nicht auflistet} other {{count} Dateien wurden ausgelassen, weil der Explorer ihren Dateityp nicht auflistet}}"
     },
     "workspace.failed.restore-session": {
       "message": "Die vorherige Sitzung konnte nicht wiederhergestellt werden"

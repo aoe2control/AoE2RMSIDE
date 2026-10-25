@@ -275,3 +275,33 @@ export function validateConnectorEditorStateReply(value: unknown): ConnectorEdit
     }),
   };
 }
+
+export const connectorFolderIdPattern = /^[0-9a-f]{32}$/u;
+
+export interface ConnectorSwitchFolderRequest {
+  id: string;
+}
+
+export type ConnectorSwitchFolderOutcome = 'switched' | 'gone';
+
+export interface ConnectorSwitchFolderReply {
+  outcome: ConnectorSwitchFolderOutcome;
+}
+
+export function validateConnectorSwitchFolderRequest(value: unknown): ConnectorSwitchFolderRequest {
+  const request = record(value, 'switch folder request');
+  knownKeys(request, ['id'], 'switch folder request');
+  if (typeof request.id !== 'string' || !connectorFolderIdPattern.test(request.id)) {
+    throw new Error('switch folder request id is malformed');
+  }
+  return { id: request.id };
+}
+
+export function validateConnectorSwitchFolderReply(value: unknown): ConnectorSwitchFolderReply {
+  const reply = record(value, 'switch folder reply');
+  knownKeys(reply, ['outcome'], 'switch folder reply');
+  if (reply.outcome !== 'switched' && reply.outcome !== 'gone') {
+    throw new Error('switch folder reply outcome is unknown');
+  }
+  return { outcome: reply.outcome };
+}

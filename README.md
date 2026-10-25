@@ -49,9 +49,9 @@ it and uses its errors, completion and hover alongside its own. See
 ## Works with AI apps
 
 AI apps on your computer can use AoE2RMSIDE through MCP: read and edit the
-scripts in your open folder, generate maps and look at pictures of them, run
-map tests and the quality check, deploy maps when you ask, and start live
-tests after you allow them. Their edits stay unsaved until you save them. MCP
+scripts in your open folder, switch to your recent folders, generate maps
+and look at pictures of them, run map tests and the quality check, deploy
+maps when you ask, and start live tests after you allow them. Their edits stay unsaved until you save them. MCP
 is off until you turn on **Enable MCP** under **View → MCP…**, and you allow
 each app once. The scripts, results and map pictures an app asks for go to
 that app, and from there to its provider; AoE2RMSIDE itself sends nothing

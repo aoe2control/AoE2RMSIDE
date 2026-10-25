@@ -26,7 +26,7 @@ import {
   type SaveDialogOptions,
 } from 'electron';
 import { dialogDirectory, type DialogPurpose } from './dialog-location';
-import { withNativeDialog } from './native-dialog';
+import { nativeDialogOpen, withNativeDialog } from './native-dialog';
 import {
   applicationMenuModel,
   findApplicationMenuItem,
@@ -48,6 +48,8 @@ import {
   type DesktopSession,
   type DevelopmentFixtureDescriptor,
   type DevelopmentFixtureRequest,
+  type ExplorerClipboardWriteRequest,
+  type ExplorerPasteRequest,
   type ExternalLinkTarget,
   type LanguageContentSelection,
   type LanguageServerNotificationMethod,
@@ -73,6 +75,7 @@ import {
   type WorkspaceExternalChange,
   type WorkspaceCreateRequest,
   type WorkspaceDeleteRequest,
+  type WorkspacePathChange,
   type WorkspaceRenameRequest,
   type WorkspaceSaveAsRequest,
   type WorkspaceSaveRequest,
@@ -185,6 +188,7 @@ import {
   validateRecoverySnapshot,
 } from './workspace-service';
 import { FileTooLargeError, readFileBounded } from './bounded-file';
+import { ExplorerClipboard, electronExplorerClipboardHost } from './explorer-clipboard';
 import { OwnSnippetStore, type OwnSnippetStoreReset } from './own-snippet-store';
 import { AppTourStore } from './app-tour-store';
 import { doneTourProgress, initialTourProgress, validateTourProgress } from '../shared/app-tour';
@@ -322,6 +326,7 @@ import { LatestValuePublisher } from './latest-value-publisher';
 import { bundledConnectorCatalog } from './connector/catalog';
 import { ConnectorService } from './connector/connector-service';
 import { connectorSetupFor, registerConnectorIpc } from './connector/ipc';
+import { registerFolderTools } from './connector/tools/folder-tools';
 import { registerGuideTools } from './connector/tools/guide-tools';
 import { ConnectorDiagnosticsStore } from './connector/diagnostics-store';
 import { registerWorkspaceTools } from './connector/tools/workspace-tools';
@@ -480,6 +485,28 @@ function registerAppRunTools(service: ConnectorService, userDataPath: string): v
     source,
     pictureMap: pictureMapFromPreviewResult,
     now: () => Date.now(),
+  });
+}
+
+function registerAppFolderTools(service: ConnectorService, workspace: WorkspaceService): void {
+  let catalog: ReturnType<typeof bundledConnectorCatalog>;
+  try {
+    catalog = bundledConnectorCatalog();
+  } catch {
+    return;
+  }
+  registerFolderTools(service.registry, {
+    folders: () => workspace.switchFolders(),
+    root: () => workspace.workspaceRoot(),
+    isProtected: (path) => workspace.isProtectedPath(path),
+    lane: new AppLane(executionLease, catalog.limits.busyWaitSeconds * 1000),
+    userBusy: () =>
+      modalSurfaceOpen || nativeDialogOpen()
+        ? 'dialog'
+        : workspace.folderActivationPending()
+          ? 'opening'
+          : null,
+    bridge: service.bridge,
   });
 }
 
@@ -1158,6 +1185,7 @@ async function createApplication(): Promise<void> {
         gameFolderLinked: () => gameFolderLinked,
       });
     }
+    if (toolWorkspace) registerAppFolderTools(connectorService, toolWorkspace);
     registerAppRunTools(connectorService, userDataPath);
     registerAppGameTools(connectorService, workspaceTools?.addStatusPart, async () => {
       const status = await controlLauncherPreference.status().catch(() => null);
@@ -4851,6 +4879,16 @@ function registerIpc(
     await refreshRecentApplicationMenu();
     return opened;
   });
+  ipcMain.handle(ipcChannels.workspaceSwitchFolders, (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    return workspaceService.switchFolders();
+  });
+  ipcMain.handle(ipcChannels.workspaceSwitchFolder, async (event, id: string) => {
+    assertTrustedSender(event.senderFrame?.url);
+    const outcome = await workspaceService.switchToFolder(id);
+    await refreshRecentApplicationMenu();
+    return outcome;
+  });
   ipcMain.handle(ipcChannels.shellOpenTake, async (event): Promise<ShellOpenTakeResult | null> => {
     assertTrustedSender(event.senderFrame?.url);
     assertMainWindowSender(event.sender);
@@ -4911,25 +4949,45 @@ function registerIpc(
     assertTrustedSender(event.senderFrame?.url);
     return workspaceService.createEntry(request);
   });
+  const remapPersistedPaths = async (changes: WorkspacePathChange[]) => {
+    await sessionStore.remapPaths(changes);
+    try {
+      await recoveryStore.remapPaths(changes);
+    } catch (error) {
+      await sessionStore.remapPaths(
+        changes.map((change) => ({
+          oldId: change.newId,
+          newId: change.oldId,
+          oldPath: change.newPath,
+          newPath: change.oldPath,
+          newUri: pathToFileURL(change.oldPath).href,
+        })),
+      );
+      throw error;
+    }
+  };
   ipcMain.handle(ipcChannels.workspaceRename, (event, request: WorkspaceRenameRequest) => {
     assertTrustedSender(event.senderFrame?.url);
-    return workspaceService.renameEntry(request, async (changes) => {
-      await sessionStore.remapPaths(changes);
-      try {
-        await recoveryStore.remapPaths(changes);
-      } catch (error) {
-        await sessionStore.remapPaths(
-          changes.map((change) => ({
-            oldId: change.newId,
-            newId: change.oldId,
-            oldPath: change.newPath,
-            newPath: change.oldPath,
-            newUri: pathToFileURL(change.oldPath).href,
-          })),
-        );
-        throw error;
-      }
-    });
+    return workspaceService.renameEntry(request, remapPersistedPaths);
+  });
+  const explorerClipboard = new ExplorerClipboard(
+    workspaceService,
+    electronExplorerClipboardHost(clipboard, ClipboardItem),
+  );
+  ipcMain.handle(ipcChannels.workspaceClipboardWrite, (event, request: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return explorerClipboard.write(request as ExplorerClipboardWriteRequest);
+  });
+  ipcMain.handle(ipcChannels.workspaceClipboardState, (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return explorerClipboard.currentState();
+  });
+  ipcMain.handle(ipcChannels.workspacePaste, (event, request: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    return explorerClipboard.paste(request as ExplorerPasteRequest, remapPersistedPaths);
   });
   ipcMain.handle(ipcChannels.workspaceDelete, (event, request: WorkspaceDeleteRequest) => {
     assertTrustedSender(event.senderFrame?.url);

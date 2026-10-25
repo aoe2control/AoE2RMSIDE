@@ -67,8 +67,9 @@ affected.
   the AoE2RMSIDE installation it belongs to. Each AI app is allowed once in
   a prompt; the name it shows is the name the app gives itself, so allowing
   an app is consent, not protection against other programs running as the
-  same user. Allowed apps work only in the open folder; replacing a mod they
-  did not deploy and starting a live test ask the user first.
+  same user. Allowed apps work only in the open folder and can switch it to
+  one of the user's recent folders, never to a game or mod folder; replacing
+  a mod they did not deploy and starting a live test ask the user first.
 - The application has no telemetry and no automatic crash upload. Logs stay
   on the user's computer unless the user chooses to share them.
 - At startup the main process makes one request to GitHub to check for a
