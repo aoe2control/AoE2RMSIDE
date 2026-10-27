@@ -980,6 +980,10 @@ impl Server {
         }
     }
 
+    pub(crate) fn constant_kind(&self, name: &str) -> Option<ConstantKind> {
+        self.content_identities()?.kind_of(name)
+    }
+
     fn content_identities(&self) -> Option<&'static ContentIdentities> {
         let identities = packaged_identities();
         match self.editor_selection() {

@@ -515,6 +515,9 @@
     "output.constructs.go-to": {
       "message": "Pergi ke penggunaan pertama"
     },
+    "output.row.go-to": {
+      "message": "Pergi ke {location}"
+    },
     "output.xs-start.summary": {
       "message": "Semakan permulaan XS: {files, list} menjalankan main() dan {rules, plural, other {# peraturan}} ({steps, plural, other {# langkah}})"
     },
@@ -3007,6 +3010,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Permainan boleh ranap di sini"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Bukan rupa bumi"
     },
     "map-icon.generate": {
       "message": "Jana ikon peta"

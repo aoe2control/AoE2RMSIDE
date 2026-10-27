@@ -16,13 +16,14 @@ import {
   type PreviewProvenanceOperation,
 } from '../shared/api';
 import { englishTranslator } from '../shared/i18n/translator';
-import { outputPartWording, rewordOutputMessage } from '../shared/message-catalog';
+import { documentName, outputPartWording, rewordOutputMessage } from '../shared/message-catalog';
 import {
   outputSourceLabel,
   sentence,
   type OutputMessage,
   type OutputSeverity,
 } from '../shared/output-message';
+import { refusalOperation } from '../shared/refusal-location';
 import {
   filterOutputEntries,
   formatOutputTime,
@@ -80,7 +81,11 @@ export const OutputPanel = memo(function OutputPanel({
         ) : (
           entries.map((entry) =>
             entry.kind === 'row' ? (
-              <OutputRowView key={`row-${entry.row.id}`} row={entry.row} />
+              <OutputRowView
+                key={`row-${entry.row.id}`}
+                onNavigateOperation={onNavigateOperation}
+                row={entry.row}
+              />
             ) : (
               <OutputGroupView
                 group={entry}
@@ -246,20 +251,56 @@ const openOutputDetails = new WeakSet<OutputMessage>();
 
 const OutputRowView = memo(function OutputRowView({
   child = false,
+  onNavigateOperation,
   row,
 }: {
   child?: boolean;
+  onNavigateOperation?: ((operation: PreviewProvenanceOperation) => void) | undefined;
   row: OutputRow;
 }) {
-  useI18n();
+  const { t } = useI18n();
   const { message } = row;
+  const target = onNavigateOperation ? message.target : undefined;
+  const go = () => {
+    if (target) onNavigateOperation?.(refusalOperation(message.code, target));
+  };
+  const click = usePlainClick(go);
+  const goTo = target
+    ? t('output.row.go-to', {
+        location: t('message.format.file-line', {
+          name: documentName(target.sourceId),
+          line: target.line,
+        }),
+      })
+    : null;
+  const position = target ? (
+    <Tooltip disableHoverablePopup>
+      <TooltipTrigger
+        render={
+          <Button
+            aria-label={goTo!}
+            className={`problems-position${child ? ' output-row-end' : ''}`}
+            onClick={go}
+            size="xs"
+            variant="ghost"
+          />
+        }
+      >
+        {`${target.line}:${target.column}`}
+      </TooltipTrigger>
+      <TooltipContent>{goTo}</TooltipContent>
+    </Tooltip>
+  ) : null;
   return (
     <div
       className="output-row"
       data-code={message.code}
+      data-goes-to={target ? 'true' : undefined}
       data-monospace={message.monospace ? 'true' : undefined}
       data-severity={message.severity}
       data-source={message.source}
+      onClick={target ? click.onClick : undefined}
+      onMouseDown={target ? click.onMouseDown : undefined}
     >
       <OutputSeverityIcon severity={message.severity} source={outputSourceLabel(message.source)} />
       <OutputMessageText
@@ -268,7 +309,16 @@ const OutputRowView = memo(function OutputRowView({
         noteDetails={message.source === 'XS'}
         repeat={row.repeat}
       />
-      {child ? null : <OutputTime time={row.time} />}
+      {child ? (
+        position
+      ) : position ? (
+        <span className="output-row-end output-row-ends">
+          {position}
+          <OutputTime time={row.time} />
+        </span>
+      ) : (
+        <OutputTime time={row.time} />
+      )}
     </div>
   );
 });
@@ -498,7 +548,12 @@ const OutputGroupView = memo(function OutputGroupView({
                 </p>
               ) : null}
               {group.rows.map((row) => (
-                <OutputRowView child key={row.id} row={row} />
+                <OutputRowView
+                  child
+                  key={row.id}
+                  onNavigateOperation={onNavigateOperation}
+                  row={row}
+                />
               ))}
             </>
           ) : null}

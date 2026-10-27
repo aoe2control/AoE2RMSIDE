@@ -9,7 +9,7 @@ pub mod v1 {
 }
 
 pub const PROTOCOL_MAJOR: u32 = 2;
-pub const PROTOCOL_MINOR: u32 = 27;
+pub const PROTOCOL_MINOR: u32 = 28;
 pub const PROTOCOL_PATCH: u32 = 0;
 pub const MAX_FRAME_BYTES: usize = 20 * 1024 * 1024;
 
@@ -38,6 +38,8 @@ pub const MAX_QUALITY_SEEDS: u32 = 4_096;
 pub const MAX_QUALITY_PLAYER_VALUES: usize = 8;
 pub const MAX_QUALITY_ROW_TILES: usize = 8;
 pub const MAX_QUALITY_SAMPLE_BYTES: usize = 256 * 1024;
+pub const MAX_REFUSAL_SOURCE_ID_BYTES: usize = 4_096;
+pub const MAX_REFUSAL_INCLUDE_CHAIN: usize = 64;
 
 #[derive(Clone, Copy, Debug, Eq, Error, PartialEq)]
 pub enum ContractViolation {
@@ -73,6 +75,8 @@ pub enum ContractViolation {
     InstanceIdLength,
     #[error("instance IDs are negative or repeated")]
     InstanceIdValue,
+    #[error("a refusal location has an invalid source id, byte range, line, or include chain")]
+    RefusalLocation,
 }
 
 pub fn validate_message_arguments(
@@ -129,6 +133,22 @@ pub fn validate_known_crash_reference(
         Ok(v1::KnownCrashEvidence::Unspecified) | Err(_) => Err(ContractViolation::CrashEvidence),
         Ok(_) => Ok(()),
     }
+}
+
+pub fn validate_refusal_location(location: &v1::RefusalLocation) -> Result<(), ContractViolation> {
+    let source_id = |id: &str| (1..=MAX_REFUSAL_SOURCE_ID_BYTES).contains(&id.len());
+    if !source_id(&location.source_id)
+        || location.byte_start > location.byte_end
+        || location.line == 0
+        || location.column == 0
+        || location.include_chain.is_empty()
+        || location.include_chain.len() > MAX_REFUSAL_INCLUDE_CHAIN
+        || !location.include_chain.iter().all(|id| source_id(id))
+        || location.include_chain.last() != Some(&location.source_id)
+    {
+        return Err(ContractViolation::RefusalLocation);
+    }
+    Ok(())
 }
 
 pub fn validate_object_instance_ids(columns: &v1::ObjectColumns) -> Result<(), ContractViolation> {
@@ -268,6 +288,7 @@ pub fn structured_error(
             retryable,
             details: Default::default(),
             known_crash: None,
+            refusal_location: None,
         }),
     )
 }

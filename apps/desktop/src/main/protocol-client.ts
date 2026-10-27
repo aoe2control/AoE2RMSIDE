@@ -67,6 +67,11 @@ import {
   type VisualCheckpointEvent,
 } from '../generated/rmside/v1/rmside_pb';
 import { withKnownCrashMarker, type KnownCrashReference } from '../shared/known-crashes';
+import {
+  refusalLocation,
+  withRefusalLocationMarker,
+  type RefusalLocation,
+} from '../shared/refusal-location';
 import { fromProtocolKnownCrash } from './known-crash-protocol';
 import {
   maximumPreviewCandidateChunks,
@@ -171,7 +176,7 @@ interface PendingRequest {
   reject(error: Error): void;
 }
 
-const protocolVersion = { major: 2, minor: 27, patch: 0 } as const;
+const protocolVersion = { major: 2, minor: 28, patch: 0 } as const;
 
 export class ProtocolResponseError extends Error {
   constructor(
@@ -179,12 +184,12 @@ export class ProtocolResponseError extends Error {
     readonly protocolMessage: string,
     readonly retryable = false,
     readonly knownCrash: KnownCrashReference | null = null,
+    readonly location: RefusalLocation | null = null,
   ) {
-    super(
-      knownCrash
-        ? withKnownCrashMarker(`${code}: ${protocolMessage}`, knownCrash)
-        : `${code}: ${protocolMessage}`,
-    );
+    const text = location
+      ? withRefusalLocationMarker(`${code}: ${protocolMessage}`, location)
+      : `${code}: ${protocolMessage}`;
+    super(knownCrash ? withKnownCrashMarker(text, knownCrash) : text);
     this.name = 'ProtocolResponseError';
   }
 }
@@ -214,6 +219,7 @@ export class RmsdClient {
   private xsStartCheck = false;
   private objectInstanceIds = false;
   private presentationInstanceIds = false;
+  private refusalLocations = false;
   private readonly installationReads = new InstallationReadQueue({
     isBusy: isInstallationReadersBusy,
   });
@@ -298,6 +304,7 @@ export class RmsdClient {
     this.xsStartCheck = negotiated.capabilities.xsStartCheck;
     this.objectInstanceIds = negotiated.capabilities.objectInstanceIds;
     this.presentationInstanceIds = negotiated.capabilities.presentationInstanceIds;
+    this.refusalLocations = negotiated.capabilities.refusalLocations;
     this.onStatus({ name: 'rmsd', state: 'running' });
   }
 
@@ -750,6 +757,9 @@ export class RmsdClient {
               refusal.message,
               refusal.retryable,
               this.knownCrashIds ? fromProtocolKnownCrash(refusal.knownCrash) : null,
+              this.refusalLocations && refusal.refusalLocation
+                ? refusalLocation({ ...refusal.refusalLocation })
+                : null,
             ),
           );
         } else if (message.payload.case !== pending.expectedCase) {

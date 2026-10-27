@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "Перейти к первому использованию"
     },
+    "output.row.go-to": {
+      "message": "Перейти к {location}"
+    },
     "output.xs-start.summary": {
       "message": "Стартовая проверка XS: {files, list} — выполнены main() и {rules, plural, one {# правило} few {# правила} many {# правил} other {# правила}} ({steps, plural, one {# шаг} few {# шага} many {# шагов} other {# шага}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Здесь игра может вылететь"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Не тип местности"
     },
     "map-icon.generate": {
       "message": "Создать значок карты"

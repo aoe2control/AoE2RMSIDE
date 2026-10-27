@@ -54,6 +54,8 @@ const MAX_TOTAL_DOCUMENT_BYTES: usize = 64 * 1024 * 1024;
 const MAX_WORKSPACE_SYMBOLS: usize = 20_000;
 const MAX_SEMANTIC_CACHE_ENTRIES: usize = 4;
 const MAX_PUBLISHED_CODE_ACTION_RANGES: usize = 512;
+const MAX_PUBLISHED_LINT_FINDINGS: usize = 10_000;
+const MAX_PUBLISHED_LINT_BYTES: usize = 12 * 1024 * 1024;
 const PUBLISHED_CODE_ACTIONS_CONTRACT: u64 = 1;
 const MAX_CANCELLED_REQUESTS: usize = 256;
 
@@ -1235,11 +1237,28 @@ impl Server {
                 self.lint_findings(uri, document, None, options.as_ref())
             }
         };
-        diagnostics.extend(findings.iter().filter_map(|finding| {
-            rms_lint::finding_json(&document.source, finding, &|id| {
-                self.generation_source(id.as_str())
-            })
-        }));
+        let (published, consumed) = bounded_lint_diagnostics(
+            findings.iter().map(|finding| {
+                rms_lint::finding_json(&document.source, finding, &|id| {
+                    self.generation_source(id.as_str())
+                })
+            }),
+            MAX_PUBLISHED_LINT_FINDINGS,
+            MAX_PUBLISHED_LINT_BYTES,
+        );
+        diagnostics.extend(published);
+        if let Some(first_omitted) = findings.get(consumed) {
+            diagnostics.push(json!({
+                "range": lsp_range(&document.source, first_omitted.range).unwrap_or_else(empty_range),
+                "severity": 2,
+                "code": "RMS1009",
+                "source": "rms-ls",
+                "message": format!(
+                    "{} more lint findings were omitted",
+                    findings.len() - consumed
+                ),
+            }));
+        }
         draft.findings = Some((findings, shared_findings));
     }
 
@@ -3055,6 +3074,31 @@ fn empty_range() -> Value {
         "start": { "line": 0, "character": 0 },
         "end": { "line": 0, "character": 0 },
     })
+}
+
+fn bounded_lint_diagnostics(
+    diagnostics: impl IntoIterator<Item = Option<Value>>,
+    max_count: usize,
+    max_bytes: usize,
+) -> (Vec<Value>, usize) {
+    let mut published = Vec::new();
+    let mut consumed = 0;
+    let mut bytes = 0usize;
+    for diagnostic in diagnostics {
+        if published.len() >= max_count {
+            break;
+        }
+        if let Some(diagnostic) = diagnostic {
+            let size = serde_json::to_vec(&diagnostic).map_or(usize::MAX, |encoded| encoded.len());
+            if bytes.saturating_add(size) > max_bytes {
+                break;
+            }
+            bytes += size;
+            published.push(diagnostic);
+        }
+        consumed += 1;
+    }
+    (published, consumed)
 }
 
 fn initialize_result() -> Value {

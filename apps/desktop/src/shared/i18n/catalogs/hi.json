@@ -515,6 +515,9 @@
     "output.constructs.go-to": {
       "message": "इसके पहले उपयोग पर जाएँ"
     },
+    "output.row.go-to": {
+      "message": "{location} पर जाएँ"
+    },
     "output.xs-start.summary": {
       "message": "XS प्रारंभ जाँच: {files, list} ने main() और {rules, plural, one {# नियम} other {# नियम}} चलाए ({steps, plural, one {# चरण} other {# चरण}})"
     },
@@ -3007,6 +3010,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "यहाँ गेम क्रैश हो सकता है"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "भूभाग नहीं"
     },
     "map-icon.generate": {
       "message": "मानचित्र का आइकन बनाएँ"

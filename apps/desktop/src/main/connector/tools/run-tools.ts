@@ -45,6 +45,7 @@ import {
   mapDetails,
   mapSummaryCaps,
   showSummary,
+  sourceFile,
   type ScriptError,
 } from '../summaries/map-summary';
 import { mapTestDetails, mapTestSummary } from '../summaries/map-test-summary';
@@ -219,6 +220,7 @@ export class RunTools {
               name: reply.name,
               stage: reply.stage,
               message: reply.message,
+              fileOf: (sourceId) => sourceFile(sourceId, this.deps.relativePath),
               ...(kind === 'show' ? { shown: false } : {}),
             },
             errors,
@@ -349,6 +351,7 @@ export class RunTools {
                 name: reply.name,
                 stage: reply.stage,
                 message: reply.message,
+                fileOf: (sourceId) => sourceFile(sourceId, this.deps.relativePath),
               },
               [],
               3_000,
@@ -427,7 +430,13 @@ export class RunTools {
         if (reply.outcome === 'failed') {
           return textResult(
             failedRunSummary(
-              { path: file, name: reply.name, stage: reply.stage, message: reply.message },
+              {
+                path: file,
+                name: reply.name,
+                stage: reply.stage,
+                message: reply.message,
+                fileOf: (sourceId) => sourceFile(sourceId, this.deps.relativePath),
+              },
               [],
               4_000,
             ),

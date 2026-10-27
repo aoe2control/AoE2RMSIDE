@@ -18,6 +18,11 @@ import {
   type KnownCrashText,
 } from './known-crashes';
 import {
+  refusalLocationFromText,
+  withoutRefusalLocationMarker,
+  type RefusalLocation,
+} from './refusal-location';
+import {
   linkStep,
   resolveCatalogAction,
   resolveCatalogText,
@@ -62,6 +67,7 @@ export interface MessageFacts {
   code: string | null;
   location: string | null;
   place: { name: string; line: number | null } | null;
+  target: RefusalLocation | null;
   params: Readonly<Record<string, string | number | undefined>>;
   standardIncludeAccess: StandardIncludeAccessHint | null;
 }
@@ -220,6 +226,81 @@ const rmsCatalog: Record<string, CatalogEntry> = {
   },
 };
 
+type TerrainOperand =
+  | { kind: 'object'; command: string; name: string }
+  | { kind: 'range'; command: string; highest: string; name: string; value: string }
+  | { kind: 'number'; command: string; highest: string; value: string }
+  | { kind: 'unknown'; command: string; name: string }
+  | { kind: 'missing'; command: string };
+
+function terrainOperand(facts: MessageFacts): TerrainOperand | null {
+  const core = facts.core.trim().replace(/\.$/u, '');
+  let match = /^(\S+) needs a terrain, but (\S+) is an object$/u.exec(core);
+  if (match) return { kind: 'object', command: match[1]!, name: match[2]! };
+  match = /^(\S+) needs a terrain number from 0 to (\d+), but (\S+) is (\S+)$/u.exec(core);
+  if (match) {
+    return {
+      kind: 'range',
+      command: match[1]!,
+      highest: match[2]!,
+      name: match[3]!,
+      value: match[4]!,
+    };
+  }
+  match = /^(\S+) needs a terrain number from 0 to (\d+), not (\S+)$/u.exec(core);
+  if (match) return { kind: 'number', command: match[1]!, highest: match[2]!, value: match[3]! };
+  match = /^(\S+) needs a terrain, but the selected game version has no terrain named (\S+)$/u.exec(
+    core,
+  );
+  if (match) return { kind: 'unknown', command: match[1]!, name: match[2]! };
+  match = /^(\S+) is missing its terrain$/u.exec(core);
+  if (match) return { kind: 'missing', command: match[1]! };
+  return null;
+}
+
+function locatedEngineCause(facts: MessageFacts): string | null {
+  const cause = engineCause(facts);
+  return cause && facts.location ? locatedCause(facts, cause) : cause;
+}
+
+function terrainOperandCause(operand: TerrainOperand): string {
+  switch (operand.kind) {
+    case 'object':
+      return t('message.RMSGEN.terrain.cause.object', { name: operand.name });
+    case 'range':
+      return t('message.RMSGEN.terrain.cause.range', {
+        name: operand.name,
+        value: operand.value,
+        highest: operand.highest,
+      });
+    case 'number':
+      return t('message.RMSGEN.terrain.cause.number', {
+        value: operand.value,
+        highest: operand.highest,
+      });
+    case 'unknown':
+      return t('message.RMSGEN.terrain.cause.unknown', { name: operand.name });
+    case 'missing':
+      return t('message.RMSGEN.terrain.cause.missing');
+  }
+}
+
+const terrainOperandEntry: CatalogEntry = {
+  headline: (facts) => {
+    const operand = terrainOperand(facts);
+    return operand
+      ? t('message.RMSGEN.terrain.headline', { command: operand.command })
+      : t('message.RMSGEN.headline');
+  },
+  cause: (facts) => {
+    const operand = terrainOperand(facts);
+    if (!operand) return locatedEngineCause(facts);
+    const cause = terrainOperandCause(operand);
+    return facts.location ? locatedCause(facts, cause) : cause;
+  },
+  action: (facts) => (terrainOperand(facts) ? step('message.RMSGEN.terrain.action') : null),
+};
+
 const generationCatalog: Record<string, CatalogEntry> = {
   RMSGEN1001: {
     headline: 'message.RMSGEN1001.headline',
@@ -338,12 +419,17 @@ const generationCatalog: Record<string, CatalogEntry> = {
     headline: 'message.RMSGEN1.headline',
     cause: engineCause,
   },
+  RMSGEN3001: terrainOperandEntry,
+  RMSGEN3101: terrainOperandEntry,
+  RMSGEN3301: terrainOperandEntry,
+  RMSGEN6001: terrainOperandEntry,
+  RMSGEN7001: terrainOperandEntry,
   RMSGEN: {
     headline: 'message.RMSGEN.headline',
     cause: (facts) =>
       /exhausted (?:its|their) bounded/u.test(facts.core)
         ? t('message.RMSGEN.cause.budget')
-        : engineCause(facts),
+        : locatedEngineCause(facts),
     action: (facts) =>
       /exhausted (?:its|their) bounded/u.test(facts.core)
         ? step('message.action.try-another-seed')
@@ -2038,7 +2124,9 @@ export function catalogKeyFor(code: string): string | null {
 }
 
 export function stripTransport(raw: string): string {
-  let text = withoutKnownCrashMarker(raw).replace(/\s+/gu, ' ').trim();
+  let text = withoutRefusalLocationMarker(withoutKnownCrashMarker(raw))
+    .replace(/\s+/gu, ' ')
+    .trim();
   for (;;) {
     const next = text
       .replace(/^Error invoking remote method '[^']*':\s*/u, '')
@@ -2132,7 +2220,7 @@ const analyzedLocationPattern =
 
 const locationPattern = /\bin (\S+) at bytes (\d+)\.\.(\d+):\s*/u;
 
-function documentName(uri: string): string {
+export function documentName(uri: string): string {
   let path = uri.replace(/[?#].*$/u, '');
   try {
     path = decodeURIComponent(path);
@@ -2152,6 +2240,7 @@ export function messageFacts(input: MessageInput): MessageFacts {
       code: input.code ?? desktop.code,
       location: null,
       place: null,
+      target: null,
       params: { ...desktop.args, ...(input.params ?? {}) },
       standardIncludeAccess: input.standardIncludeAccess ?? null,
     };
@@ -2160,6 +2249,7 @@ export function messageFacts(input: MessageInput): MessageFacts {
   let place: { name: string; line: number | null } | null = null;
   const analyzed = analyzedLocationPattern.exec(core);
   const located = analyzed ? null : locationPattern.exec(core);
+  const target = raw ? refusalLocationFromText(withoutKnownCrashMarker(raw)) : null;
   if (analyzed) {
     const uri = analyzed[1]!;
     place = input.place ?? {
@@ -2175,6 +2265,12 @@ export function messageFacts(input: MessageInput): MessageFacts {
       line: resolved?.line ?? null,
     };
     core = core.slice(located.index + located[0].length);
+  } else if (target) {
+    place = input.place ?? {
+      name:
+        input.locate?.(target.sourceId, target.byteStart)?.name ?? documentName(target.sourceId),
+      line: target.line,
+    };
   }
   const location = place
     ? place.line
@@ -2197,6 +2293,7 @@ export function messageFacts(input: MessageInput): MessageFacts {
     code: input.code ?? (raw ? messageCode(raw) : null),
     location,
     place,
+    target,
     params: input.params ?? {},
     standardIncludeAccess: input.standardIncludeAccess ?? null,
   };
@@ -2273,7 +2370,7 @@ function crashMessage(
   crash: KnownCrashText,
   code: string | null,
   location: string | null,
-  base: Pick<OutputMessage, 'severity' | 'source'> & { detail?: string },
+  base: Pick<OutputMessage, 'severity' | 'source' | 'detail' | 'target'>,
 ): OutputMessage {
   const headline = knownCrashHeadlineText(code);
   const cause: OutputText = location
@@ -2329,14 +2426,18 @@ function wordMessage(input: MessageInput): OutputMessage {
   const facts = messageFacts(input);
   const key = facts.code ? catalogKeyFor(facts.code) : null;
   const entry = key ? messageCatalog[key] : undefined;
-  const raw = input.raw ? withoutKnownCrashMarker(input.raw).trim() : undefined;
+  const raw = input.raw
+    ? withoutRefusalLocationMarker(withoutKnownCrashMarker(input.raw)).trim()
+    : undefined;
   const detail = raw ? raw : undefined;
+  const target = facts.target ? { target: facts.target } : {};
   const crash = crashWordsOf(input.raw);
   if (crash) {
     return crashMessage(crash, facts.code, facts.location, {
       severity: entry?.severity ?? input.severity ?? 'error',
       source: entry?.source ?? input.source,
       ...(detail ? { detail } : {}),
+      ...target,
     });
   }
   if (!entry) {
@@ -2348,6 +2449,7 @@ function wordMessage(input: MessageInput): OutputMessage {
       headline: wordFallbackHeadline(input),
       ...(cause ? { cause: facts.location ? locatedCause(facts, cause) : cause } : {}),
       ...(detail ? { detail } : {}),
+      ...target,
     };
   }
   const headline =
@@ -2364,6 +2466,7 @@ function wordMessage(input: MessageInput): OutputMessage {
     ...(cause ? { cause } : {}),
     ...(action ? { action } : {}),
     ...(detail ? { detail } : {}),
+    ...target,
   };
 }
 

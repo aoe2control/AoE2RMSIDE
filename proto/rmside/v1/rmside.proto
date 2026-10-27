@@ -29,6 +29,16 @@ message StructuredError {
   bool retryable = 3;
   map<string, string> details = 4;
   KnownCrashReference known_crash = 5;
+  RefusalLocation refusal_location = 6;
+}
+
+message RefusalLocation {
+  string source_id = 1;
+  uint32 byte_start = 2;
+  uint32 byte_end = 3;
+  uint32 line = 4;
+  uint32 column = 5;
+  repeated string include_chain = 6;
 }
 
 message RequestIdentity {
@@ -77,6 +87,7 @@ message Capabilities {
   bool map_test_quality = 24;
   bool object_instance_ids = 25;
   bool presentation_instance_ids = 26;
+  bool refusal_locations = 27;
 }
 
 enum MapTestStatus {

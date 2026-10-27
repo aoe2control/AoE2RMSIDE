@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "Naar het eerste gebruik gaan"
     },
+    "output.row.go-to": {
+      "message": "Naar {location} gaan"
+    },
     "output.xs-start.summary": {
       "message": "XS-startcontrole: main() en {rules, plural, one {# rule} other {# rules}} uitgevoerd in {files, list} ({steps, plural, one {# stap} other {# stappen}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Het spel kan hier crashen"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Geen terrein"
     },
     "map-icon.generate": {
       "message": "Kaartpictogram genereren"

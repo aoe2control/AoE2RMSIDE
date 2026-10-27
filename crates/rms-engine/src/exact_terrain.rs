@@ -1398,7 +1398,8 @@ fn collect_descriptors(
     for (operation_index, create) in operations {
         if create.depth != 0 {
             if let Some(descriptor) = descriptors.last_mut() {
-                apply_descriptor(descriptor, create, content)?;
+                apply_descriptor(descriptor, create, content)
+                    .map_err(|error| error.at_operation(create))?;
             }
             continue;
         }

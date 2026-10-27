@@ -1348,13 +1348,15 @@ fn collect_descriptors(
                     })
                 })
                 .transpose()?;
-            template.apply(
-                command.operation,
-                sizes.at(command.operation_index),
-                content,
-                random_zone_value,
-                command.range_len,
-            )?;
+            template
+                .apply(
+                    command.operation,
+                    sizes.at(command.operation_index),
+                    content,
+                    random_zone_value,
+                    command.range_len,
+                )
+                .map_err(|error| error.at_operation(command.operation))?;
         }
         if land_terrain_clears_base_elevation(content, template.terrain_id) {
             template.base_elevation = 0;

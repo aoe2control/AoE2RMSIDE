@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "İlk kullanımına git"
     },
+    "output.row.go-to": {
+      "message": "Konuma git: {location}"
+    },
     "output.xs-start.summary": {
       "message": "XS başlangıç kontrolü: {files, list} main() ve {rules, plural, one {# kuralı} other {# kuralı}} çalıştırdı ({steps, plural, one {# adım} other {# adım}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Oyun burada çökebilir"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Arazi değil"
     },
     "map-icon.generate": {
       "message": "Harita simgesi üret"

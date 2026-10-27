@@ -1,6 +1,6 @@
 use std::collections::{BTreeMap, BTreeSet};
 
-use rms_profile::{KnownCrashHit, crash_ids};
+use rms_profile::{ConstantKind, KnownCrashHit, crash_ids, frozen_constant_kinds};
 use rms_semantics::{
     ArgumentResolution, Braces, CrashingWords, NativeIgnoredContext, ParsedDecisionKind,
     SemanticProgram, WordAction, WordDefinitions, WordPlace, first_word_action,
@@ -38,6 +38,7 @@ pub const NOT_A_COMMENT: &str = "RMS4009";
 pub const NUMBER_FOR_A_NAME: &str = "RMS4010";
 pub const POSSIBLY_UNDEFINED_NAME: &str = "RMS4011";
 pub const GAME_CAN_CRASH: &str = "RMS4012";
+pub const NOT_A_TERRAIN: &str = "RMS4013";
 
 pub const LINT_RULES: &[LintRule] = &[
     LintRule {
@@ -111,6 +112,12 @@ pub const LINT_RULES: &[LintRule] = &[
         severity: LintSeverity::Warning,
         title: "The game can crash here",
         rationale: "The game itself crashes on some lines: a defined name it runs as a command that then reads a missing value, a line without a terrain inside the braces of a connection command, or override_map_size making the map smaller after the player lands. The preview refuses the map when the selected settings reach such a crash; this warning marks the line when another branch, seed or lobby setting can reach it.",
+    },
+    LintRule {
+        code: NOT_A_TERRAIN,
+        severity: LintSeverity::Warning,
+        title: "Not a terrain",
+        rationale: "Where a command reads a terrain, the game takes the number the name stands for. A built-in name of an object or another kind of thing stands for a number of that kind: above 255 the preview refuses the map, and below that the command gets whichever terrain has that number.",
     },
 ];
 
@@ -225,6 +232,9 @@ pub fn lint_document(
         }
         if environment.enabled(NUMBER_FOR_A_NAME) {
             numbers_for_names(&document, view, &mut findings);
+        }
+        if environment.enabled(NOT_A_TERRAIN) {
+            names_that_are_no_terrain(&document, view, &mut findings);
         }
     }
     findings.retain(|finding| environment.enabled(finding.code));
@@ -1720,6 +1730,107 @@ fn numbers_for_names(
             unnecessary: false,
             fix: None,
         });
+    }
+}
+
+const TERRAIN_OPERANDS: &[(&str, &[usize])] = &[
+    ("base_terrain", &[0]),
+    ("terrain_type", &[0]),
+    ("create_terrain", &[0]),
+    ("terrain_to_place_on", &[0]),
+    ("default_terrain_replacement", &[0]),
+    ("replace_terrain", &[0, 1]),
+    ("terrain_cost", &[0]),
+    ("terrain_size", &[0]),
+    ("base_layer", &[0]),
+    ("layer_to_place_on", &[0]),
+    ("beach_terrain", &[0]),
+    ("spacing_to_specific_terrain", &[0]),
+];
+
+fn kind_words(kind: ConstantKind) -> Option<&'static str> {
+    Some(match kind {
+        ConstantKind::Terrain | ConstantKind::Other => return None,
+        ConstantKind::Object => "an object",
+        ConstantKind::ObjectClass => "an object class",
+        ConstantKind::CliffType => "a cliff type",
+        ConstantKind::MapType => "a map type",
+        ConstantKind::ColorCorrection => "a color correction",
+        ConstantKind::WaterDefinition => "a water definition",
+        ConstantKind::Civilization => "a civilization",
+        ConstantKind::AssignType => "an assign type",
+        ConstantKind::Effect => "an effect",
+        ConstantKind::EffectType => "an effect type",
+        ConstantKind::ModifyTech => "a technology change",
+        ConstantKind::PlayerData => "a player value",
+        ConstantKind::Attribute => "an attribute",
+        ConstantKind::Resource => "a resource",
+    })
+}
+
+fn shipped_kind(view: &ProgramView<'_>, name: &str) -> Option<ConstantKind> {
+    let kinds = frozen_constant_kinds(&view.program.identity.profile.profile_id).ok()??;
+    kinds.entries.iter().find_map(|entry| entry.kind_of(name))
+}
+
+fn names_that_are_no_terrain(
+    document: &Document<'_>,
+    view: &ProgramView<'_>,
+    findings: &mut Vec<LintFinding>,
+) {
+    let id = document.source.id();
+    for operation in &view.program.operations {
+        if operation.source_id != *id {
+            continue;
+        }
+        let Some((_, positions)) = TERRAIN_OPERANDS
+            .iter()
+            .find(|(name, _)| *name == operation.name)
+        else {
+            continue;
+        };
+        for index in positions.iter().copied() {
+            let Some(argument) = operation.arguments.get(index) else {
+                continue;
+            };
+            let Some(name) = argument.spelling.as_deref() else {
+                continue;
+            };
+            let builtin = view
+                .game_definitions
+                .get(name)
+                .and_then(|value| value.parse::<f32>().ok());
+            if builtin.is_none() || builtin != argument.value.parse::<f32>().ok() {
+                continue;
+            }
+            let Some(kind) = shipped_kind(view, name).and_then(kind_words) else {
+                continue;
+            };
+            let range = operation.source_range;
+            let Some(operand) = document
+                .lines
+                .iter()
+                .flat_map(|line| line.tokens.iter())
+                .filter(|token| token.range.start >= range.start && token.range.end <= range.end)
+                .skip(1)
+                .find(|token| document.text(token) == name)
+            else {
+                continue;
+            };
+            findings.push(LintFinding {
+                known_crash: None,
+                related: Vec::new(),
+                code: NOT_A_TERRAIN,
+                severity: LintSeverity::Warning,
+                message: format!(
+                    "{name} is {kind}, not a terrain, but {} reads a terrain here.",
+                    operation.name
+                ),
+                range: operand.range,
+                unnecessary: false,
+                fix: None,
+            });
+        }
     }
 }
 

@@ -216,6 +216,7 @@ import { EditorInventoryService } from './editor-inventory-service';
 import { EditorInventoryCoordinator } from './editor-inventory-coordinator';
 import { LanguageDiagnosticAdmission } from './language-diagnostic-admission';
 import {
+  analysisFailureCurrent,
   catalogRefreshFailureReporter,
   editorAssistanceReporter,
   requiredSourceLimitReporter,
@@ -323,6 +324,7 @@ import {
 import { constantNamesField } from './content-constant-names';
 import { provideConstantNames } from './constant-names-provider';
 import { LatestValuePublisher } from './latest-value-publisher';
+import { languageCatalogWorker } from './language-catalog-worker';
 import { bundledConnectorCatalog } from './connector/catalog';
 import { ConnectorService } from './connector/connector-service';
 import { connectorSetupFor, registerConnectorIpc } from './connector/ipc';
@@ -2470,6 +2472,7 @@ function registerIpc(
           reportRequiredSourceLimit(error, failureContext);
         throw error;
       });
+    reportRequiredSourceLimit.prepared();
     if (
       nativeEpoch !== nativeSupervisor.languageIdentityEpoch() ||
       catalogEpoch !== sourceCatalogService.identityEpoch()
@@ -2690,6 +2693,7 @@ function registerIpc(
           throw new DesktopError('source-catalog.changed', 'the RMS analysis context changed');
       },
     });
+    reportRequiredSourceLimit.prepared();
     return { catalog, documentVersion: document.version };
   };
   const languageReadiness = new SourceCatalogReadiness({
@@ -2708,7 +2712,9 @@ function registerIpc(
       return nativeSupervisor.requestLanguageServer('rms/semanticIdentity', params);
     },
   });
-  const updateLanguageCatalog = async (uri: string) => {
+  const languageDocumentOpen = (uri: string) =>
+    nativeSupervisor.languageDocument(uri) !== undefined;
+  const updateLanguageCatalog = async (uri: string, obsolete: () => boolean) => {
     const epoch = nativeSupervisor.languageIdentityEpoch();
     const failureContext = requiredSourceContext(uri);
     const genericContext = requiredSourceContext(undefined);
@@ -2723,45 +2729,33 @@ function registerIpc(
       languageCatalogEntryUri = uri;
       if (languageCatalogFailedUri === uri) languageCatalogFailedUri = undefined;
     } catch (error) {
+      if (obsolete()) throw error;
       if (failureContext === requiredSourceContext(uri))
         reportRequiredSourceLimit(error, failureContext);
       reportCatalogRefreshFailure(error, genericContext);
       throw error;
     }
   };
-  let requestedLanguageCatalog: { uri: string } | undefined;
-  let languageCatalogRequestSequence = 0;
-  let languageCatalogWorker: Promise<void> | undefined;
+  const languageCatalogBuilds = languageCatalogWorker({
+    settleMilliseconds: 100,
+    isOpen: languageDocumentOpen,
+    build: updateLanguageCatalog,
+    failed: (uri) => {
+      languageCatalogFailedUri = uri;
+      languageReadiness.invalidate(uri);
+      nativeSupervisor.invalidateLanguageSourceCatalog(
+        nativeSupervisor.currentLanguageSourceCatalog(),
+      );
+    },
+  });
   let languageProbeSequence = 0;
   const scheduleLanguageCatalogUpdate = (uri: string): Promise<void> => {
     if (!editionCapabilities.sourceCatalog) return Promise.resolve();
-    requestedLanguageCatalog = { uri };
-    languageCatalogRequestSequence += 1;
-    languageCatalogWorker ??= (async () => {
-      while (requestedLanguageCatalog) {
-        const requestSequence = languageCatalogRequestSequence;
-        await new Promise<void>((resolvePending) => setTimeout(resolvePending, 100));
-        if (requestSequence !== languageCatalogRequestSequence) continue;
-        const requested = requestedLanguageCatalog;
-        requestedLanguageCatalog = undefined;
-        try {
-          await updateLanguageCatalog(requested.uri);
-        } catch (error) {
-          languageCatalogFailedUri = requested.uri;
-          languageReadiness.invalidate(requested.uri);
-          nativeSupervisor.invalidateLanguageSourceCatalog(
-            nativeSupervisor.currentLanguageSourceCatalog(),
-          );
-          throw error;
-        }
-      }
-    })().finally(() => {
-      languageCatalogWorker = undefined;
-    });
-    return languageCatalogWorker;
+    return languageCatalogBuilds.schedule(uri);
   };
   const ensureLanguageCatalog = (uri: string): Promise<void> =>
-    (languageCatalogEntryUri === uri || languageCatalogFailedUri === uri) && !languageCatalogWorker
+    (languageCatalogEntryUri === uri || languageCatalogFailedUri === uri) &&
+    !languageCatalogBuilds.current()
       ? Promise.resolve()
       : scheduleLanguageCatalogUpdate(uri);
   const requestedLanguageDocumentSyncs = new Set<string>();
@@ -3484,7 +3478,12 @@ function registerIpc(
             : await languageReadiness.validate(params);
         } catch (error) {
           if (
-            failureContext === requiredSourceContext(failureUri) &&
+            analysisFailureCurrent(
+              failureContext,
+              requiredSourceContext(failureUri),
+              failureUri,
+              languageDocumentOpen,
+            ) &&
             !reportRequiredSourceLimit(error, failureContext)
           )
             publishWorkspaceDiagnostic(sourceGraphRefreshFailure(error));
@@ -3497,8 +3496,8 @@ function registerIpc(
         const uri = languageDocumentUri(params);
         if (uri && /\.(?:rms|rms2)$/iu.test(uri)) {
           await refreshLanguageCatalogAndReportFailure(ensureLanguageCatalog(uri));
-        } else if (languageCatalogWorker) {
-          await languageCatalogWorker.catch(() => undefined);
+        } else {
+          await languageCatalogBuilds.current()?.catch(() => undefined);
         }
       }
       latencyProbe.step(probeId, 'catalog');
@@ -3595,8 +3594,9 @@ function registerIpc(
       } else if (/\.(?:rms|rms2)$/iu.test(uri)) {
         if (method === 'textDocument/didOpen') {
           await refreshLanguageCatalogAndReportFailure(scheduleLanguageCatalogUpdate(uri));
-        } else if (languageCatalogWorker) {
-          await refreshLanguageCatalogAndReportFailure(languageCatalogWorker);
+        } else {
+          const running = languageCatalogBuilds.current();
+          if (running) await refreshLanguageCatalogAndReportFailure(running);
         }
       } else if (/\.(?:inc|def|xs)$/iu.test(uri)) {
         await refreshLanguageCatalogAndReportFailure(refreshOpenLanguageCatalog());

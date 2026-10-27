@@ -1273,7 +1273,8 @@ fn collect_descriptors(
             continue;
         }
         for descriptor in &mut descriptors[start..end] {
-            apply_descriptor(descriptor, operation, content)?;
+            apply_descriptor(descriptor, operation, content)
+                .map_err(|error| error.at_operation(operation))?;
         }
     }
     for descriptor in &mut descriptors {

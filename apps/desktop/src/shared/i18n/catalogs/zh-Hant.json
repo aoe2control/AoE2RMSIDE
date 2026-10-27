@@ -515,6 +515,9 @@
     "output.constructs.go-to": {
       "message": "前往首次使用的位置"
     },
+    "output.row.go-to": {
+      "message": "前往 {location}"
+    },
     "output.xs-start.summary": {
       "message": "XS 開局檢查：{files, list} 執行了 main() 和 {rules, plural, other {# 條規則}}（{steps, plural, other {# 步}}）"
     },
@@ -3007,6 +3010,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "遊戲可能在此崩潰"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "不是地形"
     },
     "map-icon.generate": {
       "message": "產生地圖圖示"

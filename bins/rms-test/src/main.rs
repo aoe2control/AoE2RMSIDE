@@ -1029,6 +1029,7 @@ fn run_service<R: Read, W: Write + Send>(input: &mut R, output: &mut W) -> Resul
                                     map_test_quality: true,
                                     object_instance_ids: false,
                                     presentation_instance_ids: false,
+                                    refusal_locations: false,
                                 }),
                             }),
                         ),

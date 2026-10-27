@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "Przejdź do pierwszego użycia"
     },
+    "output.row.go-to": {
+      "message": "Przejdź do {location}"
+    },
     "output.xs-start.summary": {
       "message": "Sprawdzanie startu XS: {files, list} – wykonano main() i {rules, plural, one {# regułę} few {# reguły} many {# reguł} other {# reguły}} ({steps, plural, one {# krok} few {# kroki} many {# kroków} other {# kroku}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Gra może tu ulec awarii"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "To nie jest teren"
     },
     "map-icon.generate": {
       "message": "Generuj ikonę mapy"

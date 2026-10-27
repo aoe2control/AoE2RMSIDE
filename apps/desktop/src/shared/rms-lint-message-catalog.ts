@@ -157,4 +157,21 @@ export const rmsLintCatalog: Record<string, RmsLintCatalogEntry> = {
       return text ? engineSentence(text) : null;
     },
   },
+  RMS4013: {
+    severity: 'warning',
+    headline: (facts) => {
+      const name = leadingName(facts);
+      return name ? t('message.RMS4013.headline.named', { name }) : t('message.RMS4013.headline');
+    },
+    cause: (facts) => {
+      const named =
+        /^(\S+) is (an? [^,]{1,40}), not a terrain, but (\S+) reads a terrain here\.?$/u.exec(
+          facts.core.trim(),
+        );
+      return named
+        ? t('message.RMS4013.cause.named', { name: named[1], kind: named[2], command: named[3] })
+        : t('message.RMS4013.cause');
+    },
+    action: step('message.RMS4013.action'),
+  },
 };

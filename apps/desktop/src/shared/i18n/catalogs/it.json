@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "Vai al primo utilizzo"
     },
+    "output.row.go-to": {
+      "message": "Vai a {location}"
+    },
     "output.xs-start.summary": {
       "message": "Controllo XS di inizio partita: eseguiti main() e {rules, plural, one {# regola} many {# regole} other {# regole}} in {files, list} ({steps, plural, one {# passo} many {# passi} other {# passi}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Il gioco può bloccarsi qui"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Non è un terreno"
     },
     "map-icon.generate": {
       "message": "Genera icona della mappa"

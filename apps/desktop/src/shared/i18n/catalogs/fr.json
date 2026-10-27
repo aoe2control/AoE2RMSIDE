@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "Aller à sa première utilisation"
     },
+    "output.row.go-to": {
+      "message": "Aller à {location}"
+    },
     "output.xs-start.summary": {
       "message": "Vérification XS de début de partie : main() et {rules, plural, one {# règle} many {# règles} other {# règles}} exécutés dans {files, list} ({steps, plural, one {# étape} many {# étapes} other {# étapes}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Le jeu peut planter ici"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Pas un terrain"
     },
     "map-icon.generate": {
       "message": "Générer l’icône de carte"

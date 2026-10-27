@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "Перейти до першого використання"
     },
+    "output.row.go-to": {
+      "message": "Перейти до {location}"
+    },
     "output.xs-start.summary": {
       "message": "Стартова перевірка XS: {files, list} — виконано main() і {rules, plural, one {# правило} few {# правила} many {# правил} other {# правила}} ({steps, plural, one {# крок} few {# кроки} many {# кроків} other {# кроку}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Тут гра може аварійно завершитися"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Не місцевість"
     },
     "map-icon.generate": {
       "message": "Створити піктограму мапи"

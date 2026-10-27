@@ -161,13 +161,14 @@ fn constant_documentation(
     name: &str,
 ) -> Option<String> {
     if let Some(family) = catalog.run_setting_family(name) {
-        return Some(constant_markdown(Some(family), name, None));
+        return Some(constant_markdown(Some(family), name, None, None));
     }
     let value = server.built_in_value(name)?;
     Some(constant_markdown(
         catalog.definition_family(name),
         name,
         Some(&value),
+        server.constant_kind(name),
     ))
 }
 

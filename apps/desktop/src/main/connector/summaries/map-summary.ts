@@ -1,4 +1,11 @@
 import type { XsStartOutcome } from '../../../shared/xs-start';
+import { withoutKnownCrashMarker } from '../../../shared/known-crashes';
+import { documentName } from '../../../shared/message-catalog';
+import {
+  refusalLocationFromText,
+  withoutRefusalLocationMarker,
+} from '../../../shared/refusal-location';
+import { sourcePath } from '../diagnostics-store';
 import type { CompactMap } from '../app-map-store';
 import { ConnectorToolError } from '../dispatcher';
 import { fitToCap, pageToCap, round1, shorten, whole } from './budget';
@@ -186,6 +193,14 @@ export function showSummary(map: CompactMap, changed: readonly string[]): string
   );
 }
 
+export function sourceFile(
+  sourceId: string,
+  relativePath: (absolute: string) => string | null,
+): string {
+  const absolute = sourcePath(sourceId);
+  return ((absolute ? relativePath(absolute) : null) ?? documentName(sourceId)).slice(0, 260);
+}
+
 export function failedRunSummary(
   facts: {
     path: string | null;
@@ -195,6 +210,7 @@ export function failedRunSummary(
     stage: string;
     message: string;
     shown?: boolean;
+    fileOf?: (sourceId: string) => string;
   },
   errors: readonly ScriptError[],
   cap: number,
@@ -204,6 +220,14 @@ export function failedRunSummary(
     ...(error.line ? { line: error.line } : {}),
     msg: shorten(error.msg, 200),
   }));
+  const message = withoutRefusalLocationMarker(withoutKnownCrashMarker(facts.message));
+  const located = refusalLocationFromText(withoutKnownCrashMarker(facts.message));
+  const place = located
+    ? {
+        file: facts.fileOf?.(located.sourceId) ?? documentName(located.sourceId),
+        line: located.line,
+      }
+    : {};
   const path = facts.path ?? facts.name;
   return fitToCap(
     {
@@ -213,7 +237,7 @@ export function failedRunSummary(
       settings: facts.settings,
       status: 'failed',
       stage: facts.stage,
-      errors: listed.length > 0 ? listed : [{ msg: shorten(facts.message, 300) }],
+      errors: listed.length > 0 ? listed : [{ ...place, msg: shorten(message, 300) }],
       error_count: errors.length > errorsListed ? errors.length : undefined,
       more: { ask: `get_problems {path:'${path}'}` },
     },

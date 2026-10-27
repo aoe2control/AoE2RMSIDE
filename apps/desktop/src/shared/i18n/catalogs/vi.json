@@ -515,6 +515,9 @@
     "output.constructs.go-to": {
       "message": "Đến lần dùng đầu tiên"
     },
+    "output.row.go-to": {
+      "message": "Đến {location}"
+    },
     "output.xs-start.summary": {
       "message": "Kiểm tra khởi đầu XS: {files, list} đã chạy main() và {rules, plural, other {# quy tắc}} ({steps, plural, other {# bước}})"
     },
@@ -3007,6 +3010,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Trò chơi có thể bị sập ở đây"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Không phải địa hình"
     },
     "map-icon.generate": {
       "message": "Tạo biểu tượng bản đồ"

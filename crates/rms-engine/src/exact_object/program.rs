@@ -97,7 +97,8 @@ pub(super) fn collect_object_program(
                     next += 1;
                 }
                 if let Some(mut descriptor) =
-                    start_object_descriptor(operation, &groups, operation_index as u32, content)?
+                    start_object_descriptor(operation, &groups, operation_index as u32, content)
+                        .map_err(|error| error.at_operation(operation))?
                 {
                     for (_, child) in &operations[cursor + 1..next] {
                         apply_object_block_command(
@@ -106,7 +107,8 @@ pub(super) fn collect_object_program(
                             &groups,
                             &mut gaia,
                             content,
-                        )?;
+                        )
+                        .map_err(|error| error.at_operation(child))?;
                     }
                     descriptors.push(descriptor);
                 }

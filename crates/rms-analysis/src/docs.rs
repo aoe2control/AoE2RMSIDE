@@ -2,6 +2,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write as _;
 use std::sync::OnceLock;
 
+use rms_profile::ConstantKind;
 use serde::Deserialize;
 use serde_json::Value;
 
@@ -663,9 +664,52 @@ fn capitalize(text: &str) -> String {
     }
 }
 
-pub fn constant_markdown(family: Option<&Family>, name: &str, value: Option<&str>) -> String {
+fn kind_words(kind: ConstantKind) -> Option<(&'static str, &'static [&'static str])> {
+    Some(match kind {
+        ConstantKind::Object => ("object name", &["create_object"]),
+        ConstantKind::Terrain => (
+            "terrain name",
+            &["create_terrain", "terrain_type", "base_terrain"],
+        ),
+        ConstantKind::ObjectClass => ("object class", &["effect_amount", "effect_percent"]),
+        ConstantKind::CliffType => ("cliff style", &["cliff_type"]),
+        ConstantKind::MapType => ("map type", &["ai_info_map_type"]),
+        ConstantKind::ColorCorrection => ("color mood", &["color_correction"]),
+        ConstantKind::WaterDefinition => ("water look", &["water_definition"]),
+        ConstantKind::Civilization => ("civilization", &["set_gaia_civilization"]),
+        ConstantKind::AssignType => ("assignment target", &["assign_to"]),
+        _ => return None,
+    })
+}
+
+fn used_by(commands: impl IntoIterator<Item = impl AsRef<str>>) -> Option<String> {
+    let users = commands
+        .into_iter()
+        .map(|name| format!("`{}`", name.as_ref()))
+        .collect::<Vec<_>>();
+    (!users.is_empty()).then(|| format!("**Used by:** {}", users.join(", ")))
+}
+
+pub fn constant_markdown(
+    family: Option<&Family>,
+    name: &str,
+    value: Option<&str>,
+    kind: Option<ConstantKind>,
+) -> String {
     let mut sections = vec![code_block(&[name.to_owned()])];
     let source = family.map_or(FamilySource::Definitions, |family| family.source);
+    let generic = family.is_none_or(|family| family.membership.remainder);
+    let kind = kind
+        .filter(|_| source == FamilySource::Definitions && generic)
+        .and_then(kind_words);
+    if let Some((what, commands)) = kind {
+        sections.push(match value {
+            Some(value) => format!("Built-in {what}, value `{value}`."),
+            None => format!("Built-in {what}."),
+        });
+        sections.extend(used_by(commands.iter()));
+        return sections.join("\n\n");
+    }
     sections.push(match (source, value) {
         (FamilySource::RunSettings, _) => "Label defined by the run settings.".to_owned(),
         (FamilySource::Definitions, Some(value)) => format!("Built-in constant, value `{value}`."),
@@ -676,14 +720,7 @@ pub fn constant_markdown(family: Option<&Family>, name: &str, value: Option<&str
             sections.push(note.to_owned());
         }
         sections.push(format!("**{}** — {}", family.title, family.summary));
-        if !family.used_by.is_empty() {
-            let users = family
-                .used_by
-                .iter()
-                .map(|name| format!("`{name}`"))
-                .collect::<Vec<_>>();
-            sections.push(format!("**Used by:** {}", users.join(", ")));
-        }
+        sections.extend(used_by(family.used_by.iter()));
     }
     sections.join("\n\n")
 }

@@ -17,6 +17,7 @@ import {
   type ConnectorPromptAnswer,
 } from '../../../shared/connector-prompts';
 import { knownCrashFromText, withoutKnownCrashMarker } from '../../../shared/known-crashes';
+import { withoutRefusalLocationMarker } from '../../../shared/refusal-location';
 import {
   isPersistentModName,
   isReservedPersistentModName,
@@ -31,7 +32,7 @@ import {
 import { busyError, type AppLane, type AppRunTickets } from '../lane';
 import { unsignedSeed } from '../run-arguments';
 import { runningAnswer, type RunContext, type RunPrefix } from '../run-registry';
-import { failedRunSummary, type ScriptError } from '../summaries/map-summary';
+import { failedRunSummary, sourceFile, type ScriptError } from '../summaries/map-summary';
 import type { ConnectorJsonValue, ConnectorToolArguments } from '../validator';
 import type { IdeStatusPart } from './workspace-tools';
 import { connectionRuns, type ResolvedScript } from './run-tools';
@@ -457,7 +458,7 @@ export class GameTools {
         case 'live-failed':
           throw new ConnectorToolError(
             'game_not_ready',
-            `The live test did not start: ${withoutKnownCrashMarker(reply.message).slice(0, 300)}`,
+            `The live test did not start: ${withoutRefusalLocationMarker(withoutKnownCrashMarker(reply.message)).slice(0, 300)}`,
             {
               hint: 'Ask the user to look at the Output in AoE2RMSIDE and at the game.',
               facts: { file, seed },
@@ -585,7 +586,8 @@ export class GameTools {
               path: file,
               name: failure.name,
               stage: failure.stage,
-              message: withoutKnownCrashMarker(failure.message),
+              message: failure.message,
+              fileOf: (sourceId) => sourceFile(sourceId, this.deps.relativePath),
             },
             errors,
             1_500,

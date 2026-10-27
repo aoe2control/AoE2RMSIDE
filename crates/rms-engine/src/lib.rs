@@ -87,6 +87,7 @@ pub use exact_terrain::{
 };
 
 use std::collections::{BTreeMap, BTreeSet};
+use std::sync::OnceLock;
 use std::sync::atomic::{AtomicU8, Ordering};
 
 use rms_content::{
@@ -94,11 +95,12 @@ use rms_content::{
     TerrainId,
 };
 pub use rms_profile::KnownCrashHit;
-use rms_profile::{ProfileIdentity, crash_ids};
+use rms_profile::{ConstantKind, ConstantKinds, ProfileIdentity, crash_ids, frozen_constant_kinds};
 use rms_semantics::{
     ArgumentKind, ExecutionPlayerSetup, ResolvedArgument, RmsRandom, SemanticOperation,
     SemanticProgram, StrictParseOptions,
 };
+use rms_semantics::{ByteRange, SourceId};
 use rms_trace::{
     CliffMutation, ConnectionMutation, GenerationEvent, GenerationEventKind, GenerationEventSink,
     GenerationStage, MutationBatch, MutationOperation, ObjectMutation, TileMutation, TraceLevel,
@@ -136,6 +138,7 @@ impl MapDimensions {
                 code: "RMSGEN1001",
                 message: "map dimensions must be between 1 and 512".to_owned(),
                 crash: None,
+                location: None,
             });
         }
         Ok(usize::from(self.width) * usize::from(self.height))
@@ -1821,6 +1824,7 @@ fn validate_exact_operation_count(operation_count: usize) -> Result<(), Generati
                 operation_count
             ),
             crash: None,
+            location: None,
         });
     }
     Ok(())
@@ -2763,12 +2767,14 @@ fn crash_from_shrinking_after_lands(error: GenerationError) -> GenerationError {
             code,
             message,
             crash: Some(_),
+            location,
         } => GenerationError::InvalidRequest {
             code,
             message,
             crash: Some(KnownCrashHit::new(
                 crash_ids::OVERRIDE_MAP_SIZE_SHRINKS_AFTER_LANDS,
             )),
+            location,
         },
         error => error,
     }
@@ -5031,6 +5037,7 @@ pub enum GenerationError {
         code: &'static str,
         message: String,
         crash: Option<KnownCrashHit>,
+        location: Option<Box<RefusalLocation>>,
     },
     #[error("the script changed after this generation was requested")]
     StaleSemanticProgram,
@@ -5090,6 +5097,7 @@ fn invalid_request(code: &'static str, message: &str) -> GenerationError {
         code,
         message: message.to_owned(),
         crash: None,
+        location: None,
     }
 }
 
@@ -5098,6 +5106,24 @@ fn crash_refusal(code: &'static str, message: &str, crash: KnownCrashHit) -> Gen
         code,
         message: message.to_owned(),
         crash: Some(crash),
+        location: None,
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct RefusalLocation {
+    pub source_id: SourceId,
+    pub source_range: ByteRange,
+    pub include_chain: Vec<SourceId>,
+}
+
+impl RefusalLocation {
+    pub fn of(operation: &SemanticOperation) -> Self {
+        Self {
+            source_id: operation.source_id.clone(),
+            source_range: operation.source_range,
+            include_chain: operation.include_chain.clone(),
+        }
     }
 }
 
@@ -5108,6 +5134,69 @@ impl GenerationError {
             _ => None,
         }
     }
+
+    pub fn location(&self) -> Option<&RefusalLocation> {
+        match self {
+            GenerationError::InvalidRequest { location, .. } => location.as_deref(),
+            _ => None,
+        }
+    }
+
+    pub(crate) fn at_operation(mut self, operation: &SemanticOperation) -> Self {
+        if let GenerationError::InvalidRequest { location, .. } = &mut self
+            && location.is_none()
+        {
+            *location = Some(Box::new(RefusalLocation::of(operation)));
+        }
+        self
+    }
+}
+
+fn shipped_constant_kind(name: &str) -> Option<ConstantKind> {
+    static KINDS: OnceLock<Vec<ConstantKinds>> = OnceLock::new();
+    KINDS
+        .get_or_init(|| {
+            [
+                rms_profile::CURRENT_PROFILE_ID,
+                rms_profile::PROFILE_54800_ID,
+            ]
+            .into_iter()
+            .filter_map(|profile_id| frozen_constant_kinds(profile_id).ok().flatten())
+            .collect()
+        })
+        .iter()
+        .flat_map(|kinds| kinds.entries.iter())
+        .find_map(|entry| entry.kind_of(name))
+}
+
+fn terrain_argument_refusal(
+    operation: &SemanticOperation,
+    argument: &ResolvedArgument,
+    content: CompatibleContentView<'_>,
+    code: &'static str,
+    highest: u32,
+) -> GenerationError {
+    let command = operation.name.as_str();
+    let value = argument.value.as_str();
+    let message = match (argument.spelling.as_deref(), value.parse::<f32>()) {
+        (Some(name), Ok(number))
+            if shipped_constant_kind(name) == Some(ConstantKind::Object)
+                && content.rms_implicit_definition(name) == Some(number as i32) =>
+        {
+            format!("{command} needs a terrain, but {name} is an object")
+        }
+        (Some(name), Ok(_)) => {
+            format!("{command} needs a terrain number from 0 to {highest}, but {name} is {value}")
+        }
+        (None, Ok(_)) => {
+            format!("{command} needs a terrain number from 0 to {highest}, not {value}")
+        }
+        (spelling, Err(_)) => format!(
+            "{command} needs a terrain, but the selected game version has no terrain named {}",
+            spelling.unwrap_or(value)
+        ),
+    };
+    invalid_request(code, &message).at_operation(operation)
 }
 
 fn exact_terrain_argument(
@@ -5116,24 +5205,23 @@ fn exact_terrain_argument(
     content: CompatibleContentView<'_>,
     code: &'static str,
 ) -> Result<TerrainId, GenerationError> {
-    let value = operation
-        .arguments
-        .get(index)
-        .ok_or_else(|| invalid_request(code, "terrain operation is missing an argument"))?
-        .value
-        .as_str();
+    let argument = operation.arguments.get(index).ok_or_else(|| {
+        invalid_request(code, &format!("{} is missing its terrain", operation.name))
+            .at_operation(operation)
+    })?;
+    let value = argument.value.as_str();
+    let highest = u32::from(u8::MAX);
     let terrain_id = if let Ok(value) = value.parse::<u32>() {
         TerrainId(value)
     } else {
         content
             .terrain_by_rms_name(value)
             .map(|terrain| terrain.id)
-            .ok_or_else(|| invalid_request(code, "terrain identity is unresolved"))?
+            .ok_or_else(|| terrain_argument_refusal(operation, argument, content, code, highest))?
     };
-    if terrain_id.0 > u32::from(u8::MAX) {
-        return Err(invalid_request(
-            code,
-            "terrain id exceeds the target profile byte range",
+    if terrain_id.0 > highest {
+        return Err(terrain_argument_refusal(
+            operation, argument, content, code, highest,
         ));
     }
     Ok(terrain_id)

@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "Zur ersten Verwendung springen"
     },
+    "output.row.go-to": {
+      "message": "Zu {location} wechseln"
+    },
     "output.xs-start.summary": {
       "message": "XS-Startprüfung: main() und {rules, plural, one {# Regel} other {# Regeln}} in {files, list} ausgeführt ({steps, plural, one {# Schritt} other {# Schritte}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Das Spiel kann hier abstürzen"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Kein Gelände"
     },
     "map-icon.generate": {
       "message": "Kartensymbol erzeugen"

@@ -515,6 +515,9 @@
     "output.constructs.go-to": {
       "message": "처음 사용된 위치로 이동"
     },
+    "output.row.go-to": {
+      "message": "{location} 위치로 이동"
+    },
     "output.xs-start.summary": {
       "message": "XS 시작 검사: {files, list}에서 main()과 {rules, plural, other {규칙 #개}}를 실행했습니다({steps, plural, other {#단계}})"
     },
@@ -3007,6 +3010,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "여기서 게임이 강제 종료될 수 있음"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "지형이 아님"
     },
     "map-icon.generate": {
       "message": "맵 아이콘 생성"

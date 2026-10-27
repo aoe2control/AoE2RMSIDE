@@ -4726,7 +4726,8 @@ div:has(> .preview-layer-tooltip) {
   color: var(--foreground);
 }
 
-.problems-row {
+.problems-row,
+.output-row[data-goes-to] {
   cursor: pointer;
 }
 
@@ -4898,6 +4899,12 @@ div:has(> .preview-layer-tooltip) {
 .output-row-end {
   justify-self: end;
   padding-left: 4px;
+}
+
+.output-row-ends {
+  align-items: baseline;
+  display: inline-flex;
+  gap: 6px;
 }
 
 .output-severity,

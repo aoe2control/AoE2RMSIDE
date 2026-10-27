@@ -172,6 +172,7 @@ pub struct ResolvedArgument {
     pub kind: ArgumentKind,
     pub value: String,
     pub resolution: ArgumentResolution,
+    pub spelling: Option<String>,
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -577,6 +578,7 @@ impl Parser<'_> {
                         kind: classify_argument(value),
                         value: normalize_value(value, classify_argument(value)),
                         resolution: ArgumentResolution::Direct,
+                        spelling: None,
                     }],
                 )
             })
@@ -1551,6 +1553,7 @@ impl Parser<'_> {
                     kind: ArgumentKind::Number,
                     value: "0".to_owned(),
                     resolution: ArgumentResolution::Direct,
+                    spelling: None,
                 }],
                 0.0,
             )
@@ -1561,6 +1564,7 @@ impl Parser<'_> {
                     kind: ArgumentKind::Number,
                     value: canonical_number(value),
                     resolution: ArgumentResolution::Direct,
+                    spelling: None,
                 }],
                 value,
             )
@@ -1745,6 +1749,7 @@ impl Parser<'_> {
                             kind: ArgumentKind::Number,
                             value: tokens[cursor].1.clone(),
                             resolution: ArgumentResolution::UnparsedAfterRejection,
+                            spelling: None,
                         });
                         break;
                     }
@@ -1765,6 +1770,7 @@ impl Parser<'_> {
                             } else {
                                 ArgumentResolution::Direct
                             },
+                            spelling: None,
                         }),
                         Err(_) if *expected == StrictArgumentKind::TolerantNumber => break,
                         Err(error) => return Err(error),
@@ -1779,6 +1785,7 @@ impl Parser<'_> {
                         kind: ArgumentKind::Identifier,
                         value: tokens[cursor].1.clone(),
                         resolution: ArgumentResolution::UnparsedAfterRejection,
+                        spelling: None,
                     });
                     break;
                 }
@@ -1792,6 +1799,7 @@ impl Parser<'_> {
                         kind,
                         value: normalize_value(&tokens[cursor].1, kind),
                         resolution: ArgumentResolution::Direct,
+                        spelling: None,
                     });
                     cursor += 1;
                 }
@@ -1820,6 +1828,7 @@ impl Parser<'_> {
                             kind: ArgumentKind::Identifier,
                             value: normalized,
                             resolution: ArgumentResolution::ObjectGroupReference,
+                            spelling: None,
                         });
                     } else if unregistered_number || unregistered_word {
                         rejected = true;
@@ -1831,6 +1840,7 @@ impl Parser<'_> {
                             },
                             value: normalized,
                             resolution: ArgumentResolution::UnregisteredNumber,
+                            spelling: None,
                         });
                     } else if raw.parse::<f32>().is_ok()
                         || self.definitions.contains_key(&normalize_identifier(raw))
@@ -1842,26 +1852,28 @@ impl Parser<'_> {
                             decision.kind == ParsedDecisionKind::UndefinedNumericFallback
                         });
                         rejected = undefined;
+                        let resolution = if raw.parse::<f32>().is_ok() {
+                            ArgumentResolution::Direct
+                        } else if self.definitions.contains_key(&normalize_identifier(raw)) {
+                            ArgumentResolution::DefinedIdentifier
+                        } else if undefined {
+                            ArgumentResolution::UndefinedNumericFallback
+                        } else {
+                            unreachable!("undefined numeric resolution must record its decision")
+                        };
                         result.push(ResolvedArgument {
                             kind: ArgumentKind::Number,
                             value: canonical_number(value),
-                            resolution: if raw.parse::<f32>().is_ok() {
-                                ArgumentResolution::Direct
-                            } else if self.definitions.contains_key(&normalize_identifier(raw)) {
-                                ArgumentResolution::DefinedIdentifier
-                            } else if undefined {
-                                ArgumentResolution::UndefinedNumericFallback
-                            } else {
-                                unreachable!(
-                                    "undefined numeric resolution must record its decision"
-                                )
-                            },
+                            spelling: (resolution == ArgumentResolution::DefinedIdentifier)
+                                .then(|| raw.clone()),
+                            resolution,
                         });
                     } else {
                         result.push(ResolvedArgument {
                             kind: token_argument_kind(tokens[cursor].0),
                             value: normalize_identifier(raw),
                             resolution: ArgumentResolution::Direct,
+                            spelling: None,
                         });
                     }
                     cursor += 1;
@@ -1874,6 +1886,7 @@ impl Parser<'_> {
                             kind: token_argument_kind(tokens[cursor].0),
                             value: normalize_identifier(value),
                             resolution: ArgumentResolution::Direct,
+                            spelling: None,
                         });
                     }
                     result.extend(expanded);
@@ -2954,6 +2967,7 @@ fn unparsed_argument(
         kind,
         value,
         resolution: ArgumentResolution::UnparsedAfterRejection,
+        spelling: None,
     })
 }
 

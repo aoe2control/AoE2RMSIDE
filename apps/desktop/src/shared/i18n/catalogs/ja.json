@@ -515,6 +515,9 @@
     "output.constructs.go-to": {
       "message": "最初の使用箇所へ移動"
     },
+    "output.row.go-to": {
+      "message": "{location} へ移動"
+    },
     "output.xs-start.summary": {
       "message": "XS 開始時チェック：{files, list} が main() と {rules, plural, other {# 個のルール}}を実行しました（{steps, plural, other {# ステップ}}）"
     },
@@ -3007,6 +3010,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "ここでゲームがクラッシュする可能性"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "地形ではない名前"
     },
     "map-icon.generate": {
       "message": "マップアイコンを生成"

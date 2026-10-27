@@ -517,7 +517,9 @@ fn raw_connection_descriptors(
     for &(operation_index, operation) in &operations {
         if operation.depth != 0 {
             if let Some((_, template)) = current.as_mut() {
-                template.apply(operation, content)?;
+                template
+                    .apply(operation, content)
+                    .map_err(|error| error.at_operation(operation))?;
             }
             continue;
         }
@@ -899,9 +901,12 @@ fn connection_terrain_argument(
 ) -> Result<usize, GenerationError> {
     let terrain = exact_terrain_argument(operation, index, content, "RMSGEN7001")?.0 as usize;
     if terrain >= TERRAIN_SLOT_COUNT {
-        return Err(invalid_request(
+        return Err(terrain_argument_refusal(
+            operation,
+            &operation.arguments[index],
+            content,
             "RMSGEN7001",
-            "connection terrain id exceeds the descriptor slot table",
+            TERRAIN_SLOT_COUNT as u32 - 1,
         ));
     }
     Ok(terrain)

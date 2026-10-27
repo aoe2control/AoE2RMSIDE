@@ -124,23 +124,41 @@ export function editorAssistanceFailure(error: unknown, kind: EditorWarningKind)
   );
 }
 
+export interface RequiredSourceLimitReporter {
+  (error: unknown, context: string): boolean;
+  prepared(): void;
+}
+
 export function requiredSourceLimitReporter(
   publish: (message: OutputMessage) => void,
-): (error: unknown, context: string) => boolean {
+): RequiredSourceLimitReporter {
   let current: string | undefined;
   const reported = new Set<RequiredSourceLimitError['kind']>();
-  return (error, context) => {
+  const posted = new Map<RequiredSourceLimitError['kind'], string>();
+  const report = (error: unknown, context: string): boolean => {
     if (!(error instanceof RequiredSourceLimitError)) return false;
     if (context !== current) {
       current = context;
       reported.clear();
     }
-    if (!reported.has(error.kind)) {
-      reported.add(error.kind);
-      publish(sourceCatalogFailureMessage(error)!);
-    }
+    if (reported.has(error.kind)) return true;
+    reported.add(error.kind);
+    const failure = JSON.stringify([error.scope, error.used, error.maximum]);
+    if (posted.get(error.kind) === failure) return true;
+    posted.set(error.kind, failure);
+    publish(sourceCatalogFailureMessage(error)!);
     return true;
   };
+  return Object.assign(report, { prepared: () => posted.clear() });
+}
+
+export function analysisFailureCurrent(
+  capturedContext: string,
+  currentContext: string,
+  uri: string | null | undefined,
+  isOpen: (uri: string) => boolean,
+): boolean {
+  return capturedContext === currentContext && (!uri || isOpen(uri));
 }
 
 export function catalogRefreshFailureReporter(

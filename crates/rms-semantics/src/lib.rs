@@ -28,6 +28,8 @@ pub use parser::{
     normalize_implicit_definition_bytes, normalize_implicit_definition_integers,
     normalize_implicit_definition_source, parse_strict, parse_strict_cached, parse_strict_single,
 };
+pub use rms_source::{ByteRange, SourceId};
+
 pub use program::{
     ExecutedConstruct, SemanticEquivalence, SemanticOperation, SemanticProgram,
     SemanticProgramIdentity, SourceSpanMapping, compare_semantics,

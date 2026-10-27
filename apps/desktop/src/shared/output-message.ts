@@ -1,6 +1,7 @@
 import type { ExternalLinkTarget } from './api';
 import { isExternalLinkTarget } from './external-links';
 import { messageIdPattern } from './i18n/message-format';
+import { refusalLocation, type RefusalLocation } from './refusal-location';
 import {
   activeTranslator,
   englishTranslator,
@@ -100,6 +101,7 @@ export interface OutputMessage {
   action?: OutputAction;
   detail?: string;
   monospace?: boolean;
+  target?: RefusalLocation;
   wording?: OutputWording;
 }
 
@@ -116,7 +118,8 @@ const codePattern = /^[A-Za-z0-9._:-]{1,96}$/u;
 export function validateOutputMessage(value: unknown): OutputMessage | null {
   if (!value || typeof value !== 'object') return null;
   const candidate = value as Record<string, unknown>;
-  const { code, severity, source, headline, cause, action, detail, monospace, wording } = candidate;
+  const { code, severity, source, headline, cause, action, detail, monospace, target, wording } =
+    candidate;
   if (typeof code !== 'string' || !codePattern.test(code)) return null;
   if (severity !== 'info' && severity !== 'warning' && severity !== 'error') return null;
   if (typeof source !== 'string' || !(outputSources as readonly string[]).includes(source)) {
@@ -126,6 +129,8 @@ export function validateOutputMessage(value: unknown): OutputMessage | null {
   if (cause !== undefined && typeof cause !== 'string') return null;
   if (detail !== undefined && typeof detail !== 'string') return null;
   if (monospace !== undefined && typeof monospace !== 'boolean') return null;
+  const validatedTarget = target === undefined ? undefined : refusalLocation(target);
+  if (validatedTarget === null) return null;
   const validatedWording = wording === undefined ? undefined : validateOutputWording(wording);
   if (validatedWording === null) return null;
   let validatedAction: OutputAction | undefined;
@@ -150,6 +155,7 @@ export function validateOutputMessage(value: unknown): OutputMessage | null {
     ...(validatedAction ? { action: validatedAction } : {}),
     ...(detail ? { detail: bounded(detail, outputMessageLimits.detail) } : {}),
     ...(monospace ? { monospace: true } : {}),
+    ...(validatedTarget ? { target: validatedTarget } : {}),
     ...(validatedWording ? { wording: validatedWording } : {}),
   };
 }

@@ -192,6 +192,7 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
                                     control_pipe_exchange: true,
                                     map_test_completion_order_preview: false,
                                     known_crash_ids: true,
+                                    refusal_locations: true,
                                     xs_start_check: true,
                                     map_test_game_crashes: false,
                                     map_test_xs: false,
@@ -1153,7 +1154,8 @@ fn generation_worker(
             );
             if let Some(Payload::Error(error)) = error.payload.as_mut() {
                 error.details = failure.details;
-                error.known_crash = failure.known_crash;
+                error.known_crash = failure.known_crash.map(|crash| *crash);
+                error.refusal_location = failure.refusal_location.map(|location| *location);
             }
             let _ = send_protocol_batch(
                 &writer,
@@ -1653,7 +1655,8 @@ struct ProtocolFailure {
     retryable: bool,
     terminal_sequence: u64,
     details: BTreeMap<String, String>,
-    known_crash: Option<v1::KnownCrashReference>,
+    known_crash: Option<Box<v1::KnownCrashReference>>,
+    refusal_location: Option<Box<v1::RefusalLocation>>,
 }
 
 fn execute_generation(
@@ -1837,7 +1840,11 @@ fn execute_generation(
         parse()
     }
     .map_err(|error| ProtocolFailure {
-        known_crash: error.crash.as_ref().and_then(known_crash_reference),
+        known_crash: error
+            .crash
+            .as_ref()
+            .and_then(known_crash_reference)
+            .map(Box::new),
         ..malformed(format!(
             "the script could not be analyzed ({}): {}",
             error.code, error.message
@@ -2007,6 +2014,20 @@ fn execute_generation(
     drop(observed);
     latency::step(identity_request_id, "generate");
     let map = map.map_err(|error| {
+        let refusal_location = error.location().and_then(|location| {
+            protocol_refusal_location(location, &document.uri, |id| {
+                if id.as_str() == document.uri {
+                    return Some(request.source.as_slice().into());
+                }
+                source_catalog.as_ref().and_then(|catalog| {
+                    catalog
+                        .sources()
+                        .iter()
+                        .find(|source| source.source_id == *id)
+                        .map(|source| source.bytes.clone())
+                })
+            })
+        });
         let failure = match error {
             GenerationError::MissingContentDefinition { kind, id } => missing_content_failure(
                 kind,
@@ -2018,7 +2039,13 @@ fn execute_generation(
             ),
             error => map_generation_failure(error),
         };
-        with_terminal_sequence(failure, events.last_sequence + 1)
+        with_terminal_sequence(
+            ProtocolFailure {
+                refusal_location: refusal_location.map(Box::new),
+                ..failure
+            },
+            events.last_sequence + 1,
+        )
     })?;
     if cancellation.is_cancelled() {
         return Err(cancelled_failure(
@@ -3633,6 +3660,7 @@ fn malformed(message: impl Into<String>) -> ProtocolFailure {
         terminal_sequence: 0,
         details: Default::default(),
         known_crash: None,
+        refusal_location: None,
     }
 }
 
@@ -3644,6 +3672,7 @@ fn stale(message: impl Into<String>) -> ProtocolFailure {
         terminal_sequence: 0,
         details: Default::default(),
         known_crash: None,
+        refusal_location: None,
     }
 }
 
@@ -3655,6 +3684,7 @@ fn unsupported(message: impl Into<String>) -> ProtocolFailure {
         terminal_sequence: 0,
         details: Default::default(),
         known_crash: None,
+        refusal_location: None,
     }
 }
 
@@ -3666,11 +3696,48 @@ fn internal_failure(message: impl Into<String>) -> ProtocolFailure {
         terminal_sequence: 0,
         details: Default::default(),
         known_crash: None,
+        refusal_location: None,
     }
 }
 
+fn protocol_refusal_location(
+    location: &rms_engine::RefusalLocation,
+    entry: &str,
+    source_bytes: impl Fn(&SourceId) -> Option<std::sync::Arc<[u8]>>,
+) -> Option<v1::RefusalLocation> {
+    let bytes = source_bytes(&location.source_id)?;
+    let text = SourceText::from_bytes(location.source_id.clone(), bytes.to_vec()).ok()?;
+    let position = text.byte_to_utf16(location.source_range.start).ok()?;
+    let mut include_chain = if location.include_chain.is_empty() {
+        vec![entry.to_owned()]
+    } else {
+        location
+            .include_chain
+            .iter()
+            .map(|source| source.as_str().to_owned())
+            .collect::<Vec<_>>()
+    };
+    if include_chain.last().map(String::as_str) != Some(location.source_id.as_str()) {
+        include_chain.push(location.source_id.as_str().to_owned());
+    }
+    let reference = v1::RefusalLocation {
+        source_id: location.source_id.as_str().to_owned(),
+        byte_start: location.source_range.start.0,
+        byte_end: location.source_range.end.0,
+        line: position.line.checked_add(1)?,
+        column: position.character.checked_add(1)?,
+        include_chain,
+    };
+    rms_protocol::validate_refusal_location(&reference)
+        .ok()
+        .map(|()| reference)
+}
+
 fn map_generation_failure(error: GenerationError) -> ProtocolFailure {
-    let known_crash = error.known_crash().and_then(known_crash_reference);
+    let known_crash = error
+        .known_crash()
+        .and_then(known_crash_reference)
+        .map(Box::new);
     let failure = match error {
         GenerationError::UnsupportedCapability { .. } => unsupported(error.to_string()),
         GenerationError::Cancelled(_) => ProtocolFailure {
@@ -3680,6 +3747,7 @@ fn map_generation_failure(error: GenerationError) -> ProtocolFailure {
             terminal_sequence: 0,
             details: Default::default(),
             known_crash: None,
+            refusal_location: None,
         },
         GenerationError::StaleSemanticProgram => stale(error.to_string()),
         GenerationError::BackendFailure { .. } | GenerationError::EventSink(_) => {
@@ -3800,6 +3868,7 @@ fn frame_too_large_failure(
             terminal_sequence,
             details: error.details,
             known_crash: None,
+            refusal_location: None,
         },
         _ => with_terminal_sequence(
             internal_failure(format!("{description} exceeds the protocol frame bound")),
@@ -3821,6 +3890,7 @@ fn cancelled_failure(sequence: u64, message: impl Into<String>) -> ProtocolFailu
         terminal_sequence: sequence,
         details: Default::default(),
         known_crash: None,
+        refusal_location: None,
     }
 }
 

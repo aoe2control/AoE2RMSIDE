@@ -1214,6 +1214,15 @@
       "control": "tooltip",
       "meaning": "Tooltip of a command name in that list: moves the editor caret to the first place the script uses it."
     },
+    "output.row.go-to": {
+      "message": "Go to {location}",
+      "screen": "output",
+      "control": "tooltip",
+      "meaning": "Accessible name and tooltip of the line:column button at the end of an Output message about one command of the script (a refused generation): moves the editor to that command.",
+      "placeholders": {
+        "location": "a file and line, such as “arabia.rms, line 7”"
+      }
+    },
     "output.xs-start.summary": {
       "message": "XS start check: {files, list} ran main() and {rules, plural, one {# rule} other {# rules}} ({steps, plural, one {# step} other {# steps}})",
       "screen": "output",
@@ -3897,6 +3906,73 @@
       "screen": "output",
       "control": "message-headline",
       "meaning": "Headline of the message for code RMSGEN, shown in Output, the editor notice, the deployment panel, or Problems.",
+      "translate": false
+    },
+    "message.RMSGEN.terrain.headline": {
+      "message": "{command} needs a terrain",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Headline of a generation refusal of a terrain operand the engine cannot use (codes RMSGEN3001, RMSGEN3101, RMSGEN3301, RMSGEN6001, RMSGEN7001), shown in Output, the editor notice, the deployment panel, or Problems.",
+      "placeholders": {
+        "command": "the RMS command as written, such as create_terrain or terrain_type"
+      },
+      "translate": false
+    },
+    "message.RMSGEN.terrain.cause.object": {
+      "message": "{name} is an object, not a terrain.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause sentence of a generation refusal of a terrain operand the engine cannot use (codes RMSGEN3001, RMSGEN3101, RMSGEN3301, RMSGEN6001, RMSGEN7001), shown in Output, the editor notice, the deployment panel, or Problems: the operand is a built-in name of an object.",
+      "placeholders": {
+        "name": "the operand as written, such as DLC_ROCKBEACH"
+      },
+      "translate": false
+    },
+    "message.RMSGEN.terrain.cause.range": {
+      "message": "{name} is {value}, and terrain numbers go from 0 to {highest}.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause sentence of a generation refusal of a terrain operand the engine cannot use (codes RMSGEN3001, RMSGEN3101, RMSGEN3301, RMSGEN6001, RMSGEN7001), shown in Output, the editor notice, the deployment panel, or Problems: the operand is a name whose number is outside the terrain numbers.",
+      "placeholders": {
+        "name": "the operand as written, such as MY_TERRAIN",
+        "value": "the number the name stands for, such as 300",
+        "highest": "the highest terrain number the command accepts, such as 255"
+      },
+      "translate": false
+    },
+    "message.RMSGEN.terrain.cause.number": {
+      "message": "{value} is not a terrain number; they go from 0 to {highest}.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause sentence of a generation refusal of a terrain operand the engine cannot use (codes RMSGEN3001, RMSGEN3101, RMSGEN3301, RMSGEN6001, RMSGEN7001), shown in Output, the editor notice, the deployment panel, or Problems: the operand is a number outside the terrain numbers.",
+      "placeholders": {
+        "value": "the number as written, such as 300",
+        "highest": "the highest terrain number the command accepts, such as 255"
+      },
+      "translate": false
+    },
+    "message.RMSGEN.terrain.cause.unknown": {
+      "message": "The selected game version has no terrain named {name}.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause sentence of a generation refusal of a terrain operand the engine cannot use (codes RMSGEN3001, RMSGEN3101, RMSGEN3301, RMSGEN6001, RMSGEN7001), shown in Output, the editor notice, the deployment panel, or Problems: the operand is a word that names no terrain.",
+      "placeholders": {
+        "name": "the operand as written"
+      },
+      "translate": false
+    },
+    "message.RMSGEN.terrain.cause.missing": {
+      "message": "The command names no terrain.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause sentence of a generation refusal of a terrain operand the engine cannot use (codes RMSGEN3001, RMSGEN3101, RMSGEN3301, RMSGEN6001, RMSGEN7001), shown in Output, the editor notice, the deployment panel, or Problems: the command has no terrain operand.",
+      "translate": false
+    },
+    "message.RMSGEN.terrain.action": {
+      "message": "Write a terrain name or number there",
+      "screen": "output",
+      "control": "message-action",
+      "meaning": "Next-step label of a generation refusal of a terrain operand the engine cannot use (codes RMSGEN3001, RMSGEN3101, RMSGEN3301, RMSGEN6001, RMSGEN7001), shown in Output, the editor notice, the deployment panel, or Problems.",
       "translate": false
     },
     "message.RMSXS0001.headline": {
@@ -9368,6 +9444,13 @@
       "control": "menu-item",
       "maxLength": 48,
       "meaning": "Name of the RMS lint rule RMS4012 in View → Lint Rules (shown as “name (RMS4012)”; its check mark turns the rule on or off for the open workspace). The rule marks a line on which the game itself can crash with another branch, seed or lobby setting, for example a defined name the game runs as a command."
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Not a terrain",
+      "screen": "application-menu/view/lint-rules",
+      "control": "menu-item",
+      "maxLength": 48,
+      "meaning": "Name of the RMS lint rule RMS4013 in View → Lint Rules (shown as “name (RMS4013)”; its check mark turns the rule on or off for the open workspace). The rule marks a built-in name of an object or another kind of thing written where a command reads a terrain, such as an object name after create_terrain."
     },
     "map-icon.generate": {
       "message": "Generate map icon",
@@ -16016,6 +16099,49 @@
       "screen": "problems",
       "control": "message-action",
       "meaning": "Next-step label of the RMS lint finding RMS4010, shown in Problems and the editor.",
+      "translate": false
+    },
+    "message.RMS4013.headline": {
+      "message": "A name here is not a terrain",
+      "screen": "problems",
+      "control": "message-headline",
+      "meaning": "Headline of the RMS lint finding RMS4013 (a built-in name of an object or another kind of thing written where a command reads a terrain), shown in Problems and the editor.",
+      "translate": false
+    },
+    "message.RMS4013.headline.named": {
+      "message": "{name} is not a terrain",
+      "screen": "problems",
+      "control": "message-headline",
+      "meaning": "Headline of the RMS lint finding RMS4013 (a built-in name of an object or another kind of thing written where a command reads a terrain), shown in Problems and the editor, naming the name.",
+      "placeholders": {
+        "name": "the built-in name as written, such as DLC_ROCKBEACH"
+      },
+      "translate": false
+    },
+    "message.RMS4013.cause.named": {
+      "message": "{command} reads a terrain here, and {name} is {kind}.",
+      "screen": "problems",
+      "control": "message-cause",
+      "meaning": "Cause sentence of the RMS lint finding RMS4013 (a built-in name of an object or another kind of thing written where a command reads a terrain), shown in Problems and the editor, naming the command and what the name is.",
+      "placeholders": {
+        "command": "the RMS command as written, such as create_terrain",
+        "name": "the built-in name as written, such as DLC_ROCKBEACH",
+        "kind": "what the name is, in English as rms-ls words it, such as “an object”"
+      },
+      "translate": false
+    },
+    "message.RMS4013.cause": {
+      "message": "A command reads a terrain here, and this built-in name is something else.",
+      "screen": "problems",
+      "control": "message-cause",
+      "meaning": "Cause sentence of the RMS lint finding RMS4013 (a built-in name of an object or another kind of thing written where a command reads a terrain), shown in Problems and the editor.",
+      "translate": false
+    },
+    "message.RMS4013.action": {
+      "message": "Use a terrain name here",
+      "screen": "problems",
+      "control": "message-action",
+      "meaning": "Next-step label of the RMS lint finding RMS4013 (a built-in name of an object or another kind of thing written where a command reads a terrain), shown in Problems and the editor.",
       "translate": false
     },
     "editor-assistance.limited.capacity": {

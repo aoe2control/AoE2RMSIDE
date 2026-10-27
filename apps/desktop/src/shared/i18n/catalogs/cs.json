@@ -507,6 +507,9 @@
     "output.constructs.go-to": {
       "message": "Přejít na první použití"
     },
+    "output.row.go-to": {
+      "message": "Přejít na {location}"
+    },
     "output.xs-start.summary": {
       "message": "Kontrola startu XS: {files, list} – spuštěno main() a {rules, plural, one {# pravidlo} few {# pravidla} many {# pravidla} other {# pravidel}} ({steps, plural, one {# krok} few {# kroky} many {# kroku} other {# kroků}})"
     },
@@ -2999,6 +3002,9 @@
     },
     "lint-rule.RMS4012.title": {
       "message": "Hra zde může spadnout"
+    },
+    "lint-rule.RMS4013.title": {
+      "message": "Není terén"
     },
     "map-icon.generate": {
       "message": "Generovat ikonu mapy"
