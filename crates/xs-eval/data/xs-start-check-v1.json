@@ -640,6 +640,11 @@
       "class": "random"
     },
     {
+      "name": "xsGetReadNetDataPosition",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
       "name": "xsGetStrategicNumber",
       "class": "refused",
       "reason": "notInMapScripts"
@@ -831,6 +836,11 @@
       "mock": "time"
     },
     {
+      "name": "xsGetWriteNetDataPosition",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
       "name": "xsHasResearchedLocalTechnology",
       "class": "refused",
       "reason": "technologyData"
@@ -905,6 +915,26 @@
       "mock": "file"
     },
     {
+      "name": "xsReadNetFloat",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsReadNetInt",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsReadNetString",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsReadNetVector",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
       "name": "xsReadString",
       "class": "mocked",
       "mock": "file"
@@ -932,12 +962,22 @@
       "class": "recordedChange"
     },
     {
+      "name": "xsResetNetData",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
       "name": "xsResetTaskAmount",
       "class": "recordedChange"
     },
     {
       "name": "xsSendChat",
       "class": "chat"
+    },
+    {
+      "name": "xsSendNetData",
+      "class": "refused",
+      "reason": "gameRuntime"
     },
     {
       "name": "xsSetAiScriptGoal",
@@ -995,6 +1035,11 @@
     {
       "name": "xsSetPlayerName",
       "class": "recordedChange"
+    },
+    {
+      "name": "xsSetReadNetDataPosition",
+      "class": "refused",
+      "reason": "gameRuntime"
     },
     {
       "name": "xsSetRuleMaxInterval",
@@ -1090,6 +1135,11 @@
     },
     {
       "name": "xsSetViewPosition",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsSetWriteNetDataPosition",
       "class": "refused",
       "reason": "gameRuntime"
     },
@@ -1210,6 +1260,26 @@
       "name": "xsWriteInt",
       "class": "mocked",
       "mock": "file"
+    },
+    {
+      "name": "xsWriteNetFloat",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsWriteNetInt",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsWriteNetString",
+      "class": "refused",
+      "reason": "gameRuntime"
+    },
+    {
+      "name": "xsWriteNetVector",
+      "class": "refused",
+      "reason": "gameRuntime"
     },
     {
       "name": "xsWriteString",

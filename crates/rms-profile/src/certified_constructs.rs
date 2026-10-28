@@ -3,7 +3,7 @@ use std::cmp::Ordering;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CURRENT_PROFILE_ID, CompatibilityRange, PROFILE_54800_ID, ProfileError,
+    CURRENT_PROFILE_ID, CompatibilityRange, PROFILE_54800_ID, PROFILE_57257_ID, ProfileError,
     compare_product_versions, is_calendar_date, parse_product_version, validate_identifier,
 };
 
@@ -212,6 +212,10 @@ pub fn frozen_certified_constructs(
         PROFILE_54800_ID => include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
             "/../../profiles/certified-constructs/aoe2de-101.103.54800-rms-v1.json"
+        )),
+        PROFILE_57257_ID => include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../../profiles/certified-constructs/aoe2de-101.103.57257-rms-v1.json"
         )),
         _ => return Ok(None),
     };

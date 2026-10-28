@@ -87,7 +87,7 @@
   },
   "definitions": {
     "buildId": {
-      "enum": ["4x", "5x"]
+      "enum": ["4x", "5x", "57257"]
     },
     "runtimeId": {
       "enum": ["rms", "trigger", "ai"]

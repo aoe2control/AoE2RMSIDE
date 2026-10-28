@@ -9,7 +9,7 @@ export interface XsEnvironmentPayload {
   gameBuild: XsGameBuild | null;
 }
 
-export type XsGameBuild = '4x' | '5x';
+export type XsGameBuild = '4x' | '5x' | '57257';
 
 export interface XsEnvironmentState {
   payload: XsEnvironmentPayload;
@@ -21,6 +21,7 @@ export const maximumXsConstantsBytes = 16 * 1024 * 1024;
 
 export function xsGameBuildForProfile(profileId: string | null | undefined): XsGameBuild | null {
   if (typeof profileId !== 'string') return null;
+  if (profileId.includes('101.103.57257')) return '57257';
   if (profileId.includes('101.103.54800')) return '5x';
   if (profileId.includes('101.103.48987')) return '4x';
   return null;

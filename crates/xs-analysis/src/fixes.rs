@@ -56,13 +56,12 @@ pub fn version_correct_builtin_name(name: &str, build: XsBuild) -> Option<String
     if builtin.available_in(build) {
         return None;
     }
-    if let Some((successor_build, successor)) = &builtin.successor
-        && *successor_build == build
+    if let Some(successor) = builtin.successor_in(build)
         && catalog
             .get(successor)
             .is_some_and(|candidate| candidate.available_in(build))
     {
-        return Some(successor.clone());
+        return Some(successor.to_owned());
     }
     let mut predecessors = catalog.builtins().iter().filter(|candidate| {
         candidate.available_in(build)

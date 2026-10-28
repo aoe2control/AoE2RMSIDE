@@ -19,7 +19,11 @@ const RULE_NAME_CALLS: [&str; 9] = [
     "xsIsRuleGroupEnabled",
 ];
 
-const FUNCTION_NAME_CALLS: [(&str, usize); 2] = [("xsGetFunctionID", 0), ("xsAddRuntimeEvent", 1)];
+const FUNCTION_NAME_CALLS: [(&str, usize); 3] = [
+    ("xsGetFunctionID", 0),
+    ("xsAddRuntimeEvent", 1),
+    ("xsSendNetData", 0),
+];
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct RenameTarget {

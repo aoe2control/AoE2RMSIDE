@@ -12,15 +12,17 @@ const SUPPORTED_MAJOR: u64 = 1;
 pub enum XsBuild {
     V4x,
     V5x,
+    V57257,
 }
 
 impl XsBuild {
-    pub const ALL: [Self; 2] = [Self::V4x, Self::V5x];
+    pub const ALL: [Self; 3] = [Self::V4x, Self::V5x, Self::V57257];
 
     pub const fn id(self) -> &'static str {
         match self {
             Self::V4x => "4x",
             Self::V5x => "5x",
+            Self::V57257 => "57257",
         }
     }
 
@@ -28,12 +30,15 @@ impl XsBuild {
         match id {
             "4x" => Some(Self::V4x),
             "5x" => Some(Self::V5x),
+            "57257" => Some(Self::V57257),
             _ => None,
         }
     }
 
     pub fn from_profile_id(profile_id: &str) -> Option<Self> {
-        if profile_id.contains("101.103.54800") {
+        if profile_id.contains("101.103.57257") {
+            Some(Self::V57257)
+        } else if profile_id.contains("101.103.54800") {
             Some(Self::V5x)
         } else if profile_id.contains("101.103.48987") {
             Some(Self::V4x)
@@ -142,6 +147,13 @@ impl Builtin {
 
     pub fn available_in(&self, build: XsBuild) -> bool {
         self.builds.contains(&build)
+    }
+
+    pub fn successor_in(&self, build: XsBuild) -> Option<&str> {
+        self.successor
+            .as_ref()
+            .filter(|(renamed_in, _)| *renamed_in <= build)
+            .map(|(_, name)| name.as_str())
     }
 
     pub fn available_in_runtime(&self, runtime: XsRuntime) -> bool {
@@ -284,7 +296,7 @@ impl XsCatalog {
                     ));
                 }
             }
-            for build in [None, Some(XsBuild::V4x), Some(XsBuild::V5x)] {
+            for build in std::iter::once(None).chain(XsBuild::ALL.map(Some)) {
                 if build.is_none_or(|build| builtin.available_in(build))
                     && !crate::documentation::within_rendered_limit(builtin, build)
                 {

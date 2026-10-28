@@ -193,7 +193,11 @@ fn summary_without_version_notes(summary: &str) -> String {
         let note = &rest[open + 1..close];
         if note
             .split(|character: char| !character.is_ascii_alphanumeric())
-            .any(|word| word.eq_ignore_ascii_case("4x") || word.eq_ignore_ascii_case("5x"))
+            .any(|word| {
+                XsBuild::ALL
+                    .iter()
+                    .any(|build| word.eq_ignore_ascii_case(build.id()))
+            })
         {
             text.push_str(rest[..open].trim_end());
         } else {

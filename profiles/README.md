@@ -9,6 +9,7 @@ published profile file never changes. A new game version gets a new profile.
 | ----------------------------- | ----------------- | -------- |
 | `aoe2de-101.103.48987-rms-v1` | `101.103.48987.0` | verified |
 | `aoe2de-101.103.54800-rms-v1` | `101.103.54800.0` | verified |
+| `aoe2de-101.103.57257-rms-v1` | `101.103.57257.0` | verified |
 
 - **Verified** means the profile's version label is listed in
   `productVersions`. The label does not prove that a particular user's
@@ -30,7 +31,8 @@ beyond those limits are refused before generation instead of producing an
 approximate map.
 
 Profile schema `1.1.0` adds version-gated generator decisions
-(`object-group-roll-filter` and `path-no-route-result`). A `1.0.0` profile
+(`object-group-roll-filter`, `path-no-route-result`, and, from
+101.103.57257.0, `undead-flag-temporary-objects`). A `1.0.0` profile
 cannot carry them and always uses the original rules.
 
 ## Minimap palettes

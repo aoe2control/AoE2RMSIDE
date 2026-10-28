@@ -458,6 +458,38 @@ impl ExactObjectState {
         &self.game_setup_objects
     }
 
+    pub(crate) fn removed_after_generation(
+        &self,
+        object: &PlacedObject,
+    ) -> Result<bool, GenerationError> {
+        temporary_object_removed(&self.runtime_attributes, object.object_id, object.owner)
+    }
+
+    pub(crate) fn refuse_unmodelled_temporary_removals(&self) -> Result<(), GenerationError> {
+        let attributes = &self.runtime_attributes;
+        if !attributes.has_undead_flags() {
+            return Ok(());
+        }
+        for object in self.module_exit_pieces.iter() {
+            if temporary_object_removed(attributes, object.object_id, object.owner)? {
+                return Err(invalid_object(
+                    "the preview does not support removing a cliff piece whose undead flag marks it temporary",
+                ));
+            }
+        }
+        for (_, object_id, _) in self.standing_appearance_objects() {
+            if temporary_object_removed(attributes, object_id, 0)? {
+                return Err(invalid_object(
+                    "the preview does not support removing a terrain appearance whose undead flag marks it temporary",
+                ));
+            }
+        }
+        for object in self.post_rms_objects.iter() {
+            temporary_object_removed(attributes, object.object_id, object.owner)?;
+        }
+        Ok(())
+    }
+
     pub fn scripted_construction_position_f32_bits(&self, index: usize) -> Option<[u32; 2]> {
         self.objects.get(index).map(|object| {
             self.scripted_position_overrides
@@ -8954,6 +8986,31 @@ use attributes::{
 mod program;
 pub(super) use program::collect_runtime_object_attributes;
 use program::*;
+
+const FOUNDATION_REPAINTING_REMOVALS: [u32; 4] = [50, 357, 1187, 1188];
+
+fn temporary_object_removed(
+    attributes: &ObjectRuntimeAttributes,
+    object_id: ObjectId,
+    owner: u8,
+) -> Result<bool, GenerationError> {
+    let Some(flag) = attributes.undead_flag(object_id, owner) else {
+        return Err(invalid_object(
+            "the preview does not support an upgraded master whose undead flag the upgrade target's flag decides",
+        ));
+    };
+    let removed = flag & attributes::UNDEAD_FLAG_TEMPORARY_NOT_TRACKED != 0;
+    if removed
+        && (FOUNDATION_REPAINTING_REMOVALS.contains(&object_id.0)
+            || FOUNDATION_REPAINTING_REMOVALS
+                .contains(&attributes.definition_id(object_id, owner).0))
+    {
+        return Err(invalid_object(
+            "the preview does not support removing a farm whose undead flag marks it temporary",
+        ));
+    }
+    Ok(removed)
+}
 
 #[derive(Clone, Copy)]
 struct TightCandidate {

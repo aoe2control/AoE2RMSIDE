@@ -2309,9 +2309,10 @@ fn construct_verification(
     })
 }
 
-const INSTANCE_ID_COMPARED_PROFILES: [&str; 2] = [
+const INSTANCE_ID_COMPARED_PROFILES: [&str; 3] = [
     rms_profile::CURRENT_PROFILE_ID,
     rms_profile::PROFILE_54800_ID,
+    rms_profile::PROFILE_57257_ID,
 ];
 
 #[derive(Debug, Eq, PartialEq)]

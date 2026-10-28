@@ -6,7 +6,11 @@
     "maximumMajor": 1
   },
   "catalogId": "aoe2de-rms-documentation-v1",
-  "profiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+  "profiles": [
+    "aoe2de-101.103.48987-rms-v1",
+    "aoe2de-101.103.54800-rms-v1",
+    "aoe2de-101.103.57257-rms-v1"
+  ],
   "sources": [
     {
       "id": "strict-parser",
@@ -2856,7 +2860,7 @@
           "text": "An entry qualifies when its weight is at most the roll: weight 0 always qualifies, and 100 or more never does (such an entry is only used as the first entry when nothing qualifies)."
         },
         {
-          "profiles": ["aoe2de-101.103.54800-rms-v1"],
+          "profiles": ["aoe2de-101.103.54800-rms-v1", "aoe2de-101.103.57257-rms-v1"],
           "text": "An entry qualifies when its weight is at least the roll: 99 or more always qualifies, and weight 0 only on a roll of 0."
         }
       ],

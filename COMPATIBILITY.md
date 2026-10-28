@@ -52,6 +52,11 @@ repeated run of the same map counts once.
   25 test maps).
 - `101.103.54800.0`: 549 maps (168 official, 230 community, 30 tournament,
   121 test maps).
+- `101.103.57257.0`: 23 maps (21 official, 2 test maps). This version
+  changed one rule: objects whose undead flag includes
+  `UNDEADFLAG_TEMPORARY_NOT_TRACKED`
+  are removed when the map is done. Its other rules are those of
+  `101.103.54800.0`.
 
 ### Measured on unseen scripts
 
@@ -77,7 +82,7 @@ These maps cover the commands and settings that scripts use most, but not
 every possible script: a script that uses something rare that none of the
 compared maps used can still give a different map. Output names such
 commands next to the result. A script on which the game itself crashes,
-such as the official map Stranded in one verified version or the community
+such as the official map Stranded in `101.103.54800.0` or the community
 map Noble Bypass, is refused with an error instead of previewed.
 
 If AoE2RMSIDE shows a different map than the game on a verified version,

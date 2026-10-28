@@ -302,6 +302,7 @@ pub(crate) fn collect_runtime_object_attributes(
     let terrain_attribute = content.rms_implicit_definition("ATTR_TERRAIN_ID");
     let foundation_terrain_attribute = content.rms_implicit_definition("ATTR_FOUNDATION_TERRAIN");
     let standing_graphic_attribute = content.rms_implicit_definition("ATTR_STANDING_GRAPHIC");
+    let undead_flag_attribute = content.rms_implicit_definition("ATTR_UNDEAD_FLAG");
     let upgrade_unit = content.rms_implicit_definition("UPGRADE_UNIT");
     let gaia_upgrade_unit = content.rms_implicit_definition("GAIA_UPGRADE_UNIT");
     let modify_resource = content.rms_implicit_definition("MOD_RESOURCE");
@@ -427,6 +428,13 @@ pub(crate) fn collect_runtime_object_attributes(
                 };
             for_each_runtime_attribute_target(target_id, content, |object_id| {
                 attributes.mutate_standing_graphic(object_id, mutation, operand, gaia_only, content)
+            })?;
+            continue;
+        }
+        if Some(attribute) == undead_flag_attribute {
+            for_each_runtime_attribute_target(target_id, content, |object_id| {
+                attributes.mutate_undead_flag(object_id, mutation, value, gaia_only);
+                Ok(())
             })?;
             continue;
         }

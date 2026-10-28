@@ -3756,7 +3756,7 @@ impl ExactRmsGenerationBackend {
         let world_roster =
             (input.request.trace_level == TraceLevel::Full).then(|| object.world_roster());
         observer.step_started(ExecutionStep::FinalizeObjectOrder);
-        let (final_objects, final_object_operation_indices) =
+        let (mut final_objects, mut final_object_operation_indices) =
             match exact_object::native_identity_order(&object.objects, input.content) {
                 None => (
                     object.objects.clone(),
@@ -3773,6 +3773,19 @@ impl ExactRmsGenerationBackend {
                         .collect(),
                 ),
             };
+        if generation_rules(&input.semantic_program.identity.profile)?.temporary_object_removal
+            == rms_profile::TemporaryObjectRemoval::RemovedAfterGeneration
+        {
+            object.refuse_unmodelled_temporary_removals()?;
+            let removed = final_objects
+                .iter()
+                .map(|placed| object.removed_after_generation(placed))
+                .collect::<Result<Vec<_>, _>>()?;
+            let mut kept = removed.iter().map(|removed| !removed);
+            final_objects.retain(|_| kept.next().unwrap_or(true));
+            let mut kept = removed.iter().map(|removed| !removed);
+            final_object_operation_indices.retain(|_| kept.next().unwrap_or(true));
+        }
         observer.step_finished(ExecutionStep::FinalizeObjectOrder, &[]);
         observer.step_started(ExecutionStep::FinalizeCompositeTerrain);
         let mut final_terrain = object.terrain.clone();
@@ -3812,6 +3825,7 @@ impl ExactRmsGenerationBackend {
         let player_starts = player_starts(&setup.players, &land.descriptors);
         let (placement_records, omitted_placement_records) =
             placement_records(&object.statistics.attempts, &object.descriptors);
+        let final_object_count = final_objects.len() as u64;
         let mut map = GeneratedMap {
             dimensions: connection.dimensions,
             terrain: final_terrain,
@@ -3846,7 +3860,7 @@ impl ExactRmsGenerationBackend {
                 .collect(),
             metrics: GenerationMetrics {
                 tile_count: tile_count as u64,
-                object_count: object.objects.len() as u64,
+                object_count: final_object_count,
                 allocated_bytes: exact_allocation_bytes(tile_count, &cliff, &connection, &object),
                 emitted_events: sequence.saturating_add(1),
                 counters: BTreeMap::from([
@@ -5159,6 +5173,7 @@ fn shipped_constant_kind(name: &str) -> Option<ConstantKind> {
             [
                 rms_profile::CURRENT_PROFILE_ID,
                 rms_profile::PROFILE_54800_ID,
+                rms_profile::PROFILE_57257_ID,
             ]
             .into_iter()
             .filter_map(|profile_id| frozen_constant_kinds(profile_id).ok().flatten())

@@ -2085,11 +2085,7 @@ impl<'a> Analyzer<'a> {
         if let Some(build) = self.options.build
             && !builtin.available_in(build)
         {
-            let successor = builtin
-                .successor
-                .as_ref()
-                .filter(|(successor_build, _)| *successor_build == build)
-                .map(|(_, name)| name.clone());
+            let successor = builtin.successor_in(build).map(str::to_owned);
             let message = match &successor {
                 Some(successor) => format!(
                     "'{}' is not available in the selected game version; it was renamed to '{successor}'.",

@@ -105,6 +105,15 @@ const PACKAGED: &[BundleFiles<'static>] = &[
         completeness: include_bytes!("../data/aoe2de-101.103.54800-content-completeness.json"),
         build: "101.103.54800",
     },
+    BundleFiles {
+        manifest: include_bytes!("../data/aoe2de-101.103.57257-support-bundle.json"),
+        content: include_bytes!("../data/aoe2de-101.103.57257-content-pack.json"),
+        definitions: include_bytes!("../data/aoe2de-101.103.57257-implicit-definitions.json"),
+        standard_includes: include_bytes!("../data/aoe2de-101.103.57257-standard-includes.json"),
+        native_bindings: include_bytes!("../data/aoe2de-101.103.57257-native-bindings.json"),
+        completeness: include_bytes!("../data/aoe2de-101.103.57257-content-completeness.json"),
+        build: "101.103.57257",
+    },
 ];
 
 fn load(files: &BundleFiles<'_>) -> Result<SupportBundle, ContentError> {

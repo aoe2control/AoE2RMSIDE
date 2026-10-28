@@ -40,10 +40,13 @@ pub const CURRENT_PROFILE_ID: &str = "aoe2de-101.103.48987-rms-v1";
 pub const FROZEN_PRODUCT_VERSION: &str = "101.103.48987.0";
 pub const PROFILE_54800_ID: &str = "aoe2de-101.103.54800-rms-v1";
 pub const PRODUCT_VERSION_54800: &str = "101.103.54800.0";
+pub const PROFILE_57257_ID: &str = "aoe2de-101.103.57257-rms-v1";
+pub const PRODUCT_VERSION_57257: &str = "101.103.57257.0";
 pub const DECISION_OBJECT_GROUP_ROLL_FILTER: &str = "object-group-roll-filter";
 pub const DECISION_PATH_NO_ROUTE_RESULT: &str = "path-no-route-result";
 pub const DECISION_BUILDING_SPAWN_PLACEMENT: &str = "building-spawn-placement";
 pub const DECISION_FOUNDATION_TERRAIN_REMAP: &str = "foundation-terrain-remap";
+pub const DECISION_UNDEAD_FLAG_TEMPORARY_OBJECTS: &str = "undead-flag-temporary-objects";
 pub const MAXIMUM_PROFILE_BYTES: usize = 1024 * 1024;
 pub const EXACT_GENERATION_PREREQUISITES: [&str; 11] = [
     "exact-engine",
@@ -315,11 +318,18 @@ pub enum FoundationTerrainRemap {
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum TemporaryObjectRemoval {
+    Kept,
+    RemovedAfterGeneration,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct GenerationRules {
     pub object_group_roll_filter: ObjectGroupRollFilter,
     pub path_no_route_result: u8,
     pub building_spawn_placement: BuildingSpawnPlacement,
     pub foundation_terrain_remap: FoundationTerrainRemap,
+    pub temporary_object_removal: TemporaryObjectRemoval,
 }
 
 impl GenerationRules {
@@ -328,6 +338,7 @@ impl GenerationRules {
         path_no_route_result: 3,
         building_spawn_placement: BuildingSpawnPlacement::InnerTileFallback,
         foundation_terrain_remap: FoundationTerrainRemap::Remap8To27And64To54,
+        temporary_object_removal: TemporaryObjectRemoval::Kept,
     };
 }
 
@@ -365,8 +376,9 @@ impl BehaviorProfile {
             DECISION_FOUNDATION_TERRAIN_REMAP,
         ]
         .map(|key| generator.get(key));
+        let temporary_objects = generator.get(DECISION_UNDEAD_FLAG_TEMPORARY_OBJECTS);
         if !self.is_schema_1_1() {
-            if stated.iter().any(Option::is_some) {
+            if stated.iter().any(Option::is_some) || temporary_objects.is_some() {
                 return Err(ProfileError::InvalidField(
                     "schema 1.0.0 profile carries a schema 1.1 generator decision",
                 ));
@@ -419,11 +431,24 @@ impl BehaviorProfile {
                 ));
             }
         };
+        let temporary_object_removal = match temporary_objects {
+            None => TemporaryObjectRemoval::Kept,
+            Some(DecisionValue::String(value)) if value == "kept" => TemporaryObjectRemoval::Kept,
+            Some(DecisionValue::String(value)) if value == "removed-after-generation" => {
+                TemporaryObjectRemoval::RemovedAfterGeneration
+            }
+            _ => {
+                return Err(ProfileError::InvalidField(
+                    "decisions.generator.undead-flag-temporary-objects",
+                ));
+            }
+        };
         Ok(GenerationRules {
             object_group_roll_filter,
             path_no_route_result,
             building_spawn_placement,
             foundation_terrain_remap,
+            temporary_object_removal,
         })
     }
 
@@ -852,6 +877,13 @@ pub fn frozen_54800_profile() -> Result<BehaviorProfile, ProfileError> {
     )))
 }
 
+pub fn frozen_57257_profile() -> Result<BehaviorProfile, ProfileError> {
+    parse_frozen(include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../../profiles/aoe2de-101.103.57257-rms-v1.json"
+    )))
+}
+
 pub fn frozen_texture_palettes(profile_id: &str) -> Result<Option<TexturePalettes>, ProfileError> {
     let text = match profile_id {
         CURRENT_PROFILE_ID => include_str!(concat!(
@@ -861,6 +893,10 @@ pub fn frozen_texture_palettes(profile_id: &str) -> Result<Option<TexturePalette
         PROFILE_54800_ID => include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
             "/../../profiles/texture-palettes/aoe2de-101.103.54800-rms-v1.json"
+        )),
+        PROFILE_57257_ID => include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../../profiles/texture-palettes/aoe2de-101.103.57257-rms-v1.json"
         )),
         _ => return Ok(None),
     };
@@ -873,7 +909,11 @@ pub fn frozen_texture_palettes(profile_id: &str) -> Result<Option<TexturePalette
 }
 
 pub fn frozen_profiles() -> Result<Vec<BehaviorProfile>, ProfileError> {
-    Ok(vec![frozen_current_profile()?, frozen_54800_profile()?])
+    Ok(vec![
+        frozen_current_profile()?,
+        frozen_54800_profile()?,
+        frozen_57257_profile()?,
+    ])
 }
 
 fn parse_frozen(text: &str) -> Result<BehaviorProfile, ProfileError> {

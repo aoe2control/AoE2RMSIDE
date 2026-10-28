@@ -3,8 +3,9 @@ use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CURRENT_PROFILE_ID, CompatibilityRange, PROFILE_54800_ID, PROFILE_SCHEMA_MAJOR, ProfileError,
-    compare_product_versions, is_calendar_date, parse_product_version, validate_identifier,
+    CURRENT_PROFILE_ID, CompatibilityRange, PROFILE_54800_ID, PROFILE_57257_ID,
+    PROFILE_SCHEMA_MAJOR, ProfileError, compare_product_versions, is_calendar_date,
+    parse_product_version, validate_identifier,
 };
 
 pub const CONSTANT_KINDS_SCHEMA_VERSION: &str = "1.0.0";
@@ -210,6 +211,10 @@ pub fn frozen_constant_kinds(profile_id: &str) -> Result<Option<ConstantKinds>, 
         PROFILE_54800_ID => include_str!(concat!(
             env!("CARGO_MANIFEST_DIR"),
             "/../../profiles/constant-kinds/aoe2de-101.103.54800-rms-v1.json"
+        )),
+        PROFILE_57257_ID => include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../../profiles/constant-kinds/aoe2de-101.103.57257-rms-v1.json"
         )),
         _ => return Ok(None),
     };

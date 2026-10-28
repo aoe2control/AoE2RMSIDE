@@ -62,7 +62,8 @@
                   "object-group-roll-filter": false,
                   "path-no-route-result": false,
                   "building-spawn-placement": false,
-                  "foundation-terrain-remap": false
+                  "foundation-terrain-remap": false,
+                  "undead-flag-temporary-objects": false
                 }
               }
             }
@@ -93,6 +94,9 @@
                   },
                   "foundation-terrain-remap": {
                     "enum": ["remap-8-to-27-and-64-to-54", "none"]
+                  },
+                  "undead-flag-temporary-objects": {
+                    "enum": ["kept", "removed-after-generation"]
                   }
                 }
               }
