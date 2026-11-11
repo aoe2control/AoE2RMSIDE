@@ -116,9 +116,10 @@ pub const MAXIMUM_TEAMS: u8 = 4;
 pub const SETUP_CONTEXT_MAJOR: u32 = 1;
 pub const SETUP_CONTEXT_MINOR: u32 = 0;
 pub const SETUP_CONTEXT_PATCH: u32 = 0;
-pub const SETUP_CONTEXT_MAXIMUM_MINOR: u32 = 2;
+pub const SETUP_CONTEXT_MAXIMUM_MINOR: u32 = 3;
 pub const SETUP_CONTEXT_COMPUTER_PLAYER_MINOR: u32 = 1;
 pub const SETUP_CONTEXT_LOBBY_OPTIONS_MINOR: u32 = 2;
+pub const SETUP_CONTEXT_TEAM_POSITIONS_MINOR: u32 = 3;
 
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -275,6 +276,7 @@ pub enum PositionPolicy {
     Random,
     Fixed,
     TeamTogether,
+    RandomTeamPositions,
 }
 
 impl PositionPolicy {
@@ -283,6 +285,31 @@ impl PositionPolicy {
             Self::Random => 0,
             Self::Fixed => 1,
             Self::TeamTogether => 2,
+            Self::RandomTeamPositions => 3,
+        }
+    }
+
+    pub const fn teams_together(self) -> bool {
+        matches!(self, Self::Fixed | Self::TeamTogether)
+    }
+
+    pub const fn team_positions(self) -> bool {
+        matches!(self, Self::Fixed | Self::RandomTeamPositions)
+    }
+
+    pub const fn from_lobby_options(teams_together: bool, team_positions: bool) -> Self {
+        match (teams_together, team_positions) {
+            (false, false) => Self::Random,
+            (true, false) => Self::TeamTogether,
+            (true, true) => Self::Fixed,
+            (false, true) => Self::RandomTeamPositions,
+        }
+    }
+
+    pub const fn minimum_setup_minor(self) -> u32 {
+        match self {
+            Self::RandomTeamPositions => SETUP_CONTEXT_TEAM_POSITIONS_MINOR,
+            Self::Random | Self::Fixed | Self::TeamTogether => SETUP_CONTEXT_MINOR,
         }
     }
 }
@@ -495,6 +522,7 @@ impl SetupContext {
                 && self.contract_version.minor < SETUP_CONTEXT_COMPUTER_PLAYER_MINOR)
             || (!self.lobby_options.is_default()
                 && self.contract_version.minor < SETUP_CONTEXT_LOBBY_OPTIONS_MINOR)
+            || self.contract_version.minor < self.position_policy.minimum_setup_minor()
         {
             return Err(invalid_request(
                 "RMSGEN1004",
@@ -641,13 +669,11 @@ impl SetupContext {
             StartingAge::PostImperialAge => "POST_IMPERIAL_AGE_START",
         };
         define(age_condition);
-        match self.position_policy {
-            PositionPolicy::Random => {}
-            PositionPolicy::TeamTogether => define("FIXED_POSITIONS"),
-            PositionPolicy::Fixed => {
-                define("FIXED_POSITIONS");
-                define("TEAM_POSITIONS");
-            }
+        if self.position_policy.teams_together() {
+            define("FIXED_POSITIONS");
+        }
+        if self.position_policy.team_positions() {
+            define("TEAM_POSITIONS");
         }
         if !self.computer_player_slots.is_empty() {
             define("AI_PLAYERS");
@@ -2275,7 +2301,7 @@ fn native_random_player_positions(
 }
 
 fn uses_rejection_player_perimeters(state: &ExactSetupState) -> bool {
-    state.position_policy == PositionPolicy::Random
+    !state.position_policy.teams_together()
 }
 
 fn shuffled_lobby_slots(rng: &mut RmsRandom) -> [u8; 8] {
@@ -3773,14 +3799,25 @@ impl ExactRmsGenerationBackend {
                         .collect(),
                 ),
             };
+        let mut removed_farms = Vec::new();
         if generation_rules(&input.semantic_program.identity.profile)?.temporary_object_removal
             == rms_profile::TemporaryObjectRemoval::RemovedAfterGeneration
         {
-            object.refuse_unmodelled_temporary_removals()?;
-            let removed = final_objects
+            object.refuse_unmodelled_temporary_removals(input.content)?;
+            let removals = final_objects
                 .iter()
-                .map(|placed| object.removed_after_generation(placed))
+                .map(|placed| object.removed_after_generation(placed, input.content))
                 .collect::<Result<Vec<_>, _>>()?;
+            removed_farms = final_objects
+                .iter()
+                .zip(&removals)
+                .filter(|(_, removal)| **removal == exact_object::TemporaryRemoval::RemovedFarm)
+                .map(|(placed, _)| placed.clone())
+                .collect();
+            let removed = removals
+                .iter()
+                .map(|removal| *removal != exact_object::TemporaryRemoval::Kept)
+                .collect::<Vec<_>>();
             let mut kept = removed.iter().map(|removed| !removed);
             final_objects.retain(|_| kept.next().unwrap_or(true));
             let mut kept = removed.iter().map(|removed| !removed);
@@ -3795,6 +3832,9 @@ impl ExactRmsGenerationBackend {
             &mut final_layer,
             input.content,
         )?;
+        for farm in &removed_farms {
+            object.repaint_removed_farm(farm, &mut final_terrain, &mut final_layer)?;
+        }
         observer.step_finished(ExecutionStep::FinalizeCompositeTerrain, &[]);
         let mut presentation_adjustments = PresentationAdjustments::default();
         let cliff_pieces = presentation_cliff_pieces(

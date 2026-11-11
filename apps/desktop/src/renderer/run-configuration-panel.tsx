@@ -53,6 +53,7 @@ import type {
   StandardIncludeAccess,
 } from '../shared/api';
 import { gameModeModifierOptions, type LobbyOptionFlag } from '../shared/lobby-options';
+import { positionPolicyOptions } from '../shared/position-policy';
 import {
   isMapTestScriptName,
   isMapTestWorkerSetting,
@@ -114,7 +115,11 @@ import {
   unverifiedLiveGameVersion,
   type LiveWorkflowEvent,
 } from './control-presentation';
-import { buildControlLiveRequest, controlAcceptsLiveSetup } from './control-live-request';
+import {
+  buildControlLiveRequest,
+  controlAcceptsLiveSetup,
+  liveTestSupportsPositions,
+} from './control-live-request';
 import { DashedOutline } from './dashed-outline';
 import { liveControlAction } from './live-control-action';
 import {
@@ -241,7 +246,6 @@ import {
   runGameModeOptions,
   runMapSizeOptions,
   runPlayerColorOptions,
-  runPositionPolicyOptions,
   runPreset,
   runStartingAgeOptions,
   runStartingResourceOptions,
@@ -250,6 +254,7 @@ import {
   validateRunConfiguration,
   withGameModeModifier,
   withLiveComputerPlayers,
+  withLobbyPositionOption,
   withLockedSeed,
   withMapSize,
   withRandomMapTurbo,
@@ -2261,6 +2266,9 @@ export function RunConfigurationPanel({
       );
       const errors = validateRunConfiguration(requested);
       if (errors.length > 0) return failed('request', errors[0]!);
+      if (!liveTestSupportsPositions(requested)) {
+        return failed('request', 'Live tests need Team Together when Team Positions is on.');
+      }
       return new Promise<AppLiveTestReply>((resolve) => {
         let settled = false;
         const appRun: AppLiveRun = {
@@ -2891,6 +2899,16 @@ export function RunConfigurationPanel({
       ) {
         return;
       }
+      if (!liveTestSupportsPositions(effectiveConfiguration)) {
+        appendControlOutput(
+          presentMessage({
+            source: 'Live test',
+            code: 'control.team-positions-unsupported',
+            raw: 'Live tests need Team Together when Team Positions is on (team-positions-unsupported).',
+          }),
+        );
+        return;
+      }
       const requestedConfiguration = effectiveConfiguration.seedLocked
         ? effectiveConfiguration
         : withSeed(effectiveConfiguration, randomSeed());
@@ -2926,6 +2944,7 @@ export function RunConfigurationPanel({
     },
     [
       advanceLiveTestProgress,
+      appendControlOutput,
       blockingReason,
       controlLauncher.state,
       effectiveConfiguration,
@@ -4163,16 +4182,23 @@ function PreviewPresetControls({
               options={runStartingAgeOptions.map((option) => option)}
               value={configuration.endingAge}
             />
-            <CompactSelect
-              ariaLabel={t('run-menu.position-policy')}
-              className="preview-preset-option"
-              fitAllOptions
-              onValueChange={(value) =>
-                onUpdate({ positionPolicy: value as RunConfiguration['positionPolicy'] })
-              }
-              options={runPositionPolicyOptions.map((option) => option)}
-              value={configuration.positionPolicy}
-            />
+            <DropdownMenuGroup aria-label={t('run-menu.position-policy')}>
+              <LobbyOptionItem
+                checked={positionPolicyOptions[configuration.positionPolicy].teamTogether}
+                label={t('game-options.flag.team-together')}
+                onCheckedChange={(checked) =>
+                  onUpdate(withLobbyPositionOption(configuration, 'teamTogether', checked))
+                }
+              />
+              <LobbyOptionItem
+                checked={positionPolicyOptions[configuration.positionPolicy].teamPositions}
+                label={t('game-options.flag.team-positions')}
+                onCheckedChange={(checked) =>
+                  onUpdate(withLobbyPositionOption(configuration, 'teamPositions', checked))
+                }
+                tooltip={t('run-menu.team-positions.tooltip')}
+              />
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
@@ -4494,8 +4520,21 @@ function LobbyOptionItem({
   disabled?: boolean;
   label: string;
   onCheckedChange(checked: boolean): void;
-  tooltip: string;
+  tooltip?: string;
 }) {
+  if (tooltip === undefined) {
+    return (
+      <DropdownMenuCheckboxItem
+        checked={checked}
+        className="preview-lobby-option"
+        closeOnClick={false}
+        disabled={disabled}
+        onCheckedChange={onCheckedChange}
+      >
+        {label}
+      </DropdownMenuCheckboxItem>
+    );
+  }
   return (
     <Tooltip>
       <TooltipTrigger

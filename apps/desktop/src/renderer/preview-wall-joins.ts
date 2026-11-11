@@ -44,7 +44,9 @@ export function isStraightWallRun(bits: number): boolean {
   );
 }
 
-function coveredTiles(object: WallJoinObject): {
+export function coveredTiles(
+  object: Pick<WallJoinObject, 'x' | 'y' | 'footprintWidth' | 'footprintHeight'>,
+): {
   minimumX: number;
   maximumX: number;
   minimumY: number;

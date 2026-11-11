@@ -982,6 +982,14 @@ const controlFailures: Array<[codes: string[], entry: CatalogEntry]> = [
     },
   ],
   [
+    ['team-positions-unsupported'],
+    {
+      severity: 'warning',
+      headline: 'message.live.stopped.headline',
+      cause: 'message.control.team-positions-unsupported.cause',
+    },
+  ],
+  [
     ['active-match-confirmation-required'],
     {
       severity: 'warning',

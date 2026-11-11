@@ -888,6 +888,10 @@ export class ManagedDeploymentService {
       resourceSize: render.resourceSize,
       resourceSpawnOverlap: render.resourceSpawnOverlap,
       minimapObjects: render.minimapObjects,
+      walls: render.walls,
+      wallSize: render.wallSize,
+      relics: render.relics,
+      relicSize: render.relicSize,
     });
     if (
       input.look === 'game-textures' &&

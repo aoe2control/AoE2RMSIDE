@@ -1137,6 +1137,24 @@
         "count": "the number of generated maps"
       }
     },
+    "output.run.option-on": {
+      "message": "{option} on",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One setting in the list of Run menu settings an AI app set for its run (see mcp.run.settings-applied): a lobby option turned on, such as “Team Together on”.",
+      "placeholders": {
+        "option": "the lobby option's name, such as Team Together or Team Positions (game-options.flag.team-together, game-options.flag.team-positions)"
+      }
+    },
+    "output.run.option-off": {
+      "message": "{option} off",
+      "screen": "output",
+      "control": "fragment",
+      "meaning": "One setting in the list of Run menu settings an AI app set for its run (see mcp.run.settings-applied): a lobby option turned off, such as “Team Together off”.",
+      "placeholders": {
+        "option": "the lobby option's name, such as Team Together or Team Positions (game-options.flag.team-together, game-options.flag.team-positions)"
+      }
+    },
     "output.run.fact.players": {
       "message": "Players",
       "screen": "output",
@@ -2477,7 +2495,7 @@
       "message": "Position policy",
       "screen": "run-menu/settings",
       "control": "accessible-name",
-      "meaning": "Accessible name of the select that chooses how player positions are set (random, fixed, team together)."
+      "meaning": "Accessible name of the group of the two position checkboxes (Team Together, Team Positions) that set how player positions are chosen."
     },
     "run-menu.select-placeholder": {
       "message": "Select",
@@ -2687,6 +2705,12 @@
       "control": "tooltip",
       "meaning": "Tooltip of the Solid farms lobby option. SOLID_FARMS is an RMS constant and stays as written."
     },
+    "run-menu.team-positions.tooltip": {
+      "message": "Places each team's players in color order. Without Team Together, players are placed at random, but the script still sees TEAM_POSITIONS.",
+      "screen": "run-menu/settings",
+      "control": "tooltip",
+      "meaning": "Tooltip of the Team Positions checkbox. Team Together is the other checkbox: use the same words as game-options.flag.team-together. TEAM_POSITIONS is an RMS constant and stays as written."
+    },
     "run-menu.lobby.regicide-note": {
       "message": "Regicide needs a king for every player. On a map without kings the game ends the match at once.",
       "screen": "run-menu/lobby-options",
@@ -2841,7 +2865,7 @@
       "control": "message-headline",
       "meaning": "Output note after an AI app connected through the MCP connector showed a map in the preview and set Run menu settings for it, such as “seed 17, Medium, 4 players set by Claude”.",
       "placeholders": {
-        "settings": "the settings the app changed: “seed 17”, a map size, a player count, team sizes such as 2v2, civilization or game mode names",
+        "settings": "the settings the app changed: “seed 17”, a map size, a player count, team sizes such as 2v2, civilization or game mode names, or a lobby option turned on or off such as “Team Together on”",
         "app": "the AI app's name as shown in the connector settings, such as Claude"
       }
     },
@@ -4871,6 +4895,12 @@
       "screen": "output",
       "control": "message-cause",
       "meaning": "Cause sentence of the message for code control.control-lobby-options-unsupported, shown in Output, the editor notice, the deployment panel, or Problems."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Live tests need Team Together when Team Positions is on.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause sentence of the message for code control.team-positions-unsupported, shown in Output, the editor notice, the deployment panel, or Problems. Team Together and Team Positions are the run menu checkboxes: use the same words as game-options.flag.team-together and game-options.flag.team-positions."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "A live test needs a player in P1",
@@ -9978,6 +10008,54 @@
       "control": "accessible-name",
       "meaning": "Accessible name of the slider for how large the icon draws gold and stone mines. Lower case, as English reads it after the slider's role."
     },
+    "map-icon.art.walls.show": {
+      "message": "Show walls",
+      "screen": "deploy-panel/map-icon-lightbox/sprites",
+      "control": "tooltip",
+      "meaning": "Accessible name of the toggle that draws the map's walls and gates on the icon, and its tooltip while walls are hidden (what clicking does)."
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Hide walls",
+      "screen": "deploy-panel/map-icon-lightbox/sprites",
+      "control": "tooltip",
+      "meaning": "Tooltip of the walls toggle while walls are drawn: what clicking does."
+    },
+    "map-icon.art.walls.options": {
+      "message": "Wall options",
+      "screen": "deploy-panel/map-icon-lightbox/sprites",
+      "control": "tooltip",
+      "meaning": "Accessible name and tooltip of the arrow beside the walls toggle that opens the walls' size slider."
+    },
+    "map-icon.art.walls.size": {
+      "message": "walls size",
+      "screen": "deploy-panel/map-icon-lightbox/sprites",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the slider for how thick the icon draws walls and how large it draws their towers. Lower case, as English reads it after the slider's role."
+    },
+    "map-icon.art.relics.show": {
+      "message": "Show relics and monuments",
+      "screen": "deploy-panel/map-icon-lightbox/sprites",
+      "control": "tooltip",
+      "meaning": "Accessible name of the toggle that draws a small picture on the icon for every relic the map places and, in a King of the Hill game, for the monument at the map's centre; also its tooltip while they are hidden (what clicking does)."
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Hide relics and monuments",
+      "screen": "deploy-panel/map-icon-lightbox/sprites",
+      "control": "tooltip",
+      "meaning": "Tooltip of the relics and monuments toggle while their pictures are drawn: what clicking does."
+    },
+    "map-icon.art.relics.options": {
+      "message": "Relic and monument options",
+      "screen": "deploy-panel/map-icon-lightbox/sprites",
+      "control": "tooltip",
+      "meaning": "Accessible name and tooltip of the arrow beside the relics and monuments toggle that opens the size slider for their pictures."
+    },
+    "map-icon.art.relics.size": {
+      "message": "relics and monuments size",
+      "screen": "deploy-panel/map-icon-lightbox/sprites",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the slider for how large the icon draws the relic and King of the Hill monument pictures. Lower case, as English reads it after the slider's role."
+    },
     "map-icon.art.amount.fewer": {
       "message": "Fewer",
       "screen": "deploy-panel/map-icon-lightbox/sprites",
@@ -14941,27 +15019,6 @@
       "maxLength": 28,
       "meaning": "Age option \"Post-Imperial Age\" in the run menu's starting age and ending age selects. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
     },
-    "game-options.positions.random": {
-      "message": "Random positions",
-      "screen": "run-menu/settings",
-      "control": "option",
-      "maxLength": 26,
-      "meaning": "Player position option \"Random positions\" in the run menu's position select. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
-    },
-    "game-options.positions.fixed": {
-      "message": "Fixed positions",
-      "screen": "run-menu/settings",
-      "control": "option",
-      "maxLength": 24,
-      "meaning": "Player position option \"Fixed positions\" in the run menu's position select. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
-    },
-    "game-options.positions.team-together": {
-      "message": "Team together",
-      "screen": "run-menu/settings",
-      "control": "option",
-      "maxLength": 24,
-      "meaning": "Player position option \"Team together\" in the run menu's position select. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
-    },
     "game-options.color.blue": {
       "message": "Blue",
       "screen": "run-menu/players",
@@ -15062,6 +15119,20 @@
       "control": "toggle",
       "maxLength": 22,
       "meaning": "Checkbox item \"Solid farms\" in the lobby options menu (a lobby option of the game). This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
+    },
+    "game-options.flag.team-together": {
+      "message": "Team Together",
+      "screen": "run-menu/settings",
+      "control": "toggle",
+      "maxLength": 24,
+      "meaning": "Checkbox item \"Team Together\" in the run menu (a lobby option of the game: each team's players start next to each other). This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
+    },
+    "game-options.flag.team-positions": {
+      "message": "Team Positions",
+      "screen": "run-menu/settings",
+      "control": "toggle",
+      "maxLength": 24,
+      "meaning": "Checkbox item \"Team Positions\" in the run menu (a lobby option of the game: each team's players are placed in color order). This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
     },
     "game-options.civilization.random": {
       "message": "Random",
@@ -16756,6 +16827,24 @@
       "screen": "output",
       "control": "message-headline",
       "meaning": "Headline of a warning that the game itself can crash on this line with another seed, random branch, or lobby setting (a known game crash), shown in Output and Problems. The cause and the fix of that crash follow."
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "An actor area on a map with no land",
+      "screen": "known-crashes",
+      "control": "label",
+      "meaning": "Short name of one known game crash in the list of known crashes. RMS commands and section names such as <LAND_GENERATION> stay as written."
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "The script makes an actor area, with create_actor_area or with actor_area on a placed object, but creates no land. The game files every actor area under the player of a land and crashes when there is none.",
+      "screen": "known-crashes",
+      "control": "message-cause",
+      "meaning": "One sentence saying why the game itself crashes on such a map (a known game crash), shown after the headline in Output, Problems, Test Results, the deployment panel, and the live test warning. RMS commands stay as written."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Create the lands in <LAND_GENERATION>, for example with create_player_lands, or remove the actor areas.",
+      "screen": "known-crashes",
+      "control": "message-action",
+      "meaning": "What the map author changes in the script so the game no longer crashes (one known game crash). RMS commands stay as written."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required on an object too small for the search",

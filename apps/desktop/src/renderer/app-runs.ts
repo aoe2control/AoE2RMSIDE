@@ -12,6 +12,7 @@ import {
 import type { MessageId } from '../shared/i18n/translator';
 import { isMapTestScriptName } from '../shared/map-test-contract';
 import type { OutputText } from '../shared/output-message';
+import { positionPolicyOptions } from '../shared/position-policy';
 import {
   civilizationIdForKey,
   civilizationName,
@@ -22,6 +23,7 @@ import {
   runGameModeOptions,
   runStartingAgeOptions,
   runStartingResourceOptions,
+  withLobbyPositionOption,
   withMapSize,
   withPlayerCount,
   withSeed,
@@ -245,6 +247,21 @@ export function applyAppRunSettings(
       words.push({ id: `game-options.resources.${startingResources}` as MessageId });
     }
   }
+  for (const [option, field, label] of [
+    ['teamTogether', 'team_together', 'game-options.flag.team-together'],
+    ['teamPositions', 'team_positions', 'game-options.flag.team-positions'],
+  ] as const) {
+    const checked = settings?.[option];
+    if (checked === undefined) continue;
+    configuration = withLobbyPositionOption(configuration, option, checked);
+    if (positionPolicyOptions[base.positionPolicy][option] !== checked) {
+      changed.push(field);
+      words.push({
+        id: checked ? 'output.run.option-on' : 'output.run.option-off',
+        args: { option: { id: label } },
+      });
+    }
+  }
   return { configuration, changed, words };
 }
 
@@ -260,6 +277,10 @@ export function appSettingsLabel(configuration: RunConfiguration): string {
       ? []
       : [configuration.startingAge]),
     ...(configuration.startingResources === 'standard' ? [] : [configuration.startingResources]),
+    ...(positionPolicyOptions[configuration.positionPolicy].teamTogether ? ['team-together'] : []),
+    ...(positionPolicyOptions[configuration.positionPolicy].teamPositions
+      ? ['team-positions']
+      : []),
   ].join(' · ');
 }
 

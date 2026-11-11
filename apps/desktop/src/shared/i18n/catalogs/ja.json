@@ -485,6 +485,12 @@
     "output.run.maps": {
       "message": "{count, plural, other {マップ {count} 個}}"
     },
+    "output.run.option-on": {
+      "message": "{option}：オン"
+    },
+    "output.run.option-off": {
+      "message": "{option}：オフ"
+    },
     "output.run.fact.players": {
       "message": "プレイヤー"
     },
@@ -1018,6 +1024,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "ユニットが畑の上を歩けなくなります。SOLID_FARMS を定義します。"
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "各チームのプレイヤーを色の順に配置します。「チームを一緒に」がオフの場合、プレイヤーはランダムに配置されますが、スクリプトでは TEAM_POSITIONS が定義されます。"
     },
     "run-menu.lobby.regicide-note": {
       "message": "チェックメイトでは、各プレイヤーに王が必要です。王のいないマップでは、ゲーム開始直後に対戦が終了します。"
@@ -1744,6 +1753,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "ロビーオプションには AoE2Control 1.1.1 以降が必要です。ゲームの状態は変更していません。"
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "「チーム位置」がオンのとき、ゲーム内テストには「チームを一緒に」が必要です。"
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "ゲーム内テストでは P1 にプレイヤーが必要です"
@@ -3250,6 +3262,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "金と石の表示サイズ"
+    },
+    "map-icon.art.walls.show": {
+      "message": "壁を表示"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "壁を非表示"
+    },
+    "map-icon.art.walls.options": {
+      "message": "壁の表示設定"
+    },
+    "map-icon.art.walls.size": {
+      "message": "壁の表示サイズ"
+    },
+    "map-icon.art.relics.show": {
+      "message": "聖遺物とモニュメントを表示"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "聖遺物とモニュメントを非表示"
+    },
+    "map-icon.art.relics.options": {
+      "message": "聖遺物とモニュメントの表示設定"
+    },
+    "map-icon.art.relics.size": {
+      "message": "聖遺物とモニュメントの表示サイズ"
     },
     "map-icon.art.amount.fewer": {
       "message": "少なく"
@@ -5267,15 +5303,6 @@
     "game-options.age.post-imperial-age": {
       "message": "帝国の時代以降"
     },
-    "game-options.positions.random": {
-      "message": "ランダムな位置"
-    },
-    "game-options.positions.fixed": {
-      "message": "位置の固定"
-    },
-    "game-options.positions.team-together": {
-      "message": "チームを一緒に"
-    },
     "game-options.color.blue": {
       "message": "青"
     },
@@ -5317,6 +5344,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "堅固な畑"
+    },
+    "game-options.flag.team-together": {
+      "message": "チームを一緒に"
+    },
+    "game-options.flag.team-positions": {
+      "message": "チーム位置"
     },
     "game-options.civilization.random": {
       "message": "ランダム"
@@ -5962,6 +5995,15 @@
     },
     "known-crash.headline.possible": {
       "message": "ここでゲームがクラッシュする可能性"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "陸地のないマップ上のアクターエリア"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "スクリプトが create_actor_area、または配置されるオブジェクトの actor_area でアクターエリアを作りますが、陸地を一つも作りません。ゲームはすべてのアクターエリアを陸地のプレイヤーに対応づけて記録するため、陸地がないとクラッシュします。"
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "<LAND_GENERATION> で陸地を作成するか（例: create_player_lands）、アクターエリアを削除してください。"
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "空きタイルの探索には小さすぎるオブジェクトでの override_actor_radius_if_required"

@@ -3123,6 +3123,10 @@ function registerIpc(
       mapIconResourceSize: current.mapIconResourceSize,
       mapIconResourceSpawnOverlap: current.mapIconResourceSpawnOverlap,
       mapIconMinimapObjects: current.mapIconMinimapObjects,
+      mapIconWalls: current.mapIconWalls,
+      mapIconWallSize: current.mapIconWallSize,
+      mapIconRelics: current.mapIconRelics,
+      mapIconRelicSize: current.mapIconRelicSize,
     });
   });
   ipcMain.handle(ipcChannels.disableRmsLintRule, async (event, code: unknown) => {
@@ -4406,6 +4410,10 @@ function registerIpc(
       resourceSize: session.mapIconResourceSize,
       resourceSpawnOverlap: session.mapIconResourceSpawnOverlap,
       minimapObjects: session.mapIconMinimapObjects,
+      walls: session.mapIconWalls,
+      wallSize: session.mapIconWallSize,
+      relics: session.mapIconRelics,
+      relicSize: session.mapIconRelicSize,
     };
   });
   ipcMain.handle(ipcChannels.mapIconRenderInputSet, async (event, input: unknown) => {

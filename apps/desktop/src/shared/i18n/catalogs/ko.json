@@ -485,6 +485,12 @@
     "output.run.maps": {
       "message": "{count, plural, other {맵 {count}개}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: 켜짐"
+    },
+    "output.run.option-off": {
+      "message": "{option}: 꺼짐"
+    },
     "output.run.fact.players": {
       "message": "플레이어"
     },
@@ -1018,6 +1024,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "유닛이 농장 위를 지나갈 수 없습니다. SOLID_FARMS를 정의합니다."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "각 팀의 플레이어를 색상 순서대로 배치합니다. ‘팀은 인근에 위치’가 꺼져 있으면 플레이어는 무작위로 배치되지만, 스크립트에서는 여전히 TEAM_POSITIONS가 정의됩니다."
     },
     "run-menu.lobby.regicide-note": {
       "message": "국왕 시해에서는 플레이어마다 왕이 필요합니다. 왕이 없는 맵에서는 게임이 대전을 즉시 끝냅니다."
@@ -1744,6 +1753,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "로비 옵션에는 AoE2Control 1.1.1 이상이 필요합니다. 게임은 변경하지 않았습니다."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "‘팀 위치’가 켜져 있으면 게임 내 테스트에는 ‘팀은 인근에 위치’가 필요합니다."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "게임 내 테스트에는 P1의 플레이어가 필요합니다"
@@ -3250,6 +3262,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "금과 석재 크기"
+    },
+    "map-icon.art.walls.show": {
+      "message": "성벽 표시"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "성벽 숨기기"
+    },
+    "map-icon.art.walls.options": {
+      "message": "성벽 옵션"
+    },
+    "map-icon.art.walls.size": {
+      "message": "성벽 크기"
+    },
+    "map-icon.art.relics.show": {
+      "message": "유물 및 기념물 표시"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "유물 및 기념물 숨기기"
+    },
+    "map-icon.art.relics.options": {
+      "message": "유물 및 기념물 옵션"
+    },
+    "map-icon.art.relics.size": {
+      "message": "유물 및 기념물 크기"
     },
     "map-icon.art.amount.fewer": {
       "message": "적게"
@@ -5267,15 +5303,6 @@
     "game-options.age.post-imperial-age": {
       "message": "후기 왕정 시대"
     },
-    "game-options.positions.random": {
-      "message": "무작위 위치"
-    },
-    "game-options.positions.fixed": {
-      "message": "고정된 위치"
-    },
-    "game-options.positions.team-together": {
-      "message": "팀은 인근에 위치"
-    },
     "game-options.color.blue": {
       "message": "파랑"
     },
@@ -5317,6 +5344,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "견고한 농장"
+    },
+    "game-options.flag.team-together": {
+      "message": "팀은 인근에 위치"
+    },
+    "game-options.flag.team-positions": {
+      "message": "팀 위치"
     },
     "game-options.civilization.random": {
       "message": "무작위"
@@ -5962,6 +5995,15 @@
     },
     "known-crash.headline.possible": {
       "message": "여기서 게임이 강제 종료될 수 있음"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "육지가 없는 맵의 액터 영역"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "스크립트가 create_actor_area 또는 배치되는 오브젝트의 actor_area로 액터 영역을 만들지만 육지는 하나도 만들지 않습니다. 게임은 모든 액터 영역을 육지의 플레이어에게 묶어 기록하므로 육지가 없으면 강제 종료됩니다."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "<LAND_GENERATION>에서 육지를 만들거나(예: create_player_lands) 액터 영역을 제거하세요."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "빈 타일 탐색에 비해 너무 작은 오브젝트의 override_actor_radius_if_required"

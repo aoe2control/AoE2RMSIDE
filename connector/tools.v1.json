@@ -431,6 +431,14 @@
                 "minLength": 1,
                 "maxLength": 32,
                 "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "team_together": {
+                "type": "boolean",
+                "description": "The lobby's Team Together: each team's players start side by side."
+              },
+              "team_positions": {
+                "type": "boolean",
+                "description": "The lobby's Team Positions: players in color order within teams; see topic team-games."
               }
             },
             "additionalProperties": false
@@ -548,6 +556,14 @@
                 "minLength": 1,
                 "maxLength": 32,
                 "pattern": "^[a-z][a-z0-9-]{0,31}$"
+              },
+              "team_together": {
+                "type": "boolean",
+                "description": "The lobby's Team Together: each team's players start side by side."
+              },
+              "team_positions": {
+                "type": "boolean",
+                "description": "The lobby's Team Positions: players in color order within teams; see topic team-games."
               }
             },
             "additionalProperties": false
@@ -871,7 +887,9 @@
                 "minLength": 1,
                 "maxLength": 32,
                 "pattern": "^[a-z][a-z0-9-]{0,31}$"
-              }
+              },
+              "team_together": { "type": "boolean" },
+              "team_positions": { "type": "boolean" }
             },
             "additionalProperties": false
           },

@@ -527,7 +527,7 @@
         }
       ],
       "details": [
-        "It takes effect when the lobby keeps teams together or fixes positions; with random lobby positions the order stays random. Teammates are spaced by their lands’ `base_size`."
+        "It takes effect when the lobby’s Team Together option is on; without it the order stays random, also with Team Positions. Teammates are spaced by their lands’ `base_size`."
       ],
       "related": ["random_placement", "set_zone_by_team"],
       "evidence": {
@@ -4191,8 +4191,8 @@
         "CASTLE_AGE_START": "Defined when the game starts in the Castle Age.",
         "IMPERIAL_AGE_START": "Defined when the game starts in the Imperial Age.",
         "POST_IMPERIAL_AGE_START": "Defined when the game starts after the Imperial Age, the standard start of Death Match and Battle Royale.",
-        "FIXED_POSITIONS": "Defined when the lobby keeps teams together or fixes positions.",
-        "TEAM_POSITIONS": "Defined when the lobby fixes team positions.",
+        "FIXED_POSITIONS": "Defined when the lobby’s Team Together option is on.",
+        "TEAM_POSITIONS": "Defined when the lobby’s Team Positions option is on, also without Team Together.",
         "AI_PLAYERS": "Defined when a computer player takes part.",
         "FULL_TECH_TREE": "Defined when the full tech tree option is on.",
         "ANTIQUITY_MODE": "Defined when the antiquity option is on.",

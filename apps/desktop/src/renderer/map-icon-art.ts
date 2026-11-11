@@ -7,6 +7,7 @@ import {
   type MapIconArtLayer,
   type MapIconArtObjectDescriptor,
 } from '../shared/api';
+import type { MapIconLandmarkImages } from './map-icon-landmarks';
 
 export const mapIconTreeSheetLayout = Object.freeze({ columns: 4, rows: 4 });
 export const mapIconResourceSheetLayout = Object.freeze({ columns: 2, rows: 2 });
@@ -434,6 +435,7 @@ export interface MapIconArtSheets {
     squares: MapIconProcessedSheet;
     feet: MapIconProcessedSheet;
   };
+  landmarks: MapIconLandmarkImages;
 }
 
 export interface MapIconArtMetrics {

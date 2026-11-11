@@ -7101,8 +7101,8 @@ div:has(> .preview-layer-tooltip) {
 }
 
 .managed-mod-icon-lightbox {
-  width: min(640px, calc(100vw - 32px));
-  max-width: 640px;
+  width: min(704px, calc(100vw - 32px));
+  max-width: 704px;
   max-height: calc(100vh - 32px);
   gap: 10px;
   display: flex;

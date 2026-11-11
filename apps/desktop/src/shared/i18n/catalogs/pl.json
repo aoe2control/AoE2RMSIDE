@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} mapa} few {{count} mapy} many {{count} map} other {{count} mapy}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: włączone"
+    },
+    "output.run.option-off": {
+      "message": "{option}: wyłączone"
+    },
     "output.run.fact.players": {
       "message": "Gracze"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Jednostki nie mogą przechodzić przez farmy. Definiuje SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Rozmieszcza graczy każdej drużyny w kolejności ich kolorów. Bez opcji Drużyny razem gracze są rozmieszczani losowo, ale skrypt nadal widzi TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Królobójstwo wymaga króla dla każdego gracza. Na mapie bez królów gra natychmiast kończy rozgrywkę."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Opcje poczekalni wymagają AoE2Control w wersji 1.1.1 lub nowszej. Stan gry nie został zmieniony."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Testy w grze wymagają opcji Drużyny razem, gdy włączona jest opcja Pozycje drużyn."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Test w grze wymaga gracza na miejscu P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "rozmiar złóż złota i kamienia"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Pokaż mury"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Ukryj mury"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Opcje murów"
+    },
+    "map-icon.art.walls.size": {
+      "message": "rozmiar murów"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Pokaż relikwie i monumenty"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Ukryj relikwie i monumenty"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Opcje relikwii i monumentów"
+    },
+    "map-icon.art.relics.size": {
+      "message": "rozmiar relikwii i monumentów"
     },
     "map-icon.art.amount.fewer": {
       "message": "Mniej"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Era Oświecenia"
     },
-    "game-options.positions.random": {
-      "message": "Losowe pozycje"
-    },
-    "game-options.positions.fixed": {
-      "message": "Stałe pozycje"
-    },
-    "game-options.positions.team-together": {
-      "message": "Drużyny razem"
-    },
     "game-options.color.blue": {
       "message": "Niebieski"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Nieprzekraczalne farmy"
+    },
+    "game-options.flag.team-together": {
+      "message": "Drużyny razem"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Pozycje drużyn"
     },
     "game-options.civilization.random": {
       "message": "Losowo"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Gra może tu ulec awarii"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Obszar aktora na mapie bez lądów"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Skrypt tworzy obszar aktora przez create_actor_area albo przez actor_area przy umieszczanym obiekcie, ale nie tworzy żadnego lądu. Gra przypisuje każdy obszar aktora graczowi jakiegoś lądu i ulega awarii, gdy żadnego lądu nie ma."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Utwórz lądy w <LAND_GENERATION>, na przykład przez create_player_lands, albo usuń obszary aktora."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required przy obiekcie za małym dla wyszukiwania"

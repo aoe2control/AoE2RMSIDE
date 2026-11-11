@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} mapa} few {{count} mapy} many {{count} mapy} other {{count} map}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: zapnuto"
+    },
+    "output.run.option-off": {
+      "message": "{option}: vypnuto"
+    },
     "output.run.fact.players": {
       "message": "Hráči"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Jednotky nemohou procházet přes farmy. Definuje SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Rozmístí hráče každého týmu v pořadí jejich barev. Bez volby Tým pohromadě jsou hráči rozmístěni náhodně, skript ale přesto vidí TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Královražda vyžaduje krále pro každého hráče. Na mapě bez králů hra zápas ihned ukončí."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Možnosti herní místnosti vyžadují AoE2Control 1.1.1 nebo novější. Stav hry nebyl změněn."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Testy ve hře vyžadují volbu Tým pohromadě, když je zapnutá volba Pozice týmů."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Test ve hře vyžaduje hráče na pozici P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "velikost zlata a kamene"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Zobrazit hradby"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Skrýt hradby"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Možnosti hradeb"
+    },
+    "map-icon.art.walls.size": {
+      "message": "velikost hradeb"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Zobrazit relikvie a monumenty"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Skrýt relikvie a monumenty"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Možnosti relikvií a monumentů"
+    },
+    "map-icon.art.relics.size": {
+      "message": "velikost relikvií a monumentů"
     },
     "map-icon.art.amount.fewer": {
       "message": "Méně"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Postimperiální věk"
     },
-    "game-options.positions.random": {
-      "message": "Náhodné pozice"
-    },
-    "game-options.positions.fixed": {
-      "message": "Pevné pozice"
-    },
-    "game-options.positions.team-together": {
-      "message": "Tým pohromadě"
-    },
     "game-options.color.blue": {
       "message": "Modrá"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Neprůchodné farmy"
+    },
+    "game-options.flag.team-together": {
+      "message": "Tým pohromadě"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Pozice týmů"
     },
     "game-options.civilization.random": {
       "message": "Náhodná"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Hra zde může spadnout"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Zóna aktéra na mapě bez oblastí"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Skript vytváří zónu aktéra pomocí create_actor_area nebo pomocí actor_area u umístěného objektu, ale nevytváří žádnou oblast. Hra zařazuje každou zónu aktéra pod hráče některé oblasti, a když žádná není, spadne."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Vytvořit oblasti v <LAND_GENERATION>, například pomocí create_player_lands, nebo zóny aktéra odstranit."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required u objektu, který je pro hledání příliš malý"

@@ -485,6 +485,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} मानचित्र} other {{count} मानचित्र}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: चालू"
+    },
+    "output.run.option-off": {
+      "message": "{option}: बंद"
+    },
     "output.run.fact.players": {
       "message": "खिलाड़ी"
     },
@@ -1018,6 +1024,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "इकाइयाँ खेतों पर नहीं चल सकतीं। SOLID_FARMS परिभाषित करता है।"
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "हर टीम के खिलाड़ियों को रंग के क्रम में रखता है। साथ मिलकर टीम बनाएँ के बिना खिलाड़ी यादृच्छिक रूप से रखे जाते हैं, फिर भी स्क्रिप्ट को TEAM_POSITIONS दिखता है।"
     },
     "run-menu.lobby.regicide-note": {
       "message": "राजा की हत्या में हर खिलाड़ी के लिए एक राजा चाहिए। राजाओं के बिना मानचित्र पर गेम तुरंत मैच समाप्त कर देता है।"
@@ -1744,6 +1753,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "लॉबी विकल्पों के लिए AoE2Control 1.1.1 या नया संस्करण चाहिए। गेम में बदलाव नहीं किया गया।"
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "टीम की पोज़िशन चालू होने पर लाइव परीक्षण के लिए साथ मिलकर टीम बनाएँ चालू होना चाहिए।"
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "लाइव परीक्षण के लिए P1 में खिलाड़ी चाहिए"
@@ -3250,6 +3262,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "सोने और पत्थर का आकार"
+    },
+    "map-icon.art.walls.show": {
+      "message": "दीवारें दिखाएँ"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "दीवारें छिपाएँ"
+    },
+    "map-icon.art.walls.options": {
+      "message": "दीवारों के विकल्प"
+    },
+    "map-icon.art.walls.size": {
+      "message": "दीवारों का आकार"
+    },
+    "map-icon.art.relics.show": {
+      "message": "अवशेष और स्मारक दिखाएँ"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "अवशेष और स्मारक छिपाएँ"
+    },
+    "map-icon.art.relics.options": {
+      "message": "अवशेषों और स्मारकों के विकल्प"
+    },
+    "map-icon.art.relics.size": {
+      "message": "अवशेषों और स्मारकों का आकार"
     },
     "map-icon.art.amount.fewer": {
       "message": "कम"
@@ -5267,15 +5303,6 @@
     "game-options.age.post-imperial-age": {
       "message": "उत्तरसाम्राज्यवाद युग"
     },
-    "game-options.positions.random": {
-      "message": "रैंडम स्थान"
-    },
-    "game-options.positions.fixed": {
-      "message": "निश्चित स्थिति"
-    },
-    "game-options.positions.team-together": {
-      "message": "साथ मिलकर टीम बनाएँ"
-    },
     "game-options.color.blue": {
       "message": "नीला"
     },
@@ -5317,6 +5344,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "ठोस खेत"
+    },
+    "game-options.flag.team-together": {
+      "message": "साथ मिलकर टीम बनाएँ"
+    },
+    "game-options.flag.team-positions": {
+      "message": "टीम की पोज़िशन"
     },
     "game-options.civilization.random": {
       "message": "यादृच्छिक"
@@ -5962,6 +5995,15 @@
     },
     "known-crash.headline.possible": {
       "message": "यहाँ गेम क्रैश हो सकता है"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "बिना भूमि वाले मानचित्र पर एक एक्टर क्षेत्र"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "स्क्रिप्ट create_actor_area से या रखी गई वस्तु पर actor_area से एक एक्टर क्षेत्र बनाती है, लेकिन कोई भूमि नहीं बनाती। गेम हर एक्टर क्षेत्र को किसी भूमि के खिलाड़ी के नाम दर्ज करता है और जब कोई भूमि नहीं होती तो क्रैश हो जाता है।"
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "<LAND_GENERATION> में भूमियाँ बनाएँ, उदाहरण के लिए create_player_lands से, या एक्टर क्षेत्र हटा दें।"
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "खोज के लिए बहुत छोटी वस्तु पर override_actor_radius_if_required"

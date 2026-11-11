@@ -1,0 +1,31 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2rmside-map-icon-landmark-sprites",
+  "files": [
+    {
+      "path": "assets/original/map-icon-landmarks/relic-v1.png",
+      "sha256": "f001f13249a193159befff4e12b6d0e95d5d6aa5388493a58c2089418b74e927",
+      "authorship": "AoE2RMSIDE project owner; supplied and accepted on 2026-11-10 as original art for the generated map icon's relics (the owner states it contains no game content).",
+      "license": "Apache-2.0",
+      "sourceClassification": "generated-independent",
+      "created": "2026-11-10",
+      "containsGameContent": false,
+      "transformation": "Copied from the supplied 1254 x 1254 RGBA PNG (sha256 fc3a4f041f7fc5ddbfff4656b4c0fc65cb2da3bb9545cb219160952a472ab09e3) with only its embedded caBX metadata chunk removed; the IHDR, IDAT and IEND chunks, and so every pixel, are byte-for-byte as supplied. A white marble pedestal with a golden flame statue and a thick dark outline on a transparent background, drawn for every relic. Bundled with the desktop renderer and processed at run time into the generated map icon's relics and monuments layer: an alpha levels step (alpha 8 or less becomes transparent, 248 or more opaque, linear in between) that removes faint specks and makes the nearly opaque body fully opaque, a crop to the visible pixels, and an area-average downscale over premultiplied colors to the chosen size."
+    },
+    {
+      "path": "assets/original/map-icon-landmarks/koth-monument-v1.png",
+      "sha256": "2777b8f0189f9bb9c11b3b6a84e0c5e0e95bea1fb43db53b12a2b4030cff4687",
+      "authorship": "AoE2RMSIDE project owner; supplied and accepted on 2026-11-10 as original art for the generated map icon's King of the Hill monument (the owner states it contains no game content).",
+      "license": "Apache-2.0",
+      "sourceClassification": "generated-independent",
+      "created": "2026-11-10",
+      "containsGameContent": false,
+      "transformation": "Copied from the supplied 1254 x 1254 RGBA PNG (sha256 dd2b28b63b292ac0e821a43dd39481c48788ac124875f7c3477d16bb8932e0d6) with only its embedded caBX metadata chunk removed; the IHDR, IDAT and IEND chunks, and so every pixel, are byte-for-byte as supplied. A pale stone building with red-brown accents and three golden onion domes with a thick dark outline on a transparent background, drawn for the monument a King of the Hill game adds at the map's centre. Bundled with the desktop renderer and processed at run time into the generated map icon's relics and monuments layer: an alpha levels step (alpha 8 or less becomes transparent, 248 or more opaque, linear in between) that removes faint specks and makes the nearly opaque body fully opaque, a crop to the visible pixels, and an area-average downscale over premultiplied colors to the chosen size."
+    }
+  ]
+}

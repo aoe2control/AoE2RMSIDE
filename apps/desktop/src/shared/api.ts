@@ -210,7 +210,7 @@ export interface ApplicationMenuModel {
 }
 
 export const mapIconRenderContract = {
-  version: 14,
+  version: 16,
   size: 512,
   identityDomain: 'rmside-map-icon-render',
 } as const;
@@ -263,6 +263,10 @@ export interface MapIconRenderInput {
   resourceSize: number;
   resourceSpawnOverlap: boolean;
   minimapObjects: boolean;
+  walls: boolean;
+  wallSize: number;
+  relics: boolean;
+  relicSize: number;
 }
 
 export type MapIconSpawnMarkerStyle = 'hidden' | 'player-squares' | 'nomad-feet';
@@ -369,6 +373,10 @@ export const defaultMapIconRenderInput: Readonly<MapIconRenderInput> = Object.fr
   resourceSize: mapIconArtSize.default,
   resourceSpawnOverlap: false,
   minimapObjects: false,
+  walls: true,
+  wallSize: mapIconArtSize.default,
+  relics: true,
+  relicSize: mapIconArtSize.default,
 });
 
 export const mapIconRenderInputKeys: readonly (keyof MapIconRenderInput)[] = Object.freeze([
@@ -387,6 +395,10 @@ export const mapIconRenderInputKeys: readonly (keyof MapIconRenderInput)[] = Obj
   'resourceSize',
   'resourceSpawnOverlap',
   'minimapObjects',
+  'walls',
+  'wallSize',
+  'relics',
+  'relicSize',
 ]);
 
 export function isMapIconSpawnMarkerSizePercent(value: unknown): value is number {
@@ -432,13 +444,15 @@ export function validateMapIconRenderInput(value: unknown): Readonly<MapIconRend
     'resources',
     'resourceSpawnOverlap',
     'minimapObjects',
+    'walls',
+    'relics',
   ] as const) {
     if (typeof record[key] !== 'boolean') throw new Error(`map icon ${key} choice is invalid`);
   }
   for (const key of ['treeDensity', 'resourceDensity'] as const) {
     if (!isMapIconArtDensity(record[key])) throw new Error(`map icon ${key} is invalid`);
   }
-  for (const key of ['treeSize', 'resourceSize'] as const) {
+  for (const key of ['treeSize', 'resourceSize', 'wallSize', 'relicSize'] as const) {
     if (!isMapIconArtSize(record[key])) throw new Error(`map icon ${key} is invalid`);
   }
   return Object.freeze({
@@ -457,6 +471,10 @@ export function validateMapIconRenderInput(value: unknown): Readonly<MapIconRend
     resourceSize: record.resourceSize as number,
     resourceSpawnOverlap: record.resourceSpawnOverlap as boolean,
     minimapObjects: record.minimapObjects as boolean,
+    walls: record.walls as boolean,
+    wallSize: record.wallSize as number,
+    relics: record.relics as boolean,
+    relicSize: record.relicSize as number,
   });
 }
 
@@ -489,7 +507,9 @@ export function mapIconIdentityPrefix(
   const trees = `${input.trees ? 'trees' : 'no-trees'}-density-${input.treeDensity}-size-${input.treeSize}-${input.treeSpawnOverlap ? 'overlap' : 'clear'}`;
   const resources = `${input.resources ? 'resources' : 'no-resources'}-density-${input.resourceDensity}-size-${input.resourceSize}-${input.resourceSpawnOverlap ? 'overlap' : 'clear'}`;
   const objects = input.minimapObjects ? 'minimap-objects' : 'no-minimap-objects';
-  return `${identityDomain}\0v${version}\0${size}x${size}\0${perspective}\0${look}\0${relief}\0${smoothing}\0${markers}\0${markerSize}\0${trees}\0${resources}\0${objects}\0${sourceSemanticHash}\0`;
+  const walls = `${input.walls ? 'walls' : 'no-walls'}-size-${input.wallSize}`;
+  const relics = `${input.relics ? 'relics' : 'no-relics'}-size-${input.relicSize}`;
+  return `${identityDomain}\0v${version}\0${size}x${size}\0${perspective}\0${look}\0${relief}\0${smoothing}\0${markers}\0${markerSize}\0${trees}\0${resources}\0${objects}\0${walls}\0${relics}\0${sourceSemanticHash}\0`;
 }
 
 export { externalLinkUrls } from './external-links';
@@ -844,6 +864,7 @@ export interface PreviewGenerationResult {
   playerColorIds: number[];
   playerCivilizationIds?: number[];
   presentationSeed?: number;
+  kingOfTheHill?: boolean;
   objectNames: ObjectNameDescriptor[];
   graphiclessObjectIds?: number[];
   mapIconArtObjects?: MapIconArtObjectDescriptor[];
@@ -1063,7 +1084,7 @@ export interface MapTestReport {
     mapSize: string;
     players: Array<{ slot: number; team: number; civilizationId: number; color: number }>;
     setupContext: {
-      contractVersion: { major: 1; minor: 0; patch: 0 };
+      contractVersion: { major: 1; minor: 0 | 3; patch: 0 };
       gameMode: string;
       startingResources: string;
       startingAge: string;
@@ -1342,6 +1363,10 @@ export interface ManualDeploymentMapIconRender {
   resourceSize: number;
   resourceSpawnOverlap: boolean;
   minimapObjects: boolean;
+  walls: boolean;
+  wallSize: number;
+  relics: boolean;
+  relicSize: number;
   sourceSemanticHash: string;
   gameTexturesSource?: string;
   identity: string;
@@ -1800,7 +1825,7 @@ export type LanguageServerNotificationMethod =
   | 'rms/previewContext';
 
 export interface LanguageServerPreviewContext {
-  contractVersion: Readonly<{ major: 1; minor: 0 | 1 | 2; patch: 0 }>;
+  contractVersion: Readonly<{ major: 1; minor: 0 | 1 | 2 | 3; patch: 0 }>;
   computerPlayerSlots?: number[];
   gameModeModifiers?: GameModeModifier[];
   turboMode?: boolean;
@@ -2137,6 +2162,10 @@ export interface DesktopSession {
   mapIconResourceSize: number;
   mapIconResourceSpawnOverlap: boolean;
   mapIconMinimapObjects: boolean;
+  mapIconWalls: boolean;
+  mapIconWallSize: number;
+  mapIconRelics: boolean;
+  mapIconRelicSize: number;
   window: {
     bounds: WindowBounds | null;
     maximized: boolean;

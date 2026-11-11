@@ -1,3 +1,5 @@
+import { positionPolicySetupMinor } from './position-policy';
+
 export const gameModeModifierOptions = [
   {
     value: 'empire-wars',
@@ -75,7 +77,9 @@ export function hasLobbyOptions(options: Partial<LobbyOptions>): boolean {
 export function setupContextMinor(
   options: Partial<LobbyOptions>,
   computerPlayerSlots: readonly number[],
-): 0 | 1 | 2 {
+  positionPolicy = 'random',
+): 0 | 1 | 2 | 3 {
+  if (positionPolicySetupMinor(positionPolicy) === 3) return 3;
   if (hasLobbyOptions(options)) return 2;
   return computerPlayerSlots.length > 0 ? 1 : 0;
 }

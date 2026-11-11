@@ -2510,6 +2510,7 @@ fn protocol_setup_context(
         Ok(v1::PositionPolicy::Random) => PositionPolicy::Random,
         Ok(v1::PositionPolicy::Fixed) => PositionPolicy::Fixed,
         Ok(v1::PositionPolicy::TeamTogether) => PositionPolicy::TeamTogether,
+        Ok(v1::PositionPolicy::RandomTeamPositions) => PositionPolicy::RandomTeamPositions,
         _ => {
             return Err(malformed(
                 "typed position policy must be explicit and supported",

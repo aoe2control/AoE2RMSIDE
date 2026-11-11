@@ -1,5 +1,6 @@
 import { basename } from 'node:path';
 import type { PositionEncoding } from './external-language-position';
+import { compareSemanticVersions, parseSemanticVersion } from './semantic-version';
 
 export type ExternalLanguage = 'rms' | 'xs';
 
@@ -56,9 +57,30 @@ const xsc: Omit<CompatibilityProfile, 'displayName'> = {
         }
       : null,
   configurationUsesFolders: true,
-  testedVersions: ['0.1.0'],
+  testedVersions: ['0.1.0', '0.1.1'],
   provisional: false,
 };
+
+export const xscFixedVersion = '0.1.1';
+
+export function xscHasFixes(version: string | null): boolean {
+  const reported = parseSemanticVersion(version);
+  return (
+    reported !== null &&
+    compareSemanticVersions(reported, parseSemanticVersion(xscFixedVersion)!) >= 0
+  );
+}
+
+function xscFixed(): Omit<CompatibilityProfile, 'displayName'> {
+  const fixed: Omit<CompatibilityProfile, 'displayName'> = {
+    ...xsc,
+    asciiSubstitution: false,
+    onlyExistingFiles: false,
+    refreshClosedFromDisk: false,
+  };
+  delete fixed.positionEncoding;
+  return fixed;
+}
 
 const rmsc: Omit<CompatibilityProfile, 'displayName'> = {
   id: 'rmsc',
@@ -97,7 +119,8 @@ export function compatibilityProfile(
   const name = identity.name?.trim().toLowerCase() ?? null;
   const stem = programStem(identity.programPath);
   if (language === 'xs' && (name === 'xs check' || (name === null && stem === 'xs-check-lsp'))) {
-    return { ...xsc, displayName: 'XS Check' };
+    const profile = xscHasFixes(identity.version) ? xscFixed() : xsc;
+    return { ...profile, displayName: 'XS Check' };
   }
   if (
     language === 'rms' &&

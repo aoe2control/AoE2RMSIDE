@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, other {{count} 张地图}}"
     },
+    "output.run.option-on": {
+      "message": "{option}：开"
+    },
+    "output.run.option-off": {
+      "message": "{option}：关"
+    },
     "output.run.fact.players": {
       "message": "玩家"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "单位无法穿过农田。定义 SOLID_FARMS。"
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "按颜色顺序放置每支队伍的玩家。未启用协同作战时，玩家会随机放置，但脚本仍会看到 TEAM_POSITIONS。"
     },
     "run-menu.lobby.regicide-note": {
       "message": "弑君模式要求每名玩家都有一位国王。若地图中没有国王，游戏会立即结束对局。"
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "大厅选项需要 AoE2Control 1.1.1 或更高版本。游戏未被更改。"
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "启用队伍位置时，实机测试需要同时启用协同作战。"
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "实机测试需要在 P1 放置一名玩家"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "金矿和石矿大小"
+    },
+    "map-icon.art.walls.show": {
+      "message": "显示城墙"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "隐藏城墙"
+    },
+    "map-icon.art.walls.options": {
+      "message": "城墙选项"
+    },
+    "map-icon.art.walls.size": {
+      "message": "城墙大小"
+    },
+    "map-icon.art.relics.show": {
+      "message": "显示圣物和纪念碑"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "隐藏圣物和纪念碑"
+    },
+    "map-icon.art.relics.options": {
+      "message": "圣物和纪念碑选项"
+    },
+    "map-icon.art.relics.size": {
+      "message": "圣物和纪念碑大小"
     },
     "map-icon.art.amount.fewer": {
       "message": "更少"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "后帝王时代"
     },
-    "game-options.positions.random": {
-      "message": "随机位置"
-    },
-    "game-options.positions.fixed": {
-      "message": "固定位置"
-    },
-    "game-options.positions.team-together": {
-      "message": "协同作战"
-    },
     "game-options.color.blue": {
       "message": "蓝色"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "坚固农田"
+    },
+    "game-options.flag.team-together": {
+      "message": "协同作战"
+    },
+    "game-options.flag.team-positions": {
+      "message": "队伍位置"
     },
     "game-options.civilization.random": {
       "message": "随机"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "游戏可能在此崩溃"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "没有陆地的地图上的角色区域"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "脚本通过 create_actor_area 或已放置对象的 actor_area 创建了角色区域，但没有创建任何陆地。游戏将每个角色区域记录在某块陆地的玩家名下，没有陆地时就会崩溃。"
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "在 <LAND_GENERATION> 中创建陆地（例如使用 create_player_lands），或删除这些角色区域。"
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "在过小而无法搜索的对象上使用 override_actor_radius_if_required"

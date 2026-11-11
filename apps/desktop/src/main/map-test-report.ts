@@ -1,5 +1,10 @@
 import { createHash } from 'node:crypto';
 import type { MapTestFinding, MapTestReport, PreviewGenerationInput } from '../shared/api';
+import {
+  positionPolicies,
+  positionPolicyOptions,
+  type PositionPolicy,
+} from '../shared/position-policy';
 
 export const maximumMapTestReportBytes = 16 * 1024 * 1024;
 const hashPattern = /^[a-f0-9]{64}$/u;
@@ -262,7 +267,7 @@ function settings(value: unknown): void {
   const version = record(setup.contractVersion, 'setup version');
   exactKeys(version, ['major', 'minor', 'patch']);
   equal(version.major, 1, 'setup major');
-  equal(version.minor, 0, 'setup minor');
+  equal(version.minor, setup.positionPolicy === 'random-team-positions' ? 3 : 0, 'setup minor');
   equal(version.patch, 0, 'setup patch');
   oneOf(
     setup.gameMode,
@@ -291,7 +296,7 @@ function settings(value: unknown): void {
     ['standard', 'dark-age', 'feudal-age', 'castle-age', 'imperial-age', 'post-imperial-age'],
     'starting age',
   );
-  oneOf(setup.positionPolicy, ['random', 'fixed', 'team-together'], 'position policy');
+  oneOf(setup.positionPolicy, positionPolicies, 'position policy');
 }
 
 function lobby(setting: Record<string, unknown>): void {
@@ -620,8 +625,8 @@ export function mapTestReplayModeContext(
     'imperial-age': 5,
     'post-imperial-age': 6,
   };
-  const position: Record<string, number> = { random: 0, fixed: 1, 'team-together': 2 };
-  return `aoe2:gm=${gameMode[setup.gameMode]};r=${resources[setup.startingResources]};a=${age[setup.startingAge]};p=${position[setup.positionPolicy]};c=${settings.players.map((player) => player.color).join(',')}`;
+  const position = positionPolicyOptions[setup.positionPolicy as PositionPolicy].nativeValue;
+  return `aoe2:gm=${gameMode[setup.gameMode]};r=${resources[setup.startingResources]};a=${age[setup.startingAge]};p=${position};c=${settings.players.map((player) => player.color).join(',')}`;
 }
 
 export function mapTestReplayGenerationInput(

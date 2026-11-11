@@ -6,14 +6,16 @@ explicitly; a map that is fair in 1v1 can fail in 4v4.
 
 ## Placement
 
-- With the lobby's "teams together" setting, `random_placement` already
-  seats teammates next to each other. `grouped_by_team` places teammates
-  together with a gap between teams; it takes effect when the lobby keeps
-  teams together or fixes positions. Teammates are spaced by their lands'
-  `base_size`.
-- `FIXED_POSITIONS` and `TEAM_POSITIONS` tell the script what the lobby
-  chose. Labels such as `2_TEAM_GAME`, `TEAM1_SIZE4` and `PLAYER3_TEAM2`
-  describe the teams.
+- The lobby has two independent position options. With Team Together,
+  `random_placement` already seats teammates next to each other, and
+  `grouped_by_team` places teammates together with a gap between teams.
+  Team Positions adds the color order inside each team, but only with Team
+  Together; without it, players are placed at random. Teammates are spaced
+  by their lands' `base_size`.
+- `FIXED_POSITIONS` is defined when Team Together is on, and
+  `TEAM_POSITIONS` when Team Positions is on, also without Team Together.
+  Labels such as `2_TEAM_GAME`, `TEAM1_SIZE4` and `PLAYER3_TEAM2` describe
+  the teams.
 - `set_zone_by_team` in the player land block lets teammates' lands merge
   (team islands, shared team areas). `assign_to AT_TEAM` gives a neutral
   land to a team.
@@ -95,9 +97,12 @@ are on one team. If the map places walls, test that setup.
 ## Testing team setups
 
 - Set the teams before you generate: `settings.teams` of `generate_map` and
-  `run_quality_check`; the position policy comes from the IDE's lobby
-  settings. Generate and run the quality check for each team setup you
-  support, for example 2v2, 3v3, 4v4.
+  `run_quality_check`. `settings.team_together` and
+  `settings.team_positions` of `generate_map` set the position options; a
+  quality check uses the ones in the user's Run settings. Generate and run
+  the quality check for each team setup you support, for example 2v2, 3v3,
+  4v4.
+- A live test needs Team Together when Team Positions is on.
 - The quality check compares players (and distances to teammates), not
   team totals. Write team rules as map tests: `sample.players` gives each
   player's `team` and start, and the walking queries measure per team

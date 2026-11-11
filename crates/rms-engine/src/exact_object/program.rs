@@ -278,6 +278,20 @@ fn apply_braced_object_command(
     }
 }
 
+fn upgrade_copies_master(
+    source: ObjectId,
+    target: ObjectId,
+    content: CompatibleContentView<'_>,
+) -> Result<bool, GenerationError> {
+    let (Some(source), Some(target)) = (content.object(source), content.object(target)) else {
+        return Ok(false);
+    };
+    match (source.constructor_type, target.constructor_type) {
+        (Some(source), Some(target)) => Ok(source == target),
+        _ => Err(invalid_object("object type metadata is unavailable")),
+    }
+}
+
 pub(crate) fn collect_runtime_object_attributes(
     operations: &[SemanticOperation],
     content: CompatibleContentView<'_>,
@@ -318,6 +332,9 @@ pub(crate) fn collect_runtime_object_attributes(
         let target_id = nonnegative_u32(operation, 1, "effect object")?;
         if Some(effect) == upgrade_unit || Some(effect) == gaia_upgrade_unit {
             let target = ObjectId(nonnegative_u32(operation, 2, "upgrade target")?);
+            if !upgrade_copies_master(ObjectId(target_id), target, content)? {
+                continue;
+            }
             attributes.set_upgrade(
                 ObjectId(target_id),
                 target,

@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} карта} few {{count} карты} many {{count} карт} other {{count} карты}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: включено"
+    },
+    "output.run.option-off": {
+      "message": "{option}: выключено"
+    },
     "output.run.fact.players": {
       "message": "Игроки"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Юниты не могут проходить через фермы. Определяет SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Размещает игроков каждой команды в порядке их цветов. Без опции «Объединение» игроки размещаются случайно, но скрипт всё равно видит TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "В режиме «Цареубийство» каждому игроку нужен король. На карте без королей игра сразу завершает матч."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Для параметров лобби нужен AoE2Control 1.1.1 или новее. Состояние игры не изменилось."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Для тестов в игре нужна опция «Объединение», когда включена опция «Позиции команд»."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Для теста в игре нужен игрок в P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "размер залежей золота и камня"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Показать стены"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Скрыть стены"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Настройки стен"
+    },
+    "map-icon.art.walls.size": {
+      "message": "размер стен"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Показать реликвии и монументы"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Скрыть реликвии и монументы"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Настройки реликвий и монументов"
+    },
+    "map-icon.art.relics.size": {
+      "message": "размер реликвий и монументов"
     },
     "map-icon.art.amount.fewer": {
       "message": "Меньше"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Постимперская эпоха"
     },
-    "game-options.positions.random": {
-      "message": "Случайные позиции"
-    },
-    "game-options.positions.fixed": {
-      "message": "Фиксированные позиции"
-    },
-    "game-options.positions.team-together": {
-      "message": "Объединение"
-    },
     "game-options.color.blue": {
       "message": "Синий"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Непроходимые фермы"
+    },
+    "game-options.flag.team-together": {
+      "message": "Объединение"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Позиции команд"
     },
     "game-options.civilization.random": {
       "message": "Случайно"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Здесь игра может вылететь"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Область актора на карте без участков"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Скрипт создаёт область актора через create_actor_area или через actor_area у размещаемого объекта, но не создаёт ни одного участка. Игра записывает каждую область актора на игрока какого-либо участка и вылетает, если участков нет."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Создать участки в <LAND_GENERATION>, например через create_player_lands, или удалить области актора."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required у объекта, слишком маленького для поиска"

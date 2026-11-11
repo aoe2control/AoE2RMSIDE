@@ -22,7 +22,6 @@ pub(crate) struct ObjectRuntimeAttributes {
     player_resource_writes: Vec<PlayerResourceWrite>,
     undead_flags: std::collections::BTreeMap<ObjectId, u8>,
     gaia_undead_flags: std::collections::BTreeMap<ObjectId, u8>,
-    unknown_undead_flags: std::collections::BTreeSet<(ObjectId, bool)>,
 }
 
 pub(crate) const UNDEAD_FLAG_TEMPORARY_NOT_TRACKED: u8 = 8;
@@ -419,12 +418,6 @@ impl ObjectRuntimeAttributes {
         } else {
             i32::MIN
         }) as u8;
-        if mutation == AttributeMutation::Set {
-            self.unknown_undead_flags.remove(&(object_id, true));
-            if !gaia_only {
-                self.unknown_undead_flags.remove(&(object_id, false));
-            }
-        }
         let apply = |flags: &mut std::collections::BTreeMap<ObjectId, u8>| {
             let current = flags.get(&object_id).copied().unwrap_or(0);
             let next = match mutation {
@@ -440,26 +433,20 @@ impl ObjectRuntimeAttributes {
         }
     }
 
-    pub(crate) fn undead_flag(&self, object_id: ObjectId, owner: u8) -> Option<u8> {
-        let gaia = owner == 0;
-        if self.unknown_undead_flags.contains(&(object_id, gaia)) {
-            return None;
-        }
-        let flags = if gaia {
+    pub(crate) fn undead_flag(&self, object_id: ObjectId, owner: u8) -> u8 {
+        let flags = if owner == 0 {
             &self.gaia_undead_flags
         } else {
             &self.undead_flags
         };
-        Some(flags.get(&object_id).copied().unwrap_or(0))
+        flags.get(&object_id).copied().unwrap_or(0)
     }
 
     pub(crate) fn has_undead_flags(&self) -> bool {
-        !self.unknown_undead_flags.is_empty()
-            || self
-                .undead_flags
-                .values()
-                .chain(self.gaia_undead_flags.values())
-                .any(|flag| *flag != 0)
+        self.undead_flags
+            .values()
+            .chain(self.gaia_undead_flags.values())
+            .any(|flag| *flag != 0)
     }
 
     fn upgrade_undead_flag(&mut self, object_id: ObjectId, target: ObjectId, gaia: bool) {
@@ -468,14 +455,10 @@ impl ObjectRuntimeAttributes {
         } else {
             &mut self.undead_flags
         };
-        flags.remove(&object_id);
-        let target_written = flags.get(&target).is_some_and(|flag| *flag != 0)
-            || self.unknown_undead_flags.contains(&(target, gaia));
-        if target_written {
-            self.unknown_undead_flags.insert((object_id, gaia));
-        } else {
-            self.unknown_undead_flags.remove(&(object_id, gaia));
-        }
+        match flags.get(&target).copied() {
+            Some(flag) => flags.insert(object_id, flag),
+            None => flags.remove(&object_id),
+        };
     }
 
     pub(super) fn set_upgrade(&mut self, object_id: ObjectId, target: ObjectId, gaia_only: bool) {

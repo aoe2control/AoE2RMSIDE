@@ -3,6 +3,7 @@ import {
   isMapIconSaveSize,
   mapIconArtDensity,
   mapIconArtSize,
+  mapIconArtSizePercents,
   mapIconIdentityPrefix,
   mapIconRenderContract,
   mapIconSpawnMarkerSizePercent,
@@ -33,6 +34,7 @@ import {
   type MapIconProcessedSheet,
   type MapIconScreenRect,
   type MapIconSprite,
+  type MapIconSpriteCell,
 } from './map-icon-art';
 import {
   mapIconSpawnMarkerAnchor,
@@ -59,7 +61,29 @@ import {
   raisedWallLight,
   type ElevationSurface,
 } from './preview-elevation';
-import { cliffMaterial, previewHelperObjectIds, terrainMaterial } from './preview-materials';
+import {
+  cliffMaterial,
+  ownerPreviewColor,
+  previewHelperObjectIds,
+  terrainMaterial,
+} from './preview-materials';
+import {
+  mapIconWallColors,
+  mapIconWallFlagFills,
+  mapIconWallMetrics,
+  mapIconWallPlan,
+  mapIconWallSizes,
+  mapIconWallTowerFills,
+  type MapIconWallMaterial,
+  type MapIconWallSizes,
+  type MapIconWallTowerKind,
+} from './map-icon-walls';
+import {
+  mapIconLandmarkAnchors,
+  mapIconLandmarkHeight,
+  mapIconLandmarkPlacements,
+  type MapIconLandmarkPlacement,
+} from './map-icon-landmarks';
 import { terrainReliefLight } from './preview-terrain-mesh';
 import {
   decodeTopDownScene,
@@ -135,6 +159,11 @@ export interface MapIconStyle {
   artObjects?: readonly MapIconArtObjectDescriptor[];
   art?: MapIconArtSheets | null;
   minimapObjects?: boolean;
+  walls?: boolean;
+  wallSize?: number;
+  relics?: boolean;
+  relicSize?: number;
+  kingOfTheHill?: boolean;
   helperObjectIds?: ReadonlySet<number>;
   raised?: ElevationSurface | null;
 }
@@ -248,6 +277,7 @@ export function renderMapIcon(
       artObjects: map.mapIconArtObjects ?? [],
       art: options.art ?? null,
       helperObjectIds: previewHelperObjectIds(map, null),
+      kingOfTheHill: map.kingOfTheHill === true,
       ...mapIconDrawnLayers(renderInput),
     },
     { ...options, size },
@@ -285,14 +315,201 @@ export function renderMapIconScene(
   drawTerrain(canvas, scene, raised, projection);
   drawCliffs(canvas, scene, raised, projection);
   if (drawn.minimapObjects) drawMinimapObjects(canvas, scene, raised, projection);
-  drawSprites(canvas, scene, raised, projection);
+  const walls = mapIconWallDraws(scene, raised, projection);
+  drawWalls(canvas, walls, projection);
+  drawSprites(canvas, scene, raised, projection, () => drawWallFlags(canvas, walls));
   return canvas.pixels;
 }
 
 export function mapIconDrawnLayers<
-  T extends { minimapObjects?: boolean; trees?: boolean; resources?: boolean },
+  T extends {
+    minimapObjects?: boolean;
+    trees?: boolean;
+    resources?: boolean;
+    walls?: boolean;
+    relics?: boolean;
+  },
 >(input: T): T {
-  return input.minimapObjects ? { ...input, trees: false, resources: false } : input;
+  return input.minimapObjects
+    ? {
+        ...input,
+        trees: false,
+        resources: false,
+        ...(input.walls ? { walls: false } : {}),
+        ...(input.relics ? { relics: false } : {}),
+      }
+    : input;
+}
+
+export interface MapIconWallDraws {
+  sizes: MapIconWallSizes;
+  lines: { points: number[]; material: MapIconWallMaterial; strip: number }[];
+  doors: { x0: number; y0: number; x1: number; y1: number; material: MapIconWallMaterial }[];
+  towers: {
+    x: number;
+    y: number;
+    kind: MapIconWallTowerKind | 'gate';
+    material: MapIconWallMaterial;
+  }[];
+  flags: { x: number; y: number; color: number }[];
+}
+
+export function mapIconWallDraws(
+  scene: Pick<TopDownScene, 'width' | 'height' | 'objects'>,
+  style: Pick<MapIconStyle, 'playerColorIds'> &
+    Partial<Pick<MapIconStyle, 'walls' | 'wallSize' | 'minimapObjects' | 'raised'>>,
+  projection: MapIconProjection,
+): MapIconWallDraws | null {
+  if (!style.walls || style.minimapObjects) return null;
+  const plan = mapIconWallPlan(scene.objects, scene.width, scene.height);
+  if (plan.lines.length === 0 && plan.towers.length === 0 && plan.gates.length === 0) return null;
+  const sizes = mapIconWallSizes(
+    mapIconPixelScale(projection),
+    mapIconArtSizePercents[style.wallSize ?? mapIconArtSize.default] ?? 100,
+  );
+  const screen = (point: MapPoint) => {
+    const at = mapIconScreenPoint(point, projection);
+    if (style.raised)
+      at.y -= style.raised.heightAt(point.x, point.y) * projection.verticalComponent;
+    return at;
+  };
+  const lines = plan.lines.map((line) => ({
+    points: line.points.flatMap((point) => {
+      const at = screen(point);
+      return [at.x, at.y];
+    }),
+    material: line.material,
+    strip:
+      line.owner > 0
+        ? ownerPreviewColor(line.owner, style.playerColorIds)
+        : mapIconWallColors[line.material].strip,
+  }));
+  const doors: MapIconWallDraws['doors'] = [];
+  const turrets: MapIconWallDraws['towers'] = [];
+  const flags: MapIconWallDraws['flags'] = [];
+  const minimumGap = sizes.tower * mapIconWallMetrics.gateTurretSpacing;
+  for (const gate of plan.gates) {
+    let [a, b] = gate.ends.map(screen) as [ScreenPoint, ScreenPoint];
+    const gap = Math.hypot(b.x - a.x, b.y - a.y);
+    if (gap < minimumGap) {
+      const middle = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      const unit = Math.hypot(projection.component, projection.verticalComponent);
+      const axis =
+        gap > 0
+          ? { x: (b.x - a.x) / gap, y: (b.y - a.y) / gap }
+          : { x: projection.component / unit, y: -projection.verticalComponent / unit };
+      a = { x: middle.x - (axis.x * minimumGap) / 2, y: middle.y - (axis.y * minimumGap) / 2 };
+      b = { x: middle.x + (axis.x * minimumGap) / 2, y: middle.y + (axis.y * minimumGap) / 2 };
+    }
+    doors.push({ x0: a.x, y0: a.y, x1: b.x, y1: b.y, material: gate.material });
+    for (const at of [a, b]) {
+      turrets.push({ x: at.x, y: at.y, kind: 'gate', material: gate.material });
+      if (gate.owner > 0) {
+        flags.push({
+          x: at.x,
+          y: at.y,
+          color: ownerPreviewColor(gate.owner, style.playerColorIds),
+        });
+      }
+    }
+  }
+  const spacing = sizes.tower * mapIconWallMetrics.towerSpacing;
+  const placed = new Map<string, { x: number; y: number }[]>();
+  const cell = (value: number) => Math.floor(value / spacing);
+  const crowded = (x: number, y: number) => {
+    for (let row = cell(y) - 1; row <= cell(y) + 1; row += 1) {
+      for (let column = cell(x) - 1; column <= cell(x) + 1; column += 1) {
+        for (const other of placed.get(`${column}:${row}`) ?? []) {
+          if (Math.hypot(other.x - x, other.y - y) < spacing) return true;
+        }
+      }
+    }
+    return false;
+  };
+  const place = (x: number, y: number) => {
+    const key = `${cell(x)}:${cell(y)}`;
+    const list = placed.get(key);
+    if (list) list.push({ x, y });
+    else placed.set(key, [{ x, y }]);
+  };
+  const towers: MapIconWallDraws['towers'] = [...turrets];
+  for (const tower of plan.towers) {
+    const spaced = tower.kind === 'corner' || tower.kind === 'branch';
+    const at = screen(tower.at);
+    if (spaced) {
+      if (crowded(at.x, at.y)) continue;
+      place(at.x, at.y);
+    }
+    towers.push({ x: at.x, y: at.y, kind: tower.kind, material: tower.material });
+  }
+  towers.sort((a, b) => a.y - b.y || a.x - b.x);
+  flags.sort((a, b) => a.y - b.y || a.x - b.x);
+  return { sizes, lines, doors, towers, flags };
+}
+
+function drawWalls(
+  canvas: IconCanvas,
+  walls: MapIconWallDraws | null,
+  projection: MapIconProjection,
+): void {
+  if (!walls) return;
+  canvas.checkCancelled();
+  const { sizes } = walls;
+  const body = Math.max(sizes.width - 2 * sizes.outline, sizes.outline);
+  const strokeLines = (
+    width: number,
+    colorOf: (line: MapIconWallDraws['lines'][number]) => number,
+  ) => {
+    walls.lines.forEach((line, index) => {
+      if (index % cancellationItemStride === 0) canvas.checkCancelled();
+      const { points } = line;
+      const color = colorOf(line);
+      for (let point = 2; point < points.length; point += 2) {
+        canvas.strokeSegment(
+          points[point - 2]!,
+          points[point - 1]!,
+          points[point]!,
+          points[point + 1]!,
+          width,
+          color,
+        );
+      }
+    });
+  };
+  const strokeDoors = (width: number, key: 'outline' | 'door') => {
+    for (const door of walls.doors) {
+      const color = mapIconWallColors[door.material][key];
+      canvas.strokeSegment(door.x0, door.y0, door.x1, door.y1, width, color);
+    }
+  };
+  strokeLines(sizes.width, (line) => mapIconWallColors[line.material].outline);
+  strokeDoors(sizes.width, 'outline');
+  strokeLines(body, (line) => mapIconWallColors[line.material].wall);
+  strokeLines(body * mapIconWallMetrics.stripWidth, (line) => line.strip);
+  strokeDoors(body, 'door');
+  walls.towers.forEach((tower, index) => {
+    if (index % cancellationItemStride === 0) canvas.checkCancelled();
+    for (const fill of mapIconWallTowerFills(
+      tower.x,
+      tower.y,
+      sizes,
+      projection.component,
+      projection.verticalComponent,
+      tower.material,
+    )) {
+      canvas.fillPolygon(fill.points, fill.color);
+    }
+  });
+}
+
+function drawWallFlags(canvas: IconCanvas, walls: MapIconWallDraws | null): void {
+  if (!walls) return;
+  canvas.checkCancelled();
+  for (const flag of walls.flags) {
+    for (const fill of mapIconWallFlagFills(flag.x, flag.y, walls.sizes, flag.color)) {
+      canvas.fillPolygon(fill.points, fill.color);
+    }
+  }
 }
 
 export function mapIconPixelScale(projection: Pick<MapIconProjection, 'pixelScale'>): number {
@@ -387,9 +604,9 @@ function drawMinimapObjects(
 export const mapIconMinimapBorderPixels = 1.5;
 
 export function mapIconNeedsArt(
-  input: Pick<MapIconRenderInput, 'trees' | 'resources' | 'spawnMarkers'>,
+  input: Pick<MapIconRenderInput, 'trees' | 'resources' | 'spawnMarkers' | 'relics'>,
 ): boolean {
-  return input.trees || input.resources || input.spawnMarkers !== 'hidden';
+  return input.trees || input.resources || input.relics || input.spawnMarkers !== 'hidden';
 }
 
 export function mapIconProjection(
@@ -508,6 +725,10 @@ export async function mapIconRenderIdentity(
     | 'resourceSize'
     | 'resourceSpawnOverlap'
     | 'minimapObjects'
+    | 'walls'
+    | 'wallSize'
+    | 'relics'
+    | 'relicSize'
     | 'sourceSemanticHash'
     | 'gameTexturesSource'
   > & { size?: MapIconSaveSize },
@@ -531,6 +752,10 @@ export async function mapIconRenderIdentity(
         resourceSize: render.resourceSize,
         resourceSpawnOverlap: render.resourceSpawnOverlap,
         minimapObjects: render.minimapObjects,
+        walls: render.walls,
+        wallSize: render.wallSize,
+        relics: render.relics,
+        relicSize: render.relicSize,
       },
       render.gameTexturesSource,
       render.size,
@@ -1192,6 +1417,107 @@ export function mapIconSpawnMarkerDraws(
   return draws;
 }
 
+const scaledLandmarkSprites = new WeakMap<MapIconSpriteCell, Map<string, MapIconSprite>>();
+
+function scaledLandmarkSprite(
+  image: MapIconSpriteCell,
+  kind: MapIconLandmarkPlacement['kind'],
+  heightPixels: number,
+  pixelScale: number,
+): MapIconSprite {
+  let cache = scaledLandmarkSprites.get(image);
+  if (!cache) {
+    cache = new Map();
+    scaledLandmarkSprites.set(image, cache);
+  }
+  const key = `${heightPixels}:${pixelScale}`;
+  let sprite = cache.get(key);
+  if (!sprite) {
+    if (image.height === 0) {
+      throw new MapIconRenderError('art-unavailable', 'map icon landmark picture is missing');
+    }
+    const maximumScale = mapIconSpriteMaximumScale * pixelScale;
+    sprite = scaleMapIconSprite(
+      image,
+      Math.min(maximumScale, heightPixels / image.height),
+      mapIconLandmarkAnchors[kind],
+      maximumScale,
+    );
+    cache.set(key, sprite);
+  }
+  return sprite;
+}
+
+export interface MapIconLandmarkDraw {
+  placement: MapIconLandmarkPlacement;
+  sprite: MapIconSprite;
+  left: number;
+  top: number;
+  screenX: number;
+  screenY: number;
+  pushed: boolean;
+}
+
+export function mapIconLandmarkDraws(
+  scene: Pick<TopDownScene, 'width' | 'height' | 'objects'>,
+  style: Pick<MapIconStyle, 'art' | 'raised'> &
+    Partial<Pick<MapIconStyle, 'relics' | 'relicSize' | 'kingOfTheHill' | 'minimapObjects'>>,
+  projection: MapIconProjection,
+): MapIconLandmarkDraw[] {
+  if (!style.relics || style.minimapObjects) return [];
+  const placements = mapIconLandmarkPlacements(scene, style.kingOfTheHill === true);
+  if (placements.length === 0) return [];
+  const art = style.art;
+  if (!art) {
+    throw new MapIconRenderError('art-unavailable', 'map icon sprite sheets are unavailable');
+  }
+  const pixelScale = mapIconPixelScale(projection);
+  const size = style.relicSize ?? mapIconArtSize.default;
+  const draws: (MapIconLandmarkDraw & { order: number })[] = [];
+  for (const placement of placements) {
+    const sprite = scaledLandmarkSprite(
+      art.landmarks[placement.kind],
+      placement.kind,
+      mapIconLandmarkHeight(placement.kind, projection, size),
+      pixelScale,
+    );
+    if (!sprite.opaque) continue;
+    let position = mapIconContainedArtPosition(
+      placement,
+      sprite,
+      projection,
+      scene.width,
+      scene.height,
+      { limitPush: false },
+    );
+    if (!position) {
+      const screen = mapIconScreenPoint(placement, projection);
+      position = { screenX: Math.round(screen.x), screenY: Math.round(screen.y), pushed: false };
+    }
+    const { screenX, pushed } = position;
+    const screenY = position.screenY - mapIconRaisedLift(style.raised, placement, projection);
+    draws.push({
+      placement,
+      sprite,
+      left: screenX - sprite.anchorX,
+      top: screenY - sprite.anchorY,
+      screenX,
+      screenY,
+      pushed,
+      order: draws.length,
+    });
+  }
+  const kindOrder = (kind: MapIconLandmarkPlacement['kind']) => (kind === 'relic' ? 0 : 1);
+  draws.sort(
+    (a, b) =>
+      a.screenY - b.screenY ||
+      a.screenX - b.screenX ||
+      kindOrder(a.placement.kind) - kindOrder(b.placement.kind) ||
+      a.order - b.order,
+  );
+  return draws.map(({ order: _order, ...draw }) => draw);
+}
+
 export function mapIconRectsTouch(a: MapIconScreenRect, b: MapIconScreenRect): boolean {
   return a.left <= b.right && b.left <= a.right && a.top <= b.bottom && b.top <= a.bottom;
 }
@@ -1287,7 +1613,17 @@ export function mapIconArtDraws(
 }
 
 export type MapIconArtStyle = Partial<
-  Pick<MapIconStyle, 'minimapObjects' | 'minimapPalette' | 'helperObjectIds'>
+  Pick<
+    MapIconStyle,
+    | 'minimapObjects'
+    | 'minimapPalette'
+    | 'helperObjectIds'
+    | 'walls'
+    | 'wallSize'
+    | 'relics'
+    | 'relicSize'
+    | 'kingOfTheHill'
+  >
 > &
   Pick<
     MapIconStyle,
@@ -1320,7 +1656,10 @@ export function renderMapIconArtLayer(
   canvas.clear(0);
   const drawn = { ...style, ...mapIconDrawnLayers(style) };
   if (drawn.minimapObjects) drawMinimapObjects(canvas, scene, drawn, projection);
-  if (drawn.art) drawSprites(canvas, scene, drawn, projection);
+  const walls = mapIconWallDraws(scene, drawn, projection);
+  drawWalls(canvas, walls, projection);
+  if (drawn.art) drawSprites(canvas, scene, drawn, projection, () => drawWallFlags(canvas, walls));
+  else drawWallFlags(canvas, walls);
   return canvas.pixels;
 }
 
@@ -1329,9 +1668,16 @@ function drawSprites(
   scene: Pick<TopDownScene, 'width' | 'height' | 'objects'>,
   style: MapIconArtStyle,
   projection: MapIconProjection,
+  beforeMarkers?: () => void,
 ): void {
   canvas.checkCancelled();
   mapIconArtDraws(scene, style, projection).forEach((draw, index) => {
+    if (index % cancellationItemStride === 0) canvas.checkCancelled();
+    canvas.drawSprite(draw.sprite, draw.left, draw.top);
+  });
+  beforeMarkers?.();
+  canvas.checkCancelled();
+  mapIconLandmarkDraws(scene, style, projection).forEach((draw, index) => {
     if (index % cancellationItemStride === 0) canvas.checkCancelled();
     canvas.drawSprite(draw.sprite, draw.left, draw.top);
   });

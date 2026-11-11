@@ -337,6 +337,8 @@ enum PositionPolicyArgument {
     Random,
     Fixed,
     TeamTogether,
+    /// Team Positions without Team Together (setup context 1.3).
+    RandomTeamPositions,
 }
 
 impl From<GameModeArgument> for GameMode {
@@ -390,6 +392,7 @@ impl From<PositionPolicyArgument> for PositionPolicy {
             PositionPolicyArgument::Random => Self::Random,
             PositionPolicyArgument::Fixed => Self::Fixed,
             PositionPolicyArgument::TeamTogether => Self::TeamTogether,
+            PositionPolicyArgument::RandomTeamPositions => Self::RandomTeamPositions,
         }
     }
 }
@@ -707,7 +710,10 @@ fn cli_configuration(arguments: &RunArguments) -> Result<RunConfiguration> {
         map_size: arguments.map_size.clone(),
         players,
         setup_context: SetupContext {
-            contract_version: SetupContextVersion::default(),
+            contract_version: SetupContextVersion {
+                minor: PositionPolicy::from(arguments.position_policy).minimum_setup_minor(),
+                ..SetupContextVersion::default()
+            },
             game_mode: arguments.game_mode.into(),
             starting_resources: arguments.starting_resources.into(),
             starting_age: arguments.starting_age.into(),
@@ -1692,6 +1698,7 @@ fn protocol_setup_context(value: Option<&v1::SetupContext>) -> Result<SetupConte
             v1::PositionPolicy::Random => PositionPolicy::Random,
             v1::PositionPolicy::Fixed => PositionPolicy::Fixed,
             v1::PositionPolicy::TeamTogether => PositionPolicy::TeamTogether,
+            v1::PositionPolicy::RandomTeamPositions => PositionPolicy::RandomTeamPositions,
             v1::PositionPolicy::Unspecified => bail!("position policy must be explicit"),
         },
         computer_player_slots: ComputerPlayerSlots::from_slots(

@@ -102,6 +102,10 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   mapIconResourceSize: defaultMapIconRenderInput.resourceSize,
   mapIconResourceSpawnOverlap: defaultMapIconRenderInput.resourceSpawnOverlap,
   mapIconMinimapObjects: defaultMapIconRenderInput.minimapObjects,
+  mapIconWalls: defaultMapIconRenderInput.walls,
+  mapIconWallSize: defaultMapIconRenderInput.wallSize,
+  mapIconRelics: defaultMapIconRenderInput.relics,
+  mapIconRelicSize: defaultMapIconRenderInput.relicSize,
   window: { bounds: null, maximized: false, display: null },
   layout: {
     explorerExpanded: true,
@@ -287,6 +291,10 @@ export class DesktopSessionStore {
       mapIconResourceSize: input.resourceSize,
       mapIconResourceSpawnOverlap: input.resourceSpawnOverlap,
       mapIconMinimapObjects: input.minimapObjects,
+      mapIconWalls: input.walls,
+      mapIconWallSize: input.wallSize,
+      mapIconRelics: input.relics,
+      mapIconRelicSize: input.relicSize,
     }));
   }
 
@@ -371,6 +379,10 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     mapIconResourceSize: defaultMapIconRenderInput.resourceSize,
     mapIconResourceSpawnOverlap: defaultMapIconRenderInput.resourceSpawnOverlap,
     mapIconMinimapObjects: defaultMapIconRenderInput.minimapObjects,
+    mapIconWalls: defaultMapIconRenderInput.walls,
+    mapIconWallSize: defaultMapIconRenderInput.wallSize,
+    mapIconRelics: defaultMapIconRenderInput.relics,
+    mapIconRelicSize: defaultMapIconRenderInput.relicSize,
     window: { bounds: null, maximized: false, display: null },
     layout: {
       explorerExpanded: true,
@@ -554,6 +566,18 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.mapIconMinimapObjects,
       defaultMapIconRenderInput.minimapObjects,
       'minimap objects',
+    ),
+    mapIconWalls: optionalBoolean(value.mapIconWalls, defaultMapIconRenderInput.walls, 'walls'),
+    mapIconWallSize: optionalArtSize(
+      value.mapIconWallSize,
+      defaultMapIconRenderInput.wallSize,
+      'wall size',
+    ),
+    mapIconRelics: optionalBoolean(value.mapIconRelics, defaultMapIconRenderInput.relics, 'relics'),
+    mapIconRelicSize: optionalArtSize(
+      value.mapIconRelicSize,
+      defaultMapIconRenderInput.relicSize,
+      'relic size',
     ),
     window: {
       bounds: value.window.bounds === null ? null : validateWindowBounds(value.window.bounds),

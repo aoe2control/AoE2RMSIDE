@@ -115,6 +115,7 @@ struct ActorAreaState {
     records: Vec<ActorAreaRecord>,
     current_land_context: Option<u8>,
     current_land_center: Option<MapCoordinate>,
+    land_table_empty: bool,
 }
 
 struct ActorAreaRecord {
@@ -136,7 +137,7 @@ impl ActorAreaState {
         logical: Vec<ExactActorArea>,
         dimensions: MapDimensions,
     ) -> Result<Self, GenerationError> {
-        Self::with_land_context(logical, dimensions, None, None)
+        Self::with_land_context(logical, dimensions, None, None, false)
     }
 
     fn with_land_context(
@@ -144,6 +145,7 @@ impl ActorAreaState {
         dimensions: MapDimensions,
         initial_land_context: Option<u8>,
         initial_land_center: Option<MapCoordinate>,
+        land_table_empty: bool,
     ) -> Result<Self, GenerationError> {
         let mut state = Self {
             logical: Vec::with_capacity(logical.len()),
@@ -151,6 +153,7 @@ impl ActorAreaState {
             records: Vec::new(),
             current_land_context: initial_land_context,
             current_land_center: initial_land_center,
+            land_table_empty,
         };
         for area in logical {
             state.register(area, dimensions)?;
@@ -163,6 +166,13 @@ impl ActorAreaState {
         area: ExactActorArea,
         dimensions: MapDimensions,
     ) -> Result<(), GenerationError> {
+        if self.land_table_empty {
+            return Err(crate::crash_refusal(
+                "RMSGEN7103",
+                "the script makes an actor area, but the map has no land; the game files every actor area under a land's player and crashes, so this map cannot be generated",
+                rms_profile::KnownCrashHit::new(rms_profile::crash_ids::ACTOR_AREA_WITHOUT_LAND),
+            ));
+        }
         let current_land_context = self.current_land_context;
         let record_index =
             if let Some(index) = self.records.iter().position(|record| {
@@ -368,6 +378,7 @@ pub struct ExactObjectState {
     post_rms_positions: BTreeMap<usize, [u32; 2]>,
     automatic_technologies: Option<AutomaticTechnologyState>,
     foundation_terrain_remap: rms_profile::FoundationTerrainRemap,
+    snow_farm_instances: BTreeSet<u32>,
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -461,31 +472,48 @@ impl ExactObjectState {
     pub(crate) fn removed_after_generation(
         &self,
         object: &PlacedObject,
-    ) -> Result<bool, GenerationError> {
-        temporary_object_removed(&self.runtime_attributes, object.object_id, object.owner)
+        content: CompatibleContentView<'_>,
+    ) -> Result<TemporaryRemoval, GenerationError> {
+        temporary_removal(
+            &self.runtime_attributes,
+            object.object_id,
+            object.owner,
+            content,
+        )
     }
 
-    pub(crate) fn refuse_unmodelled_temporary_removals(&self) -> Result<(), GenerationError> {
+    pub(crate) fn refuse_unmodelled_temporary_removals(
+        &self,
+        content: CompatibleContentView<'_>,
+    ) -> Result<(), GenerationError> {
         let attributes = &self.runtime_attributes;
         if !attributes.has_undead_flags() {
             return Ok(());
         }
         for object in self.module_exit_pieces.iter() {
-            if temporary_object_removed(attributes, object.object_id, object.owner)? {
+            if temporary_removal(attributes, object.object_id, object.owner, content)?
+                != TemporaryRemoval::Kept
+            {
                 return Err(invalid_object(
                     "the preview does not support removing a cliff piece whose undead flag marks it temporary",
                 ));
             }
         }
         for (_, object_id, _) in self.standing_appearance_objects() {
-            if temporary_object_removed(attributes, object_id, 0)? {
+            if temporary_removal(attributes, object_id, 0, content)? != TemporaryRemoval::Kept {
                 return Err(invalid_object(
                     "the preview does not support removing a terrain appearance whose undead flag marks it temporary",
                 ));
             }
         }
         for object in self.post_rms_objects.iter() {
-            temporary_object_removed(attributes, object.object_id, object.owner)?;
+            if temporary_removal(attributes, object.object_id, object.owner, content)?
+                == TemporaryRemoval::RemovedFarm
+            {
+                return Err(invalid_object(
+                    "the preview does not support removing a game-mode farm whose undead flag marks it temporary",
+                ));
+            }
         }
         Ok(())
     }
@@ -1630,6 +1658,7 @@ pub(crate) fn resolve_exact_object_state_with_substages(
         land.descriptors
             .first()
             .map(|descriptor| descriptor.position),
+        land.descriptors.is_empty(),
     )?;
     actor_areas.index.enable_rasters(
         descriptors
@@ -1830,6 +1859,13 @@ pub(crate) fn resolve_exact_object_state_with_substages(
         .state()
         .draws()
         .saturating_sub(auxiliary_observed_entry_draws);
+    let snow_farm_instances = snow_farm_instances(
+        &objects,
+        piece_count,
+        &foundation_map.construction_positions,
+        foundation_map.terrain,
+        connection.dimensions,
+    );
     foundation_map.paint_deferred_foundations();
     statistics.foundation_tiles_painted = foundation_map.painted;
     let mut scripted_position_overrides = foundation_map
@@ -1906,6 +1942,7 @@ pub(crate) fn resolve_exact_object_state_with_substages(
         post_rms_positions: BTreeMap::new(),
         automatic_technologies,
         foundation_terrain_remap,
+        snow_farm_instances,
     })
 }
 
@@ -8987,29 +9024,193 @@ mod program;
 pub(super) use program::collect_runtime_object_attributes;
 use program::*;
 
-const FOUNDATION_REPAINTING_REMOVALS: [u32; 4] = [50, 357, 1187, 1188];
+const REPAINTING_FARMS: [u32; 2] = [50, 1187];
 
-fn temporary_object_removed(
+const FARM_REMNANTS: [u32; 2] = [357, 1188];
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub(crate) enum TemporaryRemoval {
+    Kept,
+    Removed,
+    RemovedFarm,
+}
+
+const REMOVED_WITH_HIT_POINTS_OBJECT_TYPES: [u8; 2] = [70, 80];
+
+const STATIC_OBJECT_TYPE: u8 = 10;
+
+fn temporary_removal(
     attributes: &ObjectRuntimeAttributes,
     object_id: ObjectId,
     owner: u8,
-) -> Result<bool, GenerationError> {
-    let Some(flag) = attributes.undead_flag(object_id, owner) else {
+    content: CompatibleContentView<'_>,
+) -> Result<TemporaryRemoval, GenerationError> {
+    let flag = attributes.undead_flag(object_id, owner);
+    if flag & attributes::UNDEAD_FLAG_TEMPORARY_NOT_TRACKED == 0 {
+        return Ok(TemporaryRemoval::Kept);
+    }
+    let object_type = content
+        .object(object_id)
+        .ok_or_else(|| missing_object_definition(object_id))?
+        .constructor_type
+        .ok_or_else(|| invalid_object("object type metadata is unavailable"))?;
+    let hit_points = attributes.initial_hit_points(object_id, owner, content)?;
+    if hit_points > 0 && !REMOVED_WITH_HIT_POINTS_OBJECT_TYPES.contains(&object_type) {
+        if object_type == STATIC_OBJECT_TYPE {
+            return Ok(TemporaryRemoval::Kept);
+        }
         return Err(invalid_object(
-            "the preview does not support an upgraded master whose undead flag the upgrade target's flag decides",
-        ));
-    };
-    let removed = flag & attributes::UNDEAD_FLAG_TEMPORARY_NOT_TRACKED != 0;
-    if removed
-        && (FOUNDATION_REPAINTING_REMOVALS.contains(&object_id.0)
-            || FOUNDATION_REPAINTING_REMOVALS
-                .contains(&attributes.definition_id(object_id, owner).0))
-    {
-        return Err(invalid_object(
-            "the preview does not support removing a farm whose undead flag marks it temporary",
+            "the preview does not support removing an object with hit points whose undead flag marks it temporary",
         ));
     }
-    Ok(removed)
+    let definition_id = attributes.definition_id(object_id, owner);
+    if FARM_REMNANTS.contains(&object_id.0) || FARM_REMNANTS.contains(&definition_id.0) {
+        return Err(invalid_object(
+            "the preview does not support removing a farm remnant whose undead flag marks it temporary",
+        ));
+    }
+    let farm = REPAINTING_FARMS.contains(&object_id.0);
+    if farm != REPAINTING_FARMS.contains(&definition_id.0) {
+        return Err(invalid_object(
+            "the preview does not support removing an upgraded farm whose undead flag marks it temporary",
+        ));
+    }
+    Ok(if farm {
+        TemporaryRemoval::RemovedFarm
+    } else {
+        TemporaryRemoval::Removed
+    })
+}
+
+const SNOW_TERRAINS: [u32; 10] = [21, 32, 36, 73, 74, 105, 124, 125, 126, 132];
+
+fn snow_farm_instances(
+    objects: &[PlacedObject],
+    piece_count: usize,
+    positions: &BTreeMap<usize, [u32; 2]>,
+    terrain: &[TerrainId],
+    dimensions: MapDimensions,
+) -> BTreeSet<u32> {
+    objects
+        .iter()
+        .enumerate()
+        .skip(piece_count)
+        .filter(|(_, object)| REPAINTING_FARMS.contains(&object.object_id.0))
+        .filter(|(index, object)| {
+            let [x, y] = construction_position(*index, object, positions);
+            centre_tile_index(x, y, dimensions)
+                .and_then(|index| terrain.get(index))
+                .is_some_and(|terrain| SNOW_TERRAINS.contains(&terrain.0))
+        })
+        .map(|(_, object)| object.instance_id)
+        .collect()
+}
+
+fn centre_tile_index(x: f32, y: f32, dimensions: MapDimensions) -> Option<usize> {
+    let (x, y) = (x as i32, y as i32);
+    let width = i32::from(dimensions.width);
+    let height = i32::from(dimensions.height);
+    if !(0..width).contains(&x) || !(0..height).contains(&y) {
+        return None;
+    }
+    usize::try_from(y * width + x).ok()
+}
+
+const DEAD_FARM_REPLACEABLE_TERRAINS: [u32; 6] = [0, 3, 9, 12, 32, 34];
+
+fn farm_terrain(terrain: u32) -> bool {
+    matches!(terrain, 7 | 8 | 29..=31 | 63..=67 | 117..=121)
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+struct RemovedFarmPaint {
+    primary: TerrainId,
+    secondary: u16,
+    skip: Option<TerrainId>,
+}
+
+impl ExactObjectState {
+    pub(crate) fn repaint_removed_farm(
+        &self,
+        placed: &PlacedObject,
+        terrain: &mut [TerrainId],
+        secondary: &mut [u16],
+    ) -> Result<(), GenerationError> {
+        let index = self
+            .objects
+            .iter()
+            .position(|object| object.instance_id == placed.instance_id)
+            .ok_or_else(|| invalid_object("removed farm is not a scripted object"))?;
+        let [x, y] = self
+            .scripted_construction_position_f32_bits(index)
+            .ok_or_else(|| invalid_object("removed farm position is unavailable"))?
+            .map(f32::from_bits);
+        let Some(centre_terrain) = centre_tile_index(x, y, self.dimensions)
+            .and_then(|centre| terrain.get(centre))
+            .copied()
+        else {
+            return Ok(());
+        };
+        let paint = match centre_terrain.0 {
+            7 | 29..=31 if self.snow_farm_instances.contains(&placed.instance_id) => {
+                RemovedFarmPaint {
+                    primary: TerrainId(6),
+                    secondary: 32,
+                    skip: Some(TerrainId(36)),
+                }
+            }
+            7 | 29..=31 => RemovedFarmPaint {
+                primary: TerrainId(27),
+                secondary: u16::MAX,
+                skip: None,
+            },
+            63 | 65..=67 => RemovedFarmPaint {
+                primary: TerrainId(54),
+                secondary: u16::MAX,
+                skip: Some(TerrainId(54)),
+            },
+            _ => return Ok(()),
+        };
+        let radius_x = f32::from(placed.footprint_width_256) / 512.0;
+        let radius_y = f32::from(placed.footprint_height_256) / 512.0;
+        let width = i32::from(self.dimensions.width);
+        let height = i32::from(self.dimensions.height);
+        let minimum_x = ((x - radius_x) as i32).clamp(0, width - 1);
+        let maximum_x = ((radius_x + x - 0.001) as i32).clamp(0, width - 1);
+        let minimum_y = ((y - radius_y) as i32).clamp(0, height - 1);
+        let maximum_y = ((radius_y + y - 0.001) as i32).clamp(0, height - 1);
+        for tile_y in minimum_y..=maximum_y {
+            for tile_x in minimum_x..=maximum_x {
+                let Ok(index) = usize::try_from(tile_y * width + tile_x) else {
+                    continue;
+                };
+                let (Some(&primary), Some(&layer)) = (terrain.get(index), secondary.get(index))
+                else {
+                    continue;
+                };
+                if FOUNDATION_PROTECTED_TERRAINS.contains(&primary) {
+                    continue;
+                }
+                match paint.skip {
+                    Some(skip) if skip == primary => continue,
+                    Some(_) => {}
+                    None => {
+                        let replaceable = |terrain: u32| {
+                            DEAD_FARM_REPLACEABLE_TERRAINS.contains(&terrain)
+                                || farm_terrain(terrain)
+                        };
+                        let layer = layer as i16;
+                        if !replaceable(primary.0) || (layer >= 0 && !replaceable(layer as u32)) {
+                            continue;
+                        }
+                    }
+                }
+                terrain[index] = paint.primary;
+                secondary[index] = paint.secondary;
+            }
+        }
+        Ok(())
+    }
 }
 
 #[derive(Clone, Copy)]

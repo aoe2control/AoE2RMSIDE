@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} harita} other {{count} harita}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: açık"
+    },
+    "output.run.option-off": {
+      "message": "{option}: kapalı"
+    },
     "output.run.fact.players": {
       "message": "Oyuncular"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Birimler tarlaların üzerinden geçemez. SOLID_FARMS sabitini tanımlar."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Her takımın oyuncularını renk sırasına göre yerleştirir. Takım Oluşturun kapalıyken oyuncular rastgele yerleştirilir, ancak betik yine de TEAM_POSITIONS sabitini görür."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Kral Katili modunda her oyuncunun bir kralı olmalıdır. Kralların olmadığı bir haritada oyun, maçı hemen bitirir."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Lobi seçenekleri için AoE2Control 1.1.1 veya üzeri gerekiyor. Oyunda değişiklik yapılmadı."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Takım Konumları açıkken oyunda testler için Takım Oluşturun açık olmalıdır."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Oyunda test için P1 konumunda bir oyuncu gerekiyor"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "altın ve taş boyutu"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Surları göster"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Surları gizle"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Sur seçenekleri"
+    },
+    "map-icon.art.walls.size": {
+      "message": "sur boyutu"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Kadim eserleri ve anıtları göster"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Kadim eserleri ve anıtları gizle"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Kadim eser ve anıt seçenekleri"
+    },
+    "map-icon.art.relics.size": {
+      "message": "kadim eser ve anıt boyutu"
     },
     "map-icon.art.amount.fewer": {
       "message": "Daha az"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "İmparatorluk Ötesi Çağ"
     },
-    "game-options.positions.random": {
-      "message": "Rastgele konumlar"
-    },
-    "game-options.positions.fixed": {
-      "message": "Sabit konumlar"
-    },
-    "game-options.positions.team-together": {
-      "message": "Takım oluşturun"
-    },
     "game-options.color.blue": {
       "message": "Mavi"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Geçilmez tarlalar"
+    },
+    "game-options.flag.team-together": {
+      "message": "Takım Oluşturun"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Takım Konumları"
     },
     "game-options.civilization.random": {
       "message": "Rastgele"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Oyun burada çökebilir"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Karası olmayan bir haritada aktör alanı"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Betik create_actor_area ile veya yerleştirilen bir nesnedeki actor_area ile bir aktör alanı oluşturuyor, ancak hiç kara oluşturmuyor. Oyun her aktör alanını bir karanın oyuncusuna kaydeder ve hiç kara yoksa çöker."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Karaları <LAND_GENERATION> içinde oluşturun, örneğin create_player_lands ile, ya da aktör alanlarını kaldırın."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "Arama için fazla küçük bir nesnede override_actor_radius_if_required"

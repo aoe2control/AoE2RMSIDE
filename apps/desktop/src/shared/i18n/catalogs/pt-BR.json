@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, =0 {{count} mapas} one {{count} mapa} many {{count} mapas} other {{count} mapas}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: ativado"
+    },
+    "output.run.option-off": {
+      "message": "{option}: desativado"
+    },
     "output.run.fact.players": {
       "message": "Jogadores"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "As unidades não podem atravessar as fazendas. Define SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Posiciona os jogadores de cada equipe na ordem das cores. Sem Equipes Juntas, os jogadores são posicionados aleatoriamente, mas o script ainda vê TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Regicídio exige um rei para cada jogador. Em um mapa sem reis, o jogo encerra a partida imediatamente."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "As opções da sala precisam do AoE2Control 1.1.1 ou mais recente. O jogo não foi alterado."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Os testes no jogo precisam de Equipes Juntas quando Posições das Equipes está ativado."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Um teste no jogo precisa de um jogador em P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "tamanho das minas de ouro e de pedra"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Mostrar muralhas"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Ocultar muralhas"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Opções das muralhas"
+    },
+    "map-icon.art.walls.size": {
+      "message": "tamanho das muralhas"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Mostrar relíquias e monumentos"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Ocultar relíquias e monumentos"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Opções das relíquias e dos monumentos"
+    },
+    "map-icon.art.relics.size": {
+      "message": "tamanho das relíquias e dos monumentos"
     },
     "map-icon.art.amount.fewer": {
       "message": "Menos"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Idade Pós-Imperial"
     },
-    "game-options.positions.random": {
-      "message": "Posições aleatórias"
-    },
-    "game-options.positions.fixed": {
-      "message": "Posições Fixas"
-    },
-    "game-options.positions.team-together": {
-      "message": "Equipes Juntas"
-    },
     "game-options.color.blue": {
       "message": "Azul"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Fazendas Sólidas"
+    },
+    "game-options.flag.team-together": {
+      "message": "Equipes Juntas"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Posições das Equipes"
     },
     "game-options.civilization.random": {
       "message": "Aleatório"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "O jogo pode travar aqui"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Uma área de ator em um mapa sem terras"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "O script cria uma área de ator, com create_actor_area ou com actor_area em um objeto posicionado, mas não cria nenhuma terra. O jogo registra cada área de ator sob o jogador de uma terra e trava quando não há nenhuma."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Crie as terras em <LAND_GENERATION>, por exemplo com create_player_lands, ou remova as áreas de ator."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required em um objeto pequeno demais para a busca"

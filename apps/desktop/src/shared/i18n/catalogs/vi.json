@@ -485,6 +485,12 @@
     "output.run.maps": {
       "message": "{count, plural, other {{count} bản đồ}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: bật"
+    },
+    "output.run.option-off": {
+      "message": "{option}: tắt"
+    },
     "output.run.fact.players": {
       "message": "Người chơi"
     },
@@ -1018,6 +1024,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Đơn vị không thể đi qua ruộng. Định nghĩa SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Xếp người chơi của mỗi đội theo thứ tự màu. Khi không bật Tổ đội cùng nhau, người chơi được xếp ngẫu nhiên, nhưng tập lệnh vẫn thấy TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Hành thích cần một vua cho mỗi người chơi. Trên bản đồ không có vua, trò chơi kết thúc trận ngay lập tức."
@@ -1744,6 +1753,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Tùy chọn phòng chờ cần AoE2Control 1.1.1 trở lên. Trò chơi chưa bị thay đổi."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Khi bật Vị trí của đội, thử trong trò chơi cần bật Tổ đội cùng nhau."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Thử trong trò chơi cần một người chơi ở P1"
@@ -3250,6 +3262,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "cỡ mỏ vàng và đá"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Hiện tường"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Ẩn tường"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Tùy chọn tường"
+    },
+    "map-icon.art.walls.size": {
+      "message": "cỡ tường"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Hiện di vật và đài tưởng niệm"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Ẩn di vật và đài tưởng niệm"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Tùy chọn di vật và đài tưởng niệm"
+    },
+    "map-icon.art.relics.size": {
+      "message": "cỡ di vật và đài tưởng niệm"
     },
     "map-icon.art.amount.fewer": {
       "message": "Ít hơn"
@@ -5267,15 +5303,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Thời hậu đế quốc"
     },
-    "game-options.positions.random": {
-      "message": "Vị trí ngẫu nhiên"
-    },
-    "game-options.positions.fixed": {
-      "message": "Vị trí cố định"
-    },
-    "game-options.positions.team-together": {
-      "message": "Tổ đội cùng nhau"
-    },
     "game-options.color.blue": {
       "message": "Xanh lam"
     },
@@ -5317,6 +5344,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Nông trại kiên cố"
+    },
+    "game-options.flag.team-together": {
+      "message": "Tổ đội cùng nhau"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Vị trí của đội"
     },
     "game-options.civilization.random": {
       "message": "Ngẫu nhiên"
@@ -5962,6 +5995,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Trò chơi có thể bị sập ở đây"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Vùng tác nhân trên bản đồ không có vùng đất"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Kịch bản tạo một vùng tác nhân bằng create_actor_area hoặc bằng actor_area trên một đối tượng được đặt, nhưng không tạo vùng đất nào. Trò chơi ghi mỗi vùng tác nhân dưới người chơi của một vùng đất và bị sập khi không có vùng đất nào."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Tạo các vùng đất trong <LAND_GENERATION>, ví dụ bằng create_player_lands, hoặc xóa các vùng tác nhân."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required trên đối tượng quá nhỏ cho việc tìm kiếm"

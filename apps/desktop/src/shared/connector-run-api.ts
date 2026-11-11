@@ -20,7 +20,7 @@ export const appRunLimits = Object.freeze({
   option: 32,
   label: 200,
   message: 2048,
-  changed: 8,
+  changed: 10,
   qualityCases: 32,
   qualitySettings: 16,
   qualitySeeds: 4096,
@@ -34,6 +34,8 @@ export interface AppRunSettings {
   gameMode?: string;
   age?: string;
   resources?: string;
+  teamTogether?: boolean;
+  teamPositions?: boolean;
 }
 
 export interface AppRunPlayer {
@@ -180,7 +182,17 @@ export function validateAppRunSettings(value: unknown, label: string): AppRunSet
   const settings = record(value, label);
   knownKeys(
     settings,
-    ['mapSize', 'players', 'teams', 'civs', 'gameMode', 'age', 'resources'],
+    [
+      'mapSize',
+      'players',
+      'teams',
+      'civs',
+      'gameMode',
+      'age',
+      'resources',
+      'teamTogether',
+      'teamPositions',
+    ],
     label,
   );
   const result: AppRunSettings = {};
@@ -210,6 +222,11 @@ export function validateAppRunSettings(value: unknown, label: string): AppRunSet
   }
   for (const key of ['gameMode', 'age', 'resources'] as const) {
     if (settings[key] !== undefined) result[key] = option(settings[key], `${label}.${key}`);
+  }
+  for (const key of ['teamTogether', 'teamPositions'] as const) {
+    if (settings[key] === undefined) continue;
+    if (typeof settings[key] !== 'boolean') throw new Error(`${label}.${key} is not a boolean`);
+    result[key] = settings[key];
   }
   return result;
 }

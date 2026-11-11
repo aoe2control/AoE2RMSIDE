@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} mapa} many {{count} mapas} other {{count} mapas}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: activado"
+    },
+    "output.run.option-off": {
+      "message": "{option}: desactivado"
+    },
     "output.run.fact.players": {
       "message": "Jugadores"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Las unidades no pueden atravesar las granjas. Define SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Coloca a los jugadores de cada equipo por orden de color. Sin Jugar juntos, los jugadores se colocan al azar, pero el script sigue viendo TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Regicida necesita un rey por jugador. En un mapa sin reyes, el juego termina la partida de inmediato."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Las opciones de la sala necesitan AoE2Control 1.1.1 o posterior. El juego no se ha modificado."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Las pruebas en el juego necesitan Jugar juntos cuando Posiciones del equipo está activado."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Una prueba en el juego necesita un jugador en P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "tamaño de los yacimientos de oro y piedra"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Mostrar murallas"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Ocultar murallas"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Opciones de murallas"
+    },
+    "map-icon.art.walls.size": {
+      "message": "tamaño de las murallas"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Mostrar reliquias y monumentos"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Ocultar reliquias y monumentos"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Opciones de reliquias y monumentos"
+    },
+    "map-icon.art.relics.size": {
+      "message": "tamaño de las reliquias y los monumentos"
     },
     "map-icon.art.amount.fewer": {
       "message": "Menos"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Edad Post-Imperial"
     },
-    "game-options.positions.random": {
-      "message": "Posiciones aleatorias"
-    },
-    "game-options.positions.fixed": {
-      "message": "Posiciones fijas"
-    },
-    "game-options.positions.team-together": {
-      "message": "Jugar juntos"
-    },
     "game-options.color.blue": {
       "message": "Azul"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Granjas robustas"
+    },
+    "game-options.flag.team-together": {
+      "message": "Jugar juntos"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Posiciones del equipo"
     },
     "game-options.civilization.random": {
       "message": "Aleatorio"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "El juego puede bloquearse aquí"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Un área de actor en un mapa sin tierras"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "El script crea un área de actor, con create_actor_area o con actor_area en un objeto colocado, pero no crea ninguna tierra. El juego asigna cada área de actor al jugador de una tierra y se bloquea cuando no hay ninguna."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Crea las tierras en <LAND_GENERATION>, por ejemplo con create_player_lands, o quita las áreas de actor."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required en un objeto demasiado pequeño para la búsqueda"

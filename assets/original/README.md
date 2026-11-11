@@ -27,7 +27,16 @@ the tree sheet's style, created for AoE2RMSIDE by the project owner. The
 manifest beside them records the cell order, hashes, authorship, license, and
 the no-game-content declaration.
 
+`map-icon-landmarks/` contains the original pictures of the generated map
+icon's relics and monuments layer, supplied by the project owner, who states
+they contain no game content: `relic-v1.png`, a white marble pedestal with a
+golden flame statue drawn for every relic, and `koth-monument-v1.png`, a
+building with three golden onion domes drawn for the King of the Hill
+monument. Both are transparent PNGs; the manifest beside them records the
+hashes, authorship, license, and the no-game-content declaration.
+
 The desktop renderer bundles every sheet and processes them at run time into
 the map icon's sprites (magenta chroma key, one-pixel erosion, re-outline,
 per-cell crop, downscale; the player squares are sliced by cell and keep their
-own transparency). No game art is used for the map icon.
+own transparency; the relic and monument pictures keep their own transparency
+and are cropped and downscaled). No game art is used for the map icon.

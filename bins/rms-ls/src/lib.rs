@@ -2829,6 +2829,7 @@ fn preview_context_from_json(value: &Value) -> RequestResult<PreviewContext> {
         "random" => PositionPolicy::Random,
         "fixed" => PositionPolicy::Fixed,
         "team-together" => PositionPolicy::TeamTogether,
+        "random-team-positions" => PositionPolicy::RandomTeamPositions,
         _ => {
             return Err(RequestError::invalid(
                 "preview position policy is unsupported",

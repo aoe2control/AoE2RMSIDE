@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} carte} many {{count} cartes} other {{count} cartes}}"
     },
+    "output.run.option-on": {
+      "message": "{option} : activé"
+    },
+    "output.run.option-off": {
+      "message": "{option} : désactivé"
+    },
     "output.run.fact.players": {
       "message": "Joueurs"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Les unités ne peuvent pas traverser les fermes. Définit SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Place les joueurs de chaque équipe dans l’ordre de leurs couleurs. Sans Faire équipe, les joueurs sont placés au hasard, mais le script voit quand même TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Régicide exige un roi par joueur. Sur une carte sans rois, le jeu termine immédiatement la partie."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Les options du salon nécessitent AoE2Control 1.1.1 ou une version plus récente. Le jeu n’a pas été modifié."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Les tests en jeu nécessitent Faire équipe lorsque Positions d’équipe est activé."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Un test en jeu nécessite un joueur en P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "taille des gisements d’or et de pierre"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Afficher les murs"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Masquer les murs"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Options des murs"
+    },
+    "map-icon.art.walls.size": {
+      "message": "taille des murs"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Afficher les reliques et les monuments"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Masquer les reliques et les monuments"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Options des reliques et des monuments"
+    },
+    "map-icon.art.relics.size": {
+      "message": "taille des reliques et des monuments"
     },
     "map-icon.art.amount.fewer": {
       "message": "Moins"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Âge post-impérial"
     },
-    "game-options.positions.random": {
-      "message": "Positions aléatoires"
-    },
-    "game-options.positions.fixed": {
-      "message": "Positions fixes"
-    },
-    "game-options.positions.team-together": {
-      "message": "Faire équipe"
-    },
     "game-options.color.blue": {
       "message": "Bleu"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Fermes solides"
+    },
+    "game-options.flag.team-together": {
+      "message": "Faire équipe"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Positions d’équipe"
     },
     "game-options.civilization.random": {
       "message": "Aléatoire"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Le jeu peut planter ici"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Une zone d’acteur sur une carte sans terre"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Le script crée une zone d’acteur, avec create_actor_area ou avec actor_area sur un objet placé, mais ne crée aucune terre. Le jeu range chaque zone d’acteur sous le joueur d’une terre et plante quand il n’y en a aucune."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Créez les terres dans <LAND_GENERATION>, par exemple avec create_player_lands, ou supprimez les zones d’acteur."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required sur un objet trop petit pour la recherche"

@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} mappa} many {{count} mappe} other {{count} mappe}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: attivato"
+    },
+    "output.run.option-off": {
+      "message": "{option}: disattivato"
+    },
     "output.run.fact.players": {
       "message": "Giocatori"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Le unità non possono attraversare le fattorie. Definisce SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Dispone i giocatori di ogni squadra nell’ordine dei colori. Senza Squadre unite, i giocatori vengono disposti a caso, ma lo script vede comunque TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Regicidio richiede un re per ogni giocatore. Su una mappa senza re, il gioco termina subito la partita."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Le opzioni della sala richiedono AoE2Control 1.1.1 o successivo. Il gioco non è stato modificato."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "I test nel gioco richiedono Squadre unite quando Posizioni squadra è attivo."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Un test nel gioco richiede un giocatore in P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "dimensione delle miniere d’oro e di pietra"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Mostra mura"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Nascondi mura"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Opzioni delle mura"
+    },
+    "map-icon.art.walls.size": {
+      "message": "dimensione delle mura"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Mostra reliquie e monumenti"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Nascondi reliquie e monumenti"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Opzioni di reliquie e monumenti"
+    },
+    "map-icon.art.relics.size": {
+      "message": "dimensione di reliquie e monumenti"
     },
     "map-icon.art.amount.fewer": {
       "message": "Meno"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Età postimperiale"
     },
-    "game-options.positions.random": {
-      "message": "Posizioni casuali"
-    },
-    "game-options.positions.fixed": {
-      "message": "Posizioni assegnate"
-    },
-    "game-options.positions.team-together": {
-      "message": "Squadre unite"
-    },
     "game-options.color.blue": {
       "message": "Blu"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Fattorie solide"
+    },
+    "game-options.flag.team-together": {
+      "message": "Squadre unite"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Posizioni squadra"
     },
     "game-options.civilization.random": {
       "message": "Casuale"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Il gioco può bloccarsi qui"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Un’area attore su una mappa senza terre"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Lo script crea un’area attore, con create_actor_area o con actor_area su un oggetto posizionato, ma non crea nessuna terra. Il gioco registra ogni area attore sotto il giocatore di una terra e si blocca quando non ce n’è nessuna."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Crea le terre in <LAND_GENERATION>, per esempio con create_player_lands, oppure rimuovi le aree attore."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required su un oggetto troppo piccolo per la ricerca"

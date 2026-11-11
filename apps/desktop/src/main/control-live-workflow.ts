@@ -827,6 +827,12 @@ function validateSynchronizationRequest(request: LiveSynchronizationRequest): vo
 }
 
 function validateSetup(setup: LiveSetupContext): void {
+  if (setup.positionPolicy === 'random-team-positions') {
+    throw new LiveWorkflowError(
+      'team-positions-unsupported',
+      'Live tests need Team Together when Team Positions is on (team-positions-unsupported).',
+    );
+  }
   if (
     !['1.0.0', '1.1.0', '1.2.0'].includes(setup.schemaVersion) ||
     setup.compatibility.minimumMajor !== 1 ||

@@ -485,6 +485,12 @@
     "output.run.maps": {
       "message": "{count, plural, other {{count} 張地圖}}"
     },
+    "output.run.option-on": {
+      "message": "{option}：開"
+    },
+    "output.run.option-off": {
+      "message": "{option}：關"
+    },
     "output.run.fact.players": {
       "message": "玩家"
     },
@@ -1018,6 +1024,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "單位無法穿越農田。定義 SOLID_FARMS。"
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "依顏色順序放置每支隊伍的玩家。未開啟協同作戰時，玩家會隨機放置，但指令碼仍會看到 TEAM_POSITIONS。"
     },
     "run-menu.lobby.regicide-note": {
       "message": "弒君模式需要每位玩家都有國王。若地圖沒有國王，遊戲會立刻結束對局。"
@@ -1744,6 +1753,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "大廳選項需要 AoE2Control 1.1.1 或更新版本。遊戲未被變更。"
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "開啟隊伍位置時，遊戲內測試需要同時開啟協同作戰。"
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "遊戲內測試需要在 P1 指定玩家"
@@ -3250,6 +3262,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "黃金和石頭大小"
+    },
+    "map-icon.art.walls.show": {
+      "message": "顯示城牆"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "隱藏城牆"
+    },
+    "map-icon.art.walls.options": {
+      "message": "城牆選項"
+    },
+    "map-icon.art.walls.size": {
+      "message": "城牆大小"
+    },
+    "map-icon.art.relics.show": {
+      "message": "顯示聖物和紀念碑"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "隱藏聖物和紀念碑"
+    },
+    "map-icon.art.relics.options": {
+      "message": "聖物和紀念碑選項"
+    },
+    "map-icon.art.relics.size": {
+      "message": "聖物和紀念碑大小"
     },
     "map-icon.art.amount.fewer": {
       "message": "較少"
@@ -5267,15 +5303,6 @@
     "game-options.age.post-imperial-age": {
       "message": "後帝王時代"
     },
-    "game-options.positions.random": {
-      "message": "隨機位置"
-    },
-    "game-options.positions.fixed": {
-      "message": "固定起點"
-    },
-    "game-options.positions.team-together": {
-      "message": "協同作戰"
-    },
     "game-options.color.blue": {
       "message": "藍色"
     },
@@ -5317,6 +5344,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "堅固農田"
+    },
+    "game-options.flag.team-together": {
+      "message": "協同作戰"
+    },
+    "game-options.flag.team-positions": {
+      "message": "隊伍位置"
     },
     "game-options.civilization.random": {
       "message": "隨機"
@@ -5962,6 +5995,15 @@
     },
     "known-crash.headline.possible": {
       "message": "遊戲可能在此崩潰"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "沒有陸地的地圖上的角色區域"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "指令碼透過 create_actor_area 或已放置物件的 actor_area 建立了角色區域，但沒有建立任何陸地。遊戲將每個角色區域記錄在某塊陸地的玩家名下，沒有陸地時就會崩潰。"
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "在 <LAND_GENERATION> 中建立陸地（例如使用 create_player_lands），或刪除這些角色區域。"
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "在過小而無法搜尋的物件上使用 override_actor_radius_if_required"

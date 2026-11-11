@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "profiles/known-crashes/rms-known-crashes-v1.json",
-      "sha256": "8dbfbc5b834a3bf5ea14396e20c0d2aec3a39e89d8f19ab9a7a89ec7fd2a0316",
+      "sha256": "bc8b68742b054904eb0510dacb834f6538d2f2af4945b72555ef4cfebcba34bb",
       "authorship": "Independently written catalogue of the conditions under which the game itself crashes on a random map script: stable ids, plain causes and fixes, what each crash depends on, where the IDE detects it, and the evidence quality per behavior profile. Written in the project's own words from the project's own observations of the game, in play and in its code.",
       "license": "Independent text under the repository license; command and section names are factual identifiers",
       "sourceClassification": "sanitized-observation",

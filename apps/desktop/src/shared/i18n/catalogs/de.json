@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} Karte} other {{count} Karten}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: an"
+    },
+    "output.run.option-off": {
+      "message": "{option}: aus"
+    },
     "output.run.fact.players": {
       "message": "Spieler"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Einheiten können nicht über Felder laufen. Definiert SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Platziert die Spieler jedes Teams in der Reihenfolge ihrer Farben. Ohne Team vereint werden die Spieler zufällig platziert, das Skript sieht aber trotzdem TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Königsmord benötigt für jeden Spieler einen König. Auf einer Karte ohne Könige beendet das Spiel die Partie sofort."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Lobbyoptionen benötigen AoE2Control 1.1.1 oder neuer. Das Spiel wurde nicht verändert."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Live-Tests brauchen Team vereint, wenn Teampositionen eingeschaltet ist."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Ein Live-Test benötigt einen Spieler auf P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "Größe der Gold- und Steinvorkommen"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Wälle anzeigen"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Wälle ausblenden"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Walloptionen"
+    },
+    "map-icon.art.walls.size": {
+      "message": "Größe der Wälle"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Reliquien und Monumente anzeigen"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Reliquien und Monumente ausblenden"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Reliquien- und Monumentoptionen"
+    },
+    "map-icon.art.relics.size": {
+      "message": "Größe der Reliquien und Monumente"
     },
     "map-icon.art.amount.fewer": {
       "message": "Weniger"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Post-Imperialzeit"
     },
-    "game-options.positions.random": {
-      "message": "Zufällige Positionen"
-    },
-    "game-options.positions.fixed": {
-      "message": "Feste Positionen"
-    },
-    "game-options.positions.team-together": {
-      "message": "Team vereint"
-    },
     "game-options.color.blue": {
       "message": "Blau"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Feste Felder"
+    },
+    "game-options.flag.team-together": {
+      "message": "Team vereint"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Teampositionen"
     },
     "game-options.civilization.random": {
       "message": "Zufällig"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Das Spiel kann hier abstürzen"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Ein Akteursbereich auf einer Karte ohne Land"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Das Skript legt einen Akteursbereich an, mit create_actor_area oder mit actor_area bei einem platzierten Objekt, erzeugt aber kein Land. Das Spiel ordnet jeden Akteursbereich dem Spieler eines Landes zu und stürzt ab, wenn es keines gibt."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Erzeuge die Länder in <LAND_GENERATION>, zum Beispiel mit create_player_lands, oder entferne die Akteursbereiche."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required bei einem Objekt, das für die Suche zu klein ist"

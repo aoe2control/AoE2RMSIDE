@@ -477,6 +477,12 @@
     "output.run.maps": {
       "message": "{count, plural, one {{count} kaart} other {{count} kaarten}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: aan"
+    },
+    "output.run.option-off": {
+      "message": "{option}: uit"
+    },
     "output.run.fact.players": {
       "message": "Spelers"
     },
@@ -1010,6 +1016,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Eenheden kunnen niet over akkers lopen. Definieert SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Plaatst de spelers van elk team in de volgorde van hun kleuren. Zonder Team bij elkaar worden spelers willekeurig geplaatst, maar het script ziet nog steeds TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Regicide vereist een koning voor elke speler. Op een kaart zonder koningen beëindigt het spel de partij onmiddellijk."
@@ -1736,6 +1745,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Lobbyopties vereisen AoE2Control 1.1.1 of nieuwer. Het spel is niet gewijzigd."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Livetests hebben Team bij elkaar nodig als Teamposities aan staat."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Een livetest vereist een speler op P1"
@@ -3242,6 +3254,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "grootte van goud- en steenvoorraden"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Muren tonen"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Muren verbergen"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Muuropties"
+    },
+    "map-icon.art.walls.size": {
+      "message": "grootte van muren"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Relikwieën en monumenten tonen"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Relikwieën en monumenten verbergen"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Relikwie- en monumentopties"
+    },
+    "map-icon.art.relics.size": {
+      "message": "grootte van relikwieën en monumenten"
     },
     "map-icon.art.amount.fewer": {
       "message": "Minder"
@@ -5259,15 +5295,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Na de keizertijd"
     },
-    "game-options.positions.random": {
-      "message": "Willekeurige posities"
-    },
-    "game-options.positions.fixed": {
-      "message": "Vaste posities"
-    },
-    "game-options.positions.team-together": {
-      "message": "Team bij elkaar"
-    },
     "game-options.color.blue": {
       "message": "Blauw"
     },
@@ -5309,6 +5336,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Solid Farms"
+    },
+    "game-options.flag.team-together": {
+      "message": "Team bij elkaar"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Teamposities"
     },
     "game-options.civilization.random": {
       "message": "Willekeurig"
@@ -5954,6 +5987,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Het spel kan hier crashen"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Een actorgebied op een kaart zonder land"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Het script maakt een actorgebied, met create_actor_area of met actor_area op een geplaatst object, maar maakt geen land. Het spel slaat elk actorgebied op onder de speler van een land en crasht als er geen is."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Maak de landen in <LAND_GENERATION>, bijvoorbeeld met create_player_lands, of verwijder de actorgebieden."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required bij een object dat te klein is voor de zoektocht"

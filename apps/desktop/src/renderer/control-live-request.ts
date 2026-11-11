@@ -65,6 +65,10 @@ export function isCurrentLivePreview(
   );
 }
 
+export function liveTestSupportsPositions(configuration: Pick<RunConfiguration, 'positionPolicy'>) {
+  return configuration.positionPolicy !== 'random-team-positions';
+}
+
 export function buildControlLiveRequest(
   result: PreviewGenerationResult,
   configuration: RunConfiguration,
@@ -82,6 +86,10 @@ export function buildControlLiveRequest(
   const computers = liveTestComputerPlayerSlots(configuration);
   if (computers.join(',') !== computerPlayerSlots(configuration).join(',')) {
     throw new Error('live testing requires a preview with every player after slot 1 a computer');
+  }
+  const positionPolicy = configuration.positionPolicy;
+  if (positionPolicy === 'random-team-positions') {
+    throw new Error('live testing needs Team Together when Team Positions is on');
   }
   const minor = runSetupContextMinor(configuration);
   return {
@@ -128,7 +136,7 @@ export function buildControlLiveRequest(
       startingResources: configuration.startingResources,
       startingAge: configuration.startingAge,
       revealMap: 'all-visible',
-      positionPolicy: configuration.positionPolicy,
+      positionPolicy,
       players: Array.from({ length: configuration.playerCount }, (_, index) => ({
         slot: configuration.playerSlots[index]!,
         team: configuration.teamIds[index]!,

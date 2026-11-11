@@ -177,22 +177,35 @@ export function mapIconSizeStepperText(
   };
 }
 
-export function mapIconArtLayerLabel(layer: MapIconArtLayer): string {
-  return layer === 'trees' ? t('map-icon.art.trees.show') : t('map-icon.art.resources.show');
-}
+export type MapIconLayerControl = MapIconArtLayer | 'walls' | 'relics';
 
-export function mapIconArtLayerActionLabel(layer: MapIconArtLayer, shown: boolean): string {
+export function mapIconArtLayerLabel(layer: MapIconLayerControl): string {
   return layer === 'trees'
-    ? shown
-      ? t('map-icon.art.trees.hide')
-      : t('map-icon.art.trees.show')
-    : shown
-      ? t('map-icon.art.resources.hide')
-      : t('map-icon.art.resources.show');
+    ? t('map-icon.art.trees.show')
+    : layer === 'walls'
+      ? t('map-icon.art.walls.show')
+      : layer === 'relics'
+        ? t('map-icon.art.relics.show')
+        : t('map-icon.art.resources.show');
 }
 
-export function mapIconArtLayerOptionsLabel(layer: MapIconArtLayer): string {
-  return layer === 'trees' ? t('map-icon.art.trees.options') : t('map-icon.art.resources.options');
+export function mapIconArtLayerActionLabel(layer: MapIconLayerControl, shown: boolean): string {
+  if (layer === 'trees') return shown ? t('map-icon.art.trees.hide') : t('map-icon.art.trees.show');
+  if (layer === 'walls') return shown ? t('map-icon.art.walls.hide') : t('map-icon.art.walls.show');
+  if (layer === 'relics') {
+    return shown ? t('map-icon.art.relics.hide') : t('map-icon.art.relics.show');
+  }
+  return shown ? t('map-icon.art.resources.hide') : t('map-icon.art.resources.show');
+}
+
+export function mapIconArtLayerOptionsLabel(layer: MapIconLayerControl): string {
+  return layer === 'trees'
+    ? t('map-icon.art.trees.options')
+    : layer === 'walls'
+      ? t('map-icon.art.walls.options')
+      : layer === 'relics'
+        ? t('map-icon.art.relics.options')
+        : t('map-icon.art.resources.options');
 }
 
 export function mapIconArtDensityLabel(layer: MapIconArtLayer): string {
@@ -214,8 +227,14 @@ export function mapIconArtDensityValueText(density: number): string {
       : t('map-icon.art.amount.many');
 }
 
-export function mapIconArtSizeLabel(layer: MapIconArtLayer): string {
-  return layer === 'trees' ? t('map-icon.art.trees.size') : t('map-icon.art.resources.size');
+export function mapIconArtSizeLabel(layer: MapIconLayerControl): string {
+  return layer === 'trees'
+    ? t('map-icon.art.trees.size')
+    : layer === 'walls'
+      ? t('map-icon.art.walls.size')
+      : layer === 'relics'
+        ? t('map-icon.art.relics.size')
+        : t('map-icon.art.resources.size');
 }
 export function mapIconArtSizeEnds(): { minimum: string; maximum: string } {
   return { minimum: t('map-icon.art.size.smaller'), maximum: t('map-icon.art.size.larger') };
@@ -253,6 +272,18 @@ export const mapIconArtLayerFields = Object.freeze({
     density: 'resourceDensity',
     size: 'resourceSize',
     overlap: 'resourceSpawnOverlap',
+  } as const),
+  walls: Object.freeze({
+    shown: 'walls',
+    density: null,
+    size: 'wallSize',
+    overlap: null,
+  } as const),
+  relics: Object.freeze({
+    shown: 'relics',
+    density: null,
+    size: 'relicSize',
+    overlap: null,
   } as const),
 });
 
@@ -373,6 +404,10 @@ export async function renderDeploymentMapIcon(
       resourceSize: render.resourceSize,
       resourceSpawnOverlap: render.resourceSpawnOverlap,
       minimapObjects: render.minimapObjects,
+      walls: render.walls,
+      wallSize: render.wallSize,
+      relics: render.relics,
+      relicSize: render.relicSize,
       sourceSemanticHash: render.sourceSemanticHash,
       identity,
       pixels: render.pixels,
@@ -406,6 +441,10 @@ export async function gameTexturesDeploymentMapIcon(
     resourceSize: input.resourceSize,
     resourceSpawnOverlap: input.resourceSpawnOverlap,
     minimapObjects: input.minimapObjects,
+    walls: input.walls,
+    wallSize: input.wallSize,
+    relics: input.relics,
+    relicSize: input.relicSize,
     sourceSemanticHash: result.semanticHash,
     gameTexturesSource: textured.source,
     identity: '',

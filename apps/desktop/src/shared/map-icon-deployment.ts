@@ -68,6 +68,10 @@ export function validateManualDeploymentMapIconRequest(
         key !== 'resourceSize' &&
         key !== 'resourceSpawnOverlap' &&
         key !== 'minimapObjects' &&
+        key !== 'walls' &&
+        key !== 'wallSize' &&
+        key !== 'relics' &&
+        key !== 'relicSize' &&
         key !== 'sourceSemanticHash' &&
         key !== 'gameTexturesSource' &&
         key !== 'identity' &&
@@ -111,6 +115,8 @@ export function validateManualDeploymentMapIconRequest(
     'resources',
     'resourceSpawnOverlap',
     'minimapObjects',
+    'walls',
+    'relics',
   ] as const) {
     if (typeof render[key] !== 'boolean') {
       throw new Error(`generated map icon ${key} choice is invalid`);
@@ -121,7 +127,7 @@ export function validateManualDeploymentMapIconRequest(
       throw new Error(`generated map icon ${key} is invalid`);
     }
   }
-  for (const key of ['treeSize', 'resourceSize'] as const) {
+  for (const key of ['treeSize', 'resourceSize', 'wallSize', 'relicSize'] as const) {
     if (!isMapIconArtSize(render[key])) {
       throw new Error(`generated map icon ${key} is invalid`);
     }
@@ -163,6 +169,10 @@ export function validateManualDeploymentMapIconRequest(
       resourceSize: render.resourceSize as number,
       resourceSpawnOverlap: render.resourceSpawnOverlap as boolean,
       minimapObjects: render.minimapObjects as boolean,
+      walls: render.walls as boolean,
+      wallSize: render.wallSize as number,
+      relics: render.relics as boolean,
+      relicSize: render.relicSize as number,
       sourceSemanticHash: render.sourceSemanticHash,
       ...(render.look === 'game-textures'
         ? { gameTexturesSource: render.gameTexturesSource as string }

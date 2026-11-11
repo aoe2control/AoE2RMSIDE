@@ -6,8 +6,41 @@
     "maximumMajor": 1
   },
   "catalogId": "aoe2de-rms-known-crashes-v1",
-  "profiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+  "profiles": [
+    "aoe2de-101.103.48987-rms-v1",
+    "aoe2de-101.103.54800-rms-v1",
+    "aoe2de-101.103.57257-rms-v1"
+  ],
   "entries": [
+    {
+      "id": "actor-area-without-land",
+      "title": "An actor area on a map with no land",
+      "cause": "The script makes an actor area, with create_actor_area or with actor_area on a placed object, but creates no land. The game files every actor area under the player of a land and crashes when there is none.",
+      "fix": "Create the lands in <LAND_GENERATION>, for example with create_player_lands, or remove the actor areas.",
+      "dependsOn": ["path", "seed"],
+      "timing": "generation",
+      "detectors": [{ "stage": "generation", "code": "RMSGEN7103" }],
+      "docTerms": [
+        {
+          "terms": ["create_actor_area"],
+          "places": ["objects_generation"],
+          "note": "The game crashes on an actor area when the script creates no land."
+        },
+        {
+          "terms": ["actor_area"],
+          "places": ["objects_generation/create_object"],
+          "note": "The game crashes when it places an object with actor_area and the script creates no land."
+        }
+      ],
+      "evidence": {
+        "quality": "live",
+        "liveProfiles": ["aoe2de-101.103.57257-rms-v1"],
+        "staticProfiles": ["aoe2de-101.103.54800-rms-v1", "aoe2de-101.103.57257-rms-v1"],
+        "inferredProfiles": ["aoe2de-101.103.48987-rms-v1"]
+      },
+      "status": "active",
+      "retiredIn": null
+    },
     {
       "id": "actor-radius-search-too-small",
       "title": "override_actor_radius_if_required on an object too small for the search",
@@ -26,7 +59,11 @@
       "evidence": {
         "quality": "live",
         "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -60,7 +97,11 @@
       "evidence": {
         "quality": "live",
         "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -78,7 +119,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -105,7 +150,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -132,7 +181,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -159,7 +212,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -186,7 +243,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -213,7 +274,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -240,7 +305,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -267,7 +336,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -294,7 +367,11 @@
       "evidence": {
         "quality": "static",
         "liveProfiles": [],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -331,7 +408,11 @@
         "quality": "inferred",
         "liveProfiles": [],
         "staticProfiles": [],
-        "inferredProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"]
+        "inferredProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ]
       },
       "status": "active",
       "retiredIn": null
@@ -354,7 +435,11 @@
       "evidence": {
         "quality": "live",
         "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -386,7 +471,11 @@
       "evidence": {
         "quality": "live",
         "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",
@@ -404,7 +493,11 @@
       "evidence": {
         "quality": "live",
         "liveProfiles": ["aoe2de-101.103.54800-rms-v1"],
-        "staticProfiles": ["aoe2de-101.103.48987-rms-v1", "aoe2de-101.103.54800-rms-v1"],
+        "staticProfiles": [
+          "aoe2de-101.103.48987-rms-v1",
+          "aoe2de-101.103.54800-rms-v1",
+          "aoe2de-101.103.57257-rms-v1"
+        ],
         "inferredProfiles": []
       },
       "status": "active",

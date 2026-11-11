@@ -227,7 +227,7 @@
               "const": 1
             },
             "minor": {
-              "const": 0
+              "enum": [0, 3]
             },
             "patch": {
               "const": 0
@@ -263,7 +263,21 @@
           ]
         },
         "positionPolicy": {
-          "enum": ["random", "fixed", "team-together"]
+          "enum": ["random", "fixed", "team-together", "random-team-positions"]
+        }
+      },
+      "if": {
+        "properties": { "positionPolicy": { "const": "random-team-positions" } },
+        "required": ["positionPolicy"]
+      },
+      "then": {
+        "properties": {
+          "contractVersion": { "type": "object", "properties": { "minor": { "const": 3 } } }
+        }
+      },
+      "else": {
+        "properties": {
+          "contractVersion": { "type": "object", "properties": { "minor": { "const": 0 } } }
         }
       }
     },

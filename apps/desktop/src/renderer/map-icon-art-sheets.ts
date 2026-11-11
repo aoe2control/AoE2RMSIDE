@@ -1,3 +1,5 @@
+import monumentImageData from '../../../../assets/original/map-icon-landmarks/koth-monument-v1.png?inline';
+import relicImageData from '../../../../assets/original/map-icon-landmarks/relic-v1.png?inline';
 import nomadFeetSheetData from '../../../../assets/original/map-icon-players/nomad-feet-v1.webp?inline';
 import playerSquaresSheetData from '../../../../assets/original/map-icon-players/player-squares-v1.png?inline';
 import resourceSheetData from '../../../../assets/original/map-icon-resources/resource-spritesheet-v1.webp?inline';
@@ -9,6 +11,7 @@ import {
   type MapIconArtSheets,
   type MapIconSheetPixels,
 } from './map-icon-art';
+import { processMapIconLandmarkImage } from './map-icon-landmarks';
 import {
   processMapIconNomadFeetSheet,
   processMapIconPlayerSquaresSheet,
@@ -22,13 +25,19 @@ export function loadMapIconArtSheets(): Promise<MapIconArtSheets> {
     decodeSheet(resourceSheetData),
     decodeSheet(playerSquaresSheetData),
     decodeSheet(nomadFeetSheetData),
+    decodeSheet(relicImageData),
+    decodeSheet(monumentImageData),
   ])
-    .then(([trees, resources, squares, feet]) => ({
+    .then(([trees, resources, squares, feet, relic, monument]) => ({
       trees: processMapIconSpriteSheet(trees, mapIconTreeSheetLayout),
       resources: processMapIconSpriteSheet(resources, mapIconResourceSheetLayout),
       players: {
         squares: processMapIconPlayerSquaresSheet(squares),
         feet: processMapIconNomadFeetSheet(feet),
+      },
+      landmarks: {
+        relic: processMapIconLandmarkImage(relic),
+        monument: processMapIconLandmarkImage(monument),
       },
     }))
     .catch((error: unknown) => {

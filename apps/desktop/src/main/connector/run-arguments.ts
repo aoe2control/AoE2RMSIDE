@@ -145,6 +145,13 @@ export function parseRunSettings(
     const entry = optionalString(raw[key]);
     if (entry !== undefined) settings[target] = lobbyOption(entry, `settings.${key}`);
   }
+  for (const [key, target] of [
+    ['team_together', 'teamTogether'],
+    ['team_positions', 'teamPositions'],
+  ] as const) {
+    const entry = raw[key];
+    if (typeof entry === 'boolean') settings[target] = entry;
+  }
   return Object.keys(settings).length > 0 ? settings : undefined;
 }
 

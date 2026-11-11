@@ -23,6 +23,12 @@ import {
   type GameModeModifier,
   type LobbyOptions,
 } from '../shared/lobby-options';
+import {
+  positionPolicies,
+  positionPolicyFromLobbyOptions,
+  positionPolicyOptions,
+  type PositionPolicy,
+} from '../shared/position-policy';
 import { availableLanguages, t, translatorFor, type MessageId } from '../shared/i18n/translator';
 import { isMapTestWorkerSetting, type MapTestWorkerSetting } from '../shared/map-test-contract';
 import {
@@ -278,29 +284,10 @@ export const runStartingAgeOptions = [
   },
 ] as const;
 
-export const runPositionPolicyOptions = [
-  {
-    value: 'random',
-    get label() {
-      return t('game-options.positions.random');
-    },
-    nativeValue: 0,
-  },
-  {
-    value: 'fixed',
-    get label() {
-      return t('game-options.positions.fixed');
-    },
-    nativeValue: 1,
-  },
-  {
-    value: 'team-together',
-    get label() {
-      return t('game-options.positions.team-together');
-    },
-    nativeValue: 2,
-  },
-] as const;
+export const runPositionPolicyOptions = positionPolicies.map((value) => ({
+  value,
+  ...positionPolicyOptions[value],
+}));
 
 export const runPlayerColorOptions = [
   {
@@ -364,7 +351,21 @@ export const runPlayerColorOptions = [
 export type RunGameMode = (typeof runGameModeOptions)[number]['value'];
 export type RunStartingResources = (typeof runStartingResourceOptions)[number]['value'];
 export type RunStartingAge = (typeof runStartingAgeOptions)[number]['value'];
-export type RunPositionPolicy = (typeof runPositionPolicyOptions)[number]['value'];
+export type RunPositionPolicy = PositionPolicy;
+
+export function withLobbyPositionOption(
+  configuration: RunConfiguration,
+  option: 'teamTogether' | 'teamPositions',
+  checked: boolean,
+): RunConfiguration {
+  const current =
+    positionPolicyOptions[configuration.positionPolicy] ?? positionPolicyOptions.random;
+  const next = { ...current, [option]: checked };
+  return {
+    ...configuration,
+    positionPolicy: positionPolicyFromLobbyOptions(next.teamTogether, next.teamPositions),
+  };
+}
 
 export interface RunConfiguration {
   seed: number;
@@ -1100,7 +1101,11 @@ export function languageServerPreviewContext(
   const computerSlots = computerPlayerSlots(configuration);
   const options = selectedLobbyOptions(configuration);
   return {
-    contractVersion: { major: 1, minor: setupContextMinor(options, computerSlots), patch: 0 },
+    contractVersion: {
+      major: 1,
+      minor: setupContextMinor(options, computerSlots, configuration.positionPolicy),
+      patch: 0,
+    },
     ...(computerSlots.length > 0 ? { computerPlayerSlots: computerSlots } : {}),
     ...lobbyOptionFields(options),
     ...(contentSelection ? { contentSelection } : {}),
@@ -1145,8 +1150,12 @@ export function activeGameModeModifiers(configuration: RunConfiguration): GameMo
   );
 }
 
-export function runSetupContextMinor(configuration: RunConfiguration): 0 | 1 | 2 {
-  return setupContextMinor(selectedLobbyOptions(configuration), computerPlayerSlots(configuration));
+export function runSetupContextMinor(configuration: RunConfiguration): 0 | 1 | 2 | 3 {
+  return setupContextMinor(
+    selectedLobbyOptions(configuration),
+    computerPlayerSlots(configuration),
+    configuration.positionPolicy,
+  );
 }
 
 export function withGameModeModifier(

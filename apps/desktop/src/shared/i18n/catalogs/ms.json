@@ -485,6 +485,12 @@
     "output.run.maps": {
       "message": "{count, plural, other {{count} peta}}"
     },
+    "output.run.option-on": {
+      "message": "{option}: dihidupkan"
+    },
+    "output.run.option-off": {
+      "message": "{option}: dimatikan"
+    },
     "output.run.fact.players": {
       "message": "Pemain"
     },
@@ -1018,6 +1024,9 @@
     },
     "run-menu.lobby.flag.solid-farms.tooltip": {
       "message": "Unit tidak boleh berjalan merentasi ladang. Mentakrifkan SOLID_FARMS."
+    },
+    "run-menu.team-positions.tooltip": {
+      "message": "Meletakkan pemain setiap pasukan mengikut susunan warna. Tanpa Pasukan Bersama, pemain diletakkan secara rawak, tetapi skrip masih melihat TEAM_POSITIONS."
     },
     "run-menu.lobby.regicide-note": {
       "message": "Pembunuhan Raja memerlukan raja bagi setiap pemain. Pada peta tanpa raja, permainan menamatkan perlawanan serta-merta."
@@ -1744,6 +1753,9 @@
     },
     "message.control.control-lobby-options-unsupported.cause": {
       "message": "Pilihan lobi memerlukan AoE2Control 1.1.1 atau lebih baharu. Permainan tidak diubah."
+    },
+    "message.control.team-positions-unsupported.cause": {
+      "message": "Ujian langsung memerlukan Pasukan Bersama apabila Kedudukan Pasukan dihidupkan."
     },
     "message.control.endpoint-invalid_request-local_player_slot_one_required.headline": {
       "message": "Ujian langsung memerlukan pemain dalam P1"
@@ -3250,6 +3262,30 @@
     },
     "map-icon.art.resources.size": {
       "message": "saiz emas dan batu"
+    },
+    "map-icon.art.walls.show": {
+      "message": "Tunjukkan tembok"
+    },
+    "map-icon.art.walls.hide": {
+      "message": "Sembunyikan tembok"
+    },
+    "map-icon.art.walls.options": {
+      "message": "Pilihan tembok"
+    },
+    "map-icon.art.walls.size": {
+      "message": "saiz tembok"
+    },
+    "map-icon.art.relics.show": {
+      "message": "Tunjukkan relik dan monumen"
+    },
+    "map-icon.art.relics.hide": {
+      "message": "Sembunyikan relik dan monumen"
+    },
+    "map-icon.art.relics.options": {
+      "message": "Pilihan relik dan monumen"
+    },
+    "map-icon.art.relics.size": {
+      "message": "saiz relik dan monumen"
     },
     "map-icon.art.amount.fewer": {
       "message": "Kurang"
@@ -5267,15 +5303,6 @@
     "game-options.age.post-imperial-age": {
       "message": "Zaman Pascaempayar"
     },
-    "game-options.positions.random": {
-      "message": "Kedudukan rawak"
-    },
-    "game-options.positions.fixed": {
-      "message": "Kedudukan tetap"
-    },
-    "game-options.positions.team-together": {
-      "message": "Pasukan bersama"
-    },
     "game-options.color.blue": {
       "message": "Biru"
     },
@@ -5317,6 +5344,12 @@
     },
     "game-options.flag.solid-farms": {
       "message": "Ladang pepejal"
+    },
+    "game-options.flag.team-together": {
+      "message": "Pasukan Bersama"
+    },
+    "game-options.flag.team-positions": {
+      "message": "Kedudukan Pasukan"
     },
     "game-options.civilization.random": {
       "message": "Rawak"
@@ -5962,6 +5995,15 @@
     },
     "known-crash.headline.possible": {
       "message": "Permainan boleh ranap di sini"
+    },
+    "known-crash.actor-area-without-land.title": {
+      "message": "Kawasan pelakon pada peta tanpa kawasan darat"
+    },
+    "known-crash.actor-area-without-land.cause": {
+      "message": "Skrip membuat kawasan pelakon, dengan create_actor_area atau dengan actor_area pada objek yang diletakkan, tetapi tidak membuat sebarang kawasan darat. Permainan merekodkan setiap kawasan pelakon di bawah pemain sesuatu kawasan darat dan ranap apabila tiada kawasan darat."
+    },
+    "known-crash.actor-area-without-land.fix": {
+      "message": "Buat kawasan darat dalam <LAND_GENERATION>, contohnya dengan create_player_lands, atau buang kawasan pelakon itu."
     },
     "known-crash.actor-radius-search-too-small.title": {
       "message": "override_actor_radius_if_required pada objek yang terlalu kecil untuk carian"

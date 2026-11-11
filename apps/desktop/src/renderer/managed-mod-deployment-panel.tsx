@@ -40,9 +40,11 @@ import {
   Diamond,
   Dices,
   Footprints,
+  BrickWall,
   Gem,
   Grid2x2,
   History,
+  Landmark,
   MapPinOff,
   Minus,
   Monitor,
@@ -137,6 +139,7 @@ import {
   mapIconArtSizeValueText,
   mapIconArtLayerActionLabel,
   mapIconArtLayerFields,
+  type MapIconLayerControl,
   mapIconArtLayerLabel,
   mapIconArtLayerOptionsLabel,
   mapIconArtSpawnOverlapLabel,
@@ -1651,7 +1654,7 @@ export function ManagedModDeploymentPanel({
                         target={mapIconSizeStepperTarget(mapIconInput)}
                         value={mapIconInput.spawnMarkerSizePercent}
                       />
-                      {(['trees', 'resources'] as const).map((layer) => (
+                      {(['trees', 'resources', 'walls', 'relics'] as const).map((layer) => (
                         <MapIconArtLayerControl
                           disabled={actionBusy || mapIconInput.minimapObjects}
                           input={mapIconInput}
@@ -2349,20 +2352,21 @@ function MapIconArtLayerControl({
 }: {
   disabled: boolean;
   input: MapIconRenderInput;
-  layer: 'trees' | 'resources';
+  layer: MapIconLayerControl;
   onChange(change: Partial<MapIconRenderInput>): void;
 }) {
   const fields = mapIconArtLayerFields[layer];
   const shown = input[fields.shown];
-  const density = input[fields.density];
+  const density = fields.density === null ? null : input[fields.density];
   const size = input[fields.size];
-  const overlap = input[fields.overlap];
+  const overlap = fields.overlap === null ? null : input[fields.overlap];
   const [draft, setDraft] = useState<number | null>(null);
   const [sizeDraft, setSizeDraft] = useState<number | null>(null);
   useI18n();
   const densityEnds = mapIconArtDensityEnds();
   const sizeEnds = mapIconArtSizeEnds();
-  const Icon = layer === 'trees' ? Trees : Gem;
+  const Icon =
+    layer === 'trees' ? Trees : layer === 'walls' ? BrickWall : layer === 'relics' ? Landmark : Gem;
   return (
     <div className="managed-mod-icon-art" data-layer={layer}>
       <Tooltip>
@@ -2424,26 +2428,31 @@ function MapIconArtLayerControl({
               }
             }}
           >
-            <div className="managed-mod-icon-art-amount-row">
-              <span aria-hidden="true">{densityEnds.minimum}</span>
-              <Slider
-                data-testid={`managed-mod-map-icon-${layer}-amount`}
-                disabled={disabled}
-                getAriaLabel={() => mapIconArtDensityLabel(layer)}
-                getAriaValueText={(_formatted, value) => mapIconArtDensityValueText(value)}
-                max={mapIconArtDensity.maximum}
-                min={mapIconArtDensity.minimum}
-                onValueChange={(value) => setDraft(clampMapIconArtDensity(value))}
-                onValueCommitted={(value) => {
-                  setDraft(null);
-                  const next = clampMapIconArtDensity(value);
-                  if (next !== density) onChange({ [fields.density]: next });
-                }}
-                step={mapIconArtDensity.step}
-                value={draft ?? density}
-              />
-              <span aria-hidden="true">{densityEnds.maximum}</span>
-            </div>
+            {fields.density !== null &&
+            density !== null &&
+            layer !== 'walls' &&
+            layer !== 'relics' ? (
+              <div className="managed-mod-icon-art-amount-row">
+                <span aria-hidden="true">{densityEnds.minimum}</span>
+                <Slider
+                  data-testid={`managed-mod-map-icon-${layer}-amount`}
+                  disabled={disabled}
+                  getAriaLabel={() => mapIconArtDensityLabel(layer)}
+                  getAriaValueText={(_formatted, value) => mapIconArtDensityValueText(value)}
+                  max={mapIconArtDensity.maximum}
+                  min={mapIconArtDensity.minimum}
+                  onValueChange={(value) => setDraft(clampMapIconArtDensity(value))}
+                  onValueCommitted={(value) => {
+                    setDraft(null);
+                    const next = clampMapIconArtDensity(value);
+                    if (next !== density) onChange({ [fields.density]: next });
+                  }}
+                  step={mapIconArtDensity.step}
+                  value={draft ?? density}
+                />
+                <span aria-hidden="true">{densityEnds.maximum}</span>
+              </div>
+            ) : null}
             <div className="managed-mod-icon-art-amount-row">
               <span aria-hidden="true">{sizeEnds.minimum}</span>
               <Slider
@@ -2465,14 +2474,16 @@ function MapIconArtLayerControl({
               <span aria-hidden="true">{sizeEnds.maximum}</span>
             </div>
           </div>
-          <DropdownMenuCheckboxItem
-            checked={overlap}
-            data-testid={`managed-mod-map-icon-${layer}-overlap`}
-            disabled={disabled}
-            onCheckedChange={(checked) => onChange({ [fields.overlap]: checked })}
-          >
-            {mapIconArtSpawnOverlapLabel()}
-          </DropdownMenuCheckboxItem>
+          {fields.overlap !== null && overlap !== null ? (
+            <DropdownMenuCheckboxItem
+              checked={overlap}
+              data-testid={`managed-mod-map-icon-${layer}-overlap`}
+              disabled={disabled}
+              onCheckedChange={(checked) => onChange({ [fields.overlap]: checked })}
+            >
+              {mapIconArtSpawnOverlapLabel()}
+            </DropdownMenuCheckboxItem>
+          ) : null}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -21,6 +21,13 @@ const definedName = ['command', 'word'] as const;
 
 export const knownCrashCatalogue: Readonly<Record<string, KnownCrashCatalogueEntry>> =
   Object.freeze({
+    'actor-area-without-land': {
+      quality: 'live',
+      title: 'known-crash.actor-area-without-land.title',
+      cause: 'known-crash.actor-area-without-land.cause',
+      fix: 'known-crash.actor-area-without-land.fix',
+      placeholders: [],
+    },
     'actor-radius-search-too-small': {
       quality: 'live',
       title: 'known-crash.actor-radius-search-too-small.title',

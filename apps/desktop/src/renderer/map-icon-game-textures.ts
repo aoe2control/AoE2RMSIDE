@@ -349,6 +349,7 @@ export function rasterizeMapIconGameTextures(
     | 'mapIconArtObjects'
     | 'objectNames'
     | 'graphiclessObjectIds'
+    | 'kingOfTheHill'
   >,
   input: MapIconRenderInput,
   sources: Parameters<typeof drawTerrainChunk>[2],
@@ -427,7 +428,7 @@ export function rasterizeMapIconGameTextures(
   }
   const drawn = mapIconDrawnLayers(input);
   const sprites = art !== null && mapIconNeedsArt(drawn);
-  if (sprites || drawn.minimapObjects) {
+  if (sprites || drawn.minimapObjects || drawn.walls) {
     const layer = new OffscreenCanvas(size, size);
     const layerContext = layer.getContext('2d');
     if (layerContext) {
@@ -439,6 +440,7 @@ export function rasterizeMapIconGameTextures(
           artObjects: result.mapIconArtObjects ?? [],
           minimapPalette: result.minimapPalette,
           helperObjectIds: previewHelperObjectIds(result, null),
+          kingOfTheHill: result.kingOfTheHill === true,
           art,
           raised,
         },

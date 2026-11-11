@@ -593,6 +593,7 @@ export class RmsdClient {
       this.xsStartCheck ? xsStart : undefined,
       this.objectInstanceIds,
       this.presentationInstanceIds,
+      setup.gameMode,
     );
     latencyProbe.step(requestId, 'response-convert');
     return result;
@@ -924,6 +925,7 @@ export function decodeRendererSetupContext(
       0: PositionPolicy.RANDOM,
       1: PositionPolicy.FIXED,
       2: PositionPolicy.TEAM_TOGETHER,
+      3: PositionPolicy.RANDOM_TEAM_POSITIONS,
     }),
     colors,
     computerPlayerSlots,
@@ -942,7 +944,14 @@ export function protocolSetupContext(setup: DecodedRendererSetupContext) {
   return create(SetupContextSchema, {
     contractVersion: create(ArtifactVersionSchema, {
       major: 1,
-      minor: lobbyOptions ? 2 : setup.computerPlayerSlots.length > 0 ? 1 : 0,
+      minor:
+        setup.positionPolicy === PositionPolicy.RANDOM_TEAM_POSITIONS
+          ? 3
+          : lobbyOptions
+            ? 2
+            : setup.computerPlayerSlots.length > 0
+              ? 1
+              : 0,
       patch: 0,
     }),
     gameMode: setup.gameMode,
@@ -1201,6 +1210,7 @@ function toPreviewResult(
   xsStartRequest?: XsStartCheckRequest,
   objectInstanceIds = false,
   presentationInstanceIds = false,
+  gameMode?: GameMode,
 ): PreviewGenerationResult {
   const map = response.mapState;
   const provenance = response.provenance;
@@ -1342,6 +1352,7 @@ function toPreviewResult(
     playerColorIds,
     playerCivilizationIds,
     presentationSeed: input.seed,
+    ...(gameMode === GameMode.KING_OF_THE_HILL ? { kingOfTheHill: true } : {}),
     objectNames: input.contentPack.objectNames.map((entry) => ({ ...entry })),
     graphiclessObjectIds: [...(input.contentPack.graphiclessObjectIds ?? [])],
     mapIconArtObjects: mapIconArtObjectDescriptors(input.contentPack),

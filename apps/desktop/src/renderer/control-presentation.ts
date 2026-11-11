@@ -403,6 +403,7 @@ const knownControlFailureCodes = [
   'managed-source-unavailable',
   'ambiguous-managed-source',
   'stale-or-nonexact-preview',
+  'team-positions-unsupported',
   'invalid-setup-player',
   'invalid-session-identity',
   'invalid-catalog-generation',

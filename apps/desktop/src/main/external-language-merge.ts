@@ -88,6 +88,16 @@ export function externalDiagnosticCode(prefix: string, code: unknown): string {
   return own ? `${prefix}.${own}` : prefix;
 }
 
+export function externalDiagnosticMessage(message: string, code: unknown): string {
+  if (typeof code !== 'string' && !(typeof code === 'number' && Number.isFinite(code))) {
+    return message;
+  }
+  const lead = `${String(code)}:`;
+  if (String(code) === '' || !message.startsWith(lead)) return message;
+  const rest = message.slice(lead.length).trimStart();
+  return rest === '' ? message : rest;
+}
+
 export function attributeExternalDiagnostics(
   raw: unknown,
   server: { displayName: string; codePrefix: string },
@@ -108,7 +118,10 @@ export function attributeExternalDiagnostics(
       severity,
       code: externalDiagnosticCode(server.codePrefix, value.code),
       source: server.displayName,
-      message: bounded(value.message, externalBounds.diagnosticMessage),
+      message: bounded(
+        externalDiagnosticMessage(value.message, value.code),
+        externalBounds.diagnosticMessage,
+      ),
     });
   }
   return diagnostics;

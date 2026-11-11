@@ -1,7 +1,8 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CURRENT_PROFILE_ID, CompatibilityRange, PROFILE_54800_ID, ProfileError, parse_product_version,
+    CURRENT_PROFILE_ID, CompatibilityRange, PROFILE_54800_ID, PROFILE_57257_ID, ProfileError,
+    parse_product_version,
 };
 
 pub const KNOWN_CRASHES_SCHEMA_VERSION: &str = "1.0.0";
@@ -166,7 +167,7 @@ impl KnownCrashes {
         if self.catalog_id != KNOWN_CRASHES_CATALOG_ID {
             return Err(ProfileError::InvalidField("known crashes catalogId"));
         }
-        let known_profiles = [CURRENT_PROFILE_ID, PROFILE_54800_ID];
+        let known_profiles = [CURRENT_PROFILE_ID, PROFILE_54800_ID, PROFILE_57257_ID];
         if self.profiles.is_empty()
             || !self
                 .profiles
@@ -207,6 +208,7 @@ pub fn is_known_crash_id(id: &str) -> bool {
 }
 
 pub mod crash_ids {
+    pub const ACTOR_AREA_WITHOUT_LAND: &str = "actor-area-without-land";
     pub const ACTOR_RADIUS_SEARCH_TOO_SMALL: &str = "actor-radius-search-too-small";
     pub const CONNECTION_BLOCK_MISSING_TERRAIN: &str = "connection-block-missing-terrain";
     pub const CONNECTION_TO_LAND_OUTSIDE_MAP: &str = "connection-to-land-outside-map";
@@ -227,7 +229,8 @@ pub mod crash_ids {
     pub const TERRAIN_WITHOUT_MOVEMENT_DATA: &str = "terrain-without-movement-data";
 }
 
-pub const KNOWN_CRASH_IDS: [&str; 16] = [
+pub const KNOWN_CRASH_IDS: [&str; 17] = [
+    crash_ids::ACTOR_AREA_WITHOUT_LAND,
     crash_ids::ACTOR_RADIUS_SEARCH_TOO_SMALL,
     crash_ids::CONNECTION_BLOCK_MISSING_TERRAIN,
     crash_ids::CONNECTION_TO_LAND_OUTSIDE_MAP,
