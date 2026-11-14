@@ -215,6 +215,13 @@
       "maxLength": 40,
       "meaning": "Saves the active file under another name."
     },
+    "app-menu.file.auto-save": {
+      "message": "Auto Save…",
+      "screen": "application-menu/file",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Opens the Auto Save panel, where files can be saved automatically a short time after the last edit. A check mark shows while Auto Save is on. The ellipsis says a dialog follows."
+    },
     "app-menu.file.choose-default-app": {
       "message": "Choose Default App for RMS Files…",
       "screen": "application-menu/file",
@@ -2162,6 +2169,12 @@
       "maxLength": 28,
       "meaning": "Toggle in the run menu's first row, beside Run on save, off by default: while it is on, the preview runs shortly after the user stops typing. The two share one narrow row; a longer translation is clipped with a fade."
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Runs when you save with Ctrl+S. Automatic saves don't start a run.",
+      "screen": "run-menu",
+      "control": "tooltip",
+      "meaning": "Tooltip of the Run menu's Run on save toggle, shown only while File > Auto Save… is on: saving the file yourself (Ctrl+S, File > Save) starts the run, and files saved automatically do not. Keep Ctrl+S as written."
+    },
     "run-menu.quality-check": {
       "message": "Quality check",
       "screen": "run-menu",
@@ -3371,6 +3384,40 @@
       "screen": "theme-dialog",
       "control": "accessible-name",
       "meaning": "Accessible name of the Theme panel's icon-only close button."
+    },
+    "settings.auto-save.title": {
+      "message": "Auto Save",
+      "screen": "auto-save-dialog",
+      "control": "dialog-title",
+      "maxLength": 40,
+      "meaning": "Title of the Auto Save panel (File > Auto Save…): whether edited files are saved automatically, and after how long."
+    },
+    "settings.auto-save.close-label": {
+      "message": "Close Auto Save settings",
+      "screen": "auto-save-dialog",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Auto Save panel's icon-only close button."
+    },
+    "settings.auto-save.off": {
+      "message": "Off",
+      "screen": "auto-save-dialog",
+      "control": "option",
+      "maxLength": 24,
+      "meaning": "Option of the Auto Save switch: files are saved only when the user saves them."
+    },
+    "settings.auto-save.on": {
+      "message": "On",
+      "screen": "auto-save-dialog",
+      "control": "option",
+      "maxLength": 24,
+      "meaning": "Option of the Auto Save switch: edited files are saved automatically after the delay."
+    },
+    "settings.auto-save.delay": {
+      "message": "Delay after the last edit",
+      "screen": "auto-save-dialog",
+      "control": "label",
+      "maxLength": 60,
+      "meaning": "Label of the Auto Save delay slider, from 0.0 to 5.0 seconds: how long a file must go without edits before it is saved automatically. The value in seconds shows beside the slider."
     },
     "settings.language.title": {
       "message": "Language",
@@ -15065,7 +15112,14 @@
       "screen": "run-menu/settings",
       "control": "option",
       "maxLength": 34,
-      "meaning": "Age option \"Standard starting age\" in the run menu's starting age and ending age selects. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
+      "meaning": "Age option \"Standard starting age\" in the run menu's starting age select. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
+    },
+    "game-options.ending-age.standard": {
+      "message": "Standard ending age",
+      "screen": "run-menu/settings",
+      "control": "option",
+      "maxLength": 34,
+      "meaning": "Age option \"Standard ending age\" in the run menu's ending age select: the game's default ending age. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists, matching the run menu's \"Ending age\"."
     },
     "game-options.age.dark-age": {
       "message": "Dark Age",
@@ -16082,6 +16136,15 @@
       "screen": "output",
       "control": "message-headline",
       "meaning": "Output headline when saving a file failed and no more specific message applies."
+    },
+    "workspace.failed.auto-save": {
+      "message": "{name} could not be saved automatically",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when Auto Save could not save a file. It appears once per file until a later save works; the file keeps its unsaved changes.",
+      "placeholders": {
+        "name": "the file name, such as Arabia.rms"
+      }
     },
     "workspace.failed.open-file": {
       "message": "The file could not be opened",

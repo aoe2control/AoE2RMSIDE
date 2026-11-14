@@ -337,6 +337,63 @@ function EditorTabCloseButton({
   );
 }
 
+function RunOnSaveToggle({
+  autoSave,
+  checked,
+  onToggle,
+}: {
+  autoSave: boolean;
+  checked: boolean;
+  onToggle(): void;
+}) {
+  const { t } = useI18n();
+  const onClick = (event: { stopPropagation(): void }) => {
+    event.stopPropagation();
+    onToggle();
+  };
+  const label = (
+    <span className="preview-run-automation-label">
+      <Save aria-hidden="true" />
+      <OverflowingLabel
+        className="preview-run-automation-text"
+        name={t('run-menu.run-on-save')}
+        revealOnParentFocus
+        textClassName="preview-run-automation-text-inner"
+      />
+    </span>
+  );
+  if (!autoSave) {
+    return (
+      <ToggleButton
+        check={false}
+        checked={checked}
+        className="preview-run-automation preview-run-on-save"
+        onClick={onClick}
+      >
+        {label}
+      </ToggleButton>
+    );
+  }
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <Button
+            {...toggleButtonProps({
+              checked,
+              className: 'preview-run-automation preview-run-on-save',
+            })}
+            onClick={onClick}
+          />
+        }
+      >
+        {label}
+      </TooltipTrigger>
+      <TooltipContent>{t('run-menu.run-on-save.auto-save-hint')}</TooltipContent>
+    </Tooltip>
+  );
+}
+
 function NoValidationForm({ id }: { id: string }) {
   return (
     <form
@@ -999,6 +1056,7 @@ export function EditorPanel({
     previewExecution,
     resolvedTheme,
     editorColorScheme,
+    autoSave,
     selection,
     setEditorPointerInside,
     setPinnedPreviewSource,
@@ -2884,25 +2942,11 @@ export function EditorPanel({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="preview-run-menu">
                   <div className="preview-run-automation-row">
-                    <ToggleButton
-                      check={false}
+                    <RunOnSaveToggle
+                      autoSave={autoSave}
                       checked={previewExecution?.runOnSave ?? false}
-                      className="preview-run-automation preview-run-on-save"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        previewExecution?.toggleRunOnSave();
-                      }}
-                    >
-                      <span className="preview-run-automation-label">
-                        <Save aria-hidden="true" />
-                        <OverflowingLabel
-                          className="preview-run-automation-text"
-                          name={t('run-menu.run-on-save')}
-                          revealOnParentFocus
-                          textClassName="preview-run-automation-text-inner"
-                        />
-                      </span>
-                    </ToggleButton>
+                      onToggle={() => previewExecution?.toggleRunOnSave()}
+                    />
                     <ToggleButton
                       check={false}
                       checked={previewExecution?.runOnEdit ?? false}

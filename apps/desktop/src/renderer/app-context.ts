@@ -66,6 +66,7 @@ export interface AppPanelContextValue {
   openSourceLocation(uri: string, line: number, character: number): Promise<boolean>;
   resolvedTheme: 'light' | 'dark';
   editorColorScheme: EditorColorSchemeId;
+  autoSave: boolean;
   executionProfiler: ExecutionProfilerStore;
   previewCandidates: PreviewCandidateStore;
   liveGenerationStages: boolean;

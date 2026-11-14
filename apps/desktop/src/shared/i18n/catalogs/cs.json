@@ -93,6 +93,9 @@
     "app-menu.file.save-as": {
       "message": "Uložit jako…"
     },
+    "app-menu.file.auto-save": {
+      "message": "Automatické ukládání…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "Vybrat výchozí aplikaci pro soubory RMS…"
     },
@@ -801,6 +804,9 @@
     "run-menu.run-on-edit": {
       "message": "Při úpravě"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Spustí se, když uložíte pomocí Ctrl+S. Automatické ukládání spuštění nezahájí."
+    },
     "run-menu.quality-check": {
       "message": "Kontrola kvality"
     },
@@ -1319,6 +1325,21 @@
     },
     "settings.theme.close-label": {
       "message": "Zavřít nastavení motivu"
+    },
+    "settings.auto-save.title": {
+      "message": "Automatické ukládání"
+    },
+    "settings.auto-save.close-label": {
+      "message": "Zavřít nastavení automatického ukládání"
+    },
+    "settings.auto-save.off": {
+      "message": "Vypnuto"
+    },
+    "settings.auto-save.on": {
+      "message": "Zapnuto"
+    },
+    "settings.auto-save.delay": {
+      "message": "Prodleva po poslední úpravě"
     },
     "settings.language.title": {
       "message": "Jazyk"
@@ -5319,6 +5340,9 @@
     "game-options.age.standard": {
       "message": "Standardní počáteční věk"
     },
+    "game-options.ending-age.standard": {
+      "message": "Standardní konečný věk"
+    },
     "game-options.age.dark-age": {
       "message": "Temný věk"
     },
@@ -5741,6 +5765,9 @@
     },
     "workspace.failed.save": {
       "message": "Soubor se nepodařilo uložit"
+    },
+    "workspace.failed.auto-save": {
+      "message": "Soubor {name} se nepodařilo automaticky uložit"
     },
     "workspace.failed.open-file": {
       "message": "Soubor se nepodařilo otevřít"

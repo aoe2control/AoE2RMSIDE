@@ -386,6 +386,7 @@ let pendingWriteProtectionOff: WriteProtectionTarget | null = null;
 let applyWriteProtectionAction: (() => Promise<void>) | undefined;
 let resolvedTheme: ResolvedTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
 let formatOnSavePreference = true;
+let autoSavePreference = false;
 let indentConditionalsPreference = true;
 let liveGenerationStagesPreference = true;
 let gpuMapRenderingPreference = true;
@@ -953,6 +954,7 @@ async function createApplication(): Promise<void> {
       : parsePseudoLocaleOverride(developmentOverrides().pseudoLocale),
   });
   formatOnSavePreference = initialSession.formatOnSave;
+  autoSavePreference = initialSession.autoSave;
   indentConditionalsPreference = initialSession.indentConditionals;
   liveGenerationStagesPreference = initialSession.liveGenerationStages;
   gpuMapRenderingPreference = initialSession.gpuMapRendering;
@@ -1403,6 +1405,16 @@ function createApplicationMenu(): Menu {
           label: t('app-menu.file.save-as'),
           accelerator: 'CmdOrCtrl+Shift+S',
           click: () => publishMenuAction({ type: 'save-as' }),
+        },
+        {
+          id: 'file.auto-save',
+          label: t('app-menu.file.auto-save'),
+          type: 'checkbox',
+          checked: autoSavePreference,
+          click: (item) => {
+            item.checked = autoSavePreference;
+            publishMenuAction({ type: 'open-auto-save-settings' });
+          },
         },
         { type: 'separator' },
         {
@@ -3123,6 +3135,9 @@ function registerIpc(
     formatOnSavePreference = authorized.formatOnSave;
     const formatMenuItem = applicationMenu?.getMenuItemById('edit.format-on-save');
     if (formatMenuItem) formatMenuItem.checked = formatOnSavePreference;
+    autoSavePreference = authorized.autoSave;
+    const autoSaveMenuItem = applicationMenu?.getMenuItemById('file.auto-save');
+    if (autoSaveMenuItem) autoSaveMenuItem.checked = autoSavePreference;
     indentConditionalsPreference = authorized.indentConditionals;
     const indentMenuItem = applicationMenu?.getMenuItemById('edit.indent-conditionals');
     if (indentMenuItem) indentMenuItem.checked = indentConditionalsPreference;

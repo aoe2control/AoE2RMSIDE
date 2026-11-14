@@ -35,7 +35,15 @@ import type {
   WorkspaceOpenResult,
   WorkspacePathChange,
 } from '../shared/api';
+import { autoSaveDelayMilliseconds } from '../shared/auto-save';
 import { isMapTestScriptName } from '../shared/map-test-contract';
+import {
+  AutoSaveScheduler,
+  SaveQueue,
+  autoSaveEligible,
+  diskHashForSave,
+  documentAfterSave,
+} from './auto-save';
 import { editorTextAdoption } from './editor-model-sync';
 import { formatSourceDocument } from './monaco-language';
 import { explorerAncestorFolders } from './explorer-search-tree';
@@ -144,9 +152,12 @@ export function useWorkspaceController(
   appendOutput: (message: OutputMessage) => void,
   formatOnSave: boolean,
   deletePermanently = false,
+  autoSave: { enabled: boolean; delayTenths: number } = { enabled: false, delayTenths: 10 },
 ): WorkspaceController {
   const deletePermanentlyRef = useRef(deletePermanently);
   deletePermanentlyRef.current = deletePermanently;
+  const autoSaveEnabledRef = useRef(autoSave.enabled);
+  autoSaveEnabledRef.current = autoSave.enabled;
   const untitledCounter = useRef(2);
   const [documents, setDocuments] = useState<EditorDocument[]>(() => [
     createUntitledRmsDocument(1, 'automatic'),
@@ -340,27 +351,48 @@ export function useWorkspaceController(
     [appendOutput, prepareDocumentForSave, recordSave, replaceDocument],
   );
 
+  const saveQueue = useRef(new SaveQueue());
+  const lastOwnWrite = useRef(new Map<string, string>());
+
   const saveDocument = useCallback(
     async (document: EditorDocument, overwriteExternalChange = false): Promise<string | null> => {
       if (!document.path || document.readOnly) return saveDocumentAs(document);
       try {
+        const path = document.path;
+        const startContent = document.content;
         const content = await prepareDocumentForSave(document);
         if (content === null) return null;
-        const result = await window.rmside.saveFile({
-          documentId: document.id,
-          path: document.path,
-          content,
-          diskHash: document.diskHash,
-          overwriteExternalChange,
+        const result = await saveQueue.current.run(document.id, async () => {
+          const outcome = await window.rmside.saveFile({
+            documentId: document.id,
+            path,
+            content,
+            diskHash: diskHashForSave(
+              document.diskHash,
+              documentsRef.current.find((entry) => entry.id === document.id)?.diskHash,
+              lastOwnWrite.current.get(document.id),
+            ),
+            overwriteExternalChange,
+          });
+          if (outcome.status === 'saved') {
+            lastOwnWrite.current.set(document.id, outcome.document.diskHash);
+            replaceDocument(
+              document.id,
+              documentAfterSave(
+                documentFromWorkspace(outcome.document, {
+                  editedThisOpenLifetime: document.editedThisOpenLifetime,
+                  preview: false,
+                  viewState: document.viewState,
+                }),
+                documentsRef.current.find((entry) => entry.id === document.id),
+                startContent,
+              ),
+            );
+          }
+          return outcome;
         });
         if (result.status === 'saved') {
-          const next = documentFromWorkspace(result.document, {
-            editedThisOpenLifetime: document.editedThisOpenLifetime,
-            preview: false,
-            viewState: document.viewState,
-          });
-          replaceDocument(document.id, next);
-          recordSave(next.id);
+          recordSave(result.document.id);
           return result.document.id;
         }
 
@@ -402,8 +434,93 @@ export function useWorkspaceController(
     ],
   );
 
+  const autoSaveBlocked = useRef(new Map<string, string>());
+  const autoSaveFailed = useRef(new Set<string>());
+  const autoSaveDocument = useCallback(
+    async (id: string): Promise<void> => {
+      const document = documentsRef.current.find((entry) => entry.id === id);
+      if (!document?.path || !autoSaveEligible(document)) return;
+      if (autoSaveBlocked.current.get(id) === document.diskHash) return;
+      const startContent = document.content;
+      try {
+        const result = await window.rmside.saveFile({
+          documentId: document.id,
+          path: document.path,
+          content: startContent,
+          diskHash: document.diskHash,
+          overwriteExternalChange: false,
+        });
+        if (result.status !== 'saved') {
+          autoSaveBlocked.current.set(id, document.diskHash);
+          return;
+        }
+        lastOwnWrite.current.set(id, result.document.diskHash);
+        autoSaveFailed.current.delete(id);
+        const latest = documentsRef.current.find((entry) => entry.id === id);
+        if (!latest) return;
+        replaceDocument(
+          id,
+          documentAfterSave(
+            documentFromWorkspace(result.document, {
+              editedThisOpenLifetime: latest.editedThisOpenLifetime,
+              preview: false,
+              viewState: latest.viewState,
+            }),
+            latest,
+            startContent,
+          ),
+        );
+      } catch (error) {
+        if (autoSaveFailed.current.has(id)) return;
+        autoSaveFailed.current.add(id);
+        appendOutput(
+          presentMessage({
+            source: 'Files',
+            raw: errorMessage(error),
+            fallbackHeadline: { id: 'workspace.failed.auto-save', args: { name: document.name } },
+          }),
+        );
+      }
+    },
+    [appendOutput, replaceDocument],
+  );
+  const autoSaveDocumentRef = useRef(autoSaveDocument);
+  autoSaveDocumentRef.current = autoSaveDocument;
+  const autoSaveScheduler = useMemo(
+    () =>
+      new AutoSaveScheduler((id) =>
+        saveQueue.current.run(id, () => autoSaveDocumentRef.current(id)),
+      ),
+    [],
+  );
+  useEffect(() => () => autoSaveScheduler.dispose(), [autoSaveScheduler]);
+  useEffect(() => {
+    autoSaveScheduler.update(
+      documents.map((document) => ({
+        id: document.id,
+        content: document.content,
+        eligible: autoSaveEligible(document),
+      })),
+      {
+        enabled: autoSave.enabled,
+        delayMilliseconds: autoSaveDelayMilliseconds(autoSave.delayTenths),
+      },
+    );
+  }, [autoSave.delayTenths, autoSave.enabled, autoSaveScheduler, documents]);
+
   const confirmDirtyDocuments = useCallback(
-    async (dirtyDocuments: EditorDocument[], action: DirtyDocumentsAction): Promise<boolean> => {
+    async (
+      documentsToConfirm: EditorDocument[],
+      action: DirtyDocumentsAction,
+    ): Promise<boolean> => {
+      let dirtyDocuments = documentsToConfirm;
+      if (dirtyDocuments.length > 0 && autoSaveEnabledRef.current) {
+        await autoSaveScheduler.flush(dirtyDocuments.map((document) => document.id));
+        dirtyDocuments = dirtyDocuments.flatMap((document) => {
+          const latest = documentsRef.current.find((entry) => entry.id === document.id);
+          return latest?.dirty ? [latest] : [];
+        });
+      }
       if (dirtyDocuments.length === 0) return true;
       const choice = await requestConfirmation({
         ...unsavedChangesConfirmation(dirtyDocuments, action),
@@ -416,7 +533,7 @@ export function useWorkspaceController(
       }
       return true;
     },
-    [requestConfirmation, saveDocument],
+    [autoSaveScheduler, requestConfirmation, saveDocument],
   );
 
   const ensureDocument = useCallback(() => {

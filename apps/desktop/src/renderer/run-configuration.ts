@@ -284,6 +284,18 @@ export const runStartingAgeOptions = [
   },
 ] as const;
 
+export const runEndingAgeOptions = runStartingAgeOptions.map((option) =>
+  option.value === 'standard'
+    ? {
+        value: option.value,
+        get label() {
+          return t('game-options.ending-age.standard');
+        },
+        nativeValue: option.nativeValue,
+      }
+    : option,
+);
+
 export const runPositionPolicyOptions = positionPolicies.map((value) => ({
   value,
   ...positionPolicyOptions[value],

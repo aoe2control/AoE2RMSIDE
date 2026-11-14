@@ -101,6 +101,9 @@
     "app-menu.file.save-as": {
       "message": "另存新檔…"
     },
+    "app-menu.file.auto-save": {
+      "message": "自動儲存…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "選擇 RMS 檔案的預設應用程式…"
     },
@@ -809,6 +812,9 @@
     "run-menu.run-on-edit": {
       "message": "編輯時執行"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "使用 Ctrl+S 儲存時執行。自動儲存不會啟動執行。"
+    },
     "run-menu.quality-check": {
       "message": "品質檢查"
     },
@@ -1327,6 +1333,21 @@
     },
     "settings.theme.close-label": {
       "message": "關閉佈景主題設定"
+    },
+    "settings.auto-save.title": {
+      "message": "自動儲存"
+    },
+    "settings.auto-save.close-label": {
+      "message": "關閉自動儲存設定"
+    },
+    "settings.auto-save.off": {
+      "message": "關"
+    },
+    "settings.auto-save.on": {
+      "message": "開"
+    },
+    "settings.auto-save.delay": {
+      "message": "最後一次編輯後的延遲"
     },
     "settings.language.title": {
       "message": "語言"
@@ -5327,6 +5348,9 @@
     "game-options.age.standard": {
       "message": "標準起始時代"
     },
+    "game-options.ending-age.standard": {
+      "message": "標準結束時代"
+    },
     "game-options.age.dark-age": {
       "message": "黑暗時代"
     },
@@ -5749,6 +5773,9 @@
     },
     "workspace.failed.save": {
       "message": "無法儲存檔案"
+    },
+    "workspace.failed.auto-save": {
+      "message": "無法自動儲存 {name}"
     },
     "workspace.failed.open-file": {
       "message": "無法開啟檔案"

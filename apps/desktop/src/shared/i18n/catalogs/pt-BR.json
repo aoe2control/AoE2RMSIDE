@@ -93,6 +93,9 @@
     "app-menu.file.save-as": {
       "message": "Salvar como…"
     },
+    "app-menu.file.auto-save": {
+      "message": "Salvamento automático…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "Escolher aplicativo padrão para RMS…"
     },
@@ -801,6 +804,9 @@
     "run-menu.run-on-edit": {
       "message": "Ao editar"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "É executado quando você salva com Ctrl+S. O salvamento automático não inicia uma execução."
+    },
     "run-menu.quality-check": {
       "message": "Verificação de qualidade"
     },
@@ -1319,6 +1325,21 @@
     },
     "settings.theme.close-label": {
       "message": "Fechar configurações de tema"
+    },
+    "settings.auto-save.title": {
+      "message": "Salvamento automático"
+    },
+    "settings.auto-save.close-label": {
+      "message": "Fechar configurações de salvamento automático"
+    },
+    "settings.auto-save.off": {
+      "message": "Desativado"
+    },
+    "settings.auto-save.on": {
+      "message": "Ativado"
+    },
+    "settings.auto-save.delay": {
+      "message": "Espera após a última edição"
     },
     "settings.language.title": {
       "message": "Idioma"
@@ -5319,6 +5340,9 @@
     "game-options.age.standard": {
       "message": "Era inicial padrão"
     },
+    "game-options.ending-age.standard": {
+      "message": "Era final padrão"
+    },
     "game-options.age.dark-age": {
       "message": "Idade das Trevas"
     },
@@ -5741,6 +5765,9 @@
     },
     "workspace.failed.save": {
       "message": "Não foi possível salvar o arquivo"
+    },
+    "workspace.failed.auto-save": {
+      "message": "Não foi possível salvar {name} automaticamente"
     },
     "workspace.failed.open-file": {
       "message": "Não foi possível abrir o arquivo"

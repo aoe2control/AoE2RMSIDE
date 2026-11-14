@@ -93,6 +93,9 @@
     "app-menu.file.save-as": {
       "message": "Opslaan als…"
     },
+    "app-menu.file.auto-save": {
+      "message": "Automatisch opslaan…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "Standaard-app voor RMS-bestanden kiezen…"
     },
@@ -801,6 +804,9 @@
     "run-menu.run-on-edit": {
       "message": "Bij bewerken"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Wordt uitgevoerd wanneer je opslaat met Ctrl+S. Automatisch opslaan start geen uitvoering."
+    },
     "run-menu.quality-check": {
       "message": "Kwaliteitscontrole"
     },
@@ -1319,6 +1325,21 @@
     },
     "settings.theme.close-label": {
       "message": "Thema-instellingen sluiten"
+    },
+    "settings.auto-save.title": {
+      "message": "Automatisch opslaan"
+    },
+    "settings.auto-save.close-label": {
+      "message": "Instellingen voor automatisch opslaan sluiten"
+    },
+    "settings.auto-save.off": {
+      "message": "Uit"
+    },
+    "settings.auto-save.on": {
+      "message": "Aan"
+    },
+    "settings.auto-save.delay": {
+      "message": "Wachttijd na de laatste bewerking"
     },
     "settings.language.title": {
       "message": "Taal"
@@ -5319,6 +5340,9 @@
     "game-options.age.standard": {
       "message": "Standaardbegintijdperk"
     },
+    "game-options.ending-age.standard": {
+      "message": "Standaardeindtijdperk"
+    },
     "game-options.age.dark-age": {
       "message": "Donkere tijd"
     },
@@ -5741,6 +5765,9 @@
     },
     "workspace.failed.save": {
       "message": "Het bestand kon niet worden opgeslagen"
+    },
+    "workspace.failed.auto-save": {
+      "message": "{name} kon niet automatisch worden opgeslagen"
     },
     "workspace.failed.open-file": {
       "message": "Het bestand kon niet worden geopend"

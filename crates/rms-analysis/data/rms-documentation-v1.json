@@ -220,6 +220,7 @@
       "details": [
         "The value is worked out once, where the constant is defined; every later use reads that same number, so a constant holding `rnd(…)` keeps one result for the whole script. The first definition of a name wins, including the names the game defines before the script runs.",
         "In a calculation, `(` touches the first value and `)` the last, with spaces around each of `+`, `-`, `*`, `/`, and `%`. It is worked out strictly from left to right, without operator precedence: `(2 + 3 * 4)` is 20. Dividing by zero gives 0, and `%` works on whole numbers.",
+        "A minus sign only makes a number negative: `-RIVER_WIDTH` is not a name the game knows, so it counts as 0. To negate a name, subtract it from 0: `(0 - RIVER_WIDTH)`.",
         "Inside a branch that does not run, the value is still worked out (and its random numbers drawn), but the name is not defined. Without a value nothing is defined."
       ],
       "example": [

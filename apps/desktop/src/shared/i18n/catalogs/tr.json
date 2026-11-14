@@ -93,6 +93,9 @@
     "app-menu.file.save-as": {
       "message": "Farklı kaydet…"
     },
+    "app-menu.file.auto-save": {
+      "message": "Otomatik kaydet…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "RMS dosyaları için varsayılan uygulamayı seç…"
     },
@@ -801,6 +804,9 @@
     "run-menu.run-on-edit": {
       "message": "Düzenleyince"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Ctrl+S ile kaydettiğinizde çalışır. Otomatik kaydetme çalıştırma başlatmaz."
+    },
     "run-menu.quality-check": {
       "message": "Kalite kontrolü"
     },
@@ -1319,6 +1325,21 @@
     },
     "settings.theme.close-label": {
       "message": "Tema ayarlarını kapat"
+    },
+    "settings.auto-save.title": {
+      "message": "Otomatik kaydet"
+    },
+    "settings.auto-save.close-label": {
+      "message": "Otomatik kaydetme ayarlarını kapat"
+    },
+    "settings.auto-save.off": {
+      "message": "Kapalı"
+    },
+    "settings.auto-save.on": {
+      "message": "Açık"
+    },
+    "settings.auto-save.delay": {
+      "message": "Son düzenlemeden sonraki gecikme"
     },
     "settings.language.title": {
       "message": "Dil"
@@ -5319,6 +5340,9 @@
     "game-options.age.standard": {
       "message": "Standart başlangıç çağı"
     },
+    "game-options.ending-age.standard": {
+      "message": "Standart bitiş çağı"
+    },
     "game-options.age.dark-age": {
       "message": "Karanlık Çağ"
     },
@@ -5741,6 +5765,9 @@
     },
     "workspace.failed.save": {
       "message": "Dosya kaydedilemedi"
+    },
+    "workspace.failed.auto-save": {
+      "message": "{name} otomatik olarak kaydedilemedi"
     },
     "workspace.failed.open-file": {
       "message": "Dosya açılamadı"

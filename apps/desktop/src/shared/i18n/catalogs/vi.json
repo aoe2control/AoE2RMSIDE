@@ -101,6 +101,9 @@
     "app-menu.file.save-as": {
       "message": "Lưu thành…"
     },
+    "app-menu.file.auto-save": {
+      "message": "Tự động lưu…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "Chọn ứng dụng mặc định cho tệp RMS…"
     },
@@ -809,6 +812,9 @@
     "run-menu.run-on-edit": {
       "message": "Chạy khi sửa"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Chạy khi bạn lưu bằng Ctrl+S. Tự động lưu không bắt đầu lượt chạy."
+    },
     "run-menu.quality-check": {
       "message": "Kiểm tra chất lượng"
     },
@@ -1327,6 +1333,21 @@
     },
     "settings.theme.close-label": {
       "message": "Đóng thiết lập giao diện"
+    },
+    "settings.auto-save.title": {
+      "message": "Tự động lưu"
+    },
+    "settings.auto-save.close-label": {
+      "message": "Đóng thiết lập tự động lưu"
+    },
+    "settings.auto-save.off": {
+      "message": "Tắt"
+    },
+    "settings.auto-save.on": {
+      "message": "Bật"
+    },
+    "settings.auto-save.delay": {
+      "message": "Thời gian chờ sau lần sửa cuối"
     },
     "settings.language.title": {
       "message": "Ngôn ngữ"
@@ -5327,6 +5348,9 @@
     "game-options.age.standard": {
       "message": "Thời kỳ bắt đầu tiêu chuẩn"
     },
+    "game-options.ending-age.standard": {
+      "message": "Thời đại kết thúc tiêu chuẩn"
+    },
     "game-options.age.dark-age": {
       "message": "Thời tăm tối"
     },
@@ -5749,6 +5773,9 @@
     },
     "workspace.failed.save": {
       "message": "Không thể lưu tệp"
+    },
+    "workspace.failed.auto-save": {
+      "message": "Không thể tự động lưu {name}"
     },
     "workspace.failed.open-file": {
       "message": "Không thể mở tệp"

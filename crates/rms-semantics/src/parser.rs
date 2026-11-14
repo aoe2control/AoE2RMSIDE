@@ -1994,6 +1994,12 @@ impl Parser<'_> {
             return Err(self.numeric_atom_error(atom, range));
         }
         if unsigned.len() != atom.len() {
+            if self
+                .definitions
+                .contains_key(&normalize_identifier(unsigned))
+            {
+                return self.evaluate_undefined_numeric_atom(atom, range, atof_prefix);
+            }
             return self
                 .evaluate_numeric_atom_with(unsigned, range, atof_prefix && signs == 1, false)
                 .map(|value| if negative { -value } else { value });
@@ -2032,21 +2038,30 @@ impl Parser<'_> {
         }
         match atom.parse::<f32>() {
             Ok(value) => Ok(value),
-            Err(_)
-                if self.options.undefined_numeric_values_are_zero
-                    && undefined_atom_converts_to_zero(atom) =>
-            {
-                self.record_undefined_numeric_fallback(atom, range, "0".to_owned())?;
-                Ok(0.0)
-            }
-            Err(_) if self.options.undefined_numeric_values_are_zero && atof_prefix => {
-                let value = undefined_atom_decimal_prefix(atom)
-                    .ok_or_else(|| self.numeric_atom_error(atom, range))?;
-                self.record_undefined_numeric_fallback(atom, range, canonical_number(value))?;
-                Ok(value)
-            }
-            Err(_) => Err(self.numeric_atom_error(atom, range)),
+            Err(_) => self.evaluate_undefined_numeric_atom(atom, range, atof_prefix),
         }
+    }
+
+    fn evaluate_undefined_numeric_atom(
+        &mut self,
+        atom: &str,
+        range: ByteRange,
+        atof_prefix: bool,
+    ) -> Result<f32, StrictParseError> {
+        if !self.options.undefined_numeric_values_are_zero {
+            return Err(self.numeric_atom_error(atom, range));
+        }
+        if undefined_atom_converts_to_zero(atom) {
+            self.record_undefined_numeric_fallback(atom, range, "0".to_owned())?;
+            return Ok(0.0);
+        }
+        if atof_prefix {
+            let value = undefined_atom_decimal_prefix(atom)
+                .ok_or_else(|| self.numeric_atom_error(atom, range))?;
+            self.record_undefined_numeric_fallback(atom, range, canonical_number(value))?;
+            return Ok(value);
+        }
+        Err(self.numeric_atom_error(atom, range))
     }
 
     fn token_word_converts_to_zero(&self, raw: &str) -> bool {

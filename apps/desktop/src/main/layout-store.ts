@@ -51,6 +51,7 @@ import {
 } from '../shared/preview-layout';
 import { readFileBounded, replaceFileAtomically } from './bounded-file';
 import { defaultWriteProtection, type WriteProtection } from '../shared/write-protection';
+import { autoSaveDelayTenths } from '../shared/auto-save';
 import { tileGridOpacityPercent } from '../shared/tile-grid-opacity';
 import { isLanguagePreference, type LanguagePreference } from '../shared/i18n/locale';
 import {
@@ -71,6 +72,8 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   editorColorScheme: defaultEditorColorScheme,
   previewBlur: false,
   formatOnSave: true,
+  autoSave: false,
+  autoSaveDelayTenths: autoSaveDelayTenths.default,
   indentConditionals: true,
   liveGenerationStages: true,
   gpuMapRendering: true,
@@ -355,6 +358,8 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     editorColorScheme: defaultEditorColorScheme,
     previewBlur: false,
     formatOnSave: true,
+    autoSave: false,
+    autoSaveDelayTenths: autoSaveDelayTenths.default,
     indentConditionals: true,
     liveGenerationStages: true,
     gpuMapRendering: true,
@@ -457,6 +462,19 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.formatOnSave === undefined
         ? true
         : validateBoolean(value.formatOnSave, 'format-on-save preference'),
+    autoSave:
+      value.autoSave === undefined
+        ? false
+        : validateBoolean(value.autoSave, 'auto save preference'),
+    autoSaveDelayTenths:
+      value.autoSaveDelayTenths === undefined
+        ? autoSaveDelayTenths.default
+        : validateInteger(
+            value.autoSaveDelayTenths,
+            autoSaveDelayTenths.minimum,
+            autoSaveDelayTenths.maximum,
+            'auto save delay',
+          ),
     indentConditionals:
       value.indentConditionals === undefined
         ? true

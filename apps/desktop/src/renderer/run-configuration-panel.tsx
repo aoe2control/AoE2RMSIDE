@@ -247,6 +247,7 @@ import {
   runMapSizeOptions,
   runPlayerColorOptions,
   runPreset,
+  runEndingAgeOptions,
   runStartingAgeOptions,
   runStartingResourceOptions,
   samePreviewContext,
@@ -4179,7 +4180,7 @@ function PreviewPresetControls({
               onValueChange={(value) =>
                 onUpdate({ endingAge: value as RunConfiguration['endingAge'] })
               }
-              options={runStartingAgeOptions.map((option) => option)}
+              options={runEndingAgeOptions.map((option) => option)}
               value={configuration.endingAge}
             />
             <DropdownMenuGroup aria-label={t('run-menu.position-policy')}>

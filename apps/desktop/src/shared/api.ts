@@ -540,6 +540,7 @@ export type ApplicationMenuAction =
   | { type: 'open-recent'; path: string }
   | { type: 'save' }
   | { type: 'save-as' }
+  | { type: 'open-auto-save-settings' }
   | { type: 'format-document' }
   | { type: 'insert-snippet' }
   | { type: 'save-snippet' }
@@ -2140,6 +2141,8 @@ export interface DesktopSession {
   editorColorScheme: EditorColorSchemeId;
   previewBlur: boolean;
   formatOnSave: boolean;
+  autoSave: boolean;
+  autoSaveDelayTenths: number;
   indentConditionals: boolean;
   liveGenerationStages: boolean;
   gpuMapRendering: boolean;

@@ -93,6 +93,9 @@
     "app-menu.file.save-as": {
       "message": "Zapisz jako…"
     },
+    "app-menu.file.auto-save": {
+      "message": "Autozapis…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "Wybierz domyślną aplikację dla plików RMS…"
     },
@@ -801,6 +804,9 @@
     "run-menu.run-on-edit": {
       "message": "Przy edycji"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Uruchamia się, gdy zapiszesz za pomocą Ctrl+S. Autozapis nie uruchamia przebiegu."
+    },
     "run-menu.quality-check": {
       "message": "Kontrola jakości"
     },
@@ -1319,6 +1325,21 @@
     },
     "settings.theme.close-label": {
       "message": "Zamknij ustawienia motywu"
+    },
+    "settings.auto-save.title": {
+      "message": "Autozapis"
+    },
+    "settings.auto-save.close-label": {
+      "message": "Zamknij ustawienia autozapisu"
+    },
+    "settings.auto-save.off": {
+      "message": "Wył."
+    },
+    "settings.auto-save.on": {
+      "message": "Wł."
+    },
+    "settings.auto-save.delay": {
+      "message": "Opóźnienie po ostatniej edycji"
     },
     "settings.language.title": {
       "message": "Język"
@@ -5319,6 +5340,9 @@
     "game-options.age.standard": {
       "message": "Standardowa era początkowa"
     },
+    "game-options.ending-age.standard": {
+      "message": "Standardowa era końcowa"
+    },
     "game-options.age.dark-age": {
       "message": "Era Mroku"
     },
@@ -5741,6 +5765,9 @@
     },
     "workspace.failed.save": {
       "message": "Nie udało się zapisać pliku"
+    },
+    "workspace.failed.auto-save": {
+      "message": "Nie udało się automatycznie zapisać pliku {name}"
     },
     "workspace.failed.open-file": {
       "message": "Nie udało się otworzyć pliku"

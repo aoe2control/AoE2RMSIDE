@@ -139,6 +139,8 @@ import { useWorkspaceController } from './workspace-controller';
 import { WorkspaceDialog } from './workspace-dialog';
 import { LanguageSettingsDialog } from './language-settings-dialog';
 import { ThemeSettingsDialog } from './theme-settings-dialog';
+import { AutoSaveDialog } from './auto-save-dialog';
+import { autoSaveDelayTenths as autoSaveDelayRange } from '../shared/auto-save';
 import { defaultEditorColorScheme, type EditorColorSchemeId } from '../shared/editor-color-scheme';
 import { DefinitionFileDialog, type DefinitionFileRequest } from './definition-file-dialog';
 import { useI18n } from './i18n';
@@ -320,6 +322,15 @@ export function App() {
   const [previewBlur, setPreviewBlur] = useState(false);
   const [themeSettingsOpen, setThemeSettingsOpen] = useState(false);
   const [formatOnSave, setFormatOnSave] = useState(true);
+  const [autoSave, setAutoSave] = useState(false);
+  const [autoSaveDelayTenths, setAutoSaveDelayTenths] = useState<number>(
+    autoSaveDelayRange.default,
+  );
+  const [autoSaveSettingsOpen, setAutoSaveSettingsOpen] = useState(false);
+  const autoSaveSettings = useMemo(
+    () => ({ enabled: autoSave, delayTenths: autoSaveDelayTenths }),
+    [autoSave, autoSaveDelayTenths],
+  );
   const [indentConditionals, setIndentConditionals] = useState(true);
   const [liveGenerationStages, setLiveGenerationStages] = useState(true);
   const [gpuMapRendering, setGpuMapRendering] = useState(true);
@@ -404,7 +415,12 @@ export function App() {
     setManagedModDeploymentSourceId(sourceId);
     setManagedModDeploymentOpen(true);
   }, []);
-  const workspace = useWorkspaceController(appendOutput, formatOnSave, deletePermanently);
+  const workspace = useWorkspaceController(
+    appendOutput,
+    formatOnSave,
+    deletePermanently,
+    autoSaveSettings,
+  );
   const [layoutMotionReady, setLayoutMotionReady] = useState(false);
   const sessionLayoutShown =
     sessionApplied || (workspace.sessionReady && workspace.restoredSession === null);
@@ -818,6 +834,7 @@ export function App() {
       openSourceLocation,
       resolvedTheme,
       editorColorScheme,
+      autoSave,
       executionProfiler,
       previewCandidates,
       liveGenerationStages,
@@ -887,6 +904,7 @@ export function App() {
       previewExecution,
       resolvedTheme,
       editorColorScheme,
+      autoSave,
       selectPreviewOperation,
       selection,
       setEditorPointerInside,
@@ -979,6 +997,8 @@ export function App() {
     setEditorColorScheme(session.editorColorScheme);
     setPreviewBlur(session.previewBlur);
     setFormatOnSave(session.formatOnSave);
+    setAutoSave(session.autoSave);
+    setAutoSaveDelayTenths(session.autoSaveDelayTenths);
     setIndentConditionals(session.indentConditionals);
     setLiveGenerationStages(session.liveGenerationStages);
     setGpuMapRendering(session.gpuMapRendering);
@@ -1051,6 +1071,8 @@ export function App() {
         editorColorScheme,
         previewBlur,
         formatOnSave,
+        autoSave,
+        autoSaveDelayTenths,
         indentConditionals,
         liveGenerationStages,
         gpuMapRendering,
@@ -1101,6 +1123,8 @@ export function App() {
     explorerExpanded,
     explorerWidth,
     formatOnSave,
+    autoSave,
+    autoSaveDelayTenths,
     indentConditionals,
     liveGenerationStages,
     gpuMapRendering,
@@ -1229,6 +1253,7 @@ export function App() {
       } else if (action.type === 'open-recent') void currentWorkspace.openRecent(action.path);
       else if (action.type === 'save') void currentWorkspace.saveActive();
       else if (action.type === 'save-as') void currentWorkspace.saveActiveAs();
+      else if (action.type === 'open-auto-save-settings') setAutoSaveSettingsOpen(true);
       else if (action.type === 'format-document') {
         showEditor();
         void currentWorkspace.formatActive();
@@ -2061,6 +2086,14 @@ export function App() {
         <LanguageSettingsDialog
           onOpenChange={setLanguageSettingsOpen}
           open={languageSettingsOpen}
+        />
+        <AutoSaveDialog
+          delayTenths={autoSaveDelayTenths}
+          enabled={autoSave}
+          onDelayTenthsChange={setAutoSaveDelayTenths}
+          onEnabledChange={setAutoSave}
+          onOpenChange={setAutoSaveSettingsOpen}
+          open={autoSaveSettingsOpen}
         />
         <ThemeSettingsDialog
           editorColorScheme={editorColorScheme}

@@ -93,6 +93,9 @@
     "app-menu.file.save-as": {
       "message": "另存为…"
     },
+    "app-menu.file.auto-save": {
+      "message": "自动保存…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "选择 RMS 文件的默认应用…"
     },
@@ -801,6 +804,9 @@
     "run-menu.run-on-edit": {
       "message": "编辑时运行"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "使用 Ctrl+S 保存时运行。自动保存不会启动运行。"
+    },
     "run-menu.quality-check": {
       "message": "质量检查"
     },
@@ -1319,6 +1325,21 @@
     },
     "settings.theme.close-label": {
       "message": "关闭主题设置"
+    },
+    "settings.auto-save.title": {
+      "message": "自动保存"
+    },
+    "settings.auto-save.close-label": {
+      "message": "关闭自动保存设置"
+    },
+    "settings.auto-save.off": {
+      "message": "关"
+    },
+    "settings.auto-save.on": {
+      "message": "开"
+    },
+    "settings.auto-save.delay": {
+      "message": "最后一次编辑后的延迟"
     },
     "settings.language.title": {
       "message": "语言"
@@ -5319,6 +5340,9 @@
     "game-options.age.standard": {
       "message": "标准起始时代"
     },
+    "game-options.ending-age.standard": {
+      "message": "标准终止时代"
+    },
     "game-options.age.dark-age": {
       "message": "黑暗时代"
     },
@@ -5741,6 +5765,9 @@
     },
     "workspace.failed.save": {
       "message": "无法保存文件"
+    },
+    "workspace.failed.auto-save": {
+      "message": "无法自动保存 {name}"
     },
     "workspace.failed.open-file": {
       "message": "无法打开文件"

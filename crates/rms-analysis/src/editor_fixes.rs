@@ -95,6 +95,9 @@ pub fn undefined_name_fix(
     name: &str,
     defined: &[&str],
 ) -> Option<LintFix> {
+    if name.starts_with(['-', '+']) {
+        return None;
+    }
     let tokens = &analysis.cst.tokens;
     let first = tokens.partition_point(|token| token.range.start < range.start);
     let mut occurrences = tokens[first..]

@@ -101,6 +101,9 @@
     "app-menu.file.save-as": {
       "message": "इस रूप में सहेजें…"
     },
+    "app-menu.file.auto-save": {
+      "message": "अपने-आप सहेजें…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "RMS फ़ाइलों का डिफ़ॉल्ट ऐप चुनें…"
     },
@@ -809,6 +812,9 @@
     "run-menu.run-on-edit": {
       "message": "संपादन पर चलाएँ"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Ctrl+S से सहेजने पर चलता है। अपने-आप सहेजने से रन शुरू नहीं होता।"
+    },
     "run-menu.quality-check": {
       "message": "गुणवत्ता जाँच"
     },
@@ -1327,6 +1333,21 @@
     },
     "settings.theme.close-label": {
       "message": "थीम की सेटिंग्स बंद करें"
+    },
+    "settings.auto-save.title": {
+      "message": "अपने-आप सहेजें"
+    },
+    "settings.auto-save.close-label": {
+      "message": "अपने-आप सहेजने की सेटिंग्स बंद करें"
+    },
+    "settings.auto-save.off": {
+      "message": "बंद"
+    },
+    "settings.auto-save.on": {
+      "message": "चालू"
+    },
+    "settings.auto-save.delay": {
+      "message": "आख़िरी बदलाव के बाद देरी"
     },
     "settings.language.title": {
       "message": "भाषा"
@@ -5327,6 +5348,9 @@
     "game-options.age.standard": {
       "message": "मानक शुरूआती युग"
     },
+    "game-options.ending-age.standard": {
+      "message": "मानक अंतिम युग"
+    },
     "game-options.age.dark-age": {
       "message": "अंधकार युग"
     },
@@ -5749,6 +5773,9 @@
     },
     "workspace.failed.save": {
       "message": "फ़ाइल सहेजी नहीं जा सकी"
+    },
+    "workspace.failed.auto-save": {
+      "message": "{name} अपने-आप सहेजी नहीं जा सकी"
     },
     "workspace.failed.open-file": {
       "message": "फ़ाइल खोली नहीं जा सकी"

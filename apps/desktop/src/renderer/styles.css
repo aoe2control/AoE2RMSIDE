@@ -5603,6 +5603,34 @@ div:has(> .preview-layer-tooltip) {
   text-align: start;
 }
 
+.auto-save-dialog {
+  width: min(420px, calc(100vw - 40px));
+  max-width: 420px !important;
+  max-block-size: calc(100dvh - 40px);
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.auto-save-dialog [data-slot='dialog-title'] {
+  padding-inline-end: 32px;
+  font-size: 16px;
+  text-align: start;
+}
+
+.auto-save-delay {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.auto-save-delay-value {
+  min-inline-size: 5ch;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
 .mcp-settings-dialog {
   width: min(520px, calc(100vw - 40px));
   max-width: 520px !important;

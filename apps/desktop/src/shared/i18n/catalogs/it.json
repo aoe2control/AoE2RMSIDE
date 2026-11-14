@@ -93,6 +93,9 @@
     "app-menu.file.save-as": {
       "message": "Salva con nome…"
     },
+    "app-menu.file.auto-save": {
+      "message": "Salvataggio automatico…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "Scegli app predefinita per i file RMS…"
     },
@@ -801,6 +804,9 @@
     "run-menu.run-on-edit": {
       "message": "Alla modifica"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Si avvia quando salvi con Ctrl+S. Il salvataggio automatico non avvia un’esecuzione."
+    },
     "run-menu.quality-check": {
       "message": "Controllo qualità"
     },
@@ -1319,6 +1325,21 @@
     },
     "settings.theme.close-label": {
       "message": "Chiudi impostazioni del tema"
+    },
+    "settings.auto-save.title": {
+      "message": "Salvataggio automatico"
+    },
+    "settings.auto-save.close-label": {
+      "message": "Chiudi impostazioni del salvataggio automatico"
+    },
+    "settings.auto-save.off": {
+      "message": "Disattivato"
+    },
+    "settings.auto-save.on": {
+      "message": "Attivato"
+    },
+    "settings.auto-save.delay": {
+      "message": "Ritardo dopo l’ultima modifica"
     },
     "settings.language.title": {
       "message": "Lingua"
@@ -5319,6 +5340,9 @@
     "game-options.age.standard": {
       "message": "Età d’inizio standard"
     },
+    "game-options.ending-age.standard": {
+      "message": "Età finale standard"
+    },
     "game-options.age.dark-age": {
       "message": "Alto Medioevo"
     },
@@ -5741,6 +5765,9 @@
     },
     "workspace.failed.save": {
       "message": "Impossibile salvare il file"
+    },
+    "workspace.failed.auto-save": {
+      "message": "Impossibile salvare automaticamente {name}"
     },
     "workspace.failed.open-file": {
       "message": "Impossibile aprire il file"

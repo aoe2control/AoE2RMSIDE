@@ -93,6 +93,9 @@
     "app-menu.file.save-as": {
       "message": "Зберегти як…"
     },
+    "app-menu.file.auto-save": {
+      "message": "Автозбереження…"
+    },
     "app-menu.file.choose-default-app": {
       "message": "Вибрати типову програму для файлів RMS…"
     },
@@ -801,6 +804,9 @@
     "run-menu.run-on-edit": {
       "message": "При редагуванні"
     },
+    "run-menu.run-on-save.auto-save-hint": {
+      "message": "Запускається, коли ви зберігаєте через Ctrl+S. Автозбереження не починає запуск."
+    },
     "run-menu.quality-check": {
       "message": "Перевірка якості"
     },
@@ -1319,6 +1325,21 @@
     },
     "settings.theme.close-label": {
       "message": "Закрити налаштування теми"
+    },
+    "settings.auto-save.title": {
+      "message": "Автозбереження"
+    },
+    "settings.auto-save.close-label": {
+      "message": "Закрити налаштування автозбереження"
+    },
+    "settings.auto-save.off": {
+      "message": "Вимк."
+    },
+    "settings.auto-save.on": {
+      "message": "Увімк."
+    },
+    "settings.auto-save.delay": {
+      "message": "Затримка після останнього редагування"
     },
     "settings.language.title": {
       "message": "Мова"
@@ -5319,6 +5340,9 @@
     "game-options.age.standard": {
       "message": "Стандартна початкова епоха"
     },
+    "game-options.ending-age.standard": {
+      "message": "Стандартна кінцева епоха"
+    },
     "game-options.age.dark-age": {
       "message": "Темна епоха"
     },
@@ -5741,6 +5765,9 @@
     },
     "workspace.failed.save": {
       "message": "Не вдалося зберегти файл"
+    },
+    "workspace.failed.auto-save": {
+      "message": "Не вдалося автоматично зберегти {name}"
     },
     "workspace.failed.open-file": {
       "message": "Не вдалося відкрити файл"
