@@ -62,6 +62,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "取消連結遊戲資料夾"
     },
+    "app-menu.file.write-protection": {
+      "message": "寫入保護"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "保護遊戲資料夾"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "保護模組資料夾"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "要關閉遊戲資料夾的寫入保護嗎？"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "已連結遊戲資料夾中的地圖指令碼將可在 AoE2RMSIDE 中編輯。遊戲更新或遊戲檔案檢查可能會在未詢問的情況下取代已變更的檔案，而且變更後的官方地圖將與其他玩家的副本不一致，因此使用它的遊戲可能會不同步。請將你自己的地圖保存在模組或其他資料夾中。"
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "要關閉模組資料夾的寫入保護嗎？"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "已訂閱的模組和「部署為模組」寫入的模組將可在 AoE2RMSIDE 中編輯。模組更新會在未詢問的情況下取代你對已訂閱模組的變更，而且擁有已發佈版本的玩家所玩的地圖將與你的不同。「部署為模組」在覆寫其模組中的變更之前會先詢問。遊戲內測試用的模組仍受保護。"
+    },
+    "write-protection.warning.turn-off": {
+      "message": "關閉保護"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "匯入測試報告…"
     },
@@ -2071,6 +2095,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "玩家設定檔資料夾或其模組資料夾不是 AoE2RMSIDE 可使用的一般資料夾。"
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "random-map-scripts 模組資料夾是你自己的工作資料夾，因此 AoE2RMSIDE 不會部署到其中。"
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "選擇其他模組名稱"
     },
     "message.deploy.path-collision.cause": {
       "message": "有兩個檔案會被複製到模組中的 {path}。"
@@ -4654,6 +4684,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "地圖格線"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "地圖格線選項"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "格線不透明度"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "尺規"
     },
     "preview-panel.tool.small-trees": {
       "message": "小樹"

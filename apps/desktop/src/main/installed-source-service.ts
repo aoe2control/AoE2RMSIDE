@@ -16,6 +16,8 @@ import { managedModContract, managedModDirectoryName } from './managed-deploymen
 import type { ProtectedRoot, WorkspaceService } from './workspace-service';
 import { readFileBounded } from './bounded-file';
 import { DesktopError } from '../shared/desktop-error';
+import { isSharedScriptsModName } from '../shared/persistent-mod-name';
+import { defaultWriteProtection, type WriteProtection } from '../shared/write-protection';
 
 const maximumRoots = 4_096;
 const maximumEntries = 20_000;
@@ -69,6 +71,7 @@ export class InstalledSourceService {
       profileId: string,
       modName: string,
     ) => Promise<boolean> = async () => false,
+    private readonly writeProtection: () => WriteProtection = () => defaultWriteProtection,
   ) {}
 
   async discover(
@@ -83,6 +86,7 @@ export class InstalledSourceService {
     const entries: InstalledSourceEntry[] = [];
     const diagnostics: OutputWords[] = [];
     const protectedRoots: ProtectedRoot[] = [];
+    const protection = this.writeProtection();
     let managedOutputsOmitted = 0;
 
     for (const report of reports.slice(0, 32)) {
@@ -121,7 +125,7 @@ export class InstalledSourceService {
           label: `Built-in · ${basename(evidence.value)}`,
           displayRoot: relative(installationRoot, evidence.value).replaceAll('\\', '/'),
           ownership: 'built-in',
-          readOnly: true,
+          readOnly: protection.gameFolder,
           requestedSourceRoot: evidence.value,
           requestedOwnershipRoot: evidence.value,
           requestedXsRoot: null,
@@ -162,9 +166,12 @@ export class InstalledSourceService {
               break;
             }
             const modRoot = join(modsRoot, modName);
+            const liveTestMod = pathKey(modName) === pathKey(managedModDirectoryName);
             if (
               ownership === 'local' &&
-              ((await isManagedDeploymentOutput(modName, modRoot)) ||
+              (liveTestMod || (protection.modFolders && !isSharedScriptsModName(modName))) &&
+              (liveTestMod ||
+                (await isManagedDeploymentOutput(modName, modRoot)) ||
                 (await this.isOwnedPersistentTarget(
                   installationRoot,
                   profile.source,
@@ -188,7 +195,7 @@ export class InstalledSourceService {
               label: `Profile ${profile.value} · ${ownership === 'local' ? 'Local' : 'Subscribed'} · ${modName}`,
               displayRoot: `mods/${ownership}/${modName}/resources/_common/random-map-scripts`,
               ownership,
-              readOnly: ownership === 'subscribed',
+              readOnly: ownership === 'subscribed' && protection.modFolders,
               requestedSourceRoot: sourceRoot,
               requestedOwnershipRoot: modRoot,
               requestedXsRoot: join(modRoot, 'resources', '_common', 'xs'),

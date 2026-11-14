@@ -541,6 +541,27 @@ export function useWorkspaceController(
   useEffect(
     () =>
       window.rmside.onWorkspaceExternalChange((change) => {
+        if (change.kind === 'folder-protection') {
+          setFolder((folder) =>
+            folder?.id === change.folderId ? { ...folder, writable: change.writable } : folder,
+          );
+          return;
+        }
+        if (change.kind === 'protection') {
+          updateDocuments(setDocuments, documentsRef, (documents) =>
+            documents.map((document) => {
+              if (document.id !== change.documentId) return document;
+              const { protectedReason: _previous, ...rest } = document;
+              return {
+                ...rest,
+                sourceKind: change.sourceKind,
+                readOnly: change.readOnly,
+                ...(change.protectedReason ? { protectedReason: change.protectedReason } : {}),
+              };
+            }),
+          );
+          return;
+        }
         const current = documentsRef.current.find((document) =>
           change.kind === 'changed'
             ? document.id === change.document.id

@@ -6,6 +6,11 @@ import {
   type ExportImagePixels,
 } from '../shared/image-export';
 import {
+  drawPreviewRulerMarks,
+  previewRulerMarkBox,
+  type PreviewRulerCapture,
+} from './preview-ruler';
+import {
   mapToScreen,
   previewLevelPixels,
   type PreviewCamera,
@@ -125,6 +130,42 @@ export function previewImageCrop(
   return { x: left, y: top, width: right - left, height: bottom - top };
 }
 
+export function unionScreenBoxes(boxes: Iterable<ScreenBox | null>): ScreenBox | null {
+  let union: ScreenBox | null = null;
+  for (const box of boxes) {
+    if (!box) continue;
+    union = union
+      ? {
+          left: Math.min(union.left, box.left),
+          top: Math.min(union.top, box.top),
+          right: Math.max(union.right, box.right),
+          bottom: Math.max(union.bottom, box.bottom),
+        }
+      : { ...box };
+  }
+  return union;
+}
+
+export function compositeRgbaOver(
+  base: Uint8ClampedArray,
+  overlay: Uint8Array | Uint8ClampedArray,
+): void {
+  for (let index = 0; index < base.length; index += 4) {
+    const overlayAlpha = overlay[index + 3]! / 255;
+    if (overlayAlpha === 0) continue;
+    const baseAlpha = base[index + 3]! / 255;
+    const alpha = overlayAlpha + baseAlpha * (1 - overlayAlpha);
+    for (let channel = 0; channel < 3; channel += 1) {
+      base[index + channel] = Math.round(
+        (overlay[index + channel]! * overlayAlpha +
+          base[index + channel]! * baseAlpha * (1 - overlayAlpha)) /
+          alpha,
+      );
+    }
+    base[index + 3] = Math.round(alpha * 255);
+  }
+}
+
 export function previewCanvasResolution(
   canvasWidth: number,
   screenWidth: number,
@@ -196,6 +237,8 @@ export interface PreviewImageSource {
   lift: { minimum: number; maximum: number } | null;
   transient: Iterable<Container>;
   selection: Container | null;
+  ruler: PreviewRulerCapture | null;
+  drawRuler?: (pixels: Uint8ClampedArray, crop: PixelCrop, resolution: number) => void;
 }
 
 export interface CaptureLayer {
@@ -239,7 +282,8 @@ export function capturePreviewImage(source: PreviewImageSource): ExportImagePixe
   const height = snapPixel(Math.min(viewport.height, screen.height));
   const outline = previewMapOutline(scene, camera, viewport, source.lift);
   const kept = previewSelectionBox(source.selection);
-  const cssCrop = previewImageCrop(outline, width, height, width, height, kept);
+  const include = unionScreenBoxes([kept, ...(source.ruler?.marks ?? []).map(previewRulerMarkBox)]);
+  const cssCrop = previewImageCrop(outline, width, height, width, height, include);
   if (!cssCrop) return null;
   const canvasResolution = previewCanvasResolution(
     application.canvas.width,
@@ -265,15 +309,34 @@ export function capturePreviewImage(source: PreviewImageSource): ExportImagePixe
     height,
     width * resolution,
     height * resolution,
-    kept,
+    include,
   );
   const crop = scaled && clampCrop(scaled, frame.width, frame.height);
   if (!crop || !exportImageSizeAllowed(crop.width, crop.height)) return null;
-  return {
-    width: crop.width,
-    height: crop.height,
-    pixels: cropUnpremultipliedRgba(frame.pixels, frame.width, crop),
-  };
+  const pixels = cropUnpremultipliedRgba(frame.pixels, frame.width, crop);
+  if (source.ruler) {
+    const ruler = source.ruler;
+    (source.drawRuler ?? ((target, at, scale) => drawRulerOnCanvas(target, at, scale, ruler)))(
+      pixels,
+      crop,
+      resolution,
+    );
+  }
+  return { width: crop.width, height: crop.height, pixels };
+}
+
+function drawRulerOnCanvas(
+  pixels: Uint8ClampedArray,
+  crop: PixelCrop,
+  resolution: number,
+  ruler: PreviewRulerCapture,
+): void {
+  const canvas = new OffscreenCanvas(crop.width, crop.height);
+  const context = canvas.getContext('2d');
+  if (!context) return;
+  context.setTransform(resolution, 0, 0, resolution, -crop.x, -crop.y);
+  drawPreviewRulerMarks(context, ruler, (d) => new Path2D(d));
+  compositeRgbaOver(pixels, context.getImageData(0, 0, crop.width, crop.height).data);
 }
 
 export function clampCrop(crop: PixelCrop, width: number, height: number): PixelCrop | null {

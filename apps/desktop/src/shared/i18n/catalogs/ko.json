@@ -62,6 +62,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "게임 폴더 연결 해제"
     },
+    "app-menu.file.write-protection": {
+      "message": "쓰기 보호"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "게임 폴더 보호"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "모드 폴더 보호"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "게임 폴더의 쓰기 보호를 끌까요?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "연결된 게임 폴더의 맵 스크립트를 AoE2RMSIDE에서 편집할 수 있게 됩니다. 게임 업데이트나 게임 파일 검사가 변경된 파일을 묻지 않고 교체할 수 있으며, 변경된 공식 맵은 다른 플레이어의 사본과 더 이상 일치하지 않으므로 이 맵으로 하는 게임은 동기화가 어긋날 수 있습니다. 직접 만든 맵은 모드나 다른 폴더에 보관하세요."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "모드 폴더의 쓰기 보호를 끌까요?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "구독한 모드와 모드로 배포가 쓴 모드를 AoE2RMSIDE에서 편집할 수 있게 됩니다. 모드 업데이트는 구독한 모드에 대한 변경 내용을 묻지 않고 교체하며, 게시된 버전을 가진 플레이어는 내 맵과 다른 맵으로 플레이하게 됩니다. 모드로 배포는 자신의 모드에서 변경된 내용을 덮어쓰기 전에 확인합니다. 게임 내 테스트용 모드는 계속 보호됩니다."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "보호 끄기"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "테스트 보고서 가져오기…"
     },
@@ -2071,6 +2095,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "프로필 폴더 또는 모드 폴더가 AoE2RMSIDE에서 사용할 수 있는 일반 폴더가 아닙니다."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "random-map-scripts 모드 폴더는 직접 사용하는 작업 폴더이므로 AoE2RMSIDE는 이 폴더에 배포하지 않습니다."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "다른 모드 이름을 선택하세요"
     },
     "message.deploy.path-collision.cause": {
       "message": "두 파일이 모드 안의 같은 경로 {path}에 복사됩니다."
@@ -4654,6 +4684,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "타일 격자"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "타일 격자 옵션"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "격자 불투명도"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "눈금자"
     },
     "preview-panel.tool.small-trees": {
       "message": "작은 나무"

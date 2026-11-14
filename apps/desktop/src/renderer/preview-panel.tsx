@@ -44,8 +44,25 @@ import {
   Texture,
   type ContainerChild,
 } from 'pixi.js';
-import { Copy, Grid3x3, MousePointer2, Save, Scan, TestTube2, TreePine } from 'lucide-react';
+import {
+  ChevronUp,
+  Copy,
+  Grid3x3,
+  MousePointer2,
+  Ruler,
+  Save,
+  Scan,
+  TestTube2,
+  TreePine,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Slider } from '@/components/ui/slider';
+import { clampTileGridOpacityPercent, tileGridOpacityPercent } from '../shared/tile-grid-opacity';
 import { ContextMenu, ContextMenuContent, ContextMenuItem } from '@/components/ui/context-menu';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { t as translate } from '../shared/i18n/translator';
@@ -149,10 +166,16 @@ import {
 } from './use-game-art';
 import {
   fallbackTileGridColor,
+  tileGridColorAtOpacity,
   terrainLayerTransform,
   TileGridLayer,
   type TileGridColor,
 } from './preview-tile-grid';
+import {
+  PreviewRulerOverlay,
+  previewRulerMarkKinds,
+  type PreviewRulerMarkKind,
+} from './preview-ruler';
 import {
   attachPreviewRenderScheduler,
   detachPreviewRenderScheduler,
@@ -576,6 +599,16 @@ const tileGridButton = {
   ),
 } as const;
 
+const rulerButton = {
+  key: 'ruler',
+  labelId: 'preview-panel.tool.ruler',
+  renderIcon: (ref: Ref<AnimatedIconHandle>) => (
+    <HoverScaleIcon ref={ref}>
+      <Ruler aria-hidden="true" size={14} />
+    </HoverScaleIcon>
+  ),
+} as const;
+
 const smallTreesButton = {
   key: 'smallTrees',
   labelId: 'preview-panel.tool.small-trees',
@@ -646,6 +679,102 @@ function PreviewOverlayButton({
       </TooltipTrigger>
       <TooltipContent>{label}</TooltipContent>
     </Tooltip>
+  );
+}
+
+function PreviewTileGridControl({
+  enabled,
+  opacity,
+  onToggle,
+  onOpacity,
+}: {
+  enabled: boolean;
+  opacity: number;
+  onToggle(): void;
+  onOpacity(percent: number): void;
+}) {
+  const { t, translator } = useI18n();
+  const [draft, setDraft] = useState<number | null>(null);
+  const shown = draft ?? opacity;
+  const valueText = (percent: number) =>
+    translator.formatNumber(percent / 100, { style: 'percent' });
+  return (
+    <div className="preview-tile-grid-control" data-grid={enabled ? 'on' : 'off'}>
+      <PreviewOverlayButton
+        active={enabled}
+        className="preview-tile-grid-button"
+        label={t(tileGridButton.labelId)}
+        onToggle={onToggle}
+        renderIcon={tileGridButton.renderIcon}
+      />
+      {enabled ? (
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger
+            render={
+              <Button
+                aria-label={t('preview-panel.tool.tile-grid.options')}
+                className="preview-map-tool preview-tile-grid-menu-trigger"
+                size="icon-compact"
+                type="button"
+                variant="secondary"
+              />
+            }
+          >
+            <ChevronUp aria-hidden="true" size={12} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="start"
+            className="preview-tile-grid-menu"
+            side="top"
+            sideOffset={6}
+            surface="popup"
+          >
+            <div
+              className="preview-tile-grid-opacity"
+              onKeyDown={(event) => {
+                if (
+                  [
+                    'ArrowLeft',
+                    'ArrowRight',
+                    'ArrowUp',
+                    'ArrowDown',
+                    'Home',
+                    'End',
+                    'PageUp',
+                    'PageDown',
+                  ].includes(event.key)
+                ) {
+                  event.stopPropagation();
+                }
+              }}
+            >
+              <span aria-hidden="true">{t('preview-panel.tile-grid.opacity')}</span>
+              <Slider
+                data-testid="preview-tile-grid-opacity"
+                getAriaLabel={() => t('preview-panel.tile-grid.opacity')}
+                getAriaValueText={(_formatted, value) => valueText(value)}
+                max={tileGridOpacityPercent.maximum}
+                min={tileGridOpacityPercent.minimum}
+                onValueChange={(value) => {
+                  const next = clampTileGridOpacityPercent(value);
+                  setDraft(next);
+                  onOpacity(next);
+                }}
+                onValueCommitted={(value) => {
+                  setDraft(null);
+                  onOpacity(clampTileGridOpacityPercent(value));
+                }}
+                step={tileGridOpacityPercent.step}
+                value={shown}
+              />
+              <span aria-hidden="true" className="preview-tile-grid-opacity-value">
+                {valueText(shown)}
+              </span>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : null}
+    </div>
   );
 }
 
@@ -1059,6 +1188,28 @@ export function PreviewPanel() {
   const [hoveredCoordinate, setHoveredCoordinate] = useState<{ x: number; y: number } | null>(null);
   const [selection, setSelection] = useState<PreviewSelection | null>(null);
   const [selectionPreview, setSelectionPreview] = useState<PreviewSelection | null>(null);
+  const [ruler] = useState(() => new PreviewRulerOverlay());
+  const rulerMarkRefs = useMemo(
+    () =>
+      Object.fromEntries(
+        previewRulerMarkKinds.map((kind) => [
+          kind,
+          (group: SVGGElement | null) => {
+            const [halo, line, label] = group ? Array.from(group.children) : [];
+            ruler.bind(
+              kind,
+              group &&
+                halo instanceof SVGPathElement &&
+                line instanceof SVGPathElement &&
+                label instanceof SVGTextElement
+                ? { group, halo, line, label }
+                : null,
+            );
+          },
+        ]),
+      ) as Record<PreviewRulerMarkKind, (group: SVGGElement | null) => void>,
+    [ruler],
+  );
   const {
     appendOutput,
     executionProfiler,
@@ -1080,6 +1231,10 @@ export function PreviewPanel() {
     setPreviewLook,
     previewTileGrid,
     setPreviewTileGrid,
+    previewTileGridOpacity,
+    setPreviewTileGridOpacity,
+    previewRuler,
+    setPreviewRuler,
     previewSmallTrees,
     setPreviewSmallTrees,
     gpuMapRendering,
@@ -1511,6 +1666,7 @@ export function PreviewPanel() {
         dragSelection ?? displaySelectionNow.current,
         sourceHighlightTiles.current,
         legendHoverTileIndices.current,
+        ruler,
       );
       if (container) {
         setCameraDataset(container, viewScene, next, viewport);
@@ -2397,6 +2553,16 @@ export function PreviewPanel() {
   useEffect(() => {
     mapTransitions.current?.finish();
   }, [viewport.width, viewport.height, viewport.projection]);
+  const tileGridOpacityRef = useRef(previewTileGridOpacity);
+  useEffect(() => {
+    tileGridOpacityRef.current = previewTileGridOpacity;
+    const container = host.current;
+    if (!container) return;
+    const color = tileGridColorAtOpacity(tileGridColor(container), previewTileGridOpacity);
+    terrainChunkCache.current?.tileGrid?.setColor(color);
+    keptTerrainCache.current?.tileGrid?.setColor(color);
+    container.dataset.tileGridOpacity = String(previewTileGridOpacity);
+  }, [previewTileGridOpacity]);
   useEffect(() => {
     const pixi = application.current;
     const container = host.current;
@@ -2634,7 +2800,7 @@ export function PreviewPanel() {
     syncTileGrid(
       terrainCache,
       previewTileGrid,
-      tileGridColor(container),
+      tileGridColorAtOpacity(tileGridColor(container), tileGridOpacityRef.current),
       container,
       overlayFades.tileGrid,
     );
@@ -2996,6 +3162,7 @@ export function PreviewPanel() {
         : displaySelectionNow.current,
       sourceHighlightTiles.current,
       legendHoverTileIndices.current,
+      ruler,
     );
     followedSurface.current = shownNow.raised?.surface ?? null;
     sceneBuilding.current = false;
@@ -3137,6 +3304,7 @@ export function PreviewPanel() {
         displaySelectionNow.current,
         sourceHighlightTiles.current,
         legendHoverTileIndices.current,
+        ruler,
       );
       setCameraDataset(container, scene, panned, viewport);
       container.dataset.outlineCameraZoom = panned.zoom.toFixed(4);
@@ -3312,6 +3480,7 @@ export function PreviewPanel() {
           displaySelectionNow.current,
           sourceHighlightTiles.current,
           legendHoverTileIndices.current,
+          ruler,
         );
       }
       gesture.current = null;
@@ -4041,6 +4210,9 @@ export function PreviewPanel() {
       scene: viewScene,
       camera: displayedCamera.current,
       viewport: viewportRef.current,
+      ruler: selection
+        ? ruler.capture(viewScene, displayedCamera.current, viewportRef.current)
+        : null,
       lift: surface ? { minimum: surface.minimum, maximum: surface.maximum } : null,
       transient: layers
         ? [...layers.outline.children.filter((layer) => layer !== selection), ...layers.others]
@@ -4241,6 +4413,20 @@ export function PreviewPanel() {
     ? hasLandConnection(scene) || (connectionRoutes?.totalAttempts ?? 0) > 0
     : false;
   const readoutSelection = selectionPreview ?? (candidateShown ? displaySelection : selection);
+  useLayoutEffect(() => {
+    ruler.setNumberFormat((value) => translator.formatNumber(value, { maximumFractionDigits: 1 }));
+    ruler.update(previewRuler, hoveredCoordinate, readoutSelection);
+    if (viewScene) ruler.draw(viewScene, displayedCamera.current, viewport);
+  }, [
+    camera,
+    hoveredCoordinate,
+    previewRuler,
+    readoutSelection,
+    ruler,
+    translator,
+    viewScene,
+    viewport,
+  ]);
   const informationPresent = Boolean(legendLayers || readoutSelection || hoveredCoordinate);
   const informationWasMounted = useRef(false);
   const legendWasMounted = useRef(false);
@@ -4586,6 +4772,25 @@ export function PreviewPanel() {
               <path className="preview-map-boundary-border" ref={bindBoundaryBorder} />
               <path className="preview-map-boundary-frame" ref={bindBoundaryFrame} />
             </svg>
+            <svg
+              aria-hidden="true"
+              className="preview-ruler"
+              data-ruler={previewRuler ? 'on' : 'off'}
+              data-testid="preview-ruler"
+            >
+              {previewRulerMarkKinds.map((kind) => (
+                <g
+                  className="preview-ruler-mark"
+                  data-kind={kind}
+                  key={kind}
+                  ref={rulerMarkRefs[kind]}
+                >
+                  <path className="preview-ruler-halo" />
+                  <path className="preview-ruler-line" />
+                  <text className="preview-ruler-label" />
+                </g>
+              ))}
+            </svg>
             <div
               aria-label={t('preview-panel.toolbar.label')}
               className="preview-map-toolbar"
@@ -4612,12 +4817,18 @@ export function PreviewPanel() {
                   }
                 }}
               />
-              <PreviewOverlayButton
-                active={previewTileGrid}
-                className="preview-tile-grid-button"
-                label={t(tileGridButton.labelId)}
+              <PreviewTileGridControl
+                enabled={previewTileGrid}
+                onOpacity={setPreviewTileGridOpacity}
                 onToggle={() => setPreviewTileGrid(!previewTileGrid)}
-                renderIcon={tileGridButton.renderIcon}
+                opacity={previewTileGridOpacity}
+              />
+              <PreviewOverlayButton
+                active={previewRuler}
+                className="preview-ruler-button"
+                label={t(rulerButton.labelId)}
+                onToggle={() => setPreviewRuler(!previewRuler)}
+                renderIcon={rulerButton.renderIcon}
               />
               <PreviewObjectsModeButton
                 mode={overlays.objects}
@@ -6009,11 +6220,13 @@ function drawPreviewOutlines(
   selection: PreviewSelection | null,
   sourceHighlightTileIndices: readonly number[],
   legendHoverTileIndices: readonly number[],
+  ruler: PreviewRulerOverlay,
 ): void {
   drawSelectionOutline(selectionGraphics, scene, camera, viewport, selection);
   drawLegendHover(sourceGraphics, scene, camera, viewport, sourceHighlightTileIndices);
   drawLegendHover(legendHoverGraphics, scene, camera, viewport, legendHoverTileIndices);
   drawMapBoundaryOutline(boundary, scene, camera, viewport);
+  ruler.draw(scene, camera, viewport);
 }
 
 function LayerName({ label }: { label: PreviewLayerLabel }) {

@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Desvincular carpeta del juego"
     },
+    "app-menu.file.write-protection": {
+      "message": "Protección contra escritura"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Proteger carpeta del juego"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Proteger carpetas de mods"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "¿Desactivar la protección contra escritura de la carpeta del juego?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Los scripts de mapas de la carpeta del juego vinculada se podrán editar en AoE2RMSIDE. Una actualización del juego o una verificación de los archivos del juego puede reemplazar los archivos cambiados sin preguntar, y un mapa oficial cambiado ya no coincide con las copias de los demás jugadores, así que las partidas con él pueden desincronizarse. Guarda tus propios mapas en un mod o en otra carpeta."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "¿Desactivar la protección contra escritura de las carpetas de mods?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Los mods suscritos y los mods que escribió Instalar como mod se podrán editar en AoE2RMSIDE. Una actualización de un mod reemplaza sin preguntar tus cambios en un mod suscrito, y los jugadores con la versión publicada juegan un mapa distinto del tuyo. Instalar como mod pregunta antes de sobrescribir los cambios hechos en sus mods. El mod de los tests en juego sigue protegido."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Desactivar protección"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Importar informe de pruebas…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "La carpeta del perfil o su carpeta de mods no es una carpeta normal que AoE2RMSIDE pueda usar."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "La carpeta de mod random-map-scripts es tu propia carpeta de trabajo, así que AoE2RMSIDE no instala nada en ella."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Elige otro nombre de mod"
     },
     "message.deploy.path-collision.cause": {
       "message": "Se copiarían dos archivos en {path} dentro del mod."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Cuadrícula de casillas"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Opciones de la cuadrícula"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Opacidad de cuadrícula"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Regla"
     },
     "preview-panel.tool.small-trees": {
       "message": "Árboles pequeños"

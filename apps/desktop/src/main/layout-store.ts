@@ -50,6 +50,8 @@ import {
   previewLayoutShowsPreview,
 } from '../shared/preview-layout';
 import { readFileBounded, replaceFileAtomically } from './bounded-file';
+import { defaultWriteProtection, type WriteProtection } from '../shared/write-protection';
+import { tileGridOpacityPercent } from '../shared/tile-grid-opacity';
 import { isLanguagePreference, type LanguagePreference } from '../shared/i18n/locale';
 import {
   validateRmsLintWorkspaceRules,
@@ -79,11 +81,14 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   outlineRow: true,
   deletePermanently: false,
   checkForNewVersions: true,
+  writeProtection: { ...defaultWriteProtection },
   languagePreference: 'system',
   rmsLintRules: [],
   previewPerspective: 'top-down',
   previewLook: 'minimap',
   previewTileGrid: false,
+  previewTileGridOpacity: tileGridOpacityPercent.default,
+  previewRuler: true,
   previewSmallTrees: false,
   gameTexturesFirstLinkApplied: false,
   gameTexturesFirstLinkInstallations: [],
@@ -231,6 +236,10 @@ export class DesktopSessionStore {
     return this.update((session) => ({ ...session, checkForNewVersions }));
   }
 
+  updateWriteProtection(writeProtection: WriteProtection): Promise<void> {
+    return this.update((session) => ({ ...session, writeProtection: { ...writeProtection } }));
+  }
+
   updateLanguagePreference(languagePreference: LanguagePreference): Promise<void> {
     return this.update((session) => ({ ...session, languagePreference }));
   }
@@ -356,11 +365,14 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     outlineRow: true,
     deletePermanently: false,
     checkForNewVersions: true,
+    writeProtection: { ...defaultWriteProtection },
     languagePreference: 'system',
     rmsLintRules: [],
     previewPerspective: 'top-down',
     previewLook: 'minimap',
     previewTileGrid: false,
+    previewTileGridOpacity: tileGridOpacityPercent.default,
+    previewRuler: true,
     previewSmallTrees: false,
     gameTexturesFirstLinkApplied: false,
     gameTexturesFirstLinkInstallations: [],
@@ -476,6 +488,10 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.checkForNewVersions === undefined
         ? true
         : validateBoolean(value.checkForNewVersions, 'check for new versions preference'),
+    writeProtection:
+      value.writeProtection === undefined
+        ? { ...defaultWriteProtection }
+        : validateWriteProtection(value.writeProtection),
     languagePreference:
       value.languagePreference === undefined
         ? 'system'
@@ -491,6 +507,19 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.previewTileGrid === undefined
         ? false
         : validateBoolean(value.previewTileGrid, 'preview tile grid preference'),
+    previewTileGridOpacity:
+      value.previewTileGridOpacity === undefined
+        ? tileGridOpacityPercent.default
+        : validateInteger(
+            value.previewTileGridOpacity,
+            tileGridOpacityPercent.minimum,
+            tileGridOpacityPercent.maximum,
+            'preview tile grid opacity',
+          ),
+    previewRuler:
+      value.previewRuler === undefined
+        ? true
+        : validateBoolean(value.previewRuler, 'preview ruler preference'),
     previewSmallTrees:
       value.previewSmallTrees === undefined
         ? false
@@ -798,6 +827,20 @@ function validateInstalledSourceOriginFilter(value: unknown): InstalledSourceOri
 function validateBoolean(value: unknown, label: string): boolean {
   if (typeof value !== 'boolean') throw new Error(`${label} is invalid`);
   return value;
+}
+
+function validateWriteProtection(value: unknown): WriteProtection {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    throw new Error('write protection preference is invalid');
+  }
+  const record = value as Record<string, unknown>;
+  if (Object.keys(record).some((key) => key !== 'gameFolder' && key !== 'modFolders')) {
+    throw new Error('write protection preference is invalid');
+  }
+  return {
+    gameFolder: validateBoolean(record.gameFolder, 'game folder write protection'),
+    modFolders: validateBoolean(record.modFolders, 'mod folder write protection'),
+  };
 }
 
 function validateInstallationIdentity(value: unknown): string {

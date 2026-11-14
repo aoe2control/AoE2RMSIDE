@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Dissocier le dossier du jeu"
     },
+    "app-menu.file.write-protection": {
+      "message": "Protection en écriture"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Protéger le dossier du jeu"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Protéger les dossiers de mods"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Désactiver la protection en écriture du dossier du jeu ?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Les scripts de cartes du dossier du jeu associé deviennent modifiables dans AoE2RMSIDE. Une mise à jour du jeu ou une vérification des fichiers du jeu peut remplacer les fichiers modifiés sans demander, et une carte officielle modifiée ne correspond plus aux copies des autres joueurs, si bien que les parties qui l’utilisent peuvent se désynchroniser. Gardez vos propres cartes dans un mod ou un autre dossier."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Désactiver la protection en écriture des dossiers de mods ?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Les mods suivis et les mods écrits par Déployer comme mod deviennent modifiables dans AoE2RMSIDE. Une mise à jour d’un mod remplace sans demander vos modifications d’un mod suivi, et les joueurs qui ont la version publiée jouent une autre carte que la vôtre. Déployer comme mod demande avant d’écraser les modifications faites dans ses mods. Le mod des tests en jeu reste protégé."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Désactiver la protection"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Importer un rapport de test…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Le dossier du profil ou son dossier de mods n’est pas un dossier ordinaire qu’AoE2RMSIDE peut utiliser."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "Le dossier de mod random-map-scripts est votre propre dossier de travail, AoE2RMSIDE n’y déploie donc rien."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Choisissez un autre nom de mod"
     },
     "message.deploy.path-collision.cause": {
       "message": "Deux fichiers seraient copiés vers {path} dans le mod."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Grille des cases"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Options de la grille"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Opacité de la grille"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Règle"
     },
     "preview-panel.tool.small-trees": {
       "message": "Petits arbres"

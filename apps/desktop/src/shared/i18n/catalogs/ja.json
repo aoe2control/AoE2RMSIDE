@@ -62,6 +62,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "ゲームフォルダーのリンクを解除"
     },
+    "app-menu.file.write-protection": {
+      "message": "書き込み保護"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "ゲームフォルダーを保護"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "MOD フォルダーを保護"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "ゲームフォルダーの書き込み保護をオフにしますか？"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "リンクしたゲームフォルダーのマップスクリプトが AoE2RMSIDE で編集できるようになります。ゲームの更新やゲームファイルの検証で、変更したファイルが確認なしに置き換えられることがあります。また、変更した公式マップは他のプレイヤーのコピーと一致しなくなるため、そのマップを使ったゲームが同期しなくなることがあります。自分のマップは MOD または別のフォルダーに保存してください。"
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "MOD フォルダーの書き込み保護をオフにしますか？"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "登録済み MOD と「MOD として配置」が書き込んだ MOD が AoE2RMSIDE で編集できるようになります。MOD の更新では、登録済み MOD への変更が確認なしに置き換えられます。また、公開版を使うプレイヤーはあなたとは異なるマップでプレイすることになります。「MOD として配置」は、自分の MOD で行われた変更を上書きする前に確認します。ゲーム内テスト用の MOD は保護されたままです。"
+    },
+    "write-protection.warning.turn-off": {
+      "message": "保護をオフにする"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "テストレポートを読み込む…"
     },
@@ -2071,6 +2095,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "プロファイルフォルダーまたはその MOD フォルダーが、AoE2RMSIDE で使用できる通常のフォルダーではありません。"
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "random-map-scripts MOD フォルダーはあなた自身の作業フォルダーのため、AoE2RMSIDE はそこに配置しません。"
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "別の MOD 名を選んでください"
     },
     "message.deploy.path-collision.cause": {
       "message": "2 つのファイルが MOD 内の {path} にコピーされることになります。"
@@ -4654,6 +4684,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "タイルのグリッド"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "タイルのグリッドの設定"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "グリッドの不透明度"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "ルーラー"
     },
     "preview-panel.tool.small-trees": {
       "message": "小さな木"

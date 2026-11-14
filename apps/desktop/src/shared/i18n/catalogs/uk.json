@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Від’єднати папку гри"
     },
+    "app-menu.file.write-protection": {
+      "message": "Захист від запису"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Захищати папку гри"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Захищати папки модів"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Вимкнути захист від запису для папки гри?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Скрипти мап у пов’язаній папці гри можна буде редагувати в AoE2RMSIDE. Оновлення гри або перевірка файлів гри може без запиту замінити змінені файли, а змінена офіційна мапа більше не збігається з копіями інших гравців, тому ігри на ній можуть розсинхронізуватися. Зберігайте власні мапи в моді або в іншій папці."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Вимкнути захист від запису для папок модів?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Моди за підпискою та моди, записані командою «Розгорнути як мод», можна буде редагувати в AoE2RMSIDE. Оновлення моду без запиту замінює ваші зміни в моді за підпискою, а гравці з опублікованою версією грають на іншій мапі, ніж ви. «Розгорнути як мод» питає, перш ніж перезаписати зміни у своїх модах. Мод для тестів у грі залишається захищеним."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Вимкнути захист"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Імпортувати звіт тесту…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Папка профілю або її папка модів не є звичайною папкою, яку може використати AoE2RMSIDE."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "Папка моду random-map-scripts — ваша власна робоча папка, тому AoE2RMSIDE нічого в неї не розгортає."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Виберіть іншу назву моду"
     },
     "message.deploy.path-collision.cause": {
       "message": "Два файли було б скопійовано до {path} у моді."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Сітка клітинок"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Налаштування сітки клітинок"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Непрозорість сітки"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Лінійка"
     },
     "preview-panel.tool.small-trees": {
       "message": "Маленькі дерева"

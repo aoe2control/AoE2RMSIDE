@@ -1286,6 +1286,10 @@ const deployCatalog: Record<string, CatalogEntry> = {
     action: step('message.action.link-game-folder'),
   },
   'deploy.unsafe-target': { cause: 'message.deploy.unsafe-target.cause' },
+  'deploy.shared-folder-name': {
+    cause: 'message.deploy.shared-folder-name.cause',
+    action: step('message.deploy.shared-folder-name.action'),
+  },
   'deploy.path-collision': {
     cause: (facts) => t('message.deploy.path-collision.cause', { path: param(facts, 'path') }),
   },

@@ -248,6 +248,12 @@ import {
   managedModDirectoryName,
   type ManagedDeploymentTarget,
 } from './managed-deployment-service';
+import { writeProtectionMenuItems, withWriteProtection } from './write-protection-menu';
+import {
+  defaultWriteProtection,
+  type WriteProtection,
+  type WriteProtectionTarget,
+} from '../shared/write-protection';
 import {
   ControlLauncherPreferenceStore,
   validateControlLauncherExecutable,
@@ -375,6 +381,9 @@ let applicationMenu: Menu | undefined;
 let modalSurfaceOpen = false;
 let gameFolderLinked = false;
 let openLinkedGameFolderAction: (() => Promise<void>) | undefined;
+let writeProtectionPreference: WriteProtection = { ...defaultWriteProtection };
+let pendingWriteProtectionOff: WriteProtectionTarget | null = null;
+let applyWriteProtectionAction: (() => Promise<void>) | undefined;
 let resolvedTheme: ResolvedTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
 let formatOnSavePreference = true;
 let indentConditionalsPreference = true;
@@ -961,6 +970,7 @@ async function createApplication(): Promise<void> {
     realpath,
   });
   checkForNewVersionsPreference = initialSession.checkForNewVersions;
+  writeProtectionPreference = { ...initialSession.writeProtection };
   const update = createUpdateService(userDataPath);
   updateService = update.service;
   installerLauncher = update.launcher;
@@ -1235,6 +1245,26 @@ function createApplicationMenu(): Menu {
           id: 'file.unlink-game-folder',
           label: t('app-menu.file.unlink-game-folder'),
           click: () => publishMenuAction({ type: 'unlink-game-folder' }),
+        },
+        {
+          id: 'file.write-protection',
+          label: t('app-menu.file.write-protection'),
+          submenu: writeProtectionMenuItems.map(({ id, target, labelId }) => ({
+            id,
+            label: t(labelId),
+            type: 'checkbox' as const,
+            checked: writeProtectionPreference[target],
+            click: (item: Electron.MenuItem) => {
+              item.checked = writeProtectionPreference[target];
+              if (modalSurfaceOpen) return;
+              if (writeProtectionPreference[target]) {
+                pendingWriteProtectionOff = target;
+                publishMenuAction({ type: 'confirm-write-protection-off', target });
+              } else {
+                void setWriteProtection(target, true);
+              }
+            },
+          })),
         },
       ]
     : [];
@@ -1712,6 +1742,17 @@ function newVersionsMenuItems(): MenuItemConstructorOptions[] {
   ];
 }
 
+async function setWriteProtection(target: WriteProtectionTarget, enabled: boolean): Promise<void> {
+  writeProtectionPreference = withWriteProtection(writeProtectionPreference, target, enabled);
+  const item = applicationMenu?.getMenuItemById(`file.write-protection.${target}`);
+  if (item) item.checked = enabled;
+  publishApplicationMenuModel();
+  await desktopSessionStore?.updateWriteProtection(writeProtectionPreference);
+  await applyWriteProtectionAction?.().catch((error: unknown) => {
+    console.warn(`write protection was saved but not applied: ${errorMessage(error)}`);
+  });
+}
+
 function dispatchMenuShortcut(input: Electron.Input): boolean {
   const keyEvent = {
     key: input.key,
@@ -2075,6 +2116,7 @@ function registerIpc(
         profileId,
         modName,
       ),
+    () => writeProtectionPreference,
   );
   const configuredSteamRoots = developmentOverrides().steamRoots;
   const installationHost =
@@ -2146,9 +2188,10 @@ function registerIpc(
     const localPaths = selected
       ? await readLocalStandardIncludePaths(selected.installationRoot)
       : [];
-    const linkedScripts = selected
-      ? join(selected.installationRoot, 'resources', '_common', 'random-map-scripts')
-      : null;
+    const linkedScripts =
+      selected && writeProtectionPreference.gameFolder
+        ? join(selected.installationRoot, 'resources', '_common', 'random-map-scripts')
+        : null;
     const canonicalScripts = linkedScripts
       ? await realpath(linkedScripts).catch(() => linkedScripts)
       : null;
@@ -2208,6 +2251,10 @@ function registerIpc(
       },
     );
     return installedSourceCatalogPromise;
+  };
+  applyWriteProtectionAction = async () => {
+    await discoverInstalledSources(true);
+    await workspaceService.refreshProtection();
   };
   const managedDeploymentTarget = async (): Promise<ManagedDeploymentTarget> => {
     const selection = await installationSelectionStore.read();
@@ -3107,6 +3154,7 @@ function registerIpc(
       rmsLintRules: current.rmsLintRules,
       languagePreference: current.languagePreference,
       checkForNewVersions: current.checkForNewVersions,
+      writeProtection: current.writeProtection,
       xsStartCheck: current.xsStartCheck,
       mapIconReliefMode: current.mapIconReliefMode,
       mapIconTerrainSmoothing: current.mapIconTerrainSmoothing,
@@ -3605,6 +3653,19 @@ function registerIpc(
       } else if (/\.(?:inc|def|xs)$/iu.test(uri)) {
         await refreshLanguageCatalogAndReportFailure(refreshOpenLanguageCatalog());
       }
+    },
+  );
+  ipcMain.handle(
+    ipcChannels.answerWriteProtectionOff,
+    async (event, target: WriteProtectionTarget, turnOff: boolean) => {
+      assertTrustedSender(event.senderFrame?.url);
+      if (target !== 'gameFolder' && target !== 'modFolders') {
+        throw new Error('invalid write protection target');
+      }
+      if (typeof turnOff !== 'boolean') throw new Error('invalid write protection answer');
+      if (pendingWriteProtectionOff !== target) return;
+      pendingWriteProtectionOff = null;
+      if (turnOff) await setWriteProtection(target, false);
     },
   );
   ipcMain.handle(ipcChannels.restartNative, (event, name: NativeProcessName) => {

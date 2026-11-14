@@ -66,6 +66,11 @@ export interface TileGridColor {
 
 export const fallbackTileGridColor: TileGridColor = { color: 0x060606, alpha: 0.4 };
 
+export function tileGridColorAtOpacity(color: TileGridColor, percent: number): TileGridColor {
+  const factor = Math.min(1, Math.max(0, percent / 100));
+  return { color: color.color, alpha: color.alpha * factor };
+}
+
 export function tileGridOpacity(
   strength: number,
   color: TileGridColor,
@@ -106,7 +111,7 @@ export class TileGridLayer {
   setColor(color: TileGridColor): void {
     this.color = color;
     this.graphics.tint = color.color;
-    requestPreviewRender(this.container);
+    this.apply();
   }
 
   update(

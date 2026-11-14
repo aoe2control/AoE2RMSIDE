@@ -62,6 +62,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Nyahpaut Folder Permainan"
     },
+    "app-menu.file.write-protection": {
+      "message": "Perlindungan Tulis"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Lindungi Folder Permainan"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Lindungi Folder Mod"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Matikan perlindungan tulis untuk folder permainan?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Skrip peta dalam folder permainan yang dipautkan boleh disunting dalam AoE2RMSIDE. Kemas kini permainan atau semakan fail permainan boleh menggantikan fail yang diubah tanpa bertanya, dan peta rasmi yang diubah tidak lagi sepadan dengan salinan pemain lain, jadi permainan dengannya boleh menjadi tidak segerak. Simpan peta anda sendiri dalam mod atau folder lain."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Matikan perlindungan tulis untuk folder mod?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Mod dilanggan dan mod yang ditulis oleh Pasang sebagai Mod boleh disunting dalam AoE2RMSIDE. Kemas kini mod menggantikan perubahan anda pada mod dilanggan tanpa bertanya, dan pemain yang mempunyai versi yang diterbitkan bermain peta yang berbeza daripada peta anda. Pasang sebagai Mod bertanya sebelum menulis ganti perubahan dalam modnya. Mod ujian langsung kekal dilindungi."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Matikan perlindungan"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Import Laporan Ujian…"
     },
@@ -2071,6 +2095,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Folder profil atau folder modnya bukan folder biasa yang boleh digunakan oleh AoE2RMSIDE."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "Folder mod random-map-scripts ialah folder kerja anda sendiri, jadi AoE2RMSIDE tidak memasang apa-apa ke dalamnya."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Pilih nama mod lain"
     },
     "message.deploy.path-collision.cause": {
       "message": "Dua fail akan disalin ke {path} dalam mod."
@@ -4654,6 +4684,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Grid petak"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Pilihan grid petak"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Kelegapan grid"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Pembaris"
     },
     "preview-panel.tool.small-trees": {
       "message": "Pokok kecil"

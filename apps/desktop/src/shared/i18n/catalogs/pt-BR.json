@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Desvincular pasta do jogo"
     },
+    "app-menu.file.write-protection": {
+      "message": "Proteção contra gravação"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Proteger pasta do jogo"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Proteger pastas de mods"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Desativar a proteção contra gravação da pasta do jogo?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Os scripts de mapas da pasta do jogo vinculada passam a ser editáveis no AoE2RMSIDE. Uma atualização do jogo ou uma verificação dos arquivos do jogo pode substituir os arquivos alterados sem perguntar, e um mapa oficial alterado deixa de corresponder às cópias dos outros jogadores, então as partidas com ele podem perder a sincronia. Mantenha seus próprios mapas em um mod ou em outra pasta."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Desativar a proteção contra gravação das pastas de mods?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Os mods inscritos e os mods gravados por Instalar como mod passam a ser editáveis no AoE2RMSIDE. Uma atualização de mod substitui sem perguntar suas alterações em um mod inscrito, e os jogadores com a versão publicada jogam um mapa diferente do seu. Instalar como mod pergunta antes de sobrescrever alterações feitas nos mods dele. O mod dos testes no jogo continua protegido."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Desativar proteção"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Importar relatório de teste…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "A pasta do perfil ou a pasta de mods dele não é uma pasta comum que o AoE2RMSIDE possa usar."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "A pasta de mod random-map-scripts é a sua própria pasta de trabalho, então o AoE2RMSIDE não instala nada nela."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Escolha outro nome de mod"
     },
     "message.deploy.path-collision.cause": {
       "message": "Dois arquivos seriam copiados para {path} no mod."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Grade de blocos"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Opções da grade de blocos"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Opacidade da grade"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Régua"
     },
     "preview-panel.tool.small-trees": {
       "message": "Árvores pequenas"

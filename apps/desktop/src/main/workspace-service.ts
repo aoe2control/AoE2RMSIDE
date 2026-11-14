@@ -2363,6 +2363,36 @@ export class WorkspaceService {
     }
   }
 
+  async refreshProtection(): Promise<void> {
+    for (const [documentId, capability] of this.openedDocuments) {
+      const sourceKind = this.sourceKind(capability.path);
+      if (sourceKind === capability.sourceKind) continue;
+      capability.sourceKind = sourceKind;
+      this.grantEntry(capability.path, 'file', sourceKind === 'ordinary', false);
+      this.publishExternalChange({
+        kind: 'protection',
+        documentId,
+        sourceKind,
+        readOnly: sourceKind === 'protected',
+        ...(sourceKind === 'protected' ? this.protectedReason(capability.path) : {}),
+      });
+    }
+    for (const entry of [...this.entries.values()]) {
+      const writable = await this.isWritable(entry.path);
+      if (writable === entry.writable) continue;
+      this.entries.set(entry.id, { ...entry, writable });
+      if (
+        entry.root &&
+        this.activeWorkspaceRoot !== null &&
+        pathKey(entry.path) === pathKey(this.activeWorkspaceRoot)
+      ) {
+        this.publishExternalChange({ kind: 'folder-protection', folderId: entry.id, writable });
+      }
+    }
+    const root = this.activeWorkspaceRoot;
+    if (root) await this.publishTreeChange(root, { all: true, changes: [] });
+  }
+
   isProtectedPath(targetPath: string): boolean {
     return this.sourceKind(targetPath) === 'protected';
   }

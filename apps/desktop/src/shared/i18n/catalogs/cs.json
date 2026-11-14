@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Odpojit složku hry"
     },
+    "app-menu.file.write-protection": {
+      "message": "Ochrana proti zápisu"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Chránit složku hry"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Chránit složky modů"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Vypnout ochranu proti zápisu pro složku hry?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Mapové skripty v propojené složce hry půjde v AoE2RMSIDE upravovat. Aktualizace hry nebo kontrola herních souborů může změněné soubory bez dotazu nahradit a změněná oficiální mapa už nebude odpovídat kopiím ostatních hráčů, takže hry s ní se mohou desynchronizovat. Vlastní mapy si uchovávejte v modu nebo v jiné složce."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Vypnout ochranu proti zápisu pro složky modů?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Odebírané mody a mody zapsané funkcí Nasadit jako mod půjde v AoE2RMSIDE upravovat. Aktualizace modu bez dotazu nahradí vaše změny odebíraného modu a hráči s publikovanou verzí budou hrát jinou mapu než vy. Nasadit jako mod se před přepsáním změn ve svých modech zeptá. Mod pro testy ve hře zůstane chráněný."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Vypnout ochranu"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Importovat zprávu testu…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Složka profilu nebo její složka modů není běžná složka, kterou může AoE2RMSIDE použít."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "Složka modu random-map-scripts je vaše vlastní pracovní složka, proto do ní AoE2RMSIDE nenasazuje."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Zvolte jiný název modu"
     },
     "message.deploy.path-collision.cause": {
       "message": "Dva soubory by se zkopírovaly do {path} v modu."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Mřížka políček"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Možnosti mřížky políček"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Krytí mřížky"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Pravítko"
     },
     "preview-panel.tool.small-trees": {
       "message": "Malé stromy"

@@ -21,6 +21,7 @@ import { withoutRefusalLocationMarker } from '../../../shared/refusal-location';
 import {
   isPersistentModName,
   isReservedPersistentModName,
+  isSharedScriptsModName,
 } from '../../../shared/persistent-mod-name';
 import {
   ConnectorToolError,
@@ -217,6 +218,13 @@ export class GameTools {
         {
           hint: 'Use one folder name without \\ / : * ? " < > |, without a trailing dot or space; omit it for the script name.',
         },
+      );
+    }
+    if (modName !== undefined && isSharedScriptsModName(modName)) {
+      throw new ConnectorToolError(
+        'invalid_arguments',
+        "random-map-scripts is the user's own working folder; the IDE never deploys into it.",
+        { hint: 'Use another mod_name, or omit it for the script name.' },
       );
     }
     const enable = typeof args.enable === 'boolean' ? args.enable : null;

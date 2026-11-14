@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Odłącz folder gry"
     },
+    "app-menu.file.write-protection": {
+      "message": "Ochrona przed zapisem"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Chroń folder gry"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Chroń foldery modów"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Wyłączyć ochronę przed zapisem folderu gry?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Skrypty map w połączonym folderze gry będzie można edytować w AoE2RMSIDE. Aktualizacja gry lub sprawdzenie plików gry może bez pytania zastąpić zmienione pliki, a zmieniona oficjalna mapa nie zgadza się już z kopiami innych graczy, więc gry na niej mogą się rozsynchronizować. Trzymaj własne mapy w modzie lub innym folderze."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Wyłączyć ochronę przed zapisem folderów modów?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Subskrybowane mody i mody zapisane przez Wdróż jako mod będzie można edytować w AoE2RMSIDE. Aktualizacja moda bez pytania zastępuje twoje zmiany w subskrybowanym modzie, a gracze z opublikowaną wersją grają na innej mapie niż ty. Wdróż jako mod pyta przed nadpisaniem zmian wprowadzonych w jego modach. Mod do testów w grze pozostaje chroniony."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Wyłącz ochronę"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Importuj raport testów…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Folder profilu lub jego folder modów nie jest zwykłym folderem, którego AoE2RMSIDE może użyć."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "Folder moda random-map-scripts to twój własny folder roboczy, więc AoE2RMSIDE nic do niego nie wdraża."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Wybierz inną nazwę moda"
     },
     "message.deploy.path-collision.cause": {
       "message": "Dwa pliki zostałyby skopiowane do {path} w modzie."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Siatka pól"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Opcje siatki pól"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Krycie siatki"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Linijka"
     },
     "preview-panel.tool.small-trees": {
       "message": "Małe drzewa"

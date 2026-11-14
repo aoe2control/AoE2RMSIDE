@@ -5,6 +5,7 @@ import { SourceStructureRequest } from './source-structure-request';
 import {
   useCallback,
   useEffect,
+  useId,
   useLayoutEffect,
   useRef,
   useState,
@@ -145,6 +146,7 @@ import {
   type OwnSnippetSection,
 } from '../shared/own-snippets';
 import { sourceLanguageIdForName } from '../shared/xs-contract';
+import { gameSeedFromDraft, maximumGameSeed, minimumSignedGameSeed } from '../shared/game-seed';
 import { bracketColorizationFor } from './rms-language';
 import { editorDefaultFontSize, editorFontFamily } from './editor-font';
 import { registerRmsEnter } from './rms-enter';
@@ -335,6 +337,18 @@ function EditorTabCloseButton({
   );
 }
 
+function NoValidationForm({ id }: { id: string }) {
+  return (
+    <form
+      aria-hidden="true"
+      hidden
+      id={id}
+      noValidate
+      onSubmit={(event) => event.preventDefault()}
+    />
+  );
+}
+
 function MapTestWorkersField({
   previewExecution,
 }: {
@@ -346,6 +360,7 @@ function MapTestWorkersField({
   const [draft, setDraft] = useState(() => mapTestWorkerDraft(current));
   const focused = useRef(false);
   const field = useRef<HTMLInputElement>(null);
+  const formId = useId();
   useEffect(() => {
     if (focused.current) return;
     setDraft(mapTestWorkerDraft(current));
@@ -376,6 +391,7 @@ function MapTestWorkersField({
       <Input
         aria-label={words.label}
         className="preview-run-workers"
+        form={formId}
         inputMode="numeric"
         max={maximum}
         min={1}
@@ -422,6 +438,7 @@ function MapTestWorkersField({
           <TooltipContent>{words.useAutomatic}</TooltipContent>
         </Tooltip>
       ) : null}
+      <NoValidationForm id={formId} />
     </div>
   );
 }
@@ -431,6 +448,7 @@ function QualityCheckRow({ previewExecution }: { previewExecution: PreviewExecut
   const quality = previewExecution.qualityCheck!;
   const [draft, setDraft] = useState(() => String(quality.seeds));
   const focused = useRef(false);
+  const formId = useId();
   useEffect(() => {
     if (focused.current) return;
     setDraft(String(quality.seeds));
@@ -466,6 +484,7 @@ function QualityCheckRow({ previewExecution }: { previewExecution: PreviewExecut
             <Input
               aria-label={seedsLabel}
               className="preview-run-quality-seeds"
+              form={formId}
               inputMode="numeric"
               max={qualityCheckSeeds.maximum}
               min={qualityCheckSeeds.minimum}
@@ -554,6 +573,7 @@ function QualityCheckRow({ previewExecution }: { previewExecution: PreviewExecut
           })}
         </DropdownMenuSubContent>
       </DropdownMenuSub>
+      <NoValidationForm id={formId} />
     </div>
   );
 }
@@ -596,6 +616,7 @@ function PreviewSeedField({
   const settingsLoaded = Boolean(previewExecution?.settingsLoaded);
   const [seedDraft, setSeedDraft] = useState(() => (settingsLoaded ? String(seed) : ''));
   const seedFieldFocused = useRef(false);
+  const formId = useId();
 
   useEffect(() => {
     if (seedFieldFocused.current && seedEditable) return;
@@ -603,9 +624,7 @@ function PreviewSeedField({
       setSeedDraft('');
       return;
     }
-    setSeedDraft((current) =>
-      current !== '' && Number(current) === seed ? current : String(seed),
-    );
+    setSeedDraft((current) => (gameSeedFromDraft(current) === seed ? current : String(seed)));
   }, [seed, seedEditable, settingsLoaded]);
 
   const copySeed = async (event: ReactMouseEvent<HTMLButtonElement>) => {
@@ -624,25 +643,21 @@ function PreviewSeedField({
           aria-label={t('code-editor.run-menu.seed')}
           className="preview-run-seed"
           disabled={!seedEditable}
+          form={formId}
           inputMode="numeric"
-          max={0xffff_ffff}
-          min={0}
+          max={maximumGameSeed}
+          min={minimumSignedGameSeed}
           onBlur={() => {
             seedFieldFocused.current = false;
-            const drafted = Number(seedDraft);
             setSeedDraft(
-              seedDraft !== '' &&
-                Number.isSafeInteger(drafted) &&
-                drafted >= 0 &&
-                drafted <= 0xffff_ffff
-                ? String(drafted)
-                : String(seed),
+              gameSeedFromDraft(seedDraft) === null ? String(seed) : String(Number(seedDraft) + 0),
             );
           }}
           onChange={(event) => {
             const draft = event.target.value;
             setSeedDraft(draft);
-            if (draft !== '') previewExecution?.setSeed(Number(draft));
+            const drafted = gameSeedFromDraft(draft);
+            if (drafted !== null) previewExecution?.setSeed(drafted);
           }}
           onFocus={() => {
             seedFieldFocused.current = true;
@@ -668,6 +683,7 @@ function PreviewSeedField({
             <CopyFeedbackIcon checkRef={checkRef} copied={copied} />
           </button>
         ) : null}
+        <NoValidationForm id={formId} />
       </TooltipTrigger>
       <TooltipContent>
         {t(copyable ? 'code-editor.run-menu.copy-seed' : 'code-editor.run-menu.seed')}

@@ -2,6 +2,8 @@ import { isSafeWindowsPathPart } from './windows-names';
 
 export const managedModDirectoryName = 'AoE2RMSIDE-Managed-Maps';
 
+export const sharedScriptsModDirectoryName = 'random-map-scripts';
+
 export const maximumPersistentModNameLength = 120;
 
 export const fallbackPersistentModName = 'MyRMSMod';
@@ -21,6 +23,10 @@ export function isReservedPersistentModName(value: string): boolean {
   return value.toLocaleLowerCase('en-US') === managedModDirectoryName.toLocaleLowerCase('en-US');
 }
 
+export function isSharedScriptsModName(value: string): boolean {
+  return value.replace(/[.\s]+$/u, '').toLocaleLowerCase('en-US') === sharedScriptsModDirectoryName;
+}
+
 export function modNameFromScriptName(fileName: string): string {
   const base = fileName.split(/[\\/]/u).pop() ?? '';
   const dot = base.lastIndexOf('.');
@@ -32,7 +38,9 @@ export function modNameFromScriptName(fileName: string): string {
     cut += character;
   }
   const name = cut.replace(/[.\s]+$/u, '');
-  return isPersistentModName(name) && !isReservedPersistentModName(name)
+  return isPersistentModName(name) &&
+    !isReservedPersistentModName(name) &&
+    !isSharedScriptsModName(name)
     ? name
     : fallbackPersistentModName;
 }

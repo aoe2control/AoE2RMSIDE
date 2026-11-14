@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Spelmap ontkoppelen"
     },
+    "app-menu.file.write-protection": {
+      "message": "Schrijfbeveiliging"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Spelmap beveiligen"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Modmappen beveiligen"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Schrijfbeveiliging voor de spelmap uitschakelen?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "De kaartscripts in de gekoppelde spelmap worden bewerkbaar in AoE2RMSIDE. Een spelupdate of een controle van de spelbestanden kan gewijzigde bestanden zonder te vragen vervangen, en een gewijzigde officiële kaart komt niet meer overeen met de kopieën van andere spelers, waardoor spellen ermee niet meer synchroon kunnen lopen. Bewaar je eigen kaarten in een mod of een andere map."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Schrijfbeveiliging voor modmappen uitschakelen?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Geabonneerde mods en de mods die Als mod installeren heeft geschreven worden bewerkbaar in AoE2RMSIDE. Een mod-update vervangt je wijzigingen aan een geabonneerde mod zonder te vragen, en spelers met de gepubliceerde versie spelen een andere kaart dan jij. Als mod installeren vraagt het eerst voordat het wijzigingen in zijn mods overschrijft. De mod voor livetests blijft beveiligd."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Beveiliging uitschakelen"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Testrapport importeren…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "De profielmap of de modmap ervan is geen gewone map die AoE2RMSIDE kan gebruiken."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "De modmap random-map-scripts is je eigen werkmap, dus AoE2RMSIDE installeert er niets in."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Kies een andere modnaam"
     },
     "message.deploy.path-collision.cause": {
       "message": "Twee bestanden zouden naar {path} in de mod worden gekopieerd."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Vakraster"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Vakrasteropties"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Dekking van het raster"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Liniaal"
     },
     "preview-panel.tool.small-trees": {
       "message": "Kleine bomen"

@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Spielordner-Verknüpfung lösen"
     },
+    "app-menu.file.write-protection": {
+      "message": "Schreibschutz"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Spielordner schützen"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Mod-Ordner schützen"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Schreibschutz für den Spielordner ausschalten?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Die Kartenskripte im verknüpften Spielordner werden in AoE2RMSIDE bearbeitbar. Ein Spielupdate oder eine Prüfung der Spieldateien kann geänderte Dateien ohne Nachfrage ersetzen, und eine geänderte offizielle Karte stimmt nicht mehr mit den Kopien der anderen Spieler überein, sodass Spiele damit asynchron werden können. Bewahre deine eigenen Karten in einer Mod oder einem anderen Ordner auf."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Schreibschutz für Mod-Ordner ausschalten?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Abonnierte Mods und die Mods, die „Als Mod bereitstellen“ geschrieben hat, werden in AoE2RMSIDE bearbeitbar. Ein Mod-Update ersetzt deine Änderungen an einer abonnierten Mod ohne Nachfrage, und Spieler mit der veröffentlichten Version spielen eine andere Karte als du. „Als Mod bereitstellen“ fragt nach, bevor es Änderungen in seinen Mods überschreibt. Die Mod für Live-Tests bleibt geschützt."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Schutz ausschalten"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Testbericht importieren…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Der Profilordner oder sein Mod-Ordner ist kein normaler Ordner, den AoE2RMSIDE verwenden kann."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "Der Mod-Ordner random-map-scripts ist dein eigener Arbeitsordner, daher stellt AoE2RMSIDE dort nichts bereit."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Wähle einen anderen Mod-Namen"
     },
     "message.deploy.path-collision.cause": {
       "message": "Zwei Dateien würden nach {path} in der Mod kopiert."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Feldraster"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Feldrasteroptionen"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Rasterdeckkraft"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Lineal"
     },
     "preview-panel.tool.small-trees": {
       "message": "Kleine Bäume"

@@ -62,6 +62,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Bỏ liên kết thư mục trò chơi"
     },
+    "app-menu.file.write-protection": {
+      "message": "Chống ghi"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Bảo vệ thư mục trò chơi"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Bảo vệ thư mục mod"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Tắt chống ghi cho thư mục trò chơi?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Các kịch bản bản đồ trong thư mục trò chơi đã liên kết sẽ có thể chỉnh sửa trong AoE2RMSIDE. Một bản cập nhật trò chơi hoặc việc kiểm tra tệp trò chơi có thể thay thế các tệp đã thay đổi mà không hỏi, và một bản đồ chính thức đã bị thay đổi sẽ không còn khớp với bản sao của người chơi khác, nên các trận đấu dùng bản đồ đó có thể mất đồng bộ. Hãy giữ bản đồ của riêng bạn trong một mod hoặc thư mục khác."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Tắt chống ghi cho thư mục mod?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Các mod đã đăng ký và các mod do Triển khai thành mod ghi sẽ có thể chỉnh sửa trong AoE2RMSIDE. Bản cập nhật mod sẽ thay thế các thay đổi của bạn trong mod đã đăng ký mà không hỏi, và người chơi có phiên bản đã phát hành sẽ chơi một bản đồ khác với bản đồ của bạn. Triển khai thành mod sẽ hỏi trước khi ghi đè các thay đổi trong mod của nó. Mod thử trò chơi vẫn được bảo vệ."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Tắt bảo vệ"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Nhập báo cáo kiểm thử…"
     },
@@ -2071,6 +2095,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Thư mục hồ sơ hoặc thư mục mod của nó không phải là thư mục thông thường mà AoE2RMSIDE dùng được."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "Thư mục mod random-map-scripts là thư mục làm việc của riêng bạn, nên AoE2RMSIDE không triển khai vào đó."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Chọn tên mod khác"
     },
     "message.deploy.path-collision.cause": {
       "message": "Hai tệp sẽ được sao chép vào {path} trong mod."
@@ -4654,6 +4684,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Lưới ô"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Tùy chọn lưới ô"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Độ đậm của lưới"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Thước"
     },
     "preview-panel.tool.small-trees": {
       "message": "Cây nhỏ"

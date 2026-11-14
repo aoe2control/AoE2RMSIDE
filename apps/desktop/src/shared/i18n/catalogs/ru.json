@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Отключить папку игры"
     },
+    "app-menu.file.write-protection": {
+      "message": "Защита от записи"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Защищать папку игры"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Защищать папки модов"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Отключить защиту от записи для папки игры?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Скрипты карт в связанной папке игры станут доступны для правки в AoE2RMSIDE. Обновление игры или проверка файлов игры может без предупреждения заменить изменённые файлы, а изменённая официальная карта больше не совпадает с копиями других игроков, поэтому игры на ней могут рассинхронизироваться. Храните свои карты в моде или в другой папке."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Отключить защиту от записи для папок модов?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Моды по подписке и моды, записанные командой «Развернуть как мод», станут доступны для правки в AoE2RMSIDE. Обновление мода без предупреждения заменяет ваши правки в моде по подписке, а игроки с опубликованной версией играют на другой карте, чем вы. «Развернуть как мод» спрашивает, прежде чем перезаписать изменения в своих модах. Мод для тестов в игре остаётся защищённым."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Отключить защиту"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Импортировать отчёт о тестировании…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Папка профиля или её папка модов не является обычной папкой, которую может использовать AoE2RMSIDE."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "Папка мода random-map-scripts — ваша собственная рабочая папка, поэтому AoE2RMSIDE в неё ничего не развёртывает."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Выберите другое имя мода"
     },
     "message.deploy.path-collision.cause": {
       "message": "Два файла были бы скопированы в {path} в моде."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Сетка клеток"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Настройки сетки клеток"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Непрозрачность сетки"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Линейка"
     },
     "preview-panel.tool.small-trees": {
       "message": "Маленькие деревья"

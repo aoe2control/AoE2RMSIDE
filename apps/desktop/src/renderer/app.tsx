@@ -28,6 +28,8 @@ import type {
   NativeProcessStatus,
 } from '../shared/api';
 import { applicationKeyAllowed, menuActionAllowed } from '../shared/application-shortcuts';
+import { writeProtectionOffConfirmation } from './write-protection-confirmation';
+import { tileGridOpacityPercent } from '../shared/tile-grid-opacity';
 import { definitionFilesAvailable, editionCapabilities } from '../shared/edition';
 import {
   inlineErrorText,
@@ -329,6 +331,10 @@ export function App() {
   const [previewPerspective, setPreviewPerspective] = useState<PreviewPerspective>('top-down');
   const [previewLook, setPreviewLook] = useState<PreviewLook>('minimap');
   const [previewTileGrid, setPreviewTileGrid] = useState(false);
+  const [previewTileGridOpacity, setPreviewTileGridOpacity] = useState<number>(
+    tileGridOpacityPercent.default,
+  );
+  const [previewRuler, setPreviewRuler] = useState(true);
   const [previewSmallTrees, setPreviewSmallTrees] = useState(false);
   const [gameTexturesNoticeOpen, setGameTexturesNoticeOpen] = useState(false);
   const closeGameTexturesNotice = useCallback(() => setGameTexturesNoticeOpen(false), []);
@@ -824,6 +830,10 @@ export function App() {
       setPreviewLook,
       previewTileGrid,
       setPreviewTileGrid,
+      previewTileGridOpacity,
+      setPreviewTileGridOpacity,
+      previewRuler,
+      setPreviewRuler,
       previewSmallTrees,
       setPreviewSmallTrees,
       gameTexturesNoticeOpen,
@@ -846,6 +856,8 @@ export function App() {
       previewPerspective,
       previewLook,
       previewTileGrid,
+      previewTileGridOpacity,
+      previewRuler,
       previewSmallTrees,
       gameTexturesNoticeOpen,
       closeGameTexturesNotice,
@@ -978,6 +990,8 @@ export function App() {
     setPreviewPerspective(session.previewPerspective);
     setPreviewLook(session.previewLook);
     setPreviewTileGrid(session.previewTileGrid);
+    setPreviewTileGridOpacity(session.previewTileGridOpacity);
+    setPreviewRuler(session.previewRuler);
     setPreviewSmallTrees(session.previewSmallTrees);
     setExplorerExpanded(session.layout.explorerExpanded);
     setExplorerWidth(session.layout.explorerWidth);
@@ -1047,6 +1061,8 @@ export function App() {
         previewPerspective,
         previewLook,
         previewTileGrid,
+        previewTileGridOpacity,
+        previewRuler,
         previewSmallTrees,
         layout: {
           explorerExpanded,
@@ -1095,6 +1111,8 @@ export function App() {
     previewPerspective,
     previewLook,
     previewTileGrid,
+    previewTileGridOpacity,
+    previewRuler,
     previewSmallTrees,
     previewExpanded,
     previewLayout,
@@ -1202,7 +1220,13 @@ export function App() {
       else if (action.type === 'deploy-managed-mod') openManagedModDeployment(null);
       else if (action.type === 'import-map-test-report') void importMapTestReport();
       else if (action.type === 'unlink-game-folder') void unlinkSelectedGameInstallation();
-      else if (action.type === 'open-recent') void currentWorkspace.openRecent(action.path);
+      else if (action.type === 'confirm-write-protection-off') {
+        const { target } = action;
+        void currentWorkspace
+          .requestConfirmation(writeProtectionOffConfirmation(target))
+          .then((choice) => window.rmside.answerWriteProtectionOff(target, choice === 'primary'))
+          .catch((error: unknown) => console.warn(errorMessage(error)));
+      } else if (action.type === 'open-recent') void currentWorkspace.openRecent(action.path);
       else if (action.type === 'save') void currentWorkspace.saveActive();
       else if (action.type === 'save-as') void currentWorkspace.saveActiveAs();
       else if (action.type === 'format-document') {

@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Oyun klasörünün bağlantısını kaldır"
     },
+    "app-menu.file.write-protection": {
+      "message": "Yazma koruması"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Oyun klasörünü koru"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Mod klasörlerini koru"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Oyun klasörü için yazma koruması kapatılsın mı?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Bağlı oyun klasöründeki harita betikleri AoE2RMSIDE’da düzenlenebilir hâle gelir. Bir oyun güncellemesi veya oyun dosyalarının denetimi, değiştirilmiş dosyaların üzerine sormadan yazabilir; değiştirilmiş resmî bir harita da artık diğer oyuncuların kopyalarıyla eşleşmez, bu yüzden onunla oynanan oyunlar eşzamanlılığını yitirebilir. Kendi haritalarınızı bir modda veya başka bir klasörde tutun."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Mod klasörleri için yazma koruması kapatılsın mı?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Abone olunan modlar ve Mod olarak kur’un yazdığı modlar AoE2RMSIDE’da düzenlenebilir hâle gelir. Bir mod güncellemesi, abone olunan bir modda yaptığınız değişikliklerin üzerine sormadan yazar; yayımlanan sürüme sahip oyuncular da sizinkinden farklı bir haritada oynar. Mod olarak kur, kendi modlarındaki değişikliklerin üzerine yazmadan önce sorar. Oyunda test modu korumalı kalır."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Korumayı kapat"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Test raporu içe aktar…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "Profil klasörü veya modlar klasörü, AoE2RMSIDE’ın kullanabileceği sıradan bir klasör değil."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "random-map-scripts mod klasörü sizin kendi çalışma klasörünüzdür, bu yüzden AoE2RMSIDE oraya kurulum yapmaz."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Başka bir mod adı seçin"
     },
     "message.deploy.path-collision.cause": {
       "message": "İki dosya modda {path} konumuna kopyalanacaktı."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Kare ızgarası"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Kare ızgarası seçenekleri"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Izgara opaklığı"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Cetvel"
     },
     "preview-panel.tool.small-trees": {
       "message": "Küçük ağaçlar"

@@ -48,6 +48,7 @@ import { DesktopError } from '../shared/desktop-error';
 import {
   isPersistentModName,
   isReservedPersistentModName,
+  isSharedScriptsModName,
   managedModDirectoryName,
 } from '../shared/persistent-mod-name';
 import { decodeSourceBytes } from './source-codec';
@@ -1837,6 +1838,12 @@ export function validatePersistentModName(value: string): void {
   }
   if (isReservedPersistentModName(value)) {
     throw new Error('the live-test managed mod name is reserved');
+  }
+  if (isSharedScriptsModName(value)) {
+    throw new DesktopError(
+      'deploy.shared-folder-name',
+      'the shared random-map-scripts folder is not a deployment target',
+    );
   }
 }
 

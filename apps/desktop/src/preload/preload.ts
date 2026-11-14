@@ -93,6 +93,7 @@ import {
   type WorkspaceTreeChange,
 } from '../shared/workspace-tree-change';
 import { validateWorkspaceContentSearchRequest } from '../shared/workspace-content-search';
+import type { WriteProtectionTarget } from '../shared/write-protection';
 import {
   isLanguagePreference,
   validateLocaleState,
@@ -916,6 +917,13 @@ const api: RmsideDesktopApi = Object.freeze({
   getNativeStatus: () => ipcRenderer.invoke(ipcChannels.nativeStatus),
   restartNative: (name: NativeProcessName) =>
     ipcRenderer.invoke(ipcChannels.restartNative, assertNativeName(name)),
+  answerWriteProtectionOff: (target: WriteProtectionTarget, turnOff: boolean) => {
+    if (target !== 'gameFolder' && target !== 'modFolders') {
+      throw new Error('invalid write protection target');
+    }
+    if (typeof turnOff !== 'boolean') throw new Error('invalid write protection answer');
+    return ipcRenderer.invoke(ipcChannels.answerWriteProtectionOff, target, turnOff);
+  },
   getConfigurationCatalog: () => ipcRenderer.invoke(ipcChannels.configurationCatalog),
   generatePreview: (input: PreviewGenerationInput) =>
     ipcRenderer

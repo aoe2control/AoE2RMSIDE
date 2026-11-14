@@ -17,6 +17,7 @@ import type { UpdateState } from './update';
 import type { EditorColorSchemeId } from './editor-color-scheme';
 import type { PreviewLayout } from './preview-layout';
 import type { KnownCrashReference } from './known-crashes';
+import type { WriteProtection, WriteProtectionTarget } from './write-protection';
 import type { AppQualityRun } from './connector-run-api';
 import type {
   ClipboardImageRequest,
@@ -45,6 +46,7 @@ export const ipcChannels = {
   resetLayout: 'rmside:layout:reset',
   nativeStatus: 'rmside:native:status',
   restartNative: 'rmside:native:restart',
+  answerWriteProtectionOff: 'rmside:write-protection:answer-off',
   configurationCatalog: 'rmside:generation:catalog',
   generatePreview: 'rmside:generation:run',
   cancelPreviewGeneration: 'rmside:generation:cancel',
@@ -534,6 +536,7 @@ export type ApplicationMenuAction =
   | { type: 'deploy-managed-mod' }
   | { type: 'import-map-test-report' }
   | { type: 'unlink-game-folder' }
+  | { type: 'confirm-write-protection-off'; target: WriteProtectionTarget }
   | { type: 'open-recent'; path: string }
   | { type: 'save' }
   | { type: 'save-as' }
@@ -2064,7 +2067,15 @@ export type WorkspaceSaveResult =
 
 export type WorkspaceExternalChange =
   | { kind: 'changed'; document: WorkspaceDocument }
-  | { kind: 'deleted'; documentId: string; path: string };
+  | { kind: 'deleted'; documentId: string; path: string }
+  | {
+      kind: 'protection';
+      documentId: string;
+      sourceKind: WorkspaceSourceKind;
+      readOnly: boolean;
+      protectedReason?: ProtectedSourceReason;
+    }
+  | { kind: 'folder-protection'; folderId: string; writable: boolean };
 
 export interface RecoveryDocument {
   id: string;
@@ -2139,11 +2150,14 @@ export interface DesktopSession {
   outlineRow: boolean;
   deletePermanently: boolean;
   checkForNewVersions: boolean;
+  writeProtection: WriteProtection;
   languagePreference: LanguagePreference;
   rmsLintRules: RmsLintWorkspaceRules[];
   previewPerspective: PreviewPerspective;
   previewLook: PreviewLook;
   previewTileGrid: boolean;
+  previewTileGridOpacity: number;
+  previewRuler: boolean;
   previewSmallTrees: boolean;
   gameTexturesFirstLinkApplied: boolean;
   gameTexturesFirstLinkInstallations: string[];
@@ -2220,6 +2234,7 @@ export interface RmsideDesktopApi extends ConnectorDesktopApi {
   resetLayout(): Promise<void>;
   getNativeStatus(): Promise<NativeProcessStatus[]>;
   restartNative(name: NativeProcessName): Promise<NativeProcessStatus>;
+  answerWriteProtectionOff(target: WriteProtectionTarget, turnOff: boolean): Promise<void>;
   getConfigurationCatalog(): Promise<ConfigurationCatalog>;
   generatePreview(input: PreviewGenerationInput): Promise<PreviewGenerationResult>;
   cancelPreviewGeneration(clientRequestId: string): Promise<boolean>;

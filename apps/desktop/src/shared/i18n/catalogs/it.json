@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "Scollega cartella del gioco"
     },
+    "app-menu.file.write-protection": {
+      "message": "Protezione da scrittura"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Proteggi cartella del gioco"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Proteggi cartelle dei mod"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Disattivare la protezione da scrittura della cartella del gioco?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "Gli script delle mappe nella cartella del gioco collegata diventano modificabili in AoE2RMSIDE. Un aggiornamento del gioco o una verifica dei file del gioco può sostituire i file modificati senza chiedere, e una mappa ufficiale modificata non corrisponde più alle copie degli altri giocatori, quindi le partite con essa possono andare fuori sincrono. Tieni le tue mappe in un mod o in un’altra cartella."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Disattivare la protezione da scrittura delle cartelle dei mod?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "I mod seguiti e i mod scritti da Installa come mod diventano modificabili in AoE2RMSIDE. Un aggiornamento di un mod sostituisce senza chiedere le tue modifiche a un mod seguito, e i giocatori con la versione pubblicata giocano una mappa diversa dalla tua. Installa come mod chiede prima di sovrascrivere le modifiche fatte nei suoi mod. Il mod dei test nel gioco resta protetto."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Disattiva protezione"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Importa rapporto di test…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "La cartella del profilo o la sua cartella dei mod non è una cartella normale che AoE2RMSIDE può usare."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "La cartella del mod random-map-scripts è la tua cartella di lavoro, quindi AoE2RMSIDE non vi installa nulla."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Scegli un altro nome per il mod"
     },
     "message.deploy.path-collision.cause": {
       "message": "Due file verrebbero copiati in {path} nel mod."
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "Griglia delle caselle"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Opzioni della griglia"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Opacità della griglia"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Righello"
     },
     "preview-panel.tool.small-trees": {
       "message": "Alberi piccoli"

@@ -62,6 +62,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "गेम फ़ोल्डर का लिंक हटाएँ"
     },
+    "app-menu.file.write-protection": {
+      "message": "राइट सुरक्षा"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "गेम फ़ोल्डर सुरक्षित रखें"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "मॉड फ़ोल्डर सुरक्षित रखें"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "गेम फ़ोल्डर के लिए राइट सुरक्षा बंद करें?"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "लिंक किए गए गेम फ़ोल्डर की मैप स्क्रिप्ट AoE2RMSIDE में संपादित की जा सकेंगी। गेम अपडेट या गेम फ़ाइलों की जाँच बदली गई फ़ाइलों को बिना पूछे बदल सकती है, और बदला हुआ आधिकारिक मैप अन्य खिलाड़ियों की कॉपियों से मेल नहीं खाता, इसलिए उसके साथ खेले गए गेम सिंक से बाहर हो सकते हैं। अपने मैप किसी मॉड या दूसरे फ़ोल्डर में रखें।"
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "मॉड फ़ोल्डरों के लिए राइट सुरक्षा बंद करें?"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "सब्सक्राइब्ड मॉड और ‘मॉड के रूप में तैनात करें’ द्वारा लिखे गए मॉड AoE2RMSIDE में संपादित किए जा सकेंगे। मॉड अपडेट सब्सक्राइब्ड मॉड में किए गए आपके बदलावों को बिना पूछे बदल देता है, और प्रकाशित संस्करण वाले खिलाड़ी आपसे अलग मैप खेलते हैं। ‘मॉड के रूप में तैनात करें’ अपने मॉड में किए गए बदलावों को अधिलेखित करने से पहले पूछता है। लाइव परीक्षण वाला मॉड सुरक्षित रहता है।"
+    },
+    "write-protection.warning.turn-off": {
+      "message": "सुरक्षा बंद करें"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "परीक्षण रिपोर्ट आयात करें…"
     },
@@ -2071,6 +2095,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "प्रोफ़ाइल फ़ोल्डर या उसका मॉड फ़ोल्डर ऐसा सामान्य फ़ोल्डर नहीं है जिसे AoE2RMSIDE इस्तेमाल कर सके।"
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "random-map-scripts मॉड फ़ोल्डर आपका अपना कार्य फ़ोल्डर है, इसलिए AoE2RMSIDE उसमें तैनात नहीं करता।"
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "कोई दूसरा मॉड नाम चुनें"
     },
     "message.deploy.path-collision.cause": {
       "message": "दो फ़ाइलें मॉड में {path} पर कॉपी होतीं।"
@@ -4654,6 +4684,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "टाइल ग्रिड"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "टाइल ग्रिड विकल्प"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "ग्रिड अपारदर्शिता"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "रूलर"
     },
     "preview-panel.tool.small-trees": {
       "message": "छोटे पेड़"

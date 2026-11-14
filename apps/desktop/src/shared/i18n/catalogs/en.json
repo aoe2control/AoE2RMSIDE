@@ -128,6 +128,58 @@
       "maxLength": 40,
       "meaning": "Forgets the linked game folder."
     },
+    "app-menu.file.write-protection": {
+      "message": "Write Protection",
+      "screen": "application-menu/file",
+      "control": "menu",
+      "maxLength": 40,
+      "meaning": "File submenu, shown while a game folder is linked, with two check items that choose which installed folders AoE2RMSIDE keeps read-only."
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "Protect Game Folder",
+      "screen": "application-menu/file",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Check item in File > Write Protection, on by default: the map scripts in the linked game folder open read-only. Turning it off first shows a warning."
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "Protect Mod Folders",
+      "screen": "application-menu/file",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Check item in File > Write Protection, on by default: subscribed mods and the mods Deploy as Mod wrote open read-only. A mod is the game’s own word. Turning it off first shows a warning."
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "Turn off write protection for the game folder?",
+      "screen": "confirmation-dialog/write-protection",
+      "control": "dialog-title",
+      "meaning": "Title of the confirmation dialog shown when the user unchecks File > Write Protection > Protect Game Folder."
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "The map scripts in the linked game folder become editable in AoE2RMSIDE. A game update or a check of the game files can replace changed files without asking, and a changed official map no longer matches other players’ copies, so games with it can go out of sync. Keep your own maps in a mod or another folder.",
+      "screen": "confirmation-dialog/write-protection",
+      "control": "dialog-text",
+      "meaning": "Explains the risks of turning off the game folder’s write protection: edits in AoE2RMSIDE, files replaced by game updates or file checks, and multiplayer desyncs when an official map differs between players."
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "Turn off write protection for mod folders?",
+      "screen": "confirmation-dialog/write-protection",
+      "control": "dialog-title",
+      "meaning": "Title of the confirmation dialog shown when the user unchecks File > Write Protection > Protect Mod Folders."
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "Subscribed mods and the mods Deploy as Mod wrote become editable in AoE2RMSIDE. A mod update replaces your changes to a subscribed mod without asking, and players with the published version play a different map than yours. Deploy as Mod asks before it overwrites changes made in its mods. The live-test mod stays protected.",
+      "screen": "confirmation-dialog/write-protection",
+      "control": "dialog-text",
+      "meaning": "Explains the risks of turning off the mod folders’ write protection. Subscribed mods come from the game’s mod center; the live-test mod is the mod AoE2RMSIDE rewrites for every live test, which stays read-only."
+    },
+    "write-protection.warning.turn-off": {
+      "message": "Turn Off Protection",
+      "screen": "confirmation-dialog/write-protection",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Turns the write protection off; the dialog’s Cancel keeps it on."
+    },
     "app-menu.file.import-map-test-report": {
       "message": "Import Test Report…",
       "screen": "application-menu/file",
@@ -5562,6 +5614,18 @@
       "screen": "output",
       "control": "message-cause",
       "meaning": "Cause when the profile folder, its mods folder, or the mod folder is a file, a link to another place, or inside the game installation, so AoE2RMSIDE does not write there. Deploy as Mod copies the map into a mod folder of the selected game profile (mods\\local); a mod and a profile are the game’s own words. Main refused the request with this stable code; the caller’s headline (such as “The preview could not be generated”) names what stopped, so this sentence only says why."
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "The random-map-scripts mod folder is your own working folder, so AoE2RMSIDE does not deploy into it.",
+      "screen": "output",
+      "control": "message-cause",
+      "meaning": "Cause when the mod name given to Deploy as Mod is random-map-scripts (any letter case). Many scripters keep their maps in a local mod folder with this name and edit them there, as the community guides describe; a deployment would mark it as managed by AoE2RMSIDE and make its scripts read-only, so the IDE never deploys there. Keep random-map-scripts as written: it is a folder name. The caller’s headline names what stopped, so this sentence only says why."
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "Choose another mod name",
+      "screen": "output",
+      "control": "message-action",
+      "meaning": "Next step after Deploy as Mod refused the mod name random-map-scripts: type a different name in the Mod name field."
     },
     "message.deploy.path-collision.cause": {
       "message": "Two files would be copied to {path} in the mod.",
@@ -13320,6 +13384,25 @@
       "screen": "preview/toolbar",
       "control": "toggle",
       "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar: shows or hides a grid of the map tiles."
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "Tile grid options",
+      "screen": "preview/toolbar",
+      "control": "button",
+      "meaning": "Accessible name of the small arrow button joined to the Tile grid button, shown while the grid is on; it opens a small menu above the toolbar with the grid's settings."
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "Grid opacity",
+      "screen": "preview/toolbar/tile-grid-menu",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Label and accessible name of a slider in the tile grid menu: how strongly the grid lines show, from faint to full (the most, the default)."
+    },
+    "preview-panel.tool.ruler": {
+      "message": "Ruler",
+      "screen": "preview/toolbar",
+      "control": "toggle",
+      "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar: shows or hides the ruler marks at the map's edges for the cursor position and the selected area."
     },
     "preview-panel.tool.small-trees": {
       "message": "Small trees",

@@ -1,16 +1,16 @@
 import { appMapSizes, type AppMapSize, type AppRunSettings } from '../../shared/connector-run-api';
+import { unsignedGameSeed } from '../../shared/game-seed';
 import { ConnectorToolError } from './dispatcher';
 import type { ConnectorJsonValue, ConnectorToolArguments } from './validator';
 
-const seedRange = 0x1_0000_0000;
-
 export function unsignedSeed(value: number): number {
-  if (!Number.isSafeInteger(value) || value < -0x8000_0000 || value > 0xffff_ffff) {
+  const unsigned = unsignedGameSeed(value);
+  if (unsigned === null) {
     throw new ConnectorToolError('invalid_arguments', "The seed is outside the game's range.", {
       hint: 'Use 0 to 4294967295, or the signed form -2147483648 to -1.',
     });
   }
-  return value < 0 ? value + seedRange : value;
+  return unsigned;
 }
 
 export function parseMapSize(

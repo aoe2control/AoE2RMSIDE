@@ -54,6 +54,30 @@
     "app-menu.file.unlink-game-folder": {
       "message": "取消关联游戏文件夹"
     },
+    "app-menu.file.write-protection": {
+      "message": "写入保护"
+    },
+    "app-menu.file.write-protection.game-folder": {
+      "message": "保护游戏文件夹"
+    },
+    "app-menu.file.write-protection.mod-folders": {
+      "message": "保护模组文件夹"
+    },
+    "write-protection.warning.game-folder.message": {
+      "message": "要关闭游戏文件夹的写入保护吗？"
+    },
+    "write-protection.warning.game-folder.detail": {
+      "message": "关联的游戏文件夹中的地图脚本将可以在 AoE2RMSIDE 中编辑。游戏更新或游戏文件检查可能会在不询问的情况下替换已更改的文件，而且更改后的官方地图将与其他玩家的副本不一致，因此使用它的游戏可能会不同步。请将你自己的地图保存在模组或其他文件夹中。"
+    },
+    "write-protection.warning.mod-folders.message": {
+      "message": "要关闭模组文件夹的写入保护吗？"
+    },
+    "write-protection.warning.mod-folders.detail": {
+      "message": "已订阅模组和“部署为模组”写入的模组将可以在 AoE2RMSIDE 中编辑。模组更新会在不询问的情况下替换你对已订阅模组的更改，而且拥有已发布版本的玩家玩的地图将与你的不同。“部署为模组”在覆盖其模组中的更改之前会先询问。实机测试用的模组仍受保护。"
+    },
+    "write-protection.warning.turn-off": {
+      "message": "关闭保护"
+    },
     "app-menu.file.import-map-test-report": {
       "message": "导入测试报告…"
     },
@@ -2063,6 +2087,12 @@
     },
     "message.deploy.unsafe-target.cause": {
       "message": "玩家档案文件夹或其模组文件夹不是 AoE2RMSIDE 可以使用的普通文件夹。"
+    },
+    "message.deploy.shared-folder-name.cause": {
+      "message": "random-map-scripts 模组文件夹是你自己的工作文件夹，因此 AoE2RMSIDE 不会部署到其中。"
+    },
+    "message.deploy.shared-folder-name.action": {
+      "message": "选择其他模组名称"
     },
     "message.deploy.path-collision.cause": {
       "message": "有两个文件会被复制到模组中的 {path}。"
@@ -4646,6 +4676,15 @@
     },
     "preview-panel.tool.tile-grid": {
       "message": "地块网格"
+    },
+    "preview-panel.tool.tile-grid.options": {
+      "message": "地块网格选项"
+    },
+    "preview-panel.tile-grid.opacity": {
+      "message": "网格不透明度"
+    },
+    "preview-panel.tool.ruler": {
+      "message": "标尺"
     },
     "preview-panel.tool.small-trees": {
       "message": "小树"
