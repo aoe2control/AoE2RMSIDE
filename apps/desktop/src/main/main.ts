@@ -1455,7 +1455,12 @@ function createApplicationMenu(): Menu {
         { label: t('app-menu.edit.cut'), role: 'cut' },
         { label: t('app-menu.edit.copy'), role: 'copy' },
         { label: t('app-menu.edit.paste'), role: 'paste' },
-        { label: t('app-menu.edit.select-all'), role: 'selectAll' },
+        {
+          id: 'edit.select-all',
+          label: t('app-menu.edit.select-all'),
+          accelerator: 'CmdOrCtrl+A',
+          click: () => publishMenuAction({ type: 'select-all' }),
+        },
         { type: 'separator' },
         {
           id: 'edit.insert-snippet',

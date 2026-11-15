@@ -121,7 +121,11 @@ import {
 } from './run-outcome';
 import { isModalSurfaceOpen } from './modal-surfaces';
 import { usePresence } from './motion';
-import { runEditorHistoryCommand, setRmsConditionalIndentation } from './monaco-language';
+import {
+  runEditorHistoryCommand,
+  runEditorSelectAll,
+  setRmsConditionalIndentation,
+} from './monaco-language';
 import { requestInsertSnippet, requestSaveSnippet } from './insert-snippet';
 import {
   noSourceHighlightOperations,
@@ -1223,6 +1227,7 @@ export function App() {
     const runMenuAction = (action: ApplicationMenuAction) => {
       const currentWorkspace = workspaceRef.current;
       if (action.type === 'undo' || action.type === 'redo') runEditorHistoryCommand(action.type);
+      else if (action.type === 'select-all') runEditorSelectAll();
       else if (action.type === 'set-theme') setThemePreference(action.theme);
       else if (action.type === 'open-theme-settings') setThemeSettingsOpen(true);
       else if (action.type === 'open-language-settings') setLanguageSettingsOpen(true);

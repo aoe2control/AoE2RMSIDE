@@ -99,6 +99,7 @@ import {
   attachedLanguageDocumentVersion,
   configureRmsLanguage,
   includeLinkAtPosition,
+  knownIncludeLinkAtPosition,
   openIncludedFile,
   registerActiveRmsEditor,
   onLanguageAnswersChanged,
@@ -2064,7 +2065,25 @@ export function EditorPanel({
       if (immediate) updateIncludeContext();
       else includeContextTimer = window.setTimeout(updateIncludeContext, 200);
     };
+    const decideIncludeContextOnRightPress = (event: monaco.editor.IEditorMouseEvent) => {
+      if (!event.event.rightButton) return;
+      const model = instance.getModel();
+      const clicked = event.target.position;
+      if (!model || !clicked) return;
+      const inSelection = (instance.getSelections() ?? []).some((selection) =>
+        selection.containsPosition(clicked),
+      );
+      const position = inSelection ? instance.getPosition() : clicked;
+      if (!position) return;
+      const link = knownIncludeLinkAtPosition(model, position);
+      if (link === undefined) return;
+      includeContextRequest += 1;
+      if (includeContextTimer !== null) window.clearTimeout(includeContextTimer);
+      includeContextTimer = null;
+      cursorOnInclude.set(link !== null);
+    };
     const includeContextSubscriptions = [
+      instance.onMouseDown(decideIncludeContextOnRightPress),
       instance.onDidChangeCursorPosition((event) =>
         refreshIncludeContext(event.source === 'mouse'),
       ),

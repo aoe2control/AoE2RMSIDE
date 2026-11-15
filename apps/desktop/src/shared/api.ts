@@ -525,6 +525,7 @@ export type OwnSnippetImportResult =
 export type ApplicationMenuAction =
   | { type: 'undo' }
   | { type: 'redo' }
+  | { type: 'select-all' }
   | { type: 'new-file' }
   | { type: 'new-map-test-script' }
   | { type: 'generate-definition-file' }

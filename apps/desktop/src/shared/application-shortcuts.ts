@@ -100,6 +100,7 @@ export const modalSafeMenuActions: ReadonlySet<ApplicationMenuAction['type']> = 
 >([
   'undo',
   'redo',
+  'select-all',
   'set-theme',
   'set-format-on-save',
   'set-indent-conditionals',

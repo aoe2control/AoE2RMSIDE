@@ -173,12 +173,30 @@ export function requestIncludeLinks(model: monaco.editor.ITextModel): Promise<In
   const version = model.getVersionId();
   const cached = includeLinkCache.get(key);
   if (cached?.version === version) return cached.links;
-  const links = requestLanguage<unknown>(
-    'textDocument/documentLink',
-    textDocumentParams(model),
-  ).then(includeLinksFromLsp);
+  const links = requestLanguage<unknown>('textDocument/documentLink', textDocumentParams(model))
+    .then(includeLinksFromLsp)
+    .then((resolved) => {
+      const known = knownIncludeLinks.get(key);
+      if (!known || known.version <= version)
+        knownIncludeLinks.set(key, { version, links: resolved });
+      return resolved;
+    });
   includeLinkCache.set(key, { version, links });
   return links;
+}
+
+const knownIncludeLinks = new Map<string, { version: number; links: IncludeLink[] }>();
+
+export function knownIncludeLinkAtPosition(
+  model: monaco.editor.ITextModel,
+  position: monaco.IPosition,
+): IncludeLink | null | undefined {
+  const known = knownIncludeLinks.get(model.uri.toString());
+  if (!known || known.version !== model.getVersionId()) return undefined;
+  return includeLinkAt(known.links, {
+    line: position.lineNumber - 1,
+    character: position.column - 1,
+  });
 }
 
 export async function includeLinkAtPosition(
@@ -439,6 +457,7 @@ function attachDocument(
         subscription.dispose();
         attachedDocuments.delete(uri);
         includeLinkCache.delete(uri);
+        knownIncludeLinks.delete(uri);
         publishedCodeActions.forget(uri);
         void window.rmside
           .notifyLanguageServer('textDocument/didClose', { textDocument: { uri } })
@@ -544,6 +563,17 @@ export function runEditorHistoryCommand(command: 'undo' | 'redo'): void {
     return;
   }
   document.execCommand(command);
+}
+
+export function runEditorSelectAll(): void {
+  const focused = activeRmsEditor?.hasTextFocus()
+    ? activeRmsEditor
+    : monaco.editor.getEditors().find((candidate) => candidate.hasTextFocus());
+  if (focused) {
+    focused.trigger('rmside.application-menu', 'editor.action.selectAll', null);
+    return;
+  }
+  document.execCommand('selectAll');
 }
 
 export function canonicalLanguageDocumentUri(uri: string): string {
