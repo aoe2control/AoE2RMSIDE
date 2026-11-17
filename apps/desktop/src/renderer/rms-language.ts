@@ -3,7 +3,14 @@ import type { SourceLanguageId } from '../shared/xs-contract';
 
 export function rmsLanguageConfigurationFor(
   indentConditionals: boolean,
+  indentRandom = true,
 ): monaco.languages.LanguageConfiguration {
+  const openers = [
+    indentConditionals ? String.raw`(?:if|elseif|else)(?=\s|$)(?!.*\sendif(?:\s|$))` : null,
+    indentRandom
+      ? String.raw`(?:start_random|percent_chance)(?=\s|$)(?!.*\send_random(?:\s|$))`
+      : null,
+  ].filter((opener) => opener !== null);
   return {
     brackets: [
       ['{', '}'],
@@ -16,11 +23,13 @@ export function rmsLanguageConfigurationFor(
       { open: '(', close: ')' },
       { open: '"', close: '"' },
     ],
-    ...(indentConditionals
+    ...(openers.length > 0
       ? {
           indentationRules: {
-            increaseIndentPattern: /^\s*(?:if|elseif|else)(?=\s|$)(?!.*\sendif(?:\s|$)).*$/u,
-            decreaseIndentPattern: /^\s*(?:elseif|else|endif)(?=\s|$)/u,
+            increaseIndentPattern: new RegExp(String.raw`^\s*(?:${openers.join('|')}).*$`, 'u'),
+            decreaseIndentPattern: indentConditionals
+              ? /^\s*(?:elseif|else|endif)(?=\s|$)/u
+              : /(?!)/u,
           },
         }
       : {}),

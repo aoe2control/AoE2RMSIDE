@@ -110,6 +110,19 @@ import {
 } from './menu-items';
 import { LocaleService } from './locale-service';
 import { deploymentTargetFolderToOpen } from './deployment-target-folder';
+import {
+  scenarioFileName,
+  scenarioFolder,
+  scenarioFolderToOpen,
+  writeScenarioFile,
+} from './scenario-deployment';
+import { scenarioInputFromMap, scenarioSetupFromResult } from './scenario-from-map';
+import { writeScenario } from './scenario-writer';
+import {
+  assertScenarioDeploymentRequest,
+  type ScenarioDeploymentContext,
+  type ScenarioDeploymentOutcome,
+} from '../shared/scenario-deployment';
 import '../shared/i18n/bundled-catalogs';
 import { parsePseudoLocaleOverride } from '../shared/i18n/locale';
 import { setMessageProblemReporter, t } from '../shared/i18n/translator';
@@ -118,6 +131,11 @@ import {
   validatePreviewCandidateAcknowledgement,
   type PreviewCandidate,
 } from '../shared/preview-candidate';
+import {
+  isPreviewBreakpointAction,
+  isPreviewBreakpointList,
+  type PreviewBreakpointStop,
+} from '../shared/breakpoints';
 import { validateManualDeploymentMapIconRequest } from '../shared/map-icon-deployment';
 import { isSelectedTexturePaletteOrAbsent } from '../shared/texture-palette';
 import {
@@ -388,6 +406,7 @@ let resolvedTheme: ResolvedTheme = nativeTheme.shouldUseDarkColors ? 'dark' : 'l
 let formatOnSavePreference = true;
 let autoSavePreference = false;
 let indentConditionalsPreference = true;
+let indentRandomPreference = true;
 let liveGenerationStagesPreference = true;
 let gpuMapRenderingPreference = true;
 let mapTransitionsPreference = true;
@@ -415,6 +434,7 @@ let mapTestResultsVisible = false;
 let mapTestPreviewShown = false;
 let insertSnippetAvailable = false;
 let saveSnippetAvailable = false;
+let reopenClosedTabAvailable = false;
 let ownSnippetStore: OwnSnippetStore | undefined;
 let appTourStore: AppTourStore | undefined;
 let connectorService: ConnectorService | undefined;
@@ -877,6 +897,7 @@ async function createApplication(): Promise<void> {
   mapTestPreviewShown = false;
   insertSnippetAvailable = false;
   saveSnippetAvailable = false;
+  reopenClosedTabAvailable = false;
   disposeEditorInventory();
   scheduleEditorInventoryRefresh = () => {};
   disposeEditorInventory = () => {};
@@ -956,6 +977,7 @@ async function createApplication(): Promise<void> {
   formatOnSavePreference = initialSession.formatOnSave;
   autoSavePreference = initialSession.autoSave;
   indentConditionalsPreference = initialSession.indentConditionals;
+  indentRandomPreference = initialSession.indentRandom;
   liveGenerationStagesPreference = initialSession.liveGenerationStages;
   gpuMapRenderingPreference = initialSession.gpuMapRendering;
   mapTransitionsPreference = developmentOverrides().mapTransitions ?? initialSession.mapTransitions;
@@ -1371,10 +1393,30 @@ function createApplicationMenu(): Menu {
         ...(editionCapabilities.deployment
           ? [
               {
-                id: 'file.deploy-managed-mod',
-                label: t('app-menu.file.deploy-managed-mod'),
-                accelerator: applicationShortcuts.deployManagedMod,
-                click: () => publishMenuAction({ type: 'deploy-managed-mod' }),
+                id: 'file.deploy',
+                label: t('app-menu.file.deploy'),
+                submenu: [
+                  {
+                    id: 'file.deploy-managed-mod',
+                    label: t('app-menu.file.deploy.as-mod'),
+                    accelerator: applicationShortcuts.deployManagedMod,
+                    click: () => publishMenuAction({ type: 'deploy-managed-mod' }),
+                  },
+                  {
+                    id: 'file.deploy-scenario',
+                    label: t('app-menu.file.deploy.as-scenario'),
+                    click: () => publishMenuAction({ type: 'deploy-scenario' }),
+                  },
+                ],
+              },
+            ]
+          : []),
+        ...(editionCapabilities.mapIcons
+          ? [
+              {
+                id: 'file.map-icon',
+                label: t('app-menu.file.map-icon'),
+                click: () => publishMenuAction({ type: 'open-map-icon' }),
               },
             ]
           : []),
@@ -1451,6 +1493,13 @@ function createApplicationMenu(): Menu {
           accelerator: 'CmdOrCtrl+Y',
           click: () => publishMenuAction({ type: 'redo' }),
         },
+        {
+          id: 'edit.reopen-closed-tab',
+          label: t('app-menu.edit.reopen-closed-tab'),
+          accelerator: applicationShortcuts.reopenClosedTab,
+          enabled: reopenClosedTabAvailable,
+          click: () => publishMenuAction({ type: 'reopen-closed-tab' }),
+        },
         { type: 'separator' },
         { label: t('app-menu.edit.cut'), role: 'cut' },
         { label: t('app-menu.edit.copy'), role: 'copy' },
@@ -1510,6 +1559,20 @@ function createApplicationMenu(): Menu {
             indentConditionalsPreference = enabled;
             void desktopSessionStore?.updateIndentConditionals(enabled);
             publishMenuAction({ type: 'set-indent-conditionals', enabled });
+          },
+        },
+        {
+          id: 'edit.indent-random',
+          label: t('app-menu.edit.indent-random'),
+          type: 'checkbox',
+          checked: indentRandomPreference,
+          click: (item) => {
+            const enabled =
+              item.checked === indentRandomPreference ? !indentRandomPreference : item.checked;
+            item.checked = enabled;
+            indentRandomPreference = enabled;
+            void desktopSessionStore?.updateIndentRandom(enabled);
+            publishMenuAction({ type: 'set-indent-random', enabled });
           },
         },
         { type: 'separator' },
@@ -2403,6 +2466,86 @@ function registerIpc(
     };
   };
   let lastDeployedModFolder: string | null = null;
+  let lastDeployedScenario: string | null = null;
+  const scenarioProfile = async (profileId: unknown) => {
+    if (!isDeploymentProfileId(profileId)) throw new Error('deployment profile is invalid');
+    const report = await linkedInstallationReport();
+    if (!report) {
+      throw new DesktopError(
+        'deploy.no-installation',
+        'select a valid AoE2DE installation before deploying',
+      );
+    }
+    const profile = report.evidence.userProfiles.find((candidate) => candidate.value === profileId);
+    if (!profile) {
+      throw new DesktopError(
+        'deploy.profile',
+        'select one of the linked installation numeric profiles',
+      );
+    }
+    return { report, profile };
+  };
+  const scenarioDeploymentContext = async (): Promise<ScenarioDeploymentContext | null> => {
+    const report = await linkedInstallationReport();
+    if (!report) {
+      updateGameFolderLinked(false);
+      return null;
+    }
+    updateGameFolderLinked(true);
+    const profiles = report.evidence.userProfiles;
+    const steamProfiles = await installationAccountProfiles(report, installationHost);
+    const remembered = await installationSelectionStore.read();
+    const suggested = resolveDeploymentUserProfile(profiles, {
+      managedProfileIds: [],
+      rememberedProfileId: remembered?.userProfileId,
+      steamProfiles,
+    });
+    return {
+      installationRoot: await realpath(report.evidence.installationRoot.value),
+      profiles: profiles.map((profile) => ({
+        profileId: profile.value,
+        targetRoot: scenarioFolder(profile.source),
+        suggested: profile.value === suggested?.value,
+      })),
+      selectedProfileId: suggested?.value ?? null,
+    };
+  };
+  const deployScenario = async (raw: unknown): Promise<ScenarioDeploymentOutcome> => {
+    const request = assertScenarioDeploymentRequest(raw);
+    const fileName = scenarioFileName(request.name);
+    const { report, profile } = await scenarioProfile(request.profileId);
+    const map = request.map;
+    const setup = scenarioSetupFromResult(
+      map,
+      request.scriptName.replace(/[\r\n]/gu, ' '),
+      app.getVersion(),
+    );
+    const input = scenarioInputFromMap(map, setup, {
+      includeEffects: request.includeEffects,
+      fileName,
+      timestamp: Math.floor(Date.now() / 1000),
+    });
+    const written = await writeScenarioFile(
+      profile.source,
+      request.name,
+      writeScenario(input),
+      request.replaceExisting,
+    );
+    if (written.status === 'exists') return { status: 'exists', fileName };
+    lastDeployedScenario = written.path;
+    await installationSelectionStore.write({
+      installationRoot: report.evidence.installationRoot.value,
+      userProfileId: profile.value,
+    });
+    return {
+      status: 'deployed',
+      fileName,
+      path: written.path,
+      replaced: written.replaced,
+      objectCount: input.objects.length,
+      effectCount: input.triggers.length > 0 ? map.scenario.scriptEffects.length : 0,
+    };
+  };
   let liveEventSequence = 0;
   const controlLiveWorkflow = new ControlLiveWorkflow(
     new ControlLiveSessionAdapter(controlSessionBridge),
@@ -2956,7 +3099,13 @@ function registerIpc(
     fixtureId?: DevelopmentFixtureDescriptor['id'],
     onExecutionProgress?: (event: ExecutionProgressEvent) => void,
     onPreviewCandidate?: (candidate: PreviewCandidate) => void,
-    { previewBound = true }: { previewBound?: boolean } = {},
+    {
+      previewBound = true,
+      onBreakpointStop,
+    }: {
+      previewBound?: boolean;
+      onBreakpointStop?: (stop: PreviewBreakpointStop) => void;
+    } = {},
   ) => {
     const executionSource = captureSourceExecution({
       nativeEpoch: () => nativeSupervisor.languageIdentityEpoch(),
@@ -2994,6 +3143,7 @@ function registerIpc(
           localContentService.sourceFor(input.contentPack),
           onPreviewCandidate,
           xsStart,
+          onBreakpointStop,
         ),
       async () => {
         const latestDocument = nativeSupervisor.languageDocument(input.documentUri);
@@ -3146,6 +3296,9 @@ function registerIpc(
     indentConditionalsPreference = authorized.indentConditionals;
     const indentMenuItem = applicationMenu?.getMenuItemById('edit.indent-conditionals');
     if (indentMenuItem) indentMenuItem.checked = indentConditionalsPreference;
+    indentRandomPreference = authorized.indentRandom;
+    const randomMenuItem = applicationMenu?.getMenuItemById('edit.indent-random');
+    if (randomMenuItem) randomMenuItem.checked = indentRandomPreference;
     liveGenerationStagesPreference = authorized.liveGenerationStages;
     const stagesMenuItem = applicationMenu?.getMenuItemById('view.live-generation-stages');
     if (stagesMenuItem) stagesMenuItem.checked = liveGenerationStagesPreference;
@@ -3587,6 +3740,7 @@ function registerIpc(
               'textDocument/semanticTokens/full',
               'textDocument/documentSymbol',
               'textDocument/foldingRange',
+              'rms/breakpointSites',
               'rms/snippets',
             ].includes(method) &&
             !!editorRequest.uri &&
@@ -3762,6 +3916,15 @@ function registerIpc(
               progressive
                 ? (candidate) => presentationArbiter.offerCandidate(candidate)
                 : undefined,
+              (validated.breakpoints?.length ?? 0) > 0
+                ? {
+                    onBreakpointStop: (stop) => {
+                      if (!event.sender.isDestroyed()) {
+                        event.sender.send(ipcChannels.previewBreakpointStop, stop);
+                      }
+                    },
+                  }
+                : {},
             );
             if (appTicket) {
               appRunTickets.capture(appTicket, result, Date.now(), {
@@ -3804,6 +3967,21 @@ function registerIpc(
       presentationArbiter.acknowledge(validatePreviewCandidateAcknowledgement(acknowledgement));
     } catch {}
   });
+  ipcMain.handle(
+    ipcChannels.previewBreakpointCommand,
+    async (event, clientRequestId: string, action: unknown) => {
+      assertTrustedSender(event.senderFrame?.url);
+      if (
+        typeof clientRequestId !== 'string' ||
+        clientRequestId.length < 1 ||
+        clientRequestId.length > 512 ||
+        !isPreviewBreakpointAction(action)
+      ) {
+        throw new Error('breakpoint command is invalid');
+      }
+      return nativeSupervisor.resumePreview(clientRequestId, action).catch(() => false);
+    },
+  );
   ipcMain.handle(ipcChannels.cancelPreviewGeneration, async (event, clientRequestId: string) => {
     assertTrustedSender(event.senderFrame?.url);
     if (
@@ -4294,6 +4472,42 @@ function registerIpc(
       return managedDeploymentService.apply(request);
     },
   );
+  ipcMain.handle(ipcChannels.scenarioDeploymentContext, async (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    return scenarioDeploymentContext();
+  });
+  ipcMain.handle(ipcChannels.scenarioDeploymentApply, async (event, request: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    return deployScenario(request);
+  });
+  ipcMain.handle(ipcChannels.scenarioDeploymentOpenFolder, async (event, profileId: unknown) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    const { profile } = await scenarioProfile(profileId);
+    const folder = await scenarioFolderToOpen(profile.source);
+    const failure = await shell.openPath(folder);
+    if (failure) {
+      throw new DesktopError(
+        'shell.open-failed',
+        `Windows Explorer could not open the folder: ${failure}`,
+        { reason: failure },
+      );
+    }
+  });
+  ipcMain.handle(ipcChannels.scenarioDeploymentShowFile, async (event) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    const file = lastDeployedScenario;
+    if (file === null) throw new Error('no deployed scenario is known');
+    const metadata = await lstat(file);
+    if (!metadata.isFile() || metadata.isSymbolicLink()) {
+      throw new DesktopError(
+        'deploy.unsafe-target',
+        'the deployed scenario is no longer a plain file',
+      );
+    }
+    shell.showItemInFolder(file);
+  });
   ipcMain.handle(ipcChannels.manualDeploymentContext, async (event, documentUri: string) => {
     assertTrustedSender(event.senderFrame?.url);
     return manualDeploymentContext(documentUri);
@@ -4726,6 +4940,15 @@ function registerIpc(
     if (typeof available !== 'boolean') throw new Error('invalid insert snippet state');
     insertSnippetAvailable = available;
     const item = applicationMenu?.getMenuItemById('edit.insert-snippet');
+    if (item) item.enabled = available;
+    publishApplicationMenuModel();
+  });
+  ipcMain.handle(ipcChannels.syncReopenClosedTabAvailable, (event, available: boolean) => {
+    assertTrustedSender(event.senderFrame?.url);
+    assertMainWindowSender(event.sender);
+    if (typeof available !== 'boolean') throw new Error('invalid reopen closed tab state');
+    reopenClosedTabAvailable = available;
+    const item = applicationMenu?.getMenuItemById('edit.reopen-closed-tab');
     if (item) item.enabled = available;
     publishApplicationMenuModel();
   });
@@ -5450,7 +5673,10 @@ function validateGenerationInput(input: PreviewGenerationInput): PreviewGenerati
     (input.xsStartCheck !== undefined && typeof input.xsStartCheck !== 'boolean') ||
     (input.appRun !== undefined && !isAppRunReference(input.appRun)) ||
     (input.automatic !== undefined && typeof input.automatic !== 'boolean') ||
-    (input.appRun !== undefined && input.automatic === true)
+    (input.appRun !== undefined && input.automatic === true) ||
+    (input.breakpoints !== undefined && !isPreviewBreakpointList(input.breakpoints)) ||
+    ((input.automatic === true || input.appRun !== undefined) &&
+      (input.breakpoints?.length ?? 0) > 0)
   ) {
     throw new Error('generation input is invalid or exceeds its bounds');
   }

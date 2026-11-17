@@ -57,6 +57,13 @@ import {
 } from './open-documents';
 import { sameSourceIdentity } from './source-identity';
 import {
+  canReopenClosedTab,
+  closedTabKey,
+  rememberClosedTab,
+  takeClosedTab,
+  type ClosedTab,
+} from './closed-tabs';
+import {
   createUntitledMapTestDocument,
   createUntitledRmsDocument,
   createUntitledXsDocument,
@@ -145,6 +152,8 @@ export interface WorkspaceController {
   saveDocumentById(id: string): Promise<void>;
   saveDocumentAsById(id: string): Promise<void>;
   closeDocumentById(id: string): Promise<void>;
+  canReopenClosedTab: boolean;
+  reopenClosedTab(): Promise<void>;
   closeFolder(): Promise<void>;
 }
 
@@ -1275,6 +1284,18 @@ export function useWorkspaceController(
       const next = oldDocuments.filter((document) => document.id !== closing.id);
       documentsRef.current = next;
       setDocuments(next);
+      if (closing.path) {
+        const latest = oldDocuments[closingIndex] ?? closing;
+        setClosedTabs((history) =>
+          rememberClosedTab(history, {
+            path: closing.path!,
+            uri: closing.uri,
+            sourceKind: closing.sourceKind,
+            index: closingIndex,
+            viewState: latest.viewState ?? null,
+          }),
+        );
+      }
       setActiveDocumentId((current) => {
         if (current !== closing.id) return current;
         return next[Math.min(closingIndex, next.length - 1)]?.id ?? next.at(-1)?.id ?? '';
@@ -1287,6 +1308,44 @@ export function useWorkspaceController(
   const closeActive = useCallback(async () => {
     await closeDocumentById(activeDocumentIdRef.current);
   }, [closeDocumentById]);
+
+  const [closedTabs, setClosedTabs] = useState<ClosedTab[]>([]);
+  const closedTabsRef = useRef(closedTabs);
+  closedTabsRef.current = closedTabs;
+  const isPathOpen = useCallback(
+    (path: string) =>
+      documentsRef.current.some(
+        (document) => document.path !== null && closedTabKey(document.path) === closedTabKey(path),
+      ),
+    [],
+  );
+  const reopenAvailable = useMemo(
+    () => canReopenClosedTab(closedTabs, isPathOpen),
+    [closedTabs, documents, isPathOpen],
+  );
+  useEffect(() => {
+    void window.rmside.syncReopenClosedTabAvailable(reopenAvailable).catch(() => undefined);
+  }, [reopenAvailable]);
+
+  const reopenClosedTab = useCallback(async () => {
+    const { tab, history } = takeClosedTab(closedTabsRef.current, isPathOpen);
+    closedTabsRef.current = history;
+    setClosedTabs(history);
+    if (!tab) return;
+    const opened =
+      tab.sourceKind === 'protected'
+        ? await openWorkspaceSource(tab.uri, true)
+        : await openWorkspaceFile(tab.path, true);
+    if (!opened) return;
+    updateDocuments(setDocuments, documentsRef, (current) => {
+      const from = current.findIndex((document) => document.id === opened.id);
+      if (from < 0) return current;
+      const placed = { ...current[from]!, viewState: tab.viewState ?? current[from]!.viewState };
+      const next = current.filter((document) => document.id !== opened.id);
+      next.splice(Math.min(tab.index, next.length), 0, placed);
+      return next;
+    });
+  }, [isPathOpen, openWorkspaceFile, openWorkspaceSource]);
 
   const closeFolder = useCallback(async () => {
     const currentFolder = folderRef.current;
@@ -1450,6 +1509,8 @@ export function useWorkspaceController(
       saveDocumentAsById,
       closeDocumentById,
       closeFolder,
+      canReopenClosedTab: reopenAvailable,
+      reopenClosedTab,
     }),
     [
       activeDocument,
@@ -1460,6 +1521,8 @@ export function useWorkspaceController(
       closeActive,
       closeDocumentById,
       closeFolder,
+      reopenAvailable,
+      reopenClosedTab,
       confirmation,
       createWorkspaceEntry,
       deleteWorkspaceEntry,

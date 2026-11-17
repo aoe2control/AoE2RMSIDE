@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Переглянути встановлені мапи…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Розгорнути як мод…"
+    "app-menu.file.deploy": {
+      "message": "Розгорнути…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "як мод…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "як сценарій…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Піктограма мапи…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Відкрити папку гри"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Повторити дію"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Відкрити закриту вкладку"
+    },
     "app-menu.edit.cut": {
       "message": "Вирізати"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "Відступи в блоках if/else"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Відступи у випадкових блоках"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Видаляти без переміщення до кошика"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Готово"
     },
+    "map-icon-panel.title": {
+      "message": "Піктограма мапи"
+    },
+    "scenario-panel.title": {
+      "message": "Розгорнути як сценарій"
+    },
+    "scenario-panel.name": {
+      "message": "Назва сценарію"
+    },
+    "scenario-panel.name.history": {
+      "message": "Попередні назви сценаріїв"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Використовуйте назву без \\ / : * ? \" < > | і без крапки чи пробілу в кінці."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Використовуйте назву не довшу за 100 символів."
+    },
+    "scenario-panel.summary": {
+      "message": "Вміст сценарію"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Мапа"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} клітинок, зерно {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Гравці"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Гравець {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Об’єкти"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Ефекти скрипту"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Немає"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "Скрипт XS"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Цей попередній перегляд не можна зберегти як сценарій. Згенеруйте мапу знову."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Зберегти ефекти скрипту?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Скрипт змінює гру {count} командою ефекту. Сценарій не запускає скрипт, тому ефект можна додати як тригер, що застосує його на початку.} few {Скрипт змінює гру {count} командами ефектів. Сценарій не запускає скрипт, тому ефекти можна додати як тригер, що застосує їх на початку.} many {Скрипт змінює гру {count} командами ефектів. Сценарій не запускає скрипт, тому ефекти можна додати як тригер, що застосує їх на початку.} other {Скрипт змінює гру {count} командами ефектів. Сценарій не запускає скрипт, тому ефекти можна додати як тригер, що застосує їх на початку.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Перетворити ефекти на тригери"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Не додавати ефекти"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Замінити сценарій?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Сценарій {name} у цьому профілі буде перезаписано."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Замінити"
+    },
+    "scenario-panel.success.title": {
+      "message": "Сценарій успішно розгорнуто"
+    },
+    "scenario-panel.success.note": {
+      "message": "Відкрийте його в редакторі сценаріїв гри або виберіть у розділі «Сценарій», коли створюєте лобі."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Сценарій {name} розгорнуто, об’єктів: {objects}} one {Сценарій {name} розгорнуто, об’єктів: {objects}, ефектів скрипту: {effects}} few {Сценарій {name} розгорнуто, об’єктів: {objects}, ефектів скрипту: {effects}} many {Сценарій {name} розгорнуто, об’єктів: {objects}, ефектів скрипту: {effects}} other {Сценарій {name} розгорнуто, об’єктів: {objects}, ефектів скрипту: {effects}}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Не вдалося розгорнути сценарій"
+    },
+    "scenario-panel.close": {
+      "message": "Закрити розгортання сценарію"
+    },
+    "scenario-panel.deploy": {
+      "message": "Розгорнути сценарій"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Сценарій збережено до"
+    },
+    "scenario-panel.success.path": {
+      "message": "Шлях до розгорнутого сценарію"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Копіювати шлях до сценарію"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Шлях до сценарію скопійовано"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Відкрити папку сценаріїв"
+    },
     "deploy-panel.success.title": {
       "message": "Мод успішно розгорнуто"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Закрити"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Відкрити закриту вкладку"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Клацніть або натисніть {shortcut}, щоб додати точку зупину"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Точка зупину: перегляд призупиняється тут. Клацніть або натисніть {shortcut}, щоб видалити її."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Точка зупину: останній запуск до неї не дійшов. Клацніть або натисніть {shortcut}, щоб видалити її."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Перегляд призупинено тут"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Перемкнути точку зупину"
+    },
     "code-editor.run.preview": {
       "message": "Запустити перегляд"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Зупинити ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Продовжити"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Продовжити до наступної точки зупину ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Крок"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Виконати до кінця наступної команди ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Параметри запуску перегляду"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Лінійка"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Налаштування лінійки"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Довжини на краях мапи"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Вигляд гравця"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Параметри вигляду гравця"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Гравець {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Гея"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Непрозорість туману"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Маленькі дерева"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Зберегти зображення…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Вибрати все"
     },
     "preview-panel.output.image-saved": {
       "message": "Зображення мапи збережено як {name}"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "Стан перегляду"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Пауза перед рядком {line}} other {Пауза після рядка {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Пауза у файлі, який не відкрито"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "Мапа на цьому етапі завелика для показу"
     },
     "preview-panel.status.uncertified": {
       "message": "Несертифіковано"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Випадкова"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Випадкова (базова гра)"
     },
     "game-options.civilization.britons": {
       "message": "Бритони"

@@ -88,6 +88,9 @@ message Capabilities {
   bool object_instance_ids = 25;
   bool presentation_instance_ids = 26;
   bool refusal_locations = 27;
+  bool breakpoints = 28;
+  bool start_vision = 29;
+  bool scenario_data = 30;
 }
 
 enum MapTestStatus {
@@ -468,6 +471,47 @@ message GenerationRequest {
   bool connection_routes = 28;
   bool xs_start_check = 29;
   XsGameConstants xs_constants = 30;
+  repeated GenerationBreakpoint breakpoints = 31;
+}
+
+enum BreakpointEdge {
+  BREAKPOINT_EDGE_UNSPECIFIED = 0;
+  BREAKPOINT_EDGE_BEFORE = 1;
+  BREAKPOINT_EDGE_AFTER = 2;
+}
+
+message GenerationBreakpoint {
+  uint32 id = 1;
+  string source_id = 2;
+  uint32 byte_start = 3;
+  uint32 byte_end = 4;
+  BreakpointEdge edge = 5;
+}
+
+enum BreakpointAction {
+  BREAKPOINT_ACTION_UNSPECIFIED = 0;
+  BREAKPOINT_ACTION_CONTINUE = 1;
+  BREAKPOINT_ACTION_STEP = 2;
+}
+
+message BreakpointCommand {
+  string request_id = 1;
+  BreakpointAction action = 2;
+}
+
+message BreakpointCommandResponse {
+  string request_id = 1;
+  bool accepted = 2;
+}
+
+message BreakpointStopEvent {
+  RequestIdentity identity = 1;
+  uint32 stop_sequence = 2;
+  repeated uint32 breakpoint_ids = 3;
+  string stage = 4;
+  BreakpointEdge edge = 5;
+  repeated uint32 operation_indices = 6;
+  GenerationResponse snapshot = 7;
 }
 
 message XsGameConstants {
@@ -676,6 +720,30 @@ message ColumnarMapState {
   ConnectionRoutes connection_routes = 15;
   bytes cliff_piece_instance_ids_le = 16;
   bytes appearance_instance_ids_le = 17;
+  bytes start_vision_le = 18;
+  ScenarioData scenario = 19;
+}
+
+message ScenarioData {
+  repeated ScenarioObjectKind object_kinds = 1;
+  bytes object_heights_256_le = 2;
+  repeated ScenarioScriptEffect script_effects = 3;
+  repeated string xs_includes = 4;
+}
+
+message ScenarioObjectKind {
+  uint32 object_id = 1;
+  uint32 facet_count = 2;
+  bool random_facet = 3;
+  bool random_angle = 4;
+}
+
+message ScenarioScriptEffect {
+  int32 effect = 1;
+  int32 target = 2;
+  int32 attribute = 3;
+  float value = 4;
+  uint32 operation_index = 5;
 }
 
 message ConnectionRoutes {
@@ -741,6 +809,7 @@ message GenerationResponse {
   ExecutionCostSummary execution_cost = 18;
   ConstructVerification construct_verification = 19;
   XsStartReport xs_start = 20;
+  repeated uint32 reached_breakpoint_ids = 21;
 }
 
 message XsStartReport {
@@ -1309,5 +1378,8 @@ message Envelope {
     ControlPipeExchangeRequest control_pipe_exchange_request = 40;
     ControlPipeResponseChunk control_pipe_response_chunk = 41;
     ControlPipeExchangeResponse control_pipe_exchange_response = 42;
+    BreakpointCommand breakpoint_command = 43;
+    BreakpointCommandResponse breakpoint_command_response = 44;
+    BreakpointStopEvent breakpoint_stop_event = 45;
   }
 }

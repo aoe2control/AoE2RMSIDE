@@ -174,7 +174,10 @@ fn statement_hints(
         return;
     }
     if let Some(names) = operand_names(name) {
-        for (operand, label) in operands.iter().zip(names.iter()) {
+        for (index, (operand, label)) in operands.iter().zip(names.iter()).enumerate() {
+            if !names_operand(name, index, label, operand.kind, document.text(operand)) {
+                continue;
+            }
             hints.push(InlayHint {
                 position: operand.range.start,
                 label: format!("{label}:"),
@@ -215,6 +218,25 @@ fn statement_hints(
             }
             _ => {}
         }
+    }
+}
+
+const SELF_DESCRIBING_NAMES: &[&str] = &["terrain", "object", "effect", "attribute"];
+
+fn names_operand(command: &str, index: usize, label: &str, kind: TokenKind, text: &str) -> bool {
+    match kind {
+        TokenKind::Number => {
+            content_slot(command, index).is_none_or(|content| label != content_label(content))
+        }
+        TokenKind::Identifier if !text.contains('(') => !SELF_DESCRIBING_NAMES.contains(&label),
+        _ => true,
+    }
+}
+
+fn content_label(kind: ContentKind) -> &'static str {
+    match kind {
+        ContentKind::Object => "object",
+        ContentKind::Terrain => "terrain",
     }
 }
 

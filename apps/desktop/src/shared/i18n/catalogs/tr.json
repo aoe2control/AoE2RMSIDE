@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Kurulu haritalara göz at…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Mod olarak kur…"
+    "app-menu.file.deploy": {
+      "message": "Kur…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "Mod olarak…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "Senaryo olarak…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Harita simgesi…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Oyun klasörünü aç"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Yinele"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Kapatılan sekmeyi yeniden aç"
+    },
     "app-menu.edit.cut": {
       "message": "Kes"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "if/else bloklarını girintile"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Rastgele blokları girintile"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Silerken Geri Dönüşüm Kutusu’nu atla"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Bitir"
     },
+    "map-icon-panel.title": {
+      "message": "Harita simgesi"
+    },
+    "scenario-panel.title": {
+      "message": "Senaryo olarak kur"
+    },
+    "scenario-panel.name": {
+      "message": "Senaryo adı"
+    },
+    "scenario-panel.name.history": {
+      "message": "Önceki senaryo adları"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "\\ / : * ? \" < > | içermeyen ve sonunda nokta ya da boşluk olmayan bir ad kullanın."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "En fazla 100 karakterlik bir ad kullanın."
+    },
+    "scenario-panel.summary": {
+      "message": "Senaryo içeriği"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Harita"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} kare, tohum {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Oyuncular"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Oyuncu {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Nesneler"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Betik efektleri"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Yok"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS betiği"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Bu önizleme senaryo olarak kaydedilemez. Haritayı yeniden oluşturun."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Betik efektleri korunsun mu?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Betik oyunu {count} efekt komutuyla değiştirir. Senaryo betiği çalıştırmaz; bu yüzden efekt, başlangıçta onu uygulayan bir tetikleyici olarak eklenebilir.} other {Betik oyunu {count} efekt komutuyla değiştirir. Senaryo betiği çalıştırmaz; bu yüzden efektler, başlangıçta onları uygulayan bir tetikleyici olarak eklenebilir.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Efektleri tetikleyiciye dönüştür"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Efektleri dahil etme"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Senaryo değiştirilsin mi?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Bu profildeki {name} senaryosunun üzerine yazılacak."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Değiştir"
+    },
+    "scenario-panel.success.title": {
+      "message": "Senaryo başarıyla kuruldu"
+    },
+    "scenario-panel.success.note": {
+      "message": "Oyunun Senaryo Düzenleyici’sinde açın veya lobi oluştururken Senaryo altından seçin."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {{name} senaryosu {objects} nesneyle kuruldu} one {{name} senaryosu {objects} nesne ve {effects} betik efektiyle kuruldu} other {{name} senaryosu {objects} nesne ve {effects} betik efektiyle kuruldu}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Senaryo kurulamadı"
+    },
+    "scenario-panel.close": {
+      "message": "Senaryo kurulumunu kapat"
+    },
+    "scenario-panel.deploy": {
+      "message": "Senaryoyu kur"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Senaryonun kaydedildiği konum"
+    },
+    "scenario-panel.success.path": {
+      "message": "Kurulan senaryonun yolu"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Senaryo yolunu kopyala"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Senaryo yolu kopyalandı"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Senaryo klasörünü aç"
+    },
     "deploy-panel.success.title": {
       "message": "Mod başarıyla kuruldu"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Kapat"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Kapatılan sekmeyi yeniden aç"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Kesme noktası eklemek için tıklayın veya {shortcut} tuşuna basın"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Kesme noktası: önizleme burada duraklar. Kaldırmak için tıklayın veya {shortcut} tuşuna basın."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Kesme noktası: son çalıştırma buraya ulaşmadı. Kaldırmak için tıklayın veya {shortcut} tuşuna basın."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Önizleme burada duraklatıldı"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Kesme noktasını aç/kapat"
+    },
     "code-editor.run.preview": {
       "message": "Önizlemeyi çalıştır"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Durdur ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Devam et"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Sonraki kesme noktasına kadar devam et ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Adım"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Sonraki komutun sonuna kadar çalıştır ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Önizleme çalıştırma seçenekleri"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Cetvel"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Cetvel seçenekleri"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Harita kenarlarında uzunluklar"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Oyuncu görünümü"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Oyuncu görünümü seçenekleri"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Oyuncu {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Sis opaklığı"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Küçük ağaçlar"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Görseli kaydet…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Tümünü seç"
     },
     "preview-panel.output.image-saved": {
       "message": "Harita görseli {name} olarak kaydedildi"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "Önizleme durumu"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {{line}. satırdan önce duraklatıldı} other {{line}. satırdan sonra duraklatıldı}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Açık olmayan bir dosyada duraklatıldı"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "Bu noktadaki harita gösterilemeyecek kadar büyük"
     },
     "preview-panel.status.uncertified": {
       "message": "Sertifikasız"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Rastgele"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Rastgele (ana oyun)"
     },
     "game-options.civilization.britons": {
       "message": "Britonlar"

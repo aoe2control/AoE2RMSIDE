@@ -159,6 +159,10 @@ pub trait ExecutionObserver {
     fn visual_boundary(&mut self, _stage: VisualStage, _state: &VisualState<'_>) {}
     fn visual_substage(&mut self, _stage: VisualStage, _state: &VisualState<'_>) {}
     fn exclude_observation(&mut self, _duration: std::time::Duration) {}
+    fn observes_operation_boundaries(&self) -> bool {
+        false
+    }
+    fn operation_boundary(&mut self, _boundary: &crate::OperationBoundary<'_>) {}
 }
 
 #[derive(Clone, Copy, Debug, Default)]

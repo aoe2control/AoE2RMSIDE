@@ -1,7 +1,7 @@
 import type { PreviewLook } from '../shared/game-art';
 import type { GenerationActivity } from './preview-candidate-store';
 
-export type PreviewMapOrigin = 'generation' | 'map-test';
+export type PreviewMapOrigin = 'generation' | 'map-test' | 'breakpoint';
 
 export const mapTestProgressivePreview = false;
 

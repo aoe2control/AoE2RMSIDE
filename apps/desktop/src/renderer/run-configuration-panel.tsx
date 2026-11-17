@@ -206,6 +206,8 @@ import {
 } from './run-outcome';
 import type { OutputRunHeader, OutputRunResult } from './output-log';
 import { assertStreamMatchesResult } from './preview-reconstruction';
+import { breakpointStore, type BreakpointRun } from './breakpoint-store';
+import { editorBreakpointRun } from './editor-breakpoints';
 import { contentObjectClassLookup } from './top-down-preview';
 import {
   developmentFixtureRunnable,
@@ -274,6 +276,7 @@ interface PreviewGenerationWork {
   previewContext: LanguageServerPreviewContext;
   outputRun: PreviewOutputRun;
   appRun?: AppPreviewRun;
+  breakpointRun?: BreakpointRun;
 }
 
 interface AppPreviewRun {
@@ -929,6 +932,15 @@ export function RunConfigurationPanel({
             void window.rmside.cancelPreviewGeneration(clientRequestId).catch(() => false);
           };
           signal.addEventListener('abort', cancel, { once: true });
+          const breakpointRun = job.configuration.breakpointRun;
+          if (breakpointRun) {
+            breakpointStore.beginRun({
+              ...breakpointRun,
+              executionId: clientRequestId,
+              content: job.document.content,
+            });
+          }
+          let breakpointRunCommitted = false;
           try {
             let result: PreviewGenerationResult;
             try {
@@ -972,6 +984,10 @@ export function RunConfigurationPanel({
             };
             await assertStreamMatchesResult(current);
             latencyProbe.runMark(job, 'stream-verified');
+            if (breakpointRun) {
+              breakpointRunCommitted = true;
+              breakpointStore.endRun(clientRequestId, true, result.reachedBreakpointIds ?? []);
+            }
             provenanceSourceContent.current.set(current, job.document.content);
             resultGenerationFacts.current.set(current, {
               configurationKey: job.configurationKey,
@@ -982,6 +998,9 @@ export function RunConfigurationPanel({
             signal.removeEventListener('abort', cancel);
             if (activePreviewExecutionId.current === clientRequestId) {
               activePreviewExecutionId.current = null;
+            }
+            if (breakpointRun && !breakpointRunCommitted) {
+              breakpointStore.endRun(clientRequestId, false);
             }
           }
         },
@@ -1402,6 +1421,7 @@ export function RunConfigurationPanel({
       keepMapTestResults = false,
     ): string | null => {
       if (!catalog) return null;
+      if (trigger === 'automatic' && breakpointStore.activeRun()) return null;
       if (executionState.phase !== 'idle' && !supersedeOwnPreview) return null;
       pendingRevertGeneration.current = null;
       const document = explicitSource
@@ -1466,11 +1486,22 @@ export function RunConfigurationPanel({
         ...(appRun ? { bypassCache: true } : {}),
       };
       if (appRun) job.configuration.appRun = appRun;
+      const breakpointRun =
+        trigger === 'explicit' && !appRun && !fixtureId && input.backend === 'exact'
+          ? editorBreakpointRun()
+          : null;
+      if (breakpointRun && breakpointRun.breakpoints.length > 0) {
+        job.configuration.breakpointRun = breakpointRun;
+        job.bypassCache = true;
+      }
       input = {
         ...input,
         progressivePreview: liveGenerationStagesRef.current,
         ...(appRun ? { appRun: { token: appRun.token } } : {}),
         ...(!appRun && trigger === 'automatic' && !fixtureId ? { automatic: true } : {}),
+        ...(job.configuration.breakpointRun
+          ? { breakpoints: job.configuration.breakpointRun.breakpoints }
+          : {}),
       };
       job.configuration.input = input;
       const jobIdentity = JSON.stringify({

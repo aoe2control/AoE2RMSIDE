@@ -53,8 +53,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "설치된 맵 찾아보기…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "모드로 배포…"
+    "app-menu.file.deploy": {
+      "message": "배포…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "모드로…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "시나리오로…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "맵 아이콘…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "게임 폴더 열기"
@@ -134,6 +143,9 @@
     "app-menu.edit.redo": {
       "message": "다시 실행"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "닫은 탭 다시 열기"
+    },
     "app-menu.edit.cut": {
       "message": "잘라내기"
     },
@@ -160,6 +172,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "if/else 블록 들여쓰기"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "랜덤 블록 들여쓰기"
     },
     "app-menu.edit.delete-permanently": {
       "message": "삭제할 때 휴지통 건너뛰기"
@@ -2801,6 +2816,108 @@
     "deploy-panel.success.finish": {
       "message": "완료"
     },
+    "map-icon-panel.title": {
+      "message": "맵 아이콘"
+    },
+    "scenario-panel.title": {
+      "message": "시나리오로 배포"
+    },
+    "scenario-panel.name": {
+      "message": "시나리오 이름"
+    },
+    "scenario-panel.name.history": {
+      "message": "이전에 배포한 시나리오 이름"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "\\ / : * ? \" < > |가 없고 끝이 마침표나 공백이 아닌 이름을 사용하세요."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "100자 이하의 이름을 사용하세요."
+    },
+    "scenario-panel.summary": {
+      "message": "시나리오 내용"
+    },
+    "scenario-panel.summary.map": {
+      "message": "맵"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} 타일, 시드 {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "플레이어"
+    },
+    "scenario-panel.summary.player": {
+      "message": "플레이어 {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "오브젝트"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "스크립트 효과"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "없음"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS 스크립트"
+    },
+    "scenario-panel.unavailable": {
+      "message": "이 미리 보기는 시나리오로 저장할 수 없습니다. 맵을 다시 생성하세요."
+    },
+    "scenario-panel.effects.title": {
+      "message": "스크립트 효과를 유지할까요?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, other {스크립트는 효과 명령 {count}개로 게임을 바꿉니다. 시나리오는 스크립트를 실행하지 않으므로, 효과를 시작 시 적용하는 트리거로 추가할 수 있습니다.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "효과를 트리거로 변환"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "효과 제외"
+    },
+    "scenario-panel.replace.title": {
+      "message": "시나리오를 교체할까요?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "이 프로필의 시나리오 {name}을(를) 덮어씁니다."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "덮어쓰기"
+    },
+    "scenario-panel.success.title": {
+      "message": "시나리오 배포 완료"
+    },
+    "scenario-panel.success.note": {
+      "message": "게임의 시나리오 편집기에서 열거나, 로비를 만들 때 시나리오에서 선택하세요."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {시나리오 {name}을(를) 배포했습니다(오브젝트 {objects}개)} other {시나리오 {name}을(를) 배포했습니다(오브젝트 {objects}개, 스크립트 효과 {effects}개)}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "시나리오를 배포하지 못했습니다"
+    },
+    "scenario-panel.close": {
+      "message": "시나리오 배포 닫기"
+    },
+    "scenario-panel.deploy": {
+      "message": "시나리오 배포"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "시나리오 저장 위치"
+    },
+    "scenario-panel.success.path": {
+      "message": "배포된 시나리오 경로"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "시나리오 경로 복사"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "시나리오 경로 복사됨"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "시나리오 폴더 열기"
+    },
     "deploy-panel.success.title": {
       "message": "모드 배포 완료"
     },
@@ -3872,6 +3989,24 @@
     "code-editor.tab-menu.close": {
       "message": "닫기"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "닫은 탭 다시 열기"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "클릭하거나 {shortcut} 키를 눌러 중단점 추가"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "중단점: 미리 보기가 여기에서 일시 중지됩니다. 클릭하거나 {shortcut} 키를 눌러 제거하세요."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "중단점: 마지막 실행이 여기에 도달하지 않았습니다. 클릭하거나 {shortcut} 키를 눌러 제거하세요."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "미리 보기가 여기에서 일시 중지됨"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "중단점 설정/해제"
+    },
     "code-editor.run.preview": {
       "message": "미리 보기 실행"
     },
@@ -3892,6 +4027,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "중지({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "계속"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "다음 중단점까지 계속({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "한 단계"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "다음 명령의 끝까지 실행({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "미리 보기 실행 옵션"
@@ -4715,6 +4862,27 @@
     "preview-panel.tool.ruler": {
       "message": "눈금자"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "눈금자 옵션"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "맵 가장자리에 길이 표시"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "플레이어 시야"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "플레이어 시야 옵션"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "플레이어 {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "중립"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "안개 불투명도"
+    },
     "preview-panel.tool.small-trees": {
       "message": "작은 나무"
     },
@@ -4723,6 +4891,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "이미지 저장…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "모두 선택"
     },
     "preview-panel.output.image-saved": {
       "message": "맵 이미지를 {name} 이름으로 저장했습니다"
@@ -4774,6 +4945,15 @@
     },
     "preview-panel.status.label": {
       "message": "미리 보기 상태"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {{line}번째 줄 앞에서 일시 중지됨} other {{line}번째 줄 뒤에서 일시 중지됨}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "열려 있지 않은 파일에서 일시 중지됨"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "이 시점의 맵은 너무 커서 표시할 수 없습니다"
     },
     "preview-panel.status.uncertified": {
       "message": "미인증"
@@ -5416,6 +5596,9 @@
     },
     "game-options.civilization.random": {
       "message": "무작위"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "무작위 (기본 게임)"
     },
     "game-options.civilization.britons": {
       "message": "브리튼인"

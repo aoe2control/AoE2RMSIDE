@@ -18,6 +18,7 @@ import type {
 import type { ExecutionProgressEvent } from '../shared/execution-cost';
 import { DesktopError } from '../shared/desktop-error';
 import type { PreviewCandidate } from '../shared/preview-candidate';
+import type { PreviewBreakpointAction, PreviewBreakpointStop } from '../shared/breakpoints';
 import { LanguageServerClient } from './language-server-client';
 import { MapTestClient } from './map-test-client';
 import { RmsdClient } from './protocol-client';
@@ -222,6 +223,7 @@ export class NativeSupervisor {
     localContent?: LocalContentSource,
     onPreviewCandidate?: (candidate: PreviewCandidate) => void,
     xsStart?: XsStartCheckRequest,
+    onBreakpointStop?: (stop: PreviewBreakpointStop) => void,
   ): Promise<PreviewGenerationResult> {
     if (!this.rmsd) throw rmsdUnavailable();
     return this.rmsd.generatePreview(
@@ -234,7 +236,13 @@ export class NativeSupervisor {
       localContent,
       onPreviewCandidate,
       xsStart,
+      onBreakpointStop,
     );
+  }
+
+  async resumePreview(clientRequestId: string, action: PreviewBreakpointAction): Promise<boolean> {
+    if (!this.rmsd) return false;
+    return this.rmsd.resumeGeneration(clientRequestId, action);
   }
 
   xsStartCheckSupported(): boolean {
@@ -835,6 +843,7 @@ const languageServerRequestMethods = new Set<LanguageServerRequestMethod>([
   'textDocument/documentHighlight',
   'textDocument/documentSymbol',
   'textDocument/foldingRange',
+  'rms/breakpointSites',
   'textDocument/semanticTokens/full',
   'workspace/symbol',
   'textDocument/formatting',

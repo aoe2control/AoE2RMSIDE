@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://rmside.invalid/schemas/start-sight/v1",
+  "title": "Start sight data of one behavior profile",
+  "description": "Neutral numeric gameplay data for the preview's start vision: each object's line of sight per civilization table, and the line-of-sight effects and master upgrades a player has at the start of a match. Values are IEEE 754 binary32 bit patterns so the engine reproduces the game's single-precision arithmetic.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "compatibility",
+    "behaviorProfileId",
+    "contentPackId",
+    "productVersion",
+    "objects",
+    "objectVariants",
+    "technologyEffects"
+  ],
+  "properties": {
+    "$schema": { "const": "https://rmside.invalid/schemas/start-sight/v1" },
+    "schemaVersion": { "const": "1.0.0" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimumMajor", "maximumMajor"],
+      "properties": {
+        "minimumMajor": { "const": 1 },
+        "maximumMajor": { "const": 1 }
+      }
+    },
+    "behaviorProfileId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$" },
+    "contentPackId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$" },
+    "productVersion": { "type": "string", "pattern": "^[0-9]{1,5}(\\.[0-9]{1,6}){3}$" },
+    "objects": {
+      "description": "One entry per object master in strictly ascending objectId order: the line of sight of most civilization tables.",
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["objectId", "lineOfSightF32Bits"],
+        "properties": {
+          "objectId": { "$ref": "#/definitions/objectId" },
+          "lineOfSightF32Bits": { "$ref": "#/definitions/f32Bits" }
+        }
+      }
+    },
+    "objectVariants": {
+      "description": "Sparse overrides: the listed civilization tables (0 is Gaia's) give the object another line of sight. Ordered by objectId, then by first civilization; one object's variants never share a civilization.",
+      "type": "array",
+      "maxItems": 65536,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["objectId", "civilizationIds", "lineOfSightF32Bits"],
+        "properties": {
+          "objectId": { "$ref": "#/definitions/objectId" },
+          "civilizationIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 256,
+            "uniqueItems": true,
+            "items": { "type": "integer", "minimum": 0, "maximum": 255 }
+          },
+          "lineOfSightF32Bits": { "$ref": "#/definitions/f32Bits" }
+        }
+      }
+    },
+    "technologyEffects": {
+      "description": "Applied in file order. An own effect applies to a player of the civilization (-1 is every civilization) whose starting age is requiredAge or later; a team effect applies to a player whose civilization or any teammate's civilization is civilizationId.",
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["civilizationId", "route", "requiredAge", "operations", "upgrades"],
+        "properties": {
+          "technologyId": { "type": "integer", "minimum": 0, "maximum": 65535 },
+          "civilizationId": { "type": "integer", "minimum": -1, "maximum": 255 },
+          "route": { "enum": ["own", "team"] },
+          "requiredAge": { "enum": ["dark", "feudal", "castle", "imperial"] },
+          "operations": {
+            "description": "Line-of-sight changes in row order. A row with objectId changes that master; with classId every master of the class; with both, the master only when it has the class. Every row names at least one of them.",
+            "type": "array",
+            "maxItems": 256,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "valueF32Bits"],
+              "minProperties": 3,
+              "properties": {
+                "objectId": { "$ref": "#/definitions/objectId" },
+                "classId": { "type": "integer", "minimum": 0, "maximum": 65535 },
+                "kind": { "enum": ["set", "add", "multiply"] },
+                "valueF32Bits": { "$ref": "#/definitions/f32Bits" }
+              }
+            }
+          },
+          "upgrades": {
+            "description": "Owner master upgrades in row order: an object of objectId sees as targetObjectId, with that master's line of sight and footprint.",
+            "type": "array",
+            "maxItems": 256,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["objectId", "targetObjectId"],
+              "properties": {
+                "objectId": { "$ref": "#/definitions/objectId" },
+                "targetObjectId": { "$ref": "#/definitions/objectId" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "objectId": { "type": "integer", "minimum": 0, "maximum": 65535 },
+    "f32Bits": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+  }
+}

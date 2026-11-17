@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Procházet nainstalované mapy…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Nasadit jako mod…"
+    "app-menu.file.deploy": {
+      "message": "Nasadit…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "jako mod…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "jako scénář…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Ikona mapy…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Otevřít složku hry"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Znovu"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Znovu otevřít zavřenou kartu"
+    },
     "app-menu.edit.cut": {
       "message": "Vyjmout"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "Odsadit bloky if/else"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Odsadit náhodné bloky"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Při mazání nepoužívat koš"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Dokončit"
     },
+    "map-icon-panel.title": {
+      "message": "Ikona mapy"
+    },
+    "scenario-panel.title": {
+      "message": "Nasadit jako scénář"
+    },
+    "scenario-panel.name": {
+      "message": "Název scénáře"
+    },
+    "scenario-panel.name.history": {
+      "message": "Dřívější názvy scénářů"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Použijte název bez \\ / : * ? \" < > | a bez tečky nebo mezery na konci."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Použijte název o nejvýše 100 znacích."
+    },
+    "scenario-panel.summary": {
+      "message": "Obsah scénáře"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Mapa"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} políček, semínko {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Hráči"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Hráč {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Objekty"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Efekty skriptu"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Žádné"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "Skript XS"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Tento náhled nelze uložit jako scénář. Vygenerujte mapu znovu."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Zachovat efekty skriptu?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Skript mění hru {count} příkazem efektu. Scénář skript nespouští, proto lze efekt přidat jako spouštěč, který ho použije na začátku.} few {Skript mění hru {count} příkazy efektů. Scénář skript nespouští, proto lze efekty přidat jako spouštěč, který je použije na začátku.} many {Skript mění hru {count} příkazy efektů. Scénář skript nespouští, proto lze efekty přidat jako spouštěč, který je použije na začátku.} other {Skript mění hru {count} příkazy efektů. Scénář skript nespouští, proto lze efekty přidat jako spouštěč, který je použije na začátku.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Převést efekty na spouštěče"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Vynechat efekty"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Nahradit scénář?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Scénář {name} v tomto profilu bude přepsán."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Nahradit"
+    },
+    "scenario-panel.success.title": {
+      "message": "Scénář úspěšně nasazen"
+    },
+    "scenario-panel.success.note": {
+      "message": "Otevřete ho v editoru scénářů ve hře, nebo ho vyberte v části Scénář při vytváření lobby."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Scénář {name} nasazen s {objects} objekty} one {Scénář {name} nasazen s {objects} objekty a {effects} efektem skriptu} few {Scénář {name} nasazen s {objects} objekty a {effects} efekty skriptu} many {Scénář {name} nasazen s {objects} objekty a {effects} efekty skriptu} other {Scénář {name} nasazen s {objects} objekty a {effects} efekty skriptu}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Scénář se nepodařilo nasadit"
+    },
+    "scenario-panel.close": {
+      "message": "Zavřít nasazení scénáře"
+    },
+    "scenario-panel.deploy": {
+      "message": "Nasadit scénář"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Scénář byl uložen do"
+    },
+    "scenario-panel.success.path": {
+      "message": "Cesta k nasazenému scénáři"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Kopírovat cestu ke scénáři"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Cesta ke scénáři zkopírována"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Otevřít složku scénářů"
+    },
     "deploy-panel.success.title": {
       "message": "Mod úspěšně nasazen"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Zavřít"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Znovu otevřít zavřenou kartu"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Kliknutím nebo klávesou {shortcut} přidáte zarážku"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Zarážka: náhled se zde pozastaví. Kliknutím nebo klávesou {shortcut} ji odeberete."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Zarážka: poslední spuštění k ní nedošlo. Kliknutím nebo klávesou {shortcut} ji odeberete."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Náhled je zde pozastaven"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Přepnout zarážku"
+    },
     "code-editor.run.preview": {
       "message": "Spustit náhled"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Zastavit ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Pokračovat"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Pokračovat k další zarážce ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Krok"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Krok na konec dalšího příkazu ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Možnosti spuštění náhledu"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Pravítko"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Možnosti pravítka"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Délky na okrajích mapy"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Pohled hráče"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Možnosti pohledu hráče"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Hráč {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Neprůhlednost mlhy"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Malé stromy"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Uložit obrázek…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Vybrat vše"
     },
     "preview-panel.output.image-saved": {
       "message": "Obrázek mapy uložen jako {name}"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "Stav náhledu"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Pozastaveno před řádkem {line}} other {Pozastaveno za řádkem {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Pozastaveno v souboru, který není otevřený"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "Mapa v tomto bodě je příliš velká na zobrazení"
     },
     "preview-panel.status.uncertified": {
       "message": "Necertifikováno"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Náhodná"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Náhodná (základní hra)"
     },
     "game-options.civilization.britons": {
       "message": "Britové"

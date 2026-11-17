@@ -10,6 +10,7 @@ export interface RmsEnterOptions {
   eol: string;
   indentUnit: string;
   indentConditionals?: boolean;
+  indentRandom?: boolean;
 }
 
 export interface RmsEnterEdit {
@@ -18,7 +19,7 @@ export interface RmsEnterEdit {
   endColumn: number;
   text: string;
   caret: { lineNumber: number; column: number };
-  closes: 'block' | 'brace' | 'if' | 'random';
+  closes: 'block' | 'brace' | 'if' | 'random' | 'branch' | 'random-end';
 }
 
 export const rmsEnterMaximumLength = 4 * 1024 * 1024;
@@ -109,6 +110,21 @@ function leadingWhitespace(text: string): string {
   return /^[ \t]*/u.exec(text)![0];
 }
 
+function openRandomIndentation(lines: RmsLines, lineNumber: number): string | null {
+  const open: string[] = [];
+  let depth = 0;
+  for (let line = 1; line < lineNumber; line += 1) {
+    const text = lines.line(line);
+    const state = scanRmsLine(text, depth);
+    depth = state.depth;
+    for (const word of state.words) {
+      if (word.text === 'start_random') open.push(leadingWhitespace(text));
+      else if (word.text === 'end_random') open.pop();
+    }
+  }
+  return open.at(-1) ?? null;
+}
+
 export function rmsEnterEdit(
   lines: RmsLines,
   lineNumber: number,
@@ -122,10 +138,12 @@ export function rmsEnterEdit(
   const last = /\S+$/u.exec(trimmed)?.[0];
   const first = /^\s*(\S+)/u.exec(trimmed)?.[1];
   if (!last || !first) return null;
+  const indentRandom = options.indentRandom !== false;
   const candidate =
     last === '{' ||
     first === 'if' ||
     first === 'start_random' ||
+    (indentRandom && (first === 'percent_chance' || first === 'end_random')) ||
     rmsBlockOperandCount(first) !== null;
   if (!candidate) return null;
 
@@ -178,7 +196,28 @@ export function rmsEnterEdit(
     if (!staysOpen(lines, lineNumber, state.depth, 'start_random', 'end_random')) {
       return null;
     }
-    return replace(`${eol}${indent}${eol}${indent}end_random`, 1, indent.length + 1, 'random');
+    const inner = indentRandom ? indent + indentUnit : indent;
+    return replace(`${eol}${inner}${eol}${indent}end_random`, 1, inner.length + 1, 'random');
+  }
+  if (head === 'percent_chance' || (head === 'end_random' && words.length === 1)) {
+    if (
+      words.includes('start_random') ||
+      (head === 'percent_chance' && words.includes('end_random'))
+    ) {
+      return null;
+    }
+    const block = openRandomIndentation(lines, lineNumber);
+    if (block === null) return null;
+    const level = head === 'percent_chance' ? block + indentUnit : block;
+    const next = head === 'percent_chance' ? level + indentUnit : block;
+    return {
+      lineNumber,
+      startColumn: 1,
+      endColumn: text.length + 1,
+      text: `${level}${trimmed.trimStart()}${eol}${next}`,
+      caret: { lineNumber: lineNumber + 1, column: next.length + 1 },
+      closes: head === 'percent_chance' ? 'branch' : 'random-end',
+    };
   }
   return null;
 }
@@ -197,6 +236,7 @@ export function registerRmsEnter(
   editor: monaco.editor.IStandaloneCodeEditor,
   api: typeof monaco,
   indentConditionals: () => boolean = () => true,
+  indentRandom: () => boolean = () => true,
 ): monaco.IDisposable {
   const editorKey = editor.createContextKey<boolean>('rmside.rmsEnterEditor', true);
   const focus =
@@ -233,6 +273,7 @@ export function registerRmsEnter(
       eol: model.getEOL(),
       indentUnit: indentUnitOf(model.getOptions()),
       indentConditionals: indentConditionals(),
+      indentRandom: indentRandom(),
     });
     if (!edit) {
       ordinaryEnter();

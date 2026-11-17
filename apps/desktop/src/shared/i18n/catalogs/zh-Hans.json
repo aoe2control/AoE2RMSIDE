@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "浏览已安装地图…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "部署为模组…"
+    "app-menu.file.deploy": {
+      "message": "部署…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "为模组…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "为场景…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "地图图标…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "打开游戏文件夹"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "重做"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "重新打开关闭的标签页"
+    },
     "app-menu.edit.cut": {
       "message": "剪切"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "缩进 if/else 代码块"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "缩进随机代码块"
     },
     "app-menu.edit.delete-permanently": {
       "message": "删除时跳过回收站"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "完成"
     },
+    "map-icon-panel.title": {
+      "message": "地图图标"
+    },
+    "scenario-panel.title": {
+      "message": "部署为场景"
+    },
+    "scenario-panel.name": {
+      "message": "场景名称"
+    },
+    "scenario-panel.name.history": {
+      "message": "以前部署的场景名称"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "名称中不能含有 \\ / : * ? \" < > |，且末尾不能是句点或空格。"
+    },
+    "scenario-panel.name.too-long": {
+      "message": "名称最多 100 个字符。"
+    },
+    "scenario-panel.summary": {
+      "message": "场景内容"
+    },
+    "scenario-panel.summary.map": {
+      "message": "地图"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} 个地块，种子 {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "玩家"
+    },
+    "scenario-panel.summary.player": {
+      "message": "玩家 {slot}：{civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "对象"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "脚本效果"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "无"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS 脚本"
+    },
+    "scenario-panel.unavailable": {
+      "message": "此预览无法保存为场景。请重新生成地图。"
+    },
+    "scenario-panel.effects.title": {
+      "message": "保留脚本效果？"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, other {脚本通过 {count} 条效果命令改变游戏。场景不会运行脚本，因此可以将效果添加为在开始时应用它们的触发器。}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "将效果转为触发器"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "不包含效果"
+    },
+    "scenario-panel.replace.title": {
+      "message": "替换场景？"
+    },
+    "scenario-panel.replace.description": {
+      "message": "此玩家档案中的场景 {name} 将被覆盖。"
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "替换"
+    },
+    "scenario-panel.success.title": {
+      "message": "场景已成功部署"
+    },
+    "scenario-panel.success.note": {
+      "message": "在游戏的场景编辑器中打开它，或在创建大厅时从“场景”中选择它。"
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {已部署场景 {name}，含 {objects} 个对象} other {已部署场景 {name}，含 {objects} 个对象和 {effects} 个脚本效果}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "无法部署场景"
+    },
+    "scenario-panel.close": {
+      "message": "关闭场景部署"
+    },
+    "scenario-panel.deploy": {
+      "message": "部署场景"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "场景已保存到"
+    },
+    "scenario-panel.success.path": {
+      "message": "已部署场景的路径"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "复制场景路径"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "已复制场景路径"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "打开场景文件夹"
+    },
     "deploy-panel.success.title": {
       "message": "模组已成功部署"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "关闭"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "重新打开关闭的标签页"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "单击或按 {shortcut} 添加断点"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "断点：预览在此暂停。单击或按 {shortcut} 删除。"
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "断点：上次运行未到达此处。单击或按 {shortcut} 删除。"
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "预览在此暂停"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "切换断点"
+    },
     "code-editor.run.preview": {
       "message": "运行预览"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "停止（{shortcut}）"
+    },
+    "code-editor.run.continue": {
+      "message": "继续"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "继续运行到下一个断点（{shortcut}）"
+    },
+    "code-editor.run.step": {
+      "message": "单步"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "运行到下一个命令结束（{shortcut}）"
     },
     "code-editor.run-menu.label": {
       "message": "预览运行选项"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "标尺"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "标尺选项"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "在地图边缘显示长度"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "玩家视野"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "玩家视野选项"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "玩家 {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "大地之母"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "迷雾不透明度"
+    },
     "preview-panel.tool.small-trees": {
       "message": "小树"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "保存图像…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "全选"
     },
     "preview-panel.output.image-saved": {
       "message": "已将地图图像保存为 {name}"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "预览状态"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {已在第 {line} 行之前暂停} other {已在第 {line} 行之后暂停}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "已在未打开的文件中暂停"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "此时的地图太大，无法显示"
     },
     "preview-panel.status.uncertified": {
       "message": "未经认证"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "随机"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "随机（基础游戏）"
     },
     "game-options.civilization.britons": {
       "message": "不列颠"

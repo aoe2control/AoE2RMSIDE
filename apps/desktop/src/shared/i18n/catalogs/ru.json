@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Просмотреть установленные карты…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Развернуть как мод…"
+    "app-menu.file.deploy": {
+      "message": "Развернуть…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "как мод…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "как сценарий…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Значок карты…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Открыть папку игры"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Повторить"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Открыть закрытую вкладку"
+    },
     "app-menu.edit.cut": {
       "message": "Вырезать"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "Отступы в блоках if/else"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Отступы в случайных блоках"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Удалять без перемещения в корзину"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Готово"
     },
+    "map-icon-panel.title": {
+      "message": "Значок карты"
+    },
+    "scenario-panel.title": {
+      "message": "Развернуть как сценарий"
+    },
+    "scenario-panel.name": {
+      "message": "Имя сценария"
+    },
+    "scenario-panel.name.history": {
+      "message": "Прежние имена сценариев"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Используйте имя без \\ / : * ? \" < > | и без точки или пробела в конце."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Используйте имя не длиннее 100 символов."
+    },
+    "scenario-panel.summary": {
+      "message": "Содержимое сценария"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Карта"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} клеток, зерно {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Игроки"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Игрок {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Объекты"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Эффекты скрипта"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Нет"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "Скрипт XS"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Этот предпросмотр нельзя сохранить как сценарий. Сгенерируйте карту заново."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Сохранить эффекты скрипта?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Скрипт меняет игру {count} командой эффекта. Сценарий не запускает скрипт, поэтому эффект можно добавить как триггер, который применит его в начале.} few {Скрипт меняет игру {count} командами эффектов. Сценарий не запускает скрипт, поэтому эффекты можно добавить как триггер, который применит их в начале.} many {Скрипт меняет игру {count} командами эффектов. Сценарий не запускает скрипт, поэтому эффекты можно добавить как триггер, который применит их в начале.} other {Скрипт меняет игру {count} командами эффектов. Сценарий не запускает скрипт, поэтому эффекты можно добавить как триггер, который применит их в начале.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Превратить эффекты в триггеры"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Не включать эффекты"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Заменить сценарий?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Сценарий {name} в этом профиле будет перезаписан."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Заменить"
+    },
+    "scenario-panel.success.title": {
+      "message": "Сценарий успешно развёрнут"
+    },
+    "scenario-panel.success.note": {
+      "message": "Откройте его в редакторе сценариев игры или выберите его в разделе «Сценарий» при создании лобби."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Сценарий {name} развёрнут, объектов: {objects}} one {Сценарий {name} развёрнут, объектов: {objects}, эффектов скрипта: {effects}} few {Сценарий {name} развёрнут, объектов: {objects}, эффектов скрипта: {effects}} many {Сценарий {name} развёрнут, объектов: {objects}, эффектов скрипта: {effects}} other {Сценарий {name} развёрнут, объектов: {objects}, эффектов скрипта: {effects}}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Не удалось развернуть сценарий"
+    },
+    "scenario-panel.close": {
+      "message": "Закрыть развёртывание сценария"
+    },
+    "scenario-panel.deploy": {
+      "message": "Развернуть сценарий"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Сценарий сохранён в папку"
+    },
+    "scenario-panel.success.path": {
+      "message": "Путь к развёрнутому сценарию"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Копировать путь к сценарию"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Путь к сценарию скопирован"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Открыть папку сценариев"
+    },
     "deploy-panel.success.title": {
       "message": "Мод успешно развёрнут"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Закрыть"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Открыть закрытую вкладку"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Щёлкните или нажмите {shortcut}, чтобы добавить точку останова"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Точка останова: предпросмотр приостанавливается здесь. Щёлкните или нажмите {shortcut}, чтобы удалить её."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Точка останова: последний запуск до неё не дошёл. Щёлкните или нажмите {shortcut}, чтобы удалить её."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Предпросмотр приостановлен здесь"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Переключить точку останова"
+    },
     "code-editor.run.preview": {
       "message": "Запустить предпросмотр"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Остановить ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Продолжить"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Продолжить до следующей точки останова ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Шаг"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Выполнить до конца следующей команды ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Параметры запуска предпросмотра"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Линейка"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Настройки линейки"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Длины по краям карты"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Вид игрока"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Параметры вида игрока"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Игрок {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Природа"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Непрозрачность тумана"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Маленькие деревья"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Сохранить изображение…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Выделить всё"
     },
     "preview-panel.output.image-saved": {
       "message": "Изображение карты сохранено как {name}"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "Состояние предпросмотра"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Пауза перед строкой {line}} other {Пауза после строки {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Пауза в файле, который не открыт"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "Карта на этом этапе слишком велика для показа"
     },
     "preview-panel.status.uncertified": {
       "message": "Не сертифицировано"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Случайно"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Случайно (базовая игра)"
     },
     "game-options.civilization.britons": {
       "message": "Британцы"

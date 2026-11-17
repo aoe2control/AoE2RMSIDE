@@ -230,6 +230,8 @@ export function reconstructedPreviewResult(
   const {
     cliffPieceInstanceIdsLe: _cliffPieceIds,
     appearanceInstanceIdsLe: _appearanceIds,
+    startVisionLe: _startVision,
+    scenario: _scenario,
     ...shared
   } = template;
   const presentationIds =
@@ -241,6 +243,17 @@ export function reconstructedPreviewResult(
             : {}),
           ...(template.appearanceInstanceIdsLe
             ? { appearanceInstanceIdsLe: Uint8Array.from(template.appearanceInstanceIdsLe) }
+            : {}),
+          ...(template.startVisionLe
+            ? { startVisionLe: Uint8Array.from(template.startVisionLe) }
+            : {}),
+          ...(template.scenario
+            ? {
+                scenario: {
+                  ...template.scenario,
+                  objectHeights256Le: Uint8Array.from(template.scenario.objectHeights256Le),
+                },
+              }
             : {}),
         };
   return {

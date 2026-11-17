@@ -47,6 +47,7 @@ import {
 import {
   ChevronUp,
   Copy,
+  Eye,
   Grid3x3,
   MousePointer2,
   Ruler,
@@ -58,14 +59,38 @@ import {
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Slider } from '@/components/ui/slider';
 import { clampTileGridOpacityPercent, tileGridOpacityPercent } from '../shared/tile-grid-opacity';
-import { ContextMenu, ContextMenuContent, ContextMenuItem } from '@/components/ui/context-menu';
+import {
+  clampStartVisionFogPercent,
+  startVisionFogPercent,
+  startVisionGaiaSlot,
+} from '../shared/start-vision';
+import {
+  changeStartVisionCheck,
+  shownStartVisionSlots,
+  startVisionAvailable,
+  startVisionFogTiles,
+  startVisionMenuSlots,
+  startVisionPlayerSlots,
+} from './preview-start-vision';
+import { StartVisionFogLayer } from './preview-start-vision-fog';
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+} from '@/components/ui/context-menu';
+import { shortcutLabel } from '../shared/application-shortcuts';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { t as translate } from '../shared/i18n/translator';
+import { breakpointStore } from './breakpoint-store';
 import appIconUrl from '../../../../assets/original/branding/aoe2rmside-icon-512.png';
 import type {
   LocalPresentationNames,
@@ -110,7 +135,9 @@ import {
   handOverGameArtPicture,
   keepsGameArtPicture,
   setGameArtKindVisibility,
+  setGameArtObjectFog,
   setGameArtTreeScale,
+  startVisionFogZIndex,
   syncGameArtLayers,
   writeGameArtDataset,
   type GameArtPictureRaised,
@@ -269,6 +296,7 @@ import {
   previewKeyboardHelp,
   previewKeyboardShortcuts,
   type PreviewKeyboardCursor,
+  previewSelectAllShortcut,
 } from './preview-keyboard';
 import { panDragCamera, type PreviewPanDrag } from './preview-pan-drag';
 import {
@@ -334,6 +362,7 @@ import {
   objectNameForId,
   operationTileIndices,
   operationWrittenTiles,
+  ownerPreviewColor,
   partitionHelperLayers,
   previewHelperObjectIds,
   previewLegendFilterMatches,
@@ -609,6 +638,16 @@ const rulerButton = {
   ),
 } as const;
 
+const startVisionButton = {
+  key: 'startVision',
+  labelId: 'preview-panel.tool.start-vision',
+  renderIcon: (ref: Ref<AnimatedIconHandle>) => (
+    <HoverScaleIcon ref={ref}>
+      <Eye aria-hidden="true" size={14} />
+    </HoverScaleIcon>
+  ),
+} as const;
+
 const smallTreesButton = {
   key: 'smallTrees',
   labelId: 'preview-panel.tool.small-trees',
@@ -768,6 +807,195 @@ function PreviewTileGridControl({
                 value={shown}
               />
               <span aria-hidden="true" className="preview-tile-grid-opacity-value">
+                {valueText(shown)}
+              </span>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : null}
+    </div>
+  );
+}
+
+function PreviewRulerControl({
+  enabled,
+  edges,
+  onToggle,
+  onEdges,
+}: {
+  enabled: boolean;
+  edges: boolean;
+  onToggle(): void;
+  onEdges(next: boolean): void;
+}) {
+  const { t } = useI18n();
+  return (
+    <div className="preview-ruler-control" data-ruler={enabled ? 'on' : 'off'}>
+      <PreviewOverlayButton
+        active={enabled}
+        className="preview-ruler-button"
+        label={t(rulerButton.labelId)}
+        onToggle={onToggle}
+        renderIcon={rulerButton.renderIcon}
+      />
+      {enabled ? (
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger
+            render={
+              <Button
+                aria-label={t('preview-panel.tool.ruler.options')}
+                className="preview-map-tool preview-ruler-menu-trigger"
+                size="icon-compact"
+                type="button"
+                variant="secondary"
+              />
+            }
+          >
+            <ChevronUp aria-hidden="true" size={12} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="start"
+            className="preview-ruler-menu"
+            side="top"
+            sideOffset={6}
+            surface="popup"
+          >
+            <DropdownMenuCheckboxItem
+              checked={edges}
+              closeOnClick={false}
+              data-testid="preview-ruler-edges"
+              onCheckedChange={onEdges}
+            >
+              {t('preview-panel.ruler.edge-lengths')}
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : null}
+    </div>
+  );
+}
+
+function cssHexColor(color: number): string {
+  return `#${(color & 0xffffff).toString(16).padStart(6, '0')}`;
+}
+
+function PreviewStartVisionControl({
+  enabled,
+  entries,
+  checked,
+  fogPercent,
+  playerColorIds,
+  onToggle,
+  onCheck,
+  onFogPercent,
+}: {
+  enabled: boolean;
+  entries: readonly number[];
+  checked: readonly number[];
+  fogPercent: number;
+  playerColorIds: readonly number[];
+  onToggle(): void;
+  onCheck(slot: number, on: boolean): boolean;
+  onFogPercent(percent: number): void;
+}) {
+  const { t, translator } = useI18n();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [draft, setDraft] = useState<number | null>(null);
+  const shown = draft ?? fogPercent;
+  const valueText = (percent: number) =>
+    translator.formatNumber(percent / 100, { style: 'percent' });
+  return (
+    <div className="preview-start-vision-control" data-start-vision={enabled ? 'on' : 'off'}>
+      <PreviewOverlayButton
+        active={enabled}
+        className="preview-start-vision-button"
+        label={t(startVisionButton.labelId)}
+        onToggle={onToggle}
+        renderIcon={startVisionButton.renderIcon}
+      />
+      {enabled ? (
+        <DropdownMenu modal={false} onOpenChange={setMenuOpen} open={menuOpen}>
+          <DropdownMenuTrigger
+            render={
+              <Button
+                aria-label={t('preview-panel.tool.start-vision.options')}
+                className="preview-map-tool preview-start-vision-menu-trigger"
+                size="icon-compact"
+                type="button"
+                variant="secondary"
+              />
+            }
+          >
+            <ChevronUp aria-hidden="true" size={12} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="start"
+            className="preview-start-vision-menu"
+            side="top"
+            sideOffset={6}
+            surface="popup"
+          >
+            {entries.map((slot) => (
+              <DropdownMenuCheckboxItem
+                checked={checked.includes(slot)}
+                closeOnClick={false}
+                data-owner-slot={slot}
+                data-testid="preview-start-vision-entry"
+                key={slot}
+                onCheckedChange={(next) => {
+                  if (!onCheck(slot, next)) setMenuOpen(false);
+                }}
+              >
+                <span
+                  aria-hidden="true"
+                  className="preview-player-color-swatch"
+                  style={{ backgroundColor: cssHexColor(ownerPreviewColor(slot, playerColorIds)) }}
+                />
+                {slot === startVisionGaiaSlot
+                  ? t('preview-panel.start-vision.gaia')
+                  : t('preview-panel.start-vision.player', { player: slot })}
+              </DropdownMenuCheckboxItem>
+            ))}
+            <DropdownMenuSeparator />
+            <div
+              className="preview-start-vision-fog"
+              onKeyDown={(event) => {
+                if (
+                  [
+                    'ArrowLeft',
+                    'ArrowRight',
+                    'ArrowUp',
+                    'ArrowDown',
+                    'Home',
+                    'End',
+                    'PageUp',
+                    'PageDown',
+                  ].includes(event.key)
+                ) {
+                  event.stopPropagation();
+                }
+              }}
+            >
+              <span aria-hidden="true">{t('preview-panel.start-vision.fog-opacity')}</span>
+              <Slider
+                data-testid="preview-start-vision-fog"
+                getAriaLabel={() => t('preview-panel.start-vision.fog-opacity')}
+                getAriaValueText={(_formatted, value) => valueText(value)}
+                max={startVisionFogPercent.maximum}
+                min={startVisionFogPercent.minimum}
+                onValueChange={(value) => {
+                  const next = clampStartVisionFogPercent(value);
+                  setDraft(next);
+                  onFogPercent(next);
+                }}
+                onValueCommitted={(value) => {
+                  setDraft(null);
+                  onFogPercent(clampStartVisionFogPercent(value));
+                }}
+                step={startVisionFogPercent.step}
+                value={shown}
+              />
+              <span aria-hidden="true" className="preview-start-vision-fog-value">
                 {valueText(shown)}
               </span>
             </div>
@@ -1235,6 +1463,14 @@ export function PreviewPanel() {
     setPreviewTileGridOpacity,
     previewRuler,
     setPreviewRuler,
+    previewRulerEdges,
+    setPreviewRulerEdges,
+    previewStartVision,
+    setPreviewStartVision,
+    previewStartVisionSlots,
+    setPreviewStartVisionSlots,
+    previewStartVisionFogPercent,
+    setPreviewStartVisionFogPercent,
     previewSmallTrees,
     setPreviewSmallTrees,
     gpuMapRendering,
@@ -1290,6 +1526,53 @@ export function PreviewPanel() {
   };
   useAppPictureViewBridge(appPictureView);
   const scene = useMemo(() => (map ? decodeTopDownScene(map) : null), [map]);
+  const startVisionOffered = startVisionAvailable(map, previewMapOrigin);
+  const mapPlayerColorIds = map?.playerColorIds;
+  const startVisionEntries = useMemo(
+    () => startVisionMenuSlots(startVisionPlayerSlots(mapPlayerColorIds ?? [])),
+    [mapPlayerColorIds],
+  );
+  const startVisionChecked = useMemo(
+    () => shownStartVisionSlots(previewStartVisionSlots, startVisionEntries),
+    [previewStartVisionSlots, startVisionEntries],
+  );
+  const startVisionColumn =
+    startVisionOffered && previewStartVision ? (map?.startVisionLe ?? null) : null;
+  const startVisionWidth = map?.width ?? 0;
+  const startVisionHeight = map?.height ?? 0;
+  const startVisionFog = useMemo(
+    () =>
+      startVisionColumn
+        ? startVisionFogTiles(
+            startVisionColumn,
+            startVisionWidth,
+            startVisionHeight,
+            startVisionChecked,
+          )
+        : null,
+    [startVisionChecked, startVisionColumn, startVisionHeight, startVisionWidth],
+  );
+  const startVisionFogLayer = useRef<StartVisionFogLayer | null>(null);
+  const startVisionFogState = useRef({ fog: startVisionFog, opacity: 0 });
+  startVisionFogState.current = {
+    fog: startVisionFog,
+    opacity: previewStartVisionFogPercent / 100,
+  };
+  useEffect(() => {
+    startVisionFogLayer.current?.set(startVisionFog, startVisionFogState.current.opacity);
+    const container = host.current;
+    if (!container) return;
+    container.dataset.startVision = startVisionFog ? 'on' : 'off';
+    container.dataset.startVisionSlots = startVisionFog ? startVisionChecked.join(',') : '';
+    container.dataset.startVisionFogged = String(
+      startVisionFog ? startVisionFog.reduce((count, fogged) => count + fogged, 0) : 0,
+    );
+  }, [startVisionChecked, startVisionFog]);
+  useEffect(() => {
+    startVisionFogLayer.current?.setOpacity(previewStartVisionFogPercent / 100);
+    const container = host.current;
+    if (container) container.dataset.startVisionFogPercent = String(previewStartVisionFogPercent);
+  }, [previewStartVisionFogPercent]);
   const connectionRoutes = useMemo<ConnectionRouteSet | null>(
     () => (map ? decodeConnectionRoutes(map) : null),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1317,7 +1600,16 @@ export function PreviewPanel() {
     previewCandidates.subscribeActivity,
     previewCandidates.getActivity,
   );
-  const generationActive = generationActivity !== null;
+  const breakpointPause = useSyncExternalStore(
+    (listener) => breakpointStore.subscribe(listener),
+    () => breakpointStore.currentPause(),
+  );
+  const breakpointLocation = useSyncExternalStore(
+    (listener) => breakpointStore.subscribe(listener),
+    () => breakpointStore.pausedLocation(),
+  );
+  const pausedMapShown = breakpointPause !== null && previewMapOrigin === 'breakpoint';
+  const generationActive = generationActivity !== null && !pausedMapShown;
   const boundaryMotion = useBoundaryMotion(generationActive);
   useOverlayPointerHover(host);
   useReadoutLabelGlide(host);
@@ -2778,6 +3070,10 @@ export function PreviewPanel() {
               setGameArtMarkerRedraws((count) => count + 1);
             } else layer.visible = true;
           }
+          const fogLayer = startVisionFogLayer.current;
+          if (fogLayer && !fogLayer.underSprites && startVisionFogState.current.fog) {
+            setGameArtMarkerRedraws((count) => count + 1);
+          }
           const released = releaseKeptLiveStage.current();
           const followed = followShownPicture.current();
           if (released || followed) renderScheduler.current?.renderNow();
@@ -2941,6 +3237,35 @@ export function PreviewPanel() {
       'wallJoins' in drawnObjects ? drawnObjects.wallJoins : 0,
     );
     container.dataset.objectMarkerRadiusRange = drawnObjects.radiusRange;
+    const fogUnderSprites =
+      !minimapObjectsShown &&
+      markerSkips.spriteObjects !== undefined &&
+      terrainCache.gameArtPresentation.outgoing === null;
+    const fogTerrainCache = terrainCache;
+    const fogLayer = new StartVisionFogLayer(
+      scene.width,
+      scene.height,
+      !candidateCoversScene && terrainCache.raised ? committedShownRaised(terrainCache) : null,
+      fogUnderSprites
+        ? (fog, opacity) =>
+            setGameArtObjectFog(
+              fogTerrainCache,
+              fog ? { fog, width: scene.width, height: scene.height, opacity } : null,
+            )
+        : null,
+    );
+    if (fogUnderSprites) {
+      fogLayer.container.zIndex = startVisionFogZIndex;
+      terrainCache.container.addChild(fogLayer.container);
+    } else {
+      fogLayer.place(camera, viewport);
+      mapLayer.addChild(fogLayer.container);
+    }
+    startVisionFogLayer.current = fogLayer;
+    fogLayer.set(
+      candidateCoversScene ? null : startVisionFogState.current.fog,
+      startVisionFogState.current.opacity,
+    );
     const connectionHoverGraphics = new Graphics();
     mapLayer.addChild(connectionHoverGraphics);
     markerCoverages.set(mapLayer, {
@@ -2962,7 +3287,12 @@ export function PreviewPanel() {
         );
         part.scale.set(placed.scale);
         part.position.set(placed.x, placed.y);
-        mapLayer.addChildAt(part, mapLayer.getChildIndex(connectionHoverGraphics));
+        mapLayer.addChildAt(
+          part,
+          mapLayer.getChildIndex(
+            fogLayer.container.parent === mapLayer ? fogLayer.container : connectionHoverGraphics,
+          ),
+        );
         container.dataset.markerParts = String(coverage.parts);
         container.dataset.markerExtendMs = (performance.now() - started).toFixed(2);
       },
@@ -3603,6 +3933,8 @@ export function PreviewPanel() {
       if (captureLayers.current === sceneCaptureLayers) captureLayers.current = null;
       releaseOverlayFades();
       for (const fill of raisedFills) fill.destroy();
+      if (startVisionFogLayer.current === fogLayer) startVisionFogLayer.current = null;
+      fogLayer.destroy();
       if (connectionHoverFrame !== null) window.cancelAnimationFrame(connectionHoverFrame);
       clearConnectionHover.current = () => {};
       if (followSelectionDragCamera.current === followCameraDuringDrag) {
@@ -4127,6 +4459,19 @@ export function PreviewPanel() {
     candidateSelection?.maximumY,
   ]);
 
+  const selectWholeMap = useCallback(() => {
+    const scene = keyboardInput.current.scene;
+    if (!scene) return;
+    setSelectionPreview(null);
+    selectionDimensions.current = `${scene.width}x${scene.height}`;
+    keyboardCursor.current = null;
+    setSelection({
+      minimumX: 0,
+      maximumX: scene.width - 1,
+      minimumY: 0,
+      maximumY: scene.height - 1,
+    });
+  }, [setSelection]);
   const onPreviewKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
     const input = keyboardInput.current;
     if (!input.scene) return;
@@ -4142,19 +4487,9 @@ export function PreviewPanel() {
     const scene = input.scene;
     const dimensions = `${scene.width}x${scene.height}`;
     switch (command.kind) {
-      case 'select-all': {
-        const all = {
-          minimumX: 0,
-          maximumX: scene.width - 1,
-          minimumY: 0,
-          maximumY: scene.height - 1,
-        };
-        setSelectionPreview(null);
-        selectionDimensions.current = dimensions;
-        keyboardCursor.current = null;
-        setSelection(all);
+      case 'select-all':
+        selectWholeMap();
         return;
-      }
       case 'clear':
         if (gesture.current?.kind === 'selection') gesture.current.cancelled = true;
         selectionEase.end();
@@ -4413,6 +4748,16 @@ export function PreviewPanel() {
     ? hasLandConnection(scene) || (connectionRoutes?.totalAttempts ?? 0) > 0
     : false;
   const readoutSelection = selectionPreview ?? (candidateShown ? displaySelection : selection);
+  const rulerGlideRequested = useRef(false);
+  useLayoutEffect(() => {
+    const glide =
+      rulerGlideRequested.current && !prefersReducedMotion()
+        ? motionDuration('--motion-duration-ruler-glide', 240)
+        : 0;
+    rulerGlideRequested.current = false;
+    ruler.setEdgePlacement(previewRulerEdges, glide);
+  }, [previewRulerEdges, ruler]);
+  useEffect(() => () => ruler.dispose(), [ruler]);
   useLayoutEffect(() => {
     ruler.setNumberFormat((value) => translator.formatNumber(value, { maximumFractionDigits: 1 }));
     ruler.update(previewRuler, hoveredCoordinate, readoutSelection);
@@ -4656,7 +5001,7 @@ export function PreviewPanel() {
   const narrowPreview =
     viewScene !== null && pixiReady && previewVisibleWidth(viewport) < narrowPreviewWidth;
   const blurOutdatedMap = generationBlurShown({
-    activity: generationActivity,
+    activity: pausedMapShown ? null : generationActivity,
     gameTexturesExpected: gameArtExpected,
     liveInGameTextures: gameArtLiveStages,
     candidateActive,
@@ -4823,12 +5168,14 @@ export function PreviewPanel() {
                 onToggle={() => setPreviewTileGrid(!previewTileGrid)}
                 opacity={previewTileGridOpacity}
               />
-              <PreviewOverlayButton
-                active={previewRuler}
-                className="preview-ruler-button"
-                label={t(rulerButton.labelId)}
+              <PreviewRulerControl
+                edges={previewRulerEdges}
+                enabled={previewRuler}
+                onEdges={(next) => {
+                  rulerGlideRequested.current = true;
+                  setPreviewRulerEdges(next);
+                }}
                 onToggle={() => setPreviewRuler(!previewRuler)}
-                renderIcon={rulerButton.renderIcon}
               />
               <PreviewObjectsModeButton
                 mode={overlays.objects}
@@ -4889,6 +5236,28 @@ export function PreviewPanel() {
                   )
                 }
               />
+              {startVisionOffered ? (
+                <PreviewStartVisionControl
+                  checked={startVisionChecked}
+                  enabled={previewStartVision}
+                  entries={startVisionEntries}
+                  fogPercent={previewStartVisionFogPercent}
+                  onCheck={(slot, on) => {
+                    const change = changeStartVisionCheck(
+                      startVisionChecked,
+                      slot,
+                      on,
+                      startVisionEntries,
+                    );
+                    setPreviewStartVisionSlots(change.slots);
+                    if (!change.enabled) setPreviewStartVision(false);
+                    return change.enabled;
+                  }}
+                  onFogPercent={setPreviewStartVisionFogPercent}
+                  onToggle={() => setPreviewStartVision(!previewStartVision)}
+                  playerColorIds={mapPlayerColorIds ?? []}
+                />
+              ) : null}
               {shownLook === 'game-textures' &&
               previewPerspective === 'diamond' &&
               !minimapObjectsShown ? (
@@ -4922,6 +5291,16 @@ export function PreviewPanel() {
                   onClick={() => void saveMapImage()}
                 >
                   <Save aria-hidden="true" /> {t('preview-panel.image-menu.save')}
+                </ContextMenuItem>
+                <ContextMenuSeparator />
+                <ContextMenuItem
+                  data-testid="preview-image-menu-select-all"
+                  onClick={selectWholeMap}
+                >
+                  {t('preview-panel.image-menu.select-all')}
+                  <ContextMenuShortcut>
+                    {shortcutLabel(previewSelectAllShortcut)}
+                  </ContextMenuShortcut>
                 </ContextMenuItem>
               </ContextMenuContent>
             </ContextMenu>
@@ -5017,6 +5396,26 @@ export function PreviewPanel() {
                 ref={listSurfaceRef}
                 {...presenceProps(listSurfacePresence.closing)}
               />
+            ) : null}
+            {breakpointPause ? (
+              <div
+                aria-live="polite"
+                className="preview-breakpoint-note"
+                data-testid="preview-breakpoint-note"
+                role="note"
+              >
+                {breakpointLocation
+                  ? t('preview-panel.breakpoint.paused', {
+                      edge: breakpointPause.edge,
+                      line: breakpointLocation.line + 1,
+                    })
+                  : t('preview-panel.breakpoint.paused-elsewhere')}
+                {breakpointPause.map ? null : (
+                  <span className="preview-breakpoint-note-detail">
+                    {t('preview-panel.breakpoint.map-unavailable')}
+                  </span>
+                )}
+              </div>
             ) : null}
             {candidateView ? (
               <span

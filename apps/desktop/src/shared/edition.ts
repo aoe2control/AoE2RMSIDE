@@ -110,6 +110,7 @@ export const rmsdRequestKinds = [
   'localContentImportRequest',
   'generationRequest',
   'cancellationRequest',
+  'breakpointCommand',
   'gameArtPrepareRequest',
   'gameArtSpritesRequest',
   'controlPipeExchangeRequest',
@@ -127,6 +128,7 @@ export function rmsdRequestAllowed(kind: string, capabilities: EditionCapabiliti
     case 'localContentImportRequest':
       return capabilities.sourceCatalog || capabilities.generationEngine;
     case 'generationRequest':
+    case 'breakpointCommand':
       return capabilities.generationEngine;
     case 'cancellationRequest':
       return capabilities.generationEngine || capabilities.gameTextures || capabilities.liveTests;
@@ -247,6 +249,7 @@ const featureChannels: Record<
   preview: [
     'generatePreview',
     'cancelPreviewGeneration',
+    'previewBreakpointCommand',
     'executionState',
     'executionStop',
     'developmentFixtures',
@@ -275,6 +278,10 @@ const featureChannels: Record<
     'manualDeploymentApply',
     'manualDeploymentOpenFolder',
     'manualDeploymentOpenTargetFolder',
+    'scenarioDeploymentContext',
+    'scenarioDeploymentApply',
+    'scenarioDeploymentOpenFolder',
+    'scenarioDeploymentShowFile',
   ],
   liveTests: [
     'controlLauncherStatus',

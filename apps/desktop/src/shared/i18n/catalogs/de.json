@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Installierte Karten durchsuchen…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Als Mod bereitstellen…"
+    "app-menu.file.deploy": {
+      "message": "Bereitstellen…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "als Mod…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "als Szenario…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Kartensymbol…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Spielordner öffnen"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Wiederholen"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Geschlossenen Tab wieder öffnen"
+    },
     "app-menu.edit.cut": {
       "message": "Ausschneiden"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "if/else-Blöcke einrücken"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Zufallsblöcke einrücken"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Beim Löschen den Papierkorb überspringen"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Fertig"
     },
+    "map-icon-panel.title": {
+      "message": "Kartensymbol"
+    },
+    "scenario-panel.title": {
+      "message": "Als Szenario bereitstellen"
+    },
+    "scenario-panel.name": {
+      "message": "Szenarioname"
+    },
+    "scenario-panel.name.history": {
+      "message": "Frühere Szenarionamen"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Verwende einen Namen ohne \\ / : * ? \" < > | und ohne Punkt oder Leerzeichen am Ende."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Verwende einen Namen mit höchstens 100 Zeichen."
+    },
+    "scenario-panel.summary": {
+      "message": "Szenarioinhalt"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Karte"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} Felder, Startwert {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Spieler"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Spieler {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Objekte"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Skripteffekte"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Keine"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS-Skript"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Diese Vorschau kann nicht als Szenario gespeichert werden. Erzeuge die Karte erneut."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Skripteffekte behalten?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Das Skript ändert das Spiel mit {count} Effektbefehl. Ein Szenario führt das Skript nicht aus, daher kann der Effekt als Schalter hinzugefügt werden, der ihn zu Beginn anwendet.} other {Das Skript ändert das Spiel mit {count} Effektbefehlen. Ein Szenario führt das Skript nicht aus, daher können die Effekte als Schalter hinzugefügt werden, der sie zu Beginn anwendet.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Effekte zu Schaltern machen"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Effekte weglassen"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Szenario ersetzen?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Das Szenario {name} in diesem Profil wird überschrieben."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Ersetzen"
+    },
+    "scenario-panel.success.title": {
+      "message": "Szenario erfolgreich bereitgestellt"
+    },
+    "scenario-panel.success.note": {
+      "message": "Öffne es im Szenario-Editor des Spiels oder wähle es beim Erstellen einer Lobby unter Szenario aus."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Szenario {name} mit {objects} Objekten bereitgestellt} one {Szenario {name} mit {objects} Objekten und {effects} Skripteffekt bereitgestellt} other {Szenario {name} mit {objects} Objekten und {effects} Skripteffekten bereitgestellt}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Das Szenario konnte nicht bereitgestellt werden"
+    },
+    "scenario-panel.close": {
+      "message": "Szenario-Bereitstellung schließen"
+    },
+    "scenario-panel.deploy": {
+      "message": "Szenario bereitstellen"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Das Szenario wurde hier gespeichert:"
+    },
+    "scenario-panel.success.path": {
+      "message": "Pfad des bereitgestellten Szenarios"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Szenario-Pfad kopieren"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Szenario-Pfad kopiert"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Szenario-Ordner öffnen"
+    },
     "deploy-panel.success.title": {
       "message": "Mod erfolgreich bereitgestellt"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Schließen"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Geschlossenen Tab wieder öffnen"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Klicken oder {shortcut} drücken, um einen Haltepunkt zu setzen"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Haltepunkt: Die Vorschau hält hier an. Klicken oder {shortcut} drücken, um ihn zu entfernen."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Haltepunkt: Der letzte Lauf hat ihn nicht erreicht. Klicken oder {shortcut} drücken, um ihn zu entfernen."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Die Vorschau hält hier an"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Haltepunkt umschalten"
+    },
     "code-editor.run.preview": {
       "message": "Vorschau ausführen"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Stopp ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Fortsetzen"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Bis zum nächsten Haltepunkt fortsetzen ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Schritt"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Bis zum Ende des nächsten Befehls ausführen ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Ausführungsoptionen der Vorschau"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Lineal"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Linealoptionen"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Längen an den Kartenrändern"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Spieleransicht"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Optionen der Spieleransicht"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Spieler {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Nebeldeckkraft"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Kleine Bäume"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Bild speichern…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Alles auswählen"
     },
     "preview-panel.output.image-saved": {
       "message": "Kartenbild als {name} gespeichert"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "Vorschaustatus"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Angehalten vor Zeile {line}} other {Angehalten nach Zeile {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Angehalten in einer Datei, die nicht geöffnet ist"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "Die Karte an dieser Stelle ist zu groß zum Anzeigen"
     },
     "preview-panel.status.uncertified": {
       "message": "Nicht zertifiziert"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Zufällig"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Zufällig (Basisspiel)"
     },
     "game-options.civilization.britons": {
       "message": "Briten"

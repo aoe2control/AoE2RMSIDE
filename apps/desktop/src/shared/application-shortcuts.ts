@@ -8,6 +8,9 @@ export const applicationShortcuts = {
   findInFiles: 'CmdOrCtrl+Shift+F',
   insertSnippet: 'CmdOrCtrl+J',
   saveSnippet: 'CmdOrCtrl+Shift+J',
+  reopenClosedTab: 'CmdOrCtrl+Shift+T',
+  toggleBreakpoint: 'F9',
+  stepBreakpoint: 'CmdOrCtrl+F10',
 } as const;
 
 export type ApplicationShortcutName = keyof typeof applicationShortcuts;
@@ -82,6 +85,7 @@ export const menuShortcutItems = [
   { id: 'file.find-in-files', accelerator: applicationShortcuts.findInFiles },
   { id: 'edit.insert-snippet', accelerator: applicationShortcuts.insertSnippet },
   { id: 'edit.save-snippet', accelerator: applicationShortcuts.saveSnippet },
+  { id: 'edit.reopen-closed-tab', accelerator: applicationShortcuts.reopenClosedTab },
 ] as const;
 
 export interface DeveloperToolsKeyInput {
@@ -104,6 +108,7 @@ export const modalSafeMenuActions: ReadonlySet<ApplicationMenuAction['type']> = 
   'set-theme',
   'set-format-on-save',
   'set-indent-conditionals',
+  'set-indent-random',
   'set-live-generation-stages',
   'set-gpu-map-rendering',
   'set-map-transitions',

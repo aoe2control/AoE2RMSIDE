@@ -37,6 +37,20 @@ pub struct CstDocument {
     pub nodes: Vec<CstNode>,
     pub diagnostics: Vec<LexDiagnostic>,
     pub brace_pairs: Vec<ByteRange>,
+    pub blocks: Vec<CstBlock>,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum CstBlockKind {
+    Conditional,
+    Random,
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct CstBlock {
+    pub kind: CstBlockKind,
+    pub range: ByteRange,
+    pub branches: Vec<ByteRange>,
 }
 
 impl CstDocument {
@@ -263,6 +277,9 @@ fn build_cst(
     let mut braces = BraceState::default();
     let mut brace_pairs = Vec::new();
     let mut conditional_stack = Vec::<ConditionalFrame>::new();
+    let mut random_stack = Vec::<RandomFrame>::new();
+    let mut random_overflow = 0_usize;
+    let mut blocks = Vec::new();
     let mut conditional_overflow = 0_usize;
     let mut nesting_limit_reported = false;
 
@@ -282,6 +299,7 @@ fn build_cst(
             } else {
                 conditional_stack.push(ConditionalFrame {
                     opener: first.range,
+                    branches: vec![first.range.start],
                     entry: braces.clone(),
                     merged: None,
                     has_else: false,
@@ -293,6 +311,7 @@ fn build_cst(
             {
                 let finished = std::mem::replace(&mut braces, frame.entry.clone());
                 frame.merge_branch(finished);
+                frame.branches.push(first.range.start);
                 frame.has_else |= is_conditional_else(text);
             }
         } else if is_conditional_close(text) {
@@ -303,6 +322,12 @@ fn build_cst(
                     Some(mut frame) => {
                         frame.merge_branch(std::mem::take(&mut braces));
                         let merged = frame.merged.take().unwrap_or_default();
+                        blocks.push(closed_block(
+                            CstBlockKind::Conditional,
+                            frame.opener.start,
+                            &frame.branches,
+                            first.range,
+                        ));
                         braces = if frame.has_else {
                             merged
                         } else {
@@ -315,6 +340,33 @@ fn build_cst(
                         first.range,
                     )),
                 }
+            }
+        } else if text == b"start_random" {
+            if random_stack.len() >= MAXIMUM_TRACKED_RANDOM_BLOCKS {
+                random_overflow += 1;
+                report_nesting_limit(&mut diagnostics, &mut nesting_limit_reported, first.range);
+            } else {
+                random_stack.push(RandomFrame {
+                    opener: first.range.start,
+                    branches: Vec::new(),
+                });
+            }
+        } else if text == b"percent_chance" {
+            if random_overflow == 0
+                && let Some(frame) = random_stack.last_mut()
+            {
+                frame.branches.push(first.range.start);
+            }
+        } else if text == b"end_random" {
+            if random_overflow > 0 {
+                random_overflow -= 1;
+            } else if let Some(frame) = random_stack.pop() {
+                blocks.push(closed_block(
+                    CstBlockKind::Random,
+                    frame.opener,
+                    &frame.branches,
+                    first.range,
+                ));
             }
         }
 
@@ -385,11 +437,40 @@ fn build_cst(
         nodes,
         diagnostics,
         brace_pairs,
+        blocks,
+    }
+}
+
+fn closed_block(
+    kind: CstBlockKind,
+    opener: ByteOffset,
+    branch_starts: &[ByteOffset],
+    closer: ByteRange,
+) -> CstBlock {
+    let branches = branch_starts
+        .iter()
+        .enumerate()
+        .map(|(index, &start)| ByteRange {
+            start,
+            end: branch_starts
+                .get(index + 1)
+                .copied()
+                .unwrap_or(closer.start),
+        })
+        .collect();
+    CstBlock {
+        kind,
+        range: ByteRange {
+            start: opener,
+            end: closer.end,
+        },
+        branches,
     }
 }
 
 const MAXIMUM_TRACKED_BRACE_DEPTH: usize = 128;
 const MAXIMUM_TRACKED_CONDITIONALS: usize = 128;
+const MAXIMUM_TRACKED_RANDOM_BLOCKS: usize = 128;
 const MAXIMUM_OPENERS_PER_LEVEL: usize = 16;
 
 fn report_nesting_limit(
@@ -458,9 +539,15 @@ impl BraceState {
 
 struct ConditionalFrame {
     opener: ByteRange,
+    branches: Vec<ByteOffset>,
     entry: BraceState,
     merged: Option<BraceState>,
     has_else: bool,
+}
+
+struct RandomFrame {
+    opener: ByteOffset,
+    branches: Vec<ByteOffset>,
 }
 
 impl ConditionalFrame {

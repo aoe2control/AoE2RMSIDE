@@ -174,7 +174,7 @@ pub fn resolve_exact_connection_state(
         content,
         rng,
         cancellation,
-        &mut |_| {},
+        &mut crate::NoStageObserver,
     )
 }
 
@@ -187,7 +187,7 @@ pub(crate) fn resolve_exact_connection_state_with_substages(
     content: CompatibleContentView<'_>,
     mut rng: RmsRandom,
     cancellation: &dyn CancellationToken,
-    substage: &mut dyn FnMut(&[TerrainId]),
+    observer: &mut dyn crate::StageObserver,
 ) -> Result<ExactConnectionState, GenerationError> {
     if land.dimensions != terrain.dimensions || setup.effective_dimensions != terrain.dimensions {
         return Err(invalid_request(
@@ -278,7 +278,63 @@ pub(crate) fn resolve_exact_connection_state_with_substages(
 
     let mut path_ordinal = 0_u16;
     let mut operations_before = state.tile_operation_indices.clone();
+    let descriptor_operations = state
+        .descriptors
+        .iter()
+        .map(|descriptor| descriptor.operation_index)
+        .collect::<Vec<_>>();
+    let observe_boundaries = observer.boundaries_enabled();
+    let boundary = |observer: &mut dyn crate::StageObserver,
+                    edge: crate::OperationEdge,
+                    operation: u32,
+                    state: &ExactConnectionState,
+                    aggregate_paint: &[Option<(TerrainId, u32)>]| {
+        if !isolate_descriptors {
+            observer.boundary(
+                edge,
+                operation,
+                &crate::StageView {
+                    terrain: &state.terrain,
+                    elevation: None,
+                    tile_operations: &state.tile_operation_indices,
+                    objects: &[],
+                    object_operations: &[],
+                },
+            );
+            return;
+        }
+        let mut terrain = terrain_at_stage_entry.clone();
+        let mut operations = operations_at_stage_entry.clone();
+        for (index, paint) in aggregate_paint.iter().enumerate() {
+            if let Some((replacement, operation_index)) = *paint {
+                terrain[index] = replacement;
+                operations[index] = operation_index;
+            }
+        }
+        observer.boundary(
+            edge,
+            operation,
+            &crate::StageView {
+                terrain: &terrain,
+                elevation: None,
+                tile_operations: &operations,
+                objects: &[],
+                object_operations: &[],
+            },
+        );
+    };
     for descriptor_index in 0..state.descriptors.len() {
+        let (first_of_operation, last_of_operation) =
+            crate::operation_run_edges(&descriptor_operations, descriptor_index);
+        if observe_boundaries && first_of_operation {
+            boundary(
+                observer,
+                crate::OperationEdge::Before,
+                descriptor_operations[descriptor_index],
+                &state,
+                &aggregate_paint,
+            );
+        }
         if isolate_descriptors {
             state.terrain.clone_from(&terrain_at_stage_entry);
             state
@@ -360,13 +416,28 @@ pub(crate) fn resolve_exact_connection_state_with_substages(
                     })?;
                 }
                 if !isolate_descriptors {
-                    substage(&state.terrain);
+                    observer.substage(&crate::StageView {
+                        terrain: &state.terrain,
+                        elevation: None,
+                        tile_operations: &state.tile_operation_indices,
+                        objects: &[],
+                        object_operations: &[],
+                    });
                 }
             }
         }
         state
             .tile_writes
             .record_changes(Some(&operations_before), &state.tile_operation_indices);
+        if observe_boundaries && last_of_operation {
+            boundary(
+                observer,
+                crate::OperationEdge::After,
+                descriptor_operations[descriptor_index],
+                &state,
+                &aggregate_paint,
+            );
+        }
     }
     if isolate_descriptors {
         state.terrain = terrain_at_stage_entry;

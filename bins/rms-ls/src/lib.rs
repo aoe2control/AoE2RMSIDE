@@ -701,6 +701,7 @@ impl Server {
             "textDocument/rename" => self.rename(params),
             "rms/semanticIdentity" => self.semantic_identity(params),
             "rms/snippets" => self.rms_snippets(params),
+            "rms/breakpointSites" => self.breakpoint_sites(params),
             _ => Err(RequestError {
                 code: -32601,
                 message: "method not found".to_owned(),
@@ -1587,6 +1588,36 @@ impl Server {
         Ok(text)
     }
 
+    fn breakpoint_sites(&self, params: &Value) -> RequestResult<Value> {
+        let uri = text_document_uri(params)?;
+        let document = self.document(uri)?;
+        let source = &document.source;
+        let sites = rms_analysis::breakpoint_sites(source, &document.analysis.cst)
+            .into_iter()
+            .filter_map(|site| {
+                let line = source.byte_to_utf16(site.start).ok()?.line;
+                let covers_end = source.byte_to_utf16(site.covers.end).ok()?;
+                let end_line = if covers_end.character == 0 && covers_end.line > line {
+                    covers_end.line
+                } else {
+                    covers_end.line + 1
+                };
+                let owns_until = source.byte_to_utf16(site.owns_until).ok()?.line;
+                Some(json!({
+                    "line": line,
+                    "endLine": end_line,
+                    "ownsUntilLine": owns_until.max(line),
+                    "kind": match site.kind {
+                        rms_analysis::BreakpointSiteKind::Command => "command",
+                        rms_analysis::BreakpointSiteKind::Section => "section",
+                        rms_analysis::BreakpointSiteKind::Branch => "branch",
+                    },
+                }))
+            })
+            .collect::<Vec<_>>();
+        Ok(json!({ "sites": sites }))
+    }
+
     fn folding_ranges(&self, params: &Value) -> RequestResult<Value> {
         let uri = text_document_uri(params)?;
         let document = self.document(uri)?;
@@ -1687,6 +1718,11 @@ impl Server {
             options.indent_conditionals = indent
                 .as_bool()
                 .ok_or_else(|| RequestError::invalid("rmsIndentConditionals must be a boolean"))?;
+        }
+        if let Some(indent) = params.get("rmsIndentRandom") {
+            options.indent_random = indent
+                .as_bool()
+                .ok_or_else(|| RequestError::invalid("rmsIndentRandom must be a boolean"))?;
         }
         let edits = format_document(&document.source, &document.analysis.cst, options).map_err(
             |message| RequestError::unavailable(format!("formatting is unavailable: {message}")),
@@ -2361,6 +2397,7 @@ impl Server {
             "rms/semanticIdentity" => Err(RequestError::invalid(
                 "semantic identity is defined for RMS documents only",
             )),
+            "rms/breakpointSites" => Ok(json!({ "sites": [] })),
             _ => Err(RequestError {
                 code: -32601,
                 message: "method not found".to_owned(),

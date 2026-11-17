@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Parcourir les cartes installées…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Déployer comme mod…"
+    "app-menu.file.deploy": {
+      "message": "Déployer…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "comme mod…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "comme scénario…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Icône de carte…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Ouvrir le dossier du jeu"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Rétablir"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Rouvrir l’onglet fermé"
+    },
     "app-menu.edit.cut": {
       "message": "Couper"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "Indenter les blocs if/else"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Indenter les blocs aléatoires"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Supprimer sans passer par la corbeille"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Terminer"
     },
+    "map-icon-panel.title": {
+      "message": "Icône de carte"
+    },
+    "scenario-panel.title": {
+      "message": "Déployer comme scénario"
+    },
+    "scenario-panel.name": {
+      "message": "Nom du scénario"
+    },
+    "scenario-panel.name.history": {
+      "message": "Noms de scénario précédents"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Utilisez un nom sans \\ / : * ? \" < > | et sans point ni espace à la fin."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Utilisez un nom de 100 caractères au plus."
+    },
+    "scenario-panel.summary": {
+      "message": "Contenu du scénario"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Carte"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} cases, graine {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Joueurs"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Joueur {slot} : {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Objets"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Effets du script"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Aucun"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "Script XS"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Cet aperçu ne peut pas être enregistré comme scénario. Générez à nouveau la carte."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Conserver les effets du script ?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Le script modifie la partie avec {count} commande d’effet. Un scénario n’exécute pas le script ; l’effet peut donc être ajouté comme déclencheur qui l’applique au début.} many {Le script modifie la partie avec {count} commandes d’effet. Un scénario n’exécute pas le script ; les effets peuvent donc être ajoutés comme déclencheur qui les applique au début.} other {Le script modifie la partie avec {count} commandes d’effet. Un scénario n’exécute pas le script ; les effets peuvent donc être ajoutés comme déclencheur qui les applique au début.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Convertir en déclencheurs"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Ignorer les effets"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Remplacer le scénario ?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Le scénario {name} de ce profil sera écrasé."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Remplacer"
+    },
+    "scenario-panel.success.title": {
+      "message": "Scénario déployé avec succès"
+    },
+    "scenario-panel.success.note": {
+      "message": "Ouvrez-le dans l’éditeur de scénario du jeu, ou choisissez-le sous Scénario lorsque vous créez un salon."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Scénario {name} déployé avec {objects} objets} one {Scénario {name} déployé avec {objects} objets et {effects} effet du script} many {Scénario {name} déployé avec {objects} objets et {effects} effets du script} other {Scénario {name} déployé avec {objects} objets et {effects} effets du script}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Le scénario n’a pas pu être déployé"
+    },
+    "scenario-panel.close": {
+      "message": "Fermer le déploiement du scénario"
+    },
+    "scenario-panel.deploy": {
+      "message": "Déployer le scénario"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Le scénario a été enregistré dans"
+    },
+    "scenario-panel.success.path": {
+      "message": "Chemin du scénario déployé"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Copier le chemin du scénario"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Chemin du scénario copié"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Ouvrir dossier scénarios"
+    },
     "deploy-panel.success.title": {
       "message": "Mod déployé avec succès"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Fermer"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Rouvrir l’onglet fermé"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Cliquez ou appuyez sur {shortcut} pour ajouter un point d’arrêt"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Point d’arrêt : l’aperçu s’interrompt ici. Cliquez ou appuyez sur {shortcut} pour le supprimer."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Point d’arrêt : la dernière exécution ne l’a pas atteint. Cliquez ou appuyez sur {shortcut} pour le supprimer."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "L’aperçu est en pause ici"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Activer/désactiver le point d’arrêt"
+    },
     "code-editor.run.preview": {
       "message": "Lancer l’aperçu"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Arrêter ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Continuer"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Continuer jusqu’au prochain point d’arrêt ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Pas à pas"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Exécuter jusqu’à la fin de la commande suivante ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Options d’exécution de l’aperçu"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Règle"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Options de la règle"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Longueurs sur les bords de la carte"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Vue du joueur"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Options de la vue du joueur"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Joueur {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaïa"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Opacité du brouillard"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Petits arbres"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Enregistrer l’image…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Tout sélectionner"
     },
     "preview-panel.output.image-saved": {
       "message": "Image de la carte enregistrée sous {name}"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "État de l’aperçu"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {En pause avant la ligne {line}} other {En pause après la ligne {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "En pause dans un fichier qui n’est pas ouvert"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "La carte à ce stade est trop grande pour être affichée"
     },
     "preview-panel.status.uncertified": {
       "message": "Non certifié"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Aléatoire"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Aléatoire (jeu de base)"
     },
     "game-options.civilization.britons": {
       "message": "Britanniques"

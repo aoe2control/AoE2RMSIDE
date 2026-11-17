@@ -300,8 +300,31 @@ pub fn resolve_exact_terrain_state(
     elevation: &ExactElevationState,
     cliff: &ExactCliffState,
     content: CompatibleContentView<'_>,
+    rng: RmsRandom,
+    cancellation: &dyn CancellationToken,
+) -> Result<ExactTerrainState, GenerationError> {
+    resolve_exact_terrain_state_observed(
+        semantic_program,
+        land,
+        elevation,
+        cliff,
+        content,
+        rng,
+        cancellation,
+        &mut crate::NoStageObserver,
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+pub(crate) fn resolve_exact_terrain_state_observed(
+    semantic_program: &SemanticProgram,
+    land: &ExactLandState,
+    elevation: &ExactElevationState,
+    cliff: &ExactCliffState,
+    content: CompatibleContentView<'_>,
     mut rng: RmsRandom,
     cancellation: &dyn CancellationToken,
+    observer: &mut dyn crate::StageObserver,
 ) -> Result<ExactTerrainState, GenerationError> {
     if land.dimensions != elevation.dimensions || land.dimensions != cliff.dimensions {
         return Err(invalid_request(
@@ -344,7 +367,27 @@ pub fn resolve_exact_terrain_state(
 
     let mut tile_writes = TileWriteRecorder::default();
     let mut operations_before = tile_operation_indices.clone();
+    let descriptor_operations = descriptors
+        .iter()
+        .map(|descriptor| descriptor.operation_index)
+        .collect::<Vec<_>>();
+    let observe_boundaries = observer.boundaries_enabled();
     for (descriptor_index, descriptor) in descriptors.iter().enumerate() {
+        let (first_of_operation, last_of_operation) =
+            crate::operation_run_edges(&descriptor_operations, descriptor_index);
+        if observe_boundaries && first_of_operation {
+            observer.boundary(
+                crate::OperationEdge::Before,
+                descriptor.operation_index,
+                &crate::StageView {
+                    terrain: &terrain,
+                    elevation: None,
+                    tile_operations: &tile_operation_indices,
+                    objects: &[],
+                    object_operations: &[],
+                },
+            );
+        }
         operations_before.clone_from(&tile_operation_indices);
         let terrain_before_hash = terrain_hash(&terrain)?;
         let terrain_zone_before_hash = terrain_zone_hash(&terrain_zone);
@@ -386,6 +429,19 @@ pub fn resolve_exact_terrain_state(
         layer_statistics.terrain_after_hash = terrain_hash(&terrain)?;
         layer_statistics.terrain_zone_after_hash = terrain_zone_hash(&terrain_zone);
         statistics.layers.push(layer_statistics);
+        if observe_boundaries && last_of_operation {
+            observer.boundary(
+                crate::OperationEdge::After,
+                descriptor.operation_index,
+                &crate::StageView {
+                    terrain: &terrain,
+                    elevation: None,
+                    tile_operations: &tile_operation_indices,
+                    objects: &[],
+                    object_operations: &[],
+                },
+            );
+        }
     }
 
     let mut removed_land_appearances = cliff.removed_land_appearances.clone();

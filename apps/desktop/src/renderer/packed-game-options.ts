@@ -9,6 +9,24 @@ export interface PackedCivilizationOption {
 
 const randomCivilizationId = 0;
 
+export const randomBaseGameCivilizationId = 0xffff_ffff;
+
+const firstExpansionCivilizationId = 36;
+
+export function isRandomCivilization(id: number): boolean {
+  return id === randomCivilizationId || id === randomBaseGameCivilizationId;
+}
+
+export function isBaseGameCivilization(id: number): boolean {
+  return id > randomCivilizationId && id < firstExpansionCivilizationId;
+}
+
+const chroniclesCivilizationIds: ReadonlySet<number> = new Set([46, 47, 48, 54, 55, 56]);
+
+export function isRandomPoolCivilization(id: number): boolean {
+  return !isRandomCivilization(id) && !chroniclesCivilizationIds.has(id);
+}
+
 const civilizationNames: ReadonlyMap<number, MessageId> = new Map<number, MessageId>([
   [1, 'game-options.civilization.britons'],
   [2, 'game-options.civilization.franks'],
@@ -76,6 +94,7 @@ const civilizationNames: ReadonlyMap<number, MessageId> = new Map<number, Messag
 
 export function civilizationIdForKey(key: string): number | undefined {
   if (key === 'random') return randomCivilizationId;
+  if (key === 'random-base-game') return randomBaseGameCivilizationId;
   for (const [id, name] of civilizationNames) {
     if (name === `game-options.civilization.${key}`) return id;
   }
@@ -84,6 +103,9 @@ export function civilizationIdForKey(key: string): number | undefined {
 
 export function civilizationName(id: number): OutputText {
   if (id === randomCivilizationId) return { id: 'game-options.civilization.random' };
+  if (id === randomBaseGameCivilizationId) {
+    return { id: 'game-options.civilization.random-base-game' };
+  }
   const name = civilizationNames.get(id);
   return name ? { id: name } : { id: 'game-options.civilization.unknown', args: { id } };
 }
@@ -104,10 +126,10 @@ export function packedCivilizationOptions(
   const count = packagedCivilizationCount(profileId, productVersion);
   const random = civilizationOption(randomCivilizationId);
   if (count === undefined) return [random];
-  return [
-    random,
-    ...[...civilizationNames.keys()].filter((id) => id < count).map(civilizationOption),
-  ];
+  const civilizations = [...civilizationNames.keys()].filter((id) => id < count);
+  const baseGame =
+    count >= firstExpansionCivilizationId ? [civilizationOption(randomBaseGameCivilizationId)] : [];
+  return [random, ...baseGame, ...civilizations.map(civilizationOption)];
 }
 
 export function availableCivilizationIds(

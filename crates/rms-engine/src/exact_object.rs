@@ -1569,7 +1569,7 @@ pub fn resolve_exact_object_state(
         rng,
         auxiliary_rng,
         cancellation,
-        &mut |_, _| {},
+        &mut crate::NoStageObserver,
     )
 }
 
@@ -1584,7 +1584,7 @@ pub(crate) fn resolve_exact_object_state_with_substages(
     mut rng: RmsRandom,
     mut auxiliary_rng: RmsRandom,
     cancellation: &dyn CancellationToken,
-    substage: &mut dyn FnMut(&[TerrainId], &[PlacedObject]),
+    observer: &mut dyn crate::StageObserver,
 ) -> Result<ExactObjectState, GenerationError> {
     if setup.effective_dimensions != connection.dimensions
         || land.dimensions != connection.dimensions
@@ -1803,8 +1803,28 @@ pub(crate) fn resolve_exact_object_state_with_substages(
         ..ExactObjectStatistics::default()
     };
     let mut wall_path_cache = None;
+    let descriptor_operations = descriptors
+        .iter()
+        .map(|descriptor| descriptor.operation_index)
+        .collect::<Vec<_>>();
+    let observe_boundaries = observer.boundaries_enabled();
     for (descriptor_index, descriptor) in descriptors.iter_mut().enumerate() {
         cancellation_checkpoint(cancellation, GenerationStage::Objects, rng.state().draws())?;
+        let (first_of_operation, last_of_operation) =
+            crate::operation_run_edges(&descriptor_operations, descriptor_index);
+        if observe_boundaries && first_of_operation {
+            observer.boundary(
+                crate::OperationEdge::Before,
+                descriptor_operations[descriptor_index],
+                &crate::StageView {
+                    terrain: &foundation_map.terrain[..],
+                    elevation: None,
+                    tile_operations: &foundation_map.operation_indices[..],
+                    objects: &objects[piece_count..],
+                    object_operations: &object_operation_indices[piece_count..],
+                },
+            );
+        }
         let land_local_dispatch =
             descriptor.specific_land_id.is_some() || descriptor.place_for_every_player;
         let (placements, final_land_cursor) =
@@ -1853,7 +1873,26 @@ pub(crate) fn resolve_exact_object_state_with_substages(
             actor_areas.current_land_context = cursor_land.assigned_slot.filter(|slot| *slot != 0);
             actor_areas.current_land_center = Some(cursor_land.position);
         }
-        substage(&foundation_map.terrain[..], &objects);
+        observer.substage(&crate::StageView {
+            terrain: &foundation_map.terrain[..],
+            elevation: None,
+            tile_operations: &foundation_map.operation_indices[..],
+            objects: &objects,
+            object_operations: &object_operation_indices,
+        });
+        if observe_boundaries && last_of_operation {
+            observer.boundary(
+                crate::OperationEdge::After,
+                descriptor_operations[descriptor_index],
+                &crate::StageView {
+                    terrain: &foundation_map.terrain[..],
+                    elevation: None,
+                    tile_operations: &foundation_map.operation_indices[..],
+                    objects: &objects[piece_count..],
+                    object_operations: &object_operation_indices[piece_count..],
+                },
+            );
+        }
     }
     statistics.auxiliary_rng_draws = auxiliary_rng
         .state()

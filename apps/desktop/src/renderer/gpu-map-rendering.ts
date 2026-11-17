@@ -10,6 +10,7 @@ import {
 } from './game-art-gpu-terrain';
 import { raisedColorShaders, raisedOverlayShaders } from './preview-raised-terrain';
 import { playerColorSpriteFragment, playerColorSpriteVertex } from './game-art-sprites';
+import { startVisionFogShaders } from './preview-start-vision-fog';
 
 export type MapRenderer = 'gpu' | 'cpu';
 
@@ -80,6 +81,7 @@ export const gpuMapRenderingPrograms: readonly { vertex: string; fragment: strin
 export const raisedTerrainPrograms: readonly { vertex: string; fragment: string }[] = [
   raisedColorShaders,
   raisedOverlayShaders,
+  startVisionFogShaders,
 ];
 
 export function probeRaisedTerrain(renderer: {

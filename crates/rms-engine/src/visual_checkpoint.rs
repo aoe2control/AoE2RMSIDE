@@ -563,6 +563,14 @@ impl ExecutionObserver for VisualCheckpointObserver<'_> {
     fn exclude_observation(&mut self, duration: Duration) {
         self.inner.exclude_observation(duration);
     }
+
+    fn observes_operation_boundaries(&self) -> bool {
+        self.inner.observes_operation_boundaries()
+    }
+
+    fn operation_boundary(&mut self, boundary: &crate::OperationBoundary<'_>) {
+        self.inner.operation_boundary(boundary);
+    }
 }
 
 impl VisualCheckpointObserver<'_> {

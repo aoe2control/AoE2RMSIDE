@@ -405,6 +405,28 @@ function tintedCopies(
   return copies;
 }
 
+export interface SpriteObjectFog {
+  fog: Uint8Array;
+  width: number;
+  height: number;
+  opacity: number;
+}
+
+export function spriteFogTint(
+  base: number,
+  x: number,
+  y: number,
+  objectFog: SpriteObjectFog | null,
+): number {
+  if (!objectFog) return base;
+  const column = Math.min(objectFog.width - 1, Math.max(0, Math.floor(x)));
+  const row = Math.min(objectFog.height - 1, Math.max(0, Math.floor(y)));
+  if (!objectFog.fog[row * objectFog.width + column]) return base;
+  const keep = 1 - Math.min(1, Math.max(0, objectFog.opacity));
+  const channel = (shift: number) => Math.round(((base >> shift) & 0xff) * keep) << shift;
+  return channel(16) | channel(8) | channel(0);
+}
+
 export class GameArtSpriteLayer {
   readonly container = new Container({
     label: 'game-textures-objects',
@@ -442,6 +464,13 @@ export class GameArtSpriteLayer {
   private readonly layers: Map<number, number>;
   private readonly heightAt: ((x: number, y: number) => number) | null;
   private readonly objectTintAt: ((x: number, y: number) => number) | null;
+  private objectFog: SpriteObjectFog | null = null;
+  private readonly fogTargets: {
+    sprites: readonly Container[];
+    x: number;
+    y: number;
+    base: number;
+  }[] = [];
   readonly statistics: GameArtSpriteStatistics;
 
   constructor(
@@ -637,6 +666,24 @@ export class GameArtSpriteLayer {
     requestPreviewRender(this.container);
   }
 
+  setObjectFog(objectFog: SpriteObjectFog | null): void {
+    const same =
+      objectFog === this.objectFog ||
+      (objectFog !== null &&
+        this.objectFog !== null &&
+        objectFog.fog === this.objectFog.fog &&
+        objectFog.opacity === this.objectFog.opacity);
+    if (same) return;
+    this.objectFog = objectFog;
+    for (const target of this.fogTargets) this.applyFog(target);
+    requestPreviewRender(this.container);
+  }
+
+  private applyFog(target: (typeof this.fogTargets)[number]): void {
+    const tint = spriteFogTint(target.base, target.x, target.y, this.objectFog);
+    for (const sprite of target.sprites) sprite.tint = tint;
+  }
+
   private applyVisibility(): void {
     for (const [key, sprites] of this.built) this.showChunk(sprites, this.visibleKeys.has(key));
   }
@@ -661,8 +708,17 @@ export class GameArtSpriteLayer {
         entry.kind === 'object' && this.objectTintAt
           ? this.objectTintAt(entry.instance.x, entry.instance.y)
           : null;
-      for (const sprite of this.spritesFor(entry.instance, owner, layer, tree, tint)) {
-        sprites.push({ sprite, kind: entry.kind });
+      const built = this.spritesFor(entry.instance, owner, layer, tree, tint);
+      for (const sprite of built) sprites.push({ sprite, kind: entry.kind });
+      if (built.length > 0) {
+        const target = {
+          sprites: built,
+          x: entry.instance.x,
+          y: entry.instance.y,
+          base: tint ?? 0xffffff,
+        };
+        this.fogTargets.push(target);
+        if (this.objectFog) this.applyFog(target);
       }
     }
     this.built.set(key, sprites);
@@ -856,5 +912,6 @@ export class GameArtSpriteLayer {
     this.textures.clear();
     this.built.clear();
     this.treeSprites.length = 0;
+    this.fogTargets.length = 0;
   }
 }

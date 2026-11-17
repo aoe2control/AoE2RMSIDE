@@ -107,12 +107,33 @@
       "maxLength": 40,
       "meaning": "Lists the random maps installed with the game and its mods."
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Deploy as Mod…",
+    "app-menu.file.deploy": {
+      "message": "Deploy…",
       "screen": "application-menu/file",
       "control": "menu-item",
       "maxLength": 40,
-      "meaning": "Copies the map into a local mod of the game."
+      "meaning": "Opens a side menu with the ways to put the map into the game."
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "as Mod…",
+      "screen": "application-menu/file",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Item of the Deploy side menu: copies the map into a local mod of the game."
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "as Scenario…",
+      "screen": "application-menu/file",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Item of the Deploy side menu: saves the generated map as a scenario the game can open."
+    },
+    "app-menu.file.map-icon": {
+      "message": "Map Icon…",
+      "screen": "application-menu/file",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Opens the map icon of the script on its own, to preview, copy, or save it."
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Open Game Folder",
@@ -289,6 +310,13 @@
       "maxLength": 40,
       "meaning": "Redoes the last undone edit."
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Reopen Closed Tab",
+      "screen": "application-menu/edit",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Opens the most recently closed editor tab's file again, where its tab stood; each use reopens the next closed tab. Also in the context menu of the tab row's empty space."
+    },
     "app-menu.edit.cut": {
       "message": "Cut",
       "screen": "application-menu/edit",
@@ -351,6 +379,13 @@
       "control": "menu-item",
       "maxLength": 40,
       "meaning": "Check item, on by default: formatting and Enter indent the lines inside an RMS if/elseif/else block one level. Off, those lines keep the indentation of the code around them. 'if' and 'else' are RMS keywords; keep them untranslated."
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Indent Random Blocks",
+      "screen": "application-menu/edit",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Check item, on by default: formatting and Enter indent the percent_chance lines inside an RMS start_random … end_random block one level and the lines of each branch one level more. Off, those lines keep the indentation of the code around them."
     },
     "app-menu.edit.delete-permanently": {
       "message": "Skip Recycle Bin When Deleting",
@@ -8920,6 +8955,246 @@
       "maxLength": 16,
       "meaning": "Primary button that closes the deployment's success confirmation (Enter)."
     },
+    "map-icon-panel.title": {
+      "message": "Map icon",
+      "screen": "map-icon-panel",
+      "control": "dialog-title",
+      "maxLength": 40,
+      "meaning": "Title of the panel that shows the map icon of a script on its own, to preview, copy, or save it."
+    },
+    "scenario-panel.title": {
+      "message": "Deploy as scenario",
+      "screen": "deploy-panel/scenario",
+      "control": "dialog-title",
+      "maxLength": 40,
+      "meaning": "Title of the panel that saves the generated map as a scenario file in the game profile."
+    },
+    "scenario-panel.name": {
+      "message": "Scenario name",
+      "screen": "deploy-panel/scenario",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Label of the field with the scenario file name (without its extension)."
+    },
+    "scenario-panel.name.history": {
+      "message": "Earlier scenario names",
+      "screen": "deploy-panel/scenario",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the button that lists the names of scenarios deployed before."
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Use a name without \\ / : * ? \" < > | and without a dot or space at the end.",
+      "screen": "deploy-panel/scenario",
+      "control": "notice",
+      "meaning": "Shown below the form when the scenario name cannot be a file name."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Use a name of at most 100 characters.",
+      "screen": "deploy-panel/scenario",
+      "control": "notice",
+      "meaning": "Shown below the form when the scenario name is too long."
+    },
+    "scenario-panel.summary": {
+      "message": "Scenario contents",
+      "screen": "deploy-panel/scenario",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the summary of what the scenario will contain."
+    },
+    "scenario-panel.summary.map": {
+      "message": "Map",
+      "screen": "deploy-panel/scenario",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Summary row label: the map size and seed."
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} tiles, seed {seed}",
+      "screen": "deploy-panel/scenario",
+      "control": "fragment",
+      "meaning": "Summary row value: the map size in tiles and the seed it was generated with.",
+      "placeholders": {
+        "width": "the map width in tiles, such as 120",
+        "height": "the map height in tiles, such as 120",
+        "seed": "the generation seed, such as 1234"
+      }
+    },
+    "scenario-panel.summary.players": {
+      "message": "Players",
+      "screen": "deploy-panel/scenario",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Summary row label: the players and their civilizations."
+    },
+    "scenario-panel.summary.player": {
+      "message": "Player {slot}: {civilization}",
+      "screen": "deploy-panel/scenario",
+      "control": "fragment",
+      "meaning": "One player in the summary, with the civilization of the setup.",
+      "placeholders": {
+        "slot": "the player number, 1 to 8",
+        "civilization": "the civilization name, such as Britons"
+      }
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Objects",
+      "screen": "deploy-panel/scenario",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Summary row label: how many objects (units, buildings, resources, trees, cliffs) the scenario holds."
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Script effects",
+      "screen": "deploy-panel/scenario",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Summary row label: how many effect commands the script applies at the start."
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "None",
+      "screen": "deploy-panel/scenario",
+      "control": "fragment",
+      "meaning": "Summary row value when the script applies no effect commands."
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS script",
+      "screen": "deploy-panel/scenario",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Summary row label: the XS file the script includes, which the scenario names."
+    },
+    "scenario-panel.unavailable": {
+      "message": "This preview cannot be saved as a scenario. Generate the map again.",
+      "screen": "deploy-panel/scenario",
+      "control": "notice",
+      "meaning": "Shown when the bound map has no scenario data (for example a synthetic preview)."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Keep the script effects?",
+      "screen": "deploy-panel/scenario-effects",
+      "control": "dialog-title",
+      "maxLength": 48,
+      "meaning": "Title of the question asked before deploying a scenario from a script with effect commands."
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {The script changes the game with {count} effect command. A scenario does not run the script, so the effect can be added as a trigger that applies it at the start.} other {The script changes the game with {count} effect commands. A scenario does not run the script, so the effects can be added as a trigger that applies them at the start.}}",
+      "screen": "deploy-panel/scenario-effects",
+      "control": "dialog-text",
+      "meaning": "Explains why the effect commands need a trigger in a scenario.",
+      "placeholders": {
+        "count": "the number of effect commands, such as 3"
+      }
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Turn effects into triggers",
+      "screen": "deploy-panel/scenario-effects",
+      "control": "button",
+      "maxLength": 32,
+      "meaning": "Default button: the scenario gets a trigger that applies the effects at the start."
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Leave effects out",
+      "screen": "deploy-panel/scenario-effects",
+      "control": "button",
+      "maxLength": 32,
+      "meaning": "Button: the scenario holds the map only, without the effects."
+    },
+    "scenario-panel.replace.title": {
+      "message": "Replace the scenario?",
+      "screen": "deploy-panel/scenario-replace",
+      "control": "dialog-title",
+      "maxLength": 48,
+      "meaning": "Title of the confirmation shown when a scenario of the same name exists."
+    },
+    "scenario-panel.replace.description": {
+      "message": "The scenario {name} in this profile will be overwritten.",
+      "screen": "deploy-panel/scenario-replace",
+      "control": "dialog-text",
+      "meaning": "Explains what replacing the existing scenario does.",
+      "placeholders": {
+        "name": "the scenario's name, such as Arabia-1234"
+      }
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Replace",
+      "screen": "deploy-panel/scenario-replace",
+      "control": "button",
+      "maxLength": 16,
+      "meaning": "Confirms overwriting the existing scenario."
+    },
+    "scenario-panel.success.title": {
+      "message": "Scenario successfully deployed",
+      "screen": "deploy-panel/scenario-success",
+      "control": "dialog-title",
+      "maxLength": 48,
+      "meaning": "Title of the confirmation after the scenario was saved in the game profile."
+    },
+    "scenario-panel.success.note": {
+      "message": "Open it in the game's scenario editor, or choose it under Scenario when you create a lobby.",
+      "screen": "deploy-panel/scenario-success",
+      "control": "dialog-text",
+      "meaning": "Says where the deployed scenario appears in the game."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Deployed the scenario {name} with {objects} objects} one {Deployed the scenario {name} with {objects} objects and {effects} script effect} other {Deployed the scenario {name} with {objects} objects and {effects} script effects}}",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output note after a scenario was deployed.",
+      "placeholders": {
+        "name": "the scenario file name, such as Arabia-1234.aoe2scenario",
+        "objects": "the number of objects, such as 2400",
+        "effects": "the number of script effects in its trigger, such as 3"
+      }
+    },
+    "scenario-panel.output.failed": {
+      "message": "The scenario could not be deployed",
+      "screen": "output",
+      "control": "message-headline",
+      "meaning": "Output headline when deploying a scenario failed."
+    },
+    "scenario-panel.close": {
+      "message": "Close scenario deployment",
+      "screen": "deploy-panel/scenario",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Deploy as scenario dialog's icon-only close button."
+    },
+    "scenario-panel.deploy": {
+      "message": "Deploy Scenario",
+      "screen": "deploy-panel/scenario",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Primary button that saves the scenario into the chosen profile."
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "The scenario was saved to",
+      "screen": "deploy-panel/scenario-success",
+      "control": "dialog-text",
+      "meaning": "Line above the read-only field showing the deployed scenario file's path; the path follows on its own line."
+    },
+    "scenario-panel.success.path": {
+      "message": "Deployed scenario path",
+      "screen": "deploy-panel/scenario-success",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the read-only field showing the deployed scenario file's path."
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Copy scenario path",
+      "screen": "deploy-panel/scenario-success",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the deployed scenario path field's copy button."
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Scenario path copied",
+      "screen": "deploy-panel/scenario-success",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the deployed scenario path field's copy button for a moment after it copied the path."
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Open Scenario Folder",
+      "screen": "deploy-panel/scenario-success",
+      "control": "button",
+      "maxLength": 24,
+      "meaning": "Button in the scenario's success confirmation: opens the profile's scenario folder in Windows Explorer with the deployed file selected."
+    },
     "deploy-panel.success.title": {
       "message": "Mod successfully deployed",
       "screen": "deploy-panel/success",
@@ -11445,6 +11720,47 @@
       "maxLength": 24,
       "meaning": "Item of the editor tabs' context menu that closes the active tab."
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Reopen Closed Tab",
+      "screen": "editor/tab-menu",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Item of the context menu of the tab row's empty space that opens the most recently closed tab's file again; the same command as Edit → Reopen Closed Tab."
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Click or press {shortcut} to add a breakpoint",
+      "screen": "editor/breakpoints",
+      "control": "tooltip",
+      "meaning": "Hover text of the faint dot in the code editor's left margin that shows where a click would set a breakpoint (a line where a preview run can pause).",
+      "placeholders": { "shortcut": "the keyboard shortcut, such as F9 (shown as written)" }
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Breakpoint: the preview pauses here. Click or press {shortcut} to remove it.",
+      "screen": "editor/breakpoints",
+      "control": "tooltip",
+      "meaning": "Hover text of a breakpoint dot in the code editor's left margin: a run started with Run pauses at this line.",
+      "placeholders": { "shortcut": "the keyboard shortcut, such as F9 (shown as written)" }
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Breakpoint: the last run did not reach it. Click or press {shortcut} to remove it.",
+      "screen": "editor/breakpoints",
+      "control": "tooltip",
+      "meaning": "Hover text of a hollow breakpoint ring in the code editor's left margin: the last preview run never paused there (its branch did not run, or its command placed nothing).",
+      "placeholders": { "shortcut": "the keyboard shortcut, such as F9 (shown as written)" }
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "The preview is paused here",
+      "screen": "editor/breakpoints",
+      "control": "tooltip",
+      "meaning": "Hover text of the arrow in the code editor's left margin that marks the command a paused preview run stands at."
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Toggle Breakpoint",
+      "screen": "editor/command-palette",
+      "control": "menu-item",
+      "maxLength": 48,
+      "meaning": "Code editor command (F9) that sets or removes the breakpoint of the caret's line."
+    },
     "code-editor.run.preview": {
       "message": "Run preview",
       "screen": "editor/run",
@@ -11495,6 +11811,33 @@
       "placeholders": {
         "shortcut": "the keyboard shortcut, such as Shift+F5 (shown as written)"
       }
+    },
+    "code-editor.run.continue": {
+      "message": "Continue",
+      "screen": "editor/run",
+      "control": "accessible-name",
+      "meaning": "Accessible name of the Run button while a run is paused at a breakpoint: it continues the run to the next breakpoint or its end."
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Continue to the next breakpoint ({shortcut})",
+      "screen": "editor/run",
+      "control": "tooltip",
+      "meaning": "Tooltip of the Run button while a run is paused at a breakpoint (it continues the run), with its keyboard shortcut.",
+      "placeholders": { "shortcut": "the keyboard shortcut, such as F5 (shown as written)" }
+    },
+    "code-editor.run.step": {
+      "message": "Step",
+      "screen": "editor/run",
+      "control": "accessible-name",
+      "maxLength": 24,
+      "meaning": "Accessible name of the icon button left of Run while a run is paused at a breakpoint: it runs the next command and pauses after it."
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Step to the end of the next command ({shortcut})",
+      "screen": "editor/run",
+      "control": "tooltip",
+      "meaning": "Tooltip of the Step button while a run is paused at a breakpoint: the run executes the next command (one create_object, create_terrain, …, or the whole land or cliff section) and pauses after it.",
+      "placeholders": { "shortcut": "the keyboard shortcut, such as Ctrl+F10 (shown as written)" }
     },
     "code-editor.run-menu.label": {
       "message": "Preview execution options",
@@ -13451,6 +13794,55 @@
       "control": "toggle",
       "meaning": "Accessible name and tooltip of an icon button in the map preview toolbar: shows or hides the ruler marks at the map's edges for the cursor position and the selected area."
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Ruler options",
+      "screen": "preview/toolbar",
+      "control": "button",
+      "meaning": "Accessible name of the small arrow button joined to the Ruler button, shown while the ruler is on; it opens a small menu above the toolbar with the ruler's settings."
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Lengths on map edges",
+      "screen": "preview/toolbar/ruler-menu",
+      "control": "toggle",
+      "maxLength": 40,
+      "meaning": "Checkbox item in the ruler's menu (off by default): when on, the selected area's width and height are shown along the map's top edges; when off, right beside the selected area."
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Player View",
+      "screen": "preview/toolbar",
+      "control": "toggle",
+      "meaning": "Accessible name and tooltip of an icon button (an eye) in the map preview toolbar, shown only for a finished map: covers with dark fog every part of the map the chosen players cannot see when a match starts, so map makers can check what each player sees at the start. Name of the feature; keep it short."
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Player View options",
+      "screen": "preview/toolbar",
+      "control": "button",
+      "meaning": "Accessible name of the small arrow button joined to the Player View button, shown while the view is on; it opens a small menu above the toolbar to choose the players whose view is shown and how dark the fog is."
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Player {player}",
+      "screen": "preview/toolbar/start-vision-menu",
+      "control": "toggle",
+      "maxLength": 24,
+      "meaning": "Checkbox item in the Player View menu, after a small swatch of the player's color: shows what this player sees at the start of a match. Several players can be checked at once.",
+      "placeholders": {
+        "player": "the player number, 1 to 8"
+      }
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaia",
+      "screen": "preview/toolbar/start-vision-menu",
+      "control": "toggle",
+      "maxLength": 24,
+      "meaning": "Last checkbox item in the Player View menu: shows what the objects of nature (the neutral side the game calls Gaia, such as animals) see at the start of a match. Use the game's own word for it."
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Fog opacity",
+      "screen": "preview/toolbar/start-vision-menu",
+      "control": "label",
+      "maxLength": 24,
+      "meaning": "Label and accessible name of a slider at the bottom of the Player View menu: how dark the fog over the parts the chosen players cannot see is, from invisible to solid black (60 percent by default)."
+    },
     "preview-panel.tool.small-trees": {
       "message": "Small trees",
       "screen": "preview/toolbar",
@@ -13470,6 +13862,13 @@
       "control": "menu-item",
       "maxLength": 40,
       "meaning": "Item of the menu that opens on a right-click on the map preview (without dragging): saves the picture the preview shows as a PNG file; the ellipsis says a Save dialog follows. Title case like other menu items."
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Select All",
+      "screen": "preview/map",
+      "control": "menu-item",
+      "maxLength": 40,
+      "meaning": "Item of the menu that opens on a right-click on the map preview: selects the whole map, like Ctrl+A on the map. Title case like other menu items."
     },
     "preview-panel.output.image-saved": {
       "message": "Saved the map image as {name}",
@@ -13581,6 +13980,31 @@
       "screen": "preview/status",
       "control": "accessible-name",
       "meaning": "Accessible name of the hidden status region of the map preview (read by screen readers)."
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Paused before line {line}} other {Paused after line {line}}}",
+      "screen": "preview/map",
+      "control": "status",
+      "maxLength": 64,
+      "meaning": "Quiet note over the map while a preview run is paused at a breakpoint: the map shows the state before or after the command on that line of the code.",
+      "placeholders": {
+        "edge": "before or after: whether the command on that line has run yet",
+        "line": "the 1-based line number in the code editor"
+      }
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Paused in a file that is not open",
+      "screen": "preview/map",
+      "control": "status",
+      "maxLength": 64,
+      "meaning": "Quiet note over the map while a preview run is paused at a command written in an include file that no editor tab shows."
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "The map at this point is too large to show",
+      "screen": "preview/map",
+      "control": "status",
+      "maxLength": 64,
+      "meaning": "Muted words after the paused note when the map as it stands at the pause did not fit in one message from the generator, so the previous map stays shown."
     },
     "preview-panel.status.uncertified": {
       "message": "Uncertified",
@@ -15277,6 +15701,13 @@
       "control": "option",
       "maxLength": 20,
       "meaning": "Civilization option \"Random\" in the players menu's civilization select: the game picks the civilization. This is the game's own lobby word: use the official wording of Age of Empires II: Definitive Edition in this language where it exists."
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Random (base game)",
+      "screen": "run-menu/players",
+      "control": "option",
+      "maxLength": 28,
+      "meaning": "Civilization option below \"Random\" in the players menu's civilization select: a random civilization of the base game only, without the civilizations of the expansions (DLCs). Use the same word for \"Random\" as the option above it."
     },
     "game-options.civilization.britons": {
       "message": "Britons",

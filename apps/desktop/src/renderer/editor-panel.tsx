@@ -32,6 +32,7 @@ import {
   MonitorPlay,
   Pin,
   Play,
+  RedoDot,
   RotateCcw,
   Save,
   ShieldCheck,
@@ -57,6 +58,7 @@ import {
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuSeparator,
+  ContextMenuShortcut,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
 import {
@@ -93,6 +95,9 @@ import {
   setEditorMenuLanguage,
 } from './monaco-context-menu';
 import { containEditorPopupWheel } from './monaco-popup-wheel';
+import { attachEditorBreakpoints, breakpointDocumentKey } from './editor-breakpoints';
+import { breakpointStore } from './breakpoint-store';
+import type { PreviewBreakpointAction } from '../shared/breakpoints';
 import { editorModelSyncAction } from './editor-model-sync';
 import {
   attachLanguageDocument,
@@ -107,6 +112,7 @@ import {
   requestRmsSourceStructure,
   requestXsOutlineSymbols,
   rmsConditionalIndentation,
+  rmsRandomIndentation,
   setIncludedFileOpener,
   setLanguageEditGuard,
   waitForLanguageDocument,
@@ -1042,6 +1048,7 @@ export function EditorPanel({
   const [hoveredTabId, setHoveredTabId] = useState<string | null>(null);
   const [tabHoverSuppressed, setTabHoverSuppressed] = useState(false);
   const [tabMenuOpen, setTabMenuOpen] = useState(false);
+  const [tabMenuOnRow, setTabMenuOnRow] = useState(false);
   const [fontSizeNotice, setFontSizeNotice] = useState({
     fontSize: editorDefaultFontSize,
     visible: false,
@@ -1155,6 +1162,17 @@ export function EditorPanel({
   const previewSeedLocked = previewExecution?.seedLocked ?? false;
   const runState = previewExecution?.runState ?? 'idle';
   const executionActive = previewExecution?.executionState.phase !== 'idle';
+  const breakpointPause = useSyncExternalStore(
+    (listener) => breakpointStore.subscribe(listener),
+    () => breakpointStore.currentPause(),
+  );
+  const breakpointPaused = executionActive && breakpointPause !== null;
+  const resumeBreakpointRun = useCallback((action: PreviewBreakpointAction) => {
+    const pause = breakpointStore.currentPause();
+    if (!pause) return;
+    breakpointStore.resumeRun();
+    void window.rmside.resumePreviewGeneration(pause.executionId, action).catch(() => false);
+  }, []);
   const liveTestOnRun = previewExecution?.liveTestOnRun ?? false;
   const liveControl = previewExecution?.control;
   const liveControlAction: LiveControlAction = previewExecution?.controlAction ?? {
@@ -1181,21 +1199,25 @@ export function EditorPanel({
     gameInstallationReady && liveControl?.configured && liveControl.staticallyValid,
   );
   const runActionLabel = t(
-    executionActive
-      ? 'code-editor.run.stop'
-      : liveTestOnRun
-        ? 'code-editor.run.preview-and-live-test'
-        : isMapTestScriptName(workspace.activeDocument.name)
-          ? 'code-editor.run.map-test'
-          : 'code-editor.run.preview',
+    breakpointPaused
+      ? 'code-editor.run.continue'
+      : executionActive
+        ? 'code-editor.run.stop'
+        : liveTestOnRun
+          ? 'code-editor.run.preview-and-live-test'
+          : isMapTestScriptName(workspace.activeDocument.name)
+            ? 'code-editor.run.map-test'
+            : 'code-editor.run.preview',
   );
-  const runActionTooltip = executionActive
-    ? t('code-editor.run.stop-tooltip', { shortcut: shortcutLabel(applicationShortcuts.stop) })
-    : liveTestOnRun
-      ? t('code-editor.run.preview-and-live-test-tooltip', {
-          shortcut: shortcutLabel(applicationShortcuts.run),
-        })
-      : t('code-editor.run.tooltip', { shortcut: shortcutLabel(applicationShortcuts.run) });
+  const runActionTooltip = breakpointPaused
+    ? t('code-editor.run.continue-tooltip', { shortcut: shortcutLabel(applicationShortcuts.run) })
+    : executionActive
+      ? t('code-editor.run.stop-tooltip', { shortcut: shortcutLabel(applicationShortcuts.stop) })
+      : liveTestOnRun
+        ? t('code-editor.run.preview-and-live-test-tooltip', {
+            shortcut: shortcutLabel(applicationShortcuts.run),
+          })
+        : t('code-editor.run.tooltip', { shortcut: shortcutLabel(applicationShortcuts.run) });
   const seedAdoptionReason =
     previewExecution?.adoptMatchSeedBlockingReason ??
     (!previewExecution?.canAdoptMatchSeed ? t('code-editor.run-menu.adopt-seed-required') : null);
@@ -1253,9 +1275,15 @@ export function EditorPanel({
     if (!editionCapabilities.preview) return undefined;
     const handleRunShortcut = (event: KeyboardEvent) => {
       const stopOnly = matchesShortcut(event, applicationShortcuts.stop);
-      if (!stopOnly && !matchesShortcut(event, applicationShortcuts.run)) return;
+      const step = matchesShortcut(event, applicationShortcuts.stepBreakpoint);
+      if (!stopOnly && !step && !matchesShortcut(event, applicationShortcuts.run)) return;
       event.preventDefault();
       if (event.repeat || !previewExecution || !applicationKeyAllowed(isModalSurfaceOpen())) return;
+      if (breakpointStore.currentPause() && !stopOnly) {
+        resumeBreakpointRun(step ? 'step' : 'continue');
+        return;
+      }
+      if (step) return;
       const action = runShortcutAction({
         stopOnly,
         announcedPhase: announcedExecutionPhase.current,
@@ -1736,6 +1764,7 @@ export function EditorPanel({
       fontSize: editorDefaultFontSize,
       fixedOverflowWidgets: true,
       minimap: { enabled: false },
+      glyphMargin: true,
       scrollbar: { horizontalScrollbarSize: 10, useShadows: false, verticalScrollbarSize: 10 },
       model: null,
       mouseWheelZoom: true,
@@ -1749,7 +1778,22 @@ export function EditorPanel({
     document.body.classList.add('rmside-monaco-056');
     const releasePopupWheel = containEditorPopupWheel(container.current);
     const rmsEditorRegistration = registerActiveRmsEditor(instance);
-    const rmsEnterRegistration = registerRmsEnter(instance, monaco, rmsConditionalIndentation);
+    const rmsEnterRegistration = registerRmsEnter(
+      instance,
+      monaco,
+      rmsConditionalIndentation,
+      rmsRandomIndentation,
+    );
+    const breakpointMargin = attachEditorBreakpoints(instance, {
+      accepts: (model) => model.getLanguageId() === 'rms',
+      showDocument: (documentKey) => {
+        const document = workspaceRef.current.documents.find((entry) => {
+          const model = models.current.get(entry.id);
+          return model !== undefined && breakpointDocumentKey(model) === documentKey;
+        });
+        if (document) workspaceRef.current.setActiveDocument(document.id);
+      },
+    });
     const editGuardRegistration = setLanguageEditGuard((uri) => {
       const target = monaco.Uri.parse(uri).toString();
       const document = workspaceRef.current.documents.find(
@@ -2104,6 +2148,7 @@ export function EditorPanel({
       commentLinkSubscription.dispose();
       rmsEditorRegistration.dispose();
       rmsEnterRegistration.dispose();
+      breakpointMargin.dispose();
       editGuardRegistration.dispose();
       editorOpener.dispose();
       includedFileOpener.dispose();
@@ -2699,6 +2744,11 @@ export function EditorPanel({
               className="editor-tabs"
               data-suppress-hover={tabHoverSuppressed || undefined}
               data-tab-dragging={draggingTabId ? 'true' : undefined}
+              onContextMenu={(event) =>
+                setTabMenuOnRow(
+                  !(event.target instanceof Element && event.target.closest('.editor-tab')),
+                )
+              }
               onPointerLeave={() => {
                 if (draggedTabId.current) return;
                 tabHoverSuppressionAnchor.current = null;
@@ -2829,7 +2879,19 @@ export function EditorPanel({
               ))}
             </ContextMenuTrigger>
             <ContextMenuContent>
-              {editionCapabilities.deployment &&
+              {tabMenuOnRow ? (
+                <ContextMenuItem
+                  disabled={!workspace.canReopenClosedTab}
+                  onClick={() => void workspace.reopenClosedTab()}
+                >
+                  {t('code-editor.tab-menu.reopen-closed-tab')}
+                  <ContextMenuShortcut>
+                    {shortcutLabel(applicationShortcuts.reopenClosedTab)}
+                  </ContextMenuShortcut>
+                </ContextMenuItem>
+              ) : null}
+              {!tabMenuOnRow &&
+              editionCapabilities.deployment &&
               isPreviewScriptName(workspace.activeDocument.name) ? (
                 <>
                   <ContextMenuItem
@@ -2840,22 +2902,26 @@ export function EditorPanel({
                   <ContextMenuSeparator />
                 </>
               ) : null}
-              {workspace.activeDocument.readOnly ? null : (
-                <ContextMenuItem onClick={() => void workspace.saveActive()}>
-                  {t('code-editor.tab-menu.save')}
-                </ContextMenuItem>
+              {tabMenuOnRow ? null : (
+                <>
+                  {workspace.activeDocument.readOnly ? null : (
+                    <ContextMenuItem onClick={() => void workspace.saveActive()}>
+                      {t('code-editor.tab-menu.save')}
+                    </ContextMenuItem>
+                  )}
+                  <ContextMenuItem onClick={() => void workspace.saveActiveAs()}>
+                    {t('code-editor.tab-menu.save-as')}
+                  </ContextMenuItem>
+                  <ContextMenuSeparator />
+                  <ContextMenuItem
+                    onClick={() => {
+                      closeTab(workspace.activeDocumentId);
+                    }}
+                  >
+                    {t('code-editor.tab-menu.close')}
+                  </ContextMenuItem>
+                </>
               )}
-              <ContextMenuItem onClick={() => void workspace.saveActiveAs()}>
-                {t('code-editor.tab-menu.save-as')}
-              </ContextMenuItem>
-              <ContextMenuSeparator />
-              <ContextMenuItem
-                onClick={() => {
-                  closeTab(workspace.activeDocumentId);
-                }}
-              >
-                {t('code-editor.tab-menu.close')}
-              </ContextMenuItem>
             </ContextMenuContent>
           </ContextMenu>
           {tabScrollState.left ? (
@@ -2887,7 +2953,55 @@ export function EditorPanel({
         </div>
         {editionCapabilities.preview ? (
           <>
-            <div className="preview-run-controls">
+            <div className="preview-run-controls" data-paused={breakpointPaused || undefined}>
+              {breakpointPaused ? (
+                <>
+                  <Tooltip>
+                    <TooltipTrigger
+                      render={
+                        <Button
+                          aria-label={t('code-editor.run.stop')}
+                          className="preview-breakpoint-button"
+                          data-action="stop"
+                          data-testid="preview-breakpoint-stop"
+                          onClick={() => previewExecution?.stop()}
+                          size="icon-compact"
+                          variant="ghost"
+                        />
+                      }
+                    >
+                      <Square aria-hidden="true" fill="none" size={11} />
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">
+                      {t('code-editor.run.stop-tooltip', {
+                        shortcut: shortcutLabel(applicationShortcuts.stop),
+                      })}
+                    </TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger
+                      render={
+                        <Button
+                          aria-label={t('code-editor.run.step')}
+                          className="preview-breakpoint-button"
+                          data-action="step"
+                          data-testid="preview-breakpoint-step"
+                          onClick={() => resumeBreakpointRun('step')}
+                          size="icon-compact"
+                          variant="ghost"
+                        />
+                      }
+                    >
+                      <RedoDot aria-hidden="true" size={14} />
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">
+                      {t('code-editor.run.step-tooltip', {
+                        shortcut: shortcutLabel(applicationShortcuts.stepBreakpoint),
+                      })}
+                    </TooltipContent>
+                  </Tooltip>
+                </>
+              ) : null}
               <Tooltip>
                 <TooltipTrigger
                   render={
@@ -2899,13 +3013,15 @@ export function EditorPanel({
                       aria-label={runActionLabel}
                       className="preview-run-button"
                       data-completion-animation-sequence={runCompletionAnimationSequence}
-                      data-running={executionActive || undefined}
+                      data-running={(executionActive && !breakpointPaused) || undefined}
+                      data-testid="preview-run-button"
                       data-stopping={
                         previewExecution?.executionState.phase === 'stopping' || undefined
                       }
                       onClick={() => {
                         if (!previewExecution) return;
-                        if (executionActive) previewExecution.stop();
+                        if (breakpointPaused) resumeBreakpointRun('continue');
+                        else if (executionActive) previewExecution.stop();
                         else if (previewExecution.canRun) previewExecution.run();
                         else previewExecution.explainBlockedRun?.();
                       }}
@@ -2914,7 +3030,7 @@ export function EditorPanel({
                     />
                   }
                 >
-                  {executionActive ? (
+                  {executionActive && !breakpointPaused ? (
                     <>
                       <RunningIndicator
                         className="preview-run-spinner"

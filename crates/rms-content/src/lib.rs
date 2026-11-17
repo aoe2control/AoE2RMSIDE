@@ -6,6 +6,7 @@ mod native_bindings;
 mod presentation_names;
 mod resource;
 mod standard_resource;
+mod start_sight;
 mod support_bundle;
 #[cfg(any(test, feature = "synthetic-dat-fixture"))]
 pub mod synthetic_fixture;
@@ -24,6 +25,11 @@ pub use resource::{ObjectResourceSlot, ObjectResourceState};
 pub use standard_resource::{
     StandardIncludeInventory, canonical_standard_include_inventory,
     load_canonical_standard_include_inventory, packaged_48987_standard_include_inventory,
+};
+pub use start_sight::{
+    START_SIGHT_SCHEMA, START_SIGHT_SCHEMA_VERSION, StartSight, StartSightAge, StartSightEffect,
+    StartSightObject, StartSightObjectVariant, StartSightOperation, StartSightOperationKind,
+    StartSightRoute, StartSightUpgrade, load_start_sight, packaged_start_sight,
 };
 pub use support_bundle::{
     SanitizedSupportBundle, SupportBundle, SupportBundleInputs, SupportBundleManifest,

@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Sfoglia mappe installate…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Installa come mod…"
+    "app-menu.file.deploy": {
+      "message": "Installa…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "come mod…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "come scenario…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Icona della mappa…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Apri cartella del gioco"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Ripristina"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Riapri scheda chiusa"
+    },
     "app-menu.edit.cut": {
       "message": "Taglia"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "Applica rientro ai blocchi if/else"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Applica rientro ai blocchi casuali"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Elimina senza passare dal Cestino"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Fine"
     },
+    "map-icon-panel.title": {
+      "message": "Icona della mappa"
+    },
+    "scenario-panel.title": {
+      "message": "Installa come scenario"
+    },
+    "scenario-panel.name": {
+      "message": "Nome dello scenario"
+    },
+    "scenario-panel.name.history": {
+      "message": "Nomi di scenario precedenti"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Usa un nome senza \\ / : * ? \" < > | e senza punto o spazio alla fine."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Usa un nome di al massimo 100 caratteri."
+    },
+    "scenario-panel.summary": {
+      "message": "Contenuto dello scenario"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Mappa"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} caselle, seme {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Giocatori"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Giocatore {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Oggetti"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Effetti dello script"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Nessuno"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "Script XS"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Questa anteprima non può essere salvata come scenario. Genera di nuovo la mappa."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Mantenere gli effetti dello script?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Lo script modifica la partita con {count} comando di effetto. Uno scenario non esegue lo script, quindi l’effetto può essere aggiunto come trigger che lo applica all’inizio.} many {Lo script modifica la partita con {count} comandi di effetto. Uno scenario non esegue lo script, quindi gli effetti possono essere aggiunti come trigger che li applica all’inizio.} other {Lo script modifica la partita con {count} comandi di effetto. Uno scenario non esegue lo script, quindi gli effetti possono essere aggiunti come trigger che li applica all’inizio.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Trasforma gli effetti in trigger"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Escludi gli effetti"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Sostituire lo scenario?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Lo scenario {name} in questo profilo verrà sovrascritto."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Sostituisci"
+    },
+    "scenario-panel.success.title": {
+      "message": "Scenario installato correttamente"
+    },
+    "scenario-panel.success.note": {
+      "message": "Aprilo nell’editor degli scenari del gioco, oppure sceglilo in Scenario quando crei una lobby."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Scenario {name} installato con {objects} oggetti} one {Scenario {name} installato con {objects} oggetti e {effects} effetto dello script} many {Scenario {name} installato con {objects} oggetti e {effects} effetti dello script} other {Scenario {name} installato con {objects} oggetti e {effects} effetti dello script}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Non è stato possibile installare lo scenario"
+    },
+    "scenario-panel.close": {
+      "message": "Chiudi l’installazione dello scenario"
+    },
+    "scenario-panel.deploy": {
+      "message": "Installa scenario"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Lo scenario è stato salvato in"
+    },
+    "scenario-panel.success.path": {
+      "message": "Percorso dello scenario installato"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Copia percorso dello scenario"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Percorso dello scenario copiato"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Apri cartella scenari"
+    },
     "deploy-panel.success.title": {
       "message": "Mod installato correttamente"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Chiudi"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Riapri scheda chiusa"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Fai clic o premi {shortcut} per aggiungere un punto di interruzione"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Punto di interruzione: l’anteprima si ferma qui. Fai clic o premi {shortcut} per rimuoverlo."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Punto di interruzione: l’ultima esecuzione non lo ha raggiunto. Fai clic o premi {shortcut} per rimuoverlo."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "L’anteprima è in pausa qui"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Attiva/disattiva punto di interruzione"
+    },
     "code-editor.run.preview": {
       "message": "Avvia anteprima"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Interrompi ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Continua"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Continua fino al punto di interruzione successivo ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Passo"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Esegui fino alla fine del comando successivo ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Opzioni di esecuzione dell’anteprima"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Righello"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Opzioni del righello"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Lunghezze sui bordi della mappa"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Vista del giocatore"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Opzioni della vista del giocatore"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Giocatore {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Opacità della nebbia"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Alberi piccoli"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Salva immagine…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Seleziona tutto"
     },
     "preview-panel.output.image-saved": {
       "message": "Immagine della mappa salvata come {name}"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "Stato dell’anteprima"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {In pausa prima della riga {line}} other {In pausa dopo la riga {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "In pausa in un file non aperto"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "La mappa a questo punto è troppo grande da mostrare"
     },
     "preview-panel.status.uncertified": {
       "message": "Non certificato"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Casuale"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Casuale (gioco base)"
     },
     "game-options.civilization.britons": {
       "message": "Britanni"

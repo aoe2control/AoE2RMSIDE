@@ -248,19 +248,53 @@ export function clipSegmentToBounds(
   return from <= to ? { from, to } : null;
 }
 
-function bracketMark(
+export interface PreviewRulerBracketGeometry {
+  start: ScreenPoint;
+  end: ScreenPoint;
+  outward: ScreenPoint;
+}
+
+function edgeBracketGeometry(
   frame: PreviewRulerEdgeFrame,
-  edge: PreviewRulerEdge,
   from: number,
   to: number,
+): PreviewRulerBracketGeometry {
+  return {
+    start: previewRulerEdgePoint(frame, from),
+    end: previewRulerEdgePoint(frame, to),
+    outward: squished(frame, frame.flatOutward),
+  };
+}
+
+export function blendPreviewRulerBracket(
+  from: PreviewRulerBracketGeometry,
+  to: PreviewRulerBracketGeometry,
+  share: number,
+): PreviewRulerBracketGeometry {
+  if (share <= 0) return from;
+  if (share >= 1) return to;
+  const mix = (a: ScreenPoint, b: ScreenPoint) => ({
+    x: a.x + (b.x - a.x) * share,
+    y: a.y + (b.y - a.y) * share,
+  });
+  return {
+    start: mix(from.start, to.start),
+    end: mix(from.end, to.end),
+    outward: mix(from.outward, to.outward),
+  };
+}
+
+function bracketMark(
+  edge: PreviewRulerEdge,
+  geometry: PreviewRulerBracketGeometry,
   value: number,
   bounds: PreviewRulerBounds,
 ): PreviewRulerMark | null {
   const { bracketGap, bracketTick } = previewRulerSize;
   const offset = bracketGap + bracketTick;
-  const outward = squished(frame, frame.flatOutward);
-  const start = along(previewRulerEdgePoint(frame, from), outward, offset);
-  const end = along(previewRulerEdgePoint(frame, to), outward, offset);
+  const { outward } = geometry;
+  const start = along(geometry.start, outward, offset);
+  const end = along(geometry.end, outward, offset);
   const clipped = clipSegmentToBounds(start, end, bounds);
   if (!clipped) return null;
   const at = (share: number) => ({
@@ -373,34 +407,72 @@ function diagonalMark(
   };
 }
 
+export function previewRulerSelectionBrackets(
+  selection: PreviewSelection,
+  dimensions: MapDimensions,
+  camera: PreviewCamera,
+  viewport: PreviewViewport,
+): {
+  beside: { width: PreviewRulerBracketGeometry; height: PreviewRulerBracketGeometry };
+  edges: { width: PreviewRulerBracketGeometry; height: PreviewRulerBracketGeometry };
+} {
+  const topLeft = previewRulerEdgeFrame('top-left', dimensions, camera, viewport);
+  const topRight = previewRulerEdgeFrame('top-right', dimensions, camera, viewport);
+  const project = (point: MapPoint) =>
+    mapToScreen(point, dimensions.width, dimensions.height, camera, viewport);
+  const right = selection.maximumX + 1;
+  const bottom = selection.maximumY + 1;
+  return {
+    beside: {
+      width: {
+        start: project({ x: selection.minimumX, y: selection.minimumY }),
+        end: project({ x: right, y: selection.minimumY }),
+        outward: squished(topLeft, topLeft.flatOutward),
+      },
+      height: {
+        start: project({ x: right, y: selection.minimumY }),
+        end: project({ x: right, y: bottom }),
+        outward: squished(topRight, topRight.flatOutward),
+      },
+    },
+    edges: {
+      width: edgeBracketGeometry(topLeft, selection.minimumX, right),
+      height: edgeBracketGeometry(topRight, selection.minimumY, bottom),
+    },
+  };
+}
+
 export function previewRulerSelectionMarks(
   selection: PreviewSelection,
   dimensions: MapDimensions,
   camera: PreviewCamera,
   viewport: PreviewViewport,
   formatDiagonal: (value: number) => string = String,
+  onEdges = 1,
 ): PreviewRulerSelectionMarks {
   const bounds = previewRulerBounds(viewport);
   const size = previewRulerSelectionSize(selection);
+  const brackets = previewRulerSelectionBrackets(selection, dimensions, camera, viewport);
   return {
     width: bracketMark(
-      previewRulerEdgeFrame('top-left', dimensions, camera, viewport),
       'top-left',
-      selection.minimumX,
-      selection.maximumX + 1,
+      blendPreviewRulerBracket(brackets.beside.width, brackets.edges.width, onEdges),
       size.width,
       bounds,
     ),
     height: bracketMark(
-      previewRulerEdgeFrame('top-right', dimensions, camera, viewport),
       'top-right',
-      selection.minimumY,
-      selection.maximumY + 1,
+      blendPreviewRulerBracket(brackets.beside.height, brackets.edges.height, onEdges),
       size.height,
       bounds,
     ),
     diagonal: diagonalMark(selection, dimensions, camera, viewport, bounds, formatDiagonal),
   };
+}
+
+export function previewRulerGlideEase(progress: number): number {
+  const clamped = Math.min(1, Math.max(0, progress));
+  return 1 - (1 - clamped) ** 3;
 }
 
 export interface PreviewRulerPaint {
@@ -481,6 +553,15 @@ export function drawPreviewRulerMarks<Path>(
   }
 }
 
+function nextFrame(callback: () => void): { cancel(): void } {
+  if (typeof requestAnimationFrame === 'function') {
+    const handle = requestAnimationFrame(callback);
+    return { cancel: () => cancelAnimationFrame(handle) };
+  }
+  const handle = setTimeout(callback, 16);
+  return { cancel: () => clearTimeout(handle) };
+}
+
 export interface PreviewRulerMarkElements {
   group: SVGGElement;
   halo: SVGPathElement;
@@ -507,9 +588,60 @@ export class PreviewRulerOverlay {
   private keptHover: { x: number; y: number } | null = null;
   private keptSelection: PreviewSelection | null = null;
   private formatNumber: (value: number) => string = String;
+  private onEdges = false;
+  private glide: { from: number; to: number; started: number; duration: number } | null = null;
+  private glideFrame: { cancel(): void } | null = null;
+  private lastDraw: [MapDimensions, PreviewCamera, PreviewViewport] | null = null;
 
   setNumberFormat(format: (value: number) => string): void {
     this.formatNumber = format;
+  }
+
+  setEdgePlacement(onEdges: boolean, glideMilliseconds = 0): void {
+    if (onEdges === this.onEdges) return;
+    const from = this.edgeShare();
+    this.onEdges = onEdges;
+    if (glideMilliseconds <= 0) {
+      this.glide = null;
+      this.redraw();
+      return;
+    }
+    this.glide = {
+      from,
+      to: onEdges ? 1 : 0,
+      started: performance.now(),
+      duration: glideMilliseconds,
+    };
+    this.scheduleGlideFrame();
+  }
+
+  dispose(): void {
+    this.glideFrame?.cancel();
+    this.glideFrame = null;
+    this.glide = null;
+  }
+
+  edgeShare(now = performance.now()): number {
+    const glide = this.glide;
+    if (!glide) return this.onEdges ? 1 : 0;
+    const progress = (now - glide.started) / glide.duration;
+    if (progress >= 1) return glide.to;
+    return glide.from + (glide.to - glide.from) * previewRulerGlideEase(progress);
+  }
+
+  private scheduleGlideFrame(): void {
+    if (this.glideFrame !== null) return;
+    this.glideFrame = nextFrame(() => {
+      this.glideFrame = null;
+      const glide = this.glide;
+      if (glide && performance.now() - glide.started >= glide.duration) this.glide = null;
+      this.redraw();
+      if (this.glide) this.scheduleGlideFrame();
+    });
+  }
+
+  private redraw(): void {
+    if (this.lastDraw) this.draw(...this.lastDraw);
   }
 
   bind(kind: PreviewRulerMarkKind, elements: PreviewRulerMarkElements | null): void {
@@ -530,6 +662,7 @@ export class PreviewRulerOverlay {
   }
 
   draw(dimensions: MapDimensions, camera: PreviewCamera, viewport: PreviewViewport): void {
+    this.lastDraw = [dimensions, camera, viewport];
     if (this.marks.size === 0) return;
     const hoverShown = this.enabled && this.hover !== null;
     const selectionShown = this.enabled && this.selection !== null;
@@ -539,7 +672,14 @@ export class PreviewRulerOverlay {
       ? previewRulerHoverMarks(hover, dimensions, camera, viewport)
       : { x: null, y: null };
     const selectionMarks = selection
-      ? previewRulerSelectionMarks(selection, dimensions, camera, viewport, this.formatNumber)
+      ? previewRulerSelectionMarks(
+          selection,
+          dimensions,
+          camera,
+          viewport,
+          this.formatNumber,
+          this.edgeShare(),
+        )
       : { width: null, height: null, diagonal: null };
     this.write('cursor-x', hoverMarks.x, hoverShown);
     this.write('cursor-y', hoverMarks.y, hoverShown);
@@ -560,6 +700,7 @@ export class PreviewRulerOverlay {
       camera,
       viewport,
       this.formatNumber,
+      this.onEdges ? 1 : 0,
     );
     const marks = [selectionMarks.width, selectionMarks.height, selectionMarks.diagonal].filter(
       (mark): mark is PreviewRulerMark => mark !== null,

@@ -24,6 +24,7 @@ import {
   type MapIconRenderLook,
   type MapIconSpawnMarkerStyle,
   type MonacoViewState,
+  type SessionBreakpoints,
   type ThemePreference,
   type WindowBounds,
   type WindowDisplayFingerprint,
@@ -53,6 +54,11 @@ import { readFileBounded, replaceFileAtomically } from './bounded-file';
 import { defaultWriteProtection, type WriteProtection } from '../shared/write-protection';
 import { autoSaveDelayTenths } from '../shared/auto-save';
 import { tileGridOpacityPercent } from '../shared/tile-grid-opacity';
+import {
+  defaultStartVisionSlots,
+  isStartVisionSlotList,
+  startVisionFogPercent,
+} from '../shared/start-vision';
 import { isLanguagePreference, type LanguagePreference } from '../shared/i18n/locale';
 import {
   validateRmsLintWorkspaceRules,
@@ -75,6 +81,7 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   autoSave: false,
   autoSaveDelayTenths: autoSaveDelayTenths.default,
   indentConditionals: true,
+  indentRandom: true,
   liveGenerationStages: true,
   gpuMapRendering: true,
   mapTransitions: true,
@@ -92,7 +99,12 @@ export const defaultDesktopSession = Object.freeze<DesktopSession>({
   previewTileGrid: false,
   previewTileGridOpacity: tileGridOpacityPercent.default,
   previewRuler: true,
+  previewRulerEdges: false,
+  previewStartVision: false,
+  previewStartVisionSlots: [...defaultStartVisionSlots],
+  previewStartVisionFogPercent: startVisionFogPercent.default,
   previewSmallTrees: false,
+  breakpoints: [],
   gameTexturesFirstLinkApplied: false,
   gameTexturesFirstLinkInstallations: [],
   mapIconReliefMode: defaultMapIconRenderInput.relief,
@@ -205,6 +217,10 @@ export class DesktopSessionStore {
 
   updateIndentConditionals(indentConditionals: boolean): Promise<void> {
     return this.update((session) => ({ ...session, indentConditionals }));
+  }
+
+  updateIndentRandom(indentRandom: boolean): Promise<void> {
+    return this.update((session) => ({ ...session, indentRandom }));
   }
 
   updateLiveGenerationStages(liveGenerationStages: boolean): Promise<void> {
@@ -361,6 +377,7 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     autoSave: false,
     autoSaveDelayTenths: autoSaveDelayTenths.default,
     indentConditionals: true,
+    indentRandom: true,
     liveGenerationStages: true,
     gpuMapRendering: true,
     mapTransitions: true,
@@ -378,7 +395,12 @@ export function cloneDefaultDesktopSession(): DesktopSession {
     previewTileGrid: false,
     previewTileGridOpacity: tileGridOpacityPercent.default,
     previewRuler: true,
+    previewRulerEdges: false,
+    previewStartVision: false,
+    previewStartVisionSlots: [...defaultStartVisionSlots],
+    previewStartVisionFogPercent: startVisionFogPercent.default,
     previewSmallTrees: false,
+    breakpoints: [],
     gameTexturesFirstLinkApplied: false,
     gameTexturesFirstLinkInstallations: [],
     mapIconReliefMode: defaultMapIconRenderInput.relief,
@@ -479,6 +501,10 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.indentConditionals === undefined
         ? true
         : validateBoolean(value.indentConditionals, 'indent-conditionals preference'),
+    indentRandom:
+      value.indentRandom === undefined
+        ? true
+        : validateBoolean(value.indentRandom, 'indent-random preference'),
     liveGenerationStages:
       value.liveGenerationStages === undefined
         ? true
@@ -538,10 +564,33 @@ export function validateDesktopSession(value: unknown): DesktopSession {
       value.previewRuler === undefined
         ? true
         : validateBoolean(value.previewRuler, 'preview ruler preference'),
+    previewRulerEdges:
+      value.previewRulerEdges === undefined
+        ? false
+        : validateBoolean(value.previewRulerEdges, 'preview ruler edges preference'),
+    previewStartVision:
+      value.previewStartVision === undefined
+        ? false
+        : validateBoolean(value.previewStartVision, 'preview start vision preference'),
+    previewStartVisionSlots:
+      value.previewStartVisionSlots === undefined
+        ? [...defaultStartVisionSlots]
+        : validateStartVisionSlots(value.previewStartVisionSlots),
+    previewStartVisionFogPercent:
+      value.previewStartVisionFogPercent === undefined
+        ? startVisionFogPercent.default
+        : validateInteger(
+            value.previewStartVisionFogPercent,
+            startVisionFogPercent.minimum,
+            startVisionFogPercent.maximum,
+            'preview start vision fog opacity',
+          ),
     previewSmallTrees:
       value.previewSmallTrees === undefined
         ? false
         : validateBoolean(value.previewSmallTrees, 'preview small trees preference'),
+    breakpoints:
+      value.breakpoints === undefined ? [] : validateSessionBreakpoints(value.breakpoints),
     gameTexturesFirstLinkApplied:
       value.gameTexturesFirstLinkApplied === undefined
         ? false
@@ -842,6 +891,11 @@ function validateInstalledSourceOriginFilter(value: unknown): InstalledSourceOri
   };
 }
 
+function validateStartVisionSlots(value: unknown): number[] {
+  if (!isStartVisionSlotList(value)) throw new Error('preview start vision slots are invalid');
+  return [...value];
+}
+
 function validateBoolean(value: unknown, label: string): boolean {
   if (typeof value !== 'boolean') throw new Error(`${label} is invalid`);
   return value;
@@ -1033,4 +1087,34 @@ function validatePreviewPerspective(value: unknown): PreviewPerspective {
 function validatePreviewLook(value: unknown): PreviewLook {
   if (!isPreviewLook(value)) throw new Error('preview look is invalid');
   return value;
+}
+
+function validateSessionBreakpoints(value: unknown): SessionBreakpoints[] {
+  if (!Array.isArray(value) || value.length > 1024) {
+    throw new Error('saved breakpoints are invalid');
+  }
+  const uris = new Set<string>();
+  return value.map((entry: unknown) => {
+    const saved = entry as Partial<SessionBreakpoints> | null;
+    if (
+      !saved ||
+      typeof saved.uri !== 'string' ||
+      saved.uri.length < 1 ||
+      saved.uri.length > 4096 ||
+      uris.has(saved.uri) ||
+      !Array.isArray(saved.lines) ||
+      saved.lines.length > 1024 ||
+      !saved.lines.every(
+        (line, index) =>
+          Number.isInteger(line) &&
+          line >= 0 &&
+          line <= 10_000_000 &&
+          (index === 0 || saved.lines![index - 1]! < line),
+      )
+    ) {
+      throw new Error('saved breakpoints are invalid');
+    }
+    uris.add(saved.uri);
+    return { uri: saved.uri, lines: [...saved.lines] };
+  });
 }

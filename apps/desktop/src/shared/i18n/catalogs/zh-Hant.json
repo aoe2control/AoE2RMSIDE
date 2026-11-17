@@ -53,8 +53,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "瀏覽已安裝的地圖…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "部署為模組…"
+    "app-menu.file.deploy": {
+      "message": "部署…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "為模組…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "為劇本…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "地圖圖示…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "開啟遊戲資料夾"
@@ -134,6 +143,9 @@
     "app-menu.edit.redo": {
       "message": "重做"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "重新開啟已關閉的分頁"
+    },
     "app-menu.edit.cut": {
       "message": "剪下"
     },
@@ -160,6 +172,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "縮排 if/else 區塊"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "縮排隨機區塊"
     },
     "app-menu.edit.delete-permanently": {
       "message": "刪除時略過資源回收筒"
@@ -2801,6 +2816,108 @@
     "deploy-panel.success.finish": {
       "message": "完成"
     },
+    "map-icon-panel.title": {
+      "message": "地圖圖示"
+    },
+    "scenario-panel.title": {
+      "message": "部署為劇本"
+    },
+    "scenario-panel.name": {
+      "message": "劇本名稱"
+    },
+    "scenario-panel.name.history": {
+      "message": "先前部署的劇本名稱"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "名稱中不可包含 \\ / : * ? \" < > |，結尾也不可是句點或空格。"
+    },
+    "scenario-panel.name.too-long": {
+      "message": "名稱最多 100 個字元。"
+    },
+    "scenario-panel.summary": {
+      "message": "劇本內容"
+    },
+    "scenario-panel.summary.map": {
+      "message": "地圖"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} 格，種子 {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "玩家"
+    },
+    "scenario-panel.summary.player": {
+      "message": "玩家 {slot}：{civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "物件"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "指令碼效果"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "無"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS 指令碼"
+    },
+    "scenario-panel.unavailable": {
+      "message": "此預覽無法儲存為劇本。請重新產生地圖。"
+    },
+    "scenario-panel.effects.title": {
+      "message": "保留指令碼效果？"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, other {指令碼透過 {count} 個效果命令改變遊戲。劇本不會執行指令碼，因此可將效果加入為在開始時套用它們的觸發程序。}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "將效果轉為觸發程序"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "不包含效果"
+    },
+    "scenario-panel.replace.title": {
+      "message": "取代劇本？"
+    },
+    "scenario-panel.replace.description": {
+      "message": "此玩家設定檔中的劇本 {name} 將被覆寫。"
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "取代"
+    },
+    "scenario-panel.success.title": {
+      "message": "劇本已成功部署"
+    },
+    "scenario-panel.success.note": {
+      "message": "在遊戲的劇本編輯器中開啟，或在建立大廳時從「劇本」中選擇。"
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {已部署劇本 {name}，含 {objects} 個物件} other {已部署劇本 {name}，含 {objects} 個物件與 {effects} 個指令碼效果}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "無法部署劇本"
+    },
+    "scenario-panel.close": {
+      "message": "關閉劇本部署"
+    },
+    "scenario-panel.deploy": {
+      "message": "部署劇本"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "劇本已儲存至"
+    },
+    "scenario-panel.success.path": {
+      "message": "已部署劇本的路徑"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "複製劇本路徑"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "已複製劇本路徑"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "開啟劇本資料夾"
+    },
     "deploy-panel.success.title": {
       "message": "模組已成功部署"
     },
@@ -3872,6 +3989,24 @@
     "code-editor.tab-menu.close": {
       "message": "關閉"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "重新開啟已關閉的分頁"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "按一下或按 {shortcut} 新增中斷點"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "中斷點：預覽會在此暫停。按一下或按 {shortcut} 移除。"
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "中斷點：上次執行未到達此處。按一下或按 {shortcut} 移除。"
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "預覽在此暫停"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "切換中斷點"
+    },
     "code-editor.run.preview": {
       "message": "執行預覽"
     },
@@ -3892,6 +4027,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "停止（{shortcut}）"
+    },
+    "code-editor.run.continue": {
+      "message": "繼續"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "繼續執行到下一個中斷點（{shortcut}）"
+    },
+    "code-editor.run.step": {
+      "message": "單步"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "執行到下一個命令結束（{shortcut}）"
     },
     "code-editor.run-menu.label": {
       "message": "預覽執行選項"
@@ -4715,6 +4862,27 @@
     "preview-panel.tool.ruler": {
       "message": "尺規"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "尺規選項"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "在地圖邊緣顯示長度"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "玩家視野"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "玩家視野選項"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "玩家 {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "大地之母"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "迷霧不透明度"
+    },
     "preview-panel.tool.small-trees": {
       "message": "小樹"
     },
@@ -4723,6 +4891,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "儲存影像…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "全選"
     },
     "preview-panel.output.image-saved": {
       "message": "已將地圖影像儲存為 {name}"
@@ -4774,6 +4945,15 @@
     },
     "preview-panel.status.label": {
       "message": "預覽狀態"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {已在第 {line} 行之前暫停} other {已在第 {line} 行之後暫停}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "已在未開啟的檔案中暫停"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "此時的地圖太大，無法顯示"
     },
     "preview-panel.status.uncertified": {
       "message": "未認證"
@@ -5416,6 +5596,9 @@
     },
     "game-options.civilization.random": {
       "message": "隨機"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "隨機（基礎遊戲）"
     },
     "game-options.civilization.britons": {
       "message": "不列顛人"

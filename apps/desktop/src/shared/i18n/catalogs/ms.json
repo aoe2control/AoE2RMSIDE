@@ -53,8 +53,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Semak Imbas Peta Terpasang…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Pasang sebagai Mod…"
+    "app-menu.file.deploy": {
+      "message": "Pasang…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "sebagai Mod…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "sebagai Senario…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Ikon Peta…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Buka Folder Permainan"
@@ -134,6 +143,9 @@
     "app-menu.edit.redo": {
       "message": "Buat Semula"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Buka Semula Tab yang Ditutup"
+    },
     "app-menu.edit.cut": {
       "message": "Potong"
     },
@@ -160,6 +172,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "Inden Blok if/else"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Inden Blok Rawak"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Langkau Tong Kitar Semula Semasa Memadam"
@@ -2801,6 +2816,108 @@
     "deploy-panel.success.finish": {
       "message": "Selesai"
     },
+    "map-icon-panel.title": {
+      "message": "Ikon peta"
+    },
+    "scenario-panel.title": {
+      "message": "Pasang sebagai senario"
+    },
+    "scenario-panel.name": {
+      "message": "Nama senario"
+    },
+    "scenario-panel.name.history": {
+      "message": "Nama senario terdahulu"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Gunakan nama tanpa \\ / : * ? \" < > | dan tanpa titik atau ruang di hujung."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Gunakan nama tidak melebihi 100 aksara."
+    },
+    "scenario-panel.summary": {
+      "message": "Kandungan senario"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Peta"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} petak, benih {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Pemain"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Pemain {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Objek"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Kesan skrip"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Tiada"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "Skrip XS"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Pratonton ini tidak boleh disimpan sebagai senario. Jana peta semula."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Kekalkan kesan skrip?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, other {Skrip mengubah permainan dengan {count} arahan kesan. Senario tidak menjalankan skrip, jadi kesan boleh ditambah sebagai pencetus yang menggunakannya pada permulaan.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Jadikan kesan sebagai pencetus"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Tinggalkan kesan"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Gantikan senario?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Senario {name} dalam profil ini akan ditulis ganti."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Gantikan"
+    },
+    "scenario-panel.success.title": {
+      "message": "Senario berjaya dipasang"
+    },
+    "scenario-panel.success.note": {
+      "message": "Buka dalam Editor Senario permainan, atau pilih di bawah Senario semasa mencipta lobi."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Senario {name} dipasang dengan {objects} objek} other {Senario {name} dipasang dengan {objects} objek dan {effects} kesan skrip}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Senario tidak dapat dipasang"
+    },
+    "scenario-panel.close": {
+      "message": "Tutup pemasangan senario"
+    },
+    "scenario-panel.deploy": {
+      "message": "Pasang senario"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Senario disimpan ke"
+    },
+    "scenario-panel.success.path": {
+      "message": "Laluan senario yang dipasang"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Salin laluan senario"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Laluan senario disalin"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Buka folder senario"
+    },
     "deploy-panel.success.title": {
       "message": "Mod berjaya dipasang"
     },
@@ -3872,6 +3989,24 @@
     "code-editor.tab-menu.close": {
       "message": "Tutup"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Buka Semula Tab yang Ditutup"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Klik atau tekan {shortcut} untuk menambah titik henti"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Titik henti: pratonton dijeda di sini. Klik atau tekan {shortcut} untuk membuangnya."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Titik henti: larian terakhir tidak sampai ke sini. Klik atau tekan {shortcut} untuk membuangnya."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Pratonton dijeda di sini"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Togol Titik Henti"
+    },
     "code-editor.run.preview": {
       "message": "Jalankan pratonton"
     },
@@ -3892,6 +4027,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Hentikan ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Teruskan"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Teruskan ke titik henti seterusnya ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Langkah"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Jalankan hingga akhir perintah seterusnya ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Pilihan pelaksanaan pratonton"
@@ -4715,6 +4862,27 @@
     "preview-panel.tool.ruler": {
       "message": "Pembaris"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Pilihan pembaris"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Panjang di tepi peta"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Pandangan Pemain"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Pilihan Pandangan Pemain"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Pemain {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Kelegapan kabus"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Pokok kecil"
     },
@@ -4723,6 +4891,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Simpan Imej…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Pilih Semua"
     },
     "preview-panel.output.image-saved": {
       "message": "Imej peta disimpan sebagai {name}"
@@ -4774,6 +4945,15 @@
     },
     "preview-panel.status.label": {
       "message": "Status pratonton"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Dijeda sebelum baris {line}} other {Dijeda selepas baris {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Dijeda dalam fail yang tidak dibuka"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "Peta pada titik ini terlalu besar untuk ditunjukkan"
     },
     "preview-panel.status.uncertified": {
       "message": "Belum diperakui"
@@ -5416,6 +5596,9 @@
     },
     "game-options.civilization.random": {
       "message": "Rawak"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Rawak (permainan asas)"
     },
     "game-options.civilization.britons": {
       "message": "Orang British"

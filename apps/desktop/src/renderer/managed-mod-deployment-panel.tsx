@@ -303,14 +303,17 @@ interface OriginalIconImage {
 }
 
 export function ManagedModDeploymentPanel({
+  mode = 'mod',
   onOpenChange,
   open,
   requestedSourceId,
 }: {
+  mode?: 'mod' | 'map-icon';
   onOpenChange(open: boolean): void;
   open: boolean;
   requestedSourceId: string | null;
 }) {
+  const iconOnly = mode === 'map-icon';
   const { appendOutput, map, pinnedPreviewSource, previewExecution, workspace } =
     useAppPanelContext();
   const { t } = useI18n();
@@ -375,8 +378,11 @@ export function ManagedModDeploymentPanel({
   const profileIdRef = useRef(profileId);
   profileIdRef.current = profileId;
   const mapIconOption = useMemo(
-    () => resolveMapIconOption(mapIconPreference, originalIconAvailable),
-    [mapIconPreference, originalIconAvailable],
+    () =>
+      iconOnly
+        ? ({ checked: true, mode: 'generate', settled: true } as const)
+        : resolveMapIconOption(mapIconPreference, originalIconAvailable),
+    [iconOnly, mapIconPreference, originalIconAvailable],
   );
   const mapIconMode = mapIconOption.mode;
   const iconSourceResult = useMemo(
@@ -413,7 +419,13 @@ export function ManagedModDeploymentPanel({
       exactResult ? deploymentRequest(exactResult, mapIconOption.mode === 'retain-original') : null,
     [exactResult, mapIconOption.mode],
   );
-  const installationRequired = contextLoaded && context === null;
+  const [closingInstallationRequired, setClosingInstallationRequired] = useState(false);
+  useEffect(() => {
+    if (open && contextLoaded) setClosingInstallationRequired(context === null);
+  }, [context, contextLoaded, open]);
+  const installationRequired = open
+    ? contextLoaded && context === null
+    : closingInstallationRequired;
   const certificationNote = deploymentCertificationNote(exactResult?.certification);
   const constructNote = deploymentConstructNote(exactResult);
   const crashWarning = deploymentCrashWarning(exactResult?.warnings);
@@ -680,10 +692,10 @@ export function ManagedModDeploymentPanel({
 
   const graphInputs = useMemo<DeploymentGraphInputs | null>(
     () =>
-      open && deployment && context && profileId && !sourceLoading
+      open && !iconOnly && deployment && context && profileId && !sourceLoading
         ? { context, deployment, modName, profileId }
         : null,
-    [context, deployment, modName, open, profileId, sourceLoading],
+    [context, deployment, iconOnly, modName, open, profileId, sourceLoading],
   );
   const previewInputs = useMemo<DeploymentPreviewInputs | null>(
     () => (graphInputs && mapIcon ? { ...graphInputs, mapIcon, graph: graphInputs } : null),
@@ -1019,8 +1031,8 @@ export function ManagedModDeploymentPanel({
   );
   const errorProblem = deploymentPanelError<DeploymentProblem>({
     action: actionError,
-    context: contextError,
-    source: installationRequired ? null : sourceError,
+    context: iconOnly ? null : contextError,
+    source: installationRequired && !iconOnly ? null : sourceError,
     preview: shownPreview.error === null ? null : { kind: 'deployment', raw: shownPreview.error },
   });
   const error = errorProblem ? deploymentProblemText(errorProblem, t) : null;
@@ -1059,7 +1071,9 @@ export function ManagedModDeploymentPanel({
           ? mapIconSourceDescription(currentPreview.mapIcon)
           : mapIconOption.checked && mapIconRender.status === 'rendering'
             ? t('map-icon.status.rendering')
-            : installationRequired && mapIconOption.checked && mapIconRender.status === 'ready'
+            : (installationRequired || iconOnly) &&
+                mapIconOption.checked &&
+                mapIconRender.status === 'ready'
               ? t('map-icon.status.generated-unlinked')
               : t('map-icon.status.waiting');
   const generatedIconPixels =
@@ -1237,7 +1251,7 @@ export function ManagedModDeploymentPanel({
   const iconField = (
     <div
       className="managed-mod-icon-field"
-      data-standalone={installationRequired || undefined}
+      data-standalone={iconOnly || undefined}
       data-testid="managed-mod-map-icon-field"
     >
       <div className="managed-mod-icon-row">
@@ -1261,6 +1275,7 @@ export function ManagedModDeploymentPanel({
           saveSizes={iconSaveTarget?.kind === 'generated'}
           state={iconFrameState}
           switchBusy={actionBusy}
+          switchHidden={iconOnly}
           switchReason={mapIconSwitchReason}
           switchReasonId={mapIconSwitchReasonId}
         />
@@ -1281,7 +1296,8 @@ export function ManagedModDeploymentPanel({
       <Dialog onOpenChange={onOpenChange} open={open}>
         <DialogContent
           className="managed-mod-dialog"
-          data-compact={installationRequired || undefined}
+          data-compact={installationRequired || iconOnly || undefined}
+          data-icon-only={iconOnly || undefined}
           data-lightbox-open={iconLightboxOpen || undefined}
         >
           <DialogClose
@@ -1294,13 +1310,45 @@ export function ManagedModDeploymentPanel({
           </DialogClose>
           <DialogHeader>
             <DialogTitle>
-              <PackagePlus aria-hidden="true" /> {t('deploy-panel.title')}
+              {iconOnly ? (
+                <>
+                  <ImageIcon aria-hidden="true" size={16} /> {t('map-icon-panel.title')}
+                </>
+              ) : (
+                <>
+                  <PackagePlus aria-hidden="true" /> {t('deploy-panel.title')}
+                </>
+              )}
             </DialogTitle>
           </DialogHeader>
 
-          {installationRequired ? (
+          {iconOnly ? (
+            <div className="managed-mod-icon-only">
+              <label className="managed-mod-icon-only-source">
+                <span>{t('deploy-panel.source')}</span>
+                <Select onValueChange={chooseSource} value={selectedSourceId || null}>
+                  <SelectTrigger aria-label={t('deploy-panel.source')}>
+                    <SelectValue placeholder={t('deploy-panel.source.placeholder')}>
+                      {selectedSource?.name}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sources.map((source) => (
+                      <SelectItem key={source.id} value={source.id}>
+                        {source.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </label>
+              {selectedSource ? (
+                iconField
+              ) : (
+                <p className="managed-mod-state">{t('deploy-panel.no-source')}</p>
+              )}
+            </div>
+          ) : installationRequired ? (
             <>
-              {selectedSource ? iconField : null}
               <div className="managed-mod-prerequisite">
                 <span>{t('deploy-panel.select-game-folder')}</span>
                 <SelectGameFolderButton
@@ -1432,12 +1480,12 @@ export function ManagedModDeploymentPanel({
               </div>
             </div>
           )}
-          {installationRequired && error ? (
+          {(installationRequired || iconOnly) && error ? (
             <p className="managed-mod-error" role="alert">
               {error}
             </p>
           ) : null}
-          {!installationRequired && crashWarning && !error ? (
+          {!installationRequired && !iconOnly && crashWarning && !error ? (
             <p
               className="managed-mod-crash-warning"
               data-testid="managed-mod-crash-warning"
@@ -1446,7 +1494,7 @@ export function ManagedModDeploymentPanel({
               {crashWarning}
             </p>
           ) : null}
-          {!installationRequired ? (
+          {!installationRequired && !iconOnly ? (
             <div className="managed-mod-actions">
               {certificationNote ? (
                 <span className="managed-mod-certification" data-testid="managed-mod-certification">
@@ -1760,7 +1808,7 @@ function DeploymentModStatusText({ status }: { status: ManualDeploymentModStatus
   );
 }
 
-function OpenFolderButton({
+export function OpenFolderButton({
   busy,
   className,
   disabled,
@@ -1805,7 +1853,7 @@ function layoutWidth(element: HTMLElement): number {
   return Number.parseFloat(getComputedStyle(element).width);
 }
 
-function CopyPathField({
+export function CopyPathField({
   copiedLabel,
   copyLabel,
   inputLabel,
@@ -1891,6 +1939,7 @@ function MapIconColumn({
   saveSizes,
   state,
   switchBusy,
+  switchHidden = false,
   switchReason,
   switchReasonId,
 }: {
@@ -1912,6 +1961,7 @@ function MapIconColumn({
   saveSizes: boolean;
   state: string;
   switchBusy: boolean;
+  switchHidden?: boolean;
   switchReason: string | null;
   switchReasonId: string;
   saveLabel: string;
@@ -1921,33 +1971,36 @@ function MapIconColumn({
     <div
       className="managed-mod-icon-column"
       data-generate={checked || undefined}
+      data-switch-hidden={switchHidden || undefined}
       data-testid="managed-mod-map-icon-widget"
     >
-      <Tooltip disabled={switchReason === null}>
-        <TooltipTrigger
-          render={
-            <Button
-              {...toggleButtonProps({
-                checked,
-                className: 'managed-mod-icon-switch toggle-button-part',
-                density: 'compact',
-              })}
-              aria-describedby={switchReason ? switchReasonId : undefined}
-              data-testid="managed-mod-map-icon-toggle"
-              disabled={switchBusy || switchReason !== null}
-              focusableWhenDisabled
-              onClick={onToggle}
-            />
-          }
-        >
-          {t('map-icon.generate')}
-          <ToggleButtonCheck checked={checked} />
-        </TooltipTrigger>
-        <TooltipContent className="managed-mod-icon-tooltip managed-mod-icon-widget-tooltip">
-          {switchReason}
-        </TooltipContent>
-      </Tooltip>
-      {switchReason ? (
+      {switchHidden ? null : (
+        <Tooltip disabled={switchReason === null}>
+          <TooltipTrigger
+            render={
+              <Button
+                {...toggleButtonProps({
+                  checked,
+                  className: 'managed-mod-icon-switch toggle-button-part',
+                  density: 'compact',
+                })}
+                aria-describedby={switchReason ? switchReasonId : undefined}
+                data-testid="managed-mod-map-icon-toggle"
+                disabled={switchBusy || switchReason !== null}
+                focusableWhenDisabled
+                onClick={onToggle}
+              />
+            }
+          >
+            {t('map-icon.generate')}
+            <ToggleButtonCheck checked={checked} />
+          </TooltipTrigger>
+          <TooltipContent className="managed-mod-icon-tooltip managed-mod-icon-widget-tooltip">
+            {switchReason}
+          </TooltipContent>
+        </Tooltip>
+      )}
+      {switchReason && !switchHidden ? (
         <span className="sr-only" id={switchReasonId}>
           {switchReason}
         </span>
@@ -2695,7 +2748,7 @@ function MapIconPlaceholder() {
   );
 }
 
-function ManagedModTreeSkeleton() {
+export function ManagedModTreeSkeleton() {
   const { t } = useI18n();
   return (
     <div
@@ -2710,7 +2763,7 @@ function ManagedModTreeSkeleton() {
   );
 }
 
-function preferredSource(
+export function preferredSource(
   sources: readonly PinnedPreviewSource[],
   pinnedId: string | null,
   activeId: string,
@@ -2723,7 +2776,7 @@ function preferredSource(
   );
 }
 
-function errorMessage(error: unknown): string {
+export function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 

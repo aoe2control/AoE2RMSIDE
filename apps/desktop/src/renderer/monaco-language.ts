@@ -26,7 +26,7 @@ import {
   openIncludedFileCommandUri,
   type IncludeLink,
 } from './include-navigation';
-import type { SourceBlockStructure } from './source-highlight';
+import { blockAndSectionFolds, type SourceBlockStructure } from './source-highlight';
 import { mapTestFunctionDefinition, type XsOutlineSymbol } from './editor-outline';
 import {
   codeSemanticTokenTypes,
@@ -136,6 +136,7 @@ interface AttachedDocument {
 const attachedDocuments = new Map<string, AttachedDocument>();
 const rmsFormatterConvention = 2;
 let rmsIndentConditionals = true;
+let rmsIndentRandom = true;
 let languageEditGuard: (uri: string) => string | null = () => null;
 
 export function setLanguageEditGuard(guard: (uri: string) => string | null): monaco.IDisposable {
@@ -252,13 +253,24 @@ export function rmsConditionalIndentation(): boolean {
 export function setRmsConditionalIndentation(enabled: boolean): void {
   if (enabled === rmsIndentConditionals) return;
   rmsIndentConditionals = enabled;
-  if (configured) {
-    monaco.languages.setLanguageConfiguration('rms', rmsLanguageConfigurationFor(enabled));
-    monaco.languages.setLanguageConfiguration(
-      rmsSnippetLanguageId,
-      rmsLanguageConfigurationFor(enabled),
-    );
-  }
+  applyRmsIndentationRules();
+}
+
+export function rmsRandomIndentation(): boolean {
+  return rmsIndentRandom;
+}
+
+export function setRmsRandomIndentation(enabled: boolean): void {
+  if (enabled === rmsIndentRandom) return;
+  rmsIndentRandom = enabled;
+  applyRmsIndentationRules();
+}
+
+function applyRmsIndentationRules(): void {
+  if (!configured) return;
+  const configuration = rmsLanguageConfigurationFor(rmsIndentConditionals, rmsIndentRandom);
+  monaco.languages.setLanguageConfiguration('rms', configuration);
+  monaco.languages.setLanguageConfiguration(rmsSnippetLanguageId, configuration);
 }
 
 export function configureRmsLanguage(): void {
@@ -271,13 +283,13 @@ export function configureRmsLanguage(): void {
   monaco.languages.setMonarchTokensProvider('xs', xsMonarchLanguage);
   monaco.languages.setLanguageConfiguration(
     'rms',
-    rmsLanguageConfigurationFor(rmsIndentConditionals),
+    rmsLanguageConfigurationFor(rmsIndentConditionals, rmsIndentRandom),
   );
   monaco.languages.setMonarchTokensProvider('rms', rmsMonarchLanguage);
   monaco.languages.register({ id: rmsSnippetLanguageId });
   monaco.languages.setLanguageConfiguration(
     rmsSnippetLanguageId,
-    rmsLanguageConfigurationFor(rmsIndentConditionals),
+    rmsLanguageConfigurationFor(rmsIndentConditionals, rmsIndentRandom),
   );
   monaco.languages.setMonarchTokensProvider(rmsSnippetLanguageId, rmsMonarchLanguage);
   monaco.languages.setLanguageConfiguration('starlark', {
@@ -489,37 +501,49 @@ export async function requestRmsSourceStructure(
   ]);
   if (model.isDisposed() || model.getVersionId() !== version) return null;
   if (!Array.isArray(symbols) || !Array.isArray(folds)) return null;
+  const outline = symbols.filter(isLspDocumentSymbol).map((symbol) => ({
+    kind: symbol.kind,
+    line: symbol.range.start.line,
+    name: symbol.name,
+    character: symbol.range.start.character,
+    endLine: symbol.range.end.line,
+    endCharacter: symbol.range.end.character,
+  }));
   return {
-    symbols: symbols.filter(isLspDocumentSymbol).map((symbol) => ({
-      kind: symbol.kind,
-      line: symbol.range.start.line,
-      name: symbol.name,
-      character: symbol.range.start.character,
-      endLine: symbol.range.end.line,
-      endCharacter: symbol.range.end.character,
-    })),
-    folds: folds.flatMap((fold) => {
-      const value = fold as {
-        startLine?: unknown;
-        startCharacter?: unknown;
-        endLine?: unknown;
-        kind?: unknown;
-      } | null;
-      return typeof value?.startLine === 'number' &&
-        typeof value.endLine === 'number' &&
-        value.kind !== 'comment'
-        ? [
-            {
-              startLine: value.startLine,
-              endLine: value.endLine,
-              ...(typeof value.startCharacter === 'number'
-                ? { startCharacter: value.startCharacter }
-                : {}),
-            },
-          ]
-        : [];
-    }),
+    symbols: outline,
+    folds: blockAndSectionFolds(
+      outline,
+      folds.flatMap((fold) => {
+        const value = fold as {
+          startLine?: unknown;
+          startCharacter?: unknown;
+          endLine?: unknown;
+          kind?: unknown;
+        } | null;
+        return typeof value?.startLine === 'number' &&
+          typeof value.endLine === 'number' &&
+          value.kind !== 'comment'
+          ? [
+              {
+                startLine: value.startLine,
+                endLine: value.endLine,
+                ...(typeof value.startCharacter === 'number'
+                  ? { startCharacter: value.startCharacter }
+                  : {}),
+              },
+            ]
+          : [];
+      }),
+    ),
   };
+}
+
+export async function requestRmsBreakpointSites(model: monaco.editor.ITextModel): Promise<unknown> {
+  if (model.getLanguageId() !== 'rms') return null;
+  const version = model.getVersionId();
+  const sites = await requestLanguage<unknown>('rms/breakpointSites', textDocumentParams(model));
+  if (model.isDisposed() || model.getVersionId() !== version) return null;
+  return sites;
 }
 
 export async function requestXsOutlineSymbols(
@@ -1408,7 +1432,7 @@ async function requestFormattingEdits(
     options: { tabSize: 4, insertSpaces: true },
     rmsDocumentVersion: requestedVersion,
     ...(document.languageId === 'rms'
-      ? { rmsFormatterConvention, rmsIndentConditionals }
+      ? { rmsFormatterConvention, rmsIndentConditionals, rmsIndentRandom }
       : document.languageId === 'xs'
         ? { xsFormatterConvention }
         : { starlarkFormatterConvention: 1 }),

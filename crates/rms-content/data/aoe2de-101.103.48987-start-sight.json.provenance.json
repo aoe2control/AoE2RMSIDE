@@ -1,0 +1,22 @@
+{
+  "$schema": "https://rmside.invalid/schemas/fixture-manifest/v1",
+  "schemaVersion": "1.0.0",
+  "compatibility": {
+    "minimumMajor": 1,
+    "maximumMajor": 1
+  },
+  "manifestId": "aoe2de-101.103.48987-start-sight",
+  "files": [
+    {
+      "path": "crates/rms-content/data/aoe2de-101.103.48987-start-sight.json",
+      "sha256": "5c01596aeaca6a782f84b6f3834f7182a9d6397e453c937083cb23f3c4331a65",
+      "authorship": "Neutral numeric gameplay data (line of sight per object and civilization table, and the line-of-sight effects and master upgrades in effect at the start of a match) projected from a lawfully owned, version-verified game installation; no DAT bytes, names, text, art or installation fingerprint retained.",
+      "license": "Neutral factual gameplay values; no source expression retained",
+      "sourceClassification": "sanitized-observation",
+      "created": "2026-11-16",
+      "containsGameContent": false,
+      "transformation": "The private derive-start-sight.py recipe reads the hash-pinned DAT with genieutils-py 0.1.2: each master's line of sight as binary32 bits (the most common value per master, plus sparse per-civilization variants), and for every technology a player has at the start (age technologies of the starting age, then the automatic technologies whose prerequisites are met and which the civilization's tree does not disable) and every civilization team bonus, the owner line-of-sight set, add and multiply rows and owner master upgrades in row order, with the first starting age from which each is in effect. Any other-recipient sight row, geometry write or sight-sharing resource write fails the recipe.",
+      "reviewer": "Pending maintainer review; reproducible from the same pristine DAT with the same recipe"
+    }
+  ]
+}

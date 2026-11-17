@@ -2,7 +2,7 @@ import { Container } from 'pixi.js';
 import { gameArtChunkBudget, gameArtSpriteBudget } from './game-art-resources';
 import { GameArtCliffBandLayer } from './game-art-cliffs';
 import { GameArtGpuTerrainLayer } from './game-art-gpu-terrain';
-import { GameArtSpriteLayer } from './game-art-sprites';
+import { GameArtSpriteLayer, type SpriteObjectFog } from './game-art-sprites';
 import { requestPreviewRender } from './preview-render-scheduler';
 import type { TeamColor } from './game-art-team-colors';
 import { GameArtTerrainLayer } from './game-art-terrain';
@@ -68,6 +68,7 @@ export interface GameArtPresentationState {
   minimapHidden: boolean;
   kinds: { objects: boolean; cliffs: boolean };
   treeScale: number;
+  objectFog: SpriteObjectFog | null;
 }
 
 export function createGameArtPresentationState(): GameArtPresentationState {
@@ -78,6 +79,7 @@ export function createGameArtPresentationState(): GameArtPresentationState {
     minimapHidden: false,
     kinds: { objects: true, cliffs: true },
     treeScale: 1,
+    objectFog: null,
   };
 }
 
@@ -224,6 +226,7 @@ function applyKindVisibility(cache: GameArtLayerCache): void {
     sprites.container.visible = presented;
     sprites.setKindVisibility(kinds);
     sprites.setTreeScale(cache.gameArtPresentation.treeScale);
+    sprites.setObjectFog(cache.gameArtPresentation.objectFog);
   }
   const bands = cache.gameArtCliffs?.layer;
   if (bands) bands.container.visible = presented && kinds.cliffs;
@@ -241,6 +244,16 @@ export function setGameArtTreeScale(cache: GameArtLayerCache, factor: number): v
   cache.gameArtPresentation.treeScale = factor;
   cache.gameArtSprites?.layer.setTreeScale(factor);
 }
+
+export function setGameArtObjectFog(
+  cache: GameArtLayerCache,
+  objectFog: SpriteObjectFog | null,
+): void {
+  cache.gameArtPresentation.objectFog = objectFog;
+  cache.gameArtSprites?.layer.setObjectFog(objectFog);
+}
+
+export const startVisionFogZIndex = 1.5;
 
 export function gameArtMarkerSkips(cache: GameArtLayerCache): {
   spriteObjects: ReadonlySet<number> | undefined;

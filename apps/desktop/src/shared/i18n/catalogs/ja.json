@@ -53,8 +53,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "インストール済みマップを参照…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "MOD として配置…"
+    "app-menu.file.deploy": {
+      "message": "配置…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "MOD として…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "シナリオとして…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "マップアイコン…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "ゲームフォルダーを開く"
@@ -134,6 +143,9 @@
     "app-menu.edit.redo": {
       "message": "やり直す"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "閉じたタブを再度開く"
+    },
     "app-menu.edit.cut": {
       "message": "切り取り"
     },
@@ -160,6 +172,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "if/else ブロックを字下げ"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "ランダム ブロックを字下げ"
     },
     "app-menu.edit.delete-permanently": {
       "message": "削除時にごみ箱を使わない"
@@ -2801,6 +2816,108 @@
     "deploy-panel.success.finish": {
       "message": "完了"
     },
+    "map-icon-panel.title": {
+      "message": "マップアイコン"
+    },
+    "scenario-panel.title": {
+      "message": "シナリオとして配置"
+    },
+    "scenario-panel.name": {
+      "message": "シナリオ名"
+    },
+    "scenario-panel.name.history": {
+      "message": "以前に配置したシナリオ名"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "\\ / : * ? \" < > | を含まず、末尾がピリオドやスペースでない名前にしてください。"
+    },
+    "scenario-panel.name.too-long": {
+      "message": "100 文字以内の名前にしてください。"
+    },
+    "scenario-panel.summary": {
+      "message": "シナリオの内容"
+    },
+    "scenario-panel.summary.map": {
+      "message": "マップ"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} タイル、シード {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "プレイヤー"
+    },
+    "scenario-panel.summary.player": {
+      "message": "プレイヤー {slot}：{civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "オブジェクト"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "スクリプトの効果"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "なし"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS スクリプト"
+    },
+    "scenario-panel.unavailable": {
+      "message": "このプレビューはシナリオとして保存できません。マップを再生成してください。"
+    },
+    "scenario-panel.effects.title": {
+      "message": "スクリプトの効果を残しますか？"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, other {スクリプトは {count} 個の効果コマンドでゲームを変更します。シナリオはスクリプトを実行しないため、効果を開始時に適用するトリガーとして追加できます。}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "効果をトリガーに変換"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "効果を含めない"
+    },
+    "scenario-panel.replace.title": {
+      "message": "シナリオを置き換えますか？"
+    },
+    "scenario-panel.replace.description": {
+      "message": "このプロファイルのシナリオ {name} は上書きされます。"
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "置き換え"
+    },
+    "scenario-panel.success.title": {
+      "message": "シナリオを配置しました"
+    },
+    "scenario-panel.success.note": {
+      "message": "ゲームのシナリオ エディターで開くか、ロビー作成時にシナリオから選択してください。"
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {シナリオ {name} を配置しました（オブジェクト {objects} 個）} other {シナリオ {name} を配置しました（オブジェクト {objects} 個、スクリプトの効果 {effects} 個）}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "シナリオを配置できませんでした"
+    },
+    "scenario-panel.close": {
+      "message": "シナリオの配置を閉じる"
+    },
+    "scenario-panel.deploy": {
+      "message": "シナリオを配置"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "シナリオの保存先"
+    },
+    "scenario-panel.success.path": {
+      "message": "配置したシナリオのパス"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "シナリオのパスをコピー"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "シナリオのパスをコピーしました"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "シナリオ フォルダーを開く"
+    },
     "deploy-panel.success.title": {
       "message": "MOD を配置しました"
     },
@@ -3872,6 +3989,24 @@
     "code-editor.tab-menu.close": {
       "message": "閉じる"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "閉じたタブを再度開く"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "クリックするか {shortcut} を押すとブレークポイントを追加します"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "ブレークポイント: プレビューはここで一時停止します。クリックするか {shortcut} を押すと削除します。"
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "ブレークポイント: 前回の実行はここに到達しませんでした。クリックするか {shortcut} を押すと削除します。"
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "プレビューはここで一時停止しています"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "ブレークポイントの切り替え"
+    },
     "code-editor.run.preview": {
       "message": "プレビューを実行"
     },
@@ -3892,6 +4027,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "停止（{shortcut}）"
+    },
+    "code-editor.run.continue": {
+      "message": "続行"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "次のブレークポイントまで続行（{shortcut}）"
+    },
+    "code-editor.run.step": {
+      "message": "ステップ"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "次のコマンドの終わりまで実行（{shortcut}）"
     },
     "code-editor.run-menu.label": {
       "message": "プレビューの実行オプション"
@@ -4715,6 +4862,27 @@
     "preview-panel.tool.ruler": {
       "message": "ルーラー"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "ルーラーの設定"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "マップの端に長さを表示"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "プレイヤー視点"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "プレイヤー視点のオプション"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "プレイヤー {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "ガイア"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "霧の不透明度"
+    },
     "preview-panel.tool.small-trees": {
       "message": "小さな木"
     },
@@ -4723,6 +4891,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "画像を保存…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "すべて選択"
     },
     "preview-panel.output.image-saved": {
       "message": "マップ画像を {name} として保存しました"
@@ -4774,6 +4945,15 @@
     },
     "preview-panel.status.label": {
       "message": "プレビューの状態"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {{line} 行目の前で一時停止} other {{line} 行目の後で一時停止}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "開いていないファイルで一時停止"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "この時点のマップは大きすぎて表示できません"
     },
     "preview-panel.status.uncertified": {
       "message": "未認証"
@@ -5416,6 +5596,9 @@
     },
     "game-options.civilization.random": {
       "message": "ランダム"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "ランダム（基本ゲーム）"
     },
     "game-options.civilization.britons": {
       "message": "ブリトン"

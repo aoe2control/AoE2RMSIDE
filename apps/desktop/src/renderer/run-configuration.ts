@@ -37,7 +37,14 @@ import {
   qualityCheckSeeds,
 } from '../shared/quality-check';
 import { wordOutputText, type OutputText } from '../shared/output-message';
-import { civilizationName, packedCivilizationOptions } from './packed-game-options';
+import {
+  civilizationName,
+  isBaseGameCivilization,
+  isRandomCivilization,
+  isRandomPoolCivilization,
+  packedCivilizationOptions,
+  randomBaseGameCivilizationId,
+} from './packed-game-options';
 
 export const runConfigurationStorageKey = 'rmside.run-configuration.v1';
 export const maximumRecentSeeds = 16;
@@ -1227,16 +1234,27 @@ function previewPlayers(configuration: RunConfiguration): PreviewPlayerConfigura
     return {
       slot,
       team: configuration.teamIds[index] ?? index + 1,
-      civilizationId:
-        civilizationId === 0
-          ? resolvedRandomCivilization(configuration.profileId, configuration.seed, slot)
-          : civilizationId,
+      civilizationId: isRandomCivilization(civilizationId)
+        ? resolvedRandomCivilization(
+            configuration.profileId,
+            configuration.seed,
+            slot,
+            civilizationId === randomBaseGameCivilizationId,
+          )
+        : civilizationId,
     };
   });
 }
 
-function resolvedRandomCivilization(profileId: string, seed: number, slot: number): number {
-  const civilizations = packedCivilizationOptions(profileId).filter((option) => option.id !== 0);
+function resolvedRandomCivilization(
+  profileId: string,
+  seed: number,
+  slot: number,
+  baseGameOnly: boolean,
+): number {
+  const civilizations = packedCivilizationOptions(profileId).filter((option) =>
+    baseGameOnly ? isBaseGameCivilization(option.id) : isRandomPoolCivilization(option.id),
+  );
   if (civilizations.length === 0) return 0;
   let value = (seed ^ Math.imul(slot, 0x9e3779b9)) >>> 0;
   value = Math.imul(value ^ (value >>> 16), 0x85ebca6b) >>> 0;
@@ -1252,7 +1270,10 @@ export function randomCivilizationResolutions(configuration: RunConfiguration): 
   readonly label: string;
 }[] {
   return previewPlayers(configuration).flatMap((player, playerIndex) => {
-    if ((configuration.civilizationIds[playerIndex] ?? 0) !== 0 || player.civilizationId === 0) {
+    if (
+      !isRandomCivilization(configuration.civilizationIds[playerIndex] ?? 0) ||
+      isRandomCivilization(player.civilizationId)
+    ) {
       return [];
     }
     const name = civilizationName(player.civilizationId);

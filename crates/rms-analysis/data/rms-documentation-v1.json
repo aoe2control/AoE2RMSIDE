@@ -4217,7 +4217,7 @@
       "prefix": "start_random",
       "where": ["*"],
       "summary": "A random block: the game rolls once and runs the first branch the roll reaches.",
-      "body": ["start_random", "percent_chance ${1:50}", "$0", "end_random"]
+      "body": ["start_random", "\tpercent_chance ${1:50}", "\t\t$0", "end_random"]
     },
     {
       "id": "if-block",

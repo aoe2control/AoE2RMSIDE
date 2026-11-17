@@ -407,8 +407,36 @@ pub fn resolve_exact_elevation_state(
     semantic_program: &SemanticProgram,
     land: &ExactLandState,
     content: CompatibleContentView<'_>,
+    rng: RmsRandom,
+    cancellation: &dyn CancellationToken,
+) -> Result<ExactElevationState, GenerationError> {
+    resolve_exact_elevation_state_observed(
+        semantic_program,
+        land,
+        content,
+        rng,
+        cancellation,
+        &mut crate::NoStageObserver,
+    )
+}
+
+fn boundary_view<'a>(land: &'a ExactLandState, elevation: &'a [i16]) -> crate::StageView<'a> {
+    crate::StageView {
+        terrain: &land.terrain,
+        elevation: Some(elevation),
+        tile_operations: &land.tile_operation_indices,
+        objects: &[],
+        object_operations: &[],
+    }
+}
+
+pub(crate) fn resolve_exact_elevation_state_observed(
+    semantic_program: &SemanticProgram,
+    land: &ExactLandState,
+    content: CompatibleContentView<'_>,
     mut rng: RmsRandom,
     cancellation: &dyn CancellationToken,
+    observer: &mut dyn crate::StageObserver,
 ) -> Result<ExactElevationState, GenerationError> {
     let dimensions = land.dimensions;
     let tile_count = dimensions.tile_count()?;
@@ -460,8 +488,22 @@ pub fn resolve_exact_elevation_state(
 
     let mut tile_writes = TileWriteRecorder::default();
     let mut operations_before = operation_indices.clone();
+    let descriptor_operations = descriptors
+        .iter()
+        .map(|descriptor| descriptor.operation_index)
+        .collect::<Vec<_>>();
+    let observe_boundaries = observer.boundaries_enabled();
     for (descriptor_index, descriptor) in descriptors.iter().enumerate() {
         cancellation_checkpoint(cancellation, GenerationStage::Terrain, work)?;
+        let (first_of_operation, last_of_operation) =
+            crate::operation_run_edges(&descriptor_operations, descriptor_index);
+        if observe_boundaries && first_of_operation {
+            observer.boundary(
+                crate::OperationEdge::Before,
+                descriptor.operation_index,
+                &boundary_view(land, &elevation),
+            );
+        }
         operations_before.clone_from(&operation_indices);
         let statistics_before = (
             statistics.initial_popped_candidates,
@@ -541,6 +583,13 @@ pub fn resolve_exact_elevation_state(
                 elevation_after_descriptor_hash,
                 elevation_after_cleanup_hash: elevation_hash(&elevation),
             });
+        if observe_boundaries && last_of_operation {
+            observer.boundary(
+                crate::OperationEdge::After,
+                descriptor.operation_index,
+                &boundary_view(land, &elevation),
+            );
+        }
     }
 
     Ok(ExactElevationState {

@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Geïnstalleerde kaarten bekijken…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Als mod installeren…"
+    "app-menu.file.deploy": {
+      "message": "Installeren…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "als mod…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "als scenario…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Kaartpictogram…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Spelmap openen"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Opnieuw uitvoeren"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Gesloten tabblad heropenen"
+    },
     "app-menu.edit.cut": {
       "message": "Knippen"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "if/else-blokken inspringen"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Willekeurige blokken inspringen"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Prullenbak overslaan bij verwijderen"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Voltooien"
     },
+    "map-icon-panel.title": {
+      "message": "Kaartpictogram"
+    },
+    "scenario-panel.title": {
+      "message": "Als scenario installeren"
+    },
+    "scenario-panel.name": {
+      "message": "Scenarionaam"
+    },
+    "scenario-panel.name.history": {
+      "message": "Eerdere scenarionamen"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Gebruik een naam zonder \\ / : * ? \" < > | en zonder punt of spatie aan het eind."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Gebruik een naam van hoogstens 100 tekens."
+    },
+    "scenario-panel.summary": {
+      "message": "Inhoud van het scenario"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Kaart"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} vakken, startwaarde {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Spelers"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Speler {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Objecten"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Scripteffecten"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Geen"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS-script"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Deze voorvertoning kan niet als scenario worden opgeslagen. Genereer de kaart opnieuw."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Scripteffecten behouden?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Het script verandert het spel met {count} effectopdracht. Een scenario voert het script niet uit, dus het effect kan worden toegevoegd als trigger die het aan het begin toepast.} other {Het script verandert het spel met {count} effectopdrachten. Een scenario voert het script niet uit, dus de effecten kunnen worden toegevoegd als trigger die ze aan het begin toepast.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Effecten omzetten in triggers"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Effecten weglaten"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Scenario vervangen?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Het scenario {name} in dit profiel wordt overschreven."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Vervangen"
+    },
+    "scenario-panel.success.title": {
+      "message": "Scenario geïnstalleerd"
+    },
+    "scenario-panel.success.note": {
+      "message": "Open het in de scenario-editor van het spel, of kies het onder Scenario wanneer je een lobby maakt."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Scenario {name} geïnstalleerd met {objects} objecten} one {Scenario {name} geïnstalleerd met {objects} objecten en {effects} scripteffect} other {Scenario {name} geïnstalleerd met {objects} objecten en {effects} scripteffecten}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Het scenario kon niet worden geïnstalleerd"
+    },
+    "scenario-panel.close": {
+      "message": "Scenario-installatie sluiten"
+    },
+    "scenario-panel.deploy": {
+      "message": "Scenario installeren"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Het scenario is opgeslagen in"
+    },
+    "scenario-panel.success.path": {
+      "message": "Pad van het geïnstalleerde scenario"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Scenariopad kopiëren"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Scenariopad gekopieerd"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Scenariomap openen"
+    },
     "deploy-panel.success.title": {
       "message": "Mod geïnstalleerd"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Sluiten"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Gesloten tabblad heropenen"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Klik of druk op {shortcut} om een onderbrekingspunt toe te voegen"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Onderbrekingspunt: het voorbeeld pauzeert hier. Klik of druk op {shortcut} om het te verwijderen."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Onderbrekingspunt: de laatste uitvoering heeft het niet bereikt. Klik of druk op {shortcut} om het te verwijderen."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Het voorbeeld is hier gepauzeerd"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Onderbrekingspunt in-/uitschakelen"
+    },
     "code-editor.run.preview": {
       "message": "Voorbeeld uitvoeren"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Stoppen ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Doorgaan"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Doorgaan tot het volgende onderbrekingspunt ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Stap"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Uitvoeren tot het einde van de volgende opdracht ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Uitvoeringsopties voor het voorbeeld"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Liniaal"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Liniaalopties"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Lengtes aan de kaartranden"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Spelerweergave"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Opties voor spelerweergave"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Speler {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Dekking van de mist"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Kleine bomen"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Afbeelding opslaan…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Alles selecteren"
     },
     "preview-panel.output.image-saved": {
       "message": "Kaartafbeelding opgeslagen als {name}"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "Voorbeeldstatus"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Gepauzeerd vóór regel {line}} other {Gepauzeerd na regel {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Gepauzeerd in een bestand dat niet geopend is"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "De kaart op dit punt is te groot om te tonen"
     },
     "preview-panel.status.uncertified": {
       "message": "Niet gecertificeerd"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Willekeurig"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Willekeurig (basisspel)"
     },
     "game-options.civilization.britons": {
       "message": "Britten"

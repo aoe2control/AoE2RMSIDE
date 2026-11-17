@@ -53,8 +53,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Duyệt bản đồ đã cài…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Triển khai thành mod…"
+    "app-menu.file.deploy": {
+      "message": "Triển khai…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "thành mod…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "thành bối cảnh…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Biểu tượng bản đồ…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Mở thư mục trò chơi"
@@ -134,6 +143,9 @@
     "app-menu.edit.redo": {
       "message": "Làm lại"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Mở lại thẻ đã đóng"
+    },
     "app-menu.edit.cut": {
       "message": "Cắt"
     },
@@ -160,6 +172,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "Thụt lề khối if/else"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Thụt lề khối ngẫu nhiên"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Bỏ qua Thùng rác khi xóa"
@@ -2801,6 +2816,108 @@
     "deploy-panel.success.finish": {
       "message": "Hoàn tất"
     },
+    "map-icon-panel.title": {
+      "message": "Biểu tượng bản đồ"
+    },
+    "scenario-panel.title": {
+      "message": "Triển khai thành bối cảnh"
+    },
+    "scenario-panel.name": {
+      "message": "Tên bối cảnh"
+    },
+    "scenario-panel.name.history": {
+      "message": "Tên bối cảnh đã dùng trước"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Hãy dùng tên không có \\ / : * ? \" < > | và không kết thúc bằng dấu chấm hay khoảng trắng."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Hãy dùng tên dài tối đa 100 ký tự."
+    },
+    "scenario-panel.summary": {
+      "message": "Nội dung bối cảnh"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Bản đồ"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} ô, hạt giống {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Người chơi"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Người chơi {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Đối tượng"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Hiệu ứng kịch bản"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Không có"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "Kịch bản XS"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Không thể lưu bản xem trước này thành bối cảnh. Hãy tạo lại bản đồ."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Giữ hiệu ứng kịch bản?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, other {Kịch bản thay đổi trận đấu bằng {count} lệnh hiệu ứng. Bối cảnh không chạy kịch bản, nên các hiệu ứng có thể được thêm thành một yếu tố kích hoạt áp dụng chúng lúc bắt đầu.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Chuyển thành yếu tố kích hoạt"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Bỏ qua hiệu ứng"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Thay thế bối cảnh?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Bối cảnh {name} trong hồ sơ này sẽ bị ghi đè."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Thay thế"
+    },
+    "scenario-panel.success.title": {
+      "message": "Đã triển khai bối cảnh thành công"
+    },
+    "scenario-panel.success.note": {
+      "message": "Mở nó trong Sửa bối cảnh của trò chơi, hoặc chọn nó trong mục Bối cảnh khi tạo phòng chờ."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Đã triển khai bối cảnh {name} với {objects} đối tượng} other {Đã triển khai bối cảnh {name} với {objects} đối tượng và {effects} hiệu ứng kịch bản}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Không thể triển khai bối cảnh"
+    },
+    "scenario-panel.close": {
+      "message": "Đóng triển khai bối cảnh"
+    },
+    "scenario-panel.deploy": {
+      "message": "Triển khai bối cảnh"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Đã lưu bối cảnh vào"
+    },
+    "scenario-panel.success.path": {
+      "message": "Đường dẫn bối cảnh đã triển khai"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Sao chép đường dẫn bối cảnh"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Đã sao chép đường dẫn bối cảnh"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Mở thư mục bối cảnh"
+    },
     "deploy-panel.success.title": {
       "message": "Đã triển khai mod thành công"
     },
@@ -3872,6 +3989,24 @@
     "code-editor.tab-menu.close": {
       "message": "Đóng"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Mở lại thẻ đã đóng"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Nhấp hoặc nhấn {shortcut} để thêm điểm dừng"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Điểm dừng: xem trước tạm dừng tại đây. Nhấp hoặc nhấn {shortcut} để xóa."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Điểm dừng: lần chạy trước không đi đến đây. Nhấp hoặc nhấn {shortcut} để xóa."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Xem trước đang tạm dừng tại đây"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Bật/tắt điểm dừng"
+    },
     "code-editor.run.preview": {
       "message": "Chạy xem trước"
     },
@@ -3892,6 +4027,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Dừng ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Tiếp tục"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Tiếp tục đến điểm dừng tiếp theo ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Từng bước"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Chạy đến hết lệnh tiếp theo ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Tùy chọn chạy xem trước"
@@ -4715,6 +4862,27 @@
     "preview-panel.tool.ruler": {
       "message": "Thước"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Tùy chọn thước"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Độ dài trên mép bản đồ"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Góc nhìn người chơi"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Tùy chọn góc nhìn người chơi"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Người chơi {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaia"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Độ mờ của sương"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Cây nhỏ"
     },
@@ -4723,6 +4891,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Lưu ảnh…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Chọn tất cả"
     },
     "preview-panel.output.image-saved": {
       "message": "Đã lưu ảnh bản đồ thành {name}"
@@ -4774,6 +4945,15 @@
     },
     "preview-panel.status.label": {
       "message": "Trạng thái xem trước"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Tạm dừng trước dòng {line}} other {Tạm dừng sau dòng {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Tạm dừng trong một tệp chưa mở"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "Bản đồ tại thời điểm này quá lớn để hiển thị"
     },
     "preview-panel.status.uncertified": {
       "message": "Chưa chứng nhận"
@@ -5416,6 +5596,9 @@
     },
     "game-options.civilization.random": {
       "message": "Ngẫu nhiên"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Ngẫu nhiên (trò chơi gốc)"
     },
     "game-options.civilization.britons": {
       "message": "Briton"

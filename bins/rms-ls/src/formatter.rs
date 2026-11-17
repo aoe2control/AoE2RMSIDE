@@ -12,12 +12,14 @@ const MAXIMUM_REPLACEMENT_BYTES: usize = 1024 * 1024;
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct FormatOptions {
     pub indent_conditionals: bool,
+    pub indent_random: bool,
 }
 
 impl Default for FormatOptions {
     fn default() -> Self {
         Self {
             indent_conditionals: true,
+            indent_random: true,
         }
     }
 }
@@ -42,6 +44,8 @@ pub fn format_document(
     let mut replacement_bytes = 0usize;
     let mut brace_depth = 0usize;
     let mut conditional_depth = 0usize;
+    let mut random_blocks = Vec::<bool>::new();
+    let mut random_depth = 0usize;
     let mut alignment_lines = Vec::new();
     let mut token_cursor = 0usize;
     let mut node_cursor = 0usize;
@@ -79,19 +83,37 @@ pub fn format_document(
             (node.kind == CstKind::Conditional)
                 .then(|| cst.tokens[node.token_start as usize].bytes(source))
         };
+        let random_word = |node: &CstNode| {
+            (node.kind == CstKind::RandomBranch)
+                .then(|| cst.tokens[node.token_start as usize].bytes(source))
+        };
+        let starts_line = |node: &&CstNode| {
+            first.is_some_and(|first| first.range.start.0 as usize == head_start(node))
+        };
         let leading_closing_braces = leading_closing_braces(&line_tokens, line.start);
         let conditional_outdent = usize::from(
             options.indent_conditionals
-                && line_nodes.first().is_some_and(|node| {
-                    first.is_some_and(|first| first.range.start.0 as usize == head_start(node))
-                        && conditional_word(node)
-                            .is_some_and(|word| matches!(word, b"elseif" | b"else" | b"endif"))
+                && line_nodes.first().filter(starts_line).is_some_and(|node| {
+                    conditional_word(node)
+                        .is_some_and(|word| matches!(word, b"elseif" | b"else" | b"endif"))
                 }),
         );
+        let branch_open = random_blocks.last().copied().unwrap_or(false);
+        let random_outdent = if options.indent_random {
+            match line_nodes.first().filter(starts_line).and_then(random_word) {
+                Some(b"percent_chance") => usize::from(branch_open),
+                Some(b"end_random") if !random_blocks.is_empty() => 1 + usize::from(branch_open),
+                _ => 0,
+            }
+        } else {
+            0
+        };
         let desired_depth = brace_depth
             .saturating_add(conditional_depth)
+            .saturating_add(random_depth)
             .saturating_sub(leading_closing_braces)
-            .saturating_sub(conditional_outdent);
+            .saturating_sub(conditional_outdent)
+            .saturating_sub(random_outdent);
 
         let indentation_start = if line.start == 0 && bytes.starts_with(b"\xef\xbb\xbf") {
             3
@@ -159,6 +181,31 @@ pub fn format_document(
                 match word {
                     b"if" => conditional_depth = conditional_depth.saturating_add(1),
                     b"endif" => conditional_depth = conditional_depth.saturating_sub(1),
+                    _ => {}
+                }
+            }
+        }
+        if options.indent_random {
+            for word in line_nodes.iter().filter_map(random_word) {
+                match word {
+                    b"start_random" => {
+                        random_blocks.push(false);
+                        random_depth = random_depth.saturating_add(1);
+                    }
+                    b"percent_chance" => {
+                        if let Some(branch_open) = random_blocks.last_mut()
+                            && !*branch_open
+                        {
+                            *branch_open = true;
+                            random_depth = random_depth.saturating_add(1);
+                        }
+                    }
+                    b"end_random" => {
+                        if let Some(branch_open) = random_blocks.pop() {
+                            random_depth =
+                                random_depth.saturating_sub(1 + usize::from(branch_open));
+                        }
+                    }
                     _ => {}
                 }
             }

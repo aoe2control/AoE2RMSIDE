@@ -3,6 +3,11 @@ import { connectorIpcChannels, type ConnectorDesktopApi } from './connector-api'
 import type { ExternalLinkTarget } from './external-links';
 import type { GameModeModifier } from './lobby-options';
 import type { ConstructVerification } from './construct-verification';
+import type {
+  PreviewBreakpoint,
+  PreviewBreakpointAction,
+  PreviewBreakpointStop,
+} from './breakpoints';
 import type { XsStartOutcome } from './xs-start';
 import type { PreviewConnectionRoutesPayload } from './connection-routes';
 import type { PreviewSectionStart } from './section-starts';
@@ -17,6 +22,11 @@ import type { UpdateState } from './update';
 import type { EditorColorSchemeId } from './editor-color-scheme';
 import type { PreviewLayout } from './preview-layout';
 import type { KnownCrashReference } from './known-crashes';
+import type {
+  ScenarioDeploymentContext,
+  ScenarioDeploymentOutcome,
+  ScenarioDeploymentRequest,
+} from './scenario-deployment';
 import type { WriteProtection, WriteProtectionTarget } from './write-protection';
 import type { AppQualityRun } from './connector-run-api';
 import type {
@@ -61,6 +71,8 @@ export const ipcChannels = {
   developmentFixtures: 'rmside:generation:development-fixtures',
   runDevelopmentFixture: 'rmside:generation:run-development-fixture',
   previewGenerationEvent: 'rmside:generation:event',
+  previewBreakpointStop: 'rmside:generation:breakpoint-stop',
+  previewBreakpointCommand: 'rmside:generation:breakpoint-command',
   previewExecutionProgress: 'rmside:generation:execution-progress',
   previewCandidate: 'rmside:generation:candidate',
   previewCandidateAcknowledge: 'rmside:generation:candidate-ack',
@@ -83,6 +95,10 @@ export const ipcChannels = {
   manualDeploymentApply: 'rmside:manual-deployment:apply',
   manualDeploymentOpenFolder: 'rmside:manual-deployment:open-folder',
   manualDeploymentOpenTargetFolder: 'rmside:manual-deployment:open-target-folder',
+  scenarioDeploymentContext: 'rmside:scenario-deployment:context',
+  scenarioDeploymentApply: 'rmside:scenario-deployment:apply',
+  scenarioDeploymentOpenFolder: 'rmside:scenario-deployment:open-folder',
+  scenarioDeploymentShowFile: 'rmside:scenario-deployment:show-file',
   manualDeploymentMapIconRead: 'rmside:manual-deployment:map-icon-read',
   manualDeploymentMapIconSave: 'rmside:manual-deployment:map-icon-save',
   mapIconGeneratedSave: 'rmside:map-icon:generated-save',
@@ -118,6 +134,7 @@ export const ipcChannels = {
   syncMapTestPreviewShown: 'rmside:map-test:preview-shown',
   syncModalSurfaceOpen: 'rmside:modal:sync-open',
   syncInsertSnippetAvailable: 'rmside:editor:insert-snippet-available',
+  syncReopenClosedTabAvailable: 'rmside:editor:reopen-closed-tab-available',
   syncSaveSnippetAvailable: 'rmside:editor:save-snippet-available',
   tourProgress: 'rmside:tour:progress',
   tourProgressSave: 'rmside:tour:progress-save',
@@ -535,6 +552,8 @@ export type ApplicationMenuAction =
   | { type: 'find-in-files' }
   | { type: 'browse-installed-sources' }
   | { type: 'deploy-managed-mod' }
+  | { type: 'deploy-scenario' }
+  | { type: 'open-map-icon' }
   | { type: 'import-map-test-report' }
   | { type: 'unlink-game-folder' }
   | { type: 'confirm-write-protection-off'; target: WriteProtectionTarget }
@@ -547,6 +566,7 @@ export type ApplicationMenuAction =
   | { type: 'save-snippet' }
   | { type: 'set-format-on-save'; enabled: boolean }
   | { type: 'set-indent-conditionals'; enabled: boolean }
+  | { type: 'set-indent-random'; enabled: boolean }
   | { type: 'set-live-generation-stages'; enabled: boolean }
   | { type: 'set-gpu-map-rendering'; enabled: boolean }
   | { type: 'set-map-transitions'; enabled: boolean }
@@ -555,6 +575,7 @@ export type ApplicationMenuAction =
   | { type: 'set-outline-row'; enabled: boolean }
   | { type: 'set-delete-permanently'; enabled: boolean }
   | { type: 'close-tab' }
+  | { type: 'reopen-closed-tab' }
   | { type: 'close-folder' }
   | { type: 'reset-layout' }
   | { type: 'set-theme'; theme: ThemePreference }
@@ -851,6 +872,7 @@ export interface PreviewGenerationInput {
   xsStartCheck?: boolean;
   appRun?: AppRunReference;
   automatic?: boolean;
+  breakpoints?: PreviewBreakpoint[];
 }
 
 export interface AppRunReference {
@@ -861,6 +883,36 @@ export interface PreviewGenerationWarning {
   code: string;
   message: string;
   knownCrash?: KnownCrashReference;
+}
+
+export interface PreviewScenarioObjectKind {
+  objectId: number;
+  facetCount: number;
+  randomFacet: boolean;
+  randomAngle: boolean;
+}
+
+export interface PreviewScenarioScriptEffect {
+  effect: number;
+  target: number;
+  attribute: number;
+  value: number;
+  operationIndex: number;
+}
+
+export interface PreviewScenarioData {
+  objectKinds: PreviewScenarioObjectKind[];
+  objectHeights256Le: Uint8Array;
+  scriptEffects: PreviewScenarioScriptEffect[];
+  xsIncludes: string[];
+  setup: PreviewScenarioSetup;
+}
+
+export interface PreviewScenarioSetup {
+  mapSize: string;
+  gameMode: string;
+  startingAge: number;
+  playerTeams: number[];
 }
 
 export interface PreviewGenerationResult {
@@ -950,6 +1002,9 @@ export interface PreviewGenerationResult {
   certification?: GenerationCertification;
   constructVerification?: ConstructVerification;
   xsStart?: XsStartOutcome;
+  reachedBreakpointIds?: number[];
+  startVisionLe?: Uint8Array;
+  scenario?: PreviewScenarioData;
   executionCost?: ExecutionCostSummary;
 }
 
@@ -1810,6 +1865,7 @@ export type LanguageServerRequestMethod =
   | 'textDocument/documentHighlight'
   | 'textDocument/documentSymbol'
   | 'textDocument/foldingRange'
+  | 'rms/breakpointSites'
   | 'textDocument/semanticTokens/full'
   | 'workspace/symbol'
   | 'textDocument/formatting'
@@ -2095,6 +2151,11 @@ export interface RecoveryDocument {
   viewState?: MonacoViewState | null;
 }
 
+export interface SessionBreakpoints {
+  uri: string;
+  lines: number[];
+}
+
 export interface RecoverySnapshot {
   version: 1;
   activeDocumentId: string | null;
@@ -2145,6 +2206,7 @@ export interface DesktopSession {
   autoSave: boolean;
   autoSaveDelayTenths: number;
   indentConditionals: boolean;
+  indentRandom: boolean;
   liveGenerationStages: boolean;
   gpuMapRendering: boolean;
   mapTransitions: boolean;
@@ -2162,7 +2224,12 @@ export interface DesktopSession {
   previewTileGrid: boolean;
   previewTileGridOpacity: number;
   previewRuler: boolean;
+  previewRulerEdges: boolean;
+  previewStartVision: boolean;
+  previewStartVisionSlots: number[];
+  previewStartVisionFogPercent: number;
   previewSmallTrees: boolean;
+  breakpoints: SessionBreakpoints[];
   gameTexturesFirstLinkApplied: boolean;
   gameTexturesFirstLinkInstallations: string[];
   mapIconReliefMode: MapIconRelief;
@@ -2242,6 +2309,11 @@ export interface RmsideDesktopApi extends ConnectorDesktopApi {
   getConfigurationCatalog(): Promise<ConfigurationCatalog>;
   generatePreview(input: PreviewGenerationInput): Promise<PreviewGenerationResult>;
   cancelPreviewGeneration(clientRequestId: string): Promise<boolean>;
+  resumePreviewGeneration(
+    clientRequestId: string,
+    action: PreviewBreakpointAction,
+  ): Promise<boolean>;
+  onPreviewBreakpointStop(listener: (stop: PreviewBreakpointStop) => void): () => void;
   getExecutionState(): Promise<RootExecutionState>;
   stopExecution(): Promise<boolean>;
   runMapTest(input: MapTestRunInput): Promise<MapTestRunResult>;
@@ -2289,6 +2361,10 @@ export interface RmsideDesktopApi extends ConnectorDesktopApi {
   applyManualDeployment(request: ManualDeploymentApplyRequest): Promise<ManagedDeploymentResult>;
   openDeployedModFolder(): Promise<void>;
   openDeploymentTargetFolder(profileId: string): Promise<void>;
+  getScenarioDeploymentContext(): Promise<ScenarioDeploymentContext | null>;
+  deployScenario(request: ScenarioDeploymentRequest): Promise<ScenarioDeploymentOutcome>;
+  openScenarioFolder(profileId: string): Promise<void>;
+  showDeployedScenario(): Promise<void>;
   readManualDeploymentMapIcon(token: string): Promise<ManualDeploymentMapIconImage | null>;
   saveManualDeploymentMapIcon(token: string): Promise<ManualDeploymentMapIconSaveResult>;
   saveGeneratedMapIcon(
@@ -2328,6 +2404,7 @@ export interface RmsideDesktopApi extends ConnectorDesktopApi {
   syncMapTestPreviewShown(shown: boolean): Promise<void>;
   syncModalSurfaceOpen(open: boolean): Promise<void>;
   syncInsertSnippetAvailable(available: boolean): Promise<void>;
+  syncReopenClosedTabAvailable(available: boolean): Promise<void>;
   syncSaveSnippetAvailable(available: boolean): Promise<void>;
   getTourProgress(): Promise<TourProgress>;
   saveTourProgress(progress: TourProgress): Promise<void>;

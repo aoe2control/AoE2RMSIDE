@@ -41,6 +41,8 @@ const arrowDirections: Readonly<Record<string, readonly [number, number]>> = {
   ArrowDown: [0, 1],
 };
 
+export const previewSelectAllShortcut = 'CmdOrCtrl+A';
+
 export function previewKeyboardCommand(input: PreviewKeyboardInput): PreviewKeyboardCommand | null {
   const control = input.ctrlKey || input.metaKey;
   if (input.altKey) return null;

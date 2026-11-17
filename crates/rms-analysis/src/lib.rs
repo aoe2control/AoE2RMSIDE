@@ -1,9 +1,11 @@
+mod breakpoint_sites;
 pub mod docs;
 mod editor_fixes;
 mod inlay;
 mod lint;
 mod undefined_paths;
 
+pub use breakpoint_sites::{BreakpointSite, BreakpointSiteKind, breakpoint_sites};
 pub use editor_fixes::{closest_name, missing_closer_fix, undefined_name_fix};
 pub use inlay::{
     ContentKind, InlayHint, InlayHintKind, MAXIMUM_INLAY_HINTS, content_slot, inlay_hints,
@@ -430,6 +432,10 @@ fn build_outline(source: &SourceText, cst: &CstDocument) -> Vec<OutlineItem> {
 }
 
 fn build_folds(source: &SourceText, cst: &CstDocument) -> Vec<FoldRegion> {
+    let region = |start: ByteOffset, end: ByteOffset| FoldRegion {
+        range: ByteRange { start, end },
+        kind: "region",
+    };
     let mut folds = Vec::new();
     let sections: Vec<_> = cst
         .nodes
@@ -437,32 +443,50 @@ fn build_folds(source: &SourceText, cst: &CstDocument) -> Vec<FoldRegion> {
         .filter(|node| node.kind == CstKind::Section)
         .collect();
     for (index, section) in sections.iter().enumerate() {
-        let end = sections
+        let next = sections
             .get(index + 1)
             .map_or(ByteOffset(source.bytes().len() as u32), |next| {
                 next.range.start
             });
+        let end = content_end(cst, next);
         if end > section.range.end {
-            folds.push(FoldRegion {
-                range: ByteRange {
-                    start: section.range.start,
-                    end,
-                },
-                kind: "region",
-            });
+            folds.push(region(section.range.start, end));
         }
     }
     folds.extend(
         cst.brace_pairs
             .iter()
             .filter(|pair| pair.end > pair.start)
-            .map(|pair| FoldRegion {
-                range: *pair,
-                kind: "region",
-            }),
+            .map(|pair| region(pair.start, pair.end)),
     );
+    for block in &cst.blocks {
+        folds.push(region(block.range.start, block.range.end));
+        for branch in &block.branches {
+            let end = content_end(cst, branch.end);
+            if end > branch.start {
+                folds.push(region(branch.start, end));
+            }
+        }
+    }
     folds.sort_by_key(|fold| (fold.range.start, fold.range.end));
+    folds.dedup_by_key(|fold| fold.range);
     folds
+}
+
+fn content_end(cst: &CstDocument, offset: ByteOffset) -> ByteOffset {
+    let before = cst
+        .tokens
+        .partition_point(|token| token.range.end <= offset);
+    cst.tokens[..before]
+        .iter()
+        .rev()
+        .find(|token| {
+            !matches!(
+                token.kind,
+                TokenKind::Whitespace | TokenKind::Newline | TokenKind::Bom
+            )
+        })
+        .map_or(ByteOffset(0), |token| token.range.end)
 }
 
 fn build_semantic_tokens(cst: &CstDocument) -> Vec<SemanticTokenCandidate> {

@@ -13,7 +13,10 @@ mod exact_zone;
 mod execution_cost;
 mod lobby_labels;
 pub mod local_content;
+mod operation_boundary;
 pub mod placement_oracle;
+mod scenario_data;
+mod start_vision;
 mod tile_writes;
 mod visual_checkpoint;
 
@@ -24,6 +27,14 @@ pub use execution_cost::{
     ExecutionGroup, ExecutionObserver, ExecutionProgress, ExecutionStep, GroupCost,
     MAXIMUM_EXECUTION_GROUPS, MAXIMUM_EXECUTION_STEPS, MAXIMUM_STEP_COUNTERS,
     NoopExecutionObserver, StepCost, observe_exact_script_parse,
+};
+use operation_boundary::{NoStageObserver, StageObserver, StageView, operation_run_edges};
+pub use operation_boundary::{OperationBoundary, OperationEdge};
+pub use scenario_data::{ScenarioData, ScenarioObjectKind, ScenarioScriptEffect, scenario_data};
+pub use start_vision::{
+    START_VISION_GAIA_BIT, START_VISION_MAXIMUM_SLOT, START_VISION_MERGES_ALLIES,
+    SightConstruction, SightShape, SightSource, StartVisionUnavailable, reveal_start_sight,
+    script_keeps_start_sight, start_vision,
 };
 pub use visual_checkpoint::{
     CoalescingCheckpointLane, MAXIMUM_VISUAL_CHECKPOINT_BYTES, MAXIMUM_VISUAL_CHECKPOINT_CLIFFS,
@@ -1509,6 +1520,63 @@ pub struct GeneratedMap {
 }
 
 impl GeneratedMap {
+    pub fn at_operation_boundary(
+        boundary: &OperationBoundary<'_>,
+        provenance: Vec<ProvenanceReference>,
+    ) -> Result<Self, GenerationError> {
+        let state = boundary.state;
+        let tiles = state.dimensions.tile_count()?;
+        let map = Self {
+            dimensions: state.dimensions,
+            terrain: state.terrain.to_vec(),
+            pre_connection_terrain: state.terrain.to_vec(),
+            layer: vec![0; tiles],
+            elevation: state.elevation.to_vec(),
+            land_zone: vec![0; tiles],
+            terrain_zone: vec![0; tiles],
+            flags: vec![TileFlags::default(); tiles],
+            cliffs: state.cliffs.to_vec(),
+            cliff_pieces: Vec::new(),
+            appearance_objects: Vec::new(),
+            connections: Vec::new(),
+            connection_routes: None,
+            objects: state.objects.to_vec(),
+            tile_operation_indices: boundary.tile_operations.to_vec(),
+            object_operation_indices: boundary.object_operations.to_vec(),
+            cliff_operation_indices: boundary.cliff_operations.to_vec(),
+            connection_operation_indices: Vec::new(),
+            tile_write_runs: None,
+            stage_hashes: GenerationStage::ORDERED
+                .into_iter()
+                .map(|stage| (stage, [0; 32]))
+                .collect(),
+            final_semantic_hash: [0; 32],
+            warnings: Vec::new(),
+            metrics: GenerationMetrics {
+                tile_count: tiles as u64,
+                object_count: state.objects.len() as u64,
+                allocated_bytes: 0,
+                emitted_events: 0,
+                counters: BTreeMap::new(),
+            },
+            provenance,
+            player_starts: Vec::new(),
+            placement_records: Vec::new(),
+            omitted_placement_records: 0,
+            world_roster: None,
+            object_instance_identities: ObjectInstanceIdentities::NotModelled,
+        };
+        if map.objects.len() != map.object_operation_indices.len()
+            || map.cliffs.len() != map.cliff_operation_indices.len()
+        {
+            return Err(GenerationError::InvalidMap(
+                "boundary provenance does not match its objects and cliffs".to_owned(),
+            ));
+        }
+        map.validate()?;
+        Ok(map)
+    }
+
     pub fn validate(&self) -> Result<(), GenerationError> {
         let tiles = self.dimensions.tile_count()?;
         if [
@@ -3148,6 +3216,27 @@ impl ExactRmsGenerationBackend {
             false,
         )?;
         let setup_rng_draws = setup_rng.state().draws();
+        let observe_boundaries = observer.observes_operation_boundaries();
+        let land_operations = section_operations(input.semantic_program, "land_generation");
+        let cliff_operations = section_operations(input.semantic_program, "cliff_generation");
+        if observe_boundaries && !land_operations.is_empty() {
+            let no_writers = vec![u32::MAX; tile_count];
+            observer.operation_boundary(&OperationBoundary {
+                edge: OperationEdge::Before,
+                stage: VisualStage::Land,
+                operations: &land_operations,
+                state: VisualState {
+                    dimensions: setup.effective_dimensions,
+                    terrain: &blank_terrain,
+                    elevation: &blank_elevation,
+                    cliffs: &[],
+                    objects: &[],
+                },
+                tile_operations: &no_writers,
+                object_operations: &[],
+                cliff_operations: &[],
+            });
+        }
         observer.step_started(ExecutionStep::LandGenerate);
         let land = exact_land::resolve_exact_land_state(
             input.semantic_program,
@@ -3183,6 +3272,23 @@ impl ExactRmsGenerationBackend {
                 objects: &[],
             },
         );
+        if observe_boundaries && !land_operations.is_empty() {
+            observer.operation_boundary(&OperationBoundary {
+                edge: OperationEdge::After,
+                stage: VisualStage::Land,
+                operations: &land_operations,
+                state: VisualState {
+                    dimensions: land.dimensions,
+                    terrain: &land.terrain,
+                    elevation: &land.elevation,
+                    cliffs: &[],
+                    objects: &[],
+                },
+                tile_operations: &land.tile_operation_indices,
+                object_operations: &[],
+                cliff_operations: &[],
+            });
+        }
         let presentation_land_zone = exact_land::project_search_zones(&land.search_zone);
         emit_exact_land_trace(
             input.request.trace_level,
@@ -3259,12 +3365,20 @@ impl ExactRmsGenerationBackend {
             false,
         )?;
         observer.step_started(ExecutionStep::ElevationGenerate);
-        let elevation = exact_elevation::resolve_exact_elevation_state(
+        let elevation = exact_elevation::resolve_exact_elevation_state_observed(
             input.semantic_program,
             &land,
             input.content,
             RmsRandom::from_state(land.rng_state),
             cancellation,
+            &mut ExecutionStageObserver {
+                observer: &mut *observer,
+                stage: VisualStage::Elevation,
+                dimensions: land.dimensions,
+                elevation: &land.elevation,
+                cliffs: &[],
+                cliff_operations: &[],
+            },
         )?;
         observer.step_finished(
             ExecutionStep::ElevationGenerate,
@@ -3321,6 +3435,23 @@ impl ExactRmsGenerationBackend {
             },
             false,
         )?;
+        if observe_boundaries && !cliff_operations.is_empty() {
+            observer.operation_boundary(&OperationBoundary {
+                edge: OperationEdge::Before,
+                stage: VisualStage::Cliffs,
+                operations: &cliff_operations,
+                state: VisualState {
+                    dimensions: land.dimensions,
+                    terrain: &land.terrain,
+                    elevation: &elevation.elevation,
+                    cliffs: &[],
+                    objects: &[],
+                },
+                tile_operations: &land.tile_operation_indices,
+                object_operations: &[],
+                cliff_operations: &[],
+            });
+        }
         observer.step_started(ExecutionStep::CliffsGenerate);
         let cliff = exact_cliff::resolve_exact_cliff_state(
             input.semantic_program,
@@ -3356,6 +3487,23 @@ impl ExactRmsGenerationBackend {
                 objects: &[],
             },
         );
+        if observe_boundaries && !cliff_operations.is_empty() {
+            observer.operation_boundary(&OperationBoundary {
+                edge: OperationEdge::After,
+                stage: VisualStage::Cliffs,
+                operations: &cliff_operations,
+                state: VisualState {
+                    dimensions: land.dimensions,
+                    terrain: &cliff.terrain,
+                    elevation: &elevation.elevation,
+                    cliffs: &cliff.cliffs,
+                    objects: &[],
+                },
+                tile_operations: &cliff.tile_operation_indices,
+                object_operations: &[],
+                cliff_operations: &cliff.cliff_operation_indices,
+            });
+        }
         emit_exact_cliff_trace(
             input.request.trace_level,
             events,
@@ -3382,7 +3530,7 @@ impl ExactRmsGenerationBackend {
             false,
         )?;
         observer.step_started(ExecutionStep::TerrainGenerate);
-        let terrain = exact_terrain::resolve_exact_terrain_state(
+        let terrain = exact_terrain::resolve_exact_terrain_state_observed(
             input.semantic_program,
             &land,
             &elevation,
@@ -3390,6 +3538,14 @@ impl ExactRmsGenerationBackend {
             input.content,
             RmsRandom::from_state(cliff.rng_state),
             cancellation,
+            &mut ExecutionStageObserver {
+                observer: &mut *observer,
+                stage: VisualStage::Terrain,
+                dimensions: land.dimensions,
+                elevation: &elevation.elevation,
+                cliffs: &cliff.cliffs,
+                cliff_operations: &cliff.cliff_operation_indices,
+            },
         )?;
         observer.step_finished(
             ExecutionStep::TerrainGenerate,
@@ -3456,17 +3612,13 @@ impl ExactRmsGenerationBackend {
             input.content,
             RmsRandom::from_state(terrain.rng_state),
             cancellation,
-            &mut |connection_terrain| {
-                observer.visual_substage(
-                    VisualStage::Connections,
-                    &VisualState {
-                        dimensions: land.dimensions,
-                        terrain: connection_terrain,
-                        elevation: &terrain.elevation,
-                        cliffs: &cliff.cliffs,
-                        objects: &[],
-                    },
-                );
+            &mut ExecutionStageObserver {
+                observer: &mut *observer,
+                stage: VisualStage::Connections,
+                dimensions: land.dimensions,
+                elevation: &terrain.elevation,
+                cliffs: &cliff.cliffs,
+                cliff_operations: &cliff.cliff_operation_indices,
             },
         )?;
         observer.step_finished(
@@ -3600,17 +3752,13 @@ impl ExactRmsGenerationBackend {
             RmsRandom::from_state(connection.rng_state),
             RmsRandom::from_state(cliff.auxiliary_rng_state),
             cancellation,
-            &mut |object_terrain, objects| {
-                observer.visual_substage(
-                    VisualStage::Objects,
-                    &VisualState {
-                        dimensions: connection.dimensions,
-                        terrain: object_terrain,
-                        elevation: &connection.elevation,
-                        cliffs: &cliff.cliffs,
-                        objects,
-                    },
-                );
+            &mut ExecutionStageObserver {
+                observer: &mut *observer,
+                stage: VisualStage::Objects,
+                dimensions: connection.dimensions,
+                elevation: &connection.elevation,
+                cliffs: &cliff.cliffs,
+                cliff_operations: &cliff.cliff_operation_indices,
             },
         )?;
         exact_zone::refuse_terrain_past_restriction_tables(&object.terrain, input.content)?;
@@ -5359,4 +5507,64 @@ pub(crate) fn native_generation_bindings(
             "the game data lacks the generation settings the preview needs".to_owned(),
         )
     })
+}
+
+fn section_operations(program: &SemanticProgram, section: &str) -> Vec<u32> {
+    program
+        .operations
+        .iter()
+        .enumerate()
+        .filter(|(_, operation)| {
+            operation.section == section && operation.accepted_by_target_parser()
+        })
+        .filter_map(|(index, _)| u32::try_from(index).ok())
+        .collect()
+}
+
+struct ExecutionStageObserver<'o, 's> {
+    observer: &'o mut dyn ExecutionObserver,
+    stage: VisualStage,
+    dimensions: MapDimensions,
+    elevation: &'s [i16],
+    cliffs: &'s [CliffEdge],
+    cliff_operations: &'s [u32],
+}
+
+impl StageObserver for ExecutionStageObserver<'_, '_> {
+    fn substage(&mut self, view: &StageView<'_>) {
+        self.observer.visual_substage(
+            self.stage,
+            &VisualState {
+                dimensions: self.dimensions,
+                terrain: view.terrain,
+                elevation: view.elevation.unwrap_or(self.elevation),
+                cliffs: self.cliffs,
+                objects: view.objects,
+            },
+        );
+    }
+
+    fn boundaries_enabled(&self) -> bool {
+        self.observer.observes_operation_boundaries()
+    }
+
+    fn boundary(&mut self, edge: OperationEdge, operation: u32, view: &StageView<'_>) {
+        let started = std::time::Instant::now();
+        self.observer.operation_boundary(&OperationBoundary {
+            edge,
+            stage: self.stage,
+            operations: &[operation],
+            state: VisualState {
+                dimensions: self.dimensions,
+                terrain: view.terrain,
+                elevation: view.elevation.unwrap_or(self.elevation),
+                cliffs: self.cliffs,
+                objects: view.objects,
+            },
+            tile_operations: view.tile_operations,
+            object_operations: view.object_operations,
+            cliff_operations: self.cliff_operations,
+        });
+        self.observer.exclude_observation(started.elapsed());
+    }
 }

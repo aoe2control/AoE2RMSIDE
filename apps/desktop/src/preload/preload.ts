@@ -5,6 +5,12 @@ import {
 } from '../shared/application-menu-model';
 import { isExternalLinkTarget } from '../shared/external-links';
 import {
+  isPreviewBreakpointAction,
+  isPreviewBreakpointList,
+  type PreviewBreakpointAction,
+  type PreviewBreakpointStop,
+} from '../shared/breakpoints';
+import {
   validateClipboardImageRequest,
   validatePreviewImageSaveRequest,
   type ClipboardImageRequest,
@@ -84,6 +90,10 @@ import {
   type WorkspaceSaveRequest,
 } from '../shared/api';
 import { validateLocalPresentationNames } from '../shared/local-presentation-names';
+import {
+  assertScenarioDeploymentRequest,
+  type ScenarioDeploymentRequest,
+} from '../shared/scenario-deployment';
 import { definitionGroupIds, type DefinitionGroupId } from '../shared/definition-file';
 import { isMapTestProgressCounts, isMapTestWorkerSetting } from '../shared/map-test-contract';
 import { isRmsLintCode } from '../shared/rms-lint-rules';
@@ -167,6 +177,7 @@ const languageServerRequestMethods = new Set<LanguageServerRequestMethod>([
   'textDocument/documentHighlight',
   'textDocument/documentSymbol',
   'textDocument/foldingRange',
+  'rms/breakpointSites',
   'textDocument/semanticTokens/full',
   'workspace/symbol',
   'textDocument/formatting',
@@ -589,7 +600,8 @@ function assertPreviewGenerationInput(value: PreviewGenerationInput): PreviewGen
     value.players.length < 1 ||
     value.players.length > 8 ||
     (value.progressivePreview !== undefined && typeof value.progressivePreview !== 'boolean') ||
-    (value.xsStartCheck !== undefined && typeof value.xsStartCheck !== 'boolean')
+    (value.xsStartCheck !== undefined && typeof value.xsStartCheck !== 'boolean') ||
+    (value.breakpoints !== undefined && !isPreviewBreakpointList(value.breakpoints))
   ) {
     throw new Error('preview generation input is invalid');
   }
@@ -934,6 +946,20 @@ const api: RmsideDesktopApi = Object.freeze({
       ipcChannels.cancelPreviewGeneration,
       assertBoundedString(clientRequestId, 'preview request identity', 512),
     ),
+  resumePreviewGeneration: (clientRequestId: string, action: PreviewBreakpointAction) => {
+    if (!isPreviewBreakpointAction(action)) throw new Error('breakpoint action is invalid');
+    return ipcRenderer.invoke(
+      ipcChannels.previewBreakpointCommand,
+      assertBoundedString(clientRequestId, 'preview request identity', 512),
+      action,
+    );
+  },
+  onPreviewBreakpointStop: (listener: (stop: PreviewBreakpointStop) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, stop: PreviewBreakpointStop) =>
+      listener(stop);
+    ipcRenderer.on(ipcChannels.previewBreakpointStop, handler);
+    return () => ipcRenderer.removeListener(ipcChannels.previewBreakpointStop, handler);
+  },
   getExecutionState: () => ipcRenderer.invoke(ipcChannels.executionState),
   stopExecution: () => ipcRenderer.invoke(ipcChannels.executionStop),
   runMapTest: (input: MapTestRunInput) =>
@@ -1151,6 +1177,17 @@ const api: RmsideDesktopApi = Object.freeze({
     if (!isDeploymentProfileId(profileId)) throw new Error('deployment profile is invalid');
     return ipcRenderer.invoke(ipcChannels.manualDeploymentOpenTargetFolder, profileId);
   },
+  getScenarioDeploymentContext: () => ipcRenderer.invoke(ipcChannels.scenarioDeploymentContext),
+  deployScenario: (request: ScenarioDeploymentRequest) =>
+    ipcRenderer.invoke(
+      ipcChannels.scenarioDeploymentApply,
+      assertScenarioDeploymentRequest(request),
+    ),
+  openScenarioFolder: (profileId: string) => {
+    if (!isDeploymentProfileId(profileId)) throw new Error('deployment profile is invalid');
+    return ipcRenderer.invoke(ipcChannels.scenarioDeploymentOpenFolder, profileId);
+  },
+  showDeployedScenario: () => ipcRenderer.invoke(ipcChannels.scenarioDeploymentShowFile),
   readManualDeploymentMapIcon: async (token: string) =>
     assertManualDeploymentMapIconImage(
       await ipcRenderer.invoke(
@@ -1295,6 +1332,8 @@ const api: RmsideDesktopApi = Object.freeze({
     ipcRenderer.invoke(ipcChannels.syncModalSurfaceOpen, assertBoolean(open)),
   syncInsertSnippetAvailable: (available: boolean) =>
     ipcRenderer.invoke(ipcChannels.syncInsertSnippetAvailable, assertBoolean(available)),
+  syncReopenClosedTabAvailable: (available: boolean) =>
+    ipcRenderer.invoke(ipcChannels.syncReopenClosedTabAvailable, assertBoolean(available)),
   syncSaveSnippetAvailable: (available: boolean) =>
     ipcRenderer.invoke(ipcChannels.syncSaveSnippetAvailable, assertBoolean(available)),
   getTourProgress: () => ipcRenderer.invoke(ipcChannels.tourProgress),

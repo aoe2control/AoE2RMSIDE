@@ -4,6 +4,10 @@ import { create, fromBinary, toBinary } from '@bufbuild/protobuf';
 import {
   ArtifactVersionSchema,
   CompatibilityRangeSchema,
+  BreakpointAction,
+  BreakpointCommandSchema,
+  BreakpointEdge,
+  type BreakpointStopEvent,
   CancellationRequestSchema,
   ConfigurationCatalogRequestSchema,
   ControlPipeExchangeRequestSchema,
@@ -18,6 +22,7 @@ import {
   GenerationBackend,
   GenerationCertification as ProtocolGenerationCertification,
   GenerationEventKind,
+  GenerationBreakpointSchema,
   GenerationRequestSchema,
   GameMode,
   GameModeModifier,
@@ -56,6 +61,7 @@ import {
   type ContentPackDescriptor as ProtocolContentPackDescriptor,
   type LocalContentImportResponse,
   type GenerationResponse,
+  type ScenarioData as ProtocolScenarioData,
   type GenerationEvent as ProtocolGenerationEvent,
   type MinimapPaletteDescriptor as ProtocolMinimapPaletteDescriptor,
   ExecutionCostContext as ProtocolExecutionCostContext,
@@ -67,6 +73,7 @@ import {
   type VisualCheckpointEvent,
 } from '../generated/rmside/v1/rmside_pb';
 import { withKnownCrashMarker, type KnownCrashReference } from '../shared/known-crashes';
+import type { PreviewBreakpointAction, PreviewBreakpointStop } from '../shared/breakpoints';
 import {
   refusalLocation,
   withRefusalLocationMarker,
@@ -98,6 +105,8 @@ import type {
   PreviewGenerationEvent,
   PreviewGenerationInput,
   PreviewGenerationResult,
+  PreviewScenarioData,
+  PreviewScenarioSetup,
   TexturePaletteDescriptor,
 } from '../shared/api';
 import { encodeFrame, FrameDecoder } from './framing';
@@ -172,11 +181,12 @@ interface PendingRequest {
   onPreviewCandidate?: (candidate: PreviewCandidate) => void;
   onGameArtProgress?: (progress: GameArtNativeProgress) => void;
   onControlPipeChunk?: (data: Uint8Array) => void;
+  onBreakpointStop?: (stop: BreakpointStopEvent) => void;
   resolve(message: Envelope): void;
   reject(error: Error): void;
 }
 
-const protocolVersion = { major: 2, minor: 28, patch: 0 } as const;
+const protocolVersion = { major: 2, minor: 31, patch: 0 } as const;
 
 export class ProtocolResponseError extends Error {
   constructor(
@@ -220,6 +230,9 @@ export class RmsdClient {
   private objectInstanceIds = false;
   private presentationInstanceIds = false;
   private refusalLocations = false;
+  private breakpoints = false;
+  private startVision = false;
+  private scenarioData = false;
   private readonly installationReads = new InstallationReadQueue({
     isBusy: isInstallationReadersBusy,
   });
@@ -305,6 +318,9 @@ export class RmsdClient {
     this.objectInstanceIds = negotiated.capabilities.objectInstanceIds;
     this.presentationInstanceIds = negotiated.capabilities.presentationInstanceIds;
     this.refusalLocations = negotiated.capabilities.refusalLocations;
+    this.breakpoints = negotiated.capabilities.breakpoints;
+    this.startVision = negotiated.capabilities.startVision;
+    this.scenarioData = negotiated.capabilities.scenarioData;
     this.onStatus({ name: 'rmsd', state: 'running' });
   }
 
@@ -490,6 +506,7 @@ export class RmsdClient {
     localContent?: LocalContentSource,
     onPreviewCandidate?: (candidate: PreviewCandidate) => void,
     xsStart?: XsStartCheckRequest,
+    onBreakpointStop?: (stop: PreviewBreakpointStop) => void,
   ): Promise<PreviewGenerationResult> {
     const requestId = input.clientRequestId ?? `generation-${randomUUID()}`;
     const catalogEntry = sourceCatalog.sources.find(
@@ -555,8 +572,51 @@ export class RmsdClient {
         progressivePreview: onPreviewCandidate !== undefined && this.progressivePreview,
         connectionRoutes: this.connectionRoutes,
         ...xsStartRequestFields(this.xsStartCheck, xsStart),
+        breakpoints:
+          this.breakpoints && onBreakpointStop && input.backend === 'exact'
+            ? (input.breakpoints ?? []).map((breakpoint) =>
+                create(GenerationBreakpointSchema, {
+                  id: breakpoint.id,
+                  sourceId: breakpoint.sourceId,
+                  byteStart: breakpoint.byteStart,
+                  byteEnd: breakpoint.byteEnd,
+                  edge: breakpoint.edge === 'before' ? BreakpointEdge.BEFORE : BreakpointEdge.AFTER,
+                }),
+              )
+            : [],
       }),
     });
+    const acceptBreakpointStop = (stop: BreakpointStopEvent) => {
+      if (!onBreakpointStop) return;
+      let map: PreviewGenerationResult | null = null;
+      if (stop.snapshot) {
+        try {
+          map = toPreviewResult(
+            { ...stop.snapshot, committed: true },
+            input,
+            sourceCatalog,
+            [],
+            setup.colors,
+            this.knownCrashIds,
+            undefined,
+            this.objectInstanceIds,
+            this.presentationInstanceIds,
+            setup.gameMode,
+          );
+        } catch {
+          map = null;
+        }
+      }
+      onBreakpointStop({
+        executionId: requestId,
+        stopSequence: stop.stopSequence,
+        breakpointIds: [...stop.breakpointIds],
+        stage: stop.stage,
+        edge: stop.edge === BreakpointEdge.BEFORE ? 'before' : 'after',
+        operationIndices: [...stop.operationIndices],
+        map,
+      });
+    };
     latencyProbe.step(requestId, 'request-build');
     let response: Envelope;
     try {
@@ -575,6 +635,9 @@ export class RmsdClient {
         },
         onExecutionProgress,
         onPreviewCandidate,
+        undefined,
+        undefined,
+        acceptBreakpointStop,
       );
     } catch (error) {
       if (generationEvents.overflowed) throw generationEvents.overflowError();
@@ -594,9 +657,31 @@ export class RmsdClient {
       this.objectInstanceIds,
       this.presentationInstanceIds,
       setup.gameMode,
+      this.startVision,
+      this.scenarioData,
+      setup.startingAge,
     );
     latencyProbe.step(requestId, 'response-convert');
     return result;
+  }
+
+  async resumeGeneration(
+    clientRequestId: string,
+    action: PreviewBreakpointAction,
+  ): Promise<boolean> {
+    if (!this.breakpoints) return false;
+    const requestId = `breakpoint-${randomUUID()}`;
+    const response = await this.sendAndWait(
+      createEnvelope(requestId, {
+        case: 'breakpointCommand',
+        value: create(BreakpointCommandSchema, {
+          requestId: clientRequestId,
+          action: action === 'step' ? BreakpointAction.STEP : BreakpointAction.CONTINUE,
+        }),
+      }),
+      'breakpointCommandResponse',
+    );
+    return response.payload.case === 'breakpointCommandResponse' && response.payload.value.accepted;
   }
 
   async cancelGeneration(clientRequestId: string): Promise<boolean> {
@@ -656,6 +741,7 @@ export class RmsdClient {
     onPreviewCandidate?: (candidate: PreviewCandidate) => void,
     onGameArtProgress?: (progress: GameArtNativeProgress) => void,
     onControlPipeChunk?: (data: Uint8Array) => void,
+    onBreakpointStop?: (stop: BreakpointStopEvent) => void,
   ): Promise<Envelope> {
     const kind = message.payload.case ?? '';
     if (!this.requestAllowed(kind)) {
@@ -675,6 +761,7 @@ export class RmsdClient {
         onPreviewCandidate,
         onGameArtProgress,
         onControlPipeChunk,
+        onBreakpointStop,
         resolve,
         reject,
       });
@@ -721,6 +808,10 @@ export class RmsdClient {
         if (message.payload.case === 'gameArtProgressEvent') {
           const progress = toGameArtProgress(message.payload.value);
           if (progress) pending.onGameArtProgress?.(progress);
+          continue;
+        }
+        if (message.payload.case === 'breakpointStopEvent') {
+          pending.onBreakpointStop?.(message.payload.value);
           continue;
         }
         if (message.payload.case === 'controlPipeResponseChunk') {
@@ -1200,6 +1291,92 @@ export function toPresentationInstanceIds(
   };
 }
 
+export function scenarioStartingAge(age: StartingAge): number {
+  switch (age) {
+    case StartingAge.FEUDAL_AGE:
+      return 3;
+    case StartingAge.CASTLE_AGE:
+      return 4;
+    case StartingAge.IMPERIAL_AGE:
+      return 5;
+    case StartingAge.POST_IMPERIAL_AGE:
+      return 6;
+    default:
+      return 2;
+  }
+}
+
+export function scenarioGameModeName(mode: GameMode | undefined): string {
+  const name = mode === undefined ? undefined : GameMode[mode];
+  if (!name || mode === GameMode.UNSPECIFIED) return 'Random Map';
+  return name
+    .toLowerCase()
+    .split('_')
+    .map((word) =>
+      word === 'the' || word === 'of' ? word : word[0]!.toUpperCase() + word.slice(1),
+    )
+    .join(' ');
+}
+
+export function toScenarioData(
+  data: ProtocolScenarioData | undefined,
+  objectCount: number,
+  operationCount: number,
+  setup: PreviewScenarioSetup,
+): PreviewScenarioData | undefined {
+  if (!data || data.objectHeights256Le.byteLength !== objectCount * 4) return undefined;
+  let previousId = -1;
+  for (const kind of data.objectKinds) {
+    if (kind.objectId <= previousId || kind.facetCount < 1 || kind.facetCount > 0xffff) {
+      return undefined;
+    }
+    previousId = kind.objectId;
+  }
+  let previousOperation = -1;
+  for (const effect of data.scriptEffects) {
+    if (
+      !Number.isFinite(effect.value) ||
+      effect.operationIndex <= previousOperation ||
+      effect.operationIndex >= operationCount
+    ) {
+      return undefined;
+    }
+    previousOperation = effect.operationIndex;
+  }
+  if (
+    data.xsIncludes.length > 64 ||
+    data.xsIncludes.some((name) => name.length === 0 || name.length > 4096)
+  ) {
+    return undefined;
+  }
+  return {
+    objectKinds: data.objectKinds.map((kind) => ({
+      objectId: kind.objectId,
+      facetCount: kind.facetCount,
+      randomFacet: kind.randomFacet,
+      randomAngle: kind.randomAngle,
+    })),
+    objectHeights256Le: Uint8Array.from(data.objectHeights256Le),
+    scriptEffects: data.scriptEffects.map((effect) => ({
+      effect: effect.effect,
+      target: effect.target,
+      attribute: effect.attribute,
+      value: effect.value,
+      operationIndex: effect.operationIndex,
+    })),
+    xsIncludes: [...data.xsIncludes],
+    setup: { ...setup, playerTeams: [...setup.playerTeams] },
+  };
+}
+
+export function toStartVisionColumn(column: Uint8Array, tileCount: number): Uint8Array | undefined {
+  if (tileCount < 1 || column.byteLength !== tileCount * 2) return undefined;
+  for (let offset = 1; offset < column.byteLength; offset += 2) {
+    if ((column[offset]! & 0xfe) !== 0) return undefined;
+  }
+  return Uint8Array.from(column);
+}
+
 function toPreviewResult(
   response: GenerationResponse,
   input: PreviewGenerationInput,
@@ -1211,6 +1388,9 @@ function toPreviewResult(
   objectInstanceIds = false,
   presentationInstanceIds = false,
   gameMode?: GameMode,
+  startVision = false,
+  scenarioData = false,
+  startingAge: StartingAge = StartingAge.STANDARD,
 ): PreviewGenerationResult {
   const map = response.mapState;
   const provenance = response.provenance;
@@ -1334,6 +1514,22 @@ function toPreviewResult(
         appearanceObjectsLe?.byteLength ?? 0,
       )
     : {};
+  const startVisionLe =
+    startVision && input.backend === 'exact'
+      ? toStartVisionColumn(map.startVisionLe, tileCount)
+      : undefined;
+  const scenario =
+    scenarioData && input.backend === 'exact'
+      ? toScenarioData(map.scenario, objectCount, provenance.operations.length, {
+          mapSize: input.mapSize,
+          gameMode: scenarioGameModeName(gameMode),
+          startingAge: scenarioStartingAge(startingAge),
+          playerTeams: Array.from(
+            { length: 9 },
+            (_, slot) => input.players.find((player) => player.slot === slot)?.team ?? -1,
+          ),
+        })
+      : undefined;
   const xsStart =
     input.backend === 'exact'
       ? toXsStartOutcome(response.xsStart, {
@@ -1348,6 +1544,15 @@ function toPreviewResult(
     ...(constructVerification ? { constructVerification } : {}),
     ...(xsStart ? { xsStart } : {}),
     ...(executionCost ? { executionCost } : {}),
+    ...(input.breakpoints && input.breakpoints.length > 0
+      ? {
+          reachedBreakpointIds: [...response.reachedBreakpointIds]
+            .filter((id) => input.breakpoints!.some((breakpoint) => breakpoint.id === id))
+            .sort((left, right) => left - right),
+        }
+      : {}),
+    ...(startVisionLe ? { startVisionLe } : {}),
+    ...(scenario ? { scenario } : {}),
     backendIdentity: input.backend === 'synthetic' ? 'synthetic-generation-v1' : 'exact-rms-v1',
     playerColorIds,
     playerCivilizationIds,

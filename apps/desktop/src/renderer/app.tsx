@@ -30,6 +30,7 @@ import type {
 import { applicationKeyAllowed, menuActionAllowed } from '../shared/application-shortcuts';
 import { writeProtectionOffConfirmation } from './write-protection-confirmation';
 import { tileGridOpacityPercent } from '../shared/tile-grid-opacity';
+import { defaultStartVisionSlots, startVisionFogPercent } from '../shared/start-vision';
 import { definitionFilesAvailable, editionCapabilities } from '../shared/edition';
 import {
   inlineErrorText,
@@ -110,6 +111,7 @@ import { SeverityFilterToggles } from './severity-filter-toggles';
 import { SeparatorPill } from './separator-pill-view';
 import { isSnippetCodeUri } from './snippet-code';
 import { ManagedModDeploymentPanel } from './managed-mod-deployment-panel';
+import { ScenarioDeploymentPanel } from './scenario-deployment-panel';
 import { PreviewPanel } from './preview-panel';
 import type { PinnedPreviewSource, PreviewExecutionController } from './preview-execution';
 import {
@@ -125,6 +127,7 @@ import {
   runEditorHistoryCommand,
   runEditorSelectAll,
   setRmsConditionalIndentation,
+  setRmsRandomIndentation,
 } from './monaco-language';
 import { requestInsertSnippet, requestSaveSnippet } from './insert-snippet';
 import {
@@ -135,6 +138,8 @@ import {
   type SourceHighlightRequest,
 } from './source-highlight';
 import { previewSourceContents } from './preview-source-content';
+import { breakpointStore } from './breakpoint-store';
+import { breakpointDocumentKeyOfUri, breakpointPauseLocation } from './editor-breakpoints';
 import { useEditorListHandoff } from './editor-list-handoff';
 import { nextPaneIndex } from './keyboard-navigation';
 import { navigateToPreviewOperation } from './source-navigation';
@@ -336,6 +341,7 @@ export function App() {
     [autoSave, autoSaveDelayTenths],
   );
   const [indentConditionals, setIndentConditionals] = useState(true);
+  const [indentRandom, setIndentRandom] = useState(true);
   const [liveGenerationStages, setLiveGenerationStages] = useState(true);
   const [gpuMapRendering, setGpuMapRendering] = useState(true);
   const [mapTransitions, setMapTransitions] = useState(true);
@@ -350,7 +356,18 @@ export function App() {
     tileGridOpacityPercent.default,
   );
   const [previewRuler, setPreviewRuler] = useState(true);
+  const [previewRulerEdges, setPreviewRulerEdges] = useState(false);
+  const [previewStartVision, setPreviewStartVision] = useState(false);
+  const [previewStartVisionSlots, setPreviewStartVisionSlots] =
+    useState<readonly number[]>(defaultStartVisionSlots);
+  const [previewStartVisionFogPercent, setPreviewStartVisionFogPercent] = useState<number>(
+    startVisionFogPercent.default,
+  );
   const [previewSmallTrees, setPreviewSmallTrees] = useState(false);
+  const breakpointRevision = useSyncExternalStore(
+    (listener) => breakpointStore.subscribe(listener),
+    () => breakpointStore.currentRevision(),
+  );
   const [gameTexturesNoticeOpen, setGameTexturesNoticeOpen] = useState(false);
   const closeGameTexturesNotice = useCallback(() => setGameTexturesNoticeOpen(false), []);
   useEffect(
@@ -384,6 +401,8 @@ export function App() {
   const [managedModDeploymentSourceId, setManagedModDeploymentSourceId] = useState<string | null>(
     null,
   );
+  const [scenarioDeploymentOpen, setScenarioDeploymentOpen] = useState(false);
+  const [mapIconPanelOpen, setMapIconPanelOpen] = useState(false);
   const resolvedTheme = resolveTheme(themePreference, systemIsDark);
   const horizontalDrag = useRef<HorizontalDrag | null>(null);
   const bottomPanelResize = useRef<BottomPanelResize | null>(null);
@@ -656,6 +675,64 @@ export function App() {
     [executionProfiler, previewCandidates],
   );
 
+  const mapBeforeBreakpoint = useRef<{
+    map: PreviewGenerationResult | null;
+    origin: PreviewMapOrigin;
+  } | null>(null);
+  useEffect(() => {
+    if (!editionCapabilities.preview) return undefined;
+    return window.rmside.onPreviewBreakpointStop((stop) => {
+      const run = breakpointStore.activeRun();
+      if (!run || run.executionId !== stop.executionId) return;
+      if (!breakpointStore.pauseRun(stop, breakpointPauseLocation(stop, run.content))) return;
+      if (!stop.map) return;
+      if (!mapBeforeBreakpoint.current) {
+        mapBeforeBreakpoint.current = {
+          map: mapRef.current,
+          origin: previewMapOriginRef.current,
+        };
+      }
+      previewSourceContents.set(stop.map, run.content);
+      previewCandidates.clear();
+      setMap(stop.map);
+      setPreviewMapOrigin('breakpoint');
+      setSelection(null);
+    });
+  }, [previewCandidates]);
+  useEffect(
+    () =>
+      previewCandidates.subscribe((view) => {
+        if (!view || !breakpointStore.currentPause()) return;
+        queueMicrotask(() => {
+          if (
+            previewCandidates.view &&
+            breakpointStore.currentPause() &&
+            previewMapOriginRef.current === 'breakpoint'
+          ) {
+            previewCandidates.clear();
+          }
+        });
+      }),
+    [previewCandidates],
+  );
+  useEffect(
+    () =>
+      breakpointStore.onRunEnded(({ committed }) => {
+        const before = mapBeforeBreakpoint.current;
+        mapBeforeBreakpoint.current = null;
+        if (committed || !before || previewMapOriginRef.current !== 'breakpoint') return;
+        if (before.map) {
+          setMap(before.map);
+          setPreviewMapOrigin(before.origin);
+        } else {
+          setMap(null);
+          setPreviewMapOrigin('generation');
+        }
+        setSelection(null);
+      }),
+    [],
+  );
+
   const replaySequence = useRef(0);
   const replayActivityRef = useRef<string | null>(null);
   const restorePreviewBeforeReplay = useCallback(
@@ -855,6 +932,14 @@ export function App() {
       setPreviewTileGridOpacity,
       previewRuler,
       setPreviewRuler,
+      previewRulerEdges,
+      setPreviewRulerEdges,
+      previewStartVision,
+      setPreviewStartVision,
+      previewStartVisionSlots,
+      setPreviewStartVisionSlots,
+      previewStartVisionFogPercent,
+      setPreviewStartVisionFogPercent,
       previewSmallTrees,
       setPreviewSmallTrees,
       gameTexturesNoticeOpen,
@@ -879,6 +964,10 @@ export function App() {
       previewTileGrid,
       previewTileGridOpacity,
       previewRuler,
+      previewRulerEdges,
+      previewStartVision,
+      previewStartVisionSlots,
+      previewStartVisionFogPercent,
       previewSmallTrees,
       gameTexturesNoticeOpen,
       closeGameTexturesNotice,
@@ -995,6 +1084,10 @@ export function App() {
   }, [indentConditionals]);
 
   useEffect(() => {
+    setRmsRandomIndentation(indentRandom);
+  }, [indentRandom]);
+
+  useEffect(() => {
     if (!workspace.sessionReady || !workspace.restoredSession || sessionApplied) return;
     const session = workspace.restoredSession;
     setThemePreference(session.themePreference);
@@ -1004,6 +1097,7 @@ export function App() {
     setAutoSave(session.autoSave);
     setAutoSaveDelayTenths(session.autoSaveDelayTenths);
     setIndentConditionals(session.indentConditionals);
+    setIndentRandom(session.indentRandom);
     setLiveGenerationStages(session.liveGenerationStages);
     setGpuMapRendering(session.gpuMapRendering);
     setMapTransitions(session.mapTransitions);
@@ -1016,7 +1110,12 @@ export function App() {
     setPreviewTileGrid(session.previewTileGrid);
     setPreviewTileGridOpacity(session.previewTileGridOpacity);
     setPreviewRuler(session.previewRuler);
+    setPreviewRulerEdges(session.previewRulerEdges);
+    setPreviewStartVision(session.previewStartVision);
+    setPreviewStartVisionSlots(session.previewStartVisionSlots);
+    setPreviewStartVisionFogPercent(session.previewStartVisionFogPercent);
     setPreviewSmallTrees(session.previewSmallTrees);
+    breakpointStore.restore(session.breakpoints);
     setExplorerExpanded(session.layout.explorerExpanded);
     setExplorerWidth(session.layout.explorerWidth);
     setPreviewLayoutState({
@@ -1078,6 +1177,7 @@ export function App() {
         autoSave,
         autoSaveDelayTenths,
         indentConditionals,
+        indentRandom,
         liveGenerationStages,
         gpuMapRendering,
         mapTransitions,
@@ -1089,7 +1189,17 @@ export function App() {
         previewTileGrid,
         previewTileGridOpacity,
         previewRuler,
+        previewRulerEdges,
+        previewStartVision,
+        previewStartVisionSlots: [...previewStartVisionSlots],
+        previewStartVisionFogPercent,
         previewSmallTrees,
+        breakpoints: breakpointStore.snapshot((uri) =>
+          workspace.documents.some(
+            (document) =>
+              document.path !== null && breakpointDocumentKeyOfUri(document.uri) === uri,
+          ),
+        ),
         layout: {
           explorerExpanded,
           explorerWidth,
@@ -1130,6 +1240,7 @@ export function App() {
     autoSave,
     autoSaveDelayTenths,
     indentConditionals,
+    indentRandom,
     liveGenerationStages,
     gpuMapRendering,
     mapTransitions,
@@ -1141,7 +1252,12 @@ export function App() {
     previewTileGrid,
     previewTileGridOpacity,
     previewRuler,
+    previewRulerEdges,
+    previewStartVision,
+    previewStartVisionSlots,
+    previewStartVisionFogPercent,
     previewSmallTrees,
+    breakpointRevision,
     previewExpanded,
     previewLayout,
     overlayEditorShown,
@@ -1247,6 +1363,8 @@ export function App() {
         }
       } else if (action.type === 'browse-installed-sources') openInstalledSources();
       else if (action.type === 'deploy-managed-mod') openManagedModDeployment(null);
+      else if (action.type === 'deploy-scenario') setScenarioDeploymentOpen(true);
+      else if (action.type === 'open-map-icon') setMapIconPanelOpen(true);
       else if (action.type === 'import-map-test-report') void importMapTestReport();
       else if (action.type === 'unlink-game-folder') void unlinkSelectedGameInstallation();
       else if (action.type === 'confirm-write-protection-off') {
@@ -1272,6 +1390,8 @@ export function App() {
         setFormatOnSave(action.enabled);
       } else if (action.type === 'set-indent-conditionals') {
         setIndentConditionals(action.enabled);
+      } else if (action.type === 'set-indent-random') {
+        setIndentRandom(action.enabled);
       } else if (action.type === 'set-gpu-map-rendering') {
         setGpuMapRendering(action.enabled);
       } else if (action.type === 'set-map-transitions') {
@@ -1297,6 +1417,7 @@ export function App() {
         }
       } else if (action.type === 'take-the-tour') setTourRestartRequest((request) => request + 1);
       else if (action.type === 'close-tab') void currentWorkspace.closeActive();
+      else if (action.type === 'reopen-closed-tab') void currentWorkspace.reopenClosedTab();
       else void currentWorkspace.closeFolder();
     };
     return window.rmside.onApplicationMenuAction((action) => {
@@ -2136,6 +2257,20 @@ export function App() {
             }}
             open={managedModDeploymentOpen}
             requestedSourceId={managedModDeploymentSourceId}
+          />
+        ) : null}
+        {editionCapabilities.deployment ? (
+          <ScenarioDeploymentPanel
+            onOpenChange={setScenarioDeploymentOpen}
+            open={scenarioDeploymentOpen}
+          />
+        ) : null}
+        {editionCapabilities.mapIcons ? (
+          <ManagedModDeploymentPanel
+            mode="map-icon"
+            onOpenChange={setMapIconPanelOpen}
+            open={mapIconPanelOpen}
+            requestedSourceId={null}
           />
         ) : null}
         {editionCapabilities.mcp ? (

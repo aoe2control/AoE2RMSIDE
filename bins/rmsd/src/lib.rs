@@ -52,6 +52,7 @@ use rms_trace::{
 };
 use sha2::{Digest, Sha256};
 
+mod breakpoints;
 mod connection_routes;
 pub mod control_pipe;
 mod game_art;
@@ -95,6 +96,7 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
             active: Arc::clone(&active),
         };
         let generation_gate = Arc::new(Mutex::new(()));
+        let breakpoint_controls = breakpoints::BreakpointControls::default();
         let mut workers: Vec<thread::ScopedJoinHandle<'_, ()>> = Vec::new();
         let mut worker_panicked = false;
         let mut handshaken = false;
@@ -193,6 +195,9 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
                                     map_test_completion_order_preview: false,
                                     known_crash_ids: true,
                                     refusal_locations: true,
+                                    breakpoints: true,
+                                    start_vision: true,
+                                    scenario_data: true,
                                     xs_start_check: true,
                                     map_test_game_crashes: false,
                                     map_test_xs: false,
@@ -259,12 +264,39 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
                     if accepted {
                         latency::cancelled(&request.request_id);
                     }
+                    if let Some(control) = breakpoint_controls
+                        .lock()
+                        .expect("breakpoint registry poisoned")
+                        .get(&request.request_id)
+                    {
+                        control.wake();
+                    }
                     send_protocol_batch(
                         &writer,
                         vec![envelope(
                             request_id,
                             Payload::CancellationResponse(v1::CancellationResponse {
                                 request_id: request.request_id,
+                                accepted,
+                            }),
+                        )],
+                    )?;
+                }
+                Some(Payload::BreakpointCommand(command)) => {
+                    let action = v1::BreakpointAction::try_from(command.action)
+                        .unwrap_or(v1::BreakpointAction::Unspecified);
+                    let accepted = breakpoint_controls
+                        .lock()
+                        .expect("breakpoint registry poisoned")
+                        .get(&command.request_id)
+                        .cloned()
+                        .is_some_and(|control| control.command(action));
+                    send_protocol_batch(
+                        &writer,
+                        vec![envelope(
+                            request_id,
+                            Payload::BreakpointCommandResponse(v1::BreakpointCommandResponse {
+                                request_id: command.request_id,
                                 accepted,
                             }),
                         )],
@@ -313,6 +345,7 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
                     let worker_writer = writer.clone();
                     let worker_active = Arc::clone(&active);
                     let worker_gate = Arc::clone(&generation_gate);
+                    let worker_controls = Arc::clone(&breakpoint_controls);
                     workers.push(scope.spawn(move || {
                         generation_worker(
                             request_id,
@@ -322,6 +355,7 @@ pub fn run_service<R: Read, W: Write + Send, D: Write>(
                             worker_active,
                             worker_gate,
                             worker_writer,
+                            worker_controls,
                         );
                     }));
                 }
@@ -1078,9 +1112,18 @@ fn generation_worker(
     active: Arc<Mutex<BTreeMap<String, Arc<AtomicCancellationToken>>>>,
     generation_gate: Arc<Mutex<()>>,
     writer: ProtocolWriter,
+    breakpoint_controls: breakpoints::BreakpointControls,
 ) {
     let identity = request.identity.clone();
     let mut registration = ActiveGenerationRegistration::new(identity_request_id.clone(), active);
+    let control = (!request.breakpoints.is_empty()).then(|| {
+        let control = Arc::new(breakpoints::BreakpointControl::default());
+        breakpoint_controls
+            .lock()
+            .expect("breakpoint registry poisoned")
+            .insert(identity_request_id.clone(), Arc::clone(&control));
+        control
+    });
     let execution = match generation_gate.lock() {
         Ok(_gate) if cancellation.is_cancelled() => Err(cancelled_failure(
             0,
@@ -1091,9 +1134,16 @@ fn generation_worker(
             &identity_request_id,
             cancellation.as_ref(),
             &writer,
+            control.as_ref(),
         ),
         Err(_) => Err(internal_failure("generation gate was poisoned")),
     };
+    if control.is_some() {
+        breakpoint_controls
+            .lock()
+            .expect("breakpoint registry poisoned")
+            .remove(&identity_request_id);
+    }
     writer.revoke_checkpoints(&identity_request_id);
     let execution =
         execution.and_then(|execution| framed_generation_response(&envelope_request_id, execution));
@@ -1168,6 +1218,71 @@ fn generation_worker(
     }
 }
 
+#[allow(clippy::too_many_arguments)]
+fn publish_breakpoint_stop(
+    request: &v1::GenerationRequest,
+    program: &rms_semantics::SemanticProgram,
+    internal_request: &GenerationRequest,
+    content: &ResolvedContent,
+    certification: GenerationCertification,
+    identity_request_id: &str,
+    writer: &ProtocolWriter,
+    boundary: &rms_engine::OperationBoundary<'_>,
+    facts: breakpoints::StopFacts<'_>,
+) {
+    let snapshot = GeneratedMap::at_operation_boundary(boundary, Vec::new())
+        .map_err(map_generation_failure)
+        .and_then(|map| {
+            let mut stop_request = request.clone();
+            stop_request.connection_routes = false;
+            protocol_generation_response(
+                stop_request,
+                program,
+                internal_request,
+                content,
+                map,
+                false,
+                identity_request_id,
+            )
+        })
+        .ok()
+        .map(|mut snapshot| {
+            snapshot.committed = false;
+            snapshot.certification =
+                protocol_certification(certification).unwrap_or_default() as i32;
+            if let Some(objects) = snapshot
+                .map_state
+                .as_mut()
+                .and_then(|state| state.objects.as_mut())
+            {
+                objects.instance_id_state = v1::ObjectInstanceIdState::NotInThisPreview as i32;
+            }
+            snapshot
+        });
+    let stop = |snapshot: Option<v1::GenerationResponse>| {
+        envelope(
+            identity_request_id,
+            Payload::BreakpointStopEvent(v1::BreakpointStopEvent {
+                identity: request.identity.clone(),
+                stop_sequence: facts.sequence,
+                breakpoint_ids: facts.breakpoint_ids.to_vec(),
+                stage: boundary.stage.id().to_owned(),
+                edge: match boundary.edge {
+                    rms_engine::OperationEdge::Before => v1::BreakpointEdge::Before,
+                    rms_engine::OperationEdge::After => v1::BreakpointEdge::After,
+                } as i32,
+                operation_indices: boundary.operations.to_vec(),
+                snapshot,
+            }),
+        )
+    };
+    let mut message = stop(snapshot);
+    if prost::Message::encoded_len(&message) > rms_protocol::MAX_FRAME_BYTES - 1024 {
+        message = stop(None);
+    }
+    let _ = send_protocol_batch(writer, vec![message]);
+}
+
 fn framed_generation_response(
     envelope_request_id: &str,
     execution: GenerationExecution,
@@ -1179,6 +1294,8 @@ fn framed_generation_response(
     );
     fit_tile_write_runs(&mut response);
     connection_routes::fit_connection_routes(&mut response);
+    fit_scenario(&mut response);
+    fit_start_vision(&mut response);
     xs_start_frame::fit_xs_start(&mut response);
     fits_frame(&response)
         .map(|()| (sequence, response))
@@ -1664,8 +1781,10 @@ fn execute_generation(
     identity_request_id: &str,
     cancellation: &AtomicCancellationToken,
     writer: &ProtocolWriter,
+    breakpoint_control: Option<&Arc<breakpoints::BreakpointControl>>,
 ) -> Result<GenerationExecution, ProtocolFailure> {
     latency::step(identity_request_id, "queue");
+    breakpoints::validate_breakpoints(&request.breakpoints).map_err(malformed)?;
     if request.source.is_empty() || request.source.len() > 16 * 1024 * 1024 {
         return Err(malformed("source must contain 1 byte to 16 MiB"));
     }
@@ -1989,6 +2108,7 @@ fn execute_generation(
     #[cfg(feature = "internal-fixtures")]
     let synthetic_options = synthetic_options(request.internal_fixture_scenario)?;
     latency::step(identity_request_id, "prepare");
+    let mut reached_breakpoint_ids = Vec::new();
     let map = match backend {
         #[cfg(feature = "internal-fixtures")]
         v1::GenerationBackend::SyntheticTest => SyntheticGenerationBackend::new(synthetic_options)
@@ -2002,12 +2122,48 @@ fn execute_generation(
                     "internal fixture scenarios require the synthetic test backend",
                 ));
             }
-            ExactRmsGenerationBackend.generate_observed(
-                resolved,
-                &mut events,
-                cancellation,
-                observer,
-            )
+            match (breakpoint_control, request.breakpoints.is_empty()) {
+                (Some(control), false) => {
+                    let resolved_breakpoints =
+                        breakpoints::resolve_breakpoints(&request.breakpoints, &semantic_program);
+                    let mut publish =
+                        |boundary: &rms_engine::OperationBoundary<'_>,
+                         facts: breakpoints::StopFacts<'_>| {
+                            publish_breakpoint_stop(
+                                &request,
+                                &semantic_program,
+                                &internal_request,
+                                &content,
+                                certification,
+                                identity_request_id,
+                                writer,
+                                boundary,
+                                facts,
+                            );
+                        };
+                    let mut breakpoint_observer = breakpoints::BreakpointObserver::new(
+                        &mut *observer,
+                        resolved_breakpoints,
+                        cancellation,
+                        Arc::clone(control),
+                        &mut publish,
+                    );
+                    let map = ExactRmsGenerationBackend.generate_observed(
+                        resolved,
+                        &mut events,
+                        cancellation,
+                        &mut breakpoint_observer,
+                    );
+                    reached_breakpoint_ids = breakpoint_observer.reached();
+                    map
+                }
+                _ => ExactRmsGenerationBackend.generate_observed(
+                    resolved,
+                    &mut events,
+                    cancellation,
+                    observer,
+                ),
+            }
         }
         v1::GenerationBackend::Unspecified => unreachable!("validated above"),
     };
@@ -2104,6 +2260,8 @@ fn execute_generation(
         None
     };
     let instance_ids = instance_id_columns(backend, certification, &profile.profile_id, &map);
+    let start_vision_le = start_vision_column(backend, certification, &content, resolved, &map);
+    let scenario = scenario_message(backend, resolved, &map);
     let mut response = protocol_generation_response(
         request,
         &semantic_program,
@@ -2115,6 +2273,8 @@ fn execute_generation(
     )?;
     if let Some(state) = response.map_state.as_mut() {
         instance_ids.apply(state);
+        state.start_vision_le = start_vision_le;
+        state.scenario = scenario;
     }
     response.warnings.extend(crash_warnings);
     response.xs_start = xs_start;
@@ -2127,6 +2287,7 @@ fn execute_generation(
         None
     };
     response.construct_verification = construct_verification;
+    response.reached_breakpoint_ids = reached_breakpoint_ids;
     latency::step(identity_request_id, "respond");
     if !cancellation.begin_commit() {
         return Err(cancelled_failure(
@@ -2696,6 +2857,8 @@ fn protocol_generation_response(
             appearance_objects_le: encode_appearance_objects(&map.appearance_objects),
             cliff_piece_instance_ids_le: Vec::new(),
             appearance_instance_ids_le: Vec::new(),
+            start_vision_le: Vec::new(),
+            scenario: None,
             objects: Some(v1::ObjectColumns {
                 ids_le: encode_u32(map.objects.iter().map(|value| value.object_id.0)),
                 x_le: encode_u32(map.objects.iter().map(|value| value.x_256)),
@@ -2830,6 +2993,7 @@ fn protocol_generation_response(
         execution_cost: None,
         construct_verification: None,
         xs_start: None,
+        reached_breakpoint_ids: Vec::new(),
     };
     if identity_request_id.is_empty() {
         return Err(malformed("generation request identity is invalid"));
@@ -3596,6 +3760,89 @@ fn encode_tile_write_runs(runs: &[rms_engine::TileWriteRun]) -> Vec<u8> {
         bytes.extend_from_slice(&run.tile_count.to_le_bytes());
     }
     bytes
+}
+
+fn start_vision_column(
+    backend: v1::GenerationBackend,
+    certification: GenerationCertification,
+    content: &ResolvedContent,
+    input: ResolvedGenerationInput<'_>,
+    map: &GeneratedMap,
+) -> Vec<u8> {
+    if backend != v1::GenerationBackend::Exact
+        || certification != GenerationCertification::VersionMapped
+        || !matches!(content, ResolvedContent::Product(_))
+    {
+        return Vec::new();
+    }
+    let Ok(Some(sight)) = rms_content::packaged_start_sight(
+        &input.request.behavior_profile.profile_id,
+        &input.request.content_pack.pack_id,
+    ) else {
+        return Vec::new();
+    };
+    rms_engine::start_vision(&input, map, sight).map_or_else(
+        |_| Vec::new(),
+        |words| words.iter().flat_map(|word| word.to_le_bytes()).collect(),
+    )
+}
+
+fn scenario_message(
+    backend: v1::GenerationBackend,
+    input: ResolvedGenerationInput<'_>,
+    map: &GeneratedMap,
+) -> Option<v1::ScenarioData> {
+    if backend != v1::GenerationBackend::Exact {
+        return None;
+    }
+    let data = rms_engine::scenario_data(&input, map);
+    Some(v1::ScenarioData {
+        object_kinds: data
+            .object_kinds
+            .iter()
+            .map(|kind| v1::ScenarioObjectKind {
+                object_id: kind.object_id.0,
+                facet_count: u32::from(kind.facet_count),
+                random_facet: kind.random_facet,
+                random_angle: kind.random_angle,
+            })
+            .collect(),
+        object_heights_256_le: encode_i32(map.objects.iter().map(|object| object.z_256)),
+        script_effects: data
+            .script_effects
+            .iter()
+            .map(|effect| v1::ScenarioScriptEffect {
+                effect: effect.effect,
+                target: effect.target,
+                attribute: effect.attribute,
+                value: effect.value,
+                operation_index: effect.operation_index,
+            })
+            .collect(),
+        xs_includes: data.xs_includes,
+    })
+}
+
+fn fit_scenario(message: &mut v1::Envelope) {
+    if prost::Message::encoded_len(message) <= rms_protocol::MAX_FRAME_BYTES {
+        return;
+    }
+    if let Some(Payload::GenerationResponse(response)) = message.payload.as_mut()
+        && let Some(state) = response.map_state.as_mut()
+    {
+        state.scenario = None;
+    }
+}
+
+fn fit_start_vision(message: &mut v1::Envelope) {
+    if prost::Message::encoded_len(message) <= rms_protocol::MAX_FRAME_BYTES {
+        return;
+    }
+    if let Some(Payload::GenerationResponse(response)) = message.payload.as_mut()
+        && let Some(state) = response.map_state.as_mut()
+    {
+        state.start_vision_le = Vec::new();
+    }
 }
 
 fn fit_tile_write_runs(message: &mut v1::Envelope) {

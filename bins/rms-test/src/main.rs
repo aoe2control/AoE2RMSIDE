@@ -1036,6 +1036,9 @@ fn run_service<R: Read, W: Write + Send>(input: &mut R, output: &mut W) -> Resul
                                     object_instance_ids: false,
                                     presentation_instance_ids: false,
                                     refusal_locations: false,
+                                    breakpoints: false,
+                                    start_vision: false,
+                                    scenario_data: false,
                                 }),
                             }),
                         ),
@@ -1922,6 +1925,8 @@ fn protocol_preview(sample: rms_test::PreviewSample) -> v1::MapTestPreview {
             appearance_objects_le: Vec::new(),
             cliff_piece_instance_ids_le: Vec::new(),
             appearance_instance_ids_le: Vec::new(),
+            start_vision_le: Vec::new(),
+            scenario: None,
             cliff_edges: map
                 .cliffs
                 .iter()

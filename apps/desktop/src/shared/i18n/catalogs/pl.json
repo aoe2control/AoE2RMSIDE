@@ -45,8 +45,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "Przeglądaj zainstalowane mapy…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "Wdróż jako mod…"
+    "app-menu.file.deploy": {
+      "message": "Wdróż…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "jako mod…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "jako scenariusz…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "Ikona mapy…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "Otwórz folder gry"
@@ -126,6 +135,9 @@
     "app-menu.edit.redo": {
       "message": "Ponów"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "Otwórz ponownie zamkniętą kartę"
+    },
     "app-menu.edit.cut": {
       "message": "Wytnij"
     },
@@ -152,6 +164,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "Wcięcia bloków if/else"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "Wcięcia bloków losowych"
     },
     "app-menu.edit.delete-permanently": {
       "message": "Pomijaj Kosz przy usuwaniu"
@@ -2793,6 +2808,108 @@
     "deploy-panel.success.finish": {
       "message": "Zakończ"
     },
+    "map-icon-panel.title": {
+      "message": "Ikona mapy"
+    },
+    "scenario-panel.title": {
+      "message": "Wdróż jako scenariusz"
+    },
+    "scenario-panel.name": {
+      "message": "Nazwa scenariusza"
+    },
+    "scenario-panel.name.history": {
+      "message": "Poprzednie nazwy scenariuszy"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "Użyj nazwy bez \\ / : * ? \" < > | i bez kropki ani spacji na końcu."
+    },
+    "scenario-panel.name.too-long": {
+      "message": "Użyj nazwy o długości najwyżej 100 znaków."
+    },
+    "scenario-panel.summary": {
+      "message": "Zawartość scenariusza"
+    },
+    "scenario-panel.summary.map": {
+      "message": "Mapa"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} pól, ziarno {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "Gracze"
+    },
+    "scenario-panel.summary.player": {
+      "message": "Gracz {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "Obiekty"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "Efekty skryptu"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "Brak"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "Skrypt XS"
+    },
+    "scenario-panel.unavailable": {
+      "message": "Tego podglądu nie można zapisać jako scenariusza. Wygeneruj mapę ponownie."
+    },
+    "scenario-panel.effects.title": {
+      "message": "Zachować efekty skryptu?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {Skrypt zmienia grę {count} poleceniem efektu. Scenariusz nie uruchamia skryptu, więc efekt można dodać jako wyzwalacz, który zastosuje go na początku.} few {Skrypt zmienia grę {count} poleceniami efektów. Scenariusz nie uruchamia skryptu, więc efekty można dodać jako wyzwalacz, który zastosuje je na początku.} many {Skrypt zmienia grę {count} poleceniami efektów. Scenariusz nie uruchamia skryptu, więc efekty można dodać jako wyzwalacz, który zastosuje je na początku.} other {Skrypt zmienia grę {count} poleceniami efektów. Scenariusz nie uruchamia skryptu, więc efekty można dodać jako wyzwalacz, który zastosuje je na początku.}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "Zamień efekty na wyzwalacze"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "Pomiń efekty"
+    },
+    "scenario-panel.replace.title": {
+      "message": "Zastąpić scenariusz?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "Scenariusz {name} w tym profilu zostanie nadpisany."
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "Zastąp"
+    },
+    "scenario-panel.success.title": {
+      "message": "Scenariusz został wdrożony"
+    },
+    "scenario-panel.success.note": {
+      "message": "Otwórz go w edytorze scenariuszy gry albo wybierz go w sekcji Scenariusz podczas tworzenia poczekalni."
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {Wdrożono scenariusz {name} z {objects} obiektami} one {Wdrożono scenariusz {name} z {objects} obiektami i {effects} efektem skryptu} few {Wdrożono scenariusz {name} z {objects} obiektami i {effects} efektami skryptu} many {Wdrożono scenariusz {name} z {objects} obiektami i {effects} efektami skryptu} other {Wdrożono scenariusz {name} z {objects} obiektami i {effects} efektami skryptu}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "Nie udało się wdrożyć scenariusza"
+    },
+    "scenario-panel.close": {
+      "message": "Zamknij wdrażanie scenariusza"
+    },
+    "scenario-panel.deploy": {
+      "message": "Wdróż scenariusz"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "Scenariusz zapisano w"
+    },
+    "scenario-panel.success.path": {
+      "message": "Ścieżka wdrożonego scenariusza"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "Kopiuj ścieżkę scenariusza"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "Skopiowano ścieżkę scenariusza"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "Pokaż w folderze"
+    },
     "deploy-panel.success.title": {
       "message": "Mod został wdrożony"
     },
@@ -3864,6 +3981,24 @@
     "code-editor.tab-menu.close": {
       "message": "Zamknij"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "Otwórz ponownie zamkniętą kartę"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "Kliknij lub naciśnij {shortcut}, aby dodać punkt przerwania"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "Punkt przerwania: podgląd zatrzymuje się tutaj. Kliknij lub naciśnij {shortcut}, aby go usunąć."
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "Punkt przerwania: ostatnie uruchomienie do niego nie dotarło. Kliknij lub naciśnij {shortcut}, aby go usunąć."
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "Podgląd jest tutaj wstrzymany"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "Przełącz punkt przerwania"
+    },
     "code-editor.run.preview": {
       "message": "Uruchom podgląd"
     },
@@ -3884,6 +4019,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "Zatrzymaj ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "Kontynuuj"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "Kontynuuj do następnego punktu przerwania ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "Krok"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "Wykonaj do końca następnego polecenia ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "Opcje wykonania podglądu"
@@ -4707,6 +4854,27 @@
     "preview-panel.tool.ruler": {
       "message": "Linijka"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "Opcje linijki"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "Długości na krawędziach mapy"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "Widok gracza"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "Opcje widoku gracza"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "Gracz {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "Gaja"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "Krycie mgły"
+    },
     "preview-panel.tool.small-trees": {
       "message": "Małe drzewa"
     },
@@ -4715,6 +4883,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "Zapisz obraz…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "Zaznacz wszystko"
     },
     "preview-panel.output.image-saved": {
       "message": "Zapisano obraz mapy jako {name}"
@@ -4766,6 +4937,15 @@
     },
     "preview-panel.status.label": {
       "message": "Stan podglądu"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {Wstrzymano przed wierszem {line}} other {Wstrzymano po wierszu {line}}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "Wstrzymano w pliku, który nie jest otwarty"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "Mapa w tym miejscu jest zbyt duża, by ją pokazać"
     },
     "preview-panel.status.uncertified": {
       "message": "Niecertyfikowany"
@@ -5408,6 +5588,9 @@
     },
     "game-options.civilization.random": {
       "message": "Losowo"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "Losowo (gra podstawowa)"
     },
     "game-options.civilization.britons": {
       "message": "Brytowie"

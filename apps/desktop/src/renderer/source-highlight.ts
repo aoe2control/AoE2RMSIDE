@@ -6,6 +6,7 @@ export const outlineSymbolKind = Object.freeze({
   section: 3,
   command: 12,
   conditional: 17,
+  randomBranch: 22,
 });
 
 export interface SourceOutlineSymbol {
@@ -20,6 +21,27 @@ export interface SourceOutlineSymbol {
 export interface SourceBlockStructure {
   symbols: readonly SourceOutlineSymbol[];
   folds: readonly { startLine: number; endLine: number; startCharacter?: number }[];
+}
+
+export function blockAndSectionFolds<Fold extends { startLine: number; startCharacter?: number }>(
+  symbols: readonly SourceOutlineSymbol[],
+  folds: readonly Fold[],
+): Fold[] {
+  const controlStarts = new Set(
+    symbols
+      .filter(
+        (symbol) =>
+          (symbol.kind === outlineSymbolKind.conditional ||
+            symbol.kind === outlineSymbolKind.randomBranch) &&
+          symbol.character !== undefined,
+      )
+      .map((symbol) => `${symbol.line}:${symbol.character}`),
+  );
+  return folds.filter(
+    (fold) =>
+      fold.startCharacter === undefined ||
+      !controlStarts.has(`${fold.startLine}:${fold.startCharacter}`),
+  );
 }
 
 export interface LineSpan {

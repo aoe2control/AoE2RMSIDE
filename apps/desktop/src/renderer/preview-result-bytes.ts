@@ -21,6 +21,8 @@ export function previewResultBytes(result: PreviewGenerationResult): number {
     (result.appearanceObjectsLe?.byteLength ?? 0) +
     (result.cliffPieceInstanceIdsLe?.byteLength ?? 0) +
     (result.appearanceInstanceIdsLe?.byteLength ?? 0) +
+    (result.startVisionLe?.byteLength ?? 0) +
+    (result.scenario?.objectHeights256Le.byteLength ?? 0) +
     result.layerIdsLe.byteLength +
     result.flagsLe.byteLength +
     result.objects.idsLe.byteLength +

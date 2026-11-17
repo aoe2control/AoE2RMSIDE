@@ -53,8 +53,17 @@
     "app-menu.file.browse-installed-sources": {
       "message": "इंस्टॉल किए गए मानचित्र देखें…"
     },
-    "app-menu.file.deploy-managed-mod": {
-      "message": "मॉड के रूप में तैनात करें…"
+    "app-menu.file.deploy": {
+      "message": "तैनात करें…"
+    },
+    "app-menu.file.deploy.as-mod": {
+      "message": "मॉड के रूप में…"
+    },
+    "app-menu.file.deploy.as-scenario": {
+      "message": "परिदृश्य के रूप में…"
+    },
+    "app-menu.file.map-icon": {
+      "message": "मानचित्र का आइकन…"
     },
     "app-menu.file.open-linked-game-folder": {
       "message": "गेम फ़ोल्डर खोलें"
@@ -134,6 +143,9 @@
     "app-menu.edit.redo": {
       "message": "फिर से करें"
     },
+    "app-menu.edit.reopen-closed-tab": {
+      "message": "बंद टैब फिर से खोलें"
+    },
     "app-menu.edit.cut": {
       "message": "काटें"
     },
@@ -160,6 +172,9 @@
     },
     "app-menu.edit.indent-conditionals": {
       "message": "if/else ब्लॉक में इंडेंट दें"
+    },
+    "app-menu.edit.indent-random": {
+      "message": "रैंडम ब्लॉक में इंडेंट दें"
     },
     "app-menu.edit.delete-permanently": {
       "message": "हटाते समय रीसायकल बिन छोड़ें"
@@ -2801,6 +2816,108 @@
     "deploy-panel.success.finish": {
       "message": "पूरा करें"
     },
+    "map-icon-panel.title": {
+      "message": "मानचित्र का आइकन"
+    },
+    "scenario-panel.title": {
+      "message": "परिदृश्य के रूप में तैनात करें"
+    },
+    "scenario-panel.name": {
+      "message": "परिदृश्य का नाम"
+    },
+    "scenario-panel.name.history": {
+      "message": "पहले इस्तेमाल हुए परिदृश्य नाम"
+    },
+    "scenario-panel.name.invalid": {
+      "message": "ऐसा नाम चुनें जिसमें \\ / : * ? \" < > | न हों और जिसके अंत में बिंदु या स्पेस न हो।"
+    },
+    "scenario-panel.name.too-long": {
+      "message": "अधिकतम 100 वर्णों का नाम चुनें।"
+    },
+    "scenario-panel.summary": {
+      "message": "परिदृश्य की सामग्री"
+    },
+    "scenario-panel.summary.map": {
+      "message": "मानचित्र"
+    },
+    "scenario-panel.summary.map.value": {
+      "message": "{width} × {height} टाइल, सीड {seed}"
+    },
+    "scenario-panel.summary.players": {
+      "message": "खिलाड़ी"
+    },
+    "scenario-panel.summary.player": {
+      "message": "खिलाड़ी {slot}: {civilization}"
+    },
+    "scenario-panel.summary.objects": {
+      "message": "वस्तुएँ"
+    },
+    "scenario-panel.summary.effects": {
+      "message": "स्क्रिप्ट प्रभाव"
+    },
+    "scenario-panel.summary.effects.none": {
+      "message": "कोई नहीं"
+    },
+    "scenario-panel.summary.xs": {
+      "message": "XS स्क्रिप्ट"
+    },
+    "scenario-panel.unavailable": {
+      "message": "यह पूर्वावलोकन परिदृश्य के रूप में सहेजा नहीं जा सकता। मानचित्र फिर से जनरेट करें।"
+    },
+    "scenario-panel.effects.title": {
+      "message": "स्क्रिप्ट प्रभाव रखें?"
+    },
+    "scenario-panel.effects.description": {
+      "message": "{count, plural, one {स्क्रिप्ट {count} प्रभाव कमांड से गेम बदलती है। परिदृश्य स्क्रिप्ट नहीं चलाता, इसलिए प्रभाव को एक ट्रिगर के रूप में जोड़ा जा सकता है जो उसे शुरुआत में लागू करता है।} other {स्क्रिप्ट {count} प्रभाव कमांड से गेम बदलती है। परिदृश्य स्क्रिप्ट नहीं चलाता, इसलिए प्रभावों को एक ट्रिगर के रूप में जोड़ा जा सकता है जो उन्हें शुरुआत में लागू करता है।}}"
+    },
+    "scenario-panel.effects.triggers": {
+      "message": "प्रभावों को ट्रिगर में बदलें"
+    },
+    "scenario-panel.effects.leave": {
+      "message": "प्रभाव छोड़ दें"
+    },
+    "scenario-panel.replace.title": {
+      "message": "परिदृश्य बदलें?"
+    },
+    "scenario-panel.replace.description": {
+      "message": "इस प्रोफ़ाइल में परिदृश्य {name} अधिलेखित हो जाएगा।"
+    },
+    "scenario-panel.replace.confirm": {
+      "message": "बदलें"
+    },
+    "scenario-panel.success.title": {
+      "message": "परिदृश्य सफलतापूर्वक तैनात हुआ"
+    },
+    "scenario-panel.success.note": {
+      "message": "इसे गेम के परिदृश्य संपादक में खोलें, या लॉबी बनाते समय परिदृश्य के अंतर्गत चुनें।"
+    },
+    "scenario-panel.output.deployed": {
+      "message": "{effects, plural, =0 {परिदृश्य {name} {objects} वस्तुओं के साथ तैनात किया गया} one {परिदृश्य {name} {objects} वस्तुओं और {effects} स्क्रिप्ट प्रभाव के साथ तैनात किया गया} other {परिदृश्य {name} {objects} वस्तुओं और {effects} स्क्रिप्ट प्रभावों के साथ तैनात किया गया}}"
+    },
+    "scenario-panel.output.failed": {
+      "message": "परिदृश्य तैनात नहीं किया जा सका"
+    },
+    "scenario-panel.close": {
+      "message": "परिदृश्य तैनाती बंद करें"
+    },
+    "scenario-panel.deploy": {
+      "message": "परिदृश्य तैनात करें"
+    },
+    "scenario-panel.success.saved-to": {
+      "message": "परिदृश्य यहाँ सहेजा गया"
+    },
+    "scenario-panel.success.path": {
+      "message": "तैनात परिदृश्य का पथ"
+    },
+    "scenario-panel.success.path.copy": {
+      "message": "परिदृश्य का पथ कॉपी करें"
+    },
+    "scenario-panel.success.path.copied": {
+      "message": "परिदृश्य का पथ कॉपी हुआ"
+    },
+    "scenario-panel.success.open-folder": {
+      "message": "परिदृश्य फ़ोल्डर खोलें"
+    },
     "deploy-panel.success.title": {
       "message": "मॉड सफलतापूर्वक तैनात हुआ"
     },
@@ -3872,6 +3989,24 @@
     "code-editor.tab-menu.close": {
       "message": "बंद करें"
     },
+    "code-editor.tab-menu.reopen-closed-tab": {
+      "message": "बंद टैब फिर से खोलें"
+    },
+    "code-editor.breakpoint.add": {
+      "message": "ब्रेकपॉइंट जोड़ने के लिए क्लिक करें या {shortcut} दबाएँ"
+    },
+    "code-editor.breakpoint.set": {
+      "message": "ब्रेकपॉइंट: पूर्वावलोकन यहाँ रुकता है। इसे हटाने के लिए क्लिक करें या {shortcut} दबाएँ।"
+    },
+    "code-editor.breakpoint.unreached": {
+      "message": "ब्रेकपॉइंट: पिछला रन यहाँ तक नहीं पहुँचा। इसे हटाने के लिए क्लिक करें या {shortcut} दबाएँ।"
+    },
+    "code-editor.breakpoint.paused": {
+      "message": "पूर्वावलोकन यहाँ रुका है"
+    },
+    "code-editor.breakpoint.toggle-action": {
+      "message": "ब्रेकपॉइंट टॉगल करें"
+    },
     "code-editor.run.preview": {
       "message": "पूर्वावलोकन चलाएँ"
     },
@@ -3892,6 +4027,18 @@
     },
     "code-editor.run.stop-tooltip": {
       "message": "रोकें ({shortcut})"
+    },
+    "code-editor.run.continue": {
+      "message": "जारी रखें"
+    },
+    "code-editor.run.continue-tooltip": {
+      "message": "अगले ब्रेकपॉइंट तक जारी रखें ({shortcut})"
+    },
+    "code-editor.run.step": {
+      "message": "एक कदम"
+    },
+    "code-editor.run.step-tooltip": {
+      "message": "अगले कमांड के अंत तक चलाएँ ({shortcut})"
     },
     "code-editor.run-menu.label": {
       "message": "पूर्वावलोकन चलाने के विकल्प"
@@ -4715,6 +4862,27 @@
     "preview-panel.tool.ruler": {
       "message": "रूलर"
     },
+    "preview-panel.tool.ruler.options": {
+      "message": "रूलर विकल्प"
+    },
+    "preview-panel.ruler.edge-lengths": {
+      "message": "मैप के किनारों पर लंबाई"
+    },
+    "preview-panel.tool.start-vision": {
+      "message": "खिलाड़ी दृश्य"
+    },
+    "preview-panel.tool.start-vision.options": {
+      "message": "खिलाड़ी दृश्य विकल्प"
+    },
+    "preview-panel.start-vision.player": {
+      "message": "खिलाड़ी {player}"
+    },
+    "preview-panel.start-vision.gaia": {
+      "message": "गैया"
+    },
+    "preview-panel.start-vision.fog-opacity": {
+      "message": "धुंध की अपारदर्शिता"
+    },
     "preview-panel.tool.small-trees": {
       "message": "छोटे पेड़"
     },
@@ -4723,6 +4891,9 @@
     },
     "preview-panel.image-menu.save": {
       "message": "चित्र सहेजें…"
+    },
+    "preview-panel.image-menu.select-all": {
+      "message": "सभी चुनें"
     },
     "preview-panel.output.image-saved": {
       "message": "मानचित्र का चित्र {name} के रूप में सहेजा गया"
@@ -4774,6 +4945,15 @@
     },
     "preview-panel.status.label": {
       "message": "पूर्वावलोकन की स्थिति"
+    },
+    "preview-panel.breakpoint.paused": {
+      "message": "{edge, select, before {पंक्ति {line} से पहले रुका} other {पंक्ति {line} के बाद रुका}}"
+    },
+    "preview-panel.breakpoint.paused-elsewhere": {
+      "message": "ऐसी फ़ाइल में रुका जो खुली नहीं है"
+    },
+    "preview-panel.breakpoint.map-unavailable": {
+      "message": "इस बिंदु पर मैप दिखाने के लिए बहुत बड़ा है"
     },
     "preview-panel.status.uncertified": {
       "message": "अप्रमाणित"
@@ -5416,6 +5596,9 @@
     },
     "game-options.civilization.random": {
       "message": "यादृच्छिक"
+    },
+    "game-options.civilization.random-base-game": {
+      "message": "यादृच्छिक (मूल गेम)"
     },
     "game-options.civilization.britons": {
       "message": "ब्रिटन"
