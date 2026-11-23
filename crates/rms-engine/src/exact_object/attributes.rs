@@ -22,6 +22,7 @@ pub(crate) struct ObjectRuntimeAttributes {
     player_resource_writes: Vec<PlayerResourceWrite>,
     undead_flags: std::collections::BTreeMap<ObjectId, u8>,
     gaia_undead_flags: std::collections::BTreeMap<ObjectId, u8>,
+    build_and_go_away: std::collections::BTreeMap<(ObjectId, bool), bool>,
 }
 
 pub(crate) const UNDEAD_FLAG_TEMPORARY_NOT_TRACKED: u8 = 8;
@@ -449,6 +450,50 @@ impl ObjectRuntimeAttributes {
             .any(|flag| *flag != 0)
     }
 
+    pub(super) fn mutate_build_and_go_away(
+        &mut self,
+        object_id: ObjectId,
+        mutation: AttributeMutation,
+        value: f32,
+        gaia_only: bool,
+        content: CompatibleContentView<'_>,
+    ) {
+        if mutation != AttributeMutation::Set {
+            return;
+        }
+        let flag = truncate_f32_to_i32(value) as u8 != 0;
+        for owner in if gaia_only { &[0][..] } else { &[0, 1][..] } {
+            let building = self
+                .definition(object_id, *owner, content)
+                .is_some_and(|definition| {
+                    definition.constructor_type == Some(BUILDING_CONSTRUCTOR_TYPE)
+                });
+            if building {
+                self.build_and_go_away
+                    .insert((object_id, *owner == 0), flag);
+            }
+        }
+    }
+
+    pub(super) fn disappears_when_built(
+        &self,
+        object_id: ObjectId,
+        owner: u8,
+        definition: &ObjectDefinition,
+    ) -> bool {
+        self.build_and_go_away
+            .get(&(object_id, owner == 0))
+            .copied()
+            .unwrap_or(definition.disappears_when_built)
+    }
+
+    fn upgrade_build_and_go_away(&mut self, object_id: ObjectId, target: ObjectId, gaia: bool) {
+        match self.build_and_go_away.get(&(target, gaia)).copied() {
+            Some(flag) => self.build_and_go_away.insert((object_id, gaia), flag),
+            None => self.build_and_go_away.remove(&(object_id, gaia)),
+        };
+    }
+
     fn upgrade_undead_flag(&mut self, object_id: ObjectId, target: ObjectId, gaia: bool) {
         let flags = if gaia {
             &mut self.gaia_undead_flags
@@ -463,8 +508,10 @@ impl ObjectRuntimeAttributes {
 
     pub(super) fn set_upgrade(&mut self, object_id: ObjectId, target: ObjectId, gaia_only: bool) {
         self.upgrade_undead_flag(object_id, target, true);
+        self.upgrade_build_and_go_away(object_id, target, true);
         if !gaia_only {
             self.upgrade_undead_flag(object_id, target, false);
+            self.upgrade_build_and_go_away(object_id, target, false);
         }
         self.modified_owner_speeds.retain(|&(id, civilization), _| {
             id != object_id || (gaia_only && civilization != CivilizationId(0))

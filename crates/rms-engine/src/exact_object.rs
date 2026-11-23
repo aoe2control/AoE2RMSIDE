@@ -482,6 +482,12 @@ impl ExactObjectState {
         )
     }
 
+    pub(crate) fn built_and_gone(&self, object: &PlacedObject) -> bool {
+        self.restriction_zones
+            .objects
+            .was_built_and_gone(object.instance_id)
+    }
+
     pub(crate) fn refuse_unmodelled_temporary_removals(
         &self,
         content: CompatibleContentView<'_>,
@@ -4733,9 +4739,24 @@ fn construct_one_at(
         .runtime_attributes
         .definition(object_id, owner, content)
         .ok_or_else(|| missing_object_definition(object_id))?;
-    if definition.disappears_when_built && building_stack_unit(definition).is_some() {
+    let disappears_when_built = foundation_map
+        .runtime_attributes
+        .disappears_when_built(object_id, owner, definition);
+    if building_stack_unit(definition).is_some() {
+        if disappears_when_built {
+            return Err(invalid_object(
+                "constructing a building that is replaced by its stack unit when built is unsupported",
+            ));
+        }
+        if definition.disappears_when_built {
+            return Err(invalid_object(
+                "constructing a building with a stack unit that a script effect keeps when built is unsupported",
+            ));
+        }
+    }
+    if depth > 0 && disappears_when_built && !definition.construction_attachments.is_empty() {
         return Err(invalid_object(
-            "constructing a building that is replaced by its stack unit when built is unsupported",
+            "constructing an attached building part with parts of its own that disappears when built is unsupported",
         ));
     }
     let completes = match parent_completes {
@@ -4893,7 +4914,24 @@ fn construct_one_at(
                 operation_indices,
                 foundation_map,
             )?;
-            retire_completed_disappearing_building(index, content, objects, foundation_map)?;
+            if index != constructed_index {
+                retire_completed_disappearing_building(
+                    index,
+                    index..index,
+                    content,
+                    objects,
+                    foundation_map,
+                )?;
+            }
+        }
+        if completes {
+            retire_completed_disappearing_building(
+                constructed_index,
+                constructed_index + 1..constructed_end,
+                content,
+                objects,
+                foundation_map,
+            )?;
         }
     }
     Ok(())
@@ -4907,23 +4945,52 @@ fn building_stack_unit(definition: &ObjectDefinition) -> Option<ObjectId> {
 
 fn retire_completed_disappearing_building(
     index: usize,
+    parts: std::ops::Range<usize>,
     content: CompatibleContentView<'_>,
     objects: &mut [PlacedObject],
     foundation_map: &mut FoundationMap<'_>,
 ) -> Result<(), GenerationError> {
+    let attributes = foundation_map.runtime_attributes;
     let object = &objects[index];
-    if object.status != 2
-        || !foundation_map
-            .runtime_attributes
-            .definition(object.object_id, object.owner, content)
-            .ok_or_else(|| missing_object_definition(object.object_id))?
-            .disappears_when_built
-    {
+    if object.status != 2 {
         return Ok(());
     }
-    let identity = object.instance_id;
+    let definition = attributes
+        .definition(object.object_id, object.owner, content)
+        .ok_or_else(|| missing_object_definition(object.object_id))?;
+    if !attributes.disappears_when_built(object.object_id, object.owner, definition) {
+        return Ok(());
+    }
+    if [object.object_id.0, definition.id.0]
+        .iter()
+        .any(|id| REPAINTING_FARMS.contains(id) || FARM_REMNANTS.contains(id))
+    {
+        return Err(invalid_object(
+            "the preview does not support a farm that disappears when built",
+        ));
+    }
+    let reported = content
+        .object(object.object_id)
+        .is_some_and(|master| master.disappears_when_built);
     let roster = std::sync::Arc::make_mut(&mut foundation_map.restriction_zones.objects);
-    roster.retire(identity)?;
+    for member in parts.chain(std::iter::once(index)) {
+        let part = &objects[member];
+        if roster.object(part.instance_id).is_none() {
+            continue;
+        }
+        let definition = attributes
+            .definition(part.object_id, part.owner, content)
+            .ok_or_else(|| missing_object_definition(part.object_id))?;
+        roster.finish_overlap_cleanup_on_terrain(
+            part.instance_id,
+            definition.pathing,
+            definition.collision_half_extents(),
+            Some(&*foundation_map.terrain),
+        )?;
+        if !reported {
+            roster.record_built_and_gone(part.instance_id);
+        }
+    }
     project_construction_lifecycle(objects, roster, &mut foundation_map.lifecycle_projection)
 }
 

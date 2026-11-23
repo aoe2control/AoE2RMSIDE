@@ -3947,6 +3947,16 @@ impl ExactRmsGenerationBackend {
                         .collect(),
                 ),
             };
+        let gone = final_objects
+            .iter()
+            .map(|placed| object.built_and_gone(placed))
+            .collect::<Vec<_>>();
+        if gone.contains(&true) {
+            let mut kept = gone.iter().map(|gone| !gone);
+            final_objects.retain(|_| kept.next().unwrap_or(true));
+            let mut kept = gone.iter().map(|gone| !gone);
+            final_object_operation_indices.retain(|_| kept.next().unwrap_or(true));
+        }
         let mut removed_farms = Vec::new();
         if generation_rules(&input.semantic_program.identity.profile)?.temporary_object_removal
             == rms_profile::TemporaryObjectRemoval::RemovedAfterGeneration

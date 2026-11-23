@@ -17,6 +17,8 @@ pub const GAME_ART_BLEND_ATLASES: [&str; 9] = [
     "reserved",
 ];
 
+pub const GAME_ART_DEFAULT_OVERLAY_MASK: &str = "blend_mask_01.png";
+
 pub const MAXIMUM_OBJECT_ART_PARTS: usize = 64;
 const MAXIMUM_DELTA_DEPTH: usize = 4;
 const MAXIMUM_ANNEX_DEPTH: usize = 3;
@@ -120,7 +122,11 @@ impl GameArtCatalog {
                 texture: terrain.texture_name.clone(),
                 blend_priority: terrain.blend_priority,
                 blend_type: terrain.blend_type,
-                overlay_mask: terrain.overlay_mask_name.clone(),
+                overlay_mask: if terrain.overlay_mask_name.is_empty() {
+                    GAME_ART_DEFAULT_OVERLAY_MASK.to_owned()
+                } else {
+                    terrain.overlay_mask_name.clone()
+                },
                 water_class: terrain.placement_class,
             })
             .collect();
@@ -188,7 +194,6 @@ impl GameArtCatalog {
     pub fn overlay_masks(&self) -> BTreeSet<String> {
         self.terrains
             .iter()
-            .filter(|terrain| !terrain.overlay_mask.is_empty())
             .map(|terrain| terrain.overlay_mask.clone())
             .collect()
     }

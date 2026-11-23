@@ -4134,7 +4134,7 @@ img {
   display: flex;
   font-size: 12px;
   gap: 6px;
-  left: 50%;
+  left: calc(50% + (var(--preview-hud-inset-left) - var(--preview-hud-inset-right)) / 2);
   pointer-events: none;
   position: absolute;
   text-shadow: var(--preview-overlay-halo);

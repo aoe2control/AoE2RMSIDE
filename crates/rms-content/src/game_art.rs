@@ -5,7 +5,8 @@ pub mod sld;
 
 pub use catalog::{
     ArtAnnex, ArtDelta, ArtGraphic, ArtMaster, ArtPart, ArtTerrain, GAME_ART_BLEND_ATLASES,
-    GameArtCatalog, MAXIMUM_OBJECT_ART_PARTS, ObjectArt, read_aoe2de_dat_game_art,
+    GAME_ART_DEFAULT_OVERLAY_MASK, GameArtCatalog, MAXIMUM_OBJECT_ART_PARTS, ObjectArt,
+    read_aoe2de_dat_game_art,
 };
 
 use thiserror::Error;

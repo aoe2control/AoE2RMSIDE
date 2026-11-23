@@ -184,6 +184,7 @@ pub(super) struct ObjectRoster {
 struct RosterHistory {
     lifecycle: Vec<u32>,
     destroyed: Vec<u32>,
+    built_and_gone: BTreeSet<u32>,
 }
 
 impl PartialEq for RosterHistory {
@@ -456,6 +457,14 @@ impl ObjectRoster {
             self.history.lifecycle.push(identity);
         }
         Ok(())
+    }
+
+    pub fn record_built_and_gone(&mut self, identity: u32) {
+        self.history.built_and_gone.insert(identity);
+    }
+
+    pub fn was_built_and_gone(&self, identity: u32) -> bool {
+        self.history.built_and_gone.contains(&identity)
     }
 
     pub fn lifecycle_change_count(&self) -> usize {
